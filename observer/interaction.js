@@ -1,3 +1,5 @@
+import { debug } from './debug.js';
+
 export class InteractionObserver {
   constructor(container, target) {
     this.container = container;
@@ -6,18 +8,18 @@ export class InteractionObserver {
   }
   
   start() {
-    this.send({ typ: 'observer_start', observer: 'InteractionObserver', zeitstempel: Date.now() });
+    debug.observer('InteractionObserver gestartet');
     
     this.addHandler('click', (e) => {
       const morph = e.target.closest('amorph-container');
       if (!morph) return;
       
-      this.send({
-        typ: 'klick',
+      const data = {
         morph: morph.dataset.morph,
-        feld: morph.dataset.field,
-        zeitstempel: Date.now()
-      });
+        feld: morph.dataset.field
+      };
+      debug.klick('Klick', data);
+      this.target?.send({ typ: 'klick', ...data, zeitstempel: Date.now() });
     });
     
     let hoverTimeout;
@@ -27,12 +29,12 @@ export class InteractionObserver {
       
       clearTimeout(hoverTimeout);
       hoverTimeout = setTimeout(() => {
-        this.send({
-          typ: 'hover',
+        const data = {
           morph: morph.dataset.morph,
-          feld: morph.dataset.field,
-          zeitstempel: Date.now()
-        });
+          feld: morph.dataset.field
+        };
+        debug.observer('Hover', data);
+        this.target?.send({ typ: 'hover', ...data, zeitstempel: Date.now() });
       }, 500);
     });
     
@@ -45,13 +47,10 @@ export class InteractionObserver {
   }
   
   stop() {
+    debug.observer('InteractionObserver gestoppt');
     for (const [event, handler] of this.handlers) {
       this.container.removeEventListener(event, handler);
     }
     this.handlers.clear();
-  }
-  
-  send(nachricht) {
-    this.target.send(nachricht);
   }
 }
