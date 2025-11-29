@@ -121,7 +121,13 @@ function getMorphConfig(morphName, config) {
 }
 
 export async function render(container, daten, config) {
-  container.innerHTML = '';
+  // Nur den Daten-Bereich leeren, nicht die Features!
+  // Features haben data-feature Attribut, Daten-Items haben data-morph="item"
+  const dataItems = container.querySelectorAll(':scope > amorph-container[data-morph="item"]');
+  for (const item of dataItems) {
+    item.remove();
+  }
+  
   const dom = transform(daten, config);
   container.appendChild(dom);
   
