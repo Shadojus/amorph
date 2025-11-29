@@ -1,0 +1,34 @@
+# Datenquelle - wähle eine:
+
+# Option 1: Lokale JSON-Datei (für Entwicklung)
+quelle:
+  typ: json
+  url: ./data/pilze.json
+
+# Option 2: PocketBase
+# quelle:
+#   typ: pocketbase
+#   url: https://api.funginomi.de
+#   sammlung: pilze
+
+# Option 3: REST API
+# quelle:
+#   typ: rest
+#   url: https://api.example.com/pilze
+#   headers:
+#     Authorization: Bearer ${API_TOKEN}
+
+# Schema der Daten (optional, für Validierung)
+schema:
+  id: string
+  slug: string
+  name: string
+  wissenschaftlich: string
+  essbarkeit: string
+  beschreibung: string
+  temperatur:
+    typ: range
+    einheit: °C
+  standort: array
+  verwechslung: array
+  bild: string

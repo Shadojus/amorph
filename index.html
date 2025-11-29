@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMORPH v5 - Funginomi</title>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="./styles/base.css">
+  <link rel="stylesheet" href="./styles/morphs.css">
+  <link rel="stylesheet" href="./styles/features.css">
+  <link rel="stylesheet" href="./styles/layouts.css">
+  <link rel="stylesheet" href="./styles/perspektiven.css">
+  
+  <style>
+    /* Lade-Animation */
+    #app:empty::after {
+      content: 'Lädt...';
+      display: block;
+      text-align: center;
+      padding: 2rem;
+      color: var(--color-text-muted);
+    }
+    
+    /* Header */
+    .app-header {
+      padding: var(--space-lg);
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: var(--space-lg);
+    }
+    
+    .app-header h1 {
+      margin: 0 0 var(--space-xs);
+      font-size: 1.5rem;
+    }
+    
+    .app-header p {
+      margin: 0;
+      color: var(--color-text-muted);
+    }
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <h1>🍄 Funginomi</h1>
+    <p>Pilz-Wissenssammlung</p>
+  </header>
+  
+  <main id="app"></main>
+  
+  <script type="module">
+    import { amorph } from './index.js';
+    
+    // AMORPH starten
+    const app = await amorph({
+      container: '#app',
+      config: './config/'
+    });
+    
+    // Für Debugging in Console verfügbar
+    window.amorph = app;
+    
+    console.log('🍄 AMORPH v5 gestartet');
+    console.log('Verfügbare Methoden: app.reload(), app.search(query), app.destroy()');
+  </script>
+</body>
+</html>

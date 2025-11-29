@@ -1,0 +1,23 @@
+{
+  "name": "amorph",
+  "version": "5.0.0",
+  "description": "Formlos. Zustandslos. Transformierend.",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx serve . -p 3000",
+    "start": "npx serve . -p 3000",
+    "build": "node scripts/build.js",
+    "check": "node scripts/check.js"
+  },
+  "keywords": [
+    "amorph",
+    "data-driven",
+    "morphs",
+    "stateless",
+    "transformation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {}
+}

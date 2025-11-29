@@ -1,0 +1,121 @@
+/* AMORPH v5 - Layout Styles */
+
+/* === ITEM CONTAINER === */
+amorph-container[data-morph="item"] {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  transition: box-shadow 0.2s;
+}
+
+amorph-container[data-morph="item"]:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* === LISTE === */
+[data-amorph-container][data-layout="liste"] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+[data-layout="liste"] amorph-container[data-morph="item"] {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-sm) var(--space-lg);
+  align-items: start;
+}
+
+[data-layout="liste"] amorph-container[data-field="bild"] {
+  grid-row: span 3;
+  max-width: 150px;
+}
+
+[data-layout="liste"] amorph-container[data-field="name"] {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+}
+
+/* === GRID === */
+[data-amorph-container][data-layout="grid"] {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-lg);
+}
+
+[data-layout="grid"] amorph-container[data-morph="item"] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+[data-layout="grid"] amorph-container[data-field="bild"] {
+  order: -1;
+  margin: calc(-1 * var(--space-md));
+  margin-bottom: var(--space-sm);
+}
+
+[data-layout="grid"] amorph-container[data-field="bild"] img {
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+[data-layout="grid"] amorph-container[data-field="name"] {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+}
+
+[data-layout="grid"] amorph-container[data-field="beschreibung"] {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* === KOMPAKT === */
+[data-amorph-container][data-layout="kompakt"] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+[data-layout="kompakt"] amorph-container[data-morph="item"] {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+}
+
+[data-layout="kompakt"] amorph-container[data-field="bild"] {
+  display: none;
+}
+
+[data-layout="kompakt"] amorph-container[data-field="beschreibung"] {
+  display: none;
+}
+
+[data-layout="kompakt"] amorph-container[data-field="name"] {
+  font-weight: 500;
+  flex: 1;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 640px) {
+  [data-amorph-container][data-layout="grid"] {
+    grid-template-columns: 1fr;
+  }
+  
+  [data-layout="liste"] amorph-container[data-morph="item"] {
+    grid-template-columns: 1fr;
+  }
+  
+  [data-layout="liste"] amorph-container[data-field="bild"] {
+    grid-row: auto;
+    max-width: 100%;
+  }
+}

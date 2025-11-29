@@ -1,0 +1,50 @@
+# Explizite Feld-Zuweisung
+felder:
+  name: text
+  wissenschaftlich: text
+  essbarkeit: tag
+  beschreibung: text
+  temperatur: range
+  standort: list
+  verwechslung: list
+  bild: image
+
+# Automatische Regeln (Fallback)
+regeln:
+  - typ: range
+    morph: range
+  - typ: string
+    maxLaenge: 20
+    morph: tag
+  - typ: array
+    morph: list
+  - typ: boolean
+    morph: boolean
+
+# Morph-spezifische Konfiguration
+config:
+  text:
+    maxLaenge: 500
+  
+  tag:
+    farben:
+      essbar: "#22c55e"
+      bedingt essbar: "#eab308"
+      giftig: "#ef4444"
+      tödlich: "#7f1d1d"
+      unbekannt: "#9ca3af"
+  
+  range:
+    visualisierung: true
+    einheit: °C
+    skala:
+      min: -20
+      max: 40
+  
+  list:
+    maxItems: 10
+  
+  image:
+    erlaubteDomains:
+      - funginomi.de
+      - localhost

@@ -1,0 +1,81 @@
+/* AMORPH v5 - Perspektiven Styles */
+
+/* === PERSPEKTIV-FARBEN === */
+:root {
+  --perspektive-kulinarisch: #22c55e;
+  --perspektive-sicherheit: #ef4444;
+  --perspektive-anbau: #eab308;
+  --perspektive-oekologie: #06b6d4;
+}
+
+/* === BASIS: Alle Felder normal === */
+amorph-container[data-field] {
+  transition: all 0.3s ease;
+}
+
+/* === PERSPEKTIVE AKTIV: Felder hervorheben === */
+
+/* Kulinarisch */
+.perspektive-kulinarisch amorph-container[data-field="essbarkeit"],
+.perspektive-kulinarisch amorph-container[data-field="geschmack"],
+.perspektive-kulinarisch amorph-container[data-field="zubereitung"] {
+  border-left: 3px solid var(--perspektive-kulinarisch);
+  padding-left: var(--space-sm);
+  background: color-mix(in srgb, var(--perspektive-kulinarisch) 5%, transparent);
+}
+
+/* Sicherheit */
+.perspektive-sicherheit amorph-container[data-field="essbarkeit"],
+.perspektive-sicherheit amorph-container[data-field="verwechslung"],
+.perspektive-sicherheit amorph-container[data-field="symptome"] {
+  border-left: 3px solid var(--perspektive-sicherheit);
+  padding-left: var(--space-sm);
+  background: color-mix(in srgb, var(--perspektive-sicherheit) 5%, transparent);
+}
+
+/* Anbau */
+.perspektive-anbau amorph-container[data-field="standort"],
+.perspektive-anbau amorph-container[data-field="substrat"],
+.perspektive-anbau amorph-container[data-field="temperatur"] {
+  border-left: 3px solid var(--perspektive-anbau);
+  padding-left: var(--space-sm);
+  background: color-mix(in srgb, var(--perspektive-anbau) 5%, transparent);
+}
+
+/* Ökologie */
+.perspektive-oekologie amorph-container[data-field="lebensraum"],
+.perspektive-oekologie amorph-container[data-field="symbiose"],
+.perspektive-oekologie amorph-container[data-field="verbreitung"],
+.perspektive-oekologie amorph-container[data-field="standort"] {
+  border-left: 3px solid var(--perspektive-oekologie);
+  padding-left: var(--space-sm);
+  background: color-mix(in srgb, var(--perspektive-oekologie) 5%, transparent);
+}
+
+/* === MEHRERE PERSPEKTIVEN: Doppelte Markierung === */
+.perspektive-kulinarisch.perspektive-sicherheit amorph-container[data-field="essbarkeit"] {
+  border-left-width: 6px;
+  border-image: linear-gradient(
+    to bottom, 
+    var(--perspektive-kulinarisch) 50%, 
+    var(--perspektive-sicherheit) 50%
+  ) 1;
+}
+
+/* === NICHT-RELEVANTE FELDER DIMMEN (optional) === */
+/*
+[class*="perspektive-"] amorph-container[data-field]:not([data-field="essbarkeit"]):not([data-field="geschmack"]):not([data-field="zubereitung"]):not([data-field="verwechslung"]):not([data-field="symptome"]):not([data-field="standort"]):not([data-field="temperatur"]) {
+  opacity: 0.6;
+}
+*/
+
+/* === ANIMATION === */
+@keyframes highlight {
+  0% { background-color: transparent; }
+  50% { background-color: color-mix(in srgb, currentColor 20%, transparent); }
+  100% { background-color: transparent; }
+}
+
+amorph-container[data-field][data-highlight] {
+  animation: highlight 0.5s ease;
+}

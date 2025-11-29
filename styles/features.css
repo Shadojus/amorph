@@ -1,0 +1,138 @@
+/* AMORPH v5 - Feature Styles */
+
+/* === SUCHE === */
+.amorph-suche {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.amorph-suche input {
+  flex: 1;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-size-base);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: border-color 0.2s;
+}
+
+.amorph-suche input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.amorph-suche input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.amorph-suche button {
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-size-lg);
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.amorph-suche button:hover {
+  background: var(--color-primary-hover);
+}
+
+.amorph-suche.ladend input {
+  opacity: 0.7;
+}
+
+.amorph-suche.ladend button {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* === PERSPEKTIVEN === */
+.amorph-perspektiven {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.amorph-perspektive-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.amorph-perspektive-btn:hover {
+  border-color: var(--p-farbe, var(--color-primary));
+  background: color-mix(in srgb, var(--p-farbe, var(--color-primary)) 10%, transparent);
+}
+
+.amorph-perspektive-btn.aktiv,
+.amorph-perspektive-btn[aria-pressed="true"] {
+  background: var(--p-farbe, var(--color-primary));
+  border-color: var(--p-farbe, var(--color-primary));
+  color: white;
+}
+
+/* === GRID/LAYOUT TOOLBAR === */
+.amorph-layout-toolbar {
+  display: flex;
+  gap: var(--space-xs);
+  padding: var(--space-xs);
+  background: var(--color-border);
+  border-radius: var(--radius-md);
+  width: fit-content;
+  margin-bottom: var(--space-lg);
+}
+
+.amorph-layout-btn {
+  padding: var(--space-sm);
+  font-size: var(--font-size-lg);
+  line-height: 1;
+  background: transparent;
+  color: var(--color-text-muted);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.amorph-layout-btn:hover {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.amorph-layout-btn.aktiv,
+.amorph-layout-btn[aria-checked="true"] {
+  background: var(--color-bg);
+  color: var(--color-text);
+  box-shadow: var(--shadow-sm);
+}
+
+/* === FEATURE TOOLBAR GRUPPE === */
+.amorph-feature-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: color-mix(in srgb, var(--color-border) 50%, transparent);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-lg);
+}

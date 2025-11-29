@@ -1,0 +1,69 @@
+# Aktive Features
+aktiv:
+  - suche
+  - perspektiven
+  - grid
+
+# Suche-Konfiguration
+suche:
+  live: true
+  debounce: 300
+  limit: 50
+  placeholder: "Pilze suchen..."
+  erlaubeLeer: true
+  suchfelder:
+    - name
+    - wissenschaftlich
+    - beschreibung
+
+# Perspektiven-Konfiguration
+perspektiven:
+  maxAktiv: 4
+  liste:
+    - id: kulinarisch
+      name: Kulinarisch
+      symbol: 🍳
+      farbe: "#22c55e"
+      felder:
+        - essbarkeit
+        - geschmack
+        - zubereitung
+    
+    - id: sicherheit
+      name: Sicherheit
+      symbol: ⚠️
+      farbe: "#ef4444"
+      felder:
+        - essbarkeit
+        - verwechslung
+        - symptome
+    
+    - id: anbau
+      name: Anbau
+      symbol: 🌱
+      farbe: "#eab308"
+      felder:
+        - standort
+        - substrat
+        - temperatur
+    
+    - id: oekologie
+      name: Ökologie
+      symbol: 🌍
+      farbe: "#06b6d4"
+      felder:
+        - lebensraum
+        - symbiose
+        - verbreitung
+
+# Grid/Layout-Konfiguration
+grid:
+  default: grid
+  layouts:
+    - liste
+    - grid
+    - kompakt
+
+# Externe Features (optional)
+# extern:
+#   meinFeature: ./custom/mein-feature.js
