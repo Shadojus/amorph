@@ -2,9 +2,10 @@ import { createFeatureContext } from './context.js';
 import suche from './suche/index.js';
 import perspektiven from './perspektiven/index.js';
 import grid from './grid/index.js';
+import header from './header/index.js';
 import { debug } from '../observer/debug.js';
 
-const eingebauteFeatures = { suche, perspektiven, grid };
+const eingebauteFeatures = { suche, perspektiven, grid, header };
 
 export async function loadFeatures(container, config, dataSource) {
   const geladene = [];

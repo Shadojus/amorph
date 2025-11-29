@@ -21,8 +21,11 @@ export function createFeatureContext(name, container, config, dataSource) {
       return dataSource.query(query);
     },
     
-    requestRender: () => {
-      container.dispatchEvent(new CustomEvent('amorph:request-render'));
+    // requestRender kann optional Daten übergeben
+    requestRender: (daten = null) => {
+      container.dispatchEvent(new CustomEvent('amorph:request-render', { 
+        detail: { daten } 
+      }));
     },
     
     mount: (position = 'beforeend') => {
