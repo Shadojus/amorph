@@ -1,4 +1,8 @@
+import { debug } from '../../observer/debug.js';
+
 export default function init(ctx) {
+  debug.grid('Init', ctx.config);
+  
   const layouts = ctx.config.layouts || ['liste', 'grid', 'kompakt'];
   let current = ctx.config.default || 'liste';
   
@@ -22,6 +26,7 @@ export default function init(ctx) {
   }
   
   function setLayout(layout) {
+    debug.grid('Layout gewechselt', layout);
     current = layout;
     
     for (const btn of toolbar.querySelectorAll('button')) {

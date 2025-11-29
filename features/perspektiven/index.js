@@ -1,7 +1,18 @@
+import { debug } from '../../observer/debug.js';
+
 export default function init(ctx) {
+  debug.perspektiven('Config', ctx.config);
+  
   const perspektiven = ctx.config.liste || [];
   const maxAktiv = ctx.config.maxAktiv || 4;
   let aktiv = new Set();
+  
+  debug.perspektiven('Liste', perspektiven);
+  
+  if (perspektiven.length === 0) {
+    debug.warn('Keine Perspektiven konfiguriert!');
+    return;
+  }
   
   const nav = document.createElement('nav');
   nav.className = 'amorph-perspektiven';

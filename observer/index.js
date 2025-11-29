@@ -2,11 +2,15 @@ import { InteractionObserver } from './interaction.js';
 import { RenderingObserver } from './rendering.js';
 import { SessionObserver } from './session.js';
 import { createTarget } from './target.js';
+import { debug } from './debug.js';
+
+// Debug-Observer auch exportieren
+export { debug } from './debug.js';
 
 export function setupObservers(container, config, session = null) {
   const observers = [];
   
-  console.log('%c[AMORPH]%c Observer Setup', 'color: #60a5fa; font-weight: bold', 'color: inherit', {
+  debug.observer('Setup', {
     hatConfig: !!config?.observer,
     interaktion: !!config?.observer?.interaktion,
     rendering: !!config?.observer?.rendering,
@@ -14,7 +18,7 @@ export function setupObservers(container, config, session = null) {
   });
   
   if (!config?.observer) {
-    console.warn('%c[AMORPH]%c Keine Observer-Konfiguration gefunden', 'color: #fbbf24; font-weight: bold', 'color: inherit');
+    debug.warn('Keine Observer-Konfiguration gefunden');
     return observers;
   }
   

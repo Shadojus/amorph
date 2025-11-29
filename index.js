@@ -12,6 +12,7 @@ import { setupObservers, stopObservers } from './observer/index.js';
 import { loadFeatures, unloadFeatures } from './features/index.js';
 import { createDataSource } from './util/fetch.js';
 import { getSession } from './util/session.js';
+import { debug } from './observer/debug.js';
 import './core/container.js'; // Web Component registrieren
 
 /**
@@ -40,15 +41,15 @@ export async function amorph(options = {}) {
   
   container.setAttribute('data-amorph-container', '');
   
-  console.log('%c🍄 AMORPH v5%c Initialisiere...', 'color: #f472b6; font-weight: bold; font-size: 14px', 'color: inherit');
+  debug.amorph('🍄 Initialisiere...');
   
   // Konfiguration laden
   const config = await loadConfig(configPath);
-  console.log('%c[CONFIG]%c Geladen:', 'color: #34d399; font-weight: bold', 'color: inherit', Object.keys(config));
+  debug.config('Geladen', Object.keys(config));
   
   // Datenquelle erstellen
   const dataSource = createDataSource(config.daten);
-  console.log('%c[DATEN]%c Quelle:', 'color: #60a5fa; font-weight: bold', 'color: inherit', config.daten.quelle);
+  debug.daten('Quelle', config.daten.quelle);
   
   // Session prüfen (für Observer)
   const session = getSession();
@@ -58,15 +59,15 @@ export async function amorph(options = {}) {
   
   // Features laden
   const features = await loadFeatures(container, config, dataSource);
-  console.log('%c[FEATURES]%c Geladen:', 'color: #a78bfa; font-weight: bold', 'color: inherit', features.map(f => f.name));
+  debug.features('Geladen', features.map(f => f.name));
   
   // Initiale Daten laden und rendern
-  console.log('%c[DATEN]%c Lade Daten...', 'color: #60a5fa; font-weight: bold', 'color: inherit');
+  debug.daten('Lade Daten...');
   const daten = await dataSource.query();
-  console.log('%c[DATEN]%c', 'color: #60a5fa; font-weight: bold', 'color: inherit', `${daten.length} Einträge geladen`);
+  debug.daten(`${daten.length} Einträge geladen`);
   
   await render(container, daten, config);
-  console.log('%c[RENDER]%c Fertig!', 'color: #fbbf24; font-weight: bold', 'color: inherit');
+  debug.render('Fertig!');
   
   // Re-Render Handler (für Suche etc.)
   container.addEventListener('amorph:request-render', async () => {

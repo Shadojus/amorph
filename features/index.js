@@ -2,16 +2,17 @@ import { createFeatureContext } from './context.js';
 import suche from './suche/index.js';
 import perspektiven from './perspektiven/index.js';
 import grid from './grid/index.js';
+import { debug } from '../observer/debug.js';
 
 const eingebauteFeatures = { suche, perspektiven, grid };
 
 export async function loadFeatures(container, config, dataSource) {
   const geladene = [];
   
-  console.log('%c[FEATURES]%c Config:', 'color: #a78bfa; font-weight: bold', 'color: inherit', config?.features);
+  debug.features('Config', config?.features);
   
   if (!config?.features?.aktiv) {
-    console.warn('%c[FEATURES]%c Keine aktiven Features gefunden', 'color: #fbbf24; font-weight: bold', 'color: inherit');
+    debug.warn('Keine aktiven Features gefunden');
     return geladene;
   }
   
@@ -20,7 +21,7 @@ export async function loadFeatures(container, config, dataSource) {
     ? config.features.aktiv 
     : Object.keys(config.features.aktiv || {});
   
-  console.log('%c[FEATURES]%c Aktiv:', 'color: #a78bfa; font-weight: bold', 'color: inherit', aktivListe);
+  debug.features('Aktiv', aktivListe);
   
   for (const name of aktivListe) {
     try {
@@ -32,7 +33,7 @@ export async function loadFeatures(container, config, dataSource) {
       }
       
       if (!feature) {
-        console.warn(`Feature nicht gefunden: ${name}`);
+        debug.warn(`Feature nicht gefunden: ${name}`);
         continue;
       }
       
@@ -41,7 +42,7 @@ export async function loadFeatures(container, config, dataSource) {
       geladene.push({ name, ctx });
       
     } catch (e) {
-      console.error(`Fehler beim Laden von Feature ${name}:`, e);
+      debug.fehler(`Fehler beim Laden von Feature ${name}`, e);
     }
   }
   

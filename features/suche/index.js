@@ -1,4 +1,8 @@
+import { debug } from '../../observer/debug.js';
+
 export default function init(ctx) {
+  debug.suche('Init', ctx.config);
+  
   const form = document.createElement('div');
   form.className = 'amorph-suche';
   
@@ -22,15 +26,18 @@ export default function init(ctx) {
     form.classList.add('ladend');
     
     try {
+      debug.suche('Suche', { query, limit: ctx.config.limit || 50 });
+      
       await ctx.fetch({
         search: query,
         limit: ctx.config.limit || 50
       });
       
+      debug.suche('Ergebnisse geladen');
       ctx.emit('ergebnisse', { query });
       ctx.requestRender();
     } catch (e) {
-      console.error('Suchfehler:', e);
+      debug.fehler('Suchfehler', e);
     } finally {
       form.classList.remove('ladend');
     }
