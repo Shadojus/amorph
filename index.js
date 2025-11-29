@@ -69,6 +69,12 @@ export async function amorph(options = {}) {
       currentData = await dataSource.query({ search: query });
       debug.suche('Ergebnisse', { anzahl: currentData.length });
       await render(container, currentData, config);
+      
+      // Highlighting anwenden nach Render
+      if (query && query.trim()) {
+        highlightMatches(container, query.trim());
+      }
+      
       return currentData;
     }
   });
@@ -128,6 +134,38 @@ function showEmptyState(container) {
     <div class="amorph-empty-text">Gib einen Suchbegriff ein, um Pilze zu finden</div>
   `;
   container.appendChild(emptyEl);
+}
+
+function highlightMatches(container, query) {
+  const lower = query.toLowerCase();
+  
+  // Nur bestimmte Felder highlighten
+  const highlightFields = ['name', 'wissenschaftlich', 'essbarkeit', 'geschmack'];
+  
+  for (const field of highlightFields) {
+    const elements = container.querySelectorAll(`amorph-container[data-field="${field}"] .amorph-text, amorph-container[data-field="${field}"] .amorph-tag`);
+    
+    for (const el of elements) {
+      const text = el.textContent;
+      const textLower = text.toLowerCase();
+      const index = textLower.indexOf(lower);
+      
+      if (index !== -1) {
+        // Treffer gefunden - Text mit Highlight ersetzen
+        const before = text.slice(0, index);
+        const match = text.slice(index, index + query.length);
+        const after = text.slice(index + query.length);
+        
+        el.innerHTML = `${escapeHtml(before)}<mark class="amorph-highlight">${escapeHtml(match)}</mark>${escapeHtml(after)}`;
+      }
+    }
+  }
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
 }
 
 // Exports für modulare Nutzung

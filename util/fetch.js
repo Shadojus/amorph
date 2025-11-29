@@ -74,11 +74,34 @@ class JsonSource {
     
     let items = Array.isArray(this.data) ? this.data : this.data.items || [];
     
-    if (search) {
-      const lower = search.toLowerCase();
-      items = items.filter(item => 
-        JSON.stringify(item).toLowerCase().includes(lower)
-      );
+    if (search && search.trim()) {
+      const lower = search.toLowerCase().trim();
+      
+      // Nur in relevanten Feldern suchen: name, wissenschaftlich, slug, essbarkeit
+      items = items.filter(item => {
+        const name = (item.name || '').toLowerCase();
+        const wiss = (item.wissenschaftlich || '').toLowerCase();
+        const slug = (item.slug || '').toLowerCase();
+        const essbar = (item.essbarkeit || '').toLowerCase();
+        const geschmack = (item.geschmack || '').toLowerCase();
+        
+        return name.includes(lower) || 
+               wiss.includes(lower) || 
+               slug.includes(lower) ||
+               essbar.includes(lower) ||
+               geschmack.includes(lower);
+      });
+      
+      // Sortieren: Exakte Treffer im Namen zuerst
+      items.sort((a, b) => {
+        const aName = (a.name || '').toLowerCase();
+        const bName = (b.name || '').toLowerCase();
+        const aExact = aName === lower || aName.startsWith(lower);
+        const bExact = bName === lower || bName.startsWith(lower);
+        if (aExact && !bExact) return -1;
+        if (!aExact && bExact) return 1;
+        return 0;
+      });
     }
     
     return items.slice(0, limit);
