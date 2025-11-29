@@ -40,60 +40,130 @@ export async function loadConfig(basePath = './config/') {
 }
 
 function parseYAML(text) {
-  const result = {};
-  const stack = [{ obj: result, indent: -1 }];
+  const lines = text.split('\n')
+    .map((line, i) => ({ raw: line, num: i }))
+    .filter(l => l.raw.trim() !== '' && !l.raw.trim().startsWith('#'));
   
-  const lines = text.split('\n');
+  let idx = 0;
   
-  for (const line of lines) {
-    if (line.trim() === '' || line.trim().startsWith('#')) continue;
+  function parseLevel(minIndent) {
+    const result = {};
     
-    const indent = line.search(/\S/);
-    const content = line.trim();
-    
-    // Stack aufräumen
-    while (stack.length > 1 && stack[stack.length - 1].indent >= indent) {
-      stack.pop();
-    }
-    
-    const current = stack[stack.length - 1].obj;
-    
-    if (content.startsWith('- ')) {
-      // Array-Element
-      const value = content.slice(2).trim();
-      const key = Object.keys(current).pop();
-      if (!Array.isArray(current[key])) {
-        current[key] = [];
+    while (idx < lines.length) {
+      const line = lines[idx].raw;
+      const indent = line.search(/\S/);
+      
+      // Wenn Einrückung kleiner als erwartet, zurück zur höheren Ebene
+      if (indent < minIndent) {
+        return result;
       }
       
-      if (value.includes(': ')) {
-        const obj = {};
-        const [k, v] = value.split(': ').map(s => s.trim());
-        obj[k] = parseValue(v);
-        current[key].push(obj);
-        stack.push({ obj: obj, indent: indent });
-      } else if (value) {
-        current[key].push(parseValue(value));
-      } else {
-        const obj = {};
-        current[key].push(obj);
-        stack.push({ obj: obj, indent: indent });
+      const content = line.trim();
+      
+      if (content.startsWith('- ')) {
+        // Array-Element - sollte von parseArray behandelt werden
+        return result;
       }
-    } else if (content.endsWith(':') && !content.includes(': ')) {
-      // Neues Objekt
-      const key = content.slice(0, -1);
-      current[key] = {};
-      stack.push({ obj: current[key], indent: indent });
-    } else if (content.includes(': ')) {
-      // Key-Value
-      const colonIndex = content.indexOf(': ');
-      const key = content.slice(0, colonIndex).trim();
-      const value = content.slice(colonIndex + 2).trim();
-      current[key] = parseValue(value);
+      
+      if (content.includes(':')) {
+        const colonIdx = content.indexOf(':');
+        const key = content.slice(0, colonIdx).trim();
+        const valueStr = content.slice(colonIdx + 1).trim();
+        
+        if (valueStr === '') {
+          // Schaue was als nächstes kommt
+          idx++;
+          if (idx < lines.length) {
+            const nextLine = lines[idx].raw;
+            const nextIndent = nextLine.search(/\S/);
+            const nextContent = nextLine.trim();
+            
+            if (nextIndent > indent && nextContent.startsWith('- ')) {
+              // Es ist ein Array
+              result[key] = parseArray(nextIndent);
+            } else if (nextIndent > indent) {
+              // Es ist ein verschachteltes Objekt
+              result[key] = parseLevel(nextIndent);
+            } else {
+              // Leeres Objekt, nächste Zeile gehört nicht dazu
+              result[key] = {};
+            }
+          } else {
+            result[key] = {};
+          }
+        } else {
+          // Direkter Wert
+          result[key] = parseValue(valueStr);
+          idx++;
+        }
+      } else {
+        idx++;
+      }
     }
+    
+    return result;
   }
   
-  return result;
+  function parseArray(minIndent) {
+    const arr = [];
+    
+    while (idx < lines.length) {
+      const line = lines[idx].raw;
+      const indent = line.search(/\S/);
+      
+      if (indent < minIndent) {
+        return arr;
+      }
+      
+      const content = line.trim();
+      
+      if (content.startsWith('- ')) {
+        const value = content.slice(2).trim();
+        
+        if (value === '') {
+          // Array-Element ist ein Objekt
+          idx++;
+          if (idx < lines.length) {
+            const nextIndent = lines[idx].raw.search(/\S/);
+            if (nextIndent > indent) {
+              arr.push(parseLevel(nextIndent));
+            } else {
+              arr.push({});
+            }
+          } else {
+            arr.push({});
+          }
+        } else if (value.includes(': ')) {
+          // Inline-Objekt im Array
+          const colonIdx = value.indexOf(': ');
+          const k = value.slice(0, colonIdx).trim();
+          const v = value.slice(colonIdx + 2).trim();
+          const obj = { [k]: parseValue(v) };
+          
+          // Prüfe ob weitere Properties folgen
+          idx++;
+          if (idx < lines.length) {
+            const nextIndent = lines[idx].raw.search(/\S/);
+            if (nextIndent > indent && !lines[idx].raw.trim().startsWith('- ')) {
+              Object.assign(obj, parseLevel(nextIndent));
+            }
+          }
+          arr.push(obj);
+        } else {
+          // Einfacher Wert
+          arr.push(parseValue(value));
+          idx++;
+        }
+      } else {
+        // Keine Array-Zeile mehr
+        return arr;
+      }
+    }
+    
+    return arr;
+  }
+  
+  return parseLevel(0);
 }
 
 function parseValue(value) {

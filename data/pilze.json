@@ -9,7 +9,7 @@
     "temperatur": { "min": 10, "max": 25 },
     "standort": ["Nadelwald", "Mischwald", "unter Fichten", "unter Eichen"],
     "verwechslung": ["Gallenröhrling", "Satansröhrling"],
-    "bild": "./images/steinpilz.jpg",
+    "bild": "https://placehold.co/400x300/8B4513/white?text=🍄+Steinpilz",
     "geschmack": "nussig, würzig",
     "zubereitung": "braten, trocknen, einlegen",
     "saison": "Juli bis Oktober"
@@ -24,7 +24,7 @@
     "temperatur": { "min": 15, "max": 28 },
     "standort": ["Laubwald", "Nadelwald", "moosige Böden"],
     "verwechslung": ["Falscher Pfifferling"],
-    "bild": "./images/pfifferling.jpg",
+    "bild": "https://placehold.co/400x300/FFD700/333?text=🍄+Pfifferling",
     "geschmack": "pfeffrig, fruchtig",
     "zubereitung": "braten, schmoren",
     "saison": "Juni bis November"
@@ -39,7 +39,7 @@
     "temperatur": { "min": 5, "max": 20 },
     "standort": ["Birkenwald", "Fichtenwald", "Heidegebiete"],
     "verwechslung": ["Kaiserling"],
-    "bild": "./images/fliegenpilz.jpg",
+    "bild": "https://placehold.co/400x300/DC143C/white?text=☠️+Fliegenpilz",
     "symptome": "Übelkeit, Halluzinationen, Kreislaufprobleme",
     "saison": "August bis November"
   },
@@ -53,7 +53,7 @@
     "temperatur": { "min": 12, "max": 25 },
     "standort": ["Wiesen", "Weiden", "Parkrasen", "Gärten"],
     "verwechslung": ["Knollenblätterpilz", "Karbolchampignon"],
-    "bild": "./images/champignon.jpg",
+    "bild": "https://placehold.co/400x300/F5F5DC/333?text=🍄+Champignon",
     "geschmack": "mild, angenehm",
     "zubereitung": "roh, braten, grillen",
     "saison": "Mai bis Oktober"
@@ -68,7 +68,7 @@
     "temperatur": { "min": 10, "max": 22 },
     "standort": ["Laubwald", "unter Eichen", "unter Buchen"],
     "verwechslung": ["Champignon", "Täubling"],
-    "bild": "./images/knollenblaetterpilz.jpg",
+    "bild": "https://placehold.co/400x300/556B2F/white?text=💀+Knollenblätterpilz",
     "symptome": "Leberversagen, Nierenversagen, Tod",
     "saison": "Juli bis Oktober"
   },
@@ -82,7 +82,7 @@
     "temperatur": { "min": 8, "max": 22 },
     "standort": ["Nadelwald", "unter Kiefern", "unter Fichten", "saure Böden"],
     "verwechslung": ["Steinpilz", "Gallenröhrling"],
-    "bild": "./images/marone.jpg",
+    "bild": "https://placehold.co/400x300/8B4513/white?text=🍄+Marone",
     "geschmack": "mild, nussig",
     "zubereitung": "braten, trocknen, einfrieren",
     "saison": "August bis November"
@@ -97,7 +97,7 @@
     "temperatur": { "min": 15, "max": 25 },
     "standort": ["Zucht auf Holz", "Laubholzstämme", "Sägespäne"],
     "verwechslung": [],
-    "bild": "./images/shiitake.jpg",
+    "bild": "https://placehold.co/400x300/D2691E/white?text=🍄+Shiitake",
     "geschmack": "umami, würzig, fleischig",
     "zubereitung": "braten, schmoren, trocknen, Suppen",
     "saison": "ganzjährig (Zucht)"
@@ -112,7 +112,7 @@
     "temperatur": { "min": 5, "max": 20 },
     "standort": ["Laubholz", "Buche", "Pappel", "totes Holz"],
     "verwechslung": ["Gelbstieliger Muschelseitling"],
-    "bild": "./images/austernpilz.jpg",
+    "bild": "https://placehold.co/400x300/E6E6FA/333?text=🍄+Austernpilz",
     "geschmack": "mild, zart, leicht anisartig",
     "zubereitung": "braten, schmoren, panieren",
     "saison": "Oktober bis März"
@@ -127,7 +127,7 @@
     "temperatur": { "min": 8, "max": 18 },
     "standort": ["Auwälder", "Obstgärten", "Parkanlagen", "sandige Böden"],
     "verwechslung": ["Frühjahrslorchel"],
-    "bild": "./images/morchel.jpg",
+    "bild": "https://placehold.co/400x300/DEB887/333?text=🍄+Morchel",
     "geschmack": "aromatisch, nussig",
     "zubereitung": "gut durchgaren, trocknen",
     "saison": "März bis Mai"
@@ -142,7 +142,7 @@
     "temperatur": { "min": 8, "max": 18 },
     "standort": ["Laubwald", "Nadelwald", "an Baumstümpfen", "an lebenden Bäumen"],
     "verwechslung": ["Gifthäubling"],
-    "bild": "./images/hallimasch.jpg",
+    "bild": "https://placehold.co/400x300/DAA520/333?text=🍄+Hallimasch",
     "geschmack": "säuerlich, herb",
     "zubereitung": "abkochen, Kochwasser wegschütten",
     "saison": "September bis November"

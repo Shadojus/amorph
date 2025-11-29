@@ -8,9 +8,21 @@ const eingebauteFeatures = { suche, perspektiven, grid };
 export async function loadFeatures(container, config, dataSource) {
   const geladene = [];
   
-  if (!config?.features?.aktiv) return geladene;
+  console.log('%c[FEATURES]%c Config:', 'color: #a78bfa; font-weight: bold', 'color: inherit', config?.features);
   
-  for (const name of config.features.aktiv) {
+  if (!config?.features?.aktiv) {
+    console.warn('%c[FEATURES]%c Keine aktiven Features gefunden', 'color: #fbbf24; font-weight: bold', 'color: inherit');
+    return geladene;
+  }
+  
+  // Sicherstellen dass aktiv ein Array ist
+  const aktivListe = Array.isArray(config.features.aktiv) 
+    ? config.features.aktiv 
+    : Object.keys(config.features.aktiv || {});
+  
+  console.log('%c[FEATURES]%c Aktiv:', 'color: #a78bfa; font-weight: bold', 'color: inherit', aktivListe);
+  
+  for (const name of aktivListe) {
     try {
       let feature = eingebauteFeatures[name];
       
