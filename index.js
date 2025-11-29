@@ -139,28 +139,61 @@ function showEmptyState(container) {
 function highlightMatches(container, query) {
   const q = query.toLowerCase();
   
-  // Semantische Keyword-Mappings (gleiche wie in Suche)
+  // Stopwörter die ignoriert werden (Deutsch + Englisch)
+  const stopwords = new Set([
+    'der', 'die', 'das', 'den', 'dem', 'des', 'ein', 'eine', 'einer', 'einem', 'einen',
+    'und', 'oder', 'aber', 'wenn', 'weil', 'dass', 'als', 'auch', 'nur', 'noch',
+    'was', 'wer', 'wie', 'wo', 'wann', 'warum', 'welche', 'welcher', 'welches',
+    'ist', 'sind', 'war', 'waren', 'wird', 'werden', 'wurde', 'wurden',
+    'hat', 'haben', 'hatte', 'hatten', 'kann', 'können', 'konnte', 'konnten',
+    'muss', 'müssen', 'musste', 'mussten', 'soll', 'sollen', 'sollte', 'sollten',
+    'will', 'wollen', 'wollte', 'wollten', 'darf', 'dürfen', 'durfte', 'durften',
+    'ich', 'du', 'er', 'sie', 'es', 'wir', 'ihr', 'mich', 'dich', 'sich', 'uns', 'euch',
+    'mein', 'dein', 'sein', 'unser', 'euer', 'ihr',
+    'von', 'zu', 'bei', 'mit', 'nach', 'aus', 'für', 'über', 'unter', 'vor', 'hinter',
+    'auf', 'in', 'an', 'um', 'durch', 'gegen', 'ohne', 'bis', 'seit', 'während',
+    'nicht', 'kein', 'keine', 'keiner', 'keinem', 'keinen',
+    'sehr', 'mehr', 'viel', 'wenig', 'ganz', 'gar', 'schon', 'noch', 'immer', 'nie',
+    'hier', 'dort', 'da', 'so', 'dann', 'also', 'denn', 'doch', 'ja', 'nein',
+    'man', 'alle', 'alles', 'jeder', 'jede', 'jedes', 'jedem', 'jeden',
+    'this', 'that', 'the', 'a', 'an', 'is', 'are', 'was', 'were', 'be', 'been',
+    'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should',
+    'can', 'may', 'might', 'must', 'shall',
+    'i', 'you', 'he', 'she', 'it', 'we', 'they', 'me', 'him', 'her', 'us', 'them',
+    'my', 'your', 'his', 'its', 'our', 'their',
+    'what', 'which', 'who', 'whom', 'where', 'when', 'why', 'how',
+    'and', 'or', 'but', 'if', 'because', 'as', 'while', 'of', 'at', 'by', 'for',
+    'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before',
+    'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off',
+    'over', 'under', 'again', 'further', 'then', 'once'
+  ]);
+  
+  // Semantische Keyword-Mappings
   const semanticMappings = {
     // Essbarkeit
     'essbar': ['essbar'],
     'essen': ['essbar'],
-    'kann man essen': ['essbar'],
     'speisepilz': ['essbar'],
     'genießbar': ['essbar'],
-    'lecker': ['essbar'],
-    'kochen': ['essbar', 'braten', 'schmoren'],
-    'giftig': ['giftig', 'tödlich'],
-    'gift': ['giftig', 'tödlich'],
-    'gefährlich': ['giftig', 'tödlich'],
-    'tödlich': ['tödlich'],
+    'giftig': ['giftig', 'tödlich', 'Vergiftung'],
+    'gift': ['giftig', 'tödlich', 'Gift'],
+    'gefährlich': ['giftig', 'tödlich', 'gefährlich'],
+    'tödlich': ['tödlich', 'Tod', 'sterben'],
+    'vergiftung': ['Vergiftung', 'giftig', 'Symptome'],
+    
+    // Symptome
+    'leber': ['Leber', 'Leberversagen'],
+    'niere': ['Niere', 'Nierenversagen'],
+    'übelkeit': ['Übelkeit'],
+    'halluzination': ['Halluzinationen', 'halluzinogen'],
     
     // Geschmack
-    'nussig': ['nussig', 'nuss'],
+    'nussig': ['nussig', 'Nuss'],
     'mild': ['mild', 'zart'],
-    'würzig': ['würzig', 'aromatisch', 'intensiv'],
+    'würzig': ['würzig', 'aromatisch'],
     'umami': ['umami', 'fleischig'],
     'fruchtig': ['fruchtig'],
-    'pfeffrig': ['pfeffrig', 'pfeffer'],
+    'pfeffrig': ['pfeffrig'],
     
     // Zubereitung
     'braten': ['braten'],
@@ -172,13 +205,13 @@ function highlightMatches(container, query) {
     'wald': ['wald', 'Wald'],
     'nadelwald': ['Nadelwald', 'Fichten', 'Kiefern'],
     'laubwald': ['Laubwald', 'Buche', 'Eiche'],
-    'wiese': ['Wiese', 'Weide', 'Rasen'],
+    'wiese': ['Wiese', 'Weide'],
     
     // Saison
-    'herbst': ['September', 'Oktober', 'November'],
-    'frühling': ['März', 'April', 'Mai'],
-    'sommer': ['Juni', 'Juli', 'August'],
-    'winter': ['Dezember', 'Januar', 'Februar'],
+    'herbst': ['September', 'Oktober', 'November', 'Herbst'],
+    'frühling': ['März', 'April', 'Mai', 'Frühjahr'],
+    'sommer': ['Juni', 'Juli', 'August', 'Sommer'],
+    'winter': ['Dezember', 'Januar', 'Februar', 'Winter'],
     
     // Farben
     'rot': ['rot', 'Rot'],
@@ -187,24 +220,45 @@ function highlightMatches(container, query) {
     'weiß': ['weiß', 'Weiß', 'weiss']
   };
   
-  // Finde alle zu highlightenden Begriffe
-  let highlightTerms = [q]; // Immer den originalen Query
+  // Query in Wörter zerlegen und Stopwörter entfernen
+  const queryWords = q
+    .split(/\s+/)
+    .map(w => w.replace(/[?!.,;:'"()]/g, '')) // Satzzeichen entfernen
+    .filter(w => w.length > 2 && !stopwords.has(w));
   
-  // Semantische Matches hinzufügen
-  for (const [keyword, mappedTerms] of Object.entries(semanticMappings)) {
-    if (q.includes(keyword)) {
-      highlightTerms.push(...mappedTerms);
+  // Highlight-Begriffe sammeln
+  let highlightTerms = new Set();
+  
+  // Jedes relevante Wort hinzufügen
+  for (const word of queryWords) {
+    highlightTerms.add(word);
+    
+    // Semantische Mappings für dieses Wort
+    for (const [keyword, mappedTerms] of Object.entries(semanticMappings)) {
+      if (word.includes(keyword) || keyword.includes(word)) {
+        for (const term of mappedTerms) {
+          highlightTerms.add(term);
+        }
+      }
     }
   }
   
-  // Auch einzelne Wörter der Query
-  const queryWords = q.split(/\s+/).filter(w => w.length > 2);
-  highlightTerms.push(...queryWords);
+  // Auch semantische Matches für den ganzen Query
+  for (const [keyword, mappedTerms] of Object.entries(semanticMappings)) {
+    if (q.includes(keyword)) {
+      for (const term of mappedTerms) {
+        highlightTerms.add(term);
+      }
+    }
+  }
   
-  // Duplikate entfernen
-  highlightTerms = [...new Set(highlightTerms)];
+  // Wenn keine Terme gefunden, abbrechen
+  if (highlightTerms.size === 0) return;
   
-  // ALLE Text-Elemente in Items durchsuchen (nicht nur bestimmte Felder)
+  // Debug
+  console.log('[HIGHLIGHT]', { query: q, terms: [...highlightTerms] });
+  
+  // ALLE Text-Elemente in Items durchsuchen
   const items = container.querySelectorAll('.amorph-item');
   
   for (const item of items) {
@@ -217,11 +271,12 @@ function highlightMatches(container, query) {
       
       // Alle Highlight-Begriffe prüfen
       for (const term of highlightTerms) {
-        const termLower = term.toLowerCase();
+        if (term.length < 3) continue; // Mindestens 3 Zeichen
+        
         const regex = new RegExp(`(${escapeRegex(term)})`, 'gi');
         
-        if (originalText.toLowerCase().includes(termLower)) {
-          html = html.replace(regex, '<mark class="amorph-highlight">$1</mark>');
+        if (regex.test(originalText)) {
+          html = html.replace(new RegExp(`(${escapeRegex(term)})`, 'gi'), '<mark class="amorph-highlight">$1</mark>');
           hasMatch = true;
         }
       }
