@@ -53,9 +53,23 @@ export default function init(ctx) {
       
       debug.suche('Ergebnisse', { anzahl: letzteSuchergebnisse.length });
       
-      // Auto-Perspektiven aktivieren basierend auf Ergebnissen
-      if (letzteSuchergebnisse.length > 0) {
-        autoPerspektiven(letzteSuchergebnisse);
+      // Auto-Perspektiven aktivieren basierend auf Query und Ergebnissen
+      if (letzteSuchergebnisse.length > 0 && query) {
+        autoPerspektiven(letzteSuchergebnisse, query);
+      } else if (!query) {
+        // Leere Suche → alle Perspektiven deaktivieren + Markierungen entfernen
+        for (const id of aktivePerspektiven) {
+          const btn = perspektivenNav?.querySelector(`[data-perspektive="${id}"]`);
+          btn?.classList.remove('aktiv');
+          btn?.setAttribute('aria-pressed', 'false');
+        }
+        aktivePerspektiven.clear();
+        // Treffer-Markierungen entfernen
+        for (const btn of perspektivenBtns || []) {
+          btn.classList.remove('hat-treffer');
+          btn.removeAttribute('data-treffer-anzahl');
+        }
+        anwendenPerspektiven();
       }
       
       // Perspektiven anwenden nach Render
@@ -169,50 +183,170 @@ export default function init(ctx) {
     }
   }
   
-  // Auto-Perspektiven: Aktiviere Perspektiven die zu den Ergebnissen passen
-  function autoPerspektiven(ergebnisse) {
+  // Markiere Perspektiven-Buttons mit Treffer-Indikator
+  function markiereTreffer(ergebnisse, query = '') {
     const liste = headerConfig.perspektiven.liste || [];
-    const gefunden = new Map(); // id -> anzahl Treffer
+    const q = query.toLowerCase();
+    
+    // Semantische Keywords für Perspektiven
+    const perspektivenKeywords = {
+      kulinarisch: ['essbar', 'essen', 'kochen', 'braten', 'geschmack', 'zubereitung', 'rezept', 'speise', 'würzig', 'mild', 'nussig', 'umami', 'aroma'],
+      sicherheit: ['giftig', 'gift', 'gefährlich', 'tödlich', 'vergiftung', 'symptom', 'verwechslung', 'warnung', 'vorsicht', 'leber', 'niere', 'halluzination'],
+      anbau: ['standort', 'wald', 'wiese', 'substrat', 'temperatur', 'wachsen', 'finden', 'sammeln', 'saison', 'herbst', 'sommer', 'frühling', 'holz', 'baum'],
+      oekologie: ['ökologie', 'symbiose', 'mykorrhiza', 'habitat', 'umwelt', 'natur', 'baum', 'partner']
+    };
+    
+    // Erst alle Markierungen entfernen
+    for (const btn of perspektivenBtns || []) {
+      btn.classList.remove('hat-treffer');
+      btn.removeAttribute('data-treffer-anzahl');
+    }
+    
+    // Wenn keine Query, keine Markierungen
+    if (!q || ergebnisse.length === 0) return;
     
     for (const p of liste) {
       const felder = p.felder || [];
-      let treffer = 0;
+      const keywords = perspektivenKeywords[p.id] || [];
+      let trefferAnzahl = 0;
       
-      // Zähle wie viele Ergebnisse Daten für diese Perspektive haben
-      for (const item of ergebnisse) {
-        const hatDaten = felder.some(feld => 
-          item[feld] !== undefined && item[feld] !== null && item[feld] !== ''
-        );
-        if (hatDaten) treffer++;
+      // 1. Query-basierte Treffer
+      for (const keyword of keywords) {
+        if (q.includes(keyword)) {
+          trefferAnzahl += ergebnisse.length; // Alle Ergebnisse relevant
+          break;
+        }
       }
       
-      if (treffer > 0) {
-        gefunden.set(p.id, treffer);
+      // 2. Feld-basierte Treffer zählen
+      if (trefferAnzahl === 0) {
+        for (const item of ergebnisse) {
+          for (const feld of felder) {
+            const wert = item[feld];
+            if (wert !== undefined && wert !== null && wert !== '') {
+              const textWert = JSON.stringify(wert).toLowerCase();
+              const queryWords = q.split(/\s+/).filter(w => w.length > 2);
+              for (const word of queryWords) {
+                if (textWert.includes(word)) {
+                  trefferAnzahl++;
+                  break;
+                }
+              }
+            }
+          }
+        }
+      }
+      
+      // Button markieren wenn Treffer
+      if (trefferAnzahl > 0) {
+        const btn = perspektivenNav?.querySelector(`[data-perspektive="${p.id}"]`);
+        if (btn) {
+          btn.classList.add('hat-treffer');
+          btn.setAttribute('data-treffer-anzahl', trefferAnzahl);
+        }
+      }
+    }
+    
+    debug.perspektiven('Treffer-Markierung', { 
+      buttons: [...(perspektivenBtns || [])].filter(b => b.classList.contains('hat-treffer')).map(b => b.dataset.perspektive)
+    });
+  }
+
+  // Auto-Perspektiven: Aktiviere Perspektiven basierend auf Query-Kontext
+  function autoPerspektiven(ergebnisse, query = '') {
+    // Erst Treffer markieren
+    markiereTreffer(ergebnisse, query);
+    
+    const liste = headerConfig.perspektiven.liste || [];
+    const q = query.toLowerCase();
+    
+    // Semantische Keywords für Perspektiven
+    const perspektivenKeywords = {
+      kulinarisch: ['essbar', 'essen', 'kochen', 'braten', 'geschmack', 'zubereitung', 'rezept', 'speise', 'würzig', 'mild', 'nussig', 'umami', 'aroma'],
+      sicherheit: ['giftig', 'gift', 'gefährlich', 'tödlich', 'vergiftung', 'symptom', 'verwechslung', 'warnung', 'vorsicht', 'leber', 'niere', 'halluzination'],
+      anbau: ['standort', 'wald', 'wiese', 'substrat', 'temperatur', 'wachsen', 'finden', 'sammeln', 'saison', 'herbst', 'sommer', 'frühling'],
+      oekologie: ['ökologie', 'symbiose', 'mykorrhiza', 'habitat', 'umwelt', 'natur', 'baum', 'partner']
+    };
+    
+    const gefunden = new Map(); // id -> score
+    
+    for (const p of liste) {
+      const felder = p.felder || [];
+      const keywords = perspektivenKeywords[p.id] || [];
+      let score = 0;
+      
+      // 1. Query-basierte Relevanz (höchste Priorität)
+      for (const keyword of keywords) {
+        if (q.includes(keyword)) {
+          score += 10; // Hoher Score für Query-Match
+        }
+      }
+      
+      // 2. Feld-basierte Relevanz - nur wenn Query in diesem Feld gefunden wurde
+      for (const item of ergebnisse) {
+        for (const feld of felder) {
+          const wert = item[feld];
+          if (wert !== undefined && wert !== null && wert !== '') {
+            const textWert = JSON.stringify(wert).toLowerCase();
+            // Prüfe ob Query-Wörter in diesem Feld vorkommen
+            const queryWords = q.split(/\s+/).filter(w => w.length > 2);
+            for (const word of queryWords) {
+              if (textWert.includes(word)) {
+                score += 2; // Mittlerer Score für Feld-Match
+              }
+            }
+          }
+        }
+      }
+      
+      if (score > 0) {
+        gefunden.set(p.id, score);
       }
     }
     
     debug.perspektiven('Auto-Erkennung', Object.fromEntries(gefunden));
     
-    // Beste 1-2 Perspektiven automatisch aktivieren
+    // Nur aktivieren wenn es deutliche Unterschiede gibt
     if (gefunden.size > 0) {
-      // Nach Treffer-Anzahl sortieren
       const sortiert = [...gefunden.entries()].sort((a, b) => b[1] - a[1]);
-      const beste = sortiert.slice(0, 2).map(([id]) => id);
       
-      // Alle deaktivieren
+      // Nur die mit höchstem Score nehmen (mindestens 50% des Maximums)
+      const maxScore = sortiert[0][1];
+      const beste = sortiert
+        .filter(([, score]) => score >= maxScore * 0.5)
+        .slice(0, 2)
+        .map(([id]) => id);
+      
+      // Nur ändern wenn sich was geändert hat
+      const aktuelleIds = [...aktivePerspektiven].sort().join(',');
+      const neueIds = beste.sort().join(',');
+      
+      if (aktuelleIds !== neueIds) {
+        // Alle deaktivieren
+        for (const id of aktivePerspektiven) {
+          const btn = perspektivenNav?.querySelector(`[data-perspektive="${id}"]`);
+          btn?.classList.remove('aktiv');
+          btn?.setAttribute('aria-pressed', 'false');
+        }
+        aktivePerspektiven.clear();
+        
+        // Beste aktivieren
+        for (const id of beste) {
+          setPerspektive(id, true);
+        }
+        
+        debug.perspektiven('Auto-aktiviert', beste);
+      }
+    } else {
+      // Keine passende Perspektive gefunden → alle deaktivieren
       for (const id of aktivePerspektiven) {
         const btn = perspektivenNav?.querySelector(`[data-perspektive="${id}"]`);
         btn?.classList.remove('aktiv');
         btn?.setAttribute('aria-pressed', 'false');
       }
       aktivePerspektiven.clear();
-      
-      // Beste aktivieren
-      for (const id of beste) {
-        setPerspektive(id, true);
-      }
-      
-      debug.perspektiven('Auto-aktiviert', beste);
+      anwendenPerspektiven();
+      debug.perspektiven('Keine passende Perspektive gefunden');
     }
   }
   

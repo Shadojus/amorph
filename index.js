@@ -70,9 +70,11 @@ export async function amorph(options = {}) {
       debug.suche('Ergebnisse', { anzahl: currentData.length });
       await render(container, currentData, config);
       
-      // Highlighting anwenden nach Render
+      // Highlighting anwenden nach Render - nutze die gefundenen Match-Terme
       if (query && query.trim()) {
-        highlightMatches(container, query.trim());
+        const matchedTerms = dataSource.getMatchedTerms ? dataSource.getMatchedTerms() : new Set();
+        debug.suche('Matched Terms für Highlighter', { anzahl: matchedTerms.size, terme: [...matchedTerms].slice(0, 10) });
+        highlightMatches(container, query.trim(), matchedTerms);
       }
       
       return currentData;
@@ -136,119 +138,41 @@ function showEmptyState(container) {
   container.appendChild(emptyEl);
 }
 
-function highlightMatches(container, query) {
+function highlightMatches(container, query, matchedTerms = new Set()) {
   const q = query.toLowerCase();
   
-  // Stopwörter die ignoriert werden (Deutsch + Englisch)
-  const stopwords = new Set([
-    'der', 'die', 'das', 'den', 'dem', 'des', 'ein', 'eine', 'einer', 'einem', 'einen',
-    'und', 'oder', 'aber', 'wenn', 'weil', 'dass', 'als', 'auch', 'nur', 'noch',
-    'was', 'wer', 'wie', 'wo', 'wann', 'warum', 'welche', 'welcher', 'welches',
-    'ist', 'sind', 'war', 'waren', 'wird', 'werden', 'wurde', 'wurden',
-    'hat', 'haben', 'hatte', 'hatten', 'kann', 'können', 'konnte', 'konnten',
-    'muss', 'müssen', 'musste', 'mussten', 'soll', 'sollen', 'sollte', 'sollten',
-    'will', 'wollen', 'wollte', 'wollten', 'darf', 'dürfen', 'durfte', 'durften',
-    'ich', 'du', 'er', 'sie', 'es', 'wir', 'ihr', 'mich', 'dich', 'sich', 'uns', 'euch',
-    'mein', 'dein', 'sein', 'unser', 'euer', 'ihr',
-    'von', 'zu', 'bei', 'mit', 'nach', 'aus', 'für', 'über', 'unter', 'vor', 'hinter',
-    'auf', 'in', 'an', 'um', 'durch', 'gegen', 'ohne', 'bis', 'seit', 'während',
-    'nicht', 'kein', 'keine', 'keiner', 'keinem', 'keinen',
-    'sehr', 'mehr', 'viel', 'wenig', 'ganz', 'gar', 'schon', 'noch', 'immer', 'nie',
-    'hier', 'dort', 'da', 'so', 'dann', 'also', 'denn', 'doch', 'ja', 'nein',
-    'man', 'alle', 'alles', 'jeder', 'jede', 'jedes', 'jedem', 'jeden',
-    'this', 'that', 'the', 'a', 'an', 'is', 'are', 'was', 'were', 'be', 'been',
-    'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should',
-    'can', 'may', 'might', 'must', 'shall',
-    'i', 'you', 'he', 'she', 'it', 'we', 'they', 'me', 'him', 'her', 'us', 'them',
-    'my', 'your', 'his', 'its', 'our', 'their',
-    'what', 'which', 'who', 'whom', 'where', 'when', 'why', 'how',
-    'and', 'or', 'but', 'if', 'because', 'as', 'while', 'of', 'at', 'by', 'for',
-    'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before',
-    'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off',
-    'over', 'under', 'again', 'further', 'then', 'once'
-  ]);
+  // Highlight-Begriffe: Primär die tatsächlich gematchten Terme aus der Suche verwenden
+  let highlightTerms = new Set(matchedTerms);
   
-  // Semantische Keyword-Mappings
-  const semanticMappings = {
-    // Essbarkeit
-    'essbar': ['essbar'],
-    'essen': ['essbar'],
-    'speisepilz': ['essbar'],
-    'genießbar': ['essbar'],
-    'giftig': ['giftig', 'tödlich', 'Vergiftung'],
-    'gift': ['giftig', 'tödlich', 'Gift'],
-    'gefährlich': ['giftig', 'tödlich', 'gefährlich'],
-    'tödlich': ['tödlich', 'Tod', 'sterben'],
-    'vergiftung': ['Vergiftung', 'giftig', 'Symptome'],
+  // Falls keine matchedTerms übergeben wurden, Fallback auf Query-Analyse
+  if (highlightTerms.size === 0) {
+    // Stopwörter die ignoriert werden (Deutsch + Englisch)
+    const stopwords = new Set([
+      'der', 'die', 'das', 'den', 'dem', 'des', 'ein', 'eine', 'einer', 'einem', 'einen',
+      'und', 'oder', 'aber', 'wenn', 'weil', 'dass', 'als', 'auch', 'nur', 'noch',
+      'was', 'wer', 'wie', 'wo', 'wann', 'warum', 'welche', 'welcher', 'welches',
+      'ist', 'sind', 'war', 'waren', 'wird', 'werden', 'wurde', 'wurden',
+      'hat', 'haben', 'hatte', 'hatten', 'kann', 'können', 'konnte', 'konnten',
+      'muss', 'müssen', 'musste', 'mussten', 'soll', 'sollen', 'sollte', 'sollten',
+      'will', 'wollen', 'wollte', 'wollten', 'darf', 'dürfen', 'durfte', 'durften',
+      'ich', 'du', 'er', 'sie', 'es', 'wir', 'ihr', 'mich', 'dich', 'sich', 'uns', 'euch',
+      'mein', 'dein', 'sein', 'unser', 'euer', 'ihr',
+      'von', 'zu', 'bei', 'mit', 'nach', 'aus', 'für', 'über', 'unter', 'vor', 'hinter',
+      'auf', 'in', 'an', 'um', 'durch', 'gegen', 'ohne', 'bis', 'seit', 'während',
+      'nicht', 'kein', 'keine', 'keiner', 'keinem', 'keinen',
+      'sehr', 'mehr', 'viel', 'wenig', 'ganz', 'gar', 'schon', 'noch', 'immer', 'nie',
+      'hier', 'dort', 'da', 'so', 'dann', 'also', 'denn', 'doch', 'ja', 'nein',
+      'man', 'alle', 'alles', 'jeder', 'jede', 'jedes', 'jedem', 'jeden'
+    ]);
     
-    // Symptome
-    'leber': ['Leber', 'Leberversagen'],
-    'niere': ['Niere', 'Nierenversagen'],
-    'übelkeit': ['Übelkeit'],
-    'halluzination': ['Halluzinationen', 'halluzinogen'],
+    // Query in Wörter zerlegen und Stopwörter entfernen
+    const queryWords = q
+      .split(/\s+/)
+      .map(w => w.replace(/[?!.,;:'"()]/g, ''))
+      .filter(w => w.length > 2 && !stopwords.has(w));
     
-    // Geschmack
-    'nussig': ['nussig', 'Nuss'],
-    'mild': ['mild', 'zart'],
-    'würzig': ['würzig', 'aromatisch'],
-    'umami': ['umami', 'fleischig'],
-    'fruchtig': ['fruchtig'],
-    'pfeffrig': ['pfeffrig'],
-    
-    // Zubereitung
-    'braten': ['braten'],
-    'trocknen': ['trocknen'],
-    'roh': ['roh'],
-    'schmoren': ['schmoren'],
-    
-    // Standort
-    'wald': ['wald', 'Wald'],
-    'nadelwald': ['Nadelwald', 'Fichten', 'Kiefern'],
-    'laubwald': ['Laubwald', 'Buche', 'Eiche'],
-    'wiese': ['Wiese', 'Weide'],
-    
-    // Saison
-    'herbst': ['September', 'Oktober', 'November', 'Herbst'],
-    'frühling': ['März', 'April', 'Mai', 'Frühjahr'],
-    'sommer': ['Juni', 'Juli', 'August', 'Sommer'],
-    'winter': ['Dezember', 'Januar', 'Februar', 'Winter'],
-    
-    // Farben
-    'rot': ['rot', 'Rot'],
-    'gelb': ['gelb', 'Gelb', 'gold', 'dotter'],
-    'braun': ['braun', 'Braun', 'kastanie'],
-    'weiß': ['weiß', 'Weiß', 'weiss']
-  };
-  
-  // Query in Wörter zerlegen und Stopwörter entfernen
-  const queryWords = q
-    .split(/\s+/)
-    .map(w => w.replace(/[?!.,;:'"()]/g, '')) // Satzzeichen entfernen
-    .filter(w => w.length > 2 && !stopwords.has(w));
-  
-  // Highlight-Begriffe sammeln
-  let highlightTerms = new Set();
-  
-  // Jedes relevante Wort hinzufügen
-  for (const word of queryWords) {
-    highlightTerms.add(word);
-    
-    // Semantische Mappings für dieses Wort
-    for (const [keyword, mappedTerms] of Object.entries(semanticMappings)) {
-      if (word.includes(keyword) || keyword.includes(word)) {
-        for (const term of mappedTerms) {
-          highlightTerms.add(term);
-        }
-      }
-    }
-  }
-  
-  // Auch semantische Matches für den ganzen Query
-  for (const [keyword, mappedTerms] of Object.entries(semanticMappings)) {
-    if (q.includes(keyword)) {
-      for (const term of mappedTerms) {
-        highlightTerms.add(term);
-      }
+    for (const word of queryWords) {
+      highlightTerms.add(word);
     }
   }
   
@@ -256,7 +180,7 @@ function highlightMatches(container, query) {
   if (highlightTerms.size === 0) return;
   
   // Debug
-  console.log('[HIGHLIGHT]', { query: q, terms: [...highlightTerms] });
+  console.log('[HIGHLIGHT]', { query: q, terms: [...highlightTerms], fromSearch: matchedTerms.size > 0 });
   
   // ALLE Text-Elemente in Items durchsuchen
   const items = container.querySelectorAll('.amorph-item');

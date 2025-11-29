@@ -64,6 +64,7 @@ class JsonSource {
   constructor(url) {
     this.url = url;
     this.data = null;
+    this.lastMatchedTerms = new Set(); // Speichert welche Terme gematcht haben
   }
   
   async query({ search, limit = 50 } = {}) {
@@ -73,75 +74,139 @@ class JsonSource {
     }
     
     let items = Array.isArray(this.data) ? this.data : this.data.items || [];
+    this.lastMatchedTerms = new Set();
     
     if (search && search.trim()) {
       const query = search.toLowerCase().trim();
       
-      // Intelligente Suche: Jedes Item bewerten
-      const scored = items.map(item => ({
-        item,
-        score: scoreItem(item, query)
-      }));
+      // Intelligente Suche: Jedes Item bewerten und Match-Terme sammeln
+      const scored = items.map(item => {
+        const result = scoreItemWithMatches(item, query);
+        return {
+          item,
+          score: result.score,
+          matches: result.matches
+        };
+      });
       
       // Nur Treffer mit Score > 0
-      items = scored
-        .filter(s => s.score > 0)
+      const filtered = scored.filter(s => s.score > 0);
+      
+      // Alle gefundenen Match-Terme sammeln
+      for (const s of filtered) {
+        for (const match of s.matches) {
+          this.lastMatchedTerms.add(match);
+        }
+      }
+      
+      items = filtered
         .sort((a, b) => b.score - a.score)
         .map(s => s.item);
     }
     
     return items.slice(0, limit);
   }
+  
+  getMatchedTerms() {
+    return this.lastMatchedTerms; // Gibt das Set direkt zurück
+  }
 }
 
 /**
- * Bewertet wie gut ein Item zur Suchanfrage passt
- * Höherer Score = besserer Treffer
+ * Bewertet wie gut ein Item zur Suchanfrage passt UND gibt gefundene Matches zurück
+ * @returns {{ score: number, matches: string[] }}
  */
-function scoreItem(item, query) {
+function scoreItemWithMatches(item, query) {
   let score = 0;
+  const matches = new Set();
   
   // Alle Texte aus dem Item extrahieren (auch verschachtelt)
   const allTexts = extractAllTexts(item);
   const allTextLower = allTexts.join(' ').toLowerCase();
   
   // === DIREKTE TREFFER ===
-  // Exakter Name-Match (höchste Priorität)
-  if ((item.name || '').toLowerCase() === query) {
+  const name = (item.name || '').toLowerCase();
+  const wiss = (item.wissenschaftlich || '').toLowerCase();
+  
+  // Exakter Name-Match
+  if (name === query) {
     score += 100;
+    matches.add(item.name);
   }
   // Name beginnt mit Query
-  else if ((item.name || '').toLowerCase().startsWith(query)) {
+  else if (name.startsWith(query)) {
     score += 80;
+    matches.add(item.name);
   }
   // Name enthält Query
-  else if ((item.name || '').toLowerCase().includes(query)) {
+  else if (name.includes(query)) {
     score += 60;
+    matches.add(item.name);
   }
   
   // Wissenschaftlicher Name
-  if ((item.wissenschaftlich || '').toLowerCase().includes(query)) {
+  if (wiss.includes(query)) {
     score += 40;
+    matches.add(item.wissenschaftlich);
   }
   
-  // Andere Felder enthalten Query direkt
+  // Andere Felder enthalten Query direkt - finde welche
   if (allTextLower.includes(query)) {
     score += 20;
+    // Finde die tatsächlichen Matches in den Texten
+    for (const text of allTexts) {
+      if (text.toLowerCase().includes(query)) {
+        // Extrahiere das passende Wort/Fragment
+        const idx = text.toLowerCase().indexOf(query);
+        const matchedWord = text.slice(idx, idx + query.length);
+        matches.add(matchedWord);
+        // Auch den Kontext hinzufügen (das ganze Wort)
+        const words = text.split(/\s+/);
+        for (const word of words) {
+          if (word.toLowerCase().includes(query)) {
+            matches.add(word.replace(/[.,;:!?()]/g, ''));
+          }
+        }
+      }
+    }
   }
   
-  // === FUZZY / SYNONYME ===
-  // Wörter der Query einzeln prüfen
-  const queryWords = query.split(/\s+/).filter(w => w.length > 2);
+  // === QUERY-WÖRTER EINZELN ===
+  const stopwords = new Set(['was', 'ist', 'der', 'die', 'das', 'ein', 'eine', 'und', 'oder', 'für', 'mit', 'von', 'zu', 'bei', 'kann', 'man', 'wie', 'wo', 'wer', 'welche', 'welcher']);
+  const queryWords = query.split(/\s+/).filter(w => w.length > 2 && !stopwords.has(w));
+  
   for (const word of queryWords) {
     if (allTextLower.includes(word)) {
       score += 10;
+      // Finde das passende Wort im Original
+      for (const text of allTexts) {
+        if (text.toLowerCase().includes(word)) {
+          const words = text.split(/\s+/);
+          for (const w of words) {
+            if (w.toLowerCase().includes(word)) {
+              matches.add(w.replace(/[.,;:!?()]/g, ''));
+            }
+          }
+        }
+      }
     }
   }
   
   // === SEMANTISCHE MAPPINGS ===
-  score += semanticScore(item, query);
+  const semanticResult = semanticScoreWithMatches(item, query);
+  score += semanticResult.score;
+  for (const m of semanticResult.matches) {
+    matches.add(m);
+  }
   
-  return score;
+  return { score, matches: [...matches] };
+}
+
+/**
+ * Legacy-Funktion für Kompatibilität
+ */
+function scoreItem(item, query) {
+  return scoreItemWithMatches(item, query).score;
 }
 
 /**
@@ -168,171 +233,211 @@ function extractAllTexts(obj, texts = []) {
 }
 
 /**
- * Semantische Suche - Nutzerintentionen auf Datenfelder mappen
+ * Semantische Suche mit Match-Tracking
+ * @returns {{ score: number, matches: string[] }}
  */
-function semanticScore(item, query) {
+function semanticScoreWithMatches(item, query) {
   let score = 0;
+  const matchedTerms = new Set();
   const q = query.toLowerCase();
   
   // === ESSBARKEIT ===
-  const essbar = (item.essbarkeit || '').toLowerCase();
+  const essbar = item.essbarkeit || '';
+  const essbarLower = essbar.toLowerCase();
   
-  // Fragen nach essbaren Pilzen
   if (matches(q, ['essbar', 'essen', 'kann man essen', 'speisepilz', 'genießbar', 'lecker', 
                   'kochen', 'zubereiten', 'rezept', 'küche', 'mahlzeit', 'gericht'])) {
-    if (essbar === 'essbar') score += 50;
-    if (essbar === 'bedingt essbar') score += 30;
+    if (essbarLower === 'essbar') { score += 50; matchedTerms.add(essbar); }
+    if (essbarLower === 'bedingt essbar') { score += 30; matchedTerms.add(essbar); }
   }
   
   // Fragen nach giftigen Pilzen
   if (matches(q, ['giftig', 'gift', 'gefährlich', 'tödlich', 'tod', 'sterben', 
                   'vergiftung', 'symptome', 'krank', 'nicht essen', 'vorsicht', 'warnung'])) {
-    if (essbar === 'giftig' || essbar === 'tödlich') score += 50;
-    if (item.symptome) score += 30;
+    if (essbarLower === 'giftig' || essbarLower === 'tödlich') { 
+      score += 50; 
+      matchedTerms.add(essbar); 
+    }
+    if (item.symptome) { 
+      score += 30; 
+      matchedTerms.add(item.symptome);
+      // Einzelne Symptom-Wörter hinzufügen
+      for (const word of item.symptome.split(/[,\s]+/)) {
+        if (word.length > 3) matchedTerms.add(word);
+      }
+    }
   }
   
   // === STANDORT / ÖKOLOGIE ===
-  const standorte = (item.standort || []).join(' ').toLowerCase();
+  const standorte = item.standort || [];
+  const standorteLower = standorte.join(' ').toLowerCase();
   
-  if (matches(q, ['wald', 'wälder', 'forst', 'waldpilz'])) {
-    if (standorte.includes('wald')) score += 40;
-  }
+  const standortMappings = [
+    { keywords: ['wald', 'wälder', 'forst', 'waldpilz'], search: 'wald' },
+    { keywords: ['wiese', 'wiesen', 'gras', 'rasen', 'weide'], search: ['wiese', 'weide', 'rasen'] },
+    { keywords: ['baum', 'bäume', 'holz', 'stamm', 'stumpf'], search: ['holz', 'stamm', 'baum'] },
+    { keywords: ['eiche', 'eichen'], search: 'eiche' },
+    { keywords: ['buche', 'buchen', 'buchenwald'], search: 'buche' },
+    { keywords: ['fichte', 'fichten', 'fichtenwald', 'nadelwald', 'nadel'], search: ['fichte', 'nadel'] },
+    { keywords: ['kiefer', 'kiefern'], search: 'kiefer' },
+    { keywords: ['birke', 'birken', 'birkenwald'], search: 'birke' }
+  ];
   
-  if (matches(q, ['wiese', 'wiesen', 'gras', 'rasen', 'weide'])) {
-    if (standorte.includes('wiese') || standorte.includes('weide') || standorte.includes('rasen')) score += 40;
-  }
-  
-  if (matches(q, ['baum', 'bäume', 'holz', 'stamm', 'stumpf'])) {
-    if (standorte.includes('holz') || standorte.includes('stamm') || standorte.includes('baum')) score += 40;
-  }
-  
-  if (matches(q, ['eiche', 'eichen'])) {
-    if (standorte.includes('eiche')) score += 50;
-  }
-  
-  if (matches(q, ['buche', 'buchen', 'buchenwald'])) {
-    if (standorte.includes('buche')) score += 50;
-  }
-  
-  if (matches(q, ['fichte', 'fichten', 'fichtenwald', 'nadelwald', 'nadel'])) {
-    if (standorte.includes('fichte') || standorte.includes('nadel')) score += 50;
-  }
-  
-  if (matches(q, ['kiefer', 'kiefern'])) {
-    if (standorte.includes('kiefer')) score += 50;
-  }
-  
-  if (matches(q, ['birke', 'birken', 'birkenwald'])) {
-    if (standorte.includes('birke')) score += 50;
+  for (const mapping of standortMappings) {
+    if (matches(q, mapping.keywords)) {
+      const searches = Array.isArray(mapping.search) ? mapping.search : [mapping.search];
+      for (const search of searches) {
+        if (standorteLower.includes(search)) {
+          score += 40;
+          // Finde den Original-Standort der passt
+          for (const s of standorte) {
+            if (s.toLowerCase().includes(search)) {
+              matchedTerms.add(s);
+            }
+          }
+        }
+      }
+    }
   }
   
   // === SAISON / ZEIT ===
-  const saison = (item.saison || '').toLowerCase();
+  const saison = item.saison || '';
+  const saisonLower = saison.toLowerCase();
   
-  if (matches(q, ['frühling', 'frühjahr', 'märz', 'april', 'mai'])) {
-    if (saison.includes('märz') || saison.includes('april') || saison.includes('mai')) score += 40;
-  }
+  const saisonMappings = [
+    { keywords: ['frühling', 'frühjahr', 'märz', 'april', 'mai'], months: ['märz', 'april', 'mai'] },
+    { keywords: ['sommer', 'juni', 'juli', 'august'], months: ['juni', 'juli', 'august'] },
+    { keywords: ['herbst', 'september', 'oktober', 'november'], months: ['september', 'oktober', 'november'] },
+    { keywords: ['winter', 'dezember', 'januar', 'februar'], months: ['dezember', 'januar', 'februar', 'märz'] }
+  ];
   
-  if (matches(q, ['sommer', 'juni', 'juli', 'august'])) {
-    if (saison.includes('juni') || saison.includes('juli') || saison.includes('august')) score += 40;
-  }
-  
-  if (matches(q, ['herbst', 'september', 'oktober', 'november'])) {
-    if (saison.includes('september') || saison.includes('oktober') || saison.includes('november')) score += 40;
-  }
-  
-  if (matches(q, ['winter', 'dezember', 'januar', 'februar', 'kalt', 'frost'])) {
-    if (saison.includes('dezember') || saison.includes('januar') || saison.includes('februar') || 
-        saison.includes('märz') || saison.includes('ganzjährig')) score += 40;
+  for (const mapping of saisonMappings) {
+    if (matches(q, mapping.keywords)) {
+      for (const month of mapping.months) {
+        if (saisonLower.includes(month)) {
+          score += 40;
+          matchedTerms.add(saison);
+          break;
+        }
+      }
+    }
   }
   
   if (matches(q, ['jetzt', 'aktuell', 'gerade', 'heute', 'momentan'])) {
-    // Aktueller Monat (November)
     const month = new Date().toLocaleString('de-DE', { month: 'long' }).toLowerCase();
-    if (saison.toLowerCase().includes(month) || saison.includes('ganzjährig')) score += 40;
+    if (saisonLower.includes(month) || saisonLower.includes('ganzjährig')) {
+      score += 40;
+      matchedTerms.add(saison);
+    }
   }
   
   // === GESCHMACK ===
-  const geschmack = (item.geschmack || '').toLowerCase();
+  const geschmack = item.geschmack || '';
+  const geschmackLower = geschmack.toLowerCase();
   
-  if (matches(q, ['nussig', 'nuss'])) {
-    if (geschmack.includes('nussig') || geschmack.includes('nuss')) score += 40;
-  }
+  const geschmackMappings = [
+    { keywords: ['nussig', 'nuss'], search: ['nussig', 'nuss'] },
+    { keywords: ['mild', 'sanft', 'leicht'], search: 'mild' },
+    { keywords: ['würzig', 'würze', 'intensiv', 'kräftig', 'aromatisch'], search: ['würzig', 'aromatisch', 'intensiv'] },
+    { keywords: ['umami', 'fleischig', 'herzhaft'], search: ['umami', 'fleischig'] }
+  ];
   
-  if (matches(q, ['mild', 'sanft', 'leicht'])) {
-    if (geschmack.includes('mild')) score += 40;
-  }
-  
-  if (matches(q, ['würzig', 'würze', 'intensiv', 'kräftig', 'aromatisch'])) {
-    if (geschmack.includes('würzig') || geschmack.includes('aromatisch') || geschmack.includes('intensiv')) score += 40;
-  }
-  
-  if (matches(q, ['umami', 'fleischig', 'herzhaft'])) {
-    if (geschmack.includes('umami') || geschmack.includes('fleischig')) score += 40;
+  for (const mapping of geschmackMappings) {
+    if (matches(q, mapping.keywords)) {
+      const searches = Array.isArray(mapping.search) ? mapping.search : [mapping.search];
+      for (const search of searches) {
+        if (geschmackLower.includes(search)) {
+          score += 40;
+          matchedTerms.add(geschmack);
+          break;
+        }
+      }
+    }
   }
   
   // === ZUBEREITUNG ===
-  const zubereitung = (item.zubereitung || '').toLowerCase();
+  const zubereitung = item.zubereitung || '';
+  const zubereitungLower = zubereitung.toLowerCase();
   
-  if (matches(q, ['braten', 'pfanne', 'anbraten'])) {
-    if (zubereitung.includes('braten')) score += 40;
-  }
+  const zubereitungMappings = [
+    { keywords: ['braten', 'pfanne', 'anbraten'], search: 'braten' },
+    { keywords: ['trocknen', 'dörren', 'getrocknet'], search: 'trocknen' },
+    { keywords: ['roh', 'ungekocht', 'salat'], search: 'roh' },
+    { keywords: ['suppe', 'eintopf', 'kochen'], search: ['suppe', 'schmoren'] }
+  ];
   
-  if (matches(q, ['trocknen', 'dörren', 'getrocknet'])) {
-    if (zubereitung.includes('trocknen')) score += 40;
-  }
-  
-  if (matches(q, ['roh', 'ungekocht', 'salat'])) {
-    if (zubereitung.includes('roh')) score += 40;
-  }
-  
-  if (matches(q, ['suppe', 'eintopf', 'kochen'])) {
-    if (zubereitung.includes('suppe') || zubereitung.includes('schmoren')) score += 40;
+  for (const mapping of zubereitungMappings) {
+    if (matches(q, mapping.keywords)) {
+      const searches = Array.isArray(mapping.search) ? mapping.search : [mapping.search];
+      for (const search of searches) {
+        if (zubereitungLower.includes(search)) {
+          score += 40;
+          matchedTerms.add(zubereitung);
+          break;
+        }
+      }
+    }
   }
   
   // === VERWECHSLUNG ===
   if (matches(q, ['verwechslung', 'verwechseln', 'ähnlich', 'aussehen', 'doppelgänger', 'unterscheiden'])) {
-    if (item.verwechslung && item.verwechslung.length > 0) score += 30;
+    if (item.verwechslung && item.verwechslung.length > 0) {
+      score += 30;
+      for (const v of item.verwechslung) {
+        matchedTerms.add(v);
+      }
+    }
   }
   
   // === ZUCHT ===
   if (matches(q, ['zucht', 'züchten', 'anbauen', 'kultivieren', 'selbst anbauen', 'zuhause'])) {
-    if (standorte.includes('zucht') || saison.includes('zucht') || saison.includes('ganzjährig')) score += 50;
+    if (standorteLower.includes('zucht') || saisonLower.includes('zucht') || saisonLower.includes('ganzjährig')) {
+      score += 50;
+      if (saisonLower.includes('ganzjährig')) matchedTerms.add(saison);
+      for (const s of standorte) {
+        if (s.toLowerCase().includes('zucht')) matchedTerms.add(s);
+      }
+    }
   }
   
   // === FARBE (aus Beschreibung) ===
-  const beschreibung = (item.beschreibung || '').toLowerCase();
+  const beschreibung = item.beschreibung || '';
+  const beschreibungLower = beschreibung.toLowerCase();
   
-  if (matches(q, ['rot', 'roter'])) {
-    if (beschreibung.includes('rot')) score += 30;
+  const farbMappings = [
+    { keywords: ['rot', 'roter'], search: 'rot' },
+    { keywords: ['gelb', 'gelber', 'gold', 'golden'], search: ['gelb', 'gold', 'dotter'] },
+    { keywords: ['braun', 'brauner'], search: ['braun', 'kastanie'] },
+    { keywords: ['weiß', 'weißer', 'weiss'], search: ['weiß', 'weiss'] }
+  ];
+  
+  for (const mapping of farbMappings) {
+    if (matches(q, mapping.keywords)) {
+      const searches = Array.isArray(mapping.search) ? mapping.search : [mapping.search];
+      for (const search of searches) {
+        if (beschreibungLower.includes(search)) {
+          score += 30;
+          // Finde das Wort im Kontext
+          const words = beschreibung.split(/\s+/);
+          for (const word of words) {
+            if (word.toLowerCase().includes(search)) {
+              matchedTerms.add(word.replace(/[.,;:!?()]/g, ''));
+            }
+          }
+          break;
+        }
+      }
+    }
   }
   
-  if (matches(q, ['gelb', 'gelber', 'gold', 'golden'])) {
-    if (beschreibung.includes('gelb') || beschreibung.includes('gold') || beschreibung.includes('dotter')) score += 30;
-  }
-  
-  if (matches(q, ['braun', 'brauner'])) {
-    if (beschreibung.includes('braun') || beschreibung.includes('kastanie')) score += 30;
-  }
-  
-  if (matches(q, ['weiß', 'weißer', 'weiss'])) {
-    if (beschreibung.includes('weiß') || beschreibung.includes('weiss')) score += 30;
-  }
-  
-  // === BELIEBTE FRAGEN ===
-  if (matches(q, ['beliebt', 'bekannt', 'berühmt', 'populär', 'häufig'])) {
-    if (beschreibung.includes('beliebt') || beschreibung.includes('bekannt') || beschreibung.includes('häufig')) score += 30;
-  }
-  
-  if (matches(q, ['anfänger', 'einfach', 'leicht zu erkennen', 'für anfänger'])) {
-    if (beschreibung.includes('leicht erkennbar') || beschreibung.includes('häufig')) score += 30;
-  }
-  
-  if (matches(q, ['asien', 'asiatisch', 'japan', 'japanisch', 'china', 'chinesisch'])) {
-    if (beschreibung.includes('asien') || item.name?.toLowerCase().includes('shiitake')) score += 50;
-  }
-  
-  return score;
+  return { score, matches: [...matchedTerms] };
+}
+
+/**
+ * Legacy semanticScore für Kompatibilität
+ */
+function semanticScore(item, query) {
+  return semanticScoreWithMatches(item, query).score;
 }
 
 /**
