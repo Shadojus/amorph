@@ -3,7 +3,9 @@ export function createTarget(config) {
   
   switch (typ) {
     case 'console':
-      return new ConsoleTarget(options);
+      // Console-Logging wird von debug.js übernommen
+      // Dieser Target ist nur für Kompatibilität, loggt aber nichts
+      return new NoOpTarget();
     case 'http':
       return new HttpTarget(url, options);
     case 'websocket':
@@ -11,33 +13,15 @@ export function createTarget(config) {
     case 'redis':
       return new RedisTarget(url, options);
     default:
-      console.warn(`Unbekannter Target-Typ: ${typ}, nutze Console`);
-      return new ConsoleTarget();
+      // Unbekannter Typ = kein externes Logging
+      return new NoOpTarget();
   }
 }
 
-class ConsoleTarget {
-  constructor(options = {}) {
-    this.prefix = options.prefix || '[AMORPH]';
-    this.level = options.level || 'log';
-    this.styles = {
-      log: 'color: #60a5fa; font-weight: bold',
-      debug: 'color: #a78bfa; font-weight: bold',
-      info: 'color: #34d399; font-weight: bold',
-      warn: 'color: #fbbf24; font-weight: bold',
-      error: 'color: #f87171; font-weight: bold'
-    };
-  }
-  
+// NoOp Target - tut nichts, debug.js übernimmt Console-Logging
+class NoOpTarget {
   send(nachricht) {
-    const style = this.styles[this.level] || this.styles.log;
-    const time = new Date().toLocaleTimeString('de-DE');
-    console[this.level](
-      `%c${this.prefix}%c [${time}]`,
-      style,
-      'color: #888',
-      nachricht
-    );
+    // Nichts tun - debug.js loggt bereits in die Console
   }
 }
 
