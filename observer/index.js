@@ -7,6 +7,13 @@ import { debug } from './debug.js';
 // Debug-Observer auch exportieren
 export { debug } from './debug.js';
 
+// Observer-Referenzen für globalen Zugriff
+let activeObservers = {
+  interaction: null,
+  rendering: null,
+  session: null
+};
+
 export function setupObservers(container, config, session = null) {
   const observers = [];
   
@@ -22,33 +29,78 @@ export function setupObservers(container, config, session = null) {
     return observers;
   }
   
+  // === INTERACTION OBSERVER ===
   if (config.observer.interaktion) {
     const target = createTarget(config.observer.interaktion.ziel);
     const obs = new InteractionObserver(container, target);
     obs.start();
     observers.push(obs);
+    activeObservers.interaction = obs;
   }
   
+  // === RENDERING OBSERVER ===
   if (config.observer.rendering) {
     const target = createTarget(config.observer.rendering.ziel);
     const obs = new RenderingObserver(container, target);
     obs.start();
     observers.push(obs);
+    activeObservers.rendering = obs;
   }
   
+  // === SESSION OBSERVER ===
   if (config.observer.session && session) {
     const target = createTarget(config.observer.session.ziel);
     const obs = new SessionObserver(target);
     obs.start(session.id);
     observers.push(obs);
     observers.sessionObserver = obs;
+    activeObservers.session = obs;
   }
+  
+  // Global verfügbar für Debugging
+  if (typeof window !== 'undefined') {
+    window.amorphObservers = activeObservers;
+    window.amorphObserverStats = getObserverStats;
+  }
+  
+  debug.observer('Alle Observer aktiv', { 
+    anzahl: observers.length,
+    typen: Object.keys(activeObservers).filter(k => activeObservers[k])
+  });
   
   return observers;
 }
 
 export function stopObservers(observers) {
+  debug.observer('Stoppe alle Observer');
+  
   for (const obs of observers) {
     if (obs.stop) obs.stop();
   }
+  
+  activeObservers = {
+    interaction: null,
+    rendering: null,
+    session: null
+  };
 }
+
+export function getObserverStats() {
+  const stats = {
+    debug: debug.getStats(),
+    timeline: debug.getTimeline(20)
+  };
+  
+  if (activeObservers.rendering?.getStats) {
+    stats.rendering = activeObservers.rendering.getStats();
+  }
+  
+  if (activeObservers.session?.getStats) {
+    stats.session = activeObservers.session.getStats();
+  }
+  
+  return stats;
+}
+
+// Export für direkten Zugriff
+export { InteractionObserver, RenderingObserver, SessionObserver };
