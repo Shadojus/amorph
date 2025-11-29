@@ -57,22 +57,38 @@ export async function amorph(options = {}) {
   // Observer starten
   const observers = setupObservers(container, config, session);
   
-  // Features laden
-  const features = await loadFeatures(container, config, dataSource);
+  // Aktuelle Suchergebnisse speichern (für Perspektiven-Filterung)
+  let currentData = [];
+  let currentQuery = '';
+  
+  // Features laden (mit Zugriff auf search-Funktion)
+  const features = await loadFeatures(container, config, dataSource, {
+    onSearch: async (query) => {
+      currentQuery = query;
+      debug.suche('Suche ausgeführt', { query });
+      currentData = await dataSource.query({ search: query });
+      debug.suche('Ergebnisse', { anzahl: currentData.length });
+      await render(container, currentData, config);
+      return currentData;
+    }
+  });
   debug.features('Geladen', features.map(f => f.name));
   
-  // Initiale Daten laden und rendern
-  debug.daten('Lade Daten...');
-  const daten = await dataSource.query();
-  debug.daten(`${daten.length} Einträge geladen`);
+  // KEINE initiale Daten laden - warten auf Suche
+  debug.daten('Warte auf Sucheingabe...');
   
-  await render(container, daten, config);
+  // Leere Nachricht anzeigen
+  showEmptyState(container);
+  
   debug.render('Fertig!');
   
   // Re-Render Handler (für Suche etc.)
-  container.addEventListener('amorph:request-render', async () => {
-    const neueDaten = await dataSource.query();
-    await render(container, neueDaten, config);
+  container.addEventListener('amorph:request-render', async (e) => {
+    const query = e.detail?.query ?? currentQuery;
+    if (query || query === '') {
+      currentData = await dataSource.query({ search: query });
+      await render(container, currentData, config);
+    }
   });
   
   // Aufräumen bei Bedarf
@@ -85,15 +101,33 @@ export async function amorph(options = {}) {
     },
     
     async reload() {
-      const daten = await dataSource.query();
-      await render(container, daten, config);
+      if (currentQuery) {
+        currentData = await dataSource.query({ search: currentQuery });
+        await render(container, currentData, config);
+      }
     },
     
     async search(query) {
-      const daten = await dataSource.query({ search: query });
-      await render(container, daten, config);
+      currentQuery = query;
+      currentData = await dataSource.query({ search: query });
+      await render(container, currentData, config);
+      return currentData;
+    },
+    
+    getData() {
+      return currentData;
     }
   };
+}
+
+function showEmptyState(container) {
+  const emptyEl = document.createElement('div');
+  emptyEl.className = 'amorph-empty-state';
+  emptyEl.innerHTML = `
+    <div class="amorph-empty-icon">🔍</div>
+    <div class="amorph-empty-text">Gib einen Suchbegriff ein, um Pilze zu finden</div>
+  `;
+  container.appendChild(emptyEl);
 }
 
 // Exports für modulare Nutzung

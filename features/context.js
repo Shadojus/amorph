@@ -1,4 +1,4 @@
-export function createFeatureContext(name, container, config, dataSource) {
+export function createFeatureContext(name, container, config, dataSource, callbacks = {}) {
   const bereich = document.createElement('div');
   bereich.className = `amorph-feature amorph-feature-${name}`;
   bereich.setAttribute('data-feature', name);
@@ -16,6 +16,7 @@ export function createFeatureContext(name, container, config, dataSource) {
   return {
     dom: bereich,
     config: Object.freeze(featureConfig),
+    container, // Zugriff auf App-Container
     
     on: (event, handler) => {
       eventTarget.addEventListener(event, handler);
@@ -25,12 +26,21 @@ export function createFeatureContext(name, container, config, dataSource) {
       eventTarget.dispatchEvent(new CustomEvent(event, { detail }));
     },
     
+    // Daten abfragen
     fetch: async (query) => {
       return dataSource.query(query);
     },
     
-    requestRender: () => {
-      container.dispatchEvent(new CustomEvent('amorph:request-render'));
+    // Suche ausführen (mit Render)
+    search: async (query) => {
+      if (callbacks.onSearch) {
+        return callbacks.onSearch(query);
+      }
+      return dataSource.query({ search: query });
+    },
+    
+    requestRender: (detail = {}) => {
+      container.dispatchEvent(new CustomEvent('amorph:request-render', { detail }));
     },
     
     mount: (position = 'beforeend') => {

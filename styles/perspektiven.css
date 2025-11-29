@@ -13,47 +13,62 @@ amorph-container[data-field] {
   transition: all 0.3s ease;
 }
 
-/* === PERSPEKTIVE AKTIV: Felder hervorheben === */
+/* === WENN PERSPEKTIVEN AKTIV: Alle Felder verstecken === */
+.perspektiven-aktiv .amorph-item amorph-container[data-field] {
+  display: none;
+}
 
-/* Kulinarisch */
-.perspektive-kulinarisch amorph-container[data-field="essbarkeit"],
-.perspektive-kulinarisch amorph-container[data-field="geschmack"],
-.perspektive-kulinarisch amorph-container[data-field="zubereitung"] {
+/* Immer sichtbare Basisfelder */
+.perspektiven-aktiv .amorph-item amorph-container[data-field="name"],
+.perspektiven-aktiv .amorph-item amorph-container[data-field="wissenschaftlich"],
+.perspektiven-aktiv .amorph-item amorph-container[data-field="bild"] {
+  display: block;
+}
+
+/* === KULINARISCH: Diese Felder zeigen === */
+.perspektive-kulinarisch .amorph-item amorph-container[data-field="essbarkeit"],
+.perspektive-kulinarisch .amorph-item amorph-container[data-field="geschmack"],
+.perspektive-kulinarisch .amorph-item amorph-container[data-field="zubereitung"] {
+  display: block;
   border-left: 3px solid var(--perspektive-kulinarisch);
   padding-left: var(--space-sm);
-  background: color-mix(in srgb, var(--perspektive-kulinarisch) 5%, transparent);
+  background: color-mix(in srgb, var(--perspektive-kulinarisch) 10%, transparent);
 }
 
-/* Sicherheit */
-.perspektive-sicherheit amorph-container[data-field="essbarkeit"],
-.perspektive-sicherheit amorph-container[data-field="verwechslung"],
-.perspektive-sicherheit amorph-container[data-field="symptome"] {
+/* === SICHERHEIT: Diese Felder zeigen === */
+.perspektive-sicherheit .amorph-item amorph-container[data-field="essbarkeit"],
+.perspektive-sicherheit .amorph-item amorph-container[data-field="verwechslung"],
+.perspektive-sicherheit .amorph-item amorph-container[data-field="symptome"] {
+  display: block;
   border-left: 3px solid var(--perspektive-sicherheit);
   padding-left: var(--space-sm);
-  background: color-mix(in srgb, var(--perspektive-sicherheit) 5%, transparent);
+  background: color-mix(in srgb, var(--perspektive-sicherheit) 10%, transparent);
 }
 
-/* Anbau */
-.perspektive-anbau amorph-container[data-field="standort"],
-.perspektive-anbau amorph-container[data-field="substrat"],
-.perspektive-anbau amorph-container[data-field="temperatur"] {
+/* === ANBAU: Diese Felder zeigen === */
+.perspektive-anbau .amorph-item amorph-container[data-field="standort"],
+.perspektive-anbau .amorph-item amorph-container[data-field="substrat"],
+.perspektive-anbau .amorph-item amorph-container[data-field="temperatur"],
+.perspektive-anbau .amorph-item amorph-container[data-field="saison"] {
+  display: block;
   border-left: 3px solid var(--perspektive-anbau);
   padding-left: var(--space-sm);
-  background: color-mix(in srgb, var(--perspektive-anbau) 5%, transparent);
+  background: color-mix(in srgb, var(--perspektive-anbau) 10%, transparent);
 }
 
-/* Ökologie */
-.perspektive-oekologie amorph-container[data-field="lebensraum"],
-.perspektive-oekologie amorph-container[data-field="symbiose"],
-.perspektive-oekologie amorph-container[data-field="verbreitung"],
-.perspektive-oekologie amorph-container[data-field="standort"] {
+/* === ÖKOLOGIE: Diese Felder zeigen === */
+.perspektive-oekologie .amorph-item amorph-container[data-field="lebensraum"],
+.perspektive-oekologie .amorph-item amorph-container[data-field="symbiose"],
+.perspektive-oekologie .amorph-item amorph-container[data-field="verbreitung"],
+.perspektive-oekologie .amorph-item amorph-container[data-field="standort"] {
+  display: block;
   border-left: 3px solid var(--perspektive-oekologie);
   padding-left: var(--space-sm);
-  background: color-mix(in srgb, var(--perspektive-oekologie) 5%, transparent);
+  background: color-mix(in srgb, var(--perspektive-oekologie) 10%, transparent);
 }
 
 /* === MEHRERE PERSPEKTIVEN: Doppelte Markierung === */
-.perspektive-kulinarisch.perspektive-sicherheit amorph-container[data-field="essbarkeit"] {
+.perspektive-kulinarisch.perspektive-sicherheit .amorph-item amorph-container[data-field="essbarkeit"] {
   border-left-width: 6px;
   border-image: linear-gradient(
     to bottom, 
@@ -62,12 +77,37 @@ amorph-container[data-field] {
   ) 1;
 }
 
-/* === NICHT-RELEVANTE FELDER DIMMEN (optional) === */
-/*
-[class*="perspektive-"] amorph-container[data-field]:not([data-field="essbarkeit"]):not([data-field="geschmack"]):not([data-field="zubereitung"]):not([data-field="verwechslung"]):not([data-field="symptome"]):not([data-field="standort"]):not([data-field="temperatur"]) {
-  opacity: 0.6;
+.perspektive-anbau.perspektive-oekologie .amorph-item amorph-container[data-field="standort"] {
+  border-left-width: 6px;
+  border-image: linear-gradient(
+    to bottom, 
+    var(--perspektive-anbau) 50%, 
+    var(--perspektive-oekologie) 50%
+  ) 1;
 }
-*/
+
+/* === EMPTY STATE === */
+.amorph-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl) var(--space-lg);
+  text-align: center;
+  color: var(--color-text-muted);
+  min-height: 200px;
+}
+
+.amorph-empty-icon {
+  font-size: 4rem;
+  margin-bottom: var(--space-md);
+  opacity: 0.5;
+}
+
+.amorph-empty-text {
+  font-size: var(--font-size-lg);
+  max-width: 300px;
+}
 
 /* === ANIMATION === */
 @keyframes highlight {

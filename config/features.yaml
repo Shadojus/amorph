@@ -9,7 +9,6 @@ suche:
   debounce: 300
   limit: 50
   placeholder: "Pilze suchen..."
-  erlaubeLeer: true
   suchfelder:
     - name
     - wissenschaftlich

@@ -7,7 +7,7 @@ import { debug } from '../observer/debug.js';
 
 const eingebauteFeatures = { suche, perspektiven, grid, header };
 
-export async function loadFeatures(container, config, dataSource) {
+export async function loadFeatures(container, config, dataSource, callbacks = {}) {
   const geladene = [];
   
   debug.features('Config', config?.features);
@@ -38,7 +38,7 @@ export async function loadFeatures(container, config, dataSource) {
         continue;
       }
       
-      const ctx = createFeatureContext(name, container, config, dataSource);
+      const ctx = createFeatureContext(name, container, config, dataSource, callbacks);
       await feature(ctx);
       geladene.push({ name, ctx });
       

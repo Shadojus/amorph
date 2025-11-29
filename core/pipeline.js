@@ -121,11 +121,25 @@ function getMorphConfig(morphName, config) {
 }
 
 export async function render(container, daten, config) {
+  // Empty State entfernen
+  const emptyState = container.querySelector('.amorph-empty-state');
+  if (emptyState) {
+    emptyState.remove();
+  }
+  
   // Nur den Daten-Bereich leeren, nicht die Features!
   // Features haben data-feature Attribut, Daten-Items haben data-morph="item"
   const dataItems = container.querySelectorAll(':scope > amorph-container[data-morph="item"]');
   for (const item of dataItems) {
     item.remove();
+  }
+  
+  // Wenn keine Daten, nichts rendern
+  if (!daten || (Array.isArray(daten) && daten.length === 0)) {
+    container.dispatchEvent(new CustomEvent('amorph:rendered', {
+      detail: { anzahl: 0, timestamp: Date.now() }
+    }));
+    return;
   }
   
   const dom = transform(daten, config);
