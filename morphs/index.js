@@ -7,6 +7,9 @@ import { list } from './list.js';
 import { object } from './object.js';
 import { image } from './image.js';
 import { link } from './link.js';
+import { suche } from './suche.js';
+import { perspektiven } from './perspektiven.js';
+import { header } from './header.js';
 
 export const morphs = {
   text,
@@ -17,7 +20,10 @@ export const morphs = {
   list,
   object,
   image,
-  link
+  link,
+  suche,
+  perspektiven,
+  header
 };
 
-export { text, number, boolean, tag, range, list, object, image, link };
+export { text, number, boolean, tag, range, list, object, image, link, suche, perspektiven, header };

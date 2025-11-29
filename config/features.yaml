@@ -3,47 +3,7 @@ aktiv:
   - header
   - grid
 
-# Header-Konfiguration (zentraler Morph-Header)
-header:
-  suche:
-    placeholder: "Pilze suchen..."
-    live: true
-    debounce: 300
-    limit: 50
-  perspektiven:
-    - id: kulinarisch
-      name: Kulinarisch
-      symbol: 🍳
-      farbe: "#22c55e"
-      felder:
-        - essbarkeit
-        - geschmack
-        - zubereitung
-    - id: sicherheit
-      name: Sicherheit
-      symbol: ⚠️
-      farbe: "#ef4444"
-      felder:
-        - essbarkeit
-        - verwechslung
-        - symptome
-    - id: anbau
-      name: Anbau
-      symbol: 🌱
-      farbe: "#eab308"
-      felder:
-        - standort
-        - temperatur
-        - saison
-    - id: oekologie
-      name: Ökologie
-      symbol: 🌍
-      farbe: "#06b6d4"
-      felder:
-        - standort
-        - beschreibung
-
-# Alte Features (optional, falls ohne Header genutzt)
+# Suche-Konfiguration
 suche:
   live: true
   debounce: 300
@@ -55,6 +15,7 @@ suche:
     - wissenschaftlich
     - beschreibung
 
+# Perspektiven-Konfiguration
 perspektiven:
   maxAktiv: 4
   liste:
@@ -66,6 +27,7 @@ perspektiven:
         - essbarkeit
         - geschmack
         - zubereitung
+    
     - id: sicherheit
       name: Sicherheit
       symbol: ⚠️
@@ -74,6 +36,7 @@ perspektiven:
         - essbarkeit
         - verwechslung
         - symptome
+    
     - id: anbau
       name: Anbau
       symbol: 🌱
@@ -82,6 +45,7 @@ perspektiven:
         - standort
         - substrat
         - temperatur
+    
     - id: oekologie
       name: Ökologie
       symbol: 🌍
@@ -98,3 +62,7 @@ grid:
     - liste
     - grid
     - kompakt
+
+# Externe Features (optional)
+# extern:
+#   meinFeature: ./custom/mein-feature.js

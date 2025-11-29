@@ -5,9 +5,17 @@ export function createFeatureContext(name, container, config, dataSource) {
   
   const eventTarget = new EventTarget();
   
+  // Für Header: Zugriff auf alle Feature-Configs
+  const featureConfig = name === 'header' 
+    ? { 
+        suche: config.features?.suche || {},
+        perspektiven: config.features?.perspektiven || {}
+      }
+    : (config.features?.[name] || {});
+  
   return {
     dom: bereich,
-    config: Object.freeze(config.features?.[name] || {}),
+    config: Object.freeze(featureConfig),
     
     on: (event, handler) => {
       eventTarget.addEventListener(event, handler);
@@ -21,11 +29,8 @@ export function createFeatureContext(name, container, config, dataSource) {
       return dataSource.query(query);
     },
     
-    // requestRender kann optional Daten übergeben
-    requestRender: (daten = null) => {
-      container.dispatchEvent(new CustomEvent('amorph:request-render', { 
-        detail: { daten } 
-      }));
+    requestRender: () => {
+      container.dispatchEvent(new CustomEvent('amorph:request-render'));
     },
     
     mount: (position = 'beforeend') => {

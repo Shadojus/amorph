@@ -27,8 +27,7 @@ export async function amorph(options = {}) {
   const {
     container: containerOption = '#app',
     config: configPath = './config/',
-    customMorphs = {},
-    autoLoad = true  // Neu: Steuert ob Daten bei Start geladen werden
+    customMorphs = {}
   } = options;
   
   // Container finden
@@ -48,11 +47,6 @@ export async function amorph(options = {}) {
   const config = await loadConfig(configPath);
   debug.config('Geladen', Object.keys(config));
   
-  // Prüfe ob Header-Feature aktiv ist (dann kein autoLoad)
-  const hatHeader = config.features?.aktiv?.includes?.('header') || 
-                    (Array.isArray(config.features?.aktiv) && config.features.aktiv.includes('header'));
-  const sollAutoLaden = autoLoad && !hatHeader;
-  
   // Datenquelle erstellen
   const dataSource = createDataSource(config.daten);
   debug.daten('Quelle', config.daten.quelle);
@@ -67,40 +61,18 @@ export async function amorph(options = {}) {
   const features = await loadFeatures(container, config, dataSource);
   debug.features('Geladen', features.map(f => f.name));
   
-  // Initiale Daten laden nur wenn autoLoad aktiv und kein Header
-  if (sollAutoLaden) {
-    debug.daten('Lade Daten...');
-    const daten = await dataSource.query();
-    debug.daten(`${daten.length} Einträge geladen`);
-    await render(container, daten, config);
-    debug.render('Fertig!');
-  } else {
-    debug.daten('Warte auf Sucheingabe (Header-Modus)');
-    // Leerer Zustand - zeige Hinweis
-    container.innerHTML = '<div class="amorph-leer">Gib einen Suchbegriff ein um Ergebnisse zu sehen.</div>';
-  }
+  // Initiale Daten laden und rendern
+  debug.daten('Lade Daten...');
+  const daten = await dataSource.query();
+  debug.daten(`${daten.length} Einträge geladen`);
   
-  // Re-Render Handler (für Suche etc.) - jetzt mit optionalen Daten
-  container.addEventListener('amorph:request-render', async (e) => {
-    const direkteDaten = e.detail?.daten;
-    
-    if (direkteDaten !== undefined) {
-      // Daten wurden direkt übergeben (z.B. vom Header-Feature)
-      if (Array.isArray(direkteDaten) && direkteDaten.length === 0) {
-        container.innerHTML = '<div class="amorph-leer">Keine Ergebnisse gefunden.</div>';
-        debug.render('Leer (keine Ergebnisse)');
-      } else if (direkteDaten === null || (Array.isArray(direkteDaten) && direkteDaten.length === 0)) {
-        container.innerHTML = '<div class="amorph-leer">Gib einen Suchbegriff ein.</div>';
-        debug.render('Leer (kein Suchbegriff)');
-      } else {
-        await render(container, direkteDaten, config);
-        debug.render(`${direkteDaten.length} Ergebnisse gerendert`);
-      }
-    } else {
-      // Keine Daten übergeben - aus DataSource laden
-      const neueDaten = await dataSource.query();
-      await render(container, neueDaten, config);
-    }
+  await render(container, daten, config);
+  debug.render('Fertig!');
+  
+  // Re-Render Handler (für Suche etc.)
+  container.addEventListener('amorph:request-render', async () => {
+    const neueDaten = await dataSource.query();
+    await render(container, neueDaten, config);
   });
   
   // Aufräumen bei Bedarf

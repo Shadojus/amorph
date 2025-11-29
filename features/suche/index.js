@@ -1,23 +1,19 @@
 import { debug } from '../../observer/debug.js';
+import { suche as sucheMorph } from '../../morphs/suche.js';
 
 export default function init(ctx) {
-  debug.suche('Init', ctx.config);
+  debug.suche('Feature Init', ctx.config);
   
-  const form = document.createElement('div');
-  form.className = 'amorph-suche';
+  // Suche-Morph in amorph-container wrappen
+  const container = document.createElement('amorph-container');
+  container.setAttribute('data-morph', 'suche');
+  container.setAttribute('data-field', 'suche');
   
-  const input = document.createElement('input');
-  input.type = 'search';
-  input.placeholder = ctx.config.placeholder || 'Suchen...';
-  input.setAttribute('aria-label', 'Suche');
+  const form = sucheMorph(ctx.config);
+  container.appendChild(form);
   
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.textContent = '🔍';
-  button.setAttribute('aria-label', 'Suchen');
-  
-  form.appendChild(input);
-  form.appendChild(button);
+  const input = form.querySelector('input');
+  const button = form.querySelector('button');
   
   async function suchen() {
     const query = input.value.trim();
@@ -60,6 +56,6 @@ export default function init(ctx) {
     });
   }
   
-  ctx.dom.appendChild(form);
+  ctx.dom.appendChild(container);
   ctx.mount('afterbegin');
 }

@@ -1,258 +1,207 @@
 /**
- * Morph-Header Feature
- * 
- * Zentraler Header für alle AMORPH-Seiten:
- * - Suchleiste (lädt Daten erst bei Eingabe)
- * - Perspektiven-Buttons (schalten automatisch basierend auf Ergebnissen)
+ * Header Feature
+ * Kombiniert Suche + Perspektiven in einem Container
+ * Steuert die Interaktion zwischen beiden
  */
 
 import { debug } from '../../observer/debug.js';
+import { header as headerMorph } from '../../morphs/header.js';
 
 export default function init(ctx) {
-  debug.features('MorphHeader Init', ctx.config);
+  debug.features('Header Feature Init');
   
-  const perspektiven = ctx.config.perspektiven || [];
-  const suchConfig = ctx.config.suche || {};
+  // Config aus features.suche und features.perspektiven zusammenbauen
+  const headerConfig = {
+    suche: ctx.config.suche || {},
+    perspektiven: ctx.config.perspektiven || {}
+  };
   
+  debug.features('Header Config', headerConfig);
+  
+  // Header-Morph in amorph-container wrappen
+  const container = document.createElement('amorph-container');
+  container.setAttribute('data-morph', 'header');
+  container.setAttribute('data-field', 'header');
+  
+  const headerEl = headerMorph(headerConfig);
+  container.appendChild(headerEl);
+  
+  // Elemente finden
+  const sucheForm = headerEl.querySelector('.amorph-suche');
+  const input = sucheForm?.querySelector('input');
+  const button = sucheForm?.querySelector('button');
+  const perspektivenNav = headerEl.querySelector('.amorph-perspektiven');
+  const perspektivenBtns = perspektivenNav?.querySelectorAll('.amorph-perspektive-btn');
+  
+  // Perspektiven State
+  const maxAktiv = parseInt(perspektivenNav?.dataset.maxAktiv || '4');
   let aktivePerspektiven = new Set();
-  let letzteSuche = '';
-  let letzteErgebnisse = [];
   
-  // === HEADER CONTAINER ===
-  const header = document.createElement('header');
-  header.className = 'morph-header';
-  
-  // === SUCHLEISTE ===
-  const suchBereich = document.createElement('div');
-  suchBereich.className = 'morph-header-suche';
-  
-  const suchIcon = document.createElement('span');
-  suchIcon.className = 'morph-header-suche-icon';
-  suchIcon.textContent = '🔍';
-  
-  const suchInput = document.createElement('input');
-  suchInput.type = 'search';
-  suchInput.className = 'morph-header-suche-input';
-  suchInput.placeholder = suchConfig.placeholder || 'Suchen...';
-  suchInput.setAttribute('aria-label', 'Suche in Morphs');
-  
-  const suchStatus = document.createElement('span');
-  suchStatus.className = 'morph-header-suche-status';
-  suchStatus.setAttribute('aria-live', 'polite');
-  
-  suchBereich.appendChild(suchIcon);
-  suchBereich.appendChild(suchInput);
-  suchBereich.appendChild(suchStatus);
-  
-  // === PERSPEKTIVEN BUTTONS ===
-  const perspektivenBereich = document.createElement('nav');
-  perspektivenBereich.className = 'morph-header-perspektiven';
-  perspektivenBereich.setAttribute('role', 'toolbar');
-  perspektivenBereich.setAttribute('aria-label', 'Perspektiven');
-  
-  const perspektivenButtons = new Map();
-  
-  for (const p of perspektiven) {
-    const btn = document.createElement('button');
-    btn.className = 'morph-header-perspektive-btn';
-    btn.dataset.perspektive = p.id;
-    btn.setAttribute('aria-pressed', 'false');
-    btn.innerHTML = `
-      <span class="symbol">${p.symbol || ''}</span>
-      <span class="name">${p.name}</span>
-      <span class="count" aria-hidden="true"></span>
-    `;
+  // === SUCHE LOGIK ===
+  async function suchen() {
+    const query = input?.value.trim() || '';
+    const sucheConfig = headerConfig.suche;
     
-    if (p.farbe) {
-      btn.style.setProperty('--p-farbe', p.farbe);
-    }
+    if (!query && !sucheConfig.erlaubeLeer) return;
     
-    btn.addEventListener('click', () => togglePerspektive(p.id));
-    perspektivenBereich.appendChild(btn);
-    perspektivenButtons.set(p.id, { btn, config: p });
-  }
-  
-  // === HEADER ZUSAMMENBAUEN ===
-  header.appendChild(suchBereich);
-  header.appendChild(perspektivenBereich);
-  
-  // === FUNKTIONEN ===
-  
-  async function suchen(query) {
-    if (query === letzteSuche) return;
-    letzteSuche = query;
-    
-    debug.suche('Query', query);
-    
-    if (!query.trim()) {
-      // Leere Suche - keine Daten anzeigen
-      letzteErgebnisse = [];
-      updateStatus('Gib einen Suchbegriff ein');
-      clearPerspektivenHighlights();
-      ctx.requestRender([]);
-      return;
-    }
-    
-    header.classList.add('ladend');
-    updateStatus('Suche...');
+    sucheForm?.classList.add('ladend');
     
     try {
+      debug.suche('Suche', { query, limit: sucheConfig.limit || 50 });
+      
       const ergebnisse = await ctx.fetch({
         search: query,
-        limit: suchConfig.limit || 50
+        limit: sucheConfig.limit || 50
       });
       
-      letzteErgebnisse = ergebnisse;
-      debug.suche('Ergebnisse', { anzahl: ergebnisse.length, query });
+      debug.suche('Ergebnisse', { anzahl: ergebnisse?.length || 0 });
       
-      // Status aktualisieren
-      if (ergebnisse.length === 0) {
-        updateStatus('Keine Ergebnisse');
-      } else if (ergebnisse.length === 1) {
-        updateStatus('1 Ergebnis');
-      } else {
-        updateStatus(`${ergebnisse.length} Ergebnisse`);
+      // Auto-Perspektiven aktivieren basierend auf Ergebnissen
+      if (ergebnisse && ergebnisse.length > 0) {
+        autoPerspektiven(ergebnisse);
       }
       
-      // Perspektiven automatisch aktivieren
-      autoPerspektiven(ergebnisse);
-      
-      // Rendern
-      ctx.requestRender(ergebnisse);
+      ctx.emit('suche:ergebnisse', { query, ergebnisse });
+      ctx.requestRender();
       
     } catch (e) {
       debug.fehler('Suchfehler', e);
-      updateStatus('Fehler bei der Suche');
     } finally {
-      header.classList.remove('ladend');
+      sucheForm?.classList.remove('ladend');
     }
   }
   
-  function updateStatus(text) {
-    suchStatus.textContent = text;
+  if (input && button) {
+    button.addEventListener('click', suchen);
+    
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') suchen();
+      if (e.key === 'Escape') {
+        input.value = '';
+        ctx.requestRender();
+      }
+    });
+    
+    // Live-Suche
+    if (headerConfig.suche.live) {
+      let timeout;
+      input.addEventListener('input', () => {
+        clearTimeout(timeout);
+        timeout = setTimeout(suchen, headerConfig.suche.debounce || 300);
+      });
+    }
   }
   
-  function autoPerspektiven(ergebnisse) {
-    if (ergebnisse.length === 0) {
-      clearPerspektivenHighlights();
-      return;
-    }
-    
-    // Prüfe welche Perspektiven relevante Felder in den Ergebnissen haben
-    const relevantePersp = new Set();
-    
-    for (const [id, { config }] of perspektivenButtons) {
-      const felder = config.felder || [];
+  // === PERSPEKTIVEN LOGIK ===
+  function togglePerspektive(id, btn) {
+    if (aktivePerspektiven.has(id)) {
+      aktivePerspektiven.delete(id);
+      btn.setAttribute('aria-pressed', 'false');
+      btn.classList.remove('aktiv');
+    } else {
+      // Max erreicht?
+      if (aktivePerspektiven.size >= maxAktiv) {
+        const erste = aktivePerspektiven.values().next().value;
+        aktivePerspektiven.delete(erste);
+        perspektivenNav?.querySelector(`[data-perspektive="${erste}"]`)?.classList.remove('aktiv');
+        perspektivenNav?.querySelector(`[data-perspektive="${erste}"]`)?.setAttribute('aria-pressed', 'false');
+      }
       
-      // Prüfe ob mindestens ein Ergebnis ein Feld dieser Perspektive hat
-      const hatRelevanteDaten = ergebnisse.some(item => 
-        felder.some(feld => {
-          const wert = item[feld];
-          return wert !== undefined && wert !== null && wert !== '';
-        })
+      aktivePerspektiven.add(id);
+      btn.setAttribute('aria-pressed', 'true');
+      btn.classList.add('aktiv');
+    }
+    
+    anwendenPerspektiven();
+  }
+  
+  function anwendenPerspektiven() {
+    const appContainer = document.querySelector('[data-amorph-container]');
+    if (!appContainer) return;
+    
+    // Alle Perspektiv-Klassen entfernen
+    const liste = headerConfig.perspektiven.liste || [];
+    for (const p of liste) {
+      appContainer.classList.remove(`perspektive-${p.id}`);
+    }
+    
+    // Aktive hinzufügen
+    for (const id of aktivePerspektiven) {
+      appContainer.classList.add(`perspektive-${id}`);
+    }
+    
+    debug.perspektiven('Aktiv', Array.from(aktivePerspektiven));
+    ctx.emit('perspektiven:geaendert', { aktiv: Array.from(aktivePerspektiven) });
+  }
+  
+  function setPerspektive(id, aktiv) {
+    const btn = perspektivenNav?.querySelector(`[data-perspektive="${id}"]`);
+    if (!btn) return;
+    
+    if (aktiv && !aktivePerspektiven.has(id)) {
+      if (aktivePerspektiven.size >= maxAktiv) {
+        const erste = aktivePerspektiven.values().next().value;
+        aktivePerspektiven.delete(erste);
+        const ersteBtn = perspektivenNav?.querySelector(`[data-perspektive="${erste}"]`);
+        ersteBtn?.classList.remove('aktiv');
+        ersteBtn?.setAttribute('aria-pressed', 'false');
+      }
+      aktivePerspektiven.add(id);
+      btn.classList.add('aktiv');
+      btn.setAttribute('aria-pressed', 'true');
+    } else if (!aktiv && aktivePerspektiven.has(id)) {
+      aktivePerspektiven.delete(id);
+      btn.classList.remove('aktiv');
+      btn.setAttribute('aria-pressed', 'false');
+    }
+  }
+  
+  // Auto-Perspektiven: Aktiviere Perspektiven die zu den Ergebnissen passen
+  function autoPerspektiven(ergebnisse) {
+    const liste = headerConfig.perspektiven.liste || [];
+    const gefunden = new Set();
+    
+    for (const p of liste) {
+      const felder = p.felder || [];
+      
+      // Prüfe ob mindestens ein Ergebnis Daten für diese Perspektive hat
+      const hatDaten = ergebnisse.some(item => 
+        felder.some(feld => item[feld] !== undefined && item[feld] !== null && item[feld] !== '')
       );
       
-      if (hatRelevanteDaten) {
-        relevantePersp.add(id);
+      if (hatDaten) {
+        gefunden.add(p.id);
       }
     }
     
-    debug.perspektiven('Relevante Perspektiven', Array.from(relevantePersp));
-    
-    // Highlights setzen
-    for (const [id, { btn }] of perspektivenButtons) {
-      if (relevantePersp.has(id)) {
-        btn.classList.add('hat-ergebnisse');
-        // Erste relevante Perspektive automatisch aktivieren wenn keine aktiv
-        if (aktivePerspektiven.size === 0) {
-          aktivierePerspektive(id);
-        }
-      } else {
-        btn.classList.remove('hat-ergebnisse');
+    // Nur wenn genau 1-2 Perspektiven passen, automatisch aktivieren
+    if (gefunden.size > 0 && gefunden.size <= 2) {
+      // Alle deaktivieren
+      for (const id of aktivePerspektiven) {
+        const btn = perspektivenNav?.querySelector(`[data-perspektive="${id}"]`);
+        btn?.classList.remove('aktiv');
+        btn?.setAttribute('aria-pressed', 'false');
       }
+      aktivePerspektiven.clear();
+      
+      // Gefundene aktivieren
+      for (const id of gefunden) {
+        setPerspektive(id, true);
+      }
+      
+      anwendenPerspektiven();
     }
   }
   
-  function clearPerspektivenHighlights() {
-    for (const [, { btn }] of perspektivenButtons) {
-      btn.classList.remove('hat-ergebnisse');
+  // Event-Listener für Perspektiven-Buttons
+  if (perspektivenBtns) {
+    for (const btn of perspektivenBtns) {
+      btn.addEventListener('click', () => {
+        togglePerspektive(btn.dataset.perspektive, btn);
+      });
     }
   }
   
-  function togglePerspektive(id) {
-    if (aktivePerspektiven.has(id)) {
-      deaktivierePerspektive(id);
-    } else {
-      aktivierePerspektive(id);
-    }
-  }
-  
-  function aktivierePerspektive(id) {
-    const { btn, config } = perspektivenButtons.get(id);
-    aktivePerspektiven.add(id);
-    btn.setAttribute('aria-pressed', 'true');
-    btn.classList.add('aktiv');
-    
-    // CSS-Klasse auf Container
-    const container = document.querySelector('[data-amorph-container]');
-    if (container) {
-      container.classList.add(`perspektive-${id}`);
-    }
-    
-    debug.perspektiven('Aktiviert', id);
-    ctx.emit('perspektive:aktiviert', { id, config });
-  }
-  
-  function deaktivierePerspektive(id) {
-    const { btn } = perspektivenButtons.get(id);
-    aktivePerspektiven.delete(id);
-    btn.setAttribute('aria-pressed', 'false');
-    btn.classList.remove('aktiv');
-    
-    // CSS-Klasse von Container entfernen
-    const container = document.querySelector('[data-amorph-container]');
-    if (container) {
-      container.classList.remove(`perspektive-${id}`);
-    }
-    
-    debug.perspektiven('Deaktiviert', id);
-    ctx.emit('perspektive:deaktiviert', { id });
-  }
-  
-  // === EVENT LISTENER ===
-  
-  let suchTimeout;
-  suchInput.addEventListener('input', () => {
-    clearTimeout(suchTimeout);
-    const query = suchInput.value;
-    
-    if (suchConfig.live !== false) {
-      suchTimeout = setTimeout(() => suchen(query), suchConfig.debounce || 300);
-    }
-  });
-  
-  suchInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      clearTimeout(suchTimeout);
-      suchen(suchInput.value);
-    }
-    if (e.key === 'Escape') {
-      suchInput.value = '';
-      suchen('');
-    }
-  });
-  
-  // === MOUNT ===
-  ctx.dom.appendChild(header);
+  ctx.dom.appendChild(container);
   ctx.mount('afterbegin');
-  
-  // Initial: Keine Daten laden, Hinweis anzeigen
-  updateStatus('Gib einen Suchbegriff ein');
-  
-  // API für andere Features
-  ctx.api = {
-    suchen,
-    getPerspektiven: () => Array.from(aktivePerspektiven),
-    getErgebnisse: () => letzteErgebnisse
-  };
 }
