@@ -137,26 +137,97 @@ function showEmptyState(container) {
 }
 
 function highlightMatches(container, query) {
-  const lower = query.toLowerCase();
+  const q = query.toLowerCase();
   
-  // Nur bestimmte Felder highlighten
-  const highlightFields = ['name', 'wissenschaftlich', 'essbarkeit', 'geschmack'];
-  
-  for (const field of highlightFields) {
-    const elements = container.querySelectorAll(`amorph-container[data-field="${field}"] .amorph-text, amorph-container[data-field="${field}"] .amorph-tag`);
+  // Semantische Keyword-Mappings (gleiche wie in Suche)
+  const semanticMappings = {
+    // Essbarkeit
+    'essbar': ['essbar'],
+    'essen': ['essbar'],
+    'kann man essen': ['essbar'],
+    'speisepilz': ['essbar'],
+    'genießbar': ['essbar'],
+    'lecker': ['essbar'],
+    'kochen': ['essbar', 'braten', 'schmoren'],
+    'giftig': ['giftig', 'tödlich'],
+    'gift': ['giftig', 'tödlich'],
+    'gefährlich': ['giftig', 'tödlich'],
+    'tödlich': ['tödlich'],
     
-    for (const el of elements) {
-      const text = el.textContent;
-      const textLower = text.toLowerCase();
-      const index = textLower.indexOf(lower);
+    // Geschmack
+    'nussig': ['nussig', 'nuss'],
+    'mild': ['mild', 'zart'],
+    'würzig': ['würzig', 'aromatisch', 'intensiv'],
+    'umami': ['umami', 'fleischig'],
+    'fruchtig': ['fruchtig'],
+    'pfeffrig': ['pfeffrig', 'pfeffer'],
+    
+    // Zubereitung
+    'braten': ['braten'],
+    'trocknen': ['trocknen'],
+    'roh': ['roh'],
+    'schmoren': ['schmoren'],
+    
+    // Standort
+    'wald': ['wald', 'Wald'],
+    'nadelwald': ['Nadelwald', 'Fichten', 'Kiefern'],
+    'laubwald': ['Laubwald', 'Buche', 'Eiche'],
+    'wiese': ['Wiese', 'Weide', 'Rasen'],
+    
+    // Saison
+    'herbst': ['September', 'Oktober', 'November'],
+    'frühling': ['März', 'April', 'Mai'],
+    'sommer': ['Juni', 'Juli', 'August'],
+    'winter': ['Dezember', 'Januar', 'Februar'],
+    
+    // Farben
+    'rot': ['rot', 'Rot'],
+    'gelb': ['gelb', 'Gelb', 'gold', 'dotter'],
+    'braun': ['braun', 'Braun', 'kastanie'],
+    'weiß': ['weiß', 'Weiß', 'weiss']
+  };
+  
+  // Finde alle zu highlightenden Begriffe
+  let highlightTerms = [q]; // Immer den originalen Query
+  
+  // Semantische Matches hinzufügen
+  for (const [keyword, mappedTerms] of Object.entries(semanticMappings)) {
+    if (q.includes(keyword)) {
+      highlightTerms.push(...mappedTerms);
+    }
+  }
+  
+  // Auch einzelne Wörter der Query
+  const queryWords = q.split(/\s+/).filter(w => w.length > 2);
+  highlightTerms.push(...queryWords);
+  
+  // Duplikate entfernen
+  highlightTerms = [...new Set(highlightTerms)];
+  
+  // ALLE Text-Elemente in Items durchsuchen (nicht nur bestimmte Felder)
+  const items = container.querySelectorAll('.amorph-item');
+  
+  for (const item of items) {
+    const textElements = item.querySelectorAll('.amorph-text, .amorph-tag');
+    
+    for (const el of textElements) {
+      const originalText = el.textContent;
+      let html = escapeHtml(originalText);
+      let hasMatch = false;
       
-      if (index !== -1) {
-        // Treffer gefunden - Text mit Highlight ersetzen
-        const before = text.slice(0, index);
-        const match = text.slice(index, index + query.length);
-        const after = text.slice(index + query.length);
+      // Alle Highlight-Begriffe prüfen
+      for (const term of highlightTerms) {
+        const termLower = term.toLowerCase();
+        const regex = new RegExp(`(${escapeRegex(term)})`, 'gi');
         
-        el.innerHTML = `${escapeHtml(before)}<mark class="amorph-highlight">${escapeHtml(match)}</mark>${escapeHtml(after)}`;
+        if (originalText.toLowerCase().includes(termLower)) {
+          html = html.replace(regex, '<mark class="amorph-highlight">$1</mark>');
+          hasMatch = true;
+        }
+      }
+      
+      if (hasMatch) {
+        el.innerHTML = html;
       }
     }
   }
@@ -166,6 +237,10 @@ function escapeHtml(text) {
   const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
+}
+
+function escapeRegex(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 // Exports für modulare Nutzung
