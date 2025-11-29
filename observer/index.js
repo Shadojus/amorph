@@ -6,7 +6,17 @@ import { createTarget } from './target.js';
 export function setupObservers(container, config, session = null) {
   const observers = [];
   
-  if (!config?.observer) return observers;
+  console.log('%c[AMORPH]%c Observer Setup', 'color: #60a5fa; font-weight: bold', 'color: inherit', {
+    hatConfig: !!config?.observer,
+    interaktion: !!config?.observer?.interaktion,
+    rendering: !!config?.observer?.rendering,
+    session: !!config?.observer?.session
+  });
+  
+  if (!config?.observer) {
+    console.warn('%c[AMORPH]%c Keine Observer-Konfiguration gefunden', 'color: #fbbf24; font-weight: bold', 'color: inherit');
+    return observers;
+  }
   
   if (config.observer.interaktion) {
     const target = createTarget(config.observer.interaktion.ziel);

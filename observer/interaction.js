@@ -6,6 +6,8 @@ export class InteractionObserver {
   }
   
   start() {
+    this.send({ typ: 'observer_start', observer: 'InteractionObserver', zeitstempel: Date.now() });
+    
     this.addHandler('click', (e) => {
       const morph = e.target.closest('amorph-container');
       if (!morph) return;

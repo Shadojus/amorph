@@ -20,10 +20,24 @@ class ConsoleTarget {
   constructor(options = {}) {
     this.prefix = options.prefix || '[AMORPH]';
     this.level = options.level || 'log';
+    this.styles = {
+      log: 'color: #60a5fa; font-weight: bold',
+      debug: 'color: #a78bfa; font-weight: bold',
+      info: 'color: #34d399; font-weight: bold',
+      warn: 'color: #fbbf24; font-weight: bold',
+      error: 'color: #f87171; font-weight: bold'
+    };
   }
   
   send(nachricht) {
-    console[this.level](this.prefix, nachricht);
+    const style = this.styles[this.level] || this.styles.log;
+    const time = new Date().toLocaleTimeString('de-DE');
+    console[this.level](
+      `%c${this.prefix}%c [${time}]`,
+      style,
+      'color: #888',
+      nachricht
+    );
   }
 }
 
