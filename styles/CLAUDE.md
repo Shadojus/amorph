@@ -1,53 +1,64 @@
 # Styles
 
-CSS für AMORPH. Modular, anpassbar, Dark-Mode-fähig.
+Black Glasmorphism Design. Elegant, dezent, leuchtend.
+
+## Design-System
+
+AMORPH nutzt ein **Black Glasmorphism** Design:
+- Schwarze Glass-Cards mit `backdrop-filter: blur()`
+- Dezente weiße Borders (5-15% Opacity)
+- **Multi-Color Glow-Effekte** mit CSS `color-mix()`
+- Pulsierende Animationen für aktive Elemente
+- Woodfloor-Texturen als Hintergrund
 
 ## Dateien
 
 ```
 styles/
-├── base.css         ← Variablen, Reset, Container
+├── index.css        ← Importiert alles
+├── base.css         ← CSS-Variablen, Reset, Dark Theme
 ├── morphs.css       ← Styles für alle Morphs
-├── features.css     ← Suche, Perspektiven, Grid-Toolbar
-├── layouts.css      ← Liste, Grid, Kompakt Layouts
-├── perspektiven.css ← Farbliche Hervorhebungen
-└── index.css        ← Importiert alles
+├── features.css     ← Header, Suche, Perspektiven-Buttons
+├── layouts.css      ← Glass-Cards, Liste/Grid Layouts
+└── perspektiven.css ← Feld-Glow, Multi-Perspektiven
 ```
 
 ## CSS Variablen
 
 ```css
 :root {
-  /* Farben */
-  --color-bg: #ffffff;
-  --color-text: #1f2937;
-  --color-text-muted: #6b7280;
-  --color-border: #e5e7eb;
-  --color-primary: #3b82f6;
+  /* Dark Theme (Standard) */
+  --color-bg: #0a0a0a;
+  --color-surface: rgba(255, 255, 255, 0.03);
+  --color-text: #f0f0f0;
+  --color-text-muted: rgba(255, 255, 255, 0.5);
+  --color-border: rgba(255, 255, 255, 0.08);
   
-  /* Abstände */
-  --space-xs: 0.25rem;
-  --space-sm: 0.5rem;
-  --space-md: 1rem;
-  --space-lg: 1.5rem;
-  --space-xl: 2rem;
+  /* Perspektiven-Farben (dynamisch gesetzt) */
+  --p-farbe: #3b82f6;       /* Hauptfarbe */
+  --p-farbe-1: var(--p-farbe);
+  --p-farbe-2: var(--p-farbe);
+  --p-farbe-3: var(--p-farbe);
   
-  /* Schrift */
-  --font-family: system-ui, sans-serif;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  
-  /* Rundungen */
-  --radius-sm: 4px;
-  --radius-md: 8px;
+  /* Glasmorphism */
+  --glass-blur: 20px;
+  --glass-bg: rgba(0, 0, 0, 0.7);
 }
 ```
 
-## Morph-Klassen
+## Multi-Color Glow
 
-Jeder Morph hat eine CSS-Klasse:
+Aktive Perspektiven nutzen alle 4 Farben für den Glow:
 
-- `.amorph-text`
+```css
+.amorph-perspektive-btn.aktiv {
+  box-shadow: 
+    0 0 10px color-mix(in srgb, var(--p-farbe) 40%, transparent),
+    0 0 20px color-mix(in srgb, var(--p-farbe-1) 25%, transparent),
+    0 0 30px color-mix(in srgb, var(--p-farbe-2) 15%, transparent);
+  animation: glow-pulse-multi 2.5s ease-in-out infinite;
+}
+```
 - `.amorph-number`
 - `.amorph-boolean`
 - `.amorph-tag`

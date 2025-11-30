@@ -22,43 +22,49 @@ amorph-container[data-field] {
   display: block !important;
   position: relative;
   padding-left: var(--space-md);
-  margin-left: 4px;
-  /* Kein solider Balken - stattdessen Glow */
+  margin-left: 8px;
   border-left: none;
 }
 
-/* Leuchtender vertikaler Glow-Streifen */
+/* Leuchtender vertikaler Glow-Streifen mit Farb-Grid */
 [data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field][data-perspektive-sichtbar]::before {
   content: '';
   position: absolute;
-  left: 0;
-  top: 2px;
-  bottom: 2px;
+  left: -4px;
+  top: 0;
+  bottom: 0;
   width: 2px;
-  background: var(--feld-perspektive-farbe, var(--color-accent));
+  /* Gradient aus allen 4 Farben */
+  background: linear-gradient(
+    180deg,
+    var(--feld-perspektive-farbe, var(--color-accent)) 0%,
+    var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 33%,
+    var(--feld-p-farbe-2, var(--feld-perspektive-farbe)) 66%,
+    var(--feld-p-farbe-3, var(--feld-perspektive-farbe)) 100%
+  );
   border-radius: 2px;
-  /* Leuchtender Glow-Effekt */
+  /* Multi-Color Glow-Effekt */
   box-shadow: 
     0 0 6px var(--feld-perspektive-farbe, var(--color-accent)),
-    0 0 12px color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent)) 60%, transparent),
-    0 0 20px color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent)) 30%, transparent);
-  animation: feld-glow 2.5s ease-in-out infinite;
+    0 0 12px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 50%, transparent),
+    0 0 18px color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe)) 30%, transparent);
+  animation: feld-glow-multi 3s ease-in-out infinite;
 }
 
-@keyframes feld-glow {
+@keyframes feld-glow-multi {
   0%, 100% { 
-    opacity: 0.8;
+    opacity: 0.85;
     box-shadow: 
       0 0 6px var(--feld-perspektive-farbe, var(--color-accent)),
-      0 0 12px color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent)) 60%, transparent),
-      0 0 20px color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent)) 30%, transparent);
+      0 0 12px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 50%, transparent),
+      0 0 18px color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe)) 30%, transparent);
   }
   50% { 
     opacity: 1;
     box-shadow: 
-      0 0 8px var(--feld-perspektive-farbe, var(--color-accent)),
-      0 0 18px color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent)) 80%, transparent),
-      0 0 30px color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent)) 50%, transparent);
+      0 0 10px var(--feld-perspektive-farbe, var(--color-accent)),
+      0 0 20px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 70%, transparent),
+      0 0 30px color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe)) 50%, transparent);
   }
 }
 
@@ -95,31 +101,5 @@ amorph-container[data-field] {
   }
 }
 
-/* === TREFFER-BADGE === */
-.amorph-perspektive-btn {
-  position: relative;
-}
-
-.amorph-perspektive-btn.hat-treffer::after {
-  content: attr(data-treffer-anzahl);
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  min-width: 16px;
-  height: 16px;
-  padding: 0 4px;
-  font-size: 10px;
-  font-weight: 600;
-  line-height: 16px;
-  text-align: center;
-  color: white;
-  background: color-mix(in srgb, var(--p-farbe, var(--color-accent)) 80%, black);
-  border-radius: 8px;
-  animation: badge-pop 0.3s ease-out;
-}
-
-@keyframes badge-pop {
-  0% { transform: scale(0); opacity: 0; }
-  70% { transform: scale(1.1); }
-  100% { transform: scale(1); opacity: 1; }
+/* === TREFFER-BADGE wird in features.css definiert === */
 }

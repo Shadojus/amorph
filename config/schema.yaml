@@ -318,12 +318,18 @@ semantik:
 
 # === PERSPEKTIVEN ===
 # Welche Felder gehören zu welcher Perspektive?
-# Farben: Dezente, pastellige Töne
+# Farben: Farb-Grid mit 4 harmonischen Tönen pro Perspektive
+# farben[0] = Hauptfarbe, [1-3] = Variationen
 perspektiven:
   kulinarisch:
     name: Kulinarisch
     symbol: 🍳
-    farbe: "#e0a040"
+    # Warme Gold/Orange-Töne
+    farben:
+      - "#e8b04a" 
+      - "#d4943a"
+      - "#f0c866"
+      - "#cc7a2a"
     felder:
       - geschmack
       - zubereitung
@@ -346,7 +352,12 @@ perspektiven:
   sicherheit:
     name: Sicherheit
     symbol: ⚠️
-    farbe: "#e06080"
+    # Warme Rosa/Korall-Töne
+    farben:
+      - "#e86080"
+      - "#d44a6a"
+      - "#f07898"
+      - "#c83a5a"
     felder:
       - essbarkeit
       - verwechslung
@@ -368,7 +379,12 @@ perspektiven:
   anbau:
     name: Anbau
     symbol: 🌱
-    farbe: "#60c090"
+    # Frische Grün/Türkis-Töne
+    farben:
+      - "#5cc98a"
+      - "#4ab078"
+      - "#70dda0"
+      - "#3a9868"
     felder:
       - standort
       - saison
@@ -392,7 +408,12 @@ perspektiven:
   oekologie:
     name: Ökologie
     symbol: 🌍
-    farbe: "#60a0d0"
+    # Kühle Blau/Cyan-Töne
+    farben:
+      - "#5aa0d8"
+      - "#4888c0"
+      - "#70b8f0"
+      - "#3870a8"
     felder:
       - standort
       - symbiose

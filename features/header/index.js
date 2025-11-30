@@ -178,42 +178,49 @@ export default function init(ctx) {
         if (!perspektive) continue;
         
         const felder = perspektive.felder || [];
-        const farbe = perspektive.farbe || '#3b82f6';
+        // Farben-Array unterstützen, Fallback auf einzelne farbe
+        const farben = perspektive.farben || (perspektive.farbe ? [perspektive.farbe] : ['#3b82f6']);
+        const hauptfarbe = farben[0];
         
         for (const feldname of felder) {
           if (!feldZuFarben.has(feldname)) {
             feldZuFarben.set(feldname, []);
           }
-          feldZuFarben.get(feldname).push(farbe);
+          // Speichere das komplette Farben-Array für diese Perspektive
+          feldZuFarben.get(feldname).push({ hauptfarbe, farben });
         }
       }
       
       // Felder markieren mit allen zugehörigen Farben
-      for (const [feldname, farben] of feldZuFarben) {
+      for (const [feldname, perspektivFarben] of feldZuFarben) {
         const feldElemente = appContainer.querySelectorAll(`amorph-container[data-field="${feldname}"]`);
         for (const feld of feldElemente) {
           feld.setAttribute('data-perspektive-sichtbar', 'true');
           
-          if (farben.length === 1) {
-            // Einzelne Farbe
+          if (perspektivFarben.length === 1) {
+            // Einzelne Perspektive - alle 4 Farben setzen
+            const { farben } = perspektivFarben[0];
             feld.style.setProperty('--feld-perspektive-farbe', farben[0]);
+            if (farben[1]) feld.style.setProperty('--feld-p-farbe-1', farben[1]);
+            if (farben[2]) feld.style.setProperty('--feld-p-farbe-2', farben[2]);
+            if (farben[3]) feld.style.setProperty('--feld-p-farbe-3', farben[3]);
             feld.removeAttribute('data-perspektive-multi');
           } else {
-            // Mehrere Farben - Gradient erstellen
+            // Mehrere Perspektiven - Gradient aus Hauptfarben
             feld.setAttribute('data-perspektive-multi', 'true');
-            feld.setAttribute('data-perspektive-count', farben.length.toString());
+            feld.setAttribute('data-perspektive-count', perspektivFarben.length.toString());
             
-            // Setze alle Farben als CSS Custom Properties
-            farben.forEach((farbe, i) => {
-              feld.style.setProperty(`--p-farbe-${i}`, farbe);
+            // Setze Hauptfarben aller Perspektiven
+            perspektivFarben.forEach(({ hauptfarbe }, i) => {
+              feld.style.setProperty(`--p-farbe-${i}`, hauptfarbe);
             });
-            feld.style.setProperty('--p-farben-anzahl', farben.length.toString());
+            feld.style.setProperty('--p-farben-anzahl', perspektivFarben.length.toString());
             
             // Gradient für Border erstellen
-            const gradientStops = farben.map((farbe, i) => {
-              const start = (i / farben.length) * 100;
-              const end = ((i + 1) / farben.length) * 100;
-              return `${farbe} ${start}%, ${farbe} ${end}%`;
+            const gradientStops = perspektivFarben.map(({ hauptfarbe }, i) => {
+              const start = (i / perspektivFarben.length) * 100;
+              const end = ((i + 1) / perspektivFarben.length) * 100;
+              return `${hauptfarbe} ${start}%, ${hauptfarbe} ${end}%`;
             }).join(', ');
             feld.style.setProperty('--feld-gradient', `linear-gradient(180deg, ${gradientStops})`);
           }

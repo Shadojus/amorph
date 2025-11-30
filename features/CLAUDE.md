@@ -2,6 +2,13 @@
 
 Eigenständig. Isoliert. Optional.
 
+## Aktueller Stand
+
+- ✅ **Header-Feature**: Kombiniert Suche + Perspektiven
+- ✅ **Perspektiven**: 4-Farben-Grid, Multi-Color Glow, Auto-Aktivierung
+- ✅ **Semantische Suche**: Keywords → Feldwerte aus Schema
+- ✅ **Treffer-Badges**: Zeigen Anzahl pro Perspektive
+
 ## Was ist ein Feature?
 
 Ein Feature ist eine abgeschlossene Erweiterung. Es bekommt einen eingeschränkten Kontext - keinen globalen Zugriff.

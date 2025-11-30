@@ -18,7 +18,8 @@ export function perspektiven(config, morphConfig = {}) {
   debug.perspektiven('Liste Quelle', { 
     ausSchema: schemaListe.length, 
     verwendet: liste.length,
-    quelle: config.liste?.length > 0 ? 'config' : 'schema'
+    quelle: config.liste?.length > 0 ? 'config' : 'schema',
+    erstePerspektive: liste[0] // Debug: Was ist in der Liste?
   });
   
   const nav = document.createElement('nav');
@@ -33,9 +34,15 @@ export function perspektiven(config, morphConfig = {}) {
     btn.setAttribute('aria-pressed', 'false');
     btn.textContent = `${p.symbol || ''} ${p.name}`.trim();
     
-    if (p.farbe) {
-      btn.style.setProperty('--p-farbe', p.farbe);
-    }
+    // Farben-Grid unterstützen (Array mit 4 Farben)
+    // Fallback auf einzelne farbe für Kompatibilität
+    const farben = p.farben || (p.farbe ? [p.farbe] : ['#3b82f6']);
+    debug.perspektiven('Button Farben', { id: p.id, farben, hatFarben: !!p.farben, hatFarbe: !!p.farbe });
+    
+    btn.style.setProperty('--p-farbe', farben[0]); // Hauptfarbe
+    if (farben[1]) btn.style.setProperty('--p-farbe-1', farben[1]);
+    if (farben[2]) btn.style.setProperty('--p-farbe-2', farben[2]);
+    if (farben[3]) btn.style.setProperty('--p-farbe-3', farben[3]);
     
     nav.appendChild(btn);
   }

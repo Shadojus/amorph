@@ -13,8 +13,34 @@ SCHEMA → DATENBANK → MORPHS → DOM
 Das Schema (`config/schema.yaml`) ist die **Single Source of Truth**. Es definiert:
 - Welche Felder existieren und wie sie dargestellt werden
 - Semantische Suchregeln (Keywords → Feldwerte)
-- Perspektiven (Filteransichten mit Farbmarkierung)
+- Perspektiven (Filteransichten mit 4-Farben-Grid)
 - Tag-Farben pro Feld
+
+## Design: Black Glasmorphism
+
+AMORPH nutzt ein elegantes **Black Glasmorphism** Design:
+- Schwarze Glass-Cards mit Blur-Effekt
+- Dezente weiße Borders (5-15% Opacity)
+- **Multi-Color Glow-Effekte** mit CSS `color-mix()`
+- Woodfloor-Texturen als subtiler Hintergrund
+- Pulsierende Animationen für aktive Elemente
+
+### 4-Farben-Grid pro Perspektive
+
+Jede Perspektive hat 4 harmonische Farben:
+```yaml
+perspektiven:
+  kulinarisch:
+    farben:
+      - "#e8b04a"  # Hauptfarbe (Gold)
+      - "#d4943a"  # Sekundär
+      - "#f0c866"  # Hell
+      - "#cc7a2a"  # Dunkel
+```
+
+Diese Farben erzeugen den Multi-Color Glow:
+- `--p-farbe` (Hauptfarbe)
+- `--p-farbe-1`, `--p-farbe-2`, `--p-farbe-3`
 
 ## Die vier Säulen
 
@@ -101,12 +127,16 @@ semantik:
     werte: [essbar]
     score: 50
 
-# Perspektiven mit Feldern und Farben
+# Perspektiven mit Feldern und 4-Farben-Grid
 perspektiven:
   sicherheit:
     name: Sicherheit
     symbol: ⚠️
-    farbe: "#ef4444"
+    farben:  # 4 harmonische Farben statt einer
+      - "#e86080"
+      - "#d44a6a"
+      - "#f07898"
+      - "#c83a5a"
     felder: [essbarkeit, verwechslung, symptome]
 ```
 

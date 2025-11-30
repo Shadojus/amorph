@@ -178,13 +178,18 @@ export function getPerspektivenListe() {
     return [];
   }
   
-  const liste = Object.entries(schemaCache.perspektiven).map(([id, config]) => ({
-    id,
-    name: config.name || id,
-    symbol: config.symbol || '',
-    farbe: config.farbe || null,
-    felder: config.felder || []
-  }));
+  const liste = Object.entries(schemaCache.perspektiven).map(([id, config]) => {
+    // Unterstütze sowohl `farben` (Array) als auch `farbe` (String) für Kompatibilität
+    const farben = config.farben || (config.farbe ? [config.farbe] : null);
+    return {
+      id,
+      name: config.name || id,
+      symbol: config.symbol || '',
+      farbe: farben ? farben[0] : null, // Hauptfarbe für Kompatibilität
+      farben: farben, // Vollständiges Farb-Grid
+      felder: config.felder || []
+    };
+  });
   
   debug.perspektiven('Liste aus Schema', { anzahl: liste.length });
   return liste;

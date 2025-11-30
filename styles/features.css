@@ -9,12 +9,16 @@
   right: 0;
   z-index: 100;
   padding: var(--space-sm) var(--space-lg);
+  /* Extra Platz unten für Glow-Effekte */
+  padding-bottom: var(--space-md);
   /* Dezentes schwarzes Glas */
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   /* Sehr subtile Border */
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  /* Glow darf über die Grenzen hinaus */
+  overflow: visible;
 }
 
 /* App-Titel im Header */
@@ -93,15 +97,19 @@
 .amorph-perspektiven {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-xs);
+  gap: var(--space-sm);
   margin-top: var(--space-xs);
+  /* Extra Platz für Glow und Badges */
+  padding: 12px 8px 8px 8px;
+  margin: 0 -8px;
+  overflow: visible;
 }
 
 .amorph-perspektive-btn {
   display: flex;
   align-items: center;
   gap: var(--space-xs);
-  padding: 4px 10px;
+  padding: 6px 12px;
   font-size: var(--font-size-sm);
   font-weight: 400;
   /* Dezenter Glas-Button */
@@ -111,6 +119,9 @@
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all 0.2s ease;
+  /* Platz für Glow-Effekt */
+  position: relative;
+  z-index: 1;
 }
 
 .amorph-perspektive-btn:hover {
@@ -121,46 +132,46 @@
 
 .amorph-perspektive-btn.aktiv,
 .amorph-perspektive-btn[aria-pressed="true"] {
-  /* Leuchtender Glow-Effekt */
-  background: color-mix(in srgb, var(--p-farbe, var(--color-accent)) 15%, transparent);
+  /* Leuchtender Multi-Color Glow-Effekt mit Farb-Grid */
+  background: 
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--p-farbe, var(--color-accent)) 12%, transparent) 0%,
+      color-mix(in srgb, var(--p-farbe-1, var(--p-farbe)) 10%, transparent) 50%,
+      color-mix(in srgb, var(--p-farbe-2, var(--p-farbe)) 12%, transparent) 100%
+    );
   border-color: color-mix(in srgb, var(--p-farbe, var(--color-accent)) 50%, transparent);
   color: var(--p-farbe, var(--color-accent));
-  /* Äußerer Glow */
+  /* Multi-Color Glow aus allen 4 Farben */
   box-shadow: 
-    0 0 12px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 40%, transparent),
-    0 0 24px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 20%, transparent),
-    inset 0 0 8px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 10%, transparent);
+    0 0 10px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 40%, transparent),
+    0 0 20px color-mix(in srgb, var(--p-farbe-1, var(--p-farbe)) 25%, transparent),
+    0 0 30px color-mix(in srgb, var(--p-farbe-2, var(--p-farbe)) 15%, transparent),
+    inset 0 0 8px color-mix(in srgb, var(--p-farbe-3, var(--p-farbe)) 10%, transparent);
   /* Pulsieren */
-  animation: glow-pulse 2s ease-in-out infinite;
+  animation: glow-pulse-multi 2.5s ease-in-out infinite;
 }
 
-@keyframes glow-pulse {
+@keyframes glow-pulse-multi {
   0%, 100% { 
     box-shadow: 
-      0 0 12px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 40%, transparent),
-      0 0 24px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 20%, transparent),
-      inset 0 0 8px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 10%, transparent);
+      0 0 10px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 40%, transparent),
+      0 0 20px color-mix(in srgb, var(--p-farbe-1, var(--p-farbe)) 25%, transparent),
+      0 0 30px color-mix(in srgb, var(--p-farbe-2, var(--p-farbe)) 15%, transparent),
+      inset 0 0 8px color-mix(in srgb, var(--p-farbe-3, var(--p-farbe)) 10%, transparent);
+    filter: brightness(1);
   }
   50% { 
     box-shadow: 
-      0 0 18px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 60%, transparent),
-      0 0 36px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 30%, transparent),
-      inset 0 0 12px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 15%, transparent);
+      0 0 16px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 55%, transparent),
+      0 0 28px color-mix(in srgb, var(--p-farbe-1, var(--p-farbe)) 35%, transparent),
+      0 0 40px color-mix(in srgb, var(--p-farbe-2, var(--p-farbe)) 25%, transparent),
+      inset 0 0 12px color-mix(in srgb, var(--p-farbe-3, var(--p-farbe)) 15%, transparent);
+    filter: brightness(1.1);
   }
 }
 
-/* Treffer-Badge - leuchtend */
-.amorph-perspektive-btn.hat-treffer::after {
-  content: attr(data-treffer-anzahl);
-  font-size: 0.65em;
-  padding: 2px 5px;
-  background: color-mix(in srgb, var(--p-farbe, var(--color-accent)) 80%, black);
-  color: white;
-  border-radius: 6px;
-  margin-left: 4px;
-  font-weight: 600;
-  box-shadow: 0 0 8px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 50%, transparent);
-}
+/* Treffer-Badge - leuchtend mit absolutem Positioning */\n.amorph-perspektive-btn.hat-treffer::after {\n  content: attr(data-treffer-anzahl);\n  position: absolute;\n  top: -8px;\n  right: -8px;\n  min-width: 18px;\n  height: 18px;\n  padding: 0 5px;\n  font-size: 0.7em;\n  font-weight: 700;\n  line-height: 18px;\n  text-align: center;\n  background: var(--p-farbe, var(--color-accent));\n  color: black;\n  border-radius: 10px;\n  /* Glow um Badge */\n  box-shadow: \n    0 0 8px var(--p-farbe, var(--color-accent)),\n    0 0 16px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 60%, transparent);\n  animation: badge-glow-pop 0.3s ease-out;\n  z-index: 10;\n}\n\n@keyframes badge-glow-pop {\n  0% { transform: scale(0); opacity: 0; }\n  70% { transform: scale(1.15); }\n  100% { transform: scale(1); opacity: 1; }\n}
 
 /* === ANSICHT-UMSCHALTER === */
 .amorph-ansicht-switch {

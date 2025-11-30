@@ -2,6 +2,13 @@
 
 Eine Datei = Ein Aspekt. **Schema ist die Single Source of Truth.**
 
+## Aktueller Stand
+
+- ✅ Black Glasmorphism Design
+- ✅ 4-Farben-Grid pro Perspektive (Multi-Color Glow)
+- ✅ Semantische Suche aus Schema
+- ✅ Auto-Perspektiven bei Suchergebnissen
+
 ## Dateien
 
 ```
@@ -116,11 +123,16 @@ semantik:
     werte: [aktiv, online]
     score: 50
 
-# Perspektiven (für UI-Filter)
+# Perspektiven (für UI-Filter mit 4-Farben-Grid)
 perspektiven:
   details:
     name: Details
     symbol: 📋
+    farben:              # 4 harmonische Farben
+      - \"#5aa0d8\"      # Hauptfarbe
+      - \"#4888c0\"      # Sekundär
+      - \"#70b8f0\"      # Hell
+      - \"#3870a8\"      # Dunkel
     felder: [name, beschreibung]
     keywords: [detail, info]
 ```
