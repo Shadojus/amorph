@@ -28,7 +28,8 @@ export default function init(ctx) {
   
   const headerConfig = {
     suche: ctx.config.suche || {},
-    perspektiven: perspektivenConfig
+    perspektiven: perspektivenConfig,
+    ansicht: ctx.config.ansicht || {}  // Ansicht-Switch Config
   };
   
   debug.features('Header Config', headerConfig);
@@ -153,9 +154,12 @@ export default function init(ctx) {
     
     const liste = headerConfig.perspektiven.liste || [];
     
-    // Alle Perspektiv-Klassen entfernen
-    for (const p of liste) {
-      appContainer.classList.remove(`perspektive-${p.id}`);
+    // Alle Feld-Markierungen entfernen
+    const alleFelder = appContainer.querySelectorAll('amorph-container[data-perspektive-sichtbar]');
+    for (const feld of alleFelder) {
+      feld.removeAttribute('data-perspektive-sichtbar');
+      feld.removeAttribute('data-perspektive-multi');
+      feld.style.removeProperty('--feld-perspektive-farbe');
     }
     
     // Wenn keine Perspektive aktiv → Klasse entfernen (alle sichtbar)
@@ -163,14 +167,63 @@ export default function init(ctx) {
       appContainer.classList.remove('perspektiven-aktiv');
       debug.perspektiven('Keine aktiv - alle Felder sichtbar');
     } else {
-      // Perspektiven aktiv → nur relevante Felder zeigen
+      // Perspektiven aktiv → relevante Felder markieren
       appContainer.classList.add('perspektiven-aktiv');
       
+      // Sammle alle Felder die sichtbar sein sollen mit ihrer Farbe
+      const feldZuFarben = new Map();
+      
       for (const id of aktivePerspektiven) {
-        appContainer.classList.add(`perspektive-${id}`);
+        const perspektive = liste.find(p => p.id === id);
+        if (!perspektive) continue;
+        
+        const felder = perspektive.felder || [];
+        const farbe = perspektive.farbe || '#3b82f6';
+        
+        for (const feldname of felder) {
+          if (!feldZuFarben.has(feldname)) {
+            feldZuFarben.set(feldname, []);
+          }
+          feldZuFarben.get(feldname).push(farbe);
+        }
       }
       
-      debug.perspektiven('Aktiv', Array.from(aktivePerspektiven));
+      // Felder markieren mit allen zugehörigen Farben
+      for (const [feldname, farben] of feldZuFarben) {
+        const feldElemente = appContainer.querySelectorAll(`amorph-container[data-field="${feldname}"]`);
+        for (const feld of feldElemente) {
+          feld.setAttribute('data-perspektive-sichtbar', 'true');
+          
+          if (farben.length === 1) {
+            // Einzelne Farbe
+            feld.style.setProperty('--feld-perspektive-farbe', farben[0]);
+            feld.removeAttribute('data-perspektive-multi');
+          } else {
+            // Mehrere Farben - Gradient erstellen
+            feld.setAttribute('data-perspektive-multi', 'true');
+            feld.setAttribute('data-perspektive-count', farben.length.toString());
+            
+            // Setze alle Farben als CSS Custom Properties
+            farben.forEach((farbe, i) => {
+              feld.style.setProperty(`--p-farbe-${i}`, farbe);
+            });
+            feld.style.setProperty('--p-farben-anzahl', farben.length.toString());
+            
+            // Gradient für Border erstellen
+            const gradientStops = farben.map((farbe, i) => {
+              const start = (i / farben.length) * 100;
+              const end = ((i + 1) / farben.length) * 100;
+              return `${farbe} ${start}%, ${farbe} ${end}%`;
+            }).join(', ');
+            feld.style.setProperty('--feld-gradient', `linear-gradient(180deg, ${gradientStops})`);
+          }
+        }
+      }
+      
+      debug.perspektiven('Aktiv', { 
+        perspektiven: Array.from(aktivePerspektiven),
+        felder: [...feldZuFarben.keys()]
+      });
     }
     
     ctx.emit('perspektiven:geaendert', { aktiv: Array.from(aktivePerspektiven) });
@@ -365,5 +418,9 @@ export default function init(ctx) {
   }
   
   ctx.dom.appendChild(container);
-  ctx.mount('afterbegin');
+  
+  // Header direkt in body einfügen (für position: fixed über volle Breite)
+  // Nicht in #app Container, sonst wird er durch max-width begrenzt
+  document.body.insertAdjacentElement('afterbegin', ctx.dom);
+  debug.mount('Header in body eingefügt');
 }

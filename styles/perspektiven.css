@@ -1,93 +1,102 @@
 /* AMORPH v5 - Perspektiven Styles */
+/* Black Glasmorphism - Dezent */
 
-/* === PERSPEKTIV-FARBEN === */
-:root {
-  --perspektive-kulinarisch: #22c55e;
-  --perspektive-sicherheit: #ef4444;
-  --perspektive-anbau: #eab308;
-  --perspektive-oekologie: #06b6d4;
-}
-
-/* === BASIS: Alle Felder normal === */
+/* === PERSPEKTIVEN-FILTER auf Feldern === */
 amorph-container[data-field] {
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
-/* === WENN PERSPEKTIVEN AKTIV: Alle Felder verstecken === */
+/* Wenn Perspektiven aktiv: Felder die NICHT markiert sind, verstecken */
 [data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field] {
   display: none !important;
 }
 
 /* Immer sichtbare Basisfelder */
 [data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field="name"],
-[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field="wissenschaftlich"],
 [data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field="bild"] {
   display: block !important;
 }
 
-/* === KULINARISCH: Diese Felder zeigen === */
-[data-amorph-container].perspektive-kulinarisch .amorph-item amorph-container[data-field="essbarkeit"],
-[data-amorph-container].perspektive-kulinarisch .amorph-item amorph-container[data-field="geschmack"],
-[data-amorph-container].perspektive-kulinarisch .amorph-item amorph-container[data-field="zubereitung"] {
+/* Felder die zur aktiven Perspektive gehören - leuchtender Glow */
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field][data-perspektive-sichtbar] {
   display: block !important;
-  border-left: 3px solid var(--perspektive-kulinarisch);
-  padding-left: var(--space-sm);
-  background: color-mix(in srgb, var(--perspektive-kulinarisch) 10%, transparent);
+  position: relative;
+  padding-left: var(--space-md);
+  margin-left: 4px;
+  /* Kein solider Balken - stattdessen Glow */
+  border-left: none;
 }
 
-/* === SICHERHEIT: Diese Felder zeigen === */
-[data-amorph-container].perspektive-sicherheit .amorph-item amorph-container[data-field="essbarkeit"],
-[data-amorph-container].perspektive-sicherheit .amorph-item amorph-container[data-field="verwechslung"],
-[data-amorph-container].perspektive-sicherheit .amorph-item amorph-container[data-field="symptome"] {
-  display: block !important;
-  border-left: 3px solid var(--perspektive-sicherheit);
-  padding-left: var(--space-sm);
-  background: color-mix(in srgb, var(--perspektive-sicherheit) 10%, transparent);
+/* Leuchtender vertikaler Glow-Streifen */
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field][data-perspektive-sichtbar]::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 2px;
+  bottom: 2px;
+  width: 2px;
+  background: var(--feld-perspektive-farbe, var(--color-accent));
+  border-radius: 2px;
+  /* Leuchtender Glow-Effekt */
+  box-shadow: 
+    0 0 6px var(--feld-perspektive-farbe, var(--color-accent)),
+    0 0 12px color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent)) 60%, transparent),
+    0 0 20px color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent)) 30%, transparent);
+  animation: feld-glow 2.5s ease-in-out infinite;
 }
 
-/* === ANBAU: Diese Felder zeigen === */
-[data-amorph-container].perspektive-anbau .amorph-item amorph-container[data-field="standort"],
-[data-amorph-container].perspektive-anbau .amorph-item amorph-container[data-field="substrat"],
-[data-amorph-container].perspektive-anbau .amorph-item amorph-container[data-field="temperatur"],
-[data-amorph-container].perspektive-anbau .amorph-item amorph-container[data-field="saison"] {
-  display: block !important;
-  border-left: 3px solid var(--perspektive-anbau);
-  padding-left: var(--space-sm);
-  background: color-mix(in srgb, var(--perspektive-anbau) 10%, transparent);
+@keyframes feld-glow {
+  0%, 100% { 
+    opacity: 0.8;
+    box-shadow: 
+      0 0 6px var(--feld-perspektive-farbe, var(--color-accent)),
+      0 0 12px color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent)) 60%, transparent),
+      0 0 20px color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent)) 30%, transparent);
+  }
+  50% { 
+    opacity: 1;
+    box-shadow: 
+      0 0 8px var(--feld-perspektive-farbe, var(--color-accent)),
+      0 0 18px color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent)) 80%, transparent),
+      0 0 30px color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent)) 50%, transparent);
+  }
 }
 
-/* === ÖKOLOGIE: Diese Felder zeigen === */
-[data-amorph-container].perspektive-oekologie .amorph-item amorph-container[data-field="lebensraum"],
-[data-amorph-container].perspektive-oekologie .amorph-item amorph-container[data-field="symbiose"],
-[data-amorph-container].perspektive-oekologie .amorph-item amorph-container[data-field="verbreitung"],
-[data-amorph-container].perspektive-oekologie .amorph-item amorph-container[data-field="standort"] {
-  display: block !important;
-  border-left: 3px solid var(--perspektive-oekologie);
-  padding-left: var(--space-sm);
-  background: color-mix(in srgb, var(--perspektive-oekologie) 10%, transparent);
+/* Bei mehreren Perspektiven - Multi-Color Glow */
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field][data-perspektive-sichtbar][data-perspektive-multi] {
+  padding-left: var(--space-md);
 }
 
-/* === MEHRERE PERSPEKTIVEN: Doppelte Markierung === */
-.perspektive-kulinarisch.perspektive-sicherheit .amorph-item amorph-container[data-field="essbarkeit"] {
-  border-left-width: 6px;
-  border-image: linear-gradient(
-    to bottom, 
-    var(--perspektive-kulinarisch) 50%, 
-    var(--perspektive-sicherheit) 50%
-  ) 1;
+/* Multi-Perspektiven: Animierter Gradient Glow */
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field][data-perspektive-sichtbar][data-perspektive-multi]::before {
+  width: 2px;
+  /* Animierter vertikaler Gradient */
+  background: var(--feld-gradient, var(--color-accent));
+  background-size: 100% 200%;
+  /* Kombinierter leuchtender Glow aus allen Farben */
+  box-shadow: 
+    0 0 8px var(--p-farbe-0, var(--color-accent)),
+    0 0 8px var(--p-farbe-1, var(--color-accent)),
+    0 0 16px color-mix(in srgb, var(--p-farbe-0, var(--color-accent)) 70%, transparent),
+    0 0 16px color-mix(in srgb, var(--p-farbe-1, var(--color-accent)) 70%, transparent),
+    0 0 28px color-mix(in srgb, var(--p-farbe-0, var(--color-accent)) 40%, transparent),
+    0 0 28px color-mix(in srgb, var(--p-farbe-1, var(--color-accent)) 40%, transparent);
+  animation: multi-color-flow 3s ease-in-out infinite;
 }
 
-.perspektive-anbau.perspektive-oekologie .amorph-item amorph-container[data-field="standort"] {
-  border-left-width: 6px;
-  border-image: linear-gradient(
-    to bottom, 
-    var(--perspektive-anbau) 50%, 
-    var(--perspektive-oekologie) 50%
-  ) 1;
+@keyframes multi-color-flow {
+  0%, 100% { 
+    background-position: 0% 0%;
+    filter: brightness(1);
+  }
+  50% { 
+    background-position: 0% 100%;
+    filter: brightness(1.4);
+  }
 }
 
-/* === TREFFER-INDIKATOR auf Buttons === */
-.amorph-perspektive-btn.hat-treffer {
+/* === TREFFER-BADGE === */
+.amorph-perspektive-btn {
   position: relative;
 }
 
@@ -96,79 +105,21 @@ amorph-container[data-field] {
   position: absolute;
   top: -6px;
   right: -6px;
-  min-width: 18px;
-  height: 18px;
-  padding: 0 5px;
-  font-size: 11px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  font-size: 10px;
   font-weight: 600;
-  line-height: 18px;
+  line-height: 16px;
   text-align: center;
   color: white;
-  background: var(--color-accent, #3b82f6);
-  border-radius: 9px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  animation: treffer-pop 0.3s ease-out;
+  background: color-mix(in srgb, var(--p-farbe, var(--color-accent)) 80%, black);
+  border-radius: 8px;
+  animation: badge-pop 0.3s ease-out;
 }
 
-/* Farbige Treffer-Badges pro Perspektive */
-.amorph-perspektive-btn[data-perspektive="kulinarisch"].hat-treffer::after {
-  background: var(--perspektive-kulinarisch);
-}
-
-.amorph-perspektive-btn[data-perspektive="sicherheit"].hat-treffer::after {
-  background: var(--perspektive-sicherheit);
-}
-
-.amorph-perspektive-btn[data-perspektive="anbau"].hat-treffer::after {
-  background: var(--perspektive-anbau);
-}
-
-.amorph-perspektive-btn[data-perspektive="oekologie"].hat-treffer::after {
-  background: var(--perspektive-oekologie);
-}
-
-/* Animation für Treffer-Badge */
-@keyframes treffer-pop {
+@keyframes badge-pop {
   0% { transform: scale(0); opacity: 0; }
-  70% { transform: scale(1.2); }
+  70% { transform: scale(1.1); }
   100% { transform: scale(1); opacity: 1; }
-}
-
-/* Glüh-Effekt wenn hat-treffer */
-.amorph-perspektive-btn.hat-treffer {
-  box-shadow: 0 0 0 2px color-mix(in srgb, currentColor 30%, transparent);
-}
-
-/* === EMPTY STATE === */
-.amorph-empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-xl) var(--space-lg);
-  text-align: center;
-  color: var(--color-text-muted);
-  min-height: 200px;
-}
-
-.amorph-empty-icon {
-  font-size: 4rem;
-  margin-bottom: var(--space-md);
-  opacity: 0.5;
-}
-
-.amorph-empty-text {
-  font-size: var(--font-size-lg);
-  max-width: 300px;
-}
-
-/* === ANIMATION === */
-@keyframes highlight {
-  0% { background-color: transparent; }
-  50% { background-color: color-mix(in srgb, currentColor 20%, transparent); }
-  100% { background-color: transparent; }
-}
-
-amorph-container[data-field][data-highlight] {
-  animation: highlight 0.5s ease;
 }

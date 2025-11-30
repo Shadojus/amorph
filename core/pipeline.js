@@ -5,6 +5,7 @@
 
 import { morphs } from '../morphs/index.js';
 import { debug } from '../observer/debug.js';
+import { getFeldMorphs, getVersteckteFelder, getFeldConfig } from '../util/semantic.js';
 
 export function transform(daten, config, customMorphs = {}) {
   debug.morphs('Transform Start', { 
@@ -14,17 +15,29 @@ export function transform(daten, config, customMorphs = {}) {
   
   const alleMorphs = { ...morphs, ...customMorphs };
   
+  // Feld-Morphs aus Schema laden (als Fallback/Override)
+  const schemaFeldMorphs = getFeldMorphs();
+  const versteckteFelder = getVersteckteFelder();
+  
   function morphen(wert, feldname = null) {
+    // Versteckte Felder überspringen
+    if (feldname && versteckteFelder.includes(feldname)) {
+      return null;
+    }
+    
     const typ = detectType(wert);
-    const morphName = findMorph(typ, wert, feldname, config.morphs);
-    const morph = alleMorphs[morphName];
+    const morphName = findMorph(typ, wert, feldname, config.morphs, schemaFeldMorphs);
+    let morph = alleMorphs[morphName];
+    let actualMorphName = morphName;
     
     if (!morph) {
       debug.warn(`Morph nicht gefunden: ${morphName}, nutze text`);
-      return alleMorphs.text(wert, {});
+      morph = alleMorphs.text;
+      actualMorphName = 'text';
     }
     
-    const morphConfig = getMorphConfig(morphName, config);
+    // Config zusammenbauen: morphs.yaml + schema.yaml Feld-Config
+    const morphConfig = getMorphConfig(actualMorphName, feldname, config);
     const element = morph(wert, morphConfig, morphen);
     
     // In Container wrappen
@@ -46,10 +59,12 @@ export function transform(daten, config, customMorphs = {}) {
       
       if (typeof item === 'object' && item !== null) {
         for (const [key, value] of Object.entries(item)) {
-          itemContainer.appendChild(morphen(value, key));
+          const morphed = morphen(value, key);
+          if (morphed) itemContainer.appendChild(morphed);
         }
       } else {
-        itemContainer.appendChild(morphen(item));
+        const morphed = morphen(item);
+        if (morphed) itemContainer.appendChild(morphed);
       }
       
       fragment.appendChild(itemContainer);
@@ -61,7 +76,8 @@ export function transform(daten, config, customMorphs = {}) {
   if (typeof daten === 'object' && daten !== null) {
     const fragment = document.createDocumentFragment();
     for (const [key, value] of Object.entries(daten)) {
-      fragment.appendChild(morphen(value, key));
+      const morphed = morphen(value, key);
+      if (morphed) fragment.appendChild(morphed);
     }
     return fragment;
   }
@@ -82,13 +98,18 @@ function detectType(wert) {
   return 'unknown';
 }
 
-function findMorph(typ, wert, feldname, morphConfig) {
-  // 1. Explizite Feld-Zuweisung
+function findMorph(typ, wert, feldname, morphConfig, schemaFeldMorphs = {}) {
+  // 1. Explizite Feld-Zuweisung aus morphs.yaml
   if (feldname && morphConfig?.felder?.[feldname]) {
     return morphConfig.felder[feldname];
   }
   
-  // 2. Regeln prüfen
+  // 2. Feld-Typ aus Schema (Single Source of Truth)
+  if (feldname && schemaFeldMorphs[feldname]) {
+    return schemaFeldMorphs[feldname];
+  }
+  
+  // 3. Regeln prüfen
   if (morphConfig?.regeln) {
     for (const regel of morphConfig.regeln) {
       if (matchesRegel(regel, typ, wert)) {
@@ -97,7 +118,7 @@ function findMorph(typ, wert, feldname, morphConfig) {
     }
   }
   
-  // 3. Standard-Mapping
+  // 4. Standard-Mapping
   const defaults = {
     'string': 'text',
     'number': 'number',
@@ -122,8 +143,37 @@ function matchesRegel(regel, typ, wert) {
   return true;
 }
 
-function getMorphConfig(morphName, config) {
-  return config?.morphs?.config?.[morphName] || {};
+/**
+ * Morph-Config zusammenbauen aus:
+ * 1. morphs.yaml config (generisch)
+ * 2. schema.yaml feld-config (feld-spezifisch, überschreibt)
+ */
+function getMorphConfig(morphName, feldname, config) {
+  // Basis-Config aus morphs.yaml
+  const basisConfig = config?.morphs?.config?.[morphName] || {};
+  
+  // Feld-spezifische Config aus Schema
+  const feldConfig = feldname ? getFeldConfig(feldname) : {};
+  
+  // Zusammenführen: Schema überschreibt morphs.yaml
+  const merged = { ...basisConfig };
+  
+  // Farben aus Schema übernehmen (für Tags)
+  if (feldConfig.farben) {
+    merged.farben = { ...basisConfig.farben, ...feldConfig.farben };
+  }
+  
+  // Einheit aus Schema übernehmen (für Ranges)
+  if (feldConfig.einheit) {
+    merged.einheit = feldConfig.einheit;
+  }
+  
+  // Label aus Schema
+  if (feldConfig.label) {
+    merged.label = feldConfig.label;
+  }
+  
+  return merged;
 }
 
 export async function render(container, daten, config) {

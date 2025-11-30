@@ -39,6 +39,13 @@ felder:
     label: Essbarkeit
     suche:
       gewicht: 50
+    # Tag-Farben - dezent
+    farben:
+      Essbar: "#60c090"
+      Bedingt essbar: "#d0a050"
+      Giftig: "#d06080"
+      Tödlich: "#a04060"
+      Unbekannt: "#808080"
   
   # Listen
   standort:
@@ -311,11 +318,12 @@ semantik:
 
 # === PERSPEKTIVEN ===
 # Welche Felder gehören zu welcher Perspektive?
+# Farben: Dezente, pastellige Töne
 perspektiven:
   kulinarisch:
     name: Kulinarisch
     symbol: 🍳
-    farbe: "#f59e0b"
+    farbe: "#e0a040"
     felder:
       - geschmack
       - zubereitung
@@ -338,7 +346,7 @@ perspektiven:
   sicherheit:
     name: Sicherheit
     symbol: ⚠️
-    farbe: "#ef4444"
+    farbe: "#e06080"
     felder:
       - essbarkeit
       - verwechslung
@@ -360,7 +368,7 @@ perspektiven:
   anbau:
     name: Anbau
     symbol: 🌱
-    farbe: "#10b981"
+    farbe: "#60c090"
     felder:
       - standort
       - saison
@@ -384,7 +392,7 @@ perspektiven:
   oekologie:
     name: Ökologie
     symbol: 🌍
-    farbe: "#3b82f6"
+    farbe: "#60a0d0"
     felder:
       - standort
       - symbiose

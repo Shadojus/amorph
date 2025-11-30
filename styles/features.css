@@ -1,56 +1,90 @@
 /* AMORPH v5 - Feature Styles */
+/* Black Glasmorphism - Dezent & Elegant */
+
+/* === HEADER FEATURE WRAPPER === */
+.amorph-feature-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: var(--space-sm) var(--space-lg);
+  /* Dezentes schwarzes Glas */
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  /* Sehr subtile Border */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* App-Titel im Header */
+.amorph-header-titel {
+  color: var(--color-text);
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+/* === HEADER (Inner) === */
+.amorph-header {
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
 /* === SUCHE === */
 .amorph-suche {
   display: flex;
   gap: var(--space-sm);
-  margin-bottom: var(--space-lg);
+  flex: 1;
+  min-width: 200px;
 }
 
 .amorph-suche input {
   flex: 1;
   padding: var(--space-sm) var(--space-md);
   font-size: var(--font-size-base);
-  border: 2px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: var(--color-bg);
+  /* Dezentes Glas-Input */
+  background: rgba(255, 255, 255, 0.05);
   color: var(--color-text);
-  transition: border-color 0.2s;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
 }
 
 .amorph-suche input:focus {
   outline: none;
-  border-color: var(--color-primary);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .amorph-suche input::placeholder {
-  color: var(--color-text-muted);
+  color: var(--color-text-dim);
 }
 
 .amorph-suche button {
   padding: var(--space-sm) var(--space-md);
   font-size: var(--font-size-lg);
-  background: var(--color-primary);
-  color: white;
-  border: none;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-muted);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-md);
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s ease;
 }
 
 .amorph-suche button:hover {
-  background: var(--color-primary-hover);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text);
 }
 
 .amorph-suche.ladend input {
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 .amorph-suche.ladend button {
-  animation: pulse 1s infinite;
+  animation: soft-pulse 1.5s ease-in-out infinite;
 }
 
-@keyframes pulse {
+@keyframes soft-pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
 }
@@ -59,80 +93,126 @@
 .amorph-perspektiven {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-lg);
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
 }
 
 .amorph-perspektive-btn {
   display: flex;
   align-items: center;
   gap: var(--space-xs);
-  padding: var(--space-sm) var(--space-md);
+  padding: 4px 10px;
   font-size: var(--font-size-sm);
-  font-weight: 500;
-  background: var(--color-bg);
-  color: var(--color-text);
-  border: 2px solid var(--color-border);
+  font-weight: 400;
+  /* Dezenter Glas-Button */
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--color-text-muted);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
 }
 
 .amorph-perspektive-btn:hover {
-  border-color: var(--p-farbe, var(--color-primary));
-  background: color-mix(in srgb, var(--p-farbe, var(--color-primary)) 10%, transparent);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-text);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .amorph-perspektive-btn.aktiv,
 .amorph-perspektive-btn[aria-pressed="true"] {
-  background: var(--p-farbe, var(--color-primary));
-  border-color: var(--p-farbe, var(--color-primary));
+  /* Leuchtender Glow-Effekt */
+  background: color-mix(in srgb, var(--p-farbe, var(--color-accent)) 15%, transparent);
+  border-color: color-mix(in srgb, var(--p-farbe, var(--color-accent)) 50%, transparent);
+  color: var(--p-farbe, var(--color-accent));
+  /* Äußerer Glow */
+  box-shadow: 
+    0 0 12px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 40%, transparent),
+    0 0 24px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 20%, transparent),
+    inset 0 0 8px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 10%, transparent);
+  /* Pulsieren */
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%, 100% { 
+    box-shadow: 
+      0 0 12px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 40%, transparent),
+      0 0 24px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 20%, transparent),
+      inset 0 0 8px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 10%, transparent);
+  }
+  50% { 
+    box-shadow: 
+      0 0 18px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 60%, transparent),
+      0 0 36px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 30%, transparent),
+      inset 0 0 12px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 15%, transparent);
+  }
+}
+
+/* Treffer-Badge - leuchtend */
+.amorph-perspektive-btn.hat-treffer::after {
+  content: attr(data-treffer-anzahl);
+  font-size: 0.65em;
+  padding: 2px 5px;
+  background: color-mix(in srgb, var(--p-farbe, var(--color-accent)) 80%, black);
   color: white;
+  border-radius: 6px;
+  margin-left: 4px;
+  font-weight: 600;
+  box-shadow: 0 0 8px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 50%, transparent);
 }
 
-/* === GRID/LAYOUT TOOLBAR === */
-.amorph-layout-toolbar {
+/* === ANSICHT-UMSCHALTER === */
+.amorph-ansicht-switch {
   display: flex;
-  gap: var(--space-xs);
-  padding: var(--space-xs);
-  background: var(--color-border);
+  gap: 1px;
+  padding: 2px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: var(--radius-md);
-  width: fit-content;
-  margin-bottom: var(--space-lg);
 }
 
-.amorph-layout-btn {
-  padding: var(--space-sm);
-  font-size: var(--font-size-lg);
+.amorph-ansicht-btn {
+  padding: 4px 8px;
+  font-size: var(--font-size-sm);
   line-height: 1;
   background: transparent;
-  color: var(--color-text-muted);
+  color: var(--color-text-dim);
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
 }
 
-.amorph-layout-btn:hover {
-  background: var(--color-bg);
+.amorph-ansicht-btn:hover {
+  color: var(--color-text-muted);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.amorph-ansicht-btn.aktiv,
+.amorph-ansicht-btn[aria-checked="true"] {
+  background: rgba(255, 255, 255, 0.1);
   color: var(--color-text);
 }
 
-.amorph-layout-btn.aktiv,
-.amorph-layout-btn[aria-checked="true"] {
-  background: var(--color-bg);
-  color: var(--color-text);
-  box-shadow: var(--shadow-sm);
+/* Legacy */
+.amorph-layout-toolbar {
+  display: none;
 }
 
-/* === FEATURE TOOLBAR GRUPPE === */
-.amorph-feature-toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-md);
-  background: color-mix(in srgb, var(--color-border) 50%, transparent);
-  border-radius: var(--radius-lg);
-  margin-bottom: var(--space-lg);
+/* === EMPTY STATE === */
+.amorph-empty-state {
+  text-align: center;
+  padding: var(--space-xl) var(--space-lg);
+}
+
+.amorph-empty-icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-md);
+  opacity: 0.4;
+}
+
+.amorph-empty-text {
+  font-size: var(--font-size-base);
+  color: var(--color-text-muted);
 }

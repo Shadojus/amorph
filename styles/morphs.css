@@ -1,14 +1,17 @@
 /* AMORPH v5 - Morph Styles */
+/* Black Glasmorphism - Weiß als Grundfarbe, dezente Akzente */
 
 /* === TEXT === */
 .amorph-text {
   display: inline;
+  color: var(--color-text);
 }
 
 /* === NUMBER === */
 .amorph-number {
   font-variant-numeric: tabular-nums;
   font-weight: 500;
+  color: var(--color-text);
 }
 
 /* === BOOLEAN === */
@@ -17,28 +20,31 @@
 }
 
 .amorph-boolean[data-value="true"] {
-  color: #22c55e;
+  color: var(--color-success);
 }
 
 .amorph-boolean[data-value="false"] {
-  color: #ef4444;
+  color: var(--color-error);
 }
 
 /* === TAG === */
 .amorph-tag {
   display: inline-block;
-  padding: var(--space-xs) var(--space-sm);
+  padding: 3px 8px;
   font-size: var(--font-size-sm);
   font-weight: 500;
-  background: var(--tag-farbe, var(--color-border));
-  color: white;
+  /* Dezenter Glas-Tag */
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-text);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-sm);
   text-transform: capitalize;
 }
 
-/* Tag-Farben Fallback */
-.amorph-tag:not([style*="--tag-farbe"]) {
-  background: var(--color-text-muted);
+/* Tag mit Custom-Farbe */
+.amorph-tag[style*="--tag-farbe"] {
+  background: color-mix(in srgb, var(--tag-farbe) 25%, transparent);
+  border-color: color-mix(in srgb, var(--tag-farbe) 40%, transparent);
 }
 
 /* === RANGE === */
@@ -51,15 +57,17 @@
 .amorph-range-text {
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
 }
 
 .amorph-range-bar {
   flex: 1;
-  height: 8px;
-  background: var(--color-border);
-  border-radius: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
   position: relative;
-  min-width: 100px;
+  min-width: 80px;
   overflow: hidden;
 }
 
@@ -70,8 +78,9 @@
   left: var(--range-start, 0%);
   width: calc(var(--range-end, 100%) - var(--range-start, 0%));
   height: 100%;
-  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-  border-radius: 4px;
+  background: var(--color-accent);
+  border-radius: 2px;
+  opacity: 0.8;
 }
 
 /* === LIST === */
@@ -86,11 +95,12 @@
 
 .amorph-list li {
   display: inline;
+  color: var(--color-text);
 }
 
 .amorph-list li::after {
-  content: ',';
-  color: var(--color-text-muted);
+  content: ', ';
+  color: var(--color-text-dim);
 }
 
 .amorph-list li:last-child::after {
@@ -99,8 +109,9 @@
 
 /* List als Tags */
 .amorph-list[data-style="tags"] li {
-  background: var(--color-border);
-  padding: var(--space-xs) var(--space-sm);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 2px 8px;
   border-radius: var(--radius-sm);
   font-size: var(--font-size-sm);
 }
@@ -118,7 +129,7 @@
 }
 
 .amorph-object dt {
-  font-weight: 600;
+  font-weight: 500;
   color: var(--color-text-muted);
   font-size: var(--font-size-sm);
   text-transform: uppercase;
@@ -127,6 +138,7 @@
 
 .amorph-object dd {
   margin: 0;
+  color: var(--color-text);
 }
 
 /* === IMAGE === */
@@ -139,6 +151,7 @@
   height: auto;
   border-radius: var(--radius-md);
   display: block;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .amorph-image figcaption {
@@ -148,30 +161,45 @@
 }
 
 .amorph-image[data-error] img {
-  background: var(--color-border);
+  background: rgba(255, 255, 255, 0.03);
   min-height: 100px;
 }
 
 /* === LINK === */
 .amorph-link {
-  color: var(--color-primary);
+  color: var(--color-accent);
   text-decoration: none;
+  transition: opacity 0.2s;
 }
 
 .amorph-link:hover {
+  opacity: 0.8;
   text-decoration: underline;
 }
 
 .amorph-link[data-invalid] {
-  color: var(--color-text-muted);
+  color: var(--color-text-dim);
   cursor: not-allowed;
 }
 
 /* === HIGHLIGHT (Suchtreffer) === */
+/* Dezent pulsierender Highlight mit warmem Gelb */
 .amorph-highlight {
-  background: linear-gradient(120deg, #fef08a 0%, #fde047 100%);
-  padding: 0.1em 0.2em;
-  border-radius: 2px;
-  color: #000;
+  background: var(--color-highlight-bg);
+  color: var(--color-highlight);
+  padding: 1px 4px;
+  border-radius: 3px;
   font-weight: inherit;
+  animation: highlight-pulse 2s ease-in-out infinite;
+}
+
+/* Feld-Label in Karten */
+.amorph-field-label {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-weight: 500;
 }

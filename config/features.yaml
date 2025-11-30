@@ -1,66 +1,37 @@
 # Aktive Features
 aktiv:
   - header
-  - grid
+  # grid ist jetzt im Header integriert als "Ansicht-Switch"
 
 # Suche-Konfiguration
 suche:
   live: true
   debounce: 300
   limit: 50
-  placeholder: "Pilze suchen..."
-  suchfelder:
-    - name
-    - wissenschaftlich
-    - beschreibung
+  placeholder: Suchen...
+  # suchfelder werden automatisch aus schema.yaml geladen
 
 # Perspektiven-Konfiguration
+# Liste wird automatisch aus schema.yaml/perspektiven geladen!
 perspektiven:
   maxAktiv: 4
-  liste:
-    - id: kulinarisch
-      name: Kulinarisch
-      symbol: 🍳
-      farbe: "#22c55e"
-      felder:
-        - essbarkeit
-        - geschmack
-        - zubereitung
-    
-    - id: sicherheit
-      name: Sicherheit
-      symbol: ⚠️
-      farbe: "#ef4444"
-      felder:
-        - essbarkeit
-        - verwechslung
-        - symptome
-    
-    - id: anbau
-      name: Anbau
-      symbol: 🌱
-      farbe: "#eab308"
-      felder:
-        - standort
-        - substrat
-        - temperatur
-    
-    - id: oekologie
-      name: Ökologie
-      symbol: 🌍
-      farbe: "#06b6d4"
-      felder:
-        - lebensraum
-        - symbiose
-        - verbreitung
 
-# Grid/Layout-Konfiguration
-grid:
-  default: grid
-  layouts:
-    - liste
-    - grid
-    - kompakt
+# Ansicht-Konfiguration (im Header)
+ansicht:
+  default: karten
+  ansichten:
+    - id: karten
+      label: Karten
+      icon: ⊞
+      layout: grid
+    - id: detail
+      label: Detail
+      icon: ☰
+      layout: liste
+    - id: vergleich
+      label: Vergleich
+      icon: ▥
+      layout: kompakt
 
 # Externe Features (optional)
 # extern:

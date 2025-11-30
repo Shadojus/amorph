@@ -24,32 +24,12 @@
       padding: 2rem;
       color: var(--color-text-muted);
     }
-    
-    /* Header */
-    .app-header {
-      padding: var(--space-lg);
-      border-bottom: 1px solid var(--color-border);
-      margin-bottom: var(--space-lg);
-    }
-    
-    .app-header h1 {
-      margin: 0 0 var(--space-xs);
-      font-size: 1.5rem;
-    }
-    
-    .app-header p {
-      margin: 0;
-      color: var(--color-text-muted);
-    }
   </style>
 </head>
 <body>
-  <header class="app-header">
-    <h1>🍄 Funginomi</h1>
-    <p>Pilz-Wissenssammlung</p>
-  </header>
+  <!-- Kein statischer Header mehr - AMORPH Header übernimmt -->
   
-  <main id="app"></main>
+  <main id="app" data-amorph-container></main>
   
   <script type="module">
     import { amorph } from './index.js';

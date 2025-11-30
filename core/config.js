@@ -178,6 +178,14 @@ function parseYAML(text) {
 }
 
 function parseValue(value) {
+  // Inline-Kommentare entfernen (aber nicht in Strings)
+  if (!value.startsWith('"') && !value.startsWith("'")) {
+    const commentIdx = value.indexOf(' #');
+    if (commentIdx > 0) {
+      value = value.slice(0, commentIdx).trim();
+    }
+  }
+  
   if (value === 'true') return true;
   if (value === 'false') return false;
   if (value === 'null') return null;

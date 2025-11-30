@@ -7,14 +7,21 @@ Formlos. Zustandslos. Transformierend.
 AMORPH transformiert Daten aus einer Datenbank in DOM-Elemente. Nichts wird gespeichert. Bei jeder Anfrage werden die Daten frisch geladen und neu gerendert.
 
 ```
-DATENBANK → MORPHS → DOM
+SCHEMA → DATENBANK → MORPHS → DOM
 ```
 
-Das ist alles.
+Das Schema (`config/schema.yaml`) ist die **Single Source of Truth**. Es definiert:
+- Welche Felder existieren und wie sie dargestellt werden
+- Semantische Suchregeln (Keywords → Feldwerte)
+- Perspektiven (Filteransichten mit Farbmarkierung)
+- Tag-Farben pro Feld
 
-## Die drei Säulen
+## Die vier Säulen
 
-### 1. Morphs (core/morphs/)
+### 0. Schema (config/schema.yaml)
+Definiert die Datenstruktur und steuert das gesamte System. Änderungen hier propagieren automatisch zu Morphs, Suche und Perspektiven.
+
+### 1. Morphs (morphs/)
 Reine Funktionen die Daten in DOM-Elemente transformieren. Kein Zustand, keine Seiteneffekte.
 
 ```javascript
@@ -70,20 +77,40 @@ async function suchen(query) {
 
 Kein Cache. Keine lokale Kopie. Datenbank ist die Wahrheit.
 
-### Schema-basierte Suche (NEU)
+### Schema als Single Source of Truth
 
-Die semantische Suche ist jetzt konfigurierbar über `config/schema.yaml`:
+Das Schema definiert alles an einem Ort:
 
 ```yaml
+# Felder mit Typ, Label und Suchgewicht
+felder:
+  essbarkeit:
+    typ: tag
+    label: Essbarkeit
+    suche:
+      gewicht: 50
+    farben:  # Tag-Farben direkt im Schema
+      Essbar: "#22c55e"
+      Giftig: "#ef4444"
+
+# Semantische Suche
 semantik:
   essbar:
     keywords: [essbar, essen, speisepilz]
     feld: essbarkeit
     werte: [essbar]
     score: 50
+
+# Perspektiven mit Feldern und Farben
+perspektiven:
+  sicherheit:
+    name: Sicherheit
+    symbol: ⚠️
+    farbe: "#ef4444"
+    felder: [essbarkeit, verwechslung, symptome]
 ```
 
-Das macht AMORPH universell für beliebige Datentypen.
+Das macht AMORPH universell: Schema anpassen = neues Datenmodell.
 
 ### Session-Observer
 
@@ -104,29 +131,34 @@ amorph/
 ├── CLAUDE.md           ← Du bist hier
 ├── index.js            ← Einstiegspunkt
 ├── core/
-│   ├── CLAUDE.md       ← Pipeline und Container
-│   ├── pipeline.js     ← Transformiert Daten
-│   ├── container.js    ← Web Component
-│   └── config.js       ← Lädt Konfiguration
+│   ├── pipeline.js     ← Transformiert Daten → DOM
+│   ├── container.js    ← Web Component Wrapper
+│   └── config.js       ← Lädt YAML-Konfiguration
 ├── morphs/
-│   ├── CLAUDE.md       ← Alle Morphs erklärt
-│   └── *.js            ← Die Morph-Funktionen
+│   └── *.js            ← Morph-Funktionen (text, tag, list, ...)
 ├── observer/
-│   ├── CLAUDE.md       ← Observer-System
-│   └── *.js            ← Die Observer
+│   ├── debug.js        ← Debug-Logging-System
+│   └── *.js            ← Observer (interaction, rendering, session)
 ├── features/
-│   ├── CLAUDE.md       ← Feature-System
-│   └── */              ← Einzelne Features
+│   ├── header/         ← Suche + Perspektiven
+│   ├── grid/           ← Layout-Optionen
+│   └── context.js      ← Feature-Kontext-Factory
 ├── util/
-│   ├── CLAUDE.md       ← Hilfsfunktionen
-│   ├── fetch.js        ← Datenquellen
-│   └── semantic.js     ← Schema-basierte Suche (NEU)
+│   ├── fetch.js        ← Datenquellen (JSON, API)
+│   ├── semantic.js     ← Schema-Zugriff & semantische Suche
+│   └── dom.js          ← DOM-Hilfsfunktionen
 ├── config/
-│   ├── schema.yaml     ← Datenstruktur & Semantik (NEU)
-├── template/           ← Starter-Template (NEU)
-│   └── CLAUDE.md       ← Konfigurationsformat
-└── util/
-    └── CLAUDE.md       ← Hilfsfunktionen
+│   ├── schema.yaml     ← ⭐ Single Source of Truth
+│   ├── manifest.yaml   ← App-Metadaten
+│   ├── daten.yaml      ← Datenquelle
+│   ├── morphs.yaml     ← Globale Morph-Defaults
+│   ├── features.yaml   ← Aktive Features
+│   └── observer.yaml   ← Observer-Konfiguration
+├── styles/
+│   ├── base.css        ← CSS-Variablen & Reset
+│   ├── morphs.css      ← Morph-Styles
+│   └── perspektiven.css← Dynamische Perspektiven-Styles
+└── template/           ← Starter für neue Projekte
 ```
 
 ## Schnellstart
@@ -144,11 +176,14 @@ amorph({
 
 Eine Datei pro Aspekt in `config/`:
 
-- `manifest.yaml` - Was ist das?
-- `daten.yaml` - Woher kommen die Daten?
-- `morphs.yaml` - Wie darstellen?
-- `observer.yaml` - Was beobachten?
-- `features.yaml` - Was ist aktiv?
+- `schema.yaml` - ⭐ **Datenstruktur, Semantik, Perspektiven** (wichtigste Datei!)
+- `manifest.yaml` - App-Name, Version, Beschreibung
+- `daten.yaml` - Datenquelle (JSON-Pfad oder API-URL)
+- `morphs.yaml` - Globale Morph-Defaults (maxItems, truncate)
+- `features.yaml` - Welche Features aktiv (header, grid)
+- `observer.yaml` - Debug-Level, aktive Observer
+
+**Für ein neues Projekt**: Nur `schema.yaml` und `daten.yaml` anpassen!
 
 ## Sicherheit
 

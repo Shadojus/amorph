@@ -214,3 +214,58 @@ export function getSuchfelder() {
   });
   return result;
 }
+
+/**
+ * Gibt Feld→Morph Mappings aus Schema zurück
+ * Ersetzt morphs.yaml/felder
+ */
+export function getFeldMorphs() {
+  if (!schemaCache?.felder) {
+    debug.warn('Feld-Morphs: Kein Schema geladen!');
+    return {};
+  }
+  
+  const result = {};
+  for (const [name, config] of Object.entries(schemaCache.felder)) {
+    if (config.typ) {
+      result[name] = config.typ;
+    }
+  }
+  debug.morphs('Feld-Morphs aus Schema', { 
+    anzahl: Object.keys(result).length,
+    felder: Object.keys(result)
+  });
+  return result;
+}
+
+/**
+ * Gibt versteckte Felder aus Schema zurück
+ */
+export function getVersteckteFelder() {
+  if (!schemaCache?.felder) return [];
+  
+  const result = [];
+  for (const [name, config] of Object.entries(schemaCache.felder)) {
+    if (config.versteckt) {
+      result.push(name);
+    }
+  }
+  return result;
+}
+
+/**
+ * Gibt Feld-spezifische Config aus Schema zurück
+ * z.B. Farben für Tags, Einheit für Ranges
+ */
+export function getFeldConfig(feldname) {
+  if (!schemaCache?.felder?.[feldname]) return {};
+  return schemaCache.felder[feldname];
+}
+
+/**
+ * Gibt alle Feld-Configs aus Schema zurück
+ */
+export function getAlleFeldConfigs() {
+  if (!schemaCache?.felder) return {};
+  return schemaCache.felder;
+}

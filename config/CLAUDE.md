@@ -1,6 +1,6 @@
 # Konfiguration
 
-Eine Datei = Ein Aspekt. Flach und lesbar.
+Eine Datei = Ein Aspekt. **Schema ist die Single Source of Truth.**
 
 ## Dateien
 
@@ -8,12 +8,44 @@ Eine Datei = Ein Aspekt. Flach und lesbar.
 config/
 ├── manifest.yaml      ← Was ist das?
 ├── daten.yaml         ← Woher kommen Daten?
-├── morphs.yaml        ← Wie darstellen?
+├── schema.yaml        ← WAS sind die Daten? (SINGLE SOURCE OF TRUTH)
+├── morphs.yaml        ← Wie darstellen? (nutzt Schema)
 ├── observer.yaml      ← Was beobachten?
-└── features.yaml      ← Was ist aktiv?
+└── features.yaml      ← Was ist aktiv? (nutzt Schema)
 ```
 
-Keine Vererbung. Keine Referenzen zwischen Dateien. Keine Magie.
+## Schema-First Prinzip
+
+**Alles kommt aus `schema.yaml`:**
+- Felder und ihre Typen → `morphs.yaml` muss sie nicht duplizieren
+- Perspektiven → `features.yaml` muss sie nicht duplizieren
+- Suchfelder und Gewichtung → automatisch aus Schema
+- Versteckte Felder → werden nicht gerendert
+
+```yaml
+# schema.yaml - EINE Datei für alles Domänen-spezifische
+felder:
+  name:
+    typ: string           # → Morph-Typ
+    label: Name           # → UI-Label
+    suche:                # → Suchverhalten
+      gewicht: 100
+  
+  essbarkeit:
+    typ: tag
+    versteckt: false      # → Wird gerendert
+
+perspektiven:
+  kulinarisch:            # → Feature nutzt das
+    name: Kulinarisch
+    symbol: 🍳
+    keywords: [kochen, rezept]
+```
+
+**Vorteile:**
+- Domäne ändern = nur schema.yaml anpassen
+- Keine Duplikation zwischen Dateien
+- Automatische Konsistenz
 
 ## manifest.yaml
 
@@ -30,71 +62,91 @@ sprache: de
 
 ## daten.yaml
 
-Woher die Daten kommen.
+Woher die Daten kommen. **Schema wird aus schema.yaml geladen!**
 
 ```yaml
 quelle:
-  typ: pocketbase
-  url: https://api.funginomi.de
-  sammlung: pilze
-
-# Oder REST API
-quelle:
-  typ: rest
-  url: https://api.example.com/data
-  headers:
-    Authorization: Bearer ${API_TOKEN}
-
-# Oder statische JSON
-quelle:
   typ: json
-  url: ./data/pilze.json
+  url: ./data/items.json  # Projekt-spezifisch
 
-schema:
-  id: string
-  name: string
-  essbarkeit: string
-  temperatur:
-    typ: range
-    einheit: °C
+# Alternativen:
+# quelle:
+#   typ: pocketbase
+#   url: https://api.example.com
+#   sammlung: items
+
+# quelle:
+#   typ: rest
+#   url: https://api.example.com/items
+#   headers:
+#     Authorization: Bearer ${API_TOKEN}
 ```
 
 **Pflichtfelder**: `quelle`, `quelle.typ`, `quelle.url`
 
-## morphs.yaml
+## schema.yaml (NEU - Single Source of Truth)
 
-Wie Daten dargestellt werden.
+Definiert die Datenstruktur, Suchverhalten und Perspektiven.
 
 ```yaml
-# Explizite Feld-Zuweisung
+# Felder und ihre Typen
 felder:
-  name: text
-  essbarkeit: tag
-  temperatur: range
-  beschreibung: text
+  id:
+    typ: number
+    versteckt: true       # Wird nicht gerendert
+  
+  name:
+    typ: string
+    label: Name
+    suche:
+      gewicht: 100        # Höchste Priorität bei Suche
+      exakt: true
+  
+  kategorie:
+    typ: tag
+    label: Kategorie
+    suche:
+      gewicht: 50
 
-# Automatische Regeln
+# Semantische Suche
+semantik:
+  aktiv:
+    keywords: [aktiv, verfügbar, online]
+    feld: status
+    werte: [aktiv, online]
+    score: 50
+
+# Perspektiven (für UI-Filter)
+perspektiven:
+  details:
+    name: Details
+    symbol: 📋
+    felder: [name, beschreibung]
+    keywords: [detail, info]
+```
+
+## morphs.yaml
+
+Nur noch für Morph-spezifische Konfiguration. **Feld-Typen kommen aus Schema!**
+
+```yaml
+# Feld→Morph Mappings kommen aus schema.yaml/felder[].typ
+# Diese Datei nur für Fallback-Regeln und Morph-Config
+
 regeln:
   - typ: range
     morph: range
   - typ: string
     maxLaenge: 20
     morph: tag
-  - typ: array
-    morph: list
 
-# Morph-spezifische Konfiguration
 config:
-  range:
-    visualisierung: true
-    skala:
-      min: -20
-      max: 40
   tag:
     farben:
-      essbar: "#22c55e"
-      giftig: "#ef4444"
-      unbekannt: "#9ca3af"
+      aktiv: "#22c55e"
+      fehler: "#ef4444"
+  range:
+    visualisierung: true
 ```
 
 ## observer.yaml
@@ -128,36 +180,29 @@ session:
 
 ## features.yaml
 
-Welche Features aktiv sind.
+Welche Features aktiv sind. **Perspektiven-Liste kommt aus Schema!**
 
 ```yaml
 aktiv:
-  - suche
-  - perspektiven
+  - header    # Kombiniert suche + perspektiven
   - grid
 
 suche:
   live: true
   debounce: 300
   limit: 50
+  placeholder: "Suchen..."
+  # suchfelder kommen automatisch aus schema.yaml
 
 perspektiven:
   maxAktiv: 4
-  liste:
-    - id: kulinarisch
-      name: Kulinarisch
-      symbol: 🍳
-      farbe: "#22c55e"
+  # liste kommt automatisch aus schema.yaml/perspektiven!
 
 grid:
   default: grid
   layouts:
     - liste
     - grid
-
-# Externe Features
-extern:
-  meinFeature: ./features/mein-feature.js
 ```
 
 ## Umgebungsvariablen

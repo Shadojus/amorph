@@ -1,12 +1,5 @@
 # Morph-Konfiguration
-
-# Welcher Morph für welches Feld?
-felder:
-  titel: text
-  beschreibung: text
-  kategorie: tag
-  tags: list
-  bild: image
+# Feld→Morph Mappings kommen aus schema.yaml/felder[].typ!
 
 # Morph-spezifische Einstellungen
 config:
