@@ -1,0 +1,35 @@
+# Feature-Konfiguration
+
+aktiv:
+  - header
+  - grid
+
+# Header = Suche + Perspektiven
+suche:
+  placeholder: Suchen...
+  live: true
+  debounce: 300
+
+perspektiven:
+  maxAktiv: 4
+  liste:
+    - id: uebersicht
+      name: Übersicht
+      symbol: 📋
+      felder:
+        - titel
+        - kategorie
+    - id: details
+      name: Details
+      symbol: 🔍
+      felder:
+        - beschreibung
+        - tags
+
+# Grid Layout-Optionen
+grid:
+  default: liste
+  layouts:
+    - liste
+    - grid
+    - kompakt

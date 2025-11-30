@@ -1,0 +1,15 @@
+# Observer-Konfiguration
+
+# Debug-Logging (für Entwicklung)
+debug:
+  enabled: true
+
+# Interaktions-Tracking
+interaktion:
+  ziel:
+    typ: console
+
+# Render-Tracking
+rendering:
+  ziel:
+    typ: console

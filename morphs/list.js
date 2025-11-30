@@ -1,11 +1,15 @@
+import { debug } from '../observer/debug.js';
+
 export function list(wert, config = {}, morphen) {
   const el = document.createElement('ul');
   el.className = 'amorph-list';
   
   if (!Array.isArray(wert)) {
-    console.warn('list-morph erwartet Array, bekam:', typeof wert);
+    debug.warn('list-morph erwartet Array', { bekam: typeof wert });
     return el;
   }
+  
+  debug.morphs('list', { anzahl: wert.length, maxItems: config.maxItems });
   
   const items = config.maxItems ? wert.slice(0, config.maxItems) : wert;
   

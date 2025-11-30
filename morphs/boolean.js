@@ -1,4 +1,7 @@
+import { debug } from '../observer/debug.js';
+
 export function boolean(wert, config = {}) {
+  debug.morphs('boolean', { wert: !!wert, alsIcon: config.alsIcon });
   const el = document.createElement('span');
   el.className = 'amorph-boolean';
   el.setAttribute('data-value', String(!!wert));

@@ -1,0 +1,23 @@
+# Morph-Konfiguration
+
+# Welcher Morph für welches Feld?
+felder:
+  titel: text
+  beschreibung: text
+  kategorie: tag
+  tags: list
+  bild: image
+
+# Morph-spezifische Einstellungen
+config:
+  tag:
+    farben:
+      priorität: "#ef4444"
+      normal: "#3b82f6"
+      neu: "#10b981"
+  
+  text:
+    maxLaenge: 200
+  
+  list:
+    maxItems: 10

@@ -3,6 +3,8 @@
  * Isolierter Container für Morphs
  */
 
+import { debug } from '../observer/debug.js';
+
 export class AmorphContainer extends HTMLElement {
   constructor() {
     super();
@@ -34,6 +36,7 @@ export class AmorphContainer extends HTMLElement {
   }
   
   connectedCallback() {
+    debug.mount('Container', { morph: this.dataset.morph, field: this.dataset.field });
     this.dispatchEvent(new CustomEvent('amorph:mounted', {
       bubbles: true,
       detail: {
@@ -44,6 +47,7 @@ export class AmorphContainer extends HTMLElement {
   }
   
   disconnectedCallback() {
+    debug.unmount('Container', { morph: this.dataset.morph, field: this.dataset.field });
     this.dispatchEvent(new CustomEvent('amorph:unmounted', {
       bubbles: true,
       detail: {

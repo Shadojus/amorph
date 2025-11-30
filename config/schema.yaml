@@ -1,0 +1,400 @@
+# Schema-Definition für AMORPH
+# Definiert Datenstruktur, Suchverhalten und Perspektiven
+
+# === FELDER ===
+# Welche Felder existieren und wie werden sie verarbeitet?
+felder:
+  # Primäre Identifikation
+  id:
+    typ: number
+    versteckt: true
+  
+  slug:
+    typ: string
+    versteckt: true
+  
+  # Hauptfelder
+  name:
+    typ: string
+    label: Name
+    suche: 
+      gewicht: 100
+      exakt: true
+  
+  wissenschaftlich:
+    typ: string
+    label: Wissenschaftlicher Name
+    suche:
+      gewicht: 40
+  
+  beschreibung:
+    typ: string
+    label: Beschreibung
+    suche:
+      gewicht: 20
+  
+  # Kategorisierung
+  essbarkeit:
+    typ: tag
+    label: Essbarkeit
+    suche:
+      gewicht: 50
+  
+  # Listen
+  standort:
+    typ: list
+    label: Standort
+    suche:
+      gewicht: 40
+  
+  verwechslung:
+    typ: list
+    label: Verwechslung mit
+    suche:
+      gewicht: 30
+  
+  # Medien
+  bild:
+    typ: image
+    label: Bild
+  
+  # Zusatzinfos
+  geschmack:
+    typ: tag
+    label: Geschmack
+    suche:
+      gewicht: 40
+  
+  zubereitung:
+    typ: string
+    label: Zubereitung
+    suche:
+      gewicht: 30
+  
+  saison:
+    typ: tag
+    label: Saison
+    suche:
+      gewicht: 40
+  
+  temperatur:
+    typ: range
+    label: Temperatur
+    einheit: °C
+
+# === SEMANTISCHE SUCHE ===
+# Keyword-Mappings für intelligente Suche
+semantik:
+  # Essbarkeit-bezogene Suchen
+  essbar:
+    keywords:
+      - essbar
+      - essen
+      - kann man essen
+      - speisepilz
+      - genießbar
+      - lecker
+      - kochen
+      - zubereiten
+      - rezept
+    feld: essbarkeit
+    werte:
+      - essbar
+      - bedingt essbar
+    score: 50
+  
+  giftig:
+    keywords:
+      - giftig
+      - gift
+      - gefährlich
+      - tödlich
+      - vergiftung
+      - symptome
+      - nicht essen
+      - vorsicht
+    feld: essbarkeit
+    werte:
+      - giftig
+      - tödlich
+    score: 50
+  
+  # Standort-bezogene Suchen
+  wald:
+    keywords:
+      - wald
+      - wälder
+      - forst
+      - waldpilz
+    feld: standort
+    enthält:
+      - wald
+    score: 40
+  
+  wiese:
+    keywords:
+      - wiese
+      - wiesen
+      - gras
+      - rasen
+      - weide
+    feld: standort
+    enthält:
+      - wiese
+      - weide
+      - rasen
+    score: 40
+  
+  nadelwald:
+    keywords:
+      - fichte
+      - fichten
+      - nadelwald
+      - nadel
+      - kiefer
+      - kiefern
+    feld: standort
+    enthält:
+      - fichte
+      - nadel
+      - kiefer
+    score: 40
+  
+  laubwald:
+    keywords:
+      - eiche
+      - eichen
+      - buche
+      - buchen
+      - birke
+      - birken
+      - laubwald
+    feld: standort
+    enthält:
+      - eiche
+      - buche
+      - birke
+    score: 40
+  
+  # Saison-bezogene Suchen
+  frühling:
+    keywords:
+      - frühling
+      - frühjahr
+      - märz
+      - april
+      - mai
+    feld: saison
+    enthält:
+      - märz
+      - april
+      - mai
+    score: 40
+  
+  sommer:
+    keywords:
+      - sommer
+      - juni
+      - juli
+      - august
+    feld: saison
+    enthält:
+      - juni
+      - juli
+      - august
+    score: 40
+  
+  herbst:
+    keywords:
+      - herbst
+      - september
+      - oktober
+      - november
+    feld: saison
+    enthält:
+      - september
+      - oktober
+      - november
+    score: 40
+  
+  winter:
+    keywords:
+      - winter
+      - dezember
+      - januar
+      - februar
+    feld: saison
+    enthält:
+      - dezember
+      - januar
+      - februar
+    score: 40
+  
+  jetzt:
+    keywords:
+      - jetzt
+      - aktuell
+      - gerade
+      - heute
+      - momentan
+    feld: saison
+    aktuell: true
+    score: 40
+  
+  # Geschmack-bezogene Suchen
+  nussig:
+    keywords:
+      - nussig
+      - nuss
+    feld: geschmack
+    enthält:
+      - nussig
+      - nuss
+    score: 40
+  
+  mild:
+    keywords:
+      - mild
+      - sanft
+      - leicht
+    feld: geschmack
+    enthält:
+      - mild
+    score: 40
+  
+  würzig:
+    keywords:
+      - würzig
+      - würze
+      - intensiv
+      - kräftig
+      - aromatisch
+    feld: geschmack
+    enthält:
+      - würzig
+      - aromatisch
+      - intensiv
+    score: 40
+  
+  # Zubereitung-bezogene Suchen
+  braten:
+    keywords:
+      - braten
+      - pfanne
+      - anbraten
+    feld: zubereitung
+    enthält:
+      - braten
+    score: 40
+  
+  trocknen:
+    keywords:
+      - trocknen
+      - dörren
+      - getrocknet
+    feld: zubereitung
+    enthält:
+      - trocknen
+    score: 40
+  
+  # Verwechslung
+  verwechslung:
+    keywords:
+      - verwechslung
+      - verwechseln
+      - ähnlich
+      - aussehen
+      - doppelgänger
+    feld: verwechslung
+    existiert: true
+    score: 30
+
+# === PERSPEKTIVEN ===
+# Welche Felder gehören zu welcher Perspektive?
+perspektiven:
+  kulinarisch:
+    name: Kulinarisch
+    symbol: 🍳
+    farbe: "#f59e0b"
+    felder:
+      - geschmack
+      - zubereitung
+      - essbarkeit
+    keywords:
+      - essbar
+      - essen
+      - kochen
+      - braten
+      - geschmack
+      - zubereitung
+      - rezept
+      - speise
+      - würzig
+      - mild
+      - nussig
+      - umami
+      - aroma
+  
+  sicherheit:
+    name: Sicherheit
+    symbol: ⚠️
+    farbe: "#ef4444"
+    felder:
+      - essbarkeit
+      - verwechslung
+      - symptome
+    keywords:
+      - giftig
+      - gift
+      - gefährlich
+      - tödlich
+      - vergiftung
+      - symptom
+      - verwechslung
+      - warnung
+      - vorsicht
+      - leber
+      - niere
+      - halluzination
+  
+  anbau:
+    name: Anbau
+    symbol: 🌱
+    farbe: "#10b981"
+    felder:
+      - standort
+      - saison
+      - temperatur
+    keywords:
+      - standort
+      - wald
+      - wiese
+      - substrat
+      - temperatur
+      - wachsen
+      - finden
+      - sammeln
+      - saison
+      - herbst
+      - sommer
+      - frühling
+      - holz
+      - baum
+  
+  oekologie:
+    name: Ökologie
+    symbol: 🌍
+    farbe: "#3b82f6"
+    felder:
+      - standort
+      - symbiose
+      - habitat
+    keywords:
+      - ökologie
+      - symbiose
+      - mykorrhiza
+      - habitat
+      - umwelt
+      - natur
+      - baum
+      - partner

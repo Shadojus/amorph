@@ -70,6 +70,21 @@ async function suchen(query) {
 
 Kein Cache. Keine lokale Kopie. Datenbank ist die Wahrheit.
 
+### Schema-basierte Suche (NEU)
+
+Die semantische Suche ist jetzt konfigurierbar über `config/schema.yaml`:
+
+```yaml
+semantik:
+  essbar:
+    keywords: [essbar, essen, speisepilz]
+    feld: essbarkeit
+    werte: [essbar]
+    score: 50
+```
+
+Das macht AMORPH universell für beliebige Datentypen.
+
 ### Session-Observer
 
 Wenn eine User-Session existiert, beobachtet der SessionObserver:
@@ -102,7 +117,13 @@ amorph/
 ├── features/
 │   ├── CLAUDE.md       ← Feature-System
 │   └── */              ← Einzelne Features
+├── util/
+│   ├── CLAUDE.md       ← Hilfsfunktionen
+│   ├── fetch.js        ← Datenquellen
+│   └── semantic.js     ← Schema-basierte Suche (NEU)
 ├── config/
+│   ├── schema.yaml     ← Datenstruktur & Semantik (NEU)
+├── template/           ← Starter-Template (NEU)
 │   └── CLAUDE.md       ← Konfigurationsformat
 └── util/
     └── CLAUDE.md       ← Hilfsfunktionen

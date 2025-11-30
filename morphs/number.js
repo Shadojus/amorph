@@ -1,4 +1,7 @@
+import { debug } from '../observer/debug.js';
+
 export function number(wert, config = {}) {
+  debug.morphs('number', { wert, einheit: config.einheit });
   const el = document.createElement('span');
   el.className = 'amorph-number';
   

@@ -361,3 +361,48 @@ Diese Funktionen haben keine externen Abhängigkeiten. Sie nutzen nur Browser-AP
 - `crypto.randomUUID`
 
 Das macht sie leicht testbar und portabel.
+
+## semantic.js
+
+Schema-basierte semantische Suche. Ersetzt hardcodierte Suchlogik durch konfigurierbare Regeln aus `config/schema.yaml`.
+
+```javascript
+import { setSchema, semanticScore, getPerspektivenKeywords, getSuchfelder } from './semantic.js';
+
+// Schema setzen (nach Config-Load)
+setSchema(config.schema);
+
+// Semantische Suche
+const { score, matches } = semanticScore(item, 'essbar pilze');
+// → { score: 80, matches: ['Essbar', 'Speisepilz'] }
+
+// Perspektiven-Keywords abrufen
+const keywords = getPerspektivenKeywords();
+// → { kulinarisch: ['rezept', 'kochen'], sicherheit: ['giftig', 'gefährlich'], ... }
+
+// Suchfelder mit Gewichtung
+const felder = getSuchfelder();
+// → { name: { gewicht: 100, exakt: true }, beschreibung: { gewicht: 20 }, ... }
+```
+
+### Debug-Logging
+
+Alle Funktionen loggen über `debug.suche()` und `debug.perspektiven()`:
+
+- **Schema geladen**: Zeigt geladene Felder, Semantik-Regeln, Perspektiven
+- **Semantik-Analyse startet**: Bei jeder Suchanfrage pro Item
+- **Semantik-Match**: Bei gefundenen Treffern mit Score
+- **Semantik-Ergebnis**: Gesamtscore pro Item
+- **Warnungen**: Falls kein Schema geladen ist
+
+### Strategien
+
+Die semantische Suche unterstützt verschiedene Matching-Strategien:
+
+| Strategie | Beschreibung | Beispiel |
+|-----------|--------------|----------|
+| `werte` | Exakte Werte-Übereinstimmung | `essbarkeit: Essbar` |
+| `enthält` | Teilstring-Suche in Feld | `standort enthält "wald"` |
+| `existiert` | Prüft ob Feld nicht leer ist | `verwechslung hat Einträge` |
+| `aktuell` | Aktueller Monat in Saison | `saison enthält "November"` |
+

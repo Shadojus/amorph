@@ -1,9 +1,12 @@
+import { debug } from '../observer/debug.js';
+
 export function image(wert, config = {}) {
   const el = document.createElement('figure');
   el.className = 'amorph-image';
   
   const img = document.createElement('img');
-  const src = typeof wert === 'string' ? wert : wert.url || wert.src;
+  const src = typeof wert === 'string' ? wert : wert?.url || wert?.src;
+  debug.morphs('image', { src: src?.slice(0, 50) });
   
   if (src && isAllowedUrl(src, config.erlaubteDomains)) {
     img.src = src;

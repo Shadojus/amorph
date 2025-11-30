@@ -1,11 +1,15 @@
+import { debug } from '../observer/debug.js';
+
 export function object(wert, config = {}, morphen) {
   const el = document.createElement('dl');
   el.className = 'amorph-object';
   
   if (typeof wert !== 'object' || wert === null) {
-    console.warn('object-morph erwartet Objekt, bekam:', typeof wert);
+    debug.warn('object-morph erwartet Objekt', { bekam: typeof wert });
     return el;
   }
+  
+  debug.morphs('object', { keys: Object.keys(wert) });
   
   const felder = config.felder || Object.keys(wert);
   

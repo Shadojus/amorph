@@ -4,8 +4,14 @@
  */
 
 import { morphs } from '../morphs/index.js';
+import { debug } from '../observer/debug.js';
 
 export function transform(daten, config, customMorphs = {}) {
+  debug.morphs('Transform Start', { 
+    typ: Array.isArray(daten) ? 'array' : typeof daten,
+    anzahl: Array.isArray(daten) ? daten.length : 1
+  });
+  
   const alleMorphs = { ...morphs, ...customMorphs };
   
   function morphen(wert, feldname = null) {
@@ -14,7 +20,7 @@ export function transform(daten, config, customMorphs = {}) {
     const morph = alleMorphs[morphName];
     
     if (!morph) {
-      console.warn(`Morph nicht gefunden: ${morphName}, nutze text`);
+      debug.warn(`Morph nicht gefunden: ${morphName}, nutze text`);
       return alleMorphs.text(wert, {});
     }
     
@@ -121,6 +127,11 @@ function getMorphConfig(morphName, config) {
 }
 
 export async function render(container, daten, config) {
+  debug.render('Render Start', { 
+    hatDaten: !!daten, 
+    anzahl: Array.isArray(daten) ? daten.length : (daten ? 1 : 0) 
+  });
+  
   // Empty State entfernen
   const emptyState = container.querySelector('.amorph-empty-state');
   if (emptyState) {
@@ -130,12 +141,14 @@ export async function render(container, daten, config) {
   // Nur den Daten-Bereich leeren, nicht die Features!
   // Features haben data-feature Attribut, Daten-Items haben data-morph="item"
   const dataItems = container.querySelectorAll(':scope > amorph-container[data-morph="item"]');
+  debug.render('Alte Items entfernen', { anzahl: dataItems.length });
   for (const item of dataItems) {
     item.remove();
   }
   
   // Wenn keine Daten, nichts rendern
   if (!daten || (Array.isArray(daten) && daten.length === 0)) {
+    debug.render('Keine Daten zum Rendern');
     container.dispatchEvent(new CustomEvent('amorph:rendered', {
       detail: { anzahl: 0, timestamp: Date.now() }
     }));
@@ -145,7 +158,10 @@ export async function render(container, daten, config) {
   const dom = transform(daten, config);
   container.appendChild(dom);
   
+  const anzahl = Array.isArray(daten) ? daten.length : 1;
+  debug.render('Render komplett', { anzahl });
+  
   container.dispatchEvent(new CustomEvent('amorph:rendered', {
-    detail: { anzahl: Array.isArray(daten) ? daten.length : 1, timestamp: Date.now() }
+    detail: { anzahl, timestamp: Date.now() }
   }));
 }

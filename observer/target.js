@@ -1,3 +1,5 @@
+import { debug } from './debug.js';
+
 export function createTarget(config) {
   const { typ, url, ...options } = config;
   
@@ -60,7 +62,7 @@ class HttpTarget {
         body: JSON.stringify(nachrichten)
       });
     } catch (e) {
-      console.error('Observer HTTP Fehler:', e);
+      debug.fehler('observer-http', e);
     }
   }
 }

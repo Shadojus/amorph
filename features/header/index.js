@@ -6,14 +6,29 @@
 
 import { debug } from '../../observer/debug.js';
 import { header as headerMorph } from '../../morphs/header.js';
+import { getPerspektivenKeywords, getPerspektivenListe } from '../../util/semantic.js';
 
 export default function init(ctx) {
   debug.features('Header Feature Init');
   
+  // Keywords aus Schema laden (für Auto-Perspektiven)
+  const schemaKeywords = getPerspektivenKeywords();
+  debug.features('Schema Keywords', Object.keys(schemaKeywords));
+  
+  // Perspektiven-Liste aus Schema als Fallback
+  const schemaListe = getPerspektivenListe();
+  
   // Config aus features.suche und features.perspektiven zusammenbauen
+  // Schema-Liste als Fallback wenn keine Config-Liste
+  const perspektivenConfig = ctx.config.perspektiven || {};
+  if (!perspektivenConfig.liste || perspektivenConfig.liste.length === 0) {
+    perspektivenConfig.liste = schemaListe;
+    debug.features('Perspektiven aus Schema geladen', { anzahl: schemaListe.length });
+  }
+  
   const headerConfig = {
     suche: ctx.config.suche || {},
-    perspektiven: ctx.config.perspektiven || {}
+    perspektiven: perspektivenConfig
   };
   
   debug.features('Header Config', headerConfig);
@@ -188,13 +203,8 @@ export default function init(ctx) {
     const liste = headerConfig.perspektiven.liste || [];
     const q = query.toLowerCase();
     
-    // Semantische Keywords für Perspektiven
-    const perspektivenKeywords = {
-      kulinarisch: ['essbar', 'essen', 'kochen', 'braten', 'geschmack', 'zubereitung', 'rezept', 'speise', 'würzig', 'mild', 'nussig', 'umami', 'aroma'],
-      sicherheit: ['giftig', 'gift', 'gefährlich', 'tödlich', 'vergiftung', 'symptom', 'verwechslung', 'warnung', 'vorsicht', 'leber', 'niere', 'halluzination'],
-      anbau: ['standort', 'wald', 'wiese', 'substrat', 'temperatur', 'wachsen', 'finden', 'sammeln', 'saison', 'herbst', 'sommer', 'frühling', 'holz', 'baum'],
-      oekologie: ['ökologie', 'symbiose', 'mykorrhiza', 'habitat', 'umwelt', 'natur', 'baum', 'partner']
-    };
+    // Keywords aus Schema nutzen (Fallback auf leere Arrays)
+    const perspektivenKeywords = schemaKeywords;
     
     // Erst alle Markierungen entfernen
     for (const btn of perspektivenBtns || []) {
@@ -260,13 +270,8 @@ export default function init(ctx) {
     const liste = headerConfig.perspektiven.liste || [];
     const q = query.toLowerCase();
     
-    // Semantische Keywords für Perspektiven
-    const perspektivenKeywords = {
-      kulinarisch: ['essbar', 'essen', 'kochen', 'braten', 'geschmack', 'zubereitung', 'rezept', 'speise', 'würzig', 'mild', 'nussig', 'umami', 'aroma'],
-      sicherheit: ['giftig', 'gift', 'gefährlich', 'tödlich', 'vergiftung', 'symptom', 'verwechslung', 'warnung', 'vorsicht', 'leber', 'niere', 'halluzination'],
-      anbau: ['standort', 'wald', 'wiese', 'substrat', 'temperatur', 'wachsen', 'finden', 'sammeln', 'saison', 'herbst', 'sommer', 'frühling'],
-      oekologie: ['ökologie', 'symbiose', 'mykorrhiza', 'habitat', 'umwelt', 'natur', 'baum', 'partner']
-    };
+    // Keywords aus Schema nutzen
+    const perspektivenKeywords = schemaKeywords;
     
     const gefunden = new Map(); // id -> score
     

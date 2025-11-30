@@ -10,6 +10,7 @@ import { link } from './link.js';
 import { suche } from './suche.js';
 import { perspektiven } from './perspektiven.js';
 import { header } from './header.js';
+import { debug } from '../observer/debug.js';
 
 export const morphs = {
   text,
@@ -25,5 +26,8 @@ export const morphs = {
   perspektiven,
   header
 };
+
+// Log registrierte Morphs
+debug.morphs('registry', { verfügbar: Object.keys(morphs) });
 
 export { text, number, boolean, tag, range, list, object, image, link, suche, perspektiven, header };

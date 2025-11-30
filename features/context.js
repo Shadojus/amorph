@@ -1,4 +1,8 @@
+import { debug } from '../observer/debug.js';
+
 export function createFeatureContext(name, container, config, dataSource, callbacks = {}) {
+  debug.features(`Context erstellen: ${name}`);
+  
   const bereich = document.createElement('div');
   bereich.className = `amorph-feature amorph-feature-${name}`;
   bereich.setAttribute('data-feature', name);
@@ -13,26 +17,32 @@ export function createFeatureContext(name, container, config, dataSource, callba
       }
     : (config.features?.[name] || {});
   
+  debug.features(`Config für ${name}`, featureConfig);
+  
   return {
     dom: bereich,
     config: Object.freeze(featureConfig),
     container, // Zugriff auf App-Container
     
     on: (event, handler) => {
+      debug.features(`Event registriert: ${name}:${event}`);
       eventTarget.addEventListener(event, handler);
     },
     
     emit: (event, detail) => {
+      debug.features(`Event emittiert: ${name}:${event}`, detail);
       eventTarget.dispatchEvent(new CustomEvent(event, { detail }));
     },
     
     // Daten abfragen
     fetch: async (query) => {
+      debug.daten(`Feature ${name} fetch`, query);
       return dataSource.query(query);
     },
     
     // Suche ausführen (mit Render)
     search: async (query) => {
+      debug.suche(`Feature ${name} search`, { query });
       if (callbacks.onSearch) {
         return callbacks.onSearch(query);
       }
@@ -40,14 +50,17 @@ export function createFeatureContext(name, container, config, dataSource, callba
     },
     
     requestRender: (detail = {}) => {
+      debug.render(`Feature ${name} requestRender`, detail);
       container.dispatchEvent(new CustomEvent('amorph:request-render', { detail }));
     },
     
     mount: (position = 'beforeend') => {
+      debug.mount(`Feature ${name} mount`, { position });
       container.insertAdjacentElement(position, bereich);
     },
     
     destroy: () => {
+      debug.unmount(`Feature ${name} destroy`);
       bereich.remove();
     }
   };

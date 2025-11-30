@@ -1,9 +1,12 @@
+import { debug } from '../observer/debug.js';
+
 export function link(wert, config = {}) {
   const el = document.createElement('a');
   el.className = 'amorph-link';
   
-  const url = typeof wert === 'string' ? wert : wert.url || wert.href;
-  const text = typeof wert === 'string' ? wert : wert.text || wert.label || url;
+  const url = typeof wert === 'string' ? wert : wert?.url || wert?.href;
+  const text = typeof wert === 'string' ? wert : wert?.text || wert?.label || url;
+  debug.morphs('link', { url: url?.slice(0, 50) });
   
   if (url && isValidUrl(url)) {
     el.href = url;

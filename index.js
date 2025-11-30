@@ -12,6 +12,7 @@ import { setupObservers, stopObservers } from './observer/index.js';
 import { loadFeatures, unloadFeatures } from './features/index.js';
 import { createDataSource } from './util/fetch.js';
 import { getSession } from './util/session.js';
+import { setSchema } from './util/semantic.js';
 import { debug } from './observer/debug.js';
 import './core/container.js'; // Web Component registrieren
 
@@ -46,6 +47,11 @@ export async function amorph(options = {}) {
   // Konfiguration laden
   const config = await loadConfig(configPath);
   debug.config('Geladen', Object.keys(config));
+  
+  // Schema für semantische Suche setzen
+  if (config.schema) {
+    setSchema(config.schema);
+  }
   
   // Datenquelle erstellen
   const dataSource = createDataSource(config.daten);
@@ -102,6 +108,7 @@ export async function amorph(options = {}) {
   // Aufräumen bei Bedarf
   return {
     destroy() {
+      debug.amorph('Destroy', { query: currentQuery, dataCount: currentData.length });
       stopObservers(observers);
       unloadFeatures(features);
       container.innerHTML = '';
@@ -109,9 +116,11 @@ export async function amorph(options = {}) {
     },
     
     async reload() {
+      debug.amorph('Reload', { query: currentQuery });
       if (currentQuery) {
         currentData = await dataSource.query({ search: currentQuery });
         await render(container, currentData, config);
+        debug.amorph('Reload komplett', { anzahl: currentData.length });
       }
     },
     
@@ -180,7 +189,7 @@ function highlightMatches(container, query, matchedTerms = new Set()) {
   if (highlightTerms.size === 0) return;
   
   // Debug
-  console.log('[HIGHLIGHT]', { query: q, terms: [...highlightTerms], fromSearch: matchedTerms.size > 0 });
+  debug.render('highlight', { query: q, terms: [...highlightTerms], fromSearch: matchedTerms.size > 0 });
   
   // ALLE Text-Elemente in Items durchsuchen
   const items = container.querySelectorAll('.amorph-item');

@@ -1,4 +1,7 @@
+import { debug } from '../observer/debug.js';
+
 export function range(wert, config = {}) {
+  debug.morphs('range', { min: wert.min, max: wert.max, einheit: config.einheit });
   const el = document.createElement('span');
   el.className = 'amorph-range';
   

@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "titel": "Erstes Item",
+    "beschreibung": "Dies ist ein Beispiel-Item. Passe die Daten an dein Schema an.",
+    "kategorie": "priorität",
+    "tags": ["neu", "beispiel"],
+    "bild": "https://placehold.co/400x300/3b82f6/white?text=Item+1"
+  },
+  {
+    "id": 2,
+    "titel": "Zweites Item",
+    "beschreibung": "Ein weiteres Beispiel mit anderen Tags.",
+    "kategorie": "normal",
+    "tags": ["beispiel"],
+    "bild": "https://placehold.co/400x300/10b981/white?text=Item+2"
+  },
+  {
+    "id": 3,
+    "titel": "Drittes Item",
+    "beschreibung": "Dieses Item hat die Kategorie 'wichtig' und sollte bei der Suche nach 'priorität' gefunden werden.",
+    "kategorie": "priorität",
+    "tags": ["wichtig", "dringend"],
+    "bild": "https://placehold.co/400x300/ef4444/white?text=Item+3"
+  }
+]

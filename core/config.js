@@ -3,32 +3,42 @@
  * Lädt alle YAML-Dateien aus dem Config-Ordner
  */
 
+import { debug } from '../observer/debug.js';
+
 const CONFIG_FILES = [
   'manifest.yaml',
   'daten.yaml',
   'morphs.yaml',
   'observer.yaml',
-  'features.yaml'
+  'features.yaml',
+  'schema.yaml'
 ];
 
 export async function loadConfig(basePath = './config/') {
+  debug.config('Lade Konfiguration', { basePath });
   const config = {};
+  
+  // Cache-Busting: Timestamp anhängen um Browser-Cache zu umgehen
+  const cacheBuster = `?t=${Date.now()}`;
   
   for (const file of CONFIG_FILES) {
     const name = file.replace('.yaml', '');
     try {
-      const response = await fetch(basePath + file);
+      debug.config(`Lade ${file}...`);
+      const response = await fetch(basePath + file + cacheBuster);
       if (!response.ok) {
         if (name === 'manifest' || name === 'daten') {
           throw new Error(`Pflichtdatei fehlt: ${file}`);
         }
+        debug.warn(`Optional: ${file} nicht gefunden`);
         continue;
       }
       const text = await response.text();
       config[name] = parseYAML(text);
+      debug.config(`${file} geladen`, { keys: Object.keys(config[name]) });
     } catch (e) {
       if (name === 'manifest' || name === 'daten') {
-        console.error(`Fehler beim Laden von ${file}:`, e);
+        debug.fehler(`Fehler beim Laden von ${file}`, e);
         throw e;
       }
     }
@@ -36,6 +46,7 @@ export async function loadConfig(basePath = './config/') {
   
   validateConfig(config);
   replaceEnvVars(config);
+  debug.config('Alle Configs geladen', { dateien: Object.keys(config) });
   return config;
 }
 
@@ -181,12 +192,16 @@ function parseValue(value) {
 }
 
 function validateConfig(config) {
+  debug.config('Validiere Config...');
   if (!config.manifest?.name) {
+    debug.fehler('Validierung fehlgeschlagen: manifest.name fehlt');
     throw new Error('manifest.yaml: name fehlt');
   }
   if (!config.daten?.quelle) {
+    debug.fehler('Validierung fehlgeschlagen: daten.quelle fehlt');
     throw new Error('daten.yaml: quelle fehlt');
   }
+  debug.config('Validierung OK');
 }
 
 function replaceEnvVars(obj) {

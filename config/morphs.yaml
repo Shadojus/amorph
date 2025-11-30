@@ -28,7 +28,7 @@ config:
   
   tag:
     farben:
-      essbar: "#22c55e"
+      essbar: "#22c00e"
       bedingt essbar: "#eab308"
       giftig: "#ef4444"
       tödlich: "#7f1d1d"
