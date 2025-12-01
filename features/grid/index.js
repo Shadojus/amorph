@@ -4,7 +4,7 @@ export default function init(ctx) {
   debug.grid('Init', ctx.config);
   
   const layouts = ctx.config.layouts || ['liste', 'grid', 'kompakt'];
-  let current = ctx.config.default || 'liste';
+  let current = ctx.config.default || 'grid';
   
   const icons = { liste: '☰', grid: '⊞', kompakt: '▤' };
   
