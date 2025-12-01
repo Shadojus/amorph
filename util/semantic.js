@@ -28,6 +28,39 @@ export function getSchema() {
 }
 
 /**
+ * Feld-Reihenfolge aus Schema holen
+ * @returns {string[]} Array der Feldnamen in definierter Reihenfolge
+ */
+export function getFeldReihenfolge() {
+  if (!schemaCache?.reihenfolge) {
+    // Fallback: Felder-Keys aus Schema
+    return Object.keys(schemaCache?.felder || {});
+  }
+  return schemaCache.reihenfolge;
+}
+
+/**
+ * Sortiert ein Objekt nach der Schema-Reihenfolge
+ * @param {Object} obj - Das zu sortierende Objekt  
+ * @returns {Array<[string, any]>} Sortierte Einträge [key, value]
+ */
+export function sortBySchemaOrder(obj) {
+  const reihenfolge = getFeldReihenfolge();
+  const entries = Object.entries(obj);
+  
+  return entries.sort((a, b) => {
+    const indexA = reihenfolge.indexOf(a[0]);
+    const indexB = reihenfolge.indexOf(b[0]);
+    
+    // Nicht definierte Felder ans Ende
+    const posA = indexA === -1 ? 999 : indexA;
+    const posB = indexB === -1 ? 999 : indexB;
+    
+    return posA - posB;
+  });
+}
+
+/**
  * Semantische Suche mit Schema-basiertem Scoring
  * @param {Object} item - Das zu bewertende Item
  * @param {string} query - Die Suchanfrage

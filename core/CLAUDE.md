@@ -2,11 +2,23 @@
 
 Das Herz von AMORPH. Drei Dateien, eine Aufgabe: Daten transformieren.
 
+## 🚧 AKTUELLER STAND
+
+### Implementiert
+- ✅ Config-Loader lädt alle YAML-Dateien
+- ✅ Pipeline transformiert Daten durch Morphs
+- ✅ Container Web Component rendert Morphs
+
+### TODO für Feld-Auswahl
+- Pipeline muss Morph-Elementen `data-feld-name` und `data-pilz-id` mitgeben
+- Container muss Click-Events auf Feld-Ebene abfangen
+- Events dispatchen für Feld-Auswahl
+
 ## Übersicht
 
 ```
 config.js   → Lädt und validiert Konfiguration
-pipeline.js → Transformiert Daten durch Morphs
+pipeline.js → Transformiert Daten durch Morphs  
 container.js → Web Component als Morph-Container
 ```
 

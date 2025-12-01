@@ -2,6 +2,15 @@
 
 Layout-Optionen für die Darstellung.
 
+## 🚧 AKTUELLER STAND
+
+Grid-Feature funktioniert. Layouts: Liste, Grid, Kompakt.
+
+### TODO für Feld-Auswahl
+- Jedes Feld in einer Card muss klickbar sein
+- Klick auf Feld → Event `amorph:feld-auswahl` mit `{pilzId, feldName, wert}`
+- Ausgewählte Felder bekommen `.feld-ausgewaehlt` Klasse
+
 ## Layouts
 
 - **Liste**: Vertikal, ein Element pro Zeile

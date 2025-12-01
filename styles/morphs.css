@@ -29,22 +29,29 @@
 
 /* === TAG === */
 .amorph-tag {
-  display: inline-block;
-  padding: 3px 8px;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
   font-size: var(--font-size-sm);
   font-weight: 500;
-  /* Dezenter Glas-Tag */
-  background: rgba(255, 255, 255, 0.08);
+  /* Eleganter Glasmorphism-Tag */
+  background: rgba(255, 255, 255, 0.06);
   color: var(--color-text);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
   text-transform: capitalize;
+  white-space: nowrap;
 }
 
 /* Tag mit Custom-Farbe */
 .amorph-tag[style*="--tag-farbe"] {
-  background: color-mix(in srgb, var(--tag-farbe) 25%, transparent);
-  border-color: color-mix(in srgb, var(--tag-farbe) 40%, transparent);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--tag-farbe) 20%, transparent) 0%,
+    color-mix(in srgb, var(--tag-farbe) 12%, transparent) 100%
+  );
+  border-color: color-mix(in srgb, var(--tag-farbe) 35%, transparent);
+  color: var(--tag-farbe);
 }
 
 /* === RANGE === */
@@ -90,7 +97,7 @@
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-xs);
+  gap: 6px;
 }
 
 .amorph-list li {
@@ -148,7 +155,10 @@
 
 .amorph-image img {
   max-width: 100%;
+  max-height: 250px;
+  width: 100%;
   height: auto;
+  object-fit: cover;
   border-radius: var(--radius-md);
   display: block;
   border: 1px solid rgba(255, 255, 255, 0.05);

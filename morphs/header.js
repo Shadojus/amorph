@@ -64,12 +64,13 @@ export function header(config, morphConfig = {}) {
 
 /**
  * Erstellt den Ansicht-Switch (Karten, Detail, Vergleich)
+ * Detail + Vergleich sind ausgegraut bis Items ausgewählt sind
  */
 function erstelleAnsichtSwitch(config) {
   const ansichten = config.ansichten || [
-    { id: 'karten', label: 'Karten', icon: '⊞', layout: 'grid' },
-    { id: 'detail', label: 'Detail', icon: '☰', layout: 'liste' },
-    { id: 'vergleich', label: 'Vergleich', icon: '▥', layout: 'kompakt' }
+    { id: 'karten', label: 'Karten', icon: '⊞', minAuswahl: 0 },
+    { id: 'detail', label: 'Detail', icon: '📋', minAuswahl: 1 },
+    { id: 'vergleich', label: 'Vergleich', icon: '⚖️', minAuswahl: 2 }
   ];
   
   const aktiv = config.default || 'karten';
@@ -79,11 +80,18 @@ function erstelleAnsichtSwitch(config) {
   switchContainer.setAttribute('role', 'radiogroup');
   switchContainer.setAttribute('aria-label', 'Ansicht wählen');
   
+  // Auswahl-Counter
+  const counter = document.createElement('span');
+  counter.className = 'amorph-auswahl-counter';
+  counter.textContent = '0';
+  counter.style.display = 'none';
+  switchContainer.appendChild(counter);
+  
   for (const ansicht of ansichten) {
     const btn = document.createElement('button');
     btn.className = 'amorph-ansicht-btn';
     btn.dataset.ansicht = ansicht.id;
-    btn.dataset.layout = ansicht.layout;
+    btn.dataset.minAuswahl = ansicht.minAuswahl;
     btn.setAttribute('role', 'radio');
     btn.setAttribute('aria-checked', ansicht.id === aktiv ? 'true' : 'false');
     btn.setAttribute('title', ansicht.label);
@@ -93,7 +101,15 @@ function erstelleAnsichtSwitch(config) {
       btn.classList.add('aktiv');
     }
     
+    // Detail + Vergleich initial disabled
+    if (ansicht.minAuswahl > 0) {
+      btn.disabled = true;
+      btn.classList.add('disabled');
+    }
+    
     btn.addEventListener('click', () => {
+      if (btn.disabled) return;
+      
       // Alle Buttons deaktivieren
       for (const b of switchContainer.querySelectorAll('button')) {
         b.classList.remove('aktiv');
@@ -103,26 +119,44 @@ function erstelleAnsichtSwitch(config) {
       btn.classList.add('aktiv');
       btn.setAttribute('aria-checked', 'true');
       
-      // Layout im Container setzen
-      const appContainer = document.querySelector('[data-amorph-container]');
-      if (appContainer) {
-        appContainer.dataset.layout = ansicht.layout;
-      }
+      // Event für Ansicht-Wechsel dispatchen
+      document.dispatchEvent(new CustomEvent('amorph:ansicht-wechsel', {
+        detail: { ansicht: ansicht.id }
+      }));
       
-      debug.features('Ansicht gewechselt', { ansicht: ansicht.id, layout: ansicht.layout });
+      debug.features('Ansicht gewechselt', { ansicht: ansicht.id });
     });
     
     switchContainer.appendChild(btn);
   }
   
-  // Initial Layout setzen
-  setTimeout(() => {
-    const appContainer = document.querySelector('[data-amorph-container]');
-    const aktivAnsicht = ansichten.find(a => a.id === aktiv);
-    if (appContainer && aktivAnsicht) {
-      appContainer.dataset.layout = aktivAnsicht.layout;
+  // Auf Auswahl-Änderungen reagieren
+  document.addEventListener('amorph:auswahl-geaendert', (e) => {
+    const anzahl = e.detail.anzahl;
+    
+    // Counter aktualisieren
+    counter.textContent = anzahl;
+    counter.style.display = anzahl > 0 ? '' : 'none';
+    
+    // Buttons enablen/disablen
+    for (const btn of switchContainer.querySelectorAll('.amorph-ansicht-btn')) {
+      const minAuswahl = parseInt(btn.dataset.minAuswahl || '0');
+      if (anzahl >= minAuswahl) {
+        btn.disabled = false;
+        btn.classList.remove('disabled');
+      } else {
+        btn.disabled = true;
+        btn.classList.add('disabled');
+        // Wenn aktiv und nicht mehr genug Auswahl → zu Karten wechseln
+        if (btn.classList.contains('aktiv')) {
+          const kartenBtn = switchContainer.querySelector('[data-ansicht="karten"]');
+          kartenBtn?.click();
+        }
+      }
     }
-  }, 0);
+    
+    debug.features('Auswahl geändert', { anzahl });
+  });
   
   return switchContainer;
 }

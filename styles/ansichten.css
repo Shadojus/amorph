@@ -1,0 +1,527 @@
+/* AMORPH v5 - Ansichten Styles */
+/* Black Glasmorphism - Feld-Auswahl & Views */
+
+/* === EINZELNE FELDER - Klickbar machen === */
+amorph-container[data-field] {
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  border-radius: var(--radius-sm, 4px);
+}
+
+amorph-container[data-field]:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* === FELD-AUSWAHL - Dezenter Glasmorphism mit Farbverlauf === */
+amorph-container[data-field].feld-ausgewaehlt {
+  /* Sanfter Farbverlauf - von Perspektiven-Farbe zu transparent */
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent, #e8b04a)) 15%, transparent) 0%,
+    color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe, #d4943a)) 10%, transparent) 50%,
+    color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe, #f0c866)) 5%, transparent) 100%
+  ) !important;
+  /* Glasmorphism */
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  /* Layout */
+  padding-left: var(--space-md, 12px) !important;
+  margin-left: 8px !important;
+  border-radius: 6px;
+  z-index: 10;
+}
+
+/* === BALKEN für ausgewählte Felder - dezent === */
+amorph-container[data-field].feld-ausgewaehlt::before {
+  content: '' !important;
+  position: absolute !important;
+  left: -4px !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 3px !important;
+  border-radius: 2px !important;
+  /* Gradient aus Perspektiven-Farben */
+  background: linear-gradient(
+    180deg,
+    var(--feld-perspektive-farbe, var(--color-accent, #e8b04a)) 0%,
+    var(--feld-p-farbe-1, var(--feld-perspektive-farbe, #d4943a)) 50%,
+    var(--feld-p-farbe-2, var(--feld-perspektive-farbe, #f0c866)) 100%
+  ) !important;
+  /* Sanfter Glow */
+  box-shadow: 
+    0 0 8px var(--feld-perspektive-farbe, var(--color-accent, #e8b04a)),
+    0 0 16px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe, #d4943a)) 40%, transparent) !important;
+  /* Langsame Animation */
+  animation: feld-auswahl-sanft 3s ease-in-out infinite !important;
+}
+
+@keyframes feld-auswahl-sanft {
+  0%, 100% {
+    opacity: 0.9;
+    box-shadow: 
+      0 0 8px var(--feld-perspektive-farbe, var(--color-accent, #e8b04a)),
+      0 0 16px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe, #d4943a)) 40%, transparent);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 
+      0 0 12px var(--feld-perspektive-farbe, var(--color-accent, #e8b04a)),
+      0 0 24px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe, #d4943a)) 50%, transparent);
+  }
+}
+
+/* Auswahl-Indikator Checkmark - dezent */
+amorph-container[data-field].feld-ausgewaehlt::after {
+  content: '✓';
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 16px;
+  height: 16px;
+  background: var(--feld-perspektive-farbe, var(--color-accent, #e8b04a));
+  color: black;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 16px;
+  text-align: center;
+  border-radius: 50%;
+  z-index: 15;
+  box-shadow: 0 0 8px var(--feld-perspektive-farbe, var(--color-accent));
+}
+
+/* === ITEM CARDS - Nicht mehr direkt auswählbar === */
+amorph-container[data-morph="item"] {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+amorph-container[data-morph="item"]:hover {
+  transform: translateY(-2px);
+}
+
+/* === FLOATING ACTION BAR === */
+.amorph-action-bar {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+/* Versteckt wenn keine Auswahl */
+.amorph-action-bar.versteckt {
+  opacity: 0;
+  transform: translateX(-50%) translateY(100px);
+  pointer-events: none;
+}
+
+/* Auswahl-Counter */
+.amorph-action-counter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.amorph-action-counter-zahl {
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  font-weight: 700;
+  line-height: 24px;
+  text-align: center;
+  background: var(--color-accent, #22c55e);
+  color: black;
+  border-radius: 12px;
+}
+
+/* Action Buttons */
+.amorph-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-muted);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.amorph-action-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.amorph-action-btn.primary {
+  background: var(--color-accent, #22c55e);
+  color: black;
+  border-color: var(--color-accent, #22c55e);
+}
+
+.amorph-action-btn.primary:hover {
+  filter: brightness(1.1);
+}
+
+.amorph-action-btn-icon {
+  font-size: 1.1em;
+}
+
+/* Auswahl löschen Button */
+.amorph-action-clear {
+  padding: 8px;
+  background: transparent;
+  color: var(--color-text-dim);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.amorph-action-clear:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text);
+}
+
+/* === OVERLAY VIEWS (Detail & Vergleich) === */
+.amorph-view-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Solider schwarzer Hintergrund - kein Durchscheinen */
+  background: rgb(10, 10, 12);
+  z-index: 9999;
+  overflow-y: auto;
+  padding: var(--space-lg);
+  padding-top: 80px;
+  animation: fadeIn 0.2s ease;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Close Button */
+.amorph-view-close {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  font-size: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 2001;
+}
+
+.amorph-view-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+/* === DETAIL VIEW === */
+.amorph-detail-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 var(--space-md, 16px);
+}
+
+.amorph-detail-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-lg, 24px);
+  margin-bottom: var(--space-lg, 24px);
+}
+
+.amorph-detail-nav-btn {
+  width: 44px;
+  height: 44px;
+  font-size: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text, white);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.amorph-detail-nav-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.amorph-detail-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.amorph-detail-counter {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.amorph-detail-card {
+  background: rgba(20, 20, 25, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* WICHTIG: Bild-Größe begrenzen! */
+.amorph-detail-bild {
+  width: 100%;
+  height: 250px;
+  max-height: 250px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.amorph-detail-bild img {
+  width: 100%;
+  height: 250px;
+  max-height: 250px;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Detail Info Badge */
+.amorph-detail-info {
+  text-align: center;
+  margin-bottom: var(--space-md, 16px);
+}
+
+.amorph-detail-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  font-size: var(--font-size-sm, 0.875rem);
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--color-accent, #22c55e);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 20px;
+}
+
+.amorph-detail-header {
+  padding: var(--space-lg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.amorph-detail-titel {
+  margin: 0 0 var(--space-xs) 0;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.amorph-detail-subtitel {
+  margin: 0;
+  font-size: var(--font-size-base);
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.amorph-detail-felder {
+  padding: var(--space-lg);
+  display: grid;
+  gap: var(--space-md);
+}
+
+.amorph-detail-feld {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: var(--space-md);
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.amorph-detail-feld:last-child {
+  border-bottom: none;
+}
+
+.amorph-detail-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.amorph-detail-wert {
+  color: var(--color-text);
+}
+
+/* === VERGLEICHS VIEW === */
+.amorph-vergleich-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-md, 16px);
+}
+
+/* Vergleich Info Badge */
+.amorph-vergleich-info {
+  text-align: center;
+  margin-bottom: var(--space-lg, 24px);
+}
+
+.amorph-vergleich-badge {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  background: rgba(234, 179, 8, 0.15);
+  color: #eab308;
+  border: 1px solid rgba(234, 179, 8, 0.3);
+  border-radius: 20px;
+}
+
+/* Grid für Vergleichs-Cards */
+.amorph-vergleich-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-lg, 24px);
+}
+
+/* Einzelne Vergleichs-Card */
+.amorph-vergleich-card {
+  background: rgba(20, 20, 25, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.amorph-vergleich-card-bild {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.amorph-vergleich-card-bild img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.amorph-vergleich-card-name {
+  margin: 0;
+  padding: 16px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.amorph-vergleich-card-felder {
+  padding: 12px 16px;
+}
+
+.amorph-vergleich-card-feld {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.amorph-vergleich-card-feld:last-child {
+  border-bottom: none;
+}
+
+.amorph-vergleich-card-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.amorph-vergleich-card-wert {
+  font-size: 0.875rem;
+  color: white;
+  text-align: right;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .amorph-action-bar {
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    transform: none;
+    border-radius: 12px;
+    justify-content: center;
+  }
+  
+  .amorph-action-bar.versteckt {
+    transform: translateY(100px);
+  }
+  
+  .amorph-action-counter {
+    border-right: none;
+    padding-right: 8px;
+  }
+  
+  .amorph-action-btn span:not(.amorph-action-btn-icon) {
+    display: none;
+  }
+  
+  .amorph-detail-feld {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  
+  .amorph-vergleich-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Kleinere Feld-Auswahl-Checkmarks auf Mobile */
+  amorph-container[data-field].feld-ausgewaehlt::after {
+    width: 14px;
+    height: 14px;
+    font-size: 8px;
+    line-height: 14px;
+    top: -4px;
+    right: -4px;
+  }
+  
+  .amorph-view-overlay {
+    padding: 12px;
+    padding-top: 60px;
+  }
+  
+  .amorph-view-close {
+    top: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
+}

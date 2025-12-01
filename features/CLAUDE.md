@@ -2,14 +2,41 @@
 
 Eigenständig. Isoliert. Optional.
 
-## Aktueller Stand
+## 🚧 AKTUELLER ENTWICKLUNGSSTAND
 
-- ✅ **Header-Feature**: Kombiniert Suche + Perspektiven
+### Fertig
+- ✅ **Header-Feature**: Suche + Perspektiven + Ansicht-Switch (Buttons im Header)
 - ✅ **Perspektiven**: 4-Farben-Grid, Multi-Color Glow, Auto-Aktivierung
 - ✅ **Semantische Suche**: Keywords → Feldwerte aus Schema
 - ✅ **Treffer-Badges**: Zeigen Anzahl pro Perspektive
+- ✅ **Overlay-System**: Detail + Vergleich Views rendern mit inline z-index:9999
+- ✅ **Feld-Auswahl**: Einzelne Felder anklickbar (30.11.2025)
 
-## Was ist ein Feature?
+### ✅ Feld-Auswahl (IMPLEMENTIERT)
+
+```
+VORHER: Ganze Cards wurden ausgewählt
+↓
+JETZT: Einzelne FELDER werden ausgewählt
+```
+
+**Funktionen**:
+- User klickt einzelne Datenfelder an (Name, Temperatur, Bild...)
+- Ausgewählte Felder glühen grün mit Checkmark
+- Detail-View zeigt nur ausgewählte Felder gruppiert nach Pilz
+- Vergleich-View stellt gleiche Feldtypen nebeneinander
+
+**State**:
+```javascript
+state.auswahl = Map<"pilzId:feldName", {pilzId, feldName, wert, pilzDaten}>
+```
+
+## Ansichten-System
+
+Drei Modi für Datensätze:
+- **Karten (Grid)**: Standard - einzelne FELDER sind anklickbar
+- **Detail**: Zeigt ausgewählte Felder gruppiert nach Pilz
+- **Vergleich**: Gleiche Feldtypen nebeneinander zum Vergleichen
 
 Ein Feature ist eine abgeschlossene Erweiterung. Es bekommt einen eingeschränkten Kontext - keinen globalen Zugriff.
 

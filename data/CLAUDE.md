@@ -2,6 +2,10 @@
 
 Beispieldaten für AMORPH.
 
+## 🚧 AKTUELLER STAND
+
+Pilze-Daten funktionieren. Keine Änderungen nötig für Feld-Auswahl.
+
 ## pilze.json
 
 10 Pilze mit verschiedenen Datentypen:

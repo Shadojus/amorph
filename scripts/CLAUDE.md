@@ -2,6 +2,10 @@
 
 Build- und Entwicklungs-Tools.
 
+## 🚧 AKTUELLER STAND
+
+Scripts funktionieren. Keine Änderungen nötig.
+
 ## check.js
 
 Prüft ob alle Konfigurationsdateien vorhanden und gültig sind.

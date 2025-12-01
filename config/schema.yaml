@@ -1,6 +1,21 @@
 # Schema-Definition für AMORPH
 # Definiert Datenstruktur, Suchverhalten und Perspektiven
 
+# === FELD-REIHENFOLGE ===
+# In welcher Reihenfolge werden Felder angezeigt?
+reihenfolge:
+  - bild
+  - name
+  - wissenschaftlich
+  - essbarkeit
+  - geschmack
+  - saison
+  - temperatur
+  - standort
+  - zubereitung
+  - verwechslung
+  - beschreibung
+
 # === FELDER ===
 # Welche Felder existieren und wie werden sie verarbeitet?
 felder:

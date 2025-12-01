@@ -2,6 +2,42 @@
 
 Formlos. Zustandslos. Transformierend.
 
+## 🚀 Aktueller Stand (30.11.2025)
+
+### ✅ Fertig
+- Schema-basierte Datenbank-Transformation (YAML → Morphs → DOM)
+- Black Glasmorphism Design mit Multi-Color Glow
+- Semantische Suche mit Keyword-Mapping
+- Perspektiven-System mit 4-Farben-Grid
+- Header mit Suche + Perspektiven + Ansicht-Switch
+- **Feld-Auswahl-System**: Einzelne FELDER sind anklickbar (nicht ganze Cards)
+- **Schema-basierte Feld-Reihenfolge**: Felder werden in definierter Reihenfolge angezeigt
+- Overlay-System für Detail/Vergleich Views
+
+### Feld-Auswahl
+User kann einzelne Felder in Cards auswählen:
+- Klick auf Feld → existierender Perspektiven-Balken wird **intensiver**
+- Hintergrund leuchtet stärker in Perspektiven-Farbe
+- Balken wird breiter (2px → 5px) mit verstärktem Multi-Color Glow
+- Detail-View zeigt ausgewählte Felder gruppiert nach Pilz
+- Vergleich-View stellt gleiche Feldtypen nebeneinander
+
+### Feld-Reihenfolge
+Definiert in `config/schema.yaml`:
+```yaml
+reihenfolge:
+  - bild         # Immer zuerst
+  - name
+  - wissenschaftlich
+  - essbarkeit
+  # ... weitere Felder
+```
+
+```javascript
+// State-Struktur
+state.auswahl = Map<"pilzId:feldName", {pilzId, feldName, wert, pilzDaten}>
+```
+
 ## Was ist AMORPH?
 
 AMORPH transformiert Daten aus einer Datenbank in DOM-Elemente. Nichts wird gespeichert. Bei jeder Anfrage werden die Daten frisch geladen und neu gerendert.

@@ -2,6 +2,11 @@
 
 Beobachten. Melden. Nicht eingreifen.
 
+## 🚧 AKTUELLER STAND
+
+Observer sind vorbereitet, aber noch nicht aktiv im Einsatz. 
+Für Feld-Auswahl: Observer könnten Feld-Klicks tracken.
+
 ## Was ist ein Observer?
 
 Observer beobachten das System und senden Nachrichten nach außen. Sie verändern nichts, sie sehen nur.

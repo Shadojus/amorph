@@ -105,6 +105,45 @@ export async function amorph(options = {}) {
     }
   });
   
+  // Feld-Auswahl per Klick auf einzelne Felder in Cards
+  container.addEventListener('click', async (e) => {
+    // Finde das angeklickte Feld (amorph-container mit data-field)
+    const feldContainer = e.target.closest('amorph-container[data-field]');
+    if (!feldContainer) return;
+    
+    // Finde die übergeordnete Item-Card
+    const card = feldContainer.closest('amorph-container[data-morph="item"]');
+    if (!card) return;
+    
+    // Ignoriere Klicks auf interaktive Elemente
+    if (e.target.closest('a, button, input, [role="button"]')) return;
+    
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const itemId = card.dataset.itemId;
+    const feldName = feldContainer.dataset.field;
+    
+    if (!itemId || !feldName) {
+      debug.amorph('Keine itemId oder feldName gefunden', { itemId, feldName });
+      return;
+    }
+    
+    // Wert aus dem DOM holen
+    const itemData = JSON.parse(card.dataset.itemData || '{}');
+    const wert = itemData[feldName];
+    
+    // Dynamischer Import um zirkuläre Abhängigkeiten zu vermeiden
+    const { toggleFeldAuswahl, istFeldAusgewaehlt } = await import('./features/ansichten/index.js');
+    toggleFeldAuswahl(itemId, feldName, wert, itemData);
+    
+    // Feld-State updaten
+    const isSelected = istFeldAusgewaehlt(itemId, feldName);
+    feldContainer.classList.toggle('feld-ausgewaehlt', isSelected);
+    
+    debug.amorph('Feld-Auswahl Toggle', { itemId, feldName, selected: isSelected });
+  });
+  
   // Aufräumen bei Bedarf
   return {
     destroy() {

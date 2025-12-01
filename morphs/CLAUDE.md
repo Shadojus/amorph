@@ -2,6 +2,24 @@
 
 Reine Funktionen. Keine Klassen. Kein Zustand.
 
+## 🚧 AKTUELLER STAND
+
+### Implementiert
+- Alle Morphs funktionieren: text, number, boolean, tag, range, list, object, image, link
+- Jeder Morph erzeugt `<span class="amorph-{type}">` Element
+
+### TODO für Feld-Auswahl
+- Morphs müssen **klickbar** werden für Feld-Auswahl
+- Klick auf Morph-Element → dispatcht Event mit Feld-Infos
+- Ausgewählte Felder bekommen `.ausgewaehlt` Klasse → Glow-Effekt
+
+```javascript
+// GEPLANT: Morphs erhalten click-handler
+el.dataset.feldName = config.name;  // z.B. "temperatur"
+el.dataset.pilzId = config.pilzId;   // z.B. "1"
+// Klick → Event → Feld wird zur Auswahl hinzugefügt
+```
+
 ## Was ist ein Morph?
 
 Ein Morph ist eine Funktion die Daten in ein DOM-Element transformiert:

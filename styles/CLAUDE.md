@@ -2,6 +2,16 @@
 
 Black Glasmorphism Design. Elegant, dezent, leuchtend.
 
+## 🚧 AKTUELLER STAND
+
+### Implementiert
+- Basis Dark Theme mit Glass-Effekten
+- Multi-Color Glow für Perspektiven
+- Auswahl-Glow mit pulsierender Animation (für Cards)
+- Header-Button-Glow bei aktiver Auswahl
+- ✅ **Feld-Auswahl-Intensiv** (01.12.2025): Ausgewählte Felder verstärken den existierenden Perspektiven-Effekt
+- ✅ **Bild-Größe**: Images in Overlays haben max-height Begrenzung
+
 ## Design-System
 
 AMORPH nutzt ein **Black Glasmorphism** Design:
@@ -20,7 +30,8 @@ styles/
 ├── morphs.css       ← Styles für alle Morphs
 ├── features.css     ← Header, Suche, Perspektiven-Buttons
 ├── layouts.css      ← Glass-Cards, Liste/Grid Layouts
-└── perspektiven.css ← Feld-Glow, Multi-Perspektiven
+├── perspektiven.css ← Feld-Glow, Multi-Perspektiven
+└── ansichten.css    ← Overlay, Detail-View, Vergleich, Auswahl-Glow
 ```
 
 ## CSS Variablen

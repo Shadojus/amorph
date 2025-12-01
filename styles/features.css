@@ -8,16 +8,13 @@
   left: 0;
   right: 0;
   z-index: 100;
-  padding: var(--space-sm) var(--space-lg);
-  /* Extra Platz unten für Glow-Effekte */
-  padding-bottom: var(--space-md);
-  /* Dezentes schwarzes Glas */
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  /* Sehr subtile Border */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  /* Glow darf über die Grenzen hinaus */
+  padding: var(--space-md) var(--space-xl);
+  /* Elegantes dunkles Glas */
+  background: rgba(8, 8, 10, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  /* Subtile Border */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
   overflow: visible;
 }
 
@@ -39,25 +36,26 @@
   display: flex;
   gap: var(--space-sm);
   flex: 1;
-  min-width: 200px;
+  max-width: 400px;
 }
 
 .amorph-suche input {
   flex: 1;
-  padding: var(--space-sm) var(--space-md);
+  padding: 10px 16px;
   font-size: var(--font-size-base);
-  /* Dezentes Glas-Input */
-  background: rgba(255, 255, 255, 0.05);
+  /* Elegantes Glas-Input */
+  background: rgba(255, 255, 255, 0.04);
   color: var(--color-text);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-md);
-  transition: all 0.2s ease;
+  border-radius: 20px;
+  transition: all 0.25s ease;
 }
 
 .amorph-suche input:focus {
   outline: none;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
   border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
 }
 
 .amorph-suche input::placeholder {
@@ -65,18 +63,18 @@
 }
 
 .amorph-suche button {
-  padding: var(--space-sm) var(--space-md);
-  font-size: var(--font-size-lg);
-  background: rgba(255, 255, 255, 0.05);
+  padding: 10px 14px;
+  font-size: var(--font-size-base);
+  background: rgba(255, 255, 255, 0.04);
   color: var(--color-text-muted);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-md);
+  border-radius: 20px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
 }
 
 .amorph-suche button:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
   color: var(--color-text);
 }
 
@@ -97,78 +95,59 @@
 .amorph-perspektiven {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-sm);
-  margin-top: var(--space-xs);
-  /* Extra Platz für Glow und Badges */
-  padding: 12px 8px 8px 8px;
-  margin: 0 -8px;
+  gap: 10px;
+  margin-top: var(--space-sm);
+  padding: 4px 0;
   overflow: visible;
 }
 
 .amorph-perspektive-btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: var(--space-xs);
-  padding: 6px 12px;
+  gap: 6px;
+  padding: 8px 16px;
   font-size: var(--font-size-sm);
-  font-weight: 400;
-  /* Dezenter Glas-Button */
-  background: rgba(255, 255, 255, 0.03);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  /* Eleganter Pill-Button */
+  background: rgba(255, 255, 255, 0.04);
   color: var(--color-text-muted);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  /* Platz für Glow-Effekt */
+  transition: all 0.25s ease;
   position: relative;
   z-index: 1;
 }
 
 .amorph-perspektive-btn:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.08);
   color: var(--color-text);
-  border-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
 }
 
 .amorph-perspektive-btn.aktiv,
 .amorph-perspektive-btn[aria-pressed="true"] {
-  /* Leuchtender Multi-Color Glow-Effekt mit Farb-Grid */
-  background: 
-    linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--p-farbe, var(--color-accent)) 12%, transparent) 0%,
-      color-mix(in srgb, var(--p-farbe-1, var(--p-farbe)) 10%, transparent) 50%,
-      color-mix(in srgb, var(--p-farbe-2, var(--p-farbe)) 12%, transparent) 100%
-    );
-  border-color: color-mix(in srgb, var(--p-farbe, var(--color-accent)) 50%, transparent);
+  /* Dezenter Farbverlauf */
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--p-farbe, var(--color-accent)) 20%, transparent) 0%,
+    color-mix(in srgb, var(--p-farbe-2, var(--p-farbe)) 12%, transparent) 100%
+  );
+  border-color: color-mix(in srgb, var(--p-farbe, var(--color-accent)) 40%, transparent);
   color: var(--p-farbe, var(--color-accent));
-  /* Multi-Color Glow aus allen 4 Farben */
+  /* Sanfter Glow */
   box-shadow: 
-    0 0 10px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 40%, transparent),
-    0 0 20px color-mix(in srgb, var(--p-farbe-1, var(--p-farbe)) 25%, transparent),
-    0 0 30px color-mix(in srgb, var(--p-farbe-2, var(--p-farbe)) 15%, transparent),
-    inset 0 0 8px color-mix(in srgb, var(--p-farbe-3, var(--p-farbe)) 10%, transparent);
-  /* Pulsieren */
-  animation: glow-pulse-multi 2.5s ease-in-out infinite;
+    0 0 12px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 30%, transparent),
+    0 0 24px color-mix(in srgb, var(--p-farbe-1, var(--p-farbe)) 15%, transparent);
+  animation: none; /* Kein Pulsieren - ruhiger */
 }
 
-@keyframes glow-pulse-multi {
-  0%, 100% { 
-    box-shadow: 
-      0 0 10px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 40%, transparent),
-      0 0 20px color-mix(in srgb, var(--p-farbe-1, var(--p-farbe)) 25%, transparent),
-      0 0 30px color-mix(in srgb, var(--p-farbe-2, var(--p-farbe)) 15%, transparent),
-      inset 0 0 8px color-mix(in srgb, var(--p-farbe-3, var(--p-farbe)) 10%, transparent);
-    filter: brightness(1);
-  }
-  50% { 
-    box-shadow: 
-      0 0 16px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 55%, transparent),
-      0 0 28px color-mix(in srgb, var(--p-farbe-1, var(--p-farbe)) 35%, transparent),
-      0 0 40px color-mix(in srgb, var(--p-farbe-2, var(--p-farbe)) 25%, transparent),
-      inset 0 0 12px color-mix(in srgb, var(--p-farbe-3, var(--p-farbe)) 15%, transparent);
-    filter: brightness(1.1);
-  }
+.amorph-perspektive-btn.aktiv:hover {
+  box-shadow: 
+    0 0 16px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 40%, transparent),
+    0 0 32px color-mix(in srgb, var(--p-farbe-1, var(--p-farbe)) 20%, transparent);
 }
 
 /* Treffer-Badge - leuchtend mit absolutem Positioning */\n.amorph-perspektive-btn.hat-treffer::after {\n  content: attr(data-treffer-anzahl);\n  position: absolute;\n  top: -8px;\n  right: -8px;\n  min-width: 18px;\n  height: 18px;\n  padding: 0 5px;\n  font-size: 0.7em;\n  font-weight: 700;\n  line-height: 18px;\n  text-align: center;\n  background: var(--p-farbe, var(--color-accent));\n  color: black;\n  border-radius: 10px;\n  /* Glow um Badge */\n  box-shadow: \n    0 0 8px var(--p-farbe, var(--color-accent)),\n    0 0 16px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 60%, transparent);\n  animation: badge-glow-pop 0.3s ease-out;\n  z-index: 10;\n}\n\n@keyframes badge-glow-pop {\n  0% { transform: scale(0); opacity: 0; }\n  70% { transform: scale(1.15); }\n  100% { transform: scale(1); opacity: 1; }\n}
@@ -204,6 +183,51 @@
 .amorph-ansicht-btn[aria-checked="true"] {
   background: rgba(255, 255, 255, 0.1);
   color: var(--color-text);
+}
+
+/* Disabled Buttons */
+.amorph-ansicht-btn.disabled,
+.amorph-ansicht-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Glow wenn Buttons aktivierbar sind (nicht disabled) */
+.amorph-ansicht-btn:not(.disabled):not([data-min-auswahl="0"]) {
+  box-shadow: 0 0 12px color-mix(in srgb, var(--color-accent, #22c55e) 50%, transparent);
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--color-accent, #22c55e);
+  animation: btn-glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes btn-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 8px color-mix(in srgb, var(--color-accent, #22c55e) 40%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 16px color-mix(in srgb, var(--color-accent, #22c55e) 60%, transparent);
+  }
+}
+
+/* Auswahl-Counter im Header */
+.amorph-auswahl-counter {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  line-height: 20px;
+  text-align: center;
+  background: var(--color-accent, #22c55e);
+  color: black;
+  border-radius: 10px;
+  animation: counter-pop 0.2s ease;
+}
+
+@keyframes counter-pop {
+  0% { transform: scale(0.5); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
 }
 
 /* Legacy */

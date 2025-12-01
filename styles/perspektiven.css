@@ -51,6 +51,47 @@ amorph-container[data-field] {
   animation: feld-glow-multi 3s ease-in-out infinite;
 }
 
+/* === FELD AUSGEWÄHLT: Dezenter Glasmorphism mit Farbverlauf === */
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field][data-perspektive-sichtbar].feld-ausgewaehlt {
+  /* Sanfter Farbverlauf im Hintergrund - von Perspektiven-Farbe zu transparent */
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent)) 15%, transparent) 0%,
+    color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 10%, transparent) 50%,
+    color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe)) 5%, transparent) 100%
+  ) !important;
+  /* Subtiler Glaseffekt */
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 6px;
+}
+
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field][data-perspektive-sichtbar].feld-ausgewaehlt::before {
+  /* Etwas breiterer Balken */
+  width: 3px !important;
+  /* Sanfterer Glow - nicht zu intensiv */
+  box-shadow: 
+    0 0 8px var(--feld-perspektive-farbe, var(--color-accent)),
+    0 0 16px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 40%, transparent) !important;
+  /* Langsame, elegante Animation */
+  animation: feld-auswahl-sanft 3s ease-in-out infinite !important;
+}
+
+@keyframes feld-auswahl-sanft {
+  0%, 100% {
+    opacity: 0.9;
+    box-shadow: 
+      0 0 8px var(--feld-perspektive-farbe, var(--color-accent)),
+      0 0 16px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 40%, transparent);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 
+      0 0 12px var(--feld-perspektive-farbe, var(--color-accent)),
+      0 0 24px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 50%, transparent);
+  }
+}
+
 @keyframes feld-glow-multi {
   0%, 100% { 
     opacity: 0.85;
@@ -102,4 +143,3 @@ amorph-container[data-field] {
 }
 
 /* === TREFFER-BADGE wird in features.css definiert === */
-}

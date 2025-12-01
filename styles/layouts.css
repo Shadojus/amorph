@@ -3,29 +3,30 @@
 
 /* === ITEM CONTAINER (Glass Cards) === */
 amorph-container[data-morph="item"] {
-  /* Woodfloor Hintergrund mit schwarzem Overlay */
+  /* Woodfloor Hintergrund mit schwarzem Glasmorphism Overlay */
   background: 
     linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.84) 0%,
+      160deg,
+      rgba(0, 0, 0, 0.88) 0%,
       rgba(0, 0, 0, 0.92) 50%,
-      rgba(0, 0, 0, 0.72) 100%
+      rgba(0, 0, 0, 0.85) 100%
     ),
     url('../images/woodfloor/Moss_Woodsf_Laub.png');
   background-size: cover, cover;
   background-position: center, center;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  /* Dark Glasmorphism */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-lg);
   padding: var(--space-md);
-  transition: all 0.25s ease;
-  /* Overflow visible für Glow-Effekte! */
+  transition: all 0.3s ease;
   overflow: visible;
-  /* Subtiler Glow-Rand */
+  /* Glasmorphism Schatten */
   box-shadow: 
-    inset 0 0 30px rgba(0, 0, 0, 0.4),
-    0 4px 16px rgba(0, 0, 0, 0.3);
+    inset 0 0 40px rgba(0, 0, 0, 0.3),
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 /* Scroll-Container für Card-Inhalt */
@@ -39,12 +40,12 @@ amorph-container[data-morph="item"] > .amorph-item-content {
 }
 
 amorph-container[data-morph="item"]:hover {
-  border-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.12);
   transform: translateY(-2px);
   box-shadow: 
-    inset 0 0 30px rgba(0, 0, 0, 0.3),
-    0 8px 32px rgba(0, 0, 0, 0.4),
-    0 0 20px rgba(255, 255, 255, 0.05);
+    inset 0 0 40px rgba(0, 0, 0, 0.2),
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(255, 255, 255, 0.03);
 }
 
 /* Name in Karten - weiß, nicht cyan */
@@ -80,35 +81,45 @@ amorph-container[data-field="name"] {
 /* === GRID LAYOUT === */
 [data-amorph-container][data-layout="grid"] {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: var(--space-lg);
+  /* Gleichmäßige Spalten mit festerer Mindestbreite */
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-xl);
+  padding: var(--space-md);
 }
 
 [data-layout="grid"] amorph-container[data-morph="item"] {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
-  max-height: 450px;
+  gap: var(--space-xs);
+  /* Feste Proportionen für Harmonie */
+  min-height: 400px;
+  max-height: none;
 }
 
 [data-layout="grid"] amorph-container[data-field="bild"] {
   order: -1;
   margin: calc(-1 * var(--space-md));
-  margin-bottom: var(--space-sm);
-  flex-shrink: 0; /* Bild nicht schrumpfen */
+  margin-bottom: var(--space-md);
+  flex-shrink: 0;
+  /* Konsistente Bildhöhe */
+  height: 180px;
+  overflow: hidden;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 
 [data-layout="grid"] amorph-container[data-field="bild"] img {
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   width: 100%;
-  height: 160px;
+  height: 180px;
   object-fit: cover;
 }
 
 [data-layout="grid"] amorph-container[data-field="name"] {
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
   font-weight: 600;
   flex-shrink: 0;
+  padding: 0 var(--space-sm);
+  margin-top: var(--space-xs);
 }
 
 [data-layout="grid"] amorph-container[data-field="beschreibung"] {
@@ -156,12 +167,13 @@ amorph-container[data-field="name"] {
 
 /* === FELD-CONTAINER IN KARTEN === */
 amorph-container[data-morph="item"] amorph-container[data-field] {
-  padding: var(--space-xs) 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  padding: var(--space-sm) var(--space-sm);
+  margin: 2px 0;
+  border-radius: var(--radius-sm);
 }
 
 amorph-container[data-morph="item"] amorph-container[data-field]:last-child {
-  border-bottom: none;
+  margin-bottom: 0;
 }
 
 /* === RESPONSIVE === */

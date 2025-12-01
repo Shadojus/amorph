@@ -17,6 +17,7 @@ const STYLES = {
   suche: 'color: #38bdf8; font-weight: bold',
   perspektiven: 'color: #06b6d4; font-weight: bold',
   grid: 'color: #84cc16; font-weight: bold',
+  ansichten: 'color: #22c55e; font-weight: bold',
   
   // Morphs & Rendering
   morphs: 'color: #fb7185; font-weight: bold',
@@ -89,6 +90,7 @@ class DebugObserver {
   suche(nachricht, daten = null) { return this.log('suche', nachricht, daten); }
   perspektiven(nachricht, daten = null) { return this.log('perspektiven', nachricht, daten); }
   grid(nachricht, daten = null) { return this.log('grid', nachricht, daten); }
+  ansichten(nachricht, daten = null) { return this.log('ansichten', nachricht, daten); }
   
   // === MORPHS & RENDERING ===
   morphs(nachricht, daten = null) { return this.log('morphs', nachricht, daten); }

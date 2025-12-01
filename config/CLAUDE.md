@@ -2,12 +2,16 @@
 
 Eine Datei = Ein Aspekt. **Schema ist die Single Source of Truth.**
 
-## Aktueller Stand
+## 🚧 AKTUELLER STAND
 
+### Implementiert
 - ✅ Black Glasmorphism Design
 - ✅ 4-Farben-Grid pro Perspektive (Multi-Color Glow)
 - ✅ Semantische Suche aus Schema
 - ✅ Auto-Perspektiven bei Suchergebnissen
+
+### TODO für Feld-Auswahl
+- Eventuell: Schema erweitern um `auswaehlbar: true/false` pro Feld
 
 ## Dateien
 

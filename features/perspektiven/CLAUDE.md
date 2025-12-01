@@ -2,6 +2,12 @@
 
 Verschiedene Blickwinkel auf dieselben Daten.
 
+## 🚧 AKTUELLER STAND
+
+✅ Perspektiven funktionieren mit Multi-Color Glow.
+✅ 4-Farben-Grid pro Perspektive.
+✅ Auto-Aktivierung bei Suchergebnissen.
+
 ## Konzept
 
 Eine Perspektive ist ein Filter + Styling. Sie zeigt bestimmte Felder und färbt sie ein.

@@ -2,6 +2,10 @@
 
 Kleine Helfer. Keine Abhängigkeiten.
 
+## 🚧 AKTUELLER STAND
+
+Utils funktionieren. Keine Änderungen nötig.
+
 ## dom.js
 
 Sichere DOM-Manipulation.

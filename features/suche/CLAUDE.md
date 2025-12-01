@@ -2,6 +2,10 @@
 
 Durchsucht die Datenbank, lädt neue Morphs. Immer frisch.
 
+## 🚧 AKTUELLER STAND
+
+Suche funktioniert. Semantische Suche aus Schema, Keywords → Feldwerte.
+
 ## Kernprinzip
 
 ```

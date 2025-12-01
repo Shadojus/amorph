@@ -5,7 +5,7 @@
 
 import { morphs } from '../morphs/index.js';
 import { debug } from '../observer/debug.js';
-import { getFeldMorphs, getVersteckteFelder, getFeldConfig } from '../util/semantic.js';
+import { getFeldMorphs, getVersteckteFelder, getFeldConfig, sortBySchemaOrder } from '../util/semantic.js';
 
 export function transform(daten, config, customMorphs = {}) {
   debug.morphs('Transform Start', { 
@@ -57,8 +57,16 @@ export function transform(daten, config, customMorphs = {}) {
       itemContainer.setAttribute('data-morph', 'item');
       itemContainer.className = 'amorph-item';
       
+      // ID für Auswahl-System
+      const itemId = item.id || item.slug || JSON.stringify(item).slice(0, 50);
+      itemContainer.dataset.itemId = itemId;
+      // Daten als JSON für späteren Zugriff (für Detail/Vergleich)
+      itemContainer.dataset.itemData = JSON.stringify(item);
+      
       if (typeof item === 'object' && item !== null) {
-        for (const [key, value] of Object.entries(item)) {
+        // Felder in Schema-Reihenfolge rendern
+        const sortedEntries = sortBySchemaOrder(item);
+        for (const [key, value] of sortedEntries) {
           const morphed = morphen(value, key);
           if (morphed) itemContainer.appendChild(morphed);
         }

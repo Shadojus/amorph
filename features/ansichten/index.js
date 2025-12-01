@@ -1,0 +1,615 @@
+/**
+ * Ansichten Feature
+ * Verwaltet FELD-Auswahl, Detail-View und Vergleichs-View
+ * 
+ * Grid-View: Einzelne FELDER sind anklickbar (nicht ganze Cards)
+ * Detail-View: Zeigt ausgewählte Felder gruppiert nach Pilz
+ * Vergleich-View: Stellt gleiche Feldtypen nebeneinander
+ */
+
+import { debug } from '../../observer/debug.js';
+import { getFeldConfig, getVersteckteFelder, getFeldReihenfolge } from '../../util/semantic.js';
+
+// Globaler State für FELD-Auswahl
+const state = {
+  // Map<"pilzId:feldName", {pilzId, feldName, wert, pilzDaten}>
+  auswahl: new Map(),
+  aktiveAnsicht: 'karten', // 'karten' | 'detail' | 'vergleich'
+  detailPilzId: null       // Welcher Pilz im Detail angezeigt wird
+};
+
+export function getState() {
+  return state;
+}
+
+export function setAktiveAnsicht(ansicht) {
+  state.aktiveAnsicht = ansicht;
+  debug.ansichten('Ansicht gewechselt', { ansicht });
+}
+
+/**
+ * Feld zur Auswahl hinzufügen/entfernen
+ * @param {string} pilzId - ID des Pilzes
+ * @param {string} feldName - Name des Feldes (z.B. "temperatur", "name")
+ * @param {*} wert - Wert des Feldes
+ * @param {Object} pilzDaten - Komplette Pilz-Daten
+ */
+export function toggleFeldAuswahl(pilzId, feldName, wert, pilzDaten) {
+  const key = `${pilzId}:${feldName}`;
+  
+  if (state.auswahl.has(key)) {
+    state.auswahl.delete(key);
+    debug.ansichten('Feld-Auswahl entfernt', { key, anzahl: state.auswahl.size });
+  } else {
+    state.auswahl.set(key, {
+      pilzId,
+      feldName,
+      wert,
+      pilzDaten
+    });
+    debug.ansichten('Feld-Auswahl hinzugefügt', { key, anzahl: state.auswahl.size });
+  }
+  
+  // Event für UI-Updates
+  document.dispatchEvent(new CustomEvent('amorph:auswahl-geaendert', {
+    detail: { 
+      auswahl: [...state.auswahl.keys()], 
+      anzahl: state.auswahl.size,
+      pilzIds: getAuswahlPilzIds()
+    }
+  }));
+  
+  return state.auswahl.size;
+}
+
+/**
+ * Legacy-Funktion für Kompatibilität - wählt ALLE Felder eines Pilzes aus
+ */
+export function toggleAuswahl(id, daten = null) {
+  if (!daten) return state.auswahl.size;
+  
+  const versteckt = getVersteckteFelder();
+  const hatBereitsFelder = [...state.auswahl.values()].some(a => a.pilzId === String(id));
+  
+  if (hatBereitsFelder) {
+    // Alle Felder dieses Pilzes entfernen
+    for (const [key, data] of state.auswahl) {
+      if (data.pilzId === String(id)) {
+        state.auswahl.delete(key);
+      }
+    }
+    debug.ansichten('Alle Felder entfernt', { id, anzahl: state.auswahl.size });
+  } else {
+    // Alle sichtbaren Felder hinzufügen
+    for (const [feldName, wert] of Object.entries(daten)) {
+      if (versteckt.includes(feldName)) continue;
+      if (wert === null || wert === undefined || wert === '') continue;
+      
+      const key = `${id}:${feldName}`;
+      state.auswahl.set(key, {
+        pilzId: String(id),
+        feldName,
+        wert,
+        pilzDaten: daten
+      });
+    }
+    debug.ansichten('Alle Felder hinzugefügt', { id, anzahl: state.auswahl.size });
+  }
+  
+  document.dispatchEvent(new CustomEvent('amorph:auswahl-geaendert', {
+    detail: { 
+      auswahl: [...state.auswahl.keys()], 
+      anzahl: state.auswahl.size,
+      pilzIds: getAuswahlPilzIds()
+    }
+  }));
+  
+  return state.auswahl.size;
+}
+
+export function clearAuswahl() {
+  state.auswahl.clear();
+  state.detailPilzId = null;
+  debug.ansichten('Auswahl geleert');
+  
+  document.dispatchEvent(new CustomEvent('amorph:auswahl-geaendert', {
+    detail: { auswahl: [], anzahl: 0, pilzIds: [] }
+  }));
+}
+
+/**
+ * Gibt alle eindeutigen Pilz-IDs in der Auswahl zurück
+ */
+export function getAuswahlPilzIds() {
+  const ids = new Set();
+  for (const data of state.auswahl.values()) {
+    ids.add(data.pilzId);
+  }
+  return [...ids];
+}
+
+/**
+ * Gibt alle ausgewählten Felder zurück
+ */
+export function getAuswahl() {
+  return [...state.auswahl.keys()];
+}
+
+/**
+ * Gibt die Auswahl-Daten gruppiert nach Pilz zurück (Felder sortiert nach Schema)
+ */
+export function getAuswahlNachPilz() {
+  const nachPilz = new Map();
+  const reihenfolge = getFeldReihenfolge();
+  
+  for (const [key, data] of state.auswahl) {
+    if (!nachPilz.has(data.pilzId)) {
+      nachPilz.set(data.pilzId, {
+        pilzDaten: data.pilzDaten,
+        felder: []
+      });
+    }
+    nachPilz.get(data.pilzId).felder.push({
+      feldName: data.feldName,
+      wert: data.wert
+    });
+  }
+  
+  // Felder nach Schema-Reihenfolge sortieren
+  for (const pilzData of nachPilz.values()) {
+    pilzData.felder.sort((a, b) => {
+      const indexA = reihenfolge.indexOf(a.feldName);
+      const indexB = reihenfolge.indexOf(b.feldName);
+      const posA = indexA === -1 ? 999 : indexA;
+      const posB = indexB === -1 ? 999 : indexB;
+      return posA - posB;
+    });
+  }
+  
+  return nachPilz;
+}
+
+/**
+ * Gibt die Auswahl-Daten gruppiert nach Feldtyp zurück (sortiert nach Schema)
+ */
+export function getAuswahlNachFeld() {
+  const nachFeld = new Map();
+  const reihenfolge = getFeldReihenfolge();
+  
+  for (const [key, data] of state.auswahl) {
+    if (!nachFeld.has(data.feldName)) {
+      nachFeld.set(data.feldName, []);
+    }
+    nachFeld.get(data.feldName).push({
+      pilzId: data.pilzId,
+      pilzDaten: data.pilzDaten,
+      wert: data.wert
+    });
+  }
+  
+  // Map nach Schema-Reihenfolge sortieren
+  const sortedNachFeld = new Map();
+  const feldNamen = [...nachFeld.keys()].sort((a, b) => {
+    const indexA = reihenfolge.indexOf(a);
+    const indexB = reihenfolge.indexOf(b);
+    const posA = indexA === -1 ? 999 : indexA;
+    const posB = indexB === -1 ? 999 : indexB;
+    return posA - posB;
+  });
+  
+  for (const feldName of feldNamen) {
+    sortedNachFeld.set(feldName, nachFeld.get(feldName));
+  }
+  
+  return sortedNachFeld;
+}
+
+/**
+ * Prüft ob ein Feld ausgewählt ist
+ */
+export function istFeldAusgewaehlt(pilzId, feldName) {
+  return state.auswahl.has(`${pilzId}:${feldName}`);
+}
+
+/**
+ * Navigation im Detail-View zwischen Pilzen
+ */
+export function detailNavigation(richtung) {
+  const pilzIds = getAuswahlPilzIds();
+  if (pilzIds.length === 0) return null;
+  
+  let currentIndex = pilzIds.indexOf(state.detailPilzId);
+  if (currentIndex === -1) currentIndex = 0;
+  
+  if (richtung === 'next') {
+    currentIndex = (currentIndex + 1) % pilzIds.length;
+  } else if (richtung === 'prev') {
+    currentIndex = (currentIndex - 1 + pilzIds.length) % pilzIds.length;
+  }
+  
+  state.detailPilzId = pilzIds[currentIndex];
+  
+  debug.ansichten('Detail Navigation', { 
+    richtung, 
+    pilzId: state.detailPilzId, 
+    index: currentIndex,
+    total: pilzIds.length 
+  });
+  
+  return state.detailPilzId;
+}
+
+/**
+ * Rendert die Detail-Ansicht - zeigt ausgewählte Felder gruppiert nach Pilz
+ */
+export function renderDetail(container) {
+  const nachPilz = getAuswahlNachPilz();
+  const pilzIds = [...nachPilz.keys()];
+  
+  if (pilzIds.length === 0) {
+    container.innerHTML = `
+      <div class="amorph-ansicht-leer">
+        <div class="amorph-ansicht-leer-icon">📋</div>
+        <div class="amorph-ansicht-leer-text">Wähle mindestens ein Feld aus<br><small>Klicke auf einzelne Felder in den Karten</small></div>
+      </div>
+    `;
+    return;
+  }
+  
+  // Aktuellen Pilz bestimmen
+  if (!state.detailPilzId || !nachPilz.has(state.detailPilzId)) {
+    state.detailPilzId = pilzIds[0];
+  }
+  
+  const currentIndex = pilzIds.indexOf(state.detailPilzId);
+  const pilzData = nachPilz.get(state.detailPilzId);
+  const daten = pilzData.pilzDaten;
+  const ausgewaehlteFelder = pilzData.felder;
+  
+  container.innerHTML = '';
+  
+  // Navigation Header (nur wenn mehrere Pilze)
+  if (pilzIds.length > 1) {
+    const nav = document.createElement('div');
+    nav.className = 'amorph-detail-nav';
+    nav.innerHTML = `
+      <button class="amorph-detail-nav-btn prev" ${currentIndex === 0 ? 'disabled' : ''}>←</button>
+      <span class="amorph-detail-counter">${currentIndex + 1} / ${pilzIds.length} Pilze</span>
+      <button class="amorph-detail-nav-btn next" ${currentIndex === pilzIds.length - 1 ? 'disabled' : ''}>→</button>
+    `;
+    
+    nav.querySelector('.prev')?.addEventListener('click', () => {
+      detailNavigation('prev');
+      renderDetail(container);
+    });
+    nav.querySelector('.next')?.addEventListener('click', () => {
+      detailNavigation('next');
+      renderDetail(container);
+    });
+    
+    container.appendChild(nav);
+  }
+  
+  // Ausgewählte Felder Info
+  const info = document.createElement('div');
+  info.className = 'amorph-detail-info';
+  info.innerHTML = `<span class="amorph-detail-badge">${ausgewaehlteFelder.length} Felder ausgewählt</span>`;
+  container.appendChild(info);
+  
+  // Detail-Card
+  const card = document.createElement('div');
+  card.className = 'amorph-detail-card';
+  
+  // Bild wenn ausgewählt (mit fester Höhe!)
+  const bildFeld = ausgewaehlteFelder.find(f => f.feldName === 'bild');
+  if (bildFeld && bildFeld.wert) {
+    const bildContainer = document.createElement('div');
+    bildContainer.className = 'amorph-detail-bild';
+    bildContainer.style.cssText = 'height: 250px; max-height: 250px; overflow: hidden;';
+    const img = document.createElement('img');
+    img.src = bildFeld.wert;
+    img.alt = daten.name || '';
+    img.loading = 'lazy';
+    img.style.cssText = 'width: 100%; height: 250px; object-fit: cover;';
+    bildContainer.appendChild(img);
+    card.appendChild(bildContainer);
+  }
+  
+  // Header mit Name (wenn ausgewählt)
+  const nameFeld = ausgewaehlteFelder.find(f => f.feldName === 'name');
+  const wissNameFeld = ausgewaehlteFelder.find(f => f.feldName === 'wissenschaftlich');
+  
+  if (nameFeld || wissNameFeld) {
+    const header = document.createElement('div');
+    header.className = 'amorph-detail-header';
+    header.innerHTML = `
+      ${nameFeld ? `<h2 class="amorph-detail-titel">${nameFeld.wert}</h2>` : ''}
+      ${wissNameFeld ? `<p class="amorph-detail-subtitel">${wissNameFeld.wert}</p>` : ''}
+    `;
+    card.appendChild(header);
+  } else {
+    // Fallback: Pilz-Name aus Daten anzeigen
+    const header = document.createElement('div');
+    header.className = 'amorph-detail-header';
+    header.innerHTML = `<h2 class="amorph-detail-titel">${daten.name || 'Pilz'}</h2>`;
+    card.appendChild(header);
+  }
+  
+  // Ausgewählte Felder anzeigen (ohne Bild, Name, wissenschaftlich)
+  const felder = document.createElement('div');
+  felder.className = 'amorph-detail-felder';
+  
+  for (const { feldName, wert } of ausgewaehlteFelder) {
+    if (['bild', 'name', 'wissenschaftlich'].includes(feldName)) continue;
+    
+    const feldConfig = getFeldConfig(feldName);
+    const label = feldConfig?.label || feldName;
+    
+    const feld = document.createElement('div');
+    feld.className = 'amorph-detail-feld';
+    feld.innerHTML = `
+      <span class="amorph-detail-label">${label}</span>
+      <span class="amorph-detail-wert">${formatWert(wert)}</span>
+    `;
+    felder.appendChild(feld);
+  }
+  
+  if (felder.children.length > 0) {
+    card.appendChild(felder);
+  }
+  
+  container.appendChild(card);
+  
+  debug.ansichten('Detail gerendert', { 
+    pilzId: state.detailPilzId, 
+    name: daten.name,
+    felderAnzahl: ausgewaehlteFelder.length 
+  });
+}
+
+/**
+ * Rendert die Vergleichs-Ansicht - Pilze als Karten nebeneinander
+ */
+export function renderVergleich(container) {
+  const nachFeld = getAuswahlNachFeld();
+  const nachPilz = getAuswahlNachPilz();
+  const pilzIds = [...nachPilz.keys()];
+  
+  if (pilzIds.length < 2) {
+    container.innerHTML = `
+      <div class="amorph-ansicht-leer">
+        <div class="amorph-ansicht-leer-icon">⚖️</div>
+        <div class="amorph-ansicht-leer-text">Wähle Felder von mindestens 2 Pilzen<br><small>Klicke auf gleiche Felder bei verschiedenen Pilzen</small></div>
+      </div>
+    `;
+    return;
+  }
+  
+  container.innerHTML = '';
+  
+  // Info-Badge
+  const info = document.createElement('div');
+  info.className = 'amorph-vergleich-info';
+  info.innerHTML = `<span class="amorph-vergleich-badge">${pilzIds.length} Pilze zum Vergleich</span>`;
+  container.appendChild(info);
+  
+  // Cards-Grid
+  const grid = document.createElement('div');
+  grid.className = 'amorph-vergleich-grid';
+  
+  // Eine Card pro Pilz
+  for (const [pilzId, pilzData] of nachPilz) {
+    const daten = pilzData.pilzDaten;
+    const felder = pilzData.felder;
+    
+    const card = document.createElement('div');
+    card.className = 'amorph-vergleich-card';
+    
+    // Bild (mit fester Höhe!)
+    const bildFeld = felder.find(f => f.feldName === 'bild');
+    if (bildFeld && bildFeld.wert) {
+      const bildDiv = document.createElement('div');
+      bildDiv.className = 'amorph-vergleich-card-bild';
+      bildDiv.style.cssText = 'height: 180px; overflow: hidden;';
+      const img = document.createElement('img');
+      img.src = bildFeld.wert;
+      img.alt = daten.name || '';
+      img.style.cssText = 'width: 100%; height: 180px; object-fit: cover;';
+      bildDiv.appendChild(img);
+      card.appendChild(bildDiv);
+    }
+    
+    // Name
+    const nameEl = document.createElement('h3');
+    nameEl.className = 'amorph-vergleich-card-name';
+    nameEl.textContent = daten.name || 'Pilz';
+    card.appendChild(nameEl);
+    
+    // Felder
+    const felderDiv = document.createElement('div');
+    felderDiv.className = 'amorph-vergleich-card-felder';
+    
+    for (const { feldName, wert } of felder) {
+      if (['bild', 'name', 'wissenschaftlich'].includes(feldName)) continue;
+      
+      const feldConfig = getFeldConfig(feldName);
+      const label = feldConfig?.label || feldName;
+      
+      felderDiv.innerHTML += `
+        <div class="amorph-vergleich-card-feld">
+          <span class="amorph-vergleich-card-label">${label}</span>
+          <span class="amorph-vergleich-card-wert">${formatWert(wert)}</span>
+        </div>
+      `;
+    }
+    
+    card.appendChild(felderDiv);
+    grid.appendChild(card);
+  }
+  
+  container.appendChild(grid);
+  
+  debug.ansichten('Vergleich gerendert', { 
+    pilzeAnzahl: pilzIds.length
+  });
+}
+
+/**
+ * Hilfsfunktion: Wert formatieren
+ */
+function formatWert(wert) {
+  if (wert === null || wert === undefined) return '';
+  if (Array.isArray(wert)) return wert.join(', ');
+  if (typeof wert === 'object') {
+    if ('min' in wert && 'max' in wert) {
+      return `${wert.min}–${wert.max}${wert.einheit ? ' ' + wert.einheit : ''}`;
+    }
+    return JSON.stringify(wert);
+  }
+  return String(wert);
+}
+
+/**
+ * Feature Init
+ */
+export default function init(ctx) {
+  debug.ansichten('Ansichten Feature Init');
+  
+  // Overlay Container für Detail/Vergleich Views
+  let viewOverlay = null;
+  
+  function showOverlay(type) {
+    if (viewOverlay) viewOverlay.remove();
+    
+    viewOverlay = document.createElement('div');
+    viewOverlay.className = 'amorph-view-overlay';
+    // Inline-Styles als Fallback falls CSS nicht geladen
+    viewOverlay.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgb(10, 10, 12);
+      z-index: 9999;
+      overflow-y: auto;
+      padding: 20px;
+      padding-top: 80px;
+      display: block;
+    `;
+    
+    // Close Button
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'amorph-view-close';
+    closeBtn.innerHTML = '✕';
+    closeBtn.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      font-size: 24px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 10000;
+    `;
+    closeBtn.addEventListener('click', hideOverlay);
+    viewOverlay.appendChild(closeBtn);
+    
+    // Content Container
+    const content = document.createElement('div');
+    content.className = type === 'detail' ? 'amorph-detail-container' : 'amorph-vergleich-container';
+    content.style.cssText = `
+      max-width: 900px;
+      margin: 0 auto;
+      color: white;
+    `;
+    viewOverlay.appendChild(content);
+    
+    document.body.appendChild(viewOverlay);
+    
+    // ESC zum Schließen
+    const escHandler = (e) => {
+      if (e.key === 'Escape') hideOverlay();
+    };
+    document.addEventListener('keydown', escHandler);
+    viewOverlay.dataset.escHandler = 'true';
+    
+    // Rendern
+    if (type === 'detail') {
+      renderDetail(content);
+    } else {
+      renderVergleich(content);
+    }
+    
+    state.aktiveAnsicht = type;
+    debug.ansichten('Overlay geöffnet', { type });
+  }
+  
+  function hideOverlay() {
+    if (viewOverlay) {
+      viewOverlay.remove();
+      viewOverlay = null;
+    }
+    state.aktiveAnsicht = 'karten';
+    
+    // Karten-Button im Header aktivieren
+    const kartenBtn = document.querySelector('.amorph-ansicht-btn[data-ansicht="karten"]');
+    if (kartenBtn) {
+      document.querySelectorAll('.amorph-ansicht-btn').forEach(b => {
+        b.classList.remove('aktiv');
+        b.setAttribute('aria-checked', 'false');
+      });
+      kartenBtn.classList.add('aktiv');
+      kartenBtn.setAttribute('aria-checked', 'true');
+    }
+    
+    debug.ansichten('Overlay geschlossen');
+  }
+  
+  // Click-Handler für Cards - nur Checkbox-Bereich reagiert
+  // (Der globale Handler in index.js kümmert sich um die Checkbox)
+  
+  // Auf Auswahl-Änderungen reagieren
+  document.addEventListener('amorph:auswahl-geaendert', (e) => {
+    const { anzahl } = e.detail;
+    
+    // Overlay aktualisieren wenn offen
+    if (viewOverlay) {
+      const content = viewOverlay.querySelector('.amorph-detail-container, .amorph-vergleich-container');
+      if (content) {
+        if (state.aktiveAnsicht === 'detail') {
+          renderDetail(content);
+        } else if (state.aktiveAnsicht === 'vergleich') {
+          renderVergleich(content);
+        }
+      }
+    }
+  });
+  
+  // Auf Ansicht-Wechsel vom Header reagieren
+  document.addEventListener('amorph:ansicht-wechsel', (e) => {
+    const { ansicht } = e.detail;
+    debug.ansichten('Ansicht-Wechsel Event empfangen', { ansicht });
+    
+    if (ansicht === 'karten') {
+      hideOverlay();
+    } else if (ansicht === 'detail') {
+      // Detail braucht mindestens 1 Feld
+      if (state.auswahl.size >= 1) {
+        showOverlay('detail');
+      }
+    } else if (ansicht === 'vergleich') {
+      // Vergleich braucht mindestens 2 Pilze mit Feldern
+      const pilzIds = getAuswahlPilzIds();
+      if (pilzIds.length >= 2) {
+        showOverlay('vergleich');
+      }
+    }
+  });
+  
+  ctx.mount();
+}
