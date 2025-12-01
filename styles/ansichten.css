@@ -2,14 +2,15 @@
 /* Black Glasmorphism - Feld-Auswahl & Views */
 
 /* === EINZELNE FELDER - Klickbar machen === */
-amorph-container[data-field] {
+/* Nur in Items, nicht im Header */
+.amorph-item amorph-container[data-field] {
   cursor: pointer;
   position: relative;
   transition: all 0.2s ease;
   border-radius: var(--radius-sm, 4px);
 }
 
-amorph-container[data-field]:hover {
+.amorph-item amorph-container[data-field]:hover {
   background: rgba(255, 255, 255, 0.05);
 }
 

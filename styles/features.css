@@ -104,17 +104,17 @@
 .amorph-perspektive-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  margin: 0 4px;
-  font-size: var(--font-size-sm);
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  /* Eleganter Pill-Button */
-  background: rgba(255, 255, 255, 0.04);
+  gap: 5px;
+  padding: 6px 14px;
+  margin: 0 6px 0 10px;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  /* Feinerer Pill-Button */
+  background: rgba(255, 255, 255, 0.02);
   color: var(--color-text-muted);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
   cursor: pointer;
   transition: all 0.25s ease;
   position: relative;

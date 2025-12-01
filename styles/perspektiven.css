@@ -34,35 +34,34 @@ amorph-container[data-field] {
   top: 0;
   bottom: 0;
   width: 2px;
-  /* Gradient aus allen 4 Farben */
+  /* Gradient aus allen 4 Farben - dezenter */
   background: linear-gradient(
     180deg,
-    var(--feld-perspektive-farbe, var(--color-accent)) 0%,
-    var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 33%,
-    var(--feld-p-farbe-2, var(--feld-perspektive-farbe)) 66%,
-    var(--feld-p-farbe-3, var(--feld-perspektive-farbe)) 100%
+    color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent)) 70%, transparent) 0%,
+    color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 60%, transparent) 33%,
+    color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe)) 50%, transparent) 66%,
+    color-mix(in srgb, var(--feld-p-farbe-3, var(--feld-perspektive-farbe)) 40%, transparent) 100%
   );
   border-radius: 2px;
-  /* Multi-Color Glow-Effekt */
+  /* Dezenterer Glow-Effekt */
   box-shadow: 
-    0 0 6px var(--feld-perspektive-farbe, var(--color-accent)),
-    0 0 12px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 50%, transparent),
-    0 0 18px color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe)) 30%, transparent);
-  animation: feld-glow-multi 3s ease-in-out infinite;
+    0 0 4px color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent)) 50%, transparent),
+    0 0 8px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 30%, transparent);
+  animation: feld-glow-multi 4s ease-in-out infinite;
 }
 
-/* === FELD AUSGEWÄHLT: Dezenter Glasmorphism mit Farbverlauf === */
+/* === FELD AUSGEWÄHLT: Sehr dezenter Glasmorphism === */
 [data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field][data-perspektive-sichtbar].feld-ausgewaehlt {
-  /* Sanfter Farbverlauf im Hintergrund - von Perspektiven-Farbe zu transparent */
+  /* Sehr sanfter Farbverlauf - mehr Transparenz */
   background: linear-gradient(
     135deg,
-    color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent)) 15%, transparent) 0%,
-    color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 10%, transparent) 50%,
-    color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe)) 5%, transparent) 100%
+    color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent)) 8%, transparent) 0%,
+    color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 5%, transparent) 50%,
+    color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe)) 3%, transparent) 100%
   ) !important;
   /* Subtiler Glaseffekt */
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   border-radius: 6px;
 }
 
@@ -134,44 +133,44 @@ amorph-container[data-field] {
 @keyframes multi-color-flow {
   0%, 100% { 
     background-position: 0% 0%;
-    filter: brightness(1);
+    filter: brightness(0.9);
   }
   50% { 
     background-position: 0% 100%;
-    filter: brightness(1.4);
+    filter: brightness(1.1);
   }
 }
 
-/* === MULTI-PERSPEKTIVEN AUSGEWÄHLT: Multicolor-Gradient === */
+/* === MULTI-PERSPEKTIVEN AUSGEWÄHLT: Dezenter Multicolor-Gradient === */
 [data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field][data-perspektive-multi].feld-ausgewaehlt {
-  /* Diagonaler Gradient aus allen Perspektiven-Farben */
-  background: var(--feld-bg-gradient, linear-gradient(135deg, rgba(232, 176, 74, 0.12), rgba(232, 96, 128, 0.12))) !important;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  /* Sehr dezenter Gradient aus allen Perspektiven-Farben */
+  background: var(--feld-bg-gradient, linear-gradient(135deg, rgba(232, 176, 74, 0.06), rgba(232, 96, 128, 0.06))) !important;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   border-radius: 6px;
 }
 
 [data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field][data-perspektive-multi].feld-ausgewaehlt::before {
-  /* Multi-Gradient Balken */
+  /* Multi-Gradient Balken - dezenter */
   background: var(--feld-gradient, linear-gradient(180deg, #e8b04a, #e86080)) !important;
-  width: 3px !important;
-  /* Glow aus allen Perspektiven */
+  width: 2px !important;
+  /* Dezenterer Glow */
   box-shadow: 
-    0 0 10px var(--p-farbe-0, #e8b04a),
-    0 0 10px var(--p-farbe-1, #e86080),
-    0 0 20px color-mix(in srgb, var(--p-farbe-0, #e8b04a) 50%, transparent),
-    0 0 20px color-mix(in srgb, var(--p-farbe-1, #e86080) 50%, transparent) !important;
-  animation: multi-auswahl-glow 3s ease-in-out infinite !important;
+    0 0 4px color-mix(in srgb, var(--p-farbe-0, #e8b04a) 60%, transparent),
+    0 0 4px color-mix(in srgb, var(--p-farbe-1, #e86080) 60%, transparent),
+    0 0 8px color-mix(in srgb, var(--p-farbe-0, #e8b04a) 30%, transparent),
+    0 0 8px color-mix(in srgb, var(--p-farbe-1, #e86080) 30%, transparent) !important;
+  animation: multi-auswahl-glow 4s ease-in-out infinite !important;
 }
 
 @keyframes multi-auswahl-glow {
   0%, 100% { 
-    opacity: 0.9;
-    filter: brightness(1);
+    opacity: 0.8;
+    filter: brightness(0.95);
   }
   50% { 
     opacity: 1;
-    filter: brightness(1.3);
+    filter: brightness(1.1);
   }
 }
 

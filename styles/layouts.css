@@ -29,11 +29,32 @@ amorph-container[data-morph="item"] {
     0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-/* Scroll-Container für Card-Inhalt */
+/* Scroll-Container für Card-Inhalt - Scrollbar nur beim Scrollen */
 amorph-container[data-morph="item"] {
   max-height: 500px;
   overflow-y: auto;
   overflow-x: hidden;
+  /* Scrollbar verstecken bis Hover/Scroll */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+/* Webkit Scrollbar - nur bei Hover sichtbar */
+amorph-container[data-morph="item"]::-webkit-scrollbar {
+  width: 4px;
+}
+
+amorph-container[data-morph="item"]::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+amorph-container[data-morph="item"]::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 2px;
+}
+
+amorph-container[data-morph="item"]:hover::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
 }
 
 amorph-container[data-morph="item"] > .amorph-item-content {
@@ -42,7 +63,9 @@ amorph-container[data-morph="item"] > .amorph-item-content {
   margin-left: -8px;
 }
 
+/* Card Hover - Scrollbar + visuelles Feedback */
 amorph-container[data-morph="item"]:hover {
+  scrollbar-color: rgba(255,255,255,0.2) transparent;
   border-color: rgba(255, 255, 255, 0.12);
   transform: translateY(-2px);
   box-shadow: 
@@ -82,29 +105,43 @@ amorph-container[data-field="name"] {
 }
 
 /* === GRID LAYOUT === */
+/* Flexbox mit gleichen Höhen pro Zeile */
 [data-amorph-container][data-layout="grid"] {
-  display: grid;
-  /* Gleichmäßige Spalten mit festerer Mindestbreite */
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: var(--space-xl);
-  padding: var(--space-md);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px;
+  align-items: stretch;
 }
 
-/* Header nimmt volle Breite ein - nicht im Grid */
-[data-layout="grid"] > amorph-container[data-morph="header"],
-[data-layout="liste"] > amorph-container[data-morph="header"],
-[data-layout="kompakt"] > amorph-container[data-morph="header"] {
-  grid-column: 1 / -1;
-  margin-bottom: var(--space-md);
+/* Feature-Container nehmen volle Breite */
+[data-layout="grid"] > .amorph-feature {
+  width: 100%;
+  flex-shrink: 0;
 }
 
-[data-layout="grid"] amorph-container[data-morph="item"] {
+/* Items im Grid-Layout - 3 Spalten */
+[data-layout="grid"] > amorph-container[data-morph="item"] {
+  /* 3 Spalten mit festen Werten */
+  width: calc(33.333% - 11px);
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
-  /* Feste Proportionen für Harmonie */
-  min-height: 400px;
-  max-height: none;
+}
+
+/* Bei mittleren Bildschirmen: 2 Spalten */
+@media (max-width: 1000px) {
+  [data-layout="grid"] > amorph-container[data-morph="item"] {
+    width: calc(50% - 8px);
+  }
+}
+
+/* Bei kleinen Bildschirmen: 1 Spalte */
+@media (max-width: 640px) {
+  [data-layout="grid"] > amorph-container[data-morph="item"] {
+    width: 100%;
+  }
 }
 
 [data-layout="grid"] amorph-container[data-field="bild"] {
