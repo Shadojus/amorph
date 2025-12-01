@@ -215,12 +215,15 @@
 }
 
 /* =====================================================
-   VISUELLE MORPHS - Neu
+   VISUELLE MORPHS - Black Glasmorphism Design
    ===================================================== */
 
 /* === PIE CHART === */
 .amorph-pie {
   padding: var(--space-sm);
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .amorph-pie-leer {
@@ -237,12 +240,12 @@
 
 .amorph-pie-chart {
   position: relative;
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   background: conic-gradient(from 0deg, var(--pie-gradient, #333));
   flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
 .amorph-pie-center {
@@ -316,8 +319,11 @@
 .amorph-bar {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
   padding: var(--space-sm);
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .amorph-bar-leer {
@@ -333,10 +339,10 @@
 }
 
 .amorph-bar-label {
-  flex: 0 0 60px;
-  font-size: 10px;
+  flex: 0 0 55px;
+  font-size: 9px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.7);
   text-align: right;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -345,25 +351,28 @@
 
 .amorph-bar-track {
   flex: 1;
-  height: 16px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 6px;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .amorph-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--color-accent), color-mix(in srgb, var(--color-accent) 70%, white));
-  border-radius: 8px;
+  background: linear-gradient(90deg, 
+    color-mix(in srgb, var(--color-accent) 60%, transparent),
+    color-mix(in srgb, var(--color-accent) 80%, transparent)
+  );
+  border-radius: 6px;
   transition: width 0.3s ease;
-  box-shadow: 0 0 8px color-mix(in srgb, var(--color-accent) 50%, transparent);
 }
 
 .amorph-bar-value {
-  flex: 0 0 50px;
-  font-size: 10px;
+  flex: 0 0 45px;
+  font-size: 9px;
   font-weight: 600;
-  color: var(--color-accent);
+  color: rgba(255, 255, 255, 0.5);
   font-variant-numeric: tabular-nums;
 }
 
@@ -371,6 +380,9 @@
 .amorph-radar {
   position: relative;
   padding: var(--space-sm);
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .amorph-radar-leer {
@@ -383,38 +395,35 @@
 
 .amorph-radar-svg {
   width: 100%;
-  max-width: 180px;
+  max-width: 160px;
   display: block;
   margin: 0 auto;
-  filter: drop-shadow(0 2px 6px rgba(16, 185, 129, 0.25));
+  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.4));
 }
 
 .amorph-radar-grid {
   fill: none;
-  stroke: var(--color-accent);
-  stroke-opacity: 0.2;
+  stroke: rgba(255, 255, 255, 0.06);
   stroke-width: 1;
 }
 
 .amorph-radar-axis {
-  stroke: var(--color-accent);
-  stroke-opacity: 0.2;
-  stroke-width: 1;
+  stroke: rgba(255, 255, 255, 0.05);
+  stroke-width: 0.5;
 }
 
 .amorph-radar-shape {
-  fill: var(--color-accent);
-  fill-opacity: 0.25;
-  stroke: var(--color-accent);
-  stroke-opacity: 0.8;
-  stroke-width: 2;
+  fill: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  stroke: color-mix(in srgb, var(--color-accent) 45%, transparent);
+  stroke-width: 1.5;
   stroke-linejoin: round;
 }
 
 .amorph-radar-point {
   fill: var(--color-accent);
-  stroke: rgba(255, 255, 255, 0.8);
-  stroke-width: 1.5;
+  stroke: rgba(0, 0, 0, 0.6);
+  stroke-width: 1;
+  filter: drop-shadow(0 0 2px var(--color-accent));
 }
 
 .amorph-radar-labels {
@@ -429,14 +438,10 @@
 .amorph-radar-label {
   position: absolute;
   transform: translate(-50%, -50%);
-  font-size: 9px;
-  font-weight: 700;
-  color: white;
-  text-shadow: 
-    -1px -1px 0 #000,  
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;
+  font-size: 8px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
   white-space: nowrap;
 }
 
@@ -445,42 +450,49 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .amorph-rating-stars {
   display: inline-flex;
-  gap: 2px;
+  gap: 1px;
 }
 
 .amorph-rating-star {
-  font-size: 14px;
+  font-size: 12px;
   transition: transform 0.1s;
 }
 
 .amorph-rating-full {
-  color: #f59e0b;
-  text-shadow: 0 0 6px rgba(245, 158, 11, 0.5);
+  color: #d4a94a;
+  text-shadow: 0 0 4px rgba(212, 169, 74, 0.4);
 }
 
 .amorph-rating-half {
-  color: #f59e0b;
-  opacity: 0.7;
+  color: #d4a94a;
+  opacity: 0.6;
 }
 
 .amorph-rating-empty {
-  color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.12);
 }
 
 .amorph-rating-value {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
-  color: var(--color-text-muted);
+  color: rgba(255, 255, 255, 0.5);
   font-variant-numeric: tabular-nums;
 }
 
 /* === PROGRESS === */
 .amorph-progress {
   padding: var(--space-xs);
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .amorph-progress-header {
@@ -488,62 +500,72 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: var(--space-xs);
-  font-size: 11px;
+  font-size: 10px;
 }
 
 .amorph-progress-label {
   font-weight: 600;
-  color: var(--color-text);
+  color: rgba(255, 255, 255, 0.65);
 }
 
 .amorph-progress-value {
-  color: var(--color-text-muted);
+  color: rgba(255, 255, 255, 0.45);
   font-variant-numeric: tabular-nums;
 }
 
 .amorph-progress-track {
   position: relative;
-  height: 20px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 7px;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .amorph-progress-fill {
   height: 100%;
-  border-radius: 10px;
+  border-radius: 7px;
   transition: width 0.3s ease;
 }
 
 .amorph-progress-high {
-  background: linear-gradient(90deg, #22c55e, #16a34a);
-  box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+  background: linear-gradient(90deg, 
+    color-mix(in srgb, #22c55e 50%, transparent),
+    color-mix(in srgb, #22c55e 70%, transparent)
+  );
 }
 
 .amorph-progress-medium {
-  background: linear-gradient(90deg, #f59e0b, #d97706);
-  box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+  background: linear-gradient(90deg, 
+    color-mix(in srgb, #f59e0b 50%, transparent),
+    color-mix(in srgb, #f59e0b 70%, transparent)
+  );
 }
 
 .amorph-progress-low {
-  background: linear-gradient(90deg, #ef4444, #dc2626);
-  box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+  background: linear-gradient(90deg, 
+    color-mix(in srgb, #ef4444 50%, transparent),
+    color-mix(in srgb, #ef4444 70%, transparent)
+  );
 }
 
 .amorph-progress-percent {
   position: absolute;
-  right: 8px;
+  right: 6px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 10px;
-  font-weight: 700;
-  color: white;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  font-size: 9px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
 /* === STATS === */
 .amorph-stats {
   padding: var(--space-sm);
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .amorph-stats-leer {
@@ -554,8 +576,8 @@
 
 .amorph-stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-  gap: var(--space-sm);
+  grid-template-columns: repeat(auto-fit, minmax(55px, 1fr));
+  gap: var(--space-xs);
 }
 
 .amorph-stats-item {
@@ -564,34 +586,37 @@
   align-items: center;
   gap: 2px;
   padding: var(--space-xs);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.2);
   border-radius: var(--radius-sm);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .amorph-stats-icon {
-  font-size: 12px;
-  color: var(--color-accent);
+  font-size: 10px;
+  color: color-mix(in srgb, var(--color-accent) 60%, transparent);
 }
 
 .amorph-stats-value {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
-  color: var(--color-text);
+  color: rgba(255, 255, 255, 0.75);
   font-variant-numeric: tabular-nums;
 }
 
 .amorph-stats-label {
-  font-size: 8px;
-  color: var(--color-text-muted);
+  font-size: 7px;
+  color: rgba(255, 255, 255, 0.4);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
 }
 
 /* === TIMELINE === */
 .amorph-timeline {
   position: relative;
   padding: var(--space-sm) var(--space-sm) var(--space-sm) var(--space-lg);
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .amorph-timeline-leer {
@@ -605,8 +630,8 @@
   left: 16px;
   top: var(--space-sm);
   bottom: var(--space-sm);
-  width: 2px;
-  background: rgba(255, 255, 255, 0.15);
+  width: 1px;
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 1px;
 }
 
@@ -615,7 +640,7 @@
   display: flex;
   align-items: flex-start;
   gap: var(--space-sm);
-  padding-bottom: var(--space-sm);
+  padding-bottom: var(--space-xs);
 }
 
 .amorph-timeline-item:last-child {
@@ -625,57 +650,61 @@
 .amorph-timeline-dot {
   position: absolute;
   left: -20px;
-  top: 4px;
-  width: 10px;
-  height: 10px;
-  background: rgba(255, 255, 255, 0.2);
-  border: 2px solid rgba(255, 255, 255, 0.4);
+  top: 3px;
+  width: 8px;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   z-index: 1;
 }
 
 .amorph-timeline-active {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
-  box-shadow: 0 0 8px var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 40%, transparent);
+  border-color: color-mix(in srgb, var(--color-accent) 60%, transparent);
+  box-shadow: 0 0 4px color-mix(in srgb, var(--color-accent) 30%, transparent);
 }
 
 .amorph-timeline-content {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
 }
 
 .amorph-timeline-time {
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--color-accent);
+  font-size: 8px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.45);
   text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
 .amorph-timeline-label {
-  font-size: 12px;
-  color: var(--color-text);
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.65);
 }
 
 /* === BADGE === */
 .amorph-badge {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   padding: 3px 8px;
-  font-size: 11px;
+  font-size: 9px;
   font-weight: 600;
-  background: var(--badge-bg, rgba(148, 163, 184, 0.2));
-  border: 1px solid var(--badge-border, rgba(148, 163, 184, 0.4));
-  color: var(--badge-text, #94a3b8);
-  border-radius: 12px;
-  text-transform: capitalize;
+  background: color-mix(in srgb, var(--badge-bg, #64748b) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--badge-border, #64748b) 18%, transparent);
+  color: color-mix(in srgb, var(--badge-text, #94a3b8) 80%, white);
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
   white-space: nowrap;
+  backdrop-filter: blur(4px);
 }
 
 .amorph-badge-icon {
-  font-size: 10px;
+  font-size: 9px;
+  opacity: 0.8;
 }
 
 .amorph-badge-text {

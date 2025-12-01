@@ -426,9 +426,14 @@ perspektiven:
       - "#f0c866"
       - "#cc7a2a"
     felder:
+      - bild
+      - name
       - geschmack
       - zubereitung
       - essbarkeit
+      - bewertung
+      - naehrwerte
+      - profil
     keywords:
       - essbar
       - essen
@@ -454,9 +459,14 @@ perspektiven:
       - "#f07898"
       - "#c83a5a"
     felder:
+      - bild
+      - name
       - essbarkeit
+      - verfuegbarkeit
       - verwechslung
       - symptome
+      - toxizitaet
+      - profil
     keywords:
       - giftig
       - gift
@@ -481,9 +491,14 @@ perspektiven:
       - "#70dda0"
       - "#3a9868"
     felder:
+      - bild
+      - name
       - standort
       - saison
       - temperatur
+      - verfuegbarkeit
+      - lebenszyklus
+      - ernte_stats
     keywords:
       - standort
       - wald
@@ -500,9 +515,9 @@ perspektiven:
       - holz
       - baum
   
-  oekologie:
-    name: Ökologie
-    symbol: 🌍
+  wissenschaft:
+    name: Wissenschaft
+    symbol: 🔬
     # Kühle Blau/Cyan-Töne
     farben:
       - "#5aa0d8"
@@ -510,15 +525,74 @@ perspektiven:
       - "#70b8f0"
       - "#3870a8"
     felder:
-      - standort
-      - symbiose
-      - habitat
+      - bild
+      - name
+      - wissenschaftlich
+      - wirkstoffe
+      - naehrwerte
+      - profil
+      - ernte_stats
     keywords:
-      - ökologie
-      - symbiose
-      - mykorrhiza
-      - habitat
-      - umwelt
-      - natur
-      - baum
-      - partner
+      - wissenschaft
+      - forschung
+      - wirkstoff
+      - chemie
+      - verbindung
+      - molekül
+      - studie
+      - analyse
+
+  medizin:
+    name: Medizin
+    symbol: 💊
+    # Violett/Lila-Töne
+    farben:
+      - "#a855f7"
+      - "#9333ea"
+      - "#c084fc"
+      - "#7c3aed"
+    felder:
+      - bild
+      - name
+      - wissenschaftlich
+      - wirkstoffe
+      - medizinisch
+      - profil
+      - beschreibung
+    keywords:
+      - medizin
+      - heilkunde
+      - therapie
+      - gesundheit
+      - heilpilz
+      - immunsystem
+      - antioxidativ
+      - wirkung
+
+  statistik:
+    name: Statistik
+    symbol: 📊
+    # Türkis/Teal-Töne
+    farben:
+      - "#14b8a6"
+      - "#0d9488"
+      - "#2dd4bf"
+      - "#0f766e"
+    felder:
+      - bild
+      - name
+      - bewertung
+      - beliebtheit
+      - ernte_stats
+      - naehrwerte
+      - wirkstoffe
+      - profil
+    keywords:
+      - statistik
+      - daten
+      - zahlen
+      - vergleich
+      - übersicht
+      - analyse
+      - menge
+      - häufigkeit

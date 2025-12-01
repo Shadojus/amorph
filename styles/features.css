@@ -3,19 +3,24 @@
 
 /* === HEADER FEATURE WRAPPER === */
 .amorph-feature-header {
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
   z-index: 100;
   padding: var(--space-md) var(--space-xl);
   /* Elegantes dunkles Glas */
-  background: rgba(8, 8, 10, 0.85);
+  background: rgba(8, 8, 10, 0.92);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  /* Subtile Border */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  /* Subtile Border - nur wenn gescrollt */
+  border-bottom: 1px solid transparent;
   overflow: visible;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Header-Schatten wenn gescrollt */
+.amorph-feature-header.scrolled {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 /* App-Titel im Header */

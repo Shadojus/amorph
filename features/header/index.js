@@ -123,6 +123,21 @@ export default function init(ctx) {
     }
   }
   
+  // === SCROLL DETECTION für Header-Styling ===
+  function handleScroll() {
+    const featureWrapper = container.closest('.amorph-feature-header') || container.parentElement;
+    if (featureWrapper) {
+      if (window.scrollY > 10) {
+        featureWrapper.classList.add('scrolled');
+      } else {
+        featureWrapper.classList.remove('scrolled');
+      }
+    }
+  }
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  // Initial check
+  handleScroll();
+  
   // === PERSPEKTIVEN LOGIK ===
   function togglePerspektive(id, btn) {
     debug.perspektiven('Toggle', { id, warAktiv: aktivePerspektiven.has(id) });
