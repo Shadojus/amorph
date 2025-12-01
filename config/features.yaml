@@ -1,8 +1,8 @@
 # Aktive Features
 aktiv:
   - header
+  - grid
   - ansichten
-  # grid ist jetzt im Header integriert als "Ansicht-Switch"
 
 # Suche-Konfiguration
 suche:

@@ -87,6 +87,14 @@ amorph-container[data-field="name"] {
   padding: var(--space-md);
 }
 
+/* Header nimmt volle Breite ein - nicht im Grid */
+[data-layout="grid"] > amorph-container[data-morph="header"],
+[data-layout="liste"] > amorph-container[data-morph="header"],
+[data-layout="kompakt"] > amorph-container[data-morph="header"] {
+  grid-column: 1 / -1;
+  margin-bottom: var(--space-md);
+}
+
 [data-layout="grid"] amorph-container[data-morph="item"] {
   display: flex;
   flex-direction: column;
