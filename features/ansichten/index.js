@@ -471,145 +471,18 @@ function formatWert(wert) {
 
 /**
  * Feature Init
+ * 
+ * Ansichten verwaltet nur den Auswahl-State.
+ * Die eigentlichen Views (Detail, Vergleich) sind separate Features.
  */
 export default function init(ctx) {
-  debug.ansichten('Ansichten Feature Init');
+  debug.ansichten('Ansichten Feature Init (nur Auswahl-State)');
   
-  // Overlay Container für Detail/Vergleich Views
-  let viewOverlay = null;
-  
-  function showOverlay(type) {
-    if (viewOverlay) viewOverlay.remove();
-    
-    viewOverlay = document.createElement('div');
-    viewOverlay.className = 'amorph-view-overlay';
-    // Inline-Styles als Fallback falls CSS nicht geladen
-    viewOverlay.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgb(10, 10, 12);
-      z-index: 9999;
-      overflow-y: auto;
-      padding: 20px;
-      padding-top: 80px;
-      display: block;
-    `;
-    
-    // Close Button
-    const closeBtn = document.createElement('button');
-    closeBtn.className = 'amorph-view-close';
-    closeBtn.innerHTML = '✕';
-    closeBtn.style.cssText = `
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      width: 44px;
-      height: 44px;
-      font-size: 24px;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 50%;
-      cursor: pointer;
-      z-index: 10000;
-    `;
-    closeBtn.addEventListener('click', hideOverlay);
-    viewOverlay.appendChild(closeBtn);
-    
-    // Content Container
-    const content = document.createElement('div');
-    content.className = type === 'detail' ? 'amorph-detail-container' : 'amorph-vergleich-container';
-    content.style.cssText = `
-      max-width: 900px;
-      margin: 0 auto;
-      color: white;
-    `;
-    viewOverlay.appendChild(content);
-    
-    document.body.appendChild(viewOverlay);
-    
-    // ESC zum Schließen
-    const escHandler = (e) => {
-      if (e.key === 'Escape') hideOverlay();
-    };
-    document.addEventListener('keydown', escHandler);
-    viewOverlay.dataset.escHandler = 'true';
-    
-    // Rendern
-    if (type === 'detail') {
-      renderDetail(content);
-    } else {
-      renderVergleich(content);
-    }
-    
-    state.aktiveAnsicht = type;
-    debug.ansichten('Overlay geöffnet', { type });
-  }
-  
-  function hideOverlay() {
-    if (viewOverlay) {
-      viewOverlay.remove();
-      viewOverlay = null;
-    }
-    state.aktiveAnsicht = 'karten';
-    
-    // Karten-Button im Header aktivieren
-    const kartenBtn = document.querySelector('.amorph-ansicht-btn[data-ansicht="karten"]');
-    if (kartenBtn) {
-      document.querySelectorAll('.amorph-ansicht-btn').forEach(b => {
-        b.classList.remove('aktiv');
-        b.setAttribute('aria-checked', 'false');
-      });
-      kartenBtn.classList.add('aktiv');
-      kartenBtn.setAttribute('aria-checked', 'true');
-    }
-    
-    debug.ansichten('Overlay geschlossen');
-  }
-  
-  // Click-Handler für Cards - nur Checkbox-Bereich reagiert
-  // (Der globale Handler in index.js kümmert sich um die Checkbox)
-  
-  // Auf Auswahl-Änderungen reagieren
-  document.addEventListener('amorph:auswahl-geaendert', (e) => {
-    const { anzahl } = e.detail;
-    
-    // Overlay aktualisieren wenn offen
-    if (viewOverlay) {
-      const content = viewOverlay.querySelector('.amorph-detail-container, .amorph-vergleich-container');
-      if (content) {
-        if (state.aktiveAnsicht === 'detail') {
-          renderDetail(content);
-        } else if (state.aktiveAnsicht === 'vergleich') {
-          renderVergleich(content);
-        }
-      }
-    }
-  });
-  
-  // Auf Ansicht-Wechsel vom Header reagieren
-  document.addEventListener('amorph:ansicht-wechsel', (e) => {
-    const { ansicht } = e.detail;
-    debug.ansichten('Ansicht-Wechsel Event empfangen', { ansicht });
-    
-    if (ansicht === 'karten') {
-      hideOverlay();
-    } else if (ansicht === 'detail') {
-      // Detail braucht mindestens 1 Feld
-      if (state.auswahl.size >= 1) {
-        showOverlay('detail');
-      }
-    } else if (ansicht === 'vergleich') {
-      // Vergleich braucht mindestens 2 Pilze mit Feldern
-      const pilzIds = getAuswahlPilzIds();
-      if (pilzIds.length >= 2) {
-        showOverlay('vergleich');
-      }
-    }
-  });
+  // Dieses Feature verwaltet nur den Auswahl-State.
+  // Die Detail- und Vergleich-Views werden von ihren eigenen Features gehandhabt.
+  // Der Ansicht-Switch im Header sendet 'amorph:ansicht-wechsel' Events,
+  // auf die die detail/ und vergleich/ Features reagieren.
   
   ctx.mount();
 }
+

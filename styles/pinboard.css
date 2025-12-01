@@ -1,0 +1,261 @@
+/* AMORPH v5 - Pinboard Styles (Detail Feature) */
+/* Black Glasmorphism - Pinnwand für ausgewählte Daten */
+
+/* === PINBOARD CONTAINER === */
+.amorph-feature-detail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  background: rgba(5, 5, 8, 0.98);
+}
+
+.amorph-pinboard {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+/* === TOOLBAR === */
+.amorph-pinboard-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+.amorph-pinboard-gruppierung,
+.amorph-pinboard-zoom {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.amorph-pinboard-gruppierung button,
+.amorph-pinboard-zoom button {
+  padding: 6px 10px;
+  font-size: 14px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.amorph-pinboard-gruppierung button:hover,
+.amorph-pinboard-zoom button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.amorph-pinboard-gruppierung button.aktiv {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+.amorph-pinboard-zoom .zoom-level {
+  padding: 6px 12px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  min-width: 50px;
+  text-align: center;
+}
+
+.amorph-pinboard-clear {
+  margin-left: auto;
+  padding: 8px 16px;
+  font-size: 13px;
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.amorph-pinboard-clear:hover {
+  background: rgba(239, 68, 68, 0.3);
+}
+
+/* === CANVAS === */
+.amorph-pinboard-canvas {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.amorph-pinboard-content {
+  position: relative;
+  width: 1200px;
+  height: 1000px;
+  transform-origin: center center;
+  transition: transform 0.1s ease;
+}
+
+.amorph-pinboard-connections {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* === LEER-ANZEIGE === */
+.amorph-pinboard-leer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  text-align: center;
+}
+
+.amorph-pinboard-leer .icon {
+  font-size: 48px;
+  opacity: 0.5;
+}
+
+.amorph-pinboard-leer .text {
+  font-size: 18px;
+}
+
+.amorph-pinboard-leer .hint {
+  font-size: 13px;
+  opacity: 0.6;
+}
+
+/* === PIN-GRUPPEN === */
+.amorph-pin-gruppe {
+  position: absolute;
+  min-width: 160px;
+  max-width: 300px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: box-shadow 0.2s ease;
+}
+
+.amorph-pin-gruppe:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.amorph-pin-gruppe.dragging {
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6);
+  z-index: 100;
+}
+
+.amorph-pin-gruppe-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: grab;
+  user-select: none;
+}
+
+.amorph-pin-gruppe-header:active {
+  cursor: grabbing;
+}
+
+.amorph-pin-gruppe-header .gruppe-icon {
+  font-size: 16px;
+}
+
+/* === PINS === */
+.amorph-pins {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+}
+
+.amorph-pin {
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 3px solid var(--pin-farbe, rgba(255, 255, 255, 0.3));
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.amorph-pin:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.amorph-pin-bild {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 6px;
+}
+
+.amorph-pin-label {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+.amorph-pin-wert {
+  font-size: 14px;
+  color: white;
+  font-weight: 500;
+}
+
+.amorph-pin-pilz {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 4px;
+}
+
+.amorph-pin-caption {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .amorph-pinboard-toolbar {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px 12px;
+  }
+  
+  .amorph-pinboard-gruppierung button,
+  .amorph-pinboard-zoom button {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+  
+  .amorph-pin-gruppe {
+    min-width: 140px;
+    max-width: 200px;
+  }
+}

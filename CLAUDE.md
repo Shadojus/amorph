@@ -13,9 +13,11 @@ Formlos. Zustandslos. Transformierend.
   - Zeile 0 (Branding): FUNGINOMI (Link zur Startseite) | Part of Bifroest (Link zu bifroest.io)
   - Zeile 1 (Suche): Suchleiste mit aktiven Filter-Badges
   - Zeile 2 (Controls): Ansicht-Switch + Perspektiven-Buttons
-- **Aktive Perspektiven als Badges**: Erscheinen in Suchleiste, verschwinden aus Button-Zeile
-- **Feld-Auswahl-System**: Einzelne FELDER sind anklickbar (nicht ganze Cards)
-- **Schema-basierte Feld-Reihenfolge**: Felder werden in definierter Reihenfolge angezeigt
+- **3 Ansichten als separate Features**:
+  - **Grid**: Karten-Layout (Standard)
+  - **Detail (Pinboard)**: Ausgewählte Daten als Pinnwand mit Drag&Drop
+  - **Vergleich (Vektorraum)**: Laterale Visualisierung mit 2D/Radar/3D
+- **Feld-Auswahl-System**: Einzelne FELDER sind anklickbar
 - Overlay-System für Detail/Vergleich Views
 
 ### Feld-Auswahl

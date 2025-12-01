@@ -3,6 +3,8 @@ aktiv:
   - header
   - grid
   - ansichten
+  - detail      # Pinboard-View für ausgewählte Daten
+  - vergleich   # Vektorraum-View für Vergleiche
 
 # Suche-Konfiguration
 suche:
