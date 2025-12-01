@@ -5,8 +5,12 @@ Eigenständig. Isoliert. Optional.
 ## 🚧 AKTUELLER ENTWICKLUNGSSTAND
 
 ### Fertig
-- ✅ **Header-Feature**: Suche + Perspektiven + Ansicht-Switch (Buttons im Header)
+- ✅ **Header-Feature**: 3-Zeilen-Layout mit Dark Glasmorphism
+  - Zeile 0: FUNGINOMI (Link /) + Part of Bifroest (Link bifroest.io)
+  - Zeile 1: Suchleiste mit X-Button + aktive Filter-Badges
+  - Zeile 2: Ansicht-Switch + Perspektiven-Buttons
 - ✅ **Perspektiven**: 4-Farben-Grid, Multi-Color Glow, Auto-Aktivierung
+- ✅ **Aktive Filter-Badges**: Aktive Perspektiven erscheinen als Badges in Suchleiste
 - ✅ **Semantische Suche**: Keywords → Feldwerte aus Schema
 - ✅ **Treffer-Badges**: Zeigen Anzahl pro Perspektive
 - ✅ **Overlay-System**: Detail + Vergleich Views rendern mit inline z-index:9999

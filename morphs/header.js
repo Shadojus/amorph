@@ -1,7 +1,12 @@
 /**
  * Header Morph
  * Container für Suche + Perspektiven + Ansicht-Switch
- * Sticky am oberen Rand
+ * Sticky am oberen Rand - Dark Glasmorphism Design
+ * 
+ * Layout:
+ * Zeile 0: FUNGINOMI (links) ........................ Part of Bifroest (rechts)
+ * Zeile 1: [🔍 Suche...] [aktive Badges]
+ * Zeile 2: [Grid][Detail][Vergl] | [Perspektiven-Buttons...]
  */
 
 import { debug } from '../observer/debug.js';
@@ -14,86 +19,100 @@ export function header(config, morphConfig = {}) {
   const container = document.createElement('div');
   container.className = 'amorph-header';
   
-  // Wrapper für max-width
-  const wrapper = document.createElement('div');
-  wrapper.className = 'amorph-header-wrapper';
-  wrapper.style.cssText = 'max-width: 1200px; margin: 0 auto;';
+  // === ZEILE 0: Branding (FUNGINOMI + Bifroest) ===
+  const zeile0 = document.createElement('div');
+  zeile0.className = 'amorph-header-row amorph-header-branding';
   
-  // Erste Zeile: Logo/Titel + Suche + Ansicht-Switch
-  const zeile1 = document.createElement('div');
-  zeile1.className = 'amorph-header-row';
-  zeile1.style.cssText = 'display: flex; gap: var(--space-md); align-items: center; margin-bottom: var(--space-sm);';
-  
-  // App-Titel/Logo (aus manifest.yaml)
-  const titel = document.createElement('div');
+  // App-Titel/Logo (links)
+  const titel = document.createElement('a');
   titel.className = 'amorph-header-titel';
-  titel.style.cssText = 'font-weight: 600; font-size: 1.1rem; white-space: nowrap;';
-  titel.textContent = '🍄 Funginomi';
-  zeile1.appendChild(titel);
+  titel.href = '/';
+  titel.innerHTML = '<span class="titel-text">FUNGINOMI</span>';
+  zeile0.appendChild(titel);
   
-  // Suche-Morph einfügen
+  // Bifroest Link (rechts)
+  const bifroest = document.createElement('a');
+  bifroest.className = 'amorph-header-bifroest';
+  bifroest.href = 'https://bifroest.io';
+  bifroest.target = '_blank';
+  bifroest.innerHTML = 'Part of the <span class="bifroest-name">Bifroest</span>';
+  zeile0.appendChild(bifroest);
+  
+  container.appendChild(zeile0);
+  
+  // === ZEILE 1: Suche (volle Breite) ===
+  const zeile1 = document.createElement('div');
+  zeile1.className = 'amorph-header-row amorph-header-suche';
+  
+  // Suche-Container (mit Input + aktive Filter Badges)
+  const sucheWrapper = document.createElement('div');
+  sucheWrapper.className = 'amorph-suche-wrapper';
+  
   if (config.suche) {
     const sucheContainer = document.createElement('amorph-container');
     sucheContainer.setAttribute('data-morph', 'suche');
     sucheContainer.setAttribute('data-field', 'suche');
     sucheContainer.appendChild(suche(config.suche));
-    zeile1.appendChild(sucheContainer);
+    sucheWrapper.appendChild(sucheContainer);
+    
+    // Container für aktive Filter-Badges (werden dynamisch gefüllt)
+    const aktiveBadges = document.createElement('div');
+    aktiveBadges.className = 'amorph-aktive-filter';
+    sucheWrapper.appendChild(aktiveBadges);
   }
+  zeile1.appendChild(sucheWrapper);
   
-  // Ansicht-Switch einfügen (Grid, Detail, Vergleich)
+  container.appendChild(zeile1);
+  
+  // === ZEILE 2: Ansichten + Perspektiven ===
+  const zeile2 = document.createElement('div');
+  zeile2.className = 'amorph-header-row amorph-header-nav';
+  
+  // Ansicht-Switch (Grid, Detail, Vergleich) - links
   if (config.ansicht !== false) {
     const ansichtSwitch = erstelleAnsichtSwitch(config.ansicht || {});
-    zeile1.appendChild(ansichtSwitch);
+    zeile2.appendChild(ansichtSwitch);
   }
   
-  wrapper.appendChild(zeile1);
-  
-  // Zweite Zeile: Perspektiven
+  // Perspektiven - rechts daneben
   if (config.perspektiven) {
     const perspektivenContainer = document.createElement('amorph-container');
     perspektivenContainer.setAttribute('data-morph', 'perspektiven');
     perspektivenContainer.setAttribute('data-field', 'perspektiven');
     perspektivenContainer.appendChild(perspektiven(config.perspektiven));
-    wrapper.appendChild(perspektivenContainer);
+    zeile2.appendChild(perspektivenContainer);
   }
   
-  container.appendChild(wrapper);
+  container.appendChild(zeile2);
   
   return container;
 }
 
 /**
  * Erstellt den Ansicht-Switch (Karten, Detail, Vergleich)
- * Detail + Vergleich sind ausgegraut bis Items ausgewählt sind
+ * Direktes Tab-Wechseln - kein Popup!
  */
 function erstelleAnsichtSwitch(config) {
   const ansichten = config.ansichten || [
     { id: 'karten', label: 'Karten', icon: '⊞', minAuswahl: 0 },
-    { id: 'detail', label: 'Detail', icon: '📋', minAuswahl: 1 },
-    { id: 'vergleich', label: 'Vergleich', icon: '⚖️', minAuswahl: 2 }
+    { id: 'detail', label: 'Detail', icon: '☰', minAuswahl: 1 },
+    { id: 'vergleich', label: 'Vergleich', icon: '▥', minAuswahl: 2 }
   ];
   
   const aktiv = config.default || 'karten';
   
   const switchContainer = document.createElement('div');
   switchContainer.className = 'amorph-ansicht-switch';
-  switchContainer.setAttribute('role', 'radiogroup');
+  switchContainer.setAttribute('role', 'tablist');
   switchContainer.setAttribute('aria-label', 'Ansicht wählen');
-  
-  // Auswahl-Counter
-  const counter = document.createElement('span');
-  counter.className = 'amorph-auswahl-counter';
-  counter.textContent = '0';
-  counter.style.display = 'none';
-  switchContainer.appendChild(counter);
   
   for (const ansicht of ansichten) {
     const btn = document.createElement('button');
     btn.className = 'amorph-ansicht-btn';
     btn.dataset.ansicht = ansicht.id;
     btn.dataset.minAuswahl = ansicht.minAuswahl;
-    btn.setAttribute('role', 'radio');
-    btn.setAttribute('aria-checked', ansicht.id === aktiv ? 'true' : 'false');
+    btn.setAttribute('role', 'tab');
+    btn.setAttribute('aria-selected', ansicht.id === aktiv ? 'true' : 'false');
     btn.setAttribute('title', ansicht.label);
     btn.textContent = ansicht.icon;
     
@@ -101,23 +120,24 @@ function erstelleAnsichtSwitch(config) {
       btn.classList.add('aktiv');
     }
     
-    // Detail + Vergleich initial disabled
+    // Detail + Vergleich initial disabled bis Auswahl vorhanden
     if (ansicht.minAuswahl > 0) {
       btn.disabled = true;
       btn.classList.add('disabled');
     }
     
+    // Direkter Tab-Wechsel - kein Popup!
     btn.addEventListener('click', () => {
       if (btn.disabled) return;
       
       // Alle Buttons deaktivieren
-      for (const b of switchContainer.querySelectorAll('button')) {
+      for (const b of switchContainer.querySelectorAll('.amorph-ansicht-btn')) {
         b.classList.remove('aktiv');
-        b.setAttribute('aria-checked', 'false');
+        b.setAttribute('aria-selected', 'false');
       }
       // Diesen aktivieren
       btn.classList.add('aktiv');
-      btn.setAttribute('aria-checked', 'true');
+      btn.setAttribute('aria-selected', 'true');
       
       // Event für Ansicht-Wechsel dispatchen
       document.dispatchEvent(new CustomEvent('amorph:ansicht-wechsel', {
@@ -134,11 +154,7 @@ function erstelleAnsichtSwitch(config) {
   document.addEventListener('amorph:auswahl-geaendert', (e) => {
     const anzahl = e.detail.anzahl;
     
-    // Counter aktualisieren
-    counter.textContent = anzahl;
-    counter.style.display = anzahl > 0 ? '' : 'none';
-    
-    // Buttons enablen/disablen
+    // Buttons enablen/disablen basierend auf Auswahl-Anzahl
     for (const btn of switchContainer.querySelectorAll('.amorph-ansicht-btn')) {
       const minAuswahl = parseInt(btn.dataset.minAuswahl || '0');
       if (anzahl >= minAuswahl) {
@@ -154,9 +170,8 @@ function erstelleAnsichtSwitch(config) {
         }
       }
     }
-    
-    debug.features('Auswahl geändert', { anzahl });
   });
   
   return switchContainer;
 }
+

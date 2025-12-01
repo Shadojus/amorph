@@ -1,141 +1,367 @@
 /* AMORPH v5 - Feature Styles */
-/* Black Glasmorphism - Dezent & Elegant */
+/* Dark Glasmorphism Design */
 
 /* === HEADER FEATURE WRAPPER === */
 .amorph-feature-header {
   position: sticky;
   top: 0;
   z-index: 100;
-  padding: var(--space-md) var(--space-xl);
-  /* Elegantes dunkles Glas */
-  background: rgba(8, 8, 10, 0.92);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  /* Subtile Border - nur wenn gescrollt */
-  border-bottom: 1px solid transparent;
+  padding: 12px 20px 14px;
+  /* Dark Glasmorphism */
+  background: linear-gradient(
+    180deg,
+    rgba(8, 8, 12, 0.95) 0%,
+    rgba(12, 12, 18, 0.92) 100%
+  );
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  /* Subtile Border mit Glaseffekt */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
   overflow: visible;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 /* Header-Schatten wenn gescrollt */
 .amorph-feature-header.scrolled {
-  border-bottom-color: rgba(255, 255, 255, 0.06);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(
+    180deg,
+    rgba(5, 5, 8, 0.98) 0%,
+    rgba(8, 8, 12, 0.96) 100%
+  );
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 8px 40px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
-/* App-Titel im Header */
-.amorph-header-titel {
-  color: var(--color-text);
-  font-weight: 500;
-  opacity: 0.9;
-}
-
-/* === HEADER (Inner) === */
-.amorph-header {
-  max-width: 1200px;
+/* === HEADER ROWS === */
+.amorph-header-row {
+  display: flex;
+  align-items: center;
+  max-width: 1400px;
   margin: 0 auto;
+}
+
+/* Zeile 0: Branding - FUNGINOMI links, Bifroest rechts */
+.amorph-header-branding {
+  justify-content: space-between;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Zeile 1: Suche (volle Breite) */
+.amorph-header-suche {
+  margin-bottom: 12px;
+}
+
+/* Zeile 2: Navigation - Ansicht + Perspektiven */
+.amorph-header-nav {
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Responsive Header */
+@media (max-width: 900px) {
+  .amorph-feature-header {
+    padding: 10px 14px 12px;
+  }
+  .amorph-header-nav {
+    gap: 8px;
+  }
+  .amorph-header-bifroest {
+    font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .amorph-feature-header {
+    padding: 8px 10px 10px;
+  }
+  .amorph-header-branding {
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+  }
+  .amorph-header-titel {
+    font-size: 0.85rem !important;
+  }
+  .amorph-header-bifroest {
+    display: none;
+  }
+  .amorph-header-suche {
+    margin-bottom: 10px;
+  }
+  .amorph-suche-wrapper {
+    max-width: 100% !important;
+  }
+}
+
+/* App-Titel links */
+.amorph-header-titel {
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.amorph-header-titel .titel-text {
+  color: #d64545;
+  text-shadow: 0 0 20px rgba(214, 69, 69, 0.4);
+  transition: text-shadow 0.2s ease;
+}
+
+.amorph-header-titel:hover .titel-text {
+  text-shadow: 0 0 25px rgba(214, 69, 69, 0.6);
+}
+
+/* Bifroest Link rechts */
+.amorph-header-bifroest {
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.3);
+  white-space: nowrap;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.amorph-header-bifroest:hover {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.amorph-header-bifroest .bifroest-name {
+  color: #9b59b6;
+  transition: all 0.2s ease;
+}
+
+.amorph-header-bifroest:hover .bifroest-name {
+  color: #b389c7;
+  text-shadow: 0 0 10px rgba(155, 89, 182, 0.4);
+}
+
+/* === SUCHE WRAPPER (Input + aktive Filter Badges) === */
+.amorph-suche-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  /* Dark Glasmorphism */
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.amorph-suche-wrapper:focus-within {
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 
+    0 0 0 3px rgba(255, 255, 255, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 /* === SUCHE === */
 .amorph-suche {
   display: flex;
-  gap: var(--space-sm);
   flex: 1;
-  max-width: 400px;
+  align-items: center;
+  gap: 0;
+  min-width: 0;
+  padding-left: 6px;
+}
+
+/* Lupe Icon vor Input */
+.amorph-suche::before {
+  content: '🔍';
+  font-size: 0.75rem;
+  opacity: 0.35;
+  margin: 0 8px 0 10px;
+  flex-shrink: 0;
 }
 
 .amorph-suche input {
   flex: 1;
-  padding: 10px 16px;
-  font-size: var(--font-size-base);
-  /* Elegantes Glas-Input */
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--color-text);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
+  min-width: 80px;
+  padding: 10px 12px 10px 0;
+  font-size: 0.9rem;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.9);
+  border: none;
   transition: all 0.25s ease;
 }
 
 .amorph-suche input:focus {
   outline: none;
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
 }
 
 .amorph-suche input::placeholder {
-  color: var(--color-text-dim);
+  color: rgba(255, 255, 255, 0.28);
+  font-size: 0.85rem;
 }
 
 .amorph-suche button {
-  padding: 10px 14px;
-  font-size: var(--font-size-base);
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--color-text-muted);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-.amorph-suche button:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--color-text);
+  display: none;
 }
 
 .amorph-suche.ladend input {
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
-.amorph-suche.ladend button {
-  animation: soft-pulse 1.5s ease-in-out infinite;
+/* === AKTIVE FILTER BADGES (in Suchleiste rechts) === */
+.amorph-aktive-filter {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  padding: 4px 8px 4px 4px;
+  flex-shrink: 0;
 }
 
-@keyframes soft-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+.amorph-aktive-filter:empty {
+  display: none;
 }
 
-/* === PERSPEKTIVEN === */
+.amorph-filter-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+  background: color-mix(in srgb, var(--badge-farbe, #d4a020) 18%, rgba(0,0,0,0.4));
+  color: var(--badge-farbe, #d4a020);
+  border: 1px solid color-mix(in srgb, var(--badge-farbe, #d4a020) 60%, transparent);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.amorph-filter-badge:hover {
+  background: color-mix(in srgb, var(--badge-farbe, #d4a020) 28%, rgba(0,0,0,0.4));
+  box-shadow: 0 0 10px color-mix(in srgb, var(--badge-farbe, #d4a020) 40%, transparent);
+}
+
+.amorph-filter-badge .badge-icon {
+  font-size: 0.55rem;
+  opacity: 0.9;
+}
+
+/* === ANSICHT-UMSCHALTER (Dark Glasmorphism) === */
+.amorph-ansicht-switch {
+  display: flex;
+  gap: 0;
+  padding: 4px;
+  /* Dark Glasmorphism */
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  flex-shrink: 0;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.amorph-ansicht-btn {
+  padding: 8px 12px;
+  font-size: 1.1rem;
+  line-height: 1;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.35);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.amorph-ansicht-btn:hover:not(.disabled) {
+  color: rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.amorph-ansicht-btn.aktiv,
+.amorph-ansicht-btn[aria-selected="true"] {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Disabled Buttons */
+.amorph-ansicht-btn.disabled,
+.amorph-ansicht-btn:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+/* === PERSPEKTIVEN (Dark Glasmorphism) === */
 .amorph-perspektiven {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: var(--space-sm);
-  padding: 4px 0;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
   overflow: visible;
+}
+
+/* Perspektiven Container in Nav-Zeile */
+.amorph-header-nav [data-morph="perspektiven"] {
+  display: contents;
+}
+
+/* Responsive Perspektiven */
+@media (max-width: 600px) {
+  .amorph-perspektiven {
+    gap: 6px;
+  }
+  .amorph-perspektive-btn {
+    padding: 5px 10px !important;
+    font-size: 0.68rem !important;
+  }
 }
 
 .amorph-perspektive-btn {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 6px 14px;
-  margin: 0 6px 0 10px;
-  font-size: 0.8rem;
+  padding: 5px 12px;
+  font-size: 0.72rem;
   font-weight: 400;
-  letter-spacing: 0.03em;
-  /* Feinerer Pill-Button */
-  background: rgba(255, 255, 255, 0.02);
-  color: var(--color-text-muted);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 16px;
+  letter-spacing: 0.02em;
+  text-transform: capitalize;
+  /* Pill-Button mit Border */
+  background: transparent;
+  color: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.2s ease;
   position: relative;
   z-index: 1;
 }
 
 .amorph-perspektive-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--color-text);
-  border-color: rgba(255, 255, 255, 0.12);
-  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.85);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
+/* VERSTECKEN wenn aktiv (Badge wird in Suchleiste angezeigt) */
 .amorph-perspektive-btn.aktiv,
 .amorph-perspektive-btn[aria-pressed="true"] {
-  /* Dezenter Farbverlauf */
+  display: none;
+}
+
+/* Fallback falls Badge-System nicht aktiv */
+.amorph-perspektiven.no-badges .amorph-perspektive-btn.aktiv,
+.amorph-perspektiven.no-badges .amorph-perspektive-btn[aria-pressed="true"] {
+  display: inline-flex;
   background: linear-gradient(
     135deg,
     color-mix(in srgb, var(--p-farbe, var(--color-accent)) 20%, transparent) 0%,
@@ -143,67 +369,42 @@
   );
   border-color: color-mix(in srgb, var(--p-farbe, var(--color-accent)) 40%, transparent);
   color: var(--p-farbe, var(--color-accent));
-  /* Sanfter Glow */
-  box-shadow: 
-    0 0 12px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 30%, transparent),
-    0 0 24px color-mix(in srgb, var(--p-farbe-1, var(--p-farbe)) 15%, transparent);
-  animation: none; /* Kein Pulsieren - ruhiger */
+  box-shadow: 0 0 10px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 25%, transparent);
 }
 
-.amorph-perspektive-btn.aktiv:hover {
-  box-shadow: 
-    0 0 16px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 40%, transparent),
-    0 0 32px color-mix(in srgb, var(--p-farbe-1, var(--p-farbe)) 20%, transparent);
+/* Treffer-Badge - leuchtend mit absolutem Positioning */
+.amorph-perspektive-btn.hat-treffer::after {
+  content: attr(data-treffer-anzahl);
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 14px;
+  height: 14px;
+  padding: 0 3px;
+  font-size: 0.6em;
+  font-weight: 700;
+  line-height: 14px;
+  text-align: center;
+  background: var(--p-farbe, var(--color-accent));
+  color: black;
+  border-radius: 7px;
+  box-shadow: 0 0 6px var(--p-farbe, var(--color-accent));
+  animation: badge-glow-pop 0.3s ease-out;
+  z-index: 10;
 }
 
-/* Treffer-Badge - leuchtend mit absolutem Positioning */\n.amorph-perspektive-btn.hat-treffer::after {\n  content: attr(data-treffer-anzahl);\n  position: absolute;\n  top: -8px;\n  right: -8px;\n  min-width: 18px;\n  height: 18px;\n  padding: 0 5px;\n  font-size: 0.7em;\n  font-weight: 700;\n  line-height: 18px;\n  text-align: center;\n  background: var(--p-farbe, var(--color-accent));\n  color: black;\n  border-radius: 10px;\n  /* Glow um Badge */\n  box-shadow: \n    0 0 8px var(--p-farbe, var(--color-accent)),\n    0 0 16px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 60%, transparent);\n  animation: badge-glow-pop 0.3s ease-out;\n  z-index: 10;\n}\n\n@keyframes badge-glow-pop {\n  0% { transform: scale(0); opacity: 0; }\n  70% { transform: scale(1.15); }\n  100% { transform: scale(1); opacity: 1; }\n}
-
-/* === ANSICHT-UMSCHALTER === */
-.amorph-ansicht-switch {
-  display: flex;
-  gap: 1px;
-  padding: 2px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: var(--radius-md);
+@keyframes badge-glow-pop {
+  0% { transform: scale(0); opacity: 0; }
+  70% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
 }
 
-.amorph-ansicht-btn {
-  padding: 4px 8px;
-  font-size: var(--font-size-sm);
-  line-height: 1;
-  background: transparent;
-  color: var(--color-text-dim);
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.amorph-ansicht-btn:hover {
-  color: var(--color-text-muted);
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.amorph-ansicht-btn.aktiv,
-.amorph-ansicht-btn[aria-checked="true"] {
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--color-text);
-}
-
-/* Disabled Buttons */
-.amorph-ansicht-btn.disabled,
-.amorph-ansicht-btn:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-
+/* === LEGACY ANSICHT-UMSCHALTER (überschrieben weiter oben) === */
 /* Glow wenn Buttons aktivierbar sind (nicht disabled) */
-.amorph-ansicht-btn:not(.disabled):not([data-min-auswahl="0"]) {
-  box-shadow: 0 0 12px color-mix(in srgb, var(--color-accent, #22c55e) 50%, transparent);
-  background: rgba(34, 197, 94, 0.1);
+.amorph-ansicht-btn:not(.disabled):not([data-min-auswahl="0"]):not(.aktiv) {
+  box-shadow: 0 0 8px color-mix(in srgb, var(--color-accent, #22c55e) 40%, transparent);
+  background: rgba(34, 197, 94, 0.08);
   color: var(--color-accent, #22c55e);
-  animation: btn-glow-pulse 2s ease-in-out infinite;
 }
 
 @keyframes btn-glow-pulse {

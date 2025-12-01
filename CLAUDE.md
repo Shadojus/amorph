@@ -2,14 +2,18 @@
 
 Formlos. Zustandslos. Transformierend.
 
-## 🚀 Aktueller Stand (30.11.2025)
+## 🚀 Aktueller Stand (01.12.2025)
 
 ### ✅ Fertig
 - Schema-basierte Datenbank-Transformation (YAML → Morphs → DOM)
-- Black Glasmorphism Design mit Multi-Color Glow
+- **Black Glasmorphism Design** mit Multi-Color Glow
 - Semantische Suche mit Keyword-Mapping
 - Perspektiven-System mit 4-Farben-Grid
-- Header mit Suche + Perspektiven + Ansicht-Switch
+- **Header 3-Zeilen-Layout**:
+  - Zeile 0 (Branding): FUNGINOMI (Link zur Startseite) | Part of Bifroest (Link zu bifroest.io)
+  - Zeile 1 (Suche): Suchleiste mit aktiven Filter-Badges
+  - Zeile 2 (Controls): Ansicht-Switch + Perspektiven-Buttons
+- **Aktive Perspektiven als Badges**: Erscheinen in Suchleiste, verschwinden aus Button-Zeile
 - **Feld-Auswahl-System**: Einzelne FELDER sind anklickbar (nicht ganze Cards)
 - **Schema-basierte Feld-Reihenfolge**: Felder werden in definierter Reihenfolge angezeigt
 - Overlay-System für Detail/Vergleich Views
@@ -55,11 +59,29 @@ Das Schema (`config/schema.yaml`) ist die **Single Source of Truth**. Es definie
 ## Design: Black Glasmorphism
 
 AMORPH nutzt ein elegantes **Black Glasmorphism** Design:
-- Schwarze Glass-Cards mit Blur-Effekt
-- Dezente weiße Borders (5-15% Opacity)
+- Tiefschwarzer Hintergrund mit `backdrop-filter: blur()`
+- Glass-Cards mit dezenten weißen Borders (5-15% Opacity)
 - **Multi-Color Glow-Effekte** mit CSS `color-mix()`
 - Woodfloor-Texturen als subtiler Hintergrund
 - Pulsierende Animationen für aktive Elemente
+
+### Header-Layout (3 Zeilen)
+
+```
+Zeile 0: FUNGINOMI ........................ Part of Bifroest
+         (Link /)                          (Link bifroest.io)
+
+Zeile 1: [🔍 Suchen... ] [×] [◆ Geo] [◆ Cycle]
+         (Suchleiste)  (Clear) (aktive Filter-Badges)
+
+Zeile 2: [⊞ Grid] [☰ Detail] [▥ Vergl] | [🍳 Kulinarisch] [⚠ Sicherheit] ...
+         (Ansicht-Switch)                  (Perspektiven-Buttons)
+```
+
+- Branding-Zeile: FUNGINOMI links, Bifroest rechts (beide klickbare Links)
+- Suche-Zeile: Input + Clear-Button + aktive Filter als farbige Badges
+- Controls-Zeile: Ansicht-Switch links, Perspektiven-Buttons rechts
+- Aktive Perspektiven verschwinden aus Button-Zeile und erscheinen als Badges
 
 ### 4-Farben-Grid pro Perspektive
 

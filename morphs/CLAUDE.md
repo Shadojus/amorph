@@ -7,7 +7,11 @@ Reine Funktionen. Keine Klassen. Kein Zustand.
 ### Implementiert
 - **Basis-Morphs**: text, number, boolean, tag, range, list, object, image, link
 - **Feature-Morphs**: suche, perspektiven, header
-- **Visuelle Morphs** (NEU): pie, bar, radar, rating, progress, stats, timeline, badge
+- **Header-Morph** (01.12.2025): 3-Zeilen-Layout
+  - `amorph-header-branding`: FUNGINOMI + Bifroest (beide klickbare Links)
+  - `amorph-header-suche`: Suchleiste + Clear-Button + aktive Filter-Badges
+  - `amorph-header-controls`: Ansicht-Switch + Perspektiven-Buttons
+- **Visuelle Morphs**: pie, bar, radar, rating, progress, stats, timeline, badge
 - Jeder Morph erzeugt `<span class="amorph-{type}">` oder `<div class="amorph-{type}">` Element
 - Automatische Typ-Erkennung basierend auf Datenstruktur
 

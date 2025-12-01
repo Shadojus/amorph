@@ -8,7 +8,12 @@ Black Glasmorphism Design. Elegant, dezent, leuchtend.
 - Basis Dark Theme mit Glass-Effekten
 - Multi-Color Glow für Perspektiven
 - Auswahl-Glow mit pulsierender Animation (für Cards)
-- Header-Button-Glow bei aktiver Auswahl
+- ✅ **Header 3-Zeilen-Layout** (01.12.2025):
+  - Branding-Zeile: FUNGINOMI + Bifroest (beide Links)
+  - Suche-Zeile: Input + Clear-Button + aktive Filter-Badges  
+  - Controls-Zeile: Ansicht-Switch + Perspektiven-Buttons
+- ✅ **Aktive Filter-Badges**: Farbige Perspektiven-Badges in Suchleiste
+- ✅ **Dark Glasmorphism Header**: Alle Header-Elemente im Glass-Stil
 - ✅ **Feld-Auswahl-Intensiv** (01.12.2025): Ausgewählte Felder verstärken den existierenden Perspektiven-Effekt
 - ✅ **Bild-Größe**: Images in Overlays haben max-height Begrenzung
 

@@ -2,6 +2,8 @@
  * Header Feature
  * Kombiniert Suche + Perspektiven in einem Container
  * Steuert die Interaktion zwischen beiden
+ * 
+ * NEU: Aktive Perspektiven werden als Badges in der Suchleiste angezeigt
  */
 
 import { debug } from '../../observer/debug.js';
@@ -29,7 +31,7 @@ export default function init(ctx) {
   const headerConfig = {
     suche: ctx.config.suche || {},
     perspektiven: perspektivenConfig,
-    ansicht: ctx.config.ansicht || {}  // Ansicht-Switch Config
+    ansicht: ctx.config.ansicht || {}
   };
   
   debug.features('Header Config', headerConfig);
@@ -48,6 +50,7 @@ export default function init(ctx) {
   const button = sucheForm?.querySelector('button');
   const perspektivenNav = headerEl.querySelector('.amorph-perspektiven');
   const perspektivenBtns = perspektivenNav?.querySelectorAll('.amorph-perspektive-btn');
+  const aktiveBadgesContainer = headerEl.querySelector('.amorph-aktive-filter');
   
   // Perspektiven State
   const maxAktiv = parseInt(perspektivenNav?.dataset.maxAktiv || '4');
@@ -80,6 +83,8 @@ export default function init(ctx) {
           btn?.setAttribute('aria-pressed', 'false');
         }
         aktivePerspektiven.clear();
+        // Badges in Suchleiste leeren
+        aktualisiereAktiveBadges();
         // Treffer-Markierungen entfernen
         for (const btn of perspektivenBtns || []) {
           btn.classList.remove('hat-treffer');
@@ -160,9 +165,48 @@ export default function init(ctx) {
       btn.classList.add('aktiv');
     }
     
+    // Badges in Suchleiste aktualisieren
+    aktualisiereAktiveBadges();
     anwendenPerspektiven();
   }
   
+  // Aktive Perspektiven als Badges in der Suchleiste anzeigen
+  function aktualisiereAktiveBadges() {
+    if (!aktiveBadgesContainer) return;
+    
+    aktiveBadgesContainer.innerHTML = '';
+    const liste = headerConfig.perspektiven.liste || [];
+    
+    for (const id of aktivePerspektiven) {
+      const perspektive = liste.find(p => p.id === id);
+      if (!perspektive) continue;
+      
+      const badge = document.createElement('button');
+      badge.className = 'amorph-filter-badge';
+      badge.dataset.perspektive = id;
+      
+      // Farbe aus Perspektive
+      const farben = perspektive.farben || [perspektive.farbe || '#3b82f6'];
+      badge.style.setProperty('--badge-farbe', farben[0]);
+      
+      // Kürzel für Badge (erste 3-4 Buchstaben)
+      const kuerzel = perspektive.label?.substring(0, 4) || id.substring(0, 4);
+      badge.innerHTML = `<span class="badge-icon">◆</span> ${kuerzel}`;
+      badge.setAttribute('title', `${perspektive.label} entfernen`);
+      
+      // Klick entfernt den Filter
+      badge.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const btn = perspektivenNav?.querySelector(`[data-perspektive="${id}"]`);
+        if (btn) togglePerspektive(id, btn);
+      });
+      
+      aktiveBadgesContainer.appendChild(badge);
+    }
+    
+    debug.perspektiven('Badges aktualisiert', { anzahl: aktivePerspektiven.size });
+  }
+
   function anwendenPerspektiven() {
     const appContainer = document.querySelector('[data-amorph-container]');
     if (!appContainer) return;
@@ -428,6 +472,9 @@ export default function init(ctx) {
           setPerspektive(id, true);
         }
         
+        // Badges in Suchleiste aktualisieren
+        aktualisiereAktiveBadges();
+        
         debug.perspektiven('Auto-aktiviert', beste);
       }
     } else {
@@ -438,6 +485,7 @@ export default function init(ctx) {
         btn?.setAttribute('aria-pressed', 'false');
       }
       aktivePerspektiven.clear();
+      aktualisiereAktiveBadges();
       anwendenPerspektiven();
       debug.perspektiven('Keine passende Perspektive gefunden');
     }
