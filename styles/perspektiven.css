@@ -142,4 +142,37 @@ amorph-container[data-field] {
   }
 }
 
+/* === MULTI-PERSPEKTIVEN AUSGEWÄHLT: Multicolor-Gradient === */
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field][data-perspektive-multi].feld-ausgewaehlt {
+  /* Diagonaler Gradient aus allen Perspektiven-Farben */
+  background: var(--feld-bg-gradient, linear-gradient(135deg, rgba(232, 176, 74, 0.12), rgba(232, 96, 128, 0.12))) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 6px;
+}
+
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field][data-perspektive-multi].feld-ausgewaehlt::before {
+  /* Multi-Gradient Balken */
+  background: var(--feld-gradient, linear-gradient(180deg, #e8b04a, #e86080)) !important;
+  width: 3px !important;
+  /* Glow aus allen Perspektiven */
+  box-shadow: 
+    0 0 10px var(--p-farbe-0, #e8b04a),
+    0 0 10px var(--p-farbe-1, #e86080),
+    0 0 20px color-mix(in srgb, var(--p-farbe-0, #e8b04a) 50%, transparent),
+    0 0 20px color-mix(in srgb, var(--p-farbe-1, #e86080) 50%, transparent) !important;
+  animation: multi-auswahl-glow 3s ease-in-out infinite !important;
+}
+
+@keyframes multi-auswahl-glow {
+  0%, 100% { 
+    opacity: 0.9;
+    filter: brightness(1);
+  }
+  50% { 
+    opacity: 1;
+    filter: brightness(1.3);
+  }
+}
+
 /* === TREFFER-BADGE wird in features.css definiert === */

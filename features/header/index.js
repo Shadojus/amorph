@@ -206,23 +206,36 @@ export default function init(ctx) {
             if (farben[3]) feld.style.setProperty('--feld-p-farbe-3', farben[3]);
             feld.removeAttribute('data-perspektive-multi');
           } else {
-            // Mehrere Perspektiven - Gradient aus Hauptfarben
+            // Mehrere Perspektiven - Multicolor-Gradient aus allen Hauptfarben
             feld.setAttribute('data-perspektive-multi', 'true');
             feld.setAttribute('data-perspektive-count', perspektivFarben.length.toString());
             
-            // Setze Hauptfarben aller Perspektiven
-            perspektivFarben.forEach(({ hauptfarbe }, i) => {
+            // Für .feld-ausgewaehlt: Erste Perspektive als Basis (Fallback)
+            const ersteFarben = perspektivFarben[0].farben;
+            feld.style.setProperty('--feld-perspektive-farbe', ersteFarben[0]);
+            
+            // Alle Perspektiven-Hauptfarben für Multi-Gradient setzen
+            perspektivFarben.forEach(({ hauptfarbe, farben }, i) => {
               feld.style.setProperty(`--p-farbe-${i}`, hauptfarbe);
+              // Auch sekundäre Farben für reichere Gradients
+              if (farben[1]) feld.style.setProperty(`--p-farbe-${i}-1`, farben[1]);
             });
             feld.style.setProperty('--p-farben-anzahl', perspektivFarben.length.toString());
             
-            // Gradient für Border erstellen
+            // Multi-Gradient für Balken: Alle Hauptfarben vertikal
             const gradientStops = perspektivFarben.map(({ hauptfarbe }, i) => {
               const start = (i / perspektivFarben.length) * 100;
               const end = ((i + 1) / perspektivFarben.length) * 100;
               return `${hauptfarbe} ${start}%, ${hauptfarbe} ${end}%`;
             }).join(', ');
             feld.style.setProperty('--feld-gradient', `linear-gradient(180deg, ${gradientStops})`);
+            
+            // Für Hintergrund: Diagonaler Gradient aus allen Farben
+            const bgStops = perspektivFarben.map(({ hauptfarbe }, i) => {
+              const pos = (i / (perspektivFarben.length - 1 || 1)) * 100;
+              return `color-mix(in srgb, ${hauptfarbe} 12%, transparent) ${pos}%`;
+            }).join(', ');
+            feld.style.setProperty('--feld-bg-gradient', `linear-gradient(135deg, ${bgStops})`);
           }
         }
       }
