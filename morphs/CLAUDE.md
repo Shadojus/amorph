@@ -5,20 +5,163 @@ Reine Funktionen. Keine Klassen. Kein Zustand.
 ## 🚧 AKTUELLER STAND
 
 ### Implementiert
-- Alle Morphs funktionieren: text, number, boolean, tag, range, list, object, image, link
-- Jeder Morph erzeugt `<span class="amorph-{type}">` Element
+- **Basis-Morphs**: text, number, boolean, tag, range, list, object, image, link
+- **Feature-Morphs**: suche, perspektiven, header
+- **Visuelle Morphs** (NEU): pie, bar, radar, rating, progress, stats, timeline, badge
+- Jeder Morph erzeugt `<span class="amorph-{type}">` oder `<div class="amorph-{type}">` Element
+- Automatische Typ-Erkennung basierend auf Datenstruktur
 
-### TODO für Feld-Auswahl
+## 📊 MORPH-SCHEMA-ZUORDNUNG
+
+Die Pipeline erkennt automatisch den passenden Morph anhand der Datenstruktur.
+Für explizite Zuweisung kann der Typ im Schema definiert werden.
+
+### Automatische Erkennung
+
+| Datenstruktur | Erkannter Morph | Beispiel |
+|---------------|-----------------|----------|
+| `{min: 10, max: 25}` | `range` | Temperatur, Preisbereich |
+| `[{label: "A", value: 10}, ...]` | `pie` | Verteilungen |
+| `[{label: "X", value: 5}, ...]` | `bar` | Vergleiche |
+| `[{axis: "Y", value: 80}, ...] (3+)` | `radar` | Profile mit 3+ Dimensionen |
+| `{date: "2024", event: "..."}` Array | `timeline` | Chronologische Ereignisse |
+| `{min, max, avg, count}` | `stats` | Statistische Zusammenfassungen |
+| `{rating: 4.5}` oder `{score: 8}` | `rating` | Bewertungen |
+| `{value: 75, max: 100}` | `progress` | Fortschritt, Auslastung |
+| `"essbar"` (Status-Wort) | `badge` | Status-Labels |
+| Zahl 0-10 mit Dezimalen | `rating` | 4.5 → ⭐⭐⭐⭐⯨ |
+| Zahl 0-100 (Integer) | `progress` | 75 → Balken 75% |
+| `{A: 10, B: 20, C: 30}` (nur Zahlen) | `pie` | Verteilung |
+
+### Schema-Definition für explizite Zuweisung
+
+```yaml
+# config/schema.yaml
+felder:
+  # Range-Morph für Temperatur
+  temperatur:
+    typ: range
+    label: Temperatur
+    einheit: °C
+  
+  # Pie-Chart für Nährwerte
+  naehrwerte:
+    typ: pie
+    label: Nährwerte
+  
+  # Bar-Chart für Inhaltsstoffe
+  inhaltsstoffe:
+    typ: bar
+    label: Wirkstoffe
+    maxBalken: 6
+  
+  # Radar für Eigenschaften-Profil
+  profil:
+    typ: radar
+    label: Eigenschaften
+  
+  # Rating für Bewertungen
+  geschmack_rating:
+    typ: rating
+    label: Geschmack
+    maxStars: 5
+  
+  # Progress für Fortschritt
+  reifegrad:
+    typ: progress
+    label: Reifegrad
+    einheit: '%'
+  
+  # Stats für Statistiken
+  statistik:
+    typ: stats
+    label: Übersicht
+  
+  # Timeline für Entwicklung
+  lebenszyklus:
+    typ: timeline
+    label: Lebenszyklus
+  
+  # Badge für Status
+  essbarkeit:
+    typ: badge
+    label: Essbarkeit
+```
+
+### Datenbeispiele für jeden Morph
+
+```javascript
+// PIE - Kreisdiagramm
+{
+  naehrwerte: [
+    { label: "Protein", value: 25 },
+    { label: "Kohlenhydrate", value: 45 },
+    { label: "Fett", value: 30 }
+  ]
+}
+// ODER als Objekt:
+{ naehrwerte: { Protein: 25, Kohlenhydrate: 45, Fett: 30 } }
+
+// BAR - Balkendiagramm
+{
+  wirkstoffe: [
+    { label: "Beta-Glucan", value: 12.5, unit: "mg" },
+    { label: "Ergothionein", value: 8.3, unit: "mg" },
+    { label: "Lentinan", value: 5.1, unit: "mg" }
+  ]
+}
+
+// RADAR - Spider-Chart (mind. 3 Achsen)
+{
+  profil: [
+    { axis: "Geschmack", value: 85 },
+    { axis: "Textur", value: 70 },
+    { axis: "Aroma", value: 90 },
+    { axis: "Umami", value: 75 },
+    { axis: "Würze", value: 60 }
+  ]
+}
+
+// RATING - Sterne-Bewertung
+{ geschmack_rating: 4.5 }
+// ODER:
+{ geschmack_rating: { rating: 4.5, max: 5 } }
+
+// PROGRESS - Fortschrittsbalken
+{ reifegrad: 75 }
+// ODER:
+{ reifegrad: { value: 75, max: 100, label: "Reife" } }
+
+// STATS - Statistik-Karte
+{
+  ernte_stats: {
+    min: 50,
+    max: 200,
+    avg: 125,
+    count: 42,
+    unit: "g"
+  }
+}
+
+// TIMELINE - Zeitliche Abfolge
+{
+  lebenszyklus: [
+    { date: "Tag 1-3", event: "Myzel-Wachstum" },
+    { date: "Tag 4-7", event: "Primordien" },
+    { date: "Tag 8-14", event: "Fruchtkörper", active: true }
+  ]
+}
+
+// BADGE - Status-Label
+{ essbarkeit: "essbar" }
+// ODER mit Variant:
+{ essbarkeit: { status: "essbar", variant: "success" } }
+```
+
+## TODO für Feld-Auswahl
 - Morphs müssen **klickbar** werden für Feld-Auswahl
 - Klick auf Morph-Element → dispatcht Event mit Feld-Infos
 - Ausgewählte Felder bekommen `.ausgewaehlt` Klasse → Glow-Effekt
-
-```javascript
-// GEPLANT: Morphs erhalten click-handler
-el.dataset.feldName = config.name;  // z.B. "temperatur"
-el.dataset.pilzId = config.pilzId;   // z.B. "1"
-// Klick → Event → Feld wird zur Auswahl hinzugefügt
-```
 
 ## Was ist ein Morph?
 

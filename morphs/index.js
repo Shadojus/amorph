@@ -10,9 +10,21 @@ import { link } from './link.js';
 import { suche } from './suche.js';
 import { perspektiven } from './perspektiven.js';
 import { header } from './header.js';
+
+// Neue visuelle Morphs
+import { pie } from './pie.js';
+import { bar } from './bar.js';
+import { radar } from './radar.js';
+import { rating } from './rating.js';
+import { progress } from './progress.js';
+import { stats } from './stats.js';
+import { timeline } from './timeline.js';
+import { badge } from './badge.js';
+
 import { debug } from '../observer/debug.js';
 
 export const morphs = {
+  // Basis-Morphs
   text,
   number,
   boolean,
@@ -22,12 +34,28 @@ export const morphs = {
   object,
   image,
   link,
+  
+  // Feature-Morphs
   suche,
   perspektiven,
-  header
+  header,
+  
+  // Visuelle Morphs (NEU)
+  pie,      // Kreisdiagramm für Verteilungen
+  bar,      // Balkendiagramm für Vergleiche
+  radar,    // Radar-Chart für Profile (3+ Achsen)
+  rating,   // Sterne-Bewertung (0-5, 0-10, 0-100)
+  progress, // Fortschrittsbalken
+  stats,    // Statistik-Karte (min/max/avg)
+  timeline, // Zeitliche Abfolge
+  badge     // Farbige Status-Labels
 };
 
 // Log registrierte Morphs
 debug.morphs('registry', { verfügbar: Object.keys(morphs) });
 
-export { text, number, boolean, tag, range, list, object, image, link, suche, perspektiven, header };
+export { 
+  text, number, boolean, tag, range, list, object, image, link, 
+  suche, perspektiven, header,
+  pie, bar, radar, rating, progress, stats, timeline, badge 
+};

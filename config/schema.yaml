@@ -8,9 +8,17 @@ reihenfolge:
   - name
   - wissenschaftlich
   - essbarkeit
+  - bewertung
+  - verfuegbarkeit
   - geschmack
   - saison
   - temperatur
+  - beliebtheit
+  - naehrwerte
+  - profil
+  - wirkstoffe
+  - ernte_stats
+  - lebenszyklus
   - standort
   - zubereitung
   - verwechslung
@@ -54,13 +62,12 @@ felder:
     label: Essbarkeit
     suche:
       gewicht: 50
-    # Tag-Farben - dezent
     farben:
-      Essbar: "#60c090"
-      Bedingt essbar: "#d0a050"
-      Giftig: "#d06080"
-      Tödlich: "#a04060"
-      Unbekannt: "#808080"
+      essbar: "#60c090"
+      bedingt essbar: "#d0a050"
+      nicht essbar: "#808080"
+      giftig: "#d06080"
+      tödlich: "#a04060"
   
   # Listen
   standort:
@@ -82,7 +89,7 @@ felder:
   
   # Zusatzinfos
   geschmack:
-    typ: tag
+    typ: list
     label: Geschmack
     suche:
       gewicht: 40
@@ -103,6 +110,79 @@ felder:
     typ: range
     label: Temperatur
     einheit: °C
+
+  # === NEUE VISUELLE MORPHS ===
+  
+  # RATING - Sterne-Bewertung (0-5)
+  bewertung:
+    typ: rating
+    label: Bewertung
+    maxStars: 5
+  
+  # PROGRESS - Beliebtheit als Balken (0-100)
+  beliebtheit:
+    typ: progress
+    label: Beliebtheit
+    einheit: "%"
+  
+  # PROGRESS - Toxizität als Balken
+  toxizitaet:
+    typ: progress
+    label: Toxizität
+    einheit: "%"
+  
+  # PROGRESS - Medizinischer Wert
+  medizinisch:
+    typ: progress
+    label: Medizinischer Wert
+    einheit: "%"
+  
+  # PROGRESS - Forschungsinteresse
+  forschung:
+    typ: progress
+    label: Forschung
+    einheit: "%"
+  
+  # PIE - Nährwert-Verteilung
+  naehrwerte:
+    typ: pie
+    label: Zusammensetzung
+    totalLabel: "Anteil"
+  
+  # RADAR - Eigenschaften-Profil
+  profil:
+    typ: radar
+    label: Profil
+  
+  # BAR - Wirkstoffe als Balkendiagramm
+  wirkstoffe:
+    typ: bar
+    label: Wirkstoffe
+    maxBalken: 5
+  
+  # STATS - Ernte-Statistiken
+  ernte_stats:
+    typ: stats
+    label: Ernte-Statistik
+    einheit: "g"
+  
+  # TIMELINE - Lebenszyklus
+  lebenszyklus:
+    typ: timeline
+    label: Lebenszyklus
+    maxEvents: 6
+  
+  # BADGE - Verfügbarkeits-Status
+  verfuegbarkeit:
+    typ: badge
+    label: Status
+  
+  # Symptome (für Giftpilze)
+  symptome:
+    typ: string
+    label: Symptome
+    suche:
+      gewicht: 30
 
 # === SEMANTISCHE SUCHE ===
 # Keyword-Mappings für intelligente Suche

@@ -213,3 +213,471 @@
   letter-spacing: 0.03em;
   font-weight: 500;
 }
+
+/* =====================================================
+   VISUELLE MORPHS - Neu
+   ===================================================== */
+
+/* === PIE CHART === */
+.amorph-pie {
+  padding: var(--space-sm);
+}
+
+.amorph-pie-leer {
+  color: var(--color-text-dim);
+  font-style: italic;
+  font-size: var(--font-size-sm);
+}
+
+.amorph-pie-container {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.amorph-pie-chart {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, var(--pie-gradient, #333));
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.amorph-pie-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.amorph-pie-total {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.amorph-pie-label {
+  font-size: 7px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.amorph-pie-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.amorph-pie-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+}
+
+.amorph-pie-legend-color {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.amorph-pie-legend-label {
+  flex: 1;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.amorph-pie-legend-value {
+  color: rgba(255, 255, 255, 0.6);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 9px;
+}
+
+/* === BAR CHART === */
+.amorph-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: var(--space-sm);
+}
+
+.amorph-bar-leer {
+  color: var(--color-text-dim);
+  font-style: italic;
+  font-size: var(--font-size-sm);
+}
+
+.amorph-bar-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.amorph-bar-label {
+  flex: 0 0 60px;
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.amorph-bar-track {
+  flex: 1;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.amorph-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-accent), color-mix(in srgb, var(--color-accent) 70%, white));
+  border-radius: 8px;
+  transition: width 0.3s ease;
+  box-shadow: 0 0 8px color-mix(in srgb, var(--color-accent) 50%, transparent);
+}
+
+.amorph-bar-value {
+  flex: 0 0 50px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+/* === RADAR CHART === */
+.amorph-radar {
+  position: relative;
+  padding: var(--space-sm);
+}
+
+.amorph-radar-leer {
+  color: var(--color-text-dim);
+  font-style: italic;
+  font-size: var(--font-size-sm);
+  text-align: center;
+  padding: var(--space-md);
+}
+
+.amorph-radar-svg {
+  width: 100%;
+  max-width: 180px;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 2px 6px rgba(16, 185, 129, 0.25));
+}
+
+.amorph-radar-grid {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-opacity: 0.2;
+  stroke-width: 1;
+}
+
+.amorph-radar-axis {
+  stroke: var(--color-accent);
+  stroke-opacity: 0.2;
+  stroke-width: 1;
+}
+
+.amorph-radar-shape {
+  fill: var(--color-accent);
+  fill-opacity: 0.25;
+  stroke: var(--color-accent);
+  stroke-opacity: 0.8;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.amorph-radar-point {
+  fill: var(--color-accent);
+  stroke: rgba(255, 255, 255, 0.8);
+  stroke-width: 1.5;
+}
+
+.amorph-radar-labels {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.amorph-radar-label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: 9px;
+  font-weight: 700;
+  color: white;
+  text-shadow: 
+    -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  white-space: nowrap;
+}
+
+/* === RATING === */
+.amorph-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.amorph-rating-stars {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.amorph-rating-star {
+  font-size: 14px;
+  transition: transform 0.1s;
+}
+
+.amorph-rating-full {
+  color: #f59e0b;
+  text-shadow: 0 0 6px rgba(245, 158, 11, 0.5);
+}
+
+.amorph-rating-half {
+  color: #f59e0b;
+  opacity: 0.7;
+}
+
+.amorph-rating-empty {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.amorph-rating-value {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* === PROGRESS === */
+.amorph-progress {
+  padding: var(--space-xs);
+}
+
+.amorph-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-xs);
+  font-size: 11px;
+}
+
+.amorph-progress-label {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.amorph-progress-value {
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.amorph-progress-track {
+  position: relative;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.amorph-progress-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+.amorph-progress-high {
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+}
+
+.amorph-progress-medium {
+  background: linear-gradient(90deg, #f59e0b, #d97706);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+}
+
+.amorph-progress-low {
+  background: linear-gradient(90deg, #ef4444, #dc2626);
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+}
+
+.amorph-progress-percent {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* === STATS === */
+.amorph-stats {
+  padding: var(--space-sm);
+}
+
+.amorph-stats-leer {
+  color: var(--color-text-dim);
+  font-style: italic;
+  font-size: var(--font-size-sm);
+}
+
+.amorph-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+  gap: var(--space-sm);
+}
+
+.amorph-stats-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-xs);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.amorph-stats-icon {
+  font-size: 12px;
+  color: var(--color-accent);
+}
+
+.amorph-stats-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.amorph-stats-label {
+  font-size: 8px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* === TIMELINE === */
+.amorph-timeline {
+  position: relative;
+  padding: var(--space-sm) var(--space-sm) var(--space-sm) var(--space-lg);
+}
+
+.amorph-timeline-leer {
+  color: var(--color-text-dim);
+  font-style: italic;
+  font-size: var(--font-size-sm);
+}
+
+.amorph-timeline-line {
+  position: absolute;
+  left: 16px;
+  top: var(--space-sm);
+  bottom: var(--space-sm);
+  width: 2px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 1px;
+}
+
+.amorph-timeline-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding-bottom: var(--space-sm);
+}
+
+.amorph-timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.amorph-timeline-dot {
+  position: absolute;
+  left: -20px;
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.amorph-timeline-active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 8px var(--color-accent);
+}
+
+.amorph-timeline-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.amorph-timeline-time {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-accent);
+  text-transform: uppercase;
+}
+
+.amorph-timeline-label {
+  font-size: 12px;
+  color: var(--color-text);
+}
+
+/* === BADGE === */
+.amorph-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--badge-bg, rgba(148, 163, 184, 0.2));
+  border: 1px solid var(--badge-border, rgba(148, 163, 184, 0.4));
+  color: var(--badge-text, #94a3b8);
+  border-radius: 12px;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.amorph-badge-icon {
+  font-size: 10px;
+}
+
+.amorph-badge-text {
+  line-height: 1;
+}

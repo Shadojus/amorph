@@ -95,15 +95,137 @@ export function transform(daten, config, customMorphs = {}) {
 
 function detectType(wert) {
   if (wert === null || wert === undefined) return 'null';
-  if (Array.isArray(wert)) return 'array';
   if (typeof wert === 'boolean') return 'boolean';
-  if (typeof wert === 'number') return 'number';
-  if (typeof wert === 'string') return 'string';
-  if (typeof wert === 'object') {
-    if ('min' in wert && 'max' in wert) return 'range';
-    return 'object';
+  if (typeof wert === 'number') return detectNumberType(wert);
+  if (typeof wert === 'string') return detectStringType(wert);
+  
+  if (Array.isArray(wert)) {
+    return detectArrayType(wert);
   }
+  
+  if (typeof wert === 'object') {
+    return detectObjectType(wert);
+  }
+  
   return 'unknown';
+}
+
+/**
+ * Erkennt den besten Morph für Zahlen
+ */
+function detectNumberType(wert) {
+  // Rating: 0-5 oder 0-10 Skala (mit Dezimalstellen)
+  if (wert >= 0 && wert <= 10 && !Number.isInteger(wert)) {
+    return 'rating';
+  }
+  // Progress: 0-100 Prozent
+  if (wert >= 0 && wert <= 100 && Number.isInteger(wert)) {
+    return 'progress';
+  }
+  return 'number';
+}
+
+/**
+ * Erkennt den besten Morph für Strings
+ */
+function detectStringType(wert) {
+  const lower = wert.toLowerCase().trim();
+  
+  // Badge: Kurze Status-Wörter
+  const badgeKeywords = ['aktiv', 'inaktiv', 'ja', 'nein', 'essbar', 'giftig', 'tödlich', 
+                         'active', 'inactive', 'yes', 'no', 'online', 'offline', 
+                         'offen', 'geschlossen', 'verfügbar', 'vergriffen'];
+  if (wert.length <= 20 && badgeKeywords.some(kw => lower.includes(kw))) {
+    return 'badge';
+  }
+  
+  return 'string';
+}
+
+/**
+ * Erkennt den besten Morph für Arrays
+ */
+function detectArrayType(wert) {
+  if (wert.length === 0) return 'array';
+  
+  const first = wert[0];
+  
+  // Alle Elemente sind Objekte?
+  if (typeof first === 'object' && first !== null) {
+    // Pie Chart: Arrays mit {label, value/count}
+    if (('label' in first || 'name' in first || 'category' in first) && 
+        ('value' in first || 'count' in first || 'amount' in first)) {
+      return 'pie';
+    }
+    
+    // Bar Chart: Arrays mit numerischen Werten und Labels
+    if (('label' in first || 'name' in first) && 
+        ('value' in first || 'amount' in first || 'score' in first)) {
+      return 'bar';
+    }
+    
+    // Radar Chart: Arrays mit Achsen-Daten (3+ Elemente)
+    if (wert.length >= 3 && 
+        ('axis' in first || 'dimension' in first || 'factor' in first) &&
+        ('value' in first || 'score' in first)) {
+      return 'radar';
+    }
+    
+    // Timeline: Arrays mit Datums-Feldern
+    if ('date' in first || 'time' in first || 'datum' in first || 
+        'monat' in first || 'periode' in first) {
+      return 'timeline';
+    }
+  }
+  
+  // Alle Elemente sind Zahlen → Bar Chart
+  if (wert.every(v => typeof v === 'number')) {
+    return 'bar';
+  }
+  
+  return 'array';
+}
+
+/**
+ * Erkennt den besten Morph für Objekte
+ */
+function detectObjectType(wert) {
+  const keys = Object.keys(wert);
+  
+  // Range: hat min und max
+  if ('min' in wert && 'max' in wert) {
+    return 'range';
+  }
+  
+  // Stats: Objekt mit statistischen Feldern
+  const statKeys = ['min', 'max', 'avg', 'average', 'mean', 'count', 'total', 'sum', 'median'];
+  const hasStats = keys.some(k => statKeys.includes(k.toLowerCase()));
+  if (hasStats && keys.length >= 2 && keys.length <= 8) {
+    return 'stats';
+  }
+  
+  // Rating: hat rating/score/stars Feld
+  if ('rating' in wert || 'score' in wert || 'stars' in wert) {
+    return 'rating';
+  }
+  
+  // Progress: hat value/current und max/total
+  if (('value' in wert || 'current' in wert) && ('max' in wert || 'total' in wert)) {
+    return 'progress';
+  }
+  
+  // Badge: hat status/variant Feld
+  if ('status' in wert || 'variant' in wert) {
+    return 'badge';
+  }
+  
+  // Pie: Objekt mit nur numerischen Werten (Verteilung)
+  const allNumeric = keys.every(k => typeof wert[k] === 'number');
+  if (allNumeric && keys.length >= 2 && keys.length <= 8) {
+    return 'pie';
+  }
+  
+  return 'object';
 }
 
 function findMorph(typ, wert, feldname, morphConfig, schemaFeldMorphs = {}) {
@@ -126,15 +248,26 @@ function findMorph(typ, wert, feldname, morphConfig, schemaFeldMorphs = {}) {
     }
   }
   
-  // 4. Standard-Mapping
+  // 4. Standard-Mapping (erweitert mit neuen Morphs)
   const defaults = {
+    // Basis-Typen
     'string': 'text',
     'number': 'number',
     'boolean': 'boolean',
     'array': 'list',
     'object': 'object',
     'range': 'range',
-    'null': 'text'
+    'null': 'text',
+    
+    // Visuelle Morphs (automatisch erkannt)
+    'pie': 'pie',
+    'bar': 'bar',
+    'radar': 'radar',
+    'rating': 'rating',
+    'progress': 'progress',
+    'stats': 'stats',
+    'timeline': 'timeline',
+    'badge': 'badge'
   };
   
   return defaults[typ] || 'text';

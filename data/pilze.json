@@ -12,7 +12,40 @@
     "bild": "images/fungi/porcini-boletus-edulis.jpg",
     "geschmack": ["Nussig", "Würzig"],
     "zubereitung": "braten, trocknen, einlegen",
-    "saison": "Juli bis Oktober"
+    "saison": "Juli bis Oktober",
+    "bewertung": 4.8,
+    "beliebtheit": 92,
+    "naehrwerte": {
+      "Protein": 26,
+      "Kohlenhydrate": 52,
+      "Fett": 8,
+      "Ballaststoffe": 14
+    },
+    "profil": [
+      { "axis": "Geschmack", "value": 95 },
+      { "axis": "Textur", "value": 85 },
+      { "axis": "Aroma", "value": 90 },
+      { "axis": "Umami", "value": 80 },
+      { "axis": "Seltenheit", "value": 60 }
+    ],
+    "wirkstoffe": [
+      { "label": "Ergothionein", "value": 4.2, "unit": "mg" },
+      { "label": "Beta-Glucan", "value": 12.5, "unit": "mg" },
+      { "label": "Vitamin D", "value": 2.1, "unit": "µg" }
+    ],
+    "ernte_stats": {
+      "min": 80,
+      "max": 350,
+      "avg": 180,
+      "count": 156
+    },
+    "lebenszyklus": [
+      { "date": "Frühjahr", "event": "Myzel-Aktivierung" },
+      { "date": "Sommer", "event": "Fruchtkörper-Bildung", "active": true },
+      { "date": "Herbst", "event": "Haupternte" },
+      { "date": "Winter", "event": "Ruhephase" }
+    ],
+    "verfuegbarkeit": "verfügbar"
   },
   {
     "id": "2",
@@ -27,7 +60,40 @@
     "bild": "images/fungi/chanterelle-cantharellus-cibarius.jpg",
     "geschmack": ["Pfeffrig", "Fruchtig"],
     "zubereitung": "braten, schmoren",
-    "saison": "Juni bis November"
+    "saison": "Juni bis November",
+    "bewertung": 4.5,
+    "beliebtheit": 88,
+    "naehrwerte": {
+      "Protein": 18,
+      "Kohlenhydrate": 58,
+      "Fett": 5,
+      "Ballaststoffe": 19
+    },
+    "profil": [
+      { "axis": "Geschmack", "value": 88 },
+      { "axis": "Textur", "value": 75 },
+      { "axis": "Aroma", "value": 92 },
+      { "axis": "Umami", "value": 65 },
+      { "axis": "Seltenheit", "value": 55 }
+    ],
+    "wirkstoffe": [
+      { "label": "Beta-Carotin", "value": 8.3, "unit": "mg" },
+      { "label": "Vitamin D", "value": 5.3, "unit": "µg" },
+      { "label": "Kalium", "value": 506, "unit": "mg" }
+    ],
+    "ernte_stats": {
+      "min": 20,
+      "max": 150,
+      "avg": 65,
+      "count": 89
+    },
+    "lebenszyklus": [
+      { "date": "Mai", "event": "Myzel erwacht" },
+      { "date": "Juni-Juli", "event": "Erste Fruchtkörper" },
+      { "date": "Aug-Okt", "event": "Hauptsaison", "active": true },
+      { "date": "Nov", "event": "Saisonende" }
+    ],
+    "verfuegbarkeit": "saisonal"
   },
   {
     "id": "3",
@@ -41,7 +107,33 @@
     "verwechslung": ["Kaiserling"],
     "bild": "images/fungi/fly-agaric-amanita-muscaria.jpg",
     "symptome": "Übelkeit, Halluzinationen, Kreislaufprobleme",
-    "saison": "August bis November"
+    "saison": "August bis November",
+    "bewertung": 1.2,
+    "toxizitaet": 75,
+    "naehrwerte": {
+      "Muscimol": 45,
+      "Ibotensäure": 35,
+      "Andere": 20
+    },
+    "profil": [
+      { "axis": "Toxizität", "value": 75 },
+      { "axis": "Erkennbarkeit", "value": 98 },
+      { "axis": "Verbreitung", "value": 70 },
+      { "axis": "Kulturelle Bedeutung", "value": 95 },
+      { "axis": "Forschungsinteresse", "value": 80 }
+    ],
+    "wirkstoffe": [
+      { "label": "Muscimol", "value": 15, "unit": "mg" },
+      { "label": "Ibotensäure", "value": 30, "unit": "mg" },
+      { "label": "Muscarin", "value": 0.02, "unit": "mg" }
+    ],
+    "lebenszyklus": [
+      { "date": "Frühjahr", "event": "Myzel-Wachstum" },
+      { "date": "August", "event": "Erste Pilze" },
+      { "date": "Sept-Okt", "event": "Hauptzeit", "active": true },
+      { "date": "November", "event": "Absterben" }
+    ],
+    "verfuegbarkeit": "warnung"
   },
   {
     "id": "4",
@@ -56,7 +148,40 @@
     "bild": "images/fungi/placeholder.svg",
     "geschmack": ["Mild", "Angenehm"],
     "zubereitung": "roh, braten, grillen",
-    "saison": "Mai bis Oktober"
+    "saison": "Mai bis Oktober",
+    "bewertung": 4.0,
+    "beliebtheit": 95,
+    "naehrwerte": {
+      "Protein": 31,
+      "Kohlenhydrate": 44,
+      "Fett": 5,
+      "Ballaststoffe": 20
+    },
+    "profil": [
+      { "axis": "Geschmack", "value": 70 },
+      { "axis": "Textur", "value": 80 },
+      { "axis": "Aroma", "value": 65 },
+      { "axis": "Verfügbarkeit", "value": 95 },
+      { "axis": "Preis-Leistung", "value": 90 }
+    ],
+    "wirkstoffe": [
+      { "label": "Vitamin B2", "value": 0.4, "unit": "mg" },
+      { "label": "Vitamin B3", "value": 4.9, "unit": "mg" },
+      { "label": "Selen", "value": 9.3, "unit": "µg" }
+    ],
+    "ernte_stats": {
+      "min": 50,
+      "max": 500,
+      "avg": 220,
+      "count": 312
+    },
+    "lebenszyklus": [
+      { "date": "April", "event": "Saison-Start" },
+      { "date": "Mai-Juni", "event": "Frühsommer-Ernte" },
+      { "date": "Juli-Sept", "event": "Hauptsaison", "active": true },
+      { "date": "Oktober", "event": "Saison-Ende" }
+    ],
+    "verfuegbarkeit": "reichlich"
   },
   {
     "id": "5",
@@ -70,7 +195,33 @@
     "verwechslung": ["Champignon", "Täubling"],
     "bild": "images/fungi/placeholder.svg",
     "symptome": "Leberversagen, Nierenversagen, Tod",
-    "saison": "Juli bis Oktober"
+    "saison": "Juli bis Oktober",
+    "bewertung": 0.5,
+    "toxizitaet": 100,
+    "naehrwerte": {
+      "Amatoxine": 60,
+      "Phallotoxine": 30,
+      "Andere Toxine": 10
+    },
+    "profil": [
+      { "axis": "Toxizität", "value": 100 },
+      { "axis": "Erkennbarkeit", "value": 45 },
+      { "axis": "Verwechslungsgefahr", "value": 85 },
+      { "axis": "Verbreitung", "value": 60 },
+      { "axis": "Latenzzeit", "value": 90 }
+    ],
+    "wirkstoffe": [
+      { "label": "α-Amanitin", "value": 8, "unit": "mg" },
+      { "label": "β-Amanitin", "value": 5, "unit": "mg" },
+      { "label": "Phalloidin", "value": 10, "unit": "mg" }
+    ],
+    "lebenszyklus": [
+      { "date": "Frühjahr", "event": "Myzel-Entwicklung" },
+      { "date": "Juli", "event": "Erste Fruchtkörper" },
+      { "date": "Aug-Sept", "event": "Hauptzeit", "active": true },
+      { "date": "Oktober", "event": "Abklingen" }
+    ],
+    "verfuegbarkeit": "gefährlich"
   },
   {
     "id": "6",
@@ -85,7 +236,39 @@
     "bild": "images/fungi/fomitopsis-betulina.jpg",
     "geschmack": ["Bitter"],
     "zubereitung": "Tee, Tinktur, Pulver",
-    "saison": "ganzjährig"
+    "saison": "ganzjährig",
+    "bewertung": 3.8,
+    "medizinisch": 85,
+    "naehrwerte": {
+      "Polysaccharide": 40,
+      "Triterpene": 35,
+      "Phenole": 25
+    },
+    "profil": [
+      { "axis": "Medizinisch", "value": 90 },
+      { "axis": "Antioxidativ", "value": 85 },
+      { "axis": "Immunstärkend", "value": 80 },
+      { "axis": "Verfügbarkeit", "value": 70 },
+      { "axis": "Forschung", "value": 75 }
+    ],
+    "wirkstoffe": [
+      { "label": "Betulin", "value": 25, "unit": "mg" },
+      { "label": "Betulinsäure", "value": 15, "unit": "mg" },
+      { "label": "Piptamin", "value": 8, "unit": "mg" }
+    ],
+    "ernte_stats": {
+      "min": 100,
+      "max": 800,
+      "avg": 350,
+      "count": 45
+    },
+    "lebenszyklus": [
+      { "date": "Ganzjährig", "event": "Verfügbar", "active": true },
+      { "date": "Frühjahr", "event": "Optimal für Ernte" },
+      { "date": "Sommer", "event": "Wachstumsphase" },
+      { "date": "Winter", "event": "Ruhend" }
+    ],
+    "verfuegbarkeit": "ganzjährig"
   },
   {
     "id": "7",
@@ -100,7 +283,40 @@
     "bild": "images/fungi/placeholder.svg",
     "geschmack": ["Umami", "Würzig", "Fleischig"],
     "zubereitung": "braten, schmoren, trocknen, Suppen",
-    "saison": "ganzjährig (Zucht)"
+    "saison": "ganzjährig (Zucht)",
+    "bewertung": 4.6,
+    "beliebtheit": 90,
+    "naehrwerte": {
+      "Protein": 22,
+      "Kohlenhydrate": 58,
+      "Fett": 4,
+      "Ballaststoffe": 16
+    },
+    "profil": [
+      { "axis": "Geschmack", "value": 92 },
+      { "axis": "Umami", "value": 98 },
+      { "axis": "Medizinisch", "value": 85 },
+      { "axis": "Verfügbarkeit", "value": 95 },
+      { "axis": "Vielseitigkeit", "value": 88 }
+    ],
+    "wirkstoffe": [
+      { "label": "Lentinan", "value": 18, "unit": "mg" },
+      { "label": "Eritadenin", "value": 12, "unit": "mg" },
+      { "label": "Beta-Glucan", "value": 25, "unit": "mg" }
+    ],
+    "ernte_stats": {
+      "min": 200,
+      "max": 1500,
+      "avg": 680,
+      "count": 520
+    },
+    "lebenszyklus": [
+      { "date": "Impfung", "event": "Substrat-Beimpfung" },
+      { "date": "3-6 Monate", "event": "Myzel-Durchsetzung" },
+      { "date": "Fruchtung", "event": "Erntewellen", "active": true },
+      { "date": "Ende", "event": "Substrat erschöpft" }
+    ],
+    "verfuegbarkeit": "ganzjährig"
   },
   {
     "id": "8",
@@ -115,7 +331,39 @@
     "bild": "images/fungi/cordyceps-militaris-scarlet-caterpillar-club.jpg",
     "geschmack": ["Mild", "Erdig"],
     "zubereitung": "Tee, Tinktur, Suppen",
-    "saison": "August bis November"
+    "saison": "August bis November",
+    "bewertung": 4.2,
+    "medizinisch": 95,
+    "naehrwerte": {
+      "Cordycepin": 35,
+      "Adenosin": 25,
+      "Polysaccharide": 40
+    },
+    "profil": [
+      { "axis": "Energie", "value": 90 },
+      { "axis": "Immunsystem", "value": 95 },
+      { "axis": "Ausdauer", "value": 88 },
+      { "axis": "Antioxidativ", "value": 82 },
+      { "axis": "Seltenheit", "value": 75 }
+    ],
+    "wirkstoffe": [
+      { "label": "Cordycepin", "value": 8, "unit": "mg" },
+      { "label": "Adenosin", "value": 5, "unit": "mg" },
+      { "label": "D-Mannitol", "value": 30, "unit": "mg" }
+    ],
+    "ernte_stats": {
+      "min": 5,
+      "max": 50,
+      "avg": 18,
+      "count": 23
+    },
+    "lebenszyklus": [
+      { "date": "Infektion", "event": "Insekten-Befall" },
+      { "date": "Wachstum", "event": "Myzel im Wirt" },
+      { "date": "Fruchtung", "event": "Stroma-Bildung", "active": true },
+      { "date": "Sporenflug", "event": "Fortpflanzung" }
+    ],
+    "verfuegbarkeit": "selten"
   },
   {
     "id": "9",
@@ -128,7 +376,33 @@
     "standort": ["auf Insekten", "Waldböden", "landwirtschaftliche Flächen"],
     "verwechslung": [],
     "bild": "images/fungi/beauveria_bassiana.jpg",
-    "saison": "ganzjährig"
+    "saison": "ganzjährig",
+    "bewertung": 3.5,
+    "forschung": 90,
+    "naehrwerte": {
+      "Beauvericin": 45,
+      "Bassianin": 30,
+      "Andere Metabolite": 25
+    },
+    "profil": [
+      { "axis": "Biocontrol", "value": 95 },
+      { "axis": "Forschung", "value": 90 },
+      { "axis": "Anwendung", "value": 85 },
+      { "axis": "Sicherheit", "value": 80 },
+      { "axis": "Verfügbarkeit", "value": 70 }
+    ],
+    "wirkstoffe": [
+      { "label": "Beauvericin", "value": 12, "unit": "mg" },
+      { "label": "Bassianolid", "value": 8, "unit": "mg" },
+      { "label": "Oosporein", "value": 5, "unit": "mg" }
+    ],
+    "lebenszyklus": [
+      { "date": "Sporen", "event": "Ausbreitung" },
+      { "date": "Infektion", "event": "Wirtseindringung" },
+      { "date": "Kolonisation", "event": "Wirtstötung", "active": true },
+      { "date": "Sporulation", "event": "Neue Sporen" }
+    ],
+    "verfuegbarkeit": "labor"
   },
   {
     "id": "10",
@@ -143,6 +417,39 @@
     "bild": "images/fungi/placeholder.svg",
     "geschmack": ["Säuerlich", "Herb"],
     "zubereitung": "abkochen, Kochwasser wegschütten",
-    "saison": "September bis November"
+    "saison": "September bis November",
+    "bewertung": 3.2,
+    "beliebtheit": 45,
+    "naehrwerte": {
+      "Protein": 20,
+      "Kohlenhydrate": 55,
+      "Fett": 6,
+      "Ballaststoffe": 19
+    },
+    "profil": [
+      { "axis": "Geschmack", "value": 55 },
+      { "axis": "Menge", "value": 95 },
+      { "axis": "Aufwand", "value": 70 },
+      { "axis": "Risiko", "value": 60 },
+      { "axis": "Tradition", "value": 75 }
+    ],
+    "wirkstoffe": [
+      { "label": "Armillarisäure", "value": 15, "unit": "mg" },
+      { "label": "Melleolid", "value": 8, "unit": "mg" },
+      { "label": "Protoilludin", "value": 3, "unit": "mg" }
+    ],
+    "ernte_stats": {
+      "min": 500,
+      "max": 5000,
+      "avg": 1800,
+      "count": 78
+    },
+    "lebenszyklus": [
+      { "date": "Ganzjährig", "event": "Rhizomorphen-Wachstum" },
+      { "date": "September", "event": "Fruchtung beginnt" },
+      { "date": "Okt-Nov", "event": "Massenfruchtung", "active": true },
+      { "date": "Winter", "event": "Ruhephase" }
+    ],
+    "verfuegbarkeit": "massenhaft"
   }
 ]
