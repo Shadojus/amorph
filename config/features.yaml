@@ -3,7 +3,7 @@ aktiv:
   - header
   - grid
   - ansichten
-  - detail      # Pinboard-View für ausgewählte Daten
+  # - detail      # Pinboard-View (deaktiviert - Vergleich übernimmt)
   - vergleich   # Vektorraum-View für Vergleiche
 
 # Suche-Konfiguration
@@ -27,10 +27,6 @@ ansicht:
       label: Karten
       icon: ⊞
       layout: grid
-    - id: detail
-      label: Detail
-      icon: ☰
-      layout: liste
     - id: vergleich
       label: Vergleich
       icon: ▥

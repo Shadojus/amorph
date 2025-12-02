@@ -21,6 +21,20 @@ import { stats } from './stats.js';
 import { timeline } from './timeline.js';
 import { badge } from './badge.js';
 
+// Compare-Morphs für Vergleichsansichten
+import { 
+  compareMorph, 
+  compareBar, 
+  compareRating, 
+  compareTag, 
+  compareList, 
+  compareImage, 
+  compareRadar, 
+  comparePie, 
+  compareText,
+  erstelleFarben 
+} from './compare.js';
+
 import { debug } from '../observer/debug.js';
 
 export const morphs = {
@@ -48,7 +62,19 @@ export const morphs = {
   progress, // Fortschrittsbalken
   stats,    // Statistik-Karte (min/max/avg)
   timeline, // Zeitliche Abfolge
-  badge     // Farbige Status-Labels
+  badge,    // Farbige Status-Labels
+  
+  // Compare-Morphs (Vergleich)
+  compareMorph,  // Auto-Selektor für Vergleiche
+  compareBar,    // Balken-Vergleich
+  compareRating, // Rating-Vergleich
+  compareTag,    // Tag-Vergleich
+  compareList,   // Listen-Vergleich
+  compareImage,  // Bild-Vergleich
+  compareRadar,  // Radar-Vergleich
+  comparePie,    // Pie-Vergleich
+  compareText,   // Text-Fallback
+  erstelleFarben // Farb-Utility
 };
 
 // Log registrierte Morphs
@@ -57,5 +83,7 @@ debug.morphs('registry', { verfügbar: Object.keys(morphs) });
 export { 
   text, number, boolean, tag, range, list, object, image, link, 
   suche, perspektiven, header,
-  pie, bar, radar, rating, progress, stats, timeline, badge 
+  pie, bar, radar, rating, progress, stats, timeline, badge,
+  compareMorph, compareBar, compareRating, compareTag, compareList, 
+  compareImage, compareRadar, comparePie, compareText, erstelleFarben
 };

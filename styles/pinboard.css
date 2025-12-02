@@ -1,15 +1,10 @@
-/* AMORPH v5 - Pinboard Styles (Detail Feature) */
-/* Black Glasmorphism - Pinnwand für ausgewählte Daten */
+/* AMORPH v5 - Pinboard/Detail Styles */
+/* Mobile-First - Nur ausgewählte Felder mit Mini-Morphs */
 
-/* === PINBOARD CONTAINER === */
+/* === CONTAINER === */
 .amorph-feature-detail {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1000;
-  background: rgba(5, 5, 8, 0.98);
+  width: 100%;
+  min-height: 100%;
 }
 
 .amorph-pinboard {
@@ -24,27 +19,25 @@
 .amorph-pinboard-toolbar {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 12px 20px;
+  gap: 12px;
+  padding: 10px 16px;
   background: rgba(0, 0, 0, 0.5);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   flex-shrink: 0;
 }
 
-.amorph-pinboard-gruppierung,
-.amorph-pinboard-zoom {
+.amorph-pinboard-gruppierung {
   display: flex;
   gap: 4px;
-  padding: 4px;
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
+  padding: 3px;
 }
 
-.amorph-pinboard-gruppierung button,
-.amorph-pinboard-zoom button {
-  padding: 6px 10px;
-  font-size: 14px;
+.amorph-pinboard-gruppierung button {
+  padding: 6px 12px;
+  font-size: 13px;
   background: transparent;
   color: rgba(255, 255, 255, 0.5);
   border: none;
@@ -53,9 +46,7 @@
   transition: all 0.2s ease;
 }
 
-.amorph-pinboard-gruppierung button:hover,
-.amorph-pinboard-zoom button:hover {
-  background: rgba(255, 255, 255, 0.1);
+.amorph-pinboard-gruppierung button:hover {
   color: white;
 }
 
@@ -64,198 +55,219 @@
   color: white;
 }
 
-.amorph-pinboard-zoom .zoom-level {
-  padding: 6px 12px;
+.amorph-pinboard-anzahl {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
-  min-width: 50px;
-  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .amorph-pinboard-clear {
   margin-left: auto;
-  padding: 8px 16px;
-  font-size: 13px;
-  background: rgba(239, 68, 68, 0.2);
+  padding: 6px 12px;
+  font-size: 12px;
+  background: rgba(239, 68, 68, 0.15);
   color: #ef4444;
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  border-radius: 8px;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s ease;
 }
 
 .amorph-pinboard-clear:hover {
-  background: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.25);
 }
 
-/* === CANVAS === */
-.amorph-pinboard-canvas {
-  flex: 1;
-  overflow: hidden;
-  position: relative;
-}
-
+/* === CONTENT - Mobile First Scroll === */
 .amorph-pinboard-content {
-  position: relative;
-  width: 1200px;
-  height: 1000px;
-  transform-origin: center center;
-  transition: transform 0.1s ease;
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.amorph-pinboard-connections {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-/* === LEER-ANZEIGE === */
+/* === LEER === */
 .amorph-pinboard-leer {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   color: rgba(255, 255, 255, 0.4);
-  text-align: center;
 }
 
-.amorph-pinboard-leer .icon {
-  font-size: 48px;
-  opacity: 0.5;
-}
+.amorph-pinboard-leer .icon { font-size: 40px; }
+.amorph-pinboard-leer .text { font-size: 16px; }
+.amorph-pinboard-leer .hint { font-size: 12px; opacity: 0.6; }
 
-.amorph-pinboard-leer .text {
-  font-size: 18px;
-}
-
-.amorph-pinboard-leer .hint {
-  font-size: 13px;
-  opacity: 0.6;
-}
-
-/* === PIN-GRUPPEN === */
-.amorph-pin-gruppe {
-  position: absolute;
-  min-width: 160px;
-  max-width: 300px;
-  background: rgba(0, 0, 0, 0.6);
+/* === DETAIL KARTEN (Nach Pilz gruppiert) === */
+.amorph-detail-karte,
+.amorph-detail-gruppe {
+  background: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  transition: box-shadow 0.2s ease;
+  overflow: hidden;
 }
 
-.amorph-pin-gruppe:hover {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-}
-
-.amorph-pin-gruppe.dragging {
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6);
-  z-index: 100;
-}
-
-.amorph-pin-gruppe-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.amorph-detail-header {
   padding: 10px 14px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.8);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  cursor: grab;
-  user-select: none;
-}
-
-.amorph-pin-gruppe-header:active {
-  cursor: grabbing;
-}
-
-.amorph-pin-gruppe-header .gruppe-icon {
-  font-size: 16px;
-}
-
-/* === PINS === */
-.amorph-pins {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 12px;
-}
-
-.amorph-pin {
-  padding: 10px 12px;
+  color: white;
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-left: 3px solid var(--pin-farbe, rgba(255, 255, 255, 0.3));
-  border-radius: 8px;
-  transition: all 0.2s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.amorph-pin:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.15);
+/* === FELDER GRID === */
+.amorph-detail-felder {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.05);
 }
 
-.amorph-pin-bild {
-  width: 100%;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 6px;
-  margin-bottom: 6px;
+.amorph-detail-feld {
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.3);
 }
 
-.amorph-pin-label {
+.amorph-detail-label {
   font-size: 10px;
   color: rgba(255, 255, 255, 0.5);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 2px;
+  letter-spacing: 0.03em;
+  margin-bottom: 4px;
 }
 
-.amorph-pin-wert {
-  font-size: 14px;
+.amorph-detail-inhalt {
+  font-size: 13px;
   color: white;
-  font-weight: 500;
 }
 
-.amorph-pin-pilz {
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.4);
-  margin-top: 4px;
+/* === LISTE (Nach Feld gruppiert) === */
+.amorph-detail-liste {
+  display: flex;
+  flex-direction: column;
 }
 
-.amorph-pin-caption {
-  font-size: 11px;
+.amorph-detail-zeile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.amorph-detail-zeile:last-child {
+  border-bottom: none;
+}
+
+.amorph-detail-pilz {
+  font-size: 12px;
   color: rgba(255, 255, 255, 0.6);
-  text-align: center;
-  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.amorph-detail-wert {
+  text-align: right;
+}
+
+/* === MINI MORPHS === */
+
+/* Image */
+.amorph-mini-image {
+  width: 100%;
+  max-width: 80px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* Rating */
+.amorph-mini-star {
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 12px;
+}
+.amorph-mini-star.filled {
+  color: #fbbf24;
+}
+
+/* Progress */
+.amorph-mini-progress {
+  position: relative;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.amorph-mini-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  border-radius: 8px;
+}
+
+.amorph-mini-progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 10px;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+/* Tag */
+.amorph-mini-tag {
+  display: inline-block;
+  padding: 3px 8px;
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  color: white;
+}
+
+/* List */
+.amorph-mini-list-item {
+  display: inline-block;
+  padding: 2px 6px;
+  margin: 1px;
+  font-size: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.amorph-mini-more {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-left: 4px;
+}
+
+/* Stats (für radar/pie/bar/stats) */
+.amorph-mini-stat {
+  display: block;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 2px 0;
+}
+
+/* Timeline */
+.amorph-mini-event {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* === RESPONSIVE === */
-@media (max-width: 768px) {
-  .amorph-pinboard-toolbar {
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 8px 12px;
+@media (min-width: 768px) {
+  .amorph-pinboard-content {
+    padding: 20px;
+    gap: 16px;
   }
   
-  .amorph-pinboard-gruppierung button,
-  .amorph-pinboard-zoom button {
-    padding: 4px 8px;
-    font-size: 12px;
-  }
-  
-  .amorph-pin-gruppe {
-    min-width: 140px;
-    max-width: 200px;
+  .amorph-detail-felder {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   }
 }

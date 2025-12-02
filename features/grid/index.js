@@ -41,6 +41,30 @@ export default function init(ctx) {
     ctx.emit('geaendert', { layout });
   }
   
+  // Ansicht-Wechsel: Grid-Items verstecken wenn Detail/Vergleich aktiv
+  document.addEventListener('amorph:ansicht-wechsel', (e) => {
+    const container = document.querySelector('[data-amorph-container]');
+    const gridToolbar = ctx.dom;
+    
+    if (e.detail.ansicht === 'karten') {
+      // Grid anzeigen
+      if (container) {
+        container.querySelectorAll('.amorph-item').forEach(item => {
+          item.style.display = '';
+        });
+      }
+      gridToolbar.style.display = '';
+    } else {
+      // Grid verstecken (Detail oder Vergleich)
+      if (container) {
+        container.querySelectorAll('.amorph-item').forEach(item => {
+          item.style.display = 'none';
+        });
+      }
+      gridToolbar.style.display = 'none';
+    }
+  });
+  
   ctx.dom.appendChild(toolbar);
   ctx.mount('afterbegin');
   setLayout(current);

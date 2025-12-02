@@ -1,423 +1,318 @@
 /**
  * Detail Feature - PINBOARD
  * 
- * Ausgewählte Daten werden wie auf einer Pinnwand angezeigt:
- * - Frei positionierbare "Pins" (Karten mit Daten)
- * - Logische Gruppierung nach Perspektive/Thema
- * - Drag & Drop zum Reorganisieren
- * - Verbindungslinien zwischen verwandten Daten
- * - Zoom & Pan für große Sammlungen
+ * Zeigt NUR die ausgewählten Felder als mobile-first Pins
+ * Verwendet MORPHS für korrekte Darstellung basierend auf Schema-Typ
  */
 
 import { debug } from '../../observer/debug.js';
 import { 
   getAuswahlNachPilz, 
   getAuswahlNachFeld,
-  getAuswahlPilzIds,
   getState,
   clearAuswahl 
 } from '../ansichten/index.js';
 import { getFeldConfig, getPerspektivenListe } from '../../util/semantic.js';
+import { morphs } from '../../morphs/index.js';
 
-// Pinboard State
-const pinboardState = {
-  pins: new Map(),      // Map<pinId, {x, y, width, height, data, gruppe}>
-  verbindungen: [],     // [{von: pinId, zu: pinId, typ: 'verwandt'|'gleich'|'kontrast'}]
-  zoom: 1,
-  panX: 0,
-  panY: 0,
-  dragPin: null,
-  gruppierung: 'pilz'   // 'pilz' | 'feld' | 'perspektive' | 'frei'
+// State
+const state = {
+  gruppierung: 'pilz' // 'pilz' | 'feld'
 };
 
 export default function init(ctx) {
   debug.features('Detail/Pinboard Feature Init');
   
-  // Container für Pinboard
   const pinboard = document.createElement('div');
   pinboard.className = 'amorph-pinboard';
   pinboard.innerHTML = `
     <div class="amorph-pinboard-toolbar">
       <div class="amorph-pinboard-gruppierung">
-        <button data-gruppierung="pilz" class="aktiv" title="Nach Pilz gruppieren">🍄</button>
-        <button data-gruppierung="feld" title="Nach Feldtyp gruppieren">📋</button>
-        <button data-gruppierung="perspektive" title="Nach Perspektive gruppieren">👁️</button>
-        <button data-gruppierung="frei" title="Freie Anordnung">✨</button>
+        <button data-gruppierung="pilz" class="aktiv">🍄 Pilz</button>
+        <button data-gruppierung="feld">📋 Feld</button>
       </div>
-      <div class="amorph-pinboard-zoom">
-        <button data-zoom="out" title="Verkleinern">−</button>
-        <span class="zoom-level">100%</span>
-        <button data-zoom="in" title="Vergrößern">+</button>
-        <button data-zoom="fit" title="Alles zeigen">⊡</button>
-      </div>
-      <button class="amorph-pinboard-clear" title="Auswahl leeren">🗑️ Leeren</button>
+      <span class="amorph-pinboard-anzahl"></span>
+      <button class="amorph-pinboard-clear">✕ Leeren</button>
     </div>
-    <div class="amorph-pinboard-canvas">
-      <div class="amorph-pinboard-content"></div>
-    </div>
+    <div class="amorph-pinboard-content"></div>
     <div class="amorph-pinboard-leer">
       <div class="icon">📌</div>
-      <div class="text">Pinboard ist leer</div>
-      <div class="hint">Wähle Felder in der Grid-Ansicht aus</div>
+      <div class="text">Keine Felder ausgewählt</div>
+      <div class="hint">Klicke auf Felder in den Karten</div>
     </div>
   `;
   
-  const canvas = pinboard.querySelector('.amorph-pinboard-canvas');
   const content = pinboard.querySelector('.amorph-pinboard-content');
   const leerAnzeige = pinboard.querySelector('.amorph-pinboard-leer');
-  const zoomLevel = pinboard.querySelector('.zoom-level');
+  const anzahlEl = pinboard.querySelector('.amorph-pinboard-anzahl');
   
-  // Gruppierung wechseln
+  // Gruppierung
   pinboard.querySelectorAll('[data-gruppierung]').forEach(btn => {
     btn.addEventListener('click', () => {
       pinboard.querySelectorAll('[data-gruppierung]').forEach(b => b.classList.remove('aktiv'));
       btn.classList.add('aktiv');
-      pinboardState.gruppierung = btn.dataset.gruppierung;
-      renderPinboard();
+      state.gruppierung = btn.dataset.gruppierung;
+      render();
     });
   });
   
-  // Zoom Controls
-  pinboard.querySelectorAll('[data-zoom]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const action = btn.dataset.zoom;
-      if (action === 'in') pinboardState.zoom = Math.min(2, pinboardState.zoom + 0.1);
-      if (action === 'out') pinboardState.zoom = Math.max(0.3, pinboardState.zoom - 0.1);
-      if (action === 'fit') { pinboardState.zoom = 1; pinboardState.panX = 0; pinboardState.panY = 0; }
-      
-      content.style.transform = `translate(${pinboardState.panX}px, ${pinboardState.panY}px) scale(${pinboardState.zoom})`;
-      zoomLevel.textContent = Math.round(pinboardState.zoom * 100) + '%';
-    });
-  });
-  
-  // Clear Button
-  pinboard.querySelector('.amorph-pinboard-clear').addEventListener('click', () => {
-    clearAuswahl();
-    renderPinboard();
-  });
-  
-  // Pan mit Mausrad + Shift
-  canvas.addEventListener('wheel', (e) => {
-    if (e.shiftKey) {
-      e.preventDefault();
-      pinboardState.panX -= e.deltaX || e.deltaY;
-      pinboardState.panY -= e.deltaY;
-      content.style.transform = `translate(${pinboardState.panX}px, ${pinboardState.panY}px) scale(${pinboardState.zoom})`;
-    } else if (e.ctrlKey) {
-      e.preventDefault();
-      const delta = e.deltaY > 0 ? -0.1 : 0.1;
-      pinboardState.zoom = Math.max(0.3, Math.min(2, pinboardState.zoom + delta));
-      content.style.transform = `translate(${pinboardState.panX}px, ${pinboardState.panY}px) scale(${pinboardState.zoom})`;
-      zoomLevel.textContent = Math.round(pinboardState.zoom * 100) + '%';
-    }
-  }, { passive: false });
+  // Clear
+  pinboard.querySelector('.amorph-pinboard-clear').addEventListener('click', clearAuswahl);
   
   /**
-   * Rendert das Pinboard basierend auf aktueller Gruppierung
+   * Render - Zeigt nur ausgewählte Felder mit korrekten Morphs
    */
-  function renderPinboard() {
-    const state = getState();
-    const auswahl = state.auswahl;
+  function render() {
+    const auswahl = getState().auswahl;
     
     if (auswahl.size === 0) {
       content.innerHTML = '';
       leerAnzeige.style.display = 'flex';
+      anzahlEl.textContent = '';
       return;
     }
     
     leerAnzeige.style.display = 'none';
     content.innerHTML = '';
+    anzahlEl.textContent = `${auswahl.size} Felder`;
     
-    // SVG für Verbindungslinien
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.className = 'amorph-pinboard-connections';
-    content.appendChild(svg);
+    if (state.gruppierung === 'pilz') {
+      renderNachPilz();
+    } else {
+      renderNachFeld();
+    }
+  }
+  
+  /**
+   * Gruppiert nach Pilz - kompakte Karten
+   */
+  function renderNachPilz() {
+    const nachPilz = getAuswahlNachPilz();
     
-    const gruppen = gruppiereAuswahl(pinboardState.gruppierung);
-    const perspektiven = getPerspektivenListe();
-    
-    let gruppenIndex = 0;
-    const gruppenPositionen = [];
-    
-    for (const [gruppenName, items] of gruppen) {
-      const gruppe = document.createElement('div');
-      gruppe.className = 'amorph-pin-gruppe';
-      gruppe.dataset.gruppe = gruppenName;
+    for (const [pilzId, data] of nachPilz) {
+      const karte = document.createElement('div');
+      karte.className = 'amorph-detail-karte';
       
-      // Gruppe positionieren (Kreis-Layout)
-      const winkel = (gruppenIndex / gruppen.size) * Math.PI * 2 - Math.PI / 2;
-      const radius = Math.min(400, 150 + gruppen.size * 30);
-      const x = 500 + Math.cos(winkel) * radius;
-      const y = 400 + Math.sin(winkel) * radius;
-      
-      gruppe.style.left = x + 'px';
-      gruppe.style.top = y + 'px';
-      
-      gruppenPositionen.push({ name: gruppenName, x, y, el: gruppe });
-      
-      // Gruppen-Header
+      // Header mit Pilzname
       const header = document.createElement('div');
-      header.className = 'amorph-pin-gruppe-header';
+      header.className = 'amorph-detail-header';
+      header.textContent = data.pilzDaten?.name || pilzId;
+      karte.appendChild(header);
       
-      // Farbe aus Perspektive wenn vorhanden
-      const perspektive = perspektiven.find(p => p.felder?.includes(gruppenName) || p.id === gruppenName);
-      if (perspektive?.farben?.[0]) {
-        header.style.borderColor = perspektive.farben[0];
-        header.style.color = perspektive.farben[0];
+      // Felder als Mini-Morphs
+      const felder = document.createElement('div');
+      felder.className = 'amorph-detail-felder';
+      
+      for (const feld of data.felder) {
+        const feldEl = erstelleFeldMorph(feld.feldName, feld.wert, data.pilzDaten);
+        if (feldEl) felder.appendChild(feldEl);
       }
       
-      header.innerHTML = `<span class="gruppe-icon">${getGruppenIcon(gruppenName)}</span> ${formatGruppenName(gruppenName)}`;
+      karte.appendChild(felder);
+      content.appendChild(karte);
+    }
+  }
+  
+  /**
+   * Gruppiert nach Feld - Vergleich über Pilze
+   */
+  function renderNachFeld() {
+    const nachFeld = getAuswahlNachFeld();
+    
+    for (const [feldName, items] of nachFeld) {
+      const cfg = getFeldConfig(feldName);
+      const gruppe = document.createElement('div');
+      gruppe.className = 'amorph-detail-gruppe';
+      
+      // Header mit Feldname
+      const header = document.createElement('div');
+      header.className = 'amorph-detail-header';
+      header.textContent = cfg?.label || feldName;
       gruppe.appendChild(header);
       
-      // Pins in dieser Gruppe
-      const pinsContainer = document.createElement('div');
-      pinsContainer.className = 'amorph-pins';
+      // Alle Pilze mit diesem Feld
+      const liste = document.createElement('div');
+      liste.className = 'amorph-detail-liste';
       
       for (const item of items) {
-        const pin = erstellePin(item, perspektive);
-        pinsContainer.appendChild(pin);
-      }
-      
-      gruppe.appendChild(pinsContainer);
-      content.appendChild(gruppe);
-      
-      // Drag & Drop für Gruppe
-      makeDraggable(gruppe);
-      
-      gruppenIndex++;
-    }
-    
-    // Verbindungen zwischen verwandten Gruppen zeichnen
-    setTimeout(() => zeichneVerbindungen(svg, gruppenPositionen), 50);
-    
-    debug.features('Pinboard gerendert', { 
-      gruppen: gruppen.size,
-      pins: auswahl.size,
-      gruppierung: pinboardState.gruppierung 
-    });
-  }
-  
-  /**
-   * Gruppiert die Auswahl nach gewähltem Modus
-   */
-  function gruppiereAuswahl(modus) {
-    const gruppen = new Map();
-    const state = getState();
-    
-    if (modus === 'pilz') {
-      const nachPilz = getAuswahlNachPilz();
-      for (const [pilzId, data] of nachPilz) {
-        const name = data.pilzDaten?.name || pilzId;
-        gruppen.set(name, data.felder.map(f => ({
-          ...f,
-          pilzId,
-          pilzDaten: data.pilzDaten
-        })));
-      }
-    } else if (modus === 'feld') {
-      const nachFeld = getAuswahlNachFeld();
-      for (const [feldName, items] of nachFeld) {
-        gruppen.set(feldName, items.map(item => ({
-          feldName,
-          wert: item.wert,
-          pilzId: item.pilzId,
-          pilzDaten: item.pilzDaten
-        })));
-      }
-    } else if (modus === 'perspektive') {
-      const perspektiven = getPerspektivenListe();
-      const nachPilz = getAuswahlNachPilz();
-      
-      // Felder nach Perspektive gruppieren
-      for (const perspektive of perspektiven) {
-        const items = [];
-        for (const [pilzId, data] of nachPilz) {
-          for (const feld of data.felder) {
-            if (perspektive.felder?.includes(feld.feldName)) {
-              items.push({
-                ...feld,
-                pilzId,
-                pilzDaten: data.pilzDaten,
-                perspektive
-              });
-            }
-          }
-        }
-        if (items.length > 0) {
-          gruppen.set(perspektive.label || perspektive.id, items);
-        }
-      }
-      
-      // Nicht zugeordnete Felder
-      const zugeordnet = new Set(perspektiven.flatMap(p => p.felder || []));
-      const sonstige = [];
-      for (const [pilzId, data] of nachPilz) {
-        for (const feld of data.felder) {
-          if (!zugeordnet.has(feld.feldName)) {
-            sonstige.push({ ...feld, pilzId, pilzDaten: data.pilzDaten });
-          }
-        }
-      }
-      if (sonstige.length > 0) {
-        gruppen.set('Sonstige', sonstige);
-      }
-    } else {
-      // Frei: Alle Pins einzeln
-      const nachPilz = getAuswahlNachPilz();
-      let counter = 0;
-      for (const [pilzId, data] of nachPilz) {
-        for (const feld of data.felder) {
-          gruppen.set(`pin-${counter++}`, [{
-            ...feld,
-            pilzId,
-            pilzDaten: data.pilzDaten
-          }]);
-        }
-      }
-    }
-    
-    return gruppen;
-  }
-  
-  /**
-   * Erstellt einen einzelnen Pin
-   */
-  function erstellePin(item, perspektive) {
-    const pin = document.createElement('div');
-    pin.className = 'amorph-pin';
-    
-    const feldConfig = getFeldConfig(item.feldName);
-    const label = feldConfig?.label || item.feldName;
-    
-    // Pin-Farbe aus Perspektive
-    if (perspektive?.farben?.[0]) {
-      pin.style.setProperty('--pin-farbe', perspektive.farben[0]);
-    }
-    
-    // Spezielle Darstellung für Bilder
-    if (item.feldName === 'bild' && item.wert) {
-      pin.innerHTML = `
-        <img src="${item.wert}" alt="${item.pilzDaten?.name || ''}" class="amorph-pin-bild">
-        <div class="amorph-pin-caption">${item.pilzDaten?.name || ''}</div>
-      `;
-    } else {
-      pin.innerHTML = `
-        <div class="amorph-pin-label">${label}</div>
-        <div class="amorph-pin-wert">${formatWert(item.wert)}</div>
-        ${pinboardState.gruppierung !== 'pilz' ? `<div class="amorph-pin-pilz">${item.pilzDaten?.name || ''}</div>` : ''}
-      `;
-    }
-    
-    return pin;
-  }
-  
-  /**
-   * Macht ein Element draggable
-   */
-  function makeDraggable(el) {
-    let isDragging = false;
-    let startX, startY, origX, origY;
-    
-    el.querySelector('.amorph-pin-gruppe-header')?.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      startX = e.clientX;
-      startY = e.clientY;
-      origX = parseInt(el.style.left) || 0;
-      origY = parseInt(el.style.top) || 0;
-      el.classList.add('dragging');
-      e.preventDefault();
-    });
-    
-    document.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      const dx = (e.clientX - startX) / pinboardState.zoom;
-      const dy = (e.clientY - startY) / pinboardState.zoom;
-      el.style.left = (origX + dx) + 'px';
-      el.style.top = (origY + dy) + 'px';
-    });
-    
-    document.addEventListener('mouseup', () => {
-      if (isDragging) {
-        isDragging = false;
-        el.classList.remove('dragging');
-      }
-    });
-  }
-  
-  /**
-   * Zeichnet Verbindungslinien zwischen Gruppen
-   */
-  function zeichneVerbindungen(svg, positionen) {
-    svg.innerHTML = '';
-    
-    // Verbindungen basierend auf gemeinsamen Feldern/Pilzen
-    for (let i = 0; i < positionen.length; i++) {
-      for (let j = i + 1; j < positionen.length; j++) {
-        const a = positionen[i];
-        const b = positionen[j];
+        const zeile = document.createElement('div');
+        zeile.className = 'amorph-detail-zeile';
         
-        // Dünne Linie zwischen benachbarten Gruppen
-        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-        line.setAttribute('x1', a.x + 80);
-        line.setAttribute('y1', a.y + 30);
-        line.setAttribute('x2', b.x + 80);
-        line.setAttribute('y2', b.y + 30);
-        line.setAttribute('stroke', 'rgba(255,255,255,0.1)');
-        line.setAttribute('stroke-width', '1');
-        line.setAttribute('stroke-dasharray', '4,4');
-        svg.appendChild(line);
+        const pilzName = document.createElement('span');
+        pilzName.className = 'amorph-detail-pilz';
+        pilzName.textContent = item.pilzDaten?.name || item.pilzId;
+        zeile.appendChild(pilzName);
+        
+        const wertEl = erstelleFeldMorph(feldName, item.wert, item.pilzDaten, true);
+        if (wertEl) {
+          wertEl.classList.add('amorph-detail-wert');
+          zeile.appendChild(wertEl);
+        }
+        
+        liste.appendChild(zeile);
       }
+      
+      gruppe.appendChild(liste);
+      content.appendChild(gruppe);
     }
   }
   
-  // Hilfsfunktionen
-  function formatWert(wert) {
-    if (wert === null || wert === undefined) return '';
-    if (Array.isArray(wert)) return wert.join(', ');
-    if (typeof wert === 'object') {
-      if ('min' in wert && 'max' in wert) {
-        return `${wert.min}–${wert.max}${wert.einheit ? ' ' + wert.einheit : ''}`;
-      }
-      return JSON.stringify(wert);
+  /**
+   * Erstellt Mini-Morph basierend auf Schema-Typ
+   */
+  function erstelleFeldMorph(feldName, wert, pilzDaten, kompakt = false) {
+    if (wert === null || wert === undefined) return null;
+    
+    const cfg = getFeldConfig(feldName);
+    const typ = cfg?.typ || erkennTyp(wert);
+    const container = document.createElement('div');
+    container.className = `amorph-detail-feld amorph-detail-${typ}`;
+    
+    // Label (nur bei nicht-kompakt)
+    if (!kompakt) {
+      const label = document.createElement('div');
+      label.className = 'amorph-detail-label';
+      label.textContent = cfg?.label || feldName;
+      container.appendChild(label);
     }
-    return String(wert);
+    
+    // Wert mit passendem Morph
+    const wertEl = document.createElement('div');
+    wertEl.className = 'amorph-detail-inhalt';
+    
+    try {
+      // Spezialisierte Morph-Auswahl für Mobile-First
+      switch (typ) {
+        case 'image':
+          const img = document.createElement('img');
+          img.src = wert;
+          img.alt = pilzDaten?.name || '';
+          img.className = 'amorph-mini-image';
+          wertEl.appendChild(img);
+          break;
+          
+        case 'rating':
+          wertEl.innerHTML = renderMiniRating(wert, cfg?.maxStars || 5);
+          break;
+          
+        case 'progress':
+          wertEl.innerHTML = renderMiniProgress(wert, cfg?.einheit);
+          break;
+          
+        case 'tag':
+        case 'badge':
+          const tagEl = document.createElement('span');
+          tagEl.className = 'amorph-mini-tag';
+          tagEl.textContent = wert;
+          if (cfg?.farben?.[wert?.toLowerCase?.()]) {
+            tagEl.style.backgroundColor = cfg.farben[wert.toLowerCase()];
+          }
+          wertEl.appendChild(tagEl);
+          break;
+          
+        case 'range':
+          wertEl.textContent = typeof wert === 'object' && 'min' in wert 
+            ? `${wert.min}–${wert.max}${cfg?.einheit || ''}`
+            : `${wert}${cfg?.einheit || ''}`;
+          break;
+          
+        case 'list':
+          if (Array.isArray(wert)) {
+            wertEl.innerHTML = wert.slice(0, 3).map(v => 
+              `<span class="amorph-mini-list-item">${v}</span>`
+            ).join('') + (wert.length > 3 ? `<span class="amorph-mini-more">+${wert.length - 3}</span>` : '');
+          } else {
+            wertEl.textContent = String(wert);
+          }
+          break;
+          
+        case 'pie':
+        case 'radar':
+        case 'bar':
+        case 'stats':
+          // Komplexe Morphs: Nur Key-Value Zusammenfassung für Mobile
+          if (typeof wert === 'object' && wert !== null) {
+            const entries = Array.isArray(wert) ? wert : Object.entries(wert);
+            const items = (Array.isArray(wert) ? wert : entries.slice(0, 3).map(([k,v]) => ({axis: k, value: v})));
+            wertEl.innerHTML = items.slice(0, 3).map(item => {
+              if (item.axis !== undefined) {
+                return `<span class="amorph-mini-stat">${item.axis}: ${item.value}</span>`;
+              } else if (item.label !== undefined) {
+                return `<span class="amorph-mini-stat">${item.label}: ${item.value}</span>`;
+              } else if (typeof item === 'object') {
+                const [k, v] = Object.entries(item)[0] || ['', ''];
+                return `<span class="amorph-mini-stat">${k}: ${v}</span>`;
+              }
+              return `<span class="amorph-mini-stat">${item}</span>`;
+            }).join('');
+          } else {
+            wertEl.textContent = String(wert);
+          }
+          break;
+          
+        case 'timeline':
+          if (Array.isArray(wert)) {
+            wertEl.innerHTML = wert.slice(0, 2).map(e => 
+              `<span class="amorph-mini-event">${e.event || e.phase || e.label || e.date || e}</span>`
+            ).join(' → ');
+          }
+          break;
+          
+        default:
+          wertEl.textContent = String(wert);
+      }
+    } catch (err) {
+      debug.features('Morph-Fehler', { feldName, typ, err: err.message });
+      wertEl.textContent = String(wert);
+    }
+    
+    container.appendChild(wertEl);
+    return container;
   }
   
-  function getGruppenIcon(name) {
-    const icons = {
-      'kulinarisch': '🍳', 'sicherheit': '⚠️', 'anbau': '🌱',
-      'wissenschaft': '🔬', 'medizin': '💊', 'statistik': '📊',
-      'bild': '🖼️', 'name': '📛', 'temperatur': '🌡️',
-      'essbarkeit': '🍽️', 'saison': '📅', 'lebensraum': '🌲'
-    };
-    return icons[name.toLowerCase()] || '📌';
+  function erkennTyp(wert) {
+    if (Array.isArray(wert)) return 'list';
+    if (typeof wert === 'object' && wert !== null) {
+      if ('min' in wert && 'max' in wert) return 'range';
+      return 'object';
+    }
+    if (typeof wert === 'number') return 'number';
+    if (typeof wert === 'boolean') return 'boolean';
+    return 'text';
   }
   
-  function formatGruppenName(name) {
-    if (name.startsWith('pin-')) return ''; // Freie Pins haben keinen Header
-    return name.charAt(0).toUpperCase() + name.slice(1);
+  function renderMiniRating(wert, max) {
+    const filled = Math.round(wert);
+    return Array(max).fill(0).map((_, i) => 
+      `<span class="amorph-mini-star ${i < filled ? 'filled' : ''}">${i < filled ? '★' : '☆'}</span>`
+    ).join('');
   }
   
-  // Auf Auswahl-Änderungen reagieren
+  function renderMiniProgress(wert, einheit) {
+    const pct = Math.min(100, Math.max(0, Number(wert) || 0));
+    return `<div class="amorph-mini-progress">
+      <div class="amorph-mini-progress-fill" style="width:${pct}%"></div>
+      <span class="amorph-mini-progress-text">${pct}${einheit || '%'}</span>
+    </div>`;
+  }
+  
+  // Events
   document.addEventListener('amorph:auswahl-geaendert', () => {
-    if (ctx.dom.offsetParent !== null) { // Nur wenn sichtbar
-      renderPinboard();
-    }
+    if (ctx.dom.offsetParent !== null) render();
   });
   
-  // Auf Ansicht-Wechsel reagieren
   document.addEventListener('amorph:ansicht-wechsel', (e) => {
     if (e.detail.ansicht === 'detail') {
       ctx.dom.style.display = 'block';
-      renderPinboard();
+      render();
     } else {
       ctx.dom.style.display = 'none';
     }
   });
   
   ctx.dom.appendChild(pinboard);
-  ctx.dom.style.display = 'none'; // Initial versteckt
+  ctx.dom.style.display = 'none';
   ctx.mount();
   
-  debug.features('Detail/Pinboard Feature bereit');
+  debug.features('Detail/Pinboard bereit');
 }

@@ -1,0 +1,495 @@
+/* AMORPH v5 - Compare Morphs CSS */
+/* Mobile-First Vergleichs-Visualisierungen */
+
+/* === BASIS === */
+.amorph-compare {
+  width: 100%;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.compare-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.compare-leer {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 12px;
+  text-align: center;
+  padding: 20px;
+}
+
+/* === COMPARE BAR === */
+.amorph-compare-bar .compare-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.compare-bar-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 50px;
+  align-items: center;
+  gap: 8px;
+}
+
+.compare-bar-row .bar-name {
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.compare-bar-row .bar-track {
+  height: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9px;
+  overflow: hidden;
+}
+
+.compare-bar-row .bar-fill {
+  height: 100%;
+  border-radius: 9px;
+  transition: width 0.3s ease;
+  opacity: 0.85;
+}
+
+.compare-bar-row .bar-wert {
+  font-size: 11px;
+  font-weight: 500;
+  color: white;
+  text-align: right;
+}
+
+/* === COMPARE RATING === */
+.amorph-compare-rating .compare-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.compare-rating-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.compare-rating-row .rating-name {
+  font-size: 11px;
+  font-weight: 500;
+  min-width: 70px;
+}
+
+.compare-rating-row .rating-stars {
+  flex: 1;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.compare-rating-row .rating-stars .star {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.compare-rating-row .rating-stars .star.filled {
+  color: #fbbf24;
+}
+
+.compare-rating-row .rating-wert {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* === COMPARE TAG === */
+.amorph-compare-tag .compare-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.compare-chip {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.compare-chip .chip-wert {
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  color: white;
+}
+
+.compare-chip .chip-pilze {
+  padding: 6px 10px 6px 6px;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.compare-chip .chip-pilze span {
+  font-weight: 500;
+}
+
+/* === COMPARE LIST === */
+.amorph-compare-list .compare-list-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.compare-list-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  font-size: 11px;
+}
+
+.compare-list-item.gemeinsam {
+  background: rgba(96, 192, 144, 0.15);
+  border: 1px solid rgba(96, 192, 144, 0.3);
+}
+
+.compare-list-item .list-wert {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.compare-list-item .list-pilze {
+  display: flex;
+  gap: 3px;
+}
+
+.compare-list-item .pilz-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* === COMPARE IMAGE === */
+.amorph-compare-image .compare-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px;
+}
+
+.compare-img-wrap {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid;
+}
+
+.compare-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.compare-img-wrap .img-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 4px 6px;
+  font-size: 10px;
+  font-weight: 500;
+  color: white;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* === COMPARE RADAR === */
+.amorph-compare-radar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.compare-radar-svg {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+}
+
+.compare-radar-svg .radar-grid {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 1;
+}
+
+.compare-radar-svg .radar-axis {
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 1;
+}
+
+.compare-radar-svg .radar-shape {
+  fill-opacity: 0.2;
+  stroke-width: 2;
+}
+
+.compare-radar-svg .radar-label {
+  font-size: 8px;
+  fill: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+}
+
+.compare-legende {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.compare-legende .legende-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.compare-legende .legende-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+/* Compact Radar */
+.amorph-compare-radar-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.radar-compact-row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.radar-compact-row .radar-achse {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.radar-compact-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.radar-mini-bar {
+  height: 6px;
+  border-radius: 3px;
+  opacity: 0.75;
+}
+
+/* === COMPARE PIE === */
+.amorph-compare-pie .compare-pie-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 12px;
+}
+
+.compare-pie-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.compare-pie-wrap .pie-pilz {
+  font-size: 10px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.compare-pie-wrap .mini-pie-svg {
+  width: 60px;
+  height: 60px;
+}
+
+.compare-pie-wrap .pie-slice {
+  stroke: rgba(0, 0, 0, 0.3);
+  stroke-width: 1;
+}
+
+.compare-pie-wrap .pie-leer {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 20px;
+}
+
+/* === COMPARE TEXT === */
+.amorph-compare-text .compare-text-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.compare-text-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.compare-text-row .text-pilz {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  padding-left: 8px;
+  border-left: 3px solid;
+}
+
+.compare-text-row .text-wert {
+  font-size: 12px;
+  color: white;
+  line-height: 1.4;
+  padding-left: 11px;
+}
+
+/* === RESPONSIVE === */
+@media (min-width: 480px) {
+  .compare-bar-row {
+    grid-template-columns: 100px 1fr 60px;
+  }
+  
+  .compare-img-wrap {
+    aspect-ratio: 4/3;
+  }
+  
+  .compare-text-row {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  
+  .compare-text-row .text-pilz {
+    min-width: 100px;
+    flex-shrink: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .amorph-compare {
+    padding: 16px;
+  }
+  
+  .compare-radar-svg {
+    max-width: 250px;
+  }
+  
+  .compare-pie-container {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+}
+
+/* === COMPARE WIRKSTOFFE === */
+.amorph-compare-wirkstoffe .wirkstoffe-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wirkstoffe-row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  align-items: center;
+  gap: 10px;
+}
+
+.wirkstoffe-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.wirkstoffe-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.wirkstoffe-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 14px;
+}
+
+.wirkstoffe-bar .bar-fill {
+  height: 100%;
+  border-radius: 7px;
+  min-width: 4px;
+  opacity: 0.8;
+}
+
+.wirkstoffe-bar .bar-value {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.6);
+  white-space: nowrap;
+}
+
+/* === COMPARE TIMELINE === */
+.amorph-compare-timeline .timeline-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.timeline-pilz {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.timeline-pilz-name {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.timeline-events {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-left: 10px;
+}
+
+.timeline-event {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border-left: 3px solid;
+  border-radius: 0 8px 8px 0;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.timeline-event .event-date {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 10px;
+}

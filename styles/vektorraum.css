@@ -1,18 +1,13 @@
-/* AMORPH v5 - Vektorraum Styles (Vergleich Feature) */
-/* Black Glasmorphism - Laterale Visualisierung */
+/* AMORPH v5 - Sammel-Diagramm Styles (Vergleich Feature) */
+/* Black Glasmorphism - Vereinigte Visualisierung */
 
-/* === VEKTORRAUM CONTAINER === */
+/* === SAMMELDIAGRAMM CONTAINER === */
 .amorph-feature-vergleich {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1000;
-  background: rgba(5, 5, 8, 0.98);
+  width: 100%;
+  min-height: 100%;
 }
 
-.amorph-vektorraum {
+.amorph-sammeldiagramm {
   width: 100%;
   height: 100%;
   display: flex;
@@ -21,7 +16,7 @@
 }
 
 /* === TOOLBAR === */
-.amorph-vektorraum-toolbar {
+.amorph-sammel-toolbar {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -29,96 +24,291 @@
   background: rgba(0, 0, 0, 0.5);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   flex-shrink: 0;
-  flex-wrap: wrap;
 }
 
-.amorph-vektorraum-modus {
+.sammel-anzahl {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* === CONTENT === */
+.amorph-sammel-content {
+  flex: 1;
   display: flex;
-  gap: 4px;
-  padding: 4px;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 20px;
+  gap: 20px;
+}
+
+/* === DIAGRAMME GRID === */
+.amorph-sammel-diagramme {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* === EINZELNES DIAGRAMM === */
+.amorph-sammel-diagramm {
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-}
-
-.amorph-vektorraum-modus button {
-  padding: 6px 12px;
-  font-size: 13px;
-  font-weight: 500;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.5);
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.amorph-vektorraum-modus button:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-}
-
-.amorph-vektorraum-modus button.aktiv {
-  background: rgba(255, 255, 255, 0.15);
-  color: white;
-}
-
-/* Dimensionen-Auswahl */
-.amorph-vektorraum-dimensionen {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  flex: 1;
-}
-
-.amorph-vektorraum-dimensionen .dim-btn {
-  padding: 5px 10px;
-  font-size: 11px;
-  background: rgba(0, 0, 0, 0.3);
-  color: rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  padding: 16px;
 }
 
-.amorph-vektorraum-dimensionen .dim-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
+.sammel-titel {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.amorph-vektorraum-dimensionen .dim-btn.aktiv {
-  background: rgba(59, 130, 246, 0.2);
-  color: #60a5fa;
-  border-color: rgba(59, 130, 246, 0.4);
+.sammel-canvas {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.amorph-vektorraum-info {
+/* === BAR CHART === */
+.sammel-bars .sammel-bar {
+  display: grid;
+  grid-template-columns: 100px 1fr 60px;
+  align-items: center;
+  gap: 10px;
+}
+
+.sammel-bar .bar-name {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* === CANVAS === */
-.amorph-vektorraum-canvas {
-  flex: 1;
-  position: relative;
+.sammel-bar .bar-track {
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
   overflow: hidden;
 }
 
-.amorph-vektorraum-svg {
-  width: 100%;
+.sammel-bar .bar-fill {
   height: 100%;
+  border-radius: 10px;
+  transition: width 0.3s ease;
 }
 
-.amorph-vektorraum-labels {
-  position: absolute;
-  top: 0;
-  left: 0;
-  pointer-events: none;
+.sammel-bar .bar-wert {
+  font-size: 12px;
+  font-weight: 500;
+  color: white;
+  text-align: right;
+}
+
+/* === TAG CHART === */
+.sammel-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sammel-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.sammel-tag .tag-pilz {
+  padding: 6px 8px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  border-left: 3px solid;
+}
+
+.sammel-tag .tag-wert {
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  color: white;
+}
+
+/* === LIST === */
+.sammel-lists {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sammel-list-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.sammel-list-item .list-pilz {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  padding-left: 8px;
+  border-left: 3px solid;
+}
+
+.sammel-list-item .list-werte {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.sammel-list-item .list-tag {
+  padding: 3px 8px;
+  font-size: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: white;
+}
+
+/* === KOMPLEX (pie/radar/bar/stats) === */
+.sammel-komplex {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sammel-komplex-item {
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.sammel-komplex-item .komplex-pilz {
+  font-size: 12px;
+  font-weight: 500;
+  color: white;
+  padding-left: 8px;
+  border-left: 3px solid;
+  margin-bottom: 8px;
+}
+
+.sammel-komplex-item .komplex-werte {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.sammel-komplex-item .komplex-stat {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+}
+
+.sammel-komplex-item .komplex-stat b {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
+  margin-right: 4px;
+}
+
+.sammel-komplex-item .komplex-more {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* === TIMELINE === */
+.sammel-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sammel-timeline-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.sammel-timeline-item .timeline-pilz {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  padding-left: 8px;
+  border-left: 3px solid;
+}
+
+.sammel-timeline-item .timeline-events {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.sammel-timeline-item .timeline-event {
+  padding: 2px 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+}
+
+/* === IMAGE GALLERY === */
+.sammel-images {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 8px;
+}
+
+.sammel-image {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.sammel-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sammel-image .image-name {
+  display: none;
+}
+
+.sammel-image:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* === TEXT LIST === */
+.sammel-texts {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sammel-text {
+  display: flex;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.sammel-text .text-name {
+  color: rgba(255, 255, 255, 0.5);
+  min-width: 80px;
+}
+
+.sammel-text .text-wert {
+  color: white;
 }
 
 /* === LEGENDE === */
-.amorph-vektorraum-legende {
+.amorph-sammel-legende {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -126,72 +316,35 @@
   background: rgba(0, 0, 0, 0.4);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   flex-wrap: wrap;
+  flex-shrink: 0;
 }
 
-.amorph-vektorraum-legende .legende-titel {
+.amorph-sammel-legende .legende-titel {
   font-size: 11px;
   color: rgba(255, 255, 255, 0.5);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
-.amorph-vektorraum-legende .legende-item {
+.amorph-sammel-legende .legende-item {
   display: flex;
   align-items: center;
   gap: 6px;
   font-size: 12px;
 }
 
-.amorph-vektorraum-legende .legende-farbe {
+.amorph-sammel-legende .legende-farbe {
   width: 12px;
   height: 12px;
   border-radius: 50%;
 }
 
-.amorph-vektorraum-legende .legende-name {
+.amorph-sammel-legende .legende-name {
   color: rgba(255, 255, 255, 0.8);
 }
 
-/* === TOOLTIP === */
-.amorph-vektorraum-tooltip {
-  display: none;
-  position: absolute;
-  min-width: 160px;
-  max-width: 250px;
-  padding: 12px;
-  background: rgba(0, 0, 0, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  z-index: 100;
-  pointer-events: none;
-}
-
-.amorph-vektorraum-tooltip .tooltip-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: white;
-  margin-bottom: 8px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.amorph-vektorraum-tooltip .tooltip-feld {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 4px;
-}
-
-.amorph-vektorraum-tooltip .tooltip-feld strong {
-  color: white;
-}
-
 /* === LEER-ANZEIGE === */
-.amorph-vektorraum-leer {
+.amorph-sammel-leer {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -204,38 +357,32 @@
   text-align: center;
 }
 
-.amorph-vektorraum-leer .icon {
+.amorph-sammel-leer .icon {
   font-size: 48px;
   opacity: 0.5;
 }
 
-.amorph-vektorraum-leer .text {
+.amorph-sammel-leer .text {
   font-size: 18px;
 }
 
-.amorph-vektorraum-leer .hint {
+.amorph-sammel-leer .hint {
   font-size: 13px;
   opacity: 0.6;
 }
 
 /* === RESPONSIVE === */
 @media (max-width: 768px) {
-  .amorph-vektorraum-toolbar {
+  .amorph-sammel-toolbar {
     gap: 8px;
     padding: 8px 12px;
   }
   
-  .amorph-vektorraum-modus button {
-    padding: 4px 8px;
-    font-size: 12px;
+  .amorph-sammel-diagramme {
+    grid-template-columns: 1fr;
   }
   
-  .amorph-vektorraum-dimensionen .dim-btn {
-    padding: 4px 8px;
-    font-size: 10px;
-  }
-  
-  .amorph-vektorraum-legende {
+  .amorph-sammel-legende {
     gap: 12px;
     padding: 8px 12px;
   }

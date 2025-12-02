@@ -12,6 +12,17 @@ Reine Funktionen. Keine Klassen. Kein Zustand.
   - `amorph-header-suche`: Suchleiste + Clear-Button + aktive Filter-Badges
   - `amorph-header-controls`: Ansicht-Switch + Perspektiven-Buttons
 - **Visuelle Morphs**: pie, bar, radar, rating, progress, stats, timeline, badge
+- **Compare-Morphs** (NEU): Spezialisierte Vergleichs-Visualisierungen
+  - `compareBar` - Horizontale Balkendiagramme für Zahlenvergleiche
+  - `compareRating` - Sterne-Vergleich für Bewertungen
+  - `compareTag` - Gruppierte Chips nach Wert (z.B. Essbarkeit)
+  - `compareList` - Listen mit Überlappungs-Hervorhebung
+  - `compareImage` - Bildergalerie mit farbigen Rahmen
+  - `compareRadar` - Überlappende SVG-Radar-Charts
+  - `comparePie` - Nebeneinander Mini-Pie-Charts
+  - `compareText` - Fallback Text-Vergleich
+  - `compareMorph` - Auto-Selektor wählt passenden Compare-Morph
+  - `erstelleFarben` - Konsistente Farbzuweisung für Pilze
 - Jeder Morph erzeugt `<span class="amorph-{type}">` oder `<div class="amorph-{type}">` Element
 - Automatische Typ-Erkennung basierend auf Datenstruktur
 
