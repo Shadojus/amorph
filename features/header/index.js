@@ -67,7 +67,7 @@ export default function init(ctx) {
     const aktiveAnsicht = getAnsichtState().aktiveAnsicht;
     const imVergleichsView = aktiveAnsicht === 'vergleich';
     
-    console.log('%c[HEADER-SUCHE] Ansicht-Check', 'background:#f59e0b;color:black;padding:2px 6px;border-radius:3px', {
+    debug.header('Ansicht-Check', {
       query,
       aktiveAnsicht,
       imVergleichsView
@@ -75,7 +75,7 @@ export default function init(ctx) {
     
     // Im Vergleich-View: NUR Highlights anwenden, KEINE DB-Suche
     if (imVergleichsView) {
-      console.log('%c[HEADER-SUCHE] ⚡ Vergleich-View: Nur Highlights, keine DB-Suche!', 'background:#10b981;color:white;padding:2px 6px;border-radius:3px');
+      debug.header('Vergleich-View: Nur Highlights, keine DB-Suche');
       // Event emittieren für Vergleich-View Highlights
       ctx.emit('suche:ergebnisse', { query, ergebnisse: [], matchedTerms: new Set(), nurHighlights: true });
       return;
@@ -327,7 +327,7 @@ export default function init(ctx) {
     
     // Event emittieren - sowohl ctx-intern als auch document-weit
     const eventData = { aktiv: Array.from(aktivePerspektiven) };
-    console.log('%c[HEADER] Perspektiven-Event wird gesendet', 'background:#e8b04a;color:black;padding:4px 8px;border-radius:3px;font-weight:bold', eventData);
+    debug.header('Perspektiven-Event wird gesendet', eventData);
     ctx.emit('perspektiven:geaendert', eventData);
     document.dispatchEvent(new CustomEvent('perspektiven:geaendert', { 
       detail: eventData

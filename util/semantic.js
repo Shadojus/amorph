@@ -236,21 +236,21 @@ export function getPerspektivenListe() {
  * @returns {Object|null} Morph-Config oder null
  */
 export function getPerspektivenMorphConfig(feldName, aktivePerspektiven = []) {
-  console.log('%c[SEMANTIC] getPerspektivenMorphConfig aufgerufen', 'background:#5aa0d8;color:white;padding:2px 6px;border-radius:3px', {
+  debug.semantic('getPerspektivenMorphConfig', {
     feldName,
     aktivePerspektiven,
     hatSchema: !!schemaCache?.perspektiven
   });
   
   if (!schemaCache?.perspektiven || !aktivePerspektiven.length) {
-    console.log('%c[SEMANTIC] Keine Perspektiven oder kein Schema', 'background:#d06080;color:white;padding:2px 6px;border-radius:3px');
+    debug.semantic('Keine Perspektiven oder kein Schema');
     return null;
   }
   
   // Priorisiere erste aktive Perspektive die eine Config für dieses Feld hat
   for (const perspId of aktivePerspektiven) {
     const persp = schemaCache.perspektiven[perspId];
-    console.log('%c[SEMANTIC] Prüfe Perspektive', 'background:#60c090;color:white;padding:2px 6px;border-radius:3px', {
+    debug.semantic('Prüfe Perspektive', {
       perspId,
       hatPerspektive: !!persp,
       hatMorphs: !!persp?.morphs,
@@ -263,13 +263,13 @@ export function getPerspektivenMorphConfig(feldName, aktivePerspektiven = []) {
         perspektive: perspId,
         farben: persp.farben
       };
-      console.log('%c[SEMANTIC] ✓ Morph-Config gefunden!', 'background:#60c090;color:white;padding:2px 6px;border-radius:3px;font-weight:bold', result);
+      debug.semantic('Morph-Config gefunden', result);
       debug.perspektiven('Morph-Config gefunden', { feldName, perspektive: perspId, config: persp.morphs[feldName] });
       return result;
     }
   }
   
-  console.log('%c[SEMANTIC] ✗ Keine Morph-Config für dieses Feld', 'background:#808080;color:white;padding:2px 6px;border-radius:3px', { feldName });
+  debug.semantic('Keine Morph-Config für Feld', { feldName });
   return null;
 }
 
@@ -310,10 +310,12 @@ export function getAllePerspektivenFarben(feldName, aktivePerspektiven = []) {
   
   result.isMulti = result.perspektiven.length > 1;
   
-  console.log('%c[SEMANTIC] Alle Perspektiven-Farben', 
-    result.isMulti ? 'background:linear-gradient(90deg,#e8b04a,#60c090,#5aa0d8);color:white;padding:2px 6px;border-radius:3px;font-weight:bold' : 'background:#5aa0d8;color:white;padding:2px 6px;border-radius:3px', 
-    { feldName, anzahl: result.perspektiven.length, isMulti: result.isMulti, perspektiven: result.perspektiven.map(p => p.id) }
-  );
+  debug.semantic('Alle Perspektiven-Farben', { 
+    feldName, 
+    anzahl: result.perspektiven.length, 
+    isMulti: result.isMulti, 
+    perspektiven: result.perspektiven.map(p => p.id) 
+  });
   
   return result;
 }

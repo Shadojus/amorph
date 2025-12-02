@@ -3,6 +3,8 @@
  * 
  * Alle wichtigen Events werden hier geloggt, nicht verstreut im Code.
  * Überwacht das gesamte System: Init, Config, Daten, Features, Morphs, Render, User-Interaktionen
+ * 
+ * ARCHITEKTUR: KEINE console.log im Code! Nur debug.* verwenden!
  */
 
 const STYLES = {
@@ -18,12 +20,18 @@ const STYLES = {
   perspektiven: 'color: #06b6d4; font-weight: bold',
   grid: 'color: #84cc16; font-weight: bold',
   ansichten: 'color: #22c55e; font-weight: bold',
+  vergleich: 'color: #14b8a6; font-weight: bold',
+  detail: 'color: #10b981; font-weight: bold',
   
   // Morphs & Rendering
   morphs: 'color: #fb7185; font-weight: bold',
+  compare: 'color: #e86080; font-weight: bold',
   render: 'color: #fbbf24; font-weight: bold',
   mount: 'color: #facc15; font-weight: bold',
   unmount: 'color: #a3a3a3; font-weight: bold',
+  
+  // Utils
+  semantic: 'color: #5aa0d8; font-weight: bold',
   
   // User-Interaktion
   observer: 'color: #f87171; font-weight: bold',
@@ -91,12 +99,18 @@ class DebugObserver {
   perspektiven(nachricht, daten = null) { return this.log('perspektiven', nachricht, daten); }
   grid(nachricht, daten = null) { return this.log('grid', nachricht, daten); }
   ansichten(nachricht, daten = null) { return this.log('ansichten', nachricht, daten); }
+  vergleich(nachricht, daten = null) { return this.log('vergleich', nachricht, daten); }
+  detail(nachricht, daten = null) { return this.log('detail', nachricht, daten); }
   
   // === MORPHS & RENDERING ===
   morphs(nachricht, daten = null) { return this.log('morphs', nachricht, daten); }
+  compare(nachricht, daten = null) { return this.log('compare', nachricht, daten); }
   render(nachricht, daten = null) { return this.log('render', nachricht, daten); }
   mount(nachricht, daten = null) { return this.log('mount', nachricht, daten); }
   unmount(nachricht, daten = null) { return this.log('unmount', nachricht, daten); }
+  
+  // === UTILS ===
+  semantic(nachricht, daten = null) { return this.log('semantic', nachricht, daten); }
   
   // === USER-INTERAKTION ===
   observer(nachricht, daten = null) { return this.log('observer', nachricht, daten); }

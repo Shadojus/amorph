@@ -17,6 +17,26 @@
 | Hardcoded Type Detection | ✅ BEHOBEN | Detection jetzt aus `morphs.yaml → erkennung` |
 | Hardcoded Feld-Handler | ✅ BEHOBEN | `feldHandler` aus `compare.js` entfernt |
 | Hardcoded Farben | ✅ BEHOBEN | Farben jetzt aus `morphs.yaml → farben` |
+| **Hardcoded console.log** | ✅ BEHOBEN | 22+ Logs auf zentrales `debug.*` System umgestellt |
+
+---
+
+## 🔄 Observer-System
+
+Das Observer-System ist jetzt **konsequent implementiert**:
+
+- **debug.js**: Zentraler Debug-Observer mit allen Kategorien
+- **Neue Kategorien**: `vergleich`, `detail`, `compare`, `semantic`
+- **Bereinigt**: Alle `console.log` aus Anwendungscode entfernt
+- **Verbleibend (OK)**: Build-Scripts, CLI-Tools, Startup-Logs
+
+```javascript
+// ❌ FALSCH - Hardcoded console.log
+console.log('%c[VERGLEICH] ...', 'background:...');
+
+// ✅ RICHTIG - Zentrales Debug-System
+debug.vergleich('Nachricht', { daten });
+```
 
 ---
 
@@ -35,6 +55,7 @@ Stattdessen gibt es nun an vielen Stellen **hardcoded Logik** und **explizite Mo
 | Hardcoded Feld-Handler | ✅ BEHOBEN | MITTEL |
 | Hardcoded Farben | ✅ BEHOBEN | NIEDRIG |
 | Perspektiven-Morphs | ✅ BEHOBEN | HOCH |
+| Hardcoded console.log | ✅ BEHOBEN | MITTEL |
 
 ---
 
@@ -68,16 +89,6 @@ naehrwerte:
 - statistik
 
 Die Perspektive ist jetzt wieder nur ein **Filter**, nicht eine Transformationsregel.
-- `kulinarisch` (Zeilen 438-449)
-- `sicherheit` (Zeilen 487-496)
-- `anbau` (Zeilen 527-538)
-- `wissenschaft` (Zeilen 576-584)
-- `medizin` (Zeilen 612-618)
-- `statistik` (Zeilen 647-658)
-
----
-
-### 3. 🔴 SCHWER: Hardcoded Type Detection in Pipeline
 
 **Problem**: `pipeline.js` enthält hardcoded Listen für Type Detection.
 

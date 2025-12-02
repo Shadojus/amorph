@@ -190,7 +190,7 @@ export function compareTag(items, config = {}) {
   const el = document.createElement('div');
   el.className = 'amorph-compare amorph-compare-tag';
   
-  console.log('%c[COMPARE-TAG] 🏷️ Tag-Morph erstellen', 'background:#d06080;color:white;padding:2px 6px;border-radius:3px', {
+  debug.compare('Tag-Morph erstellen', {
     itemsAnzahl: items.length,
     label: config.label,
     schemaFarben: config.farben,
@@ -226,7 +226,7 @@ export function compareTag(items, config = {}) {
     const wertKey = String(wert || '').toLowerCase();
     const tagFarbe = config.farben?.[wertKey] || pilze[0]?.farbe || '#666';
     
-    console.log('%c[COMPARE-TAG] Chip-Farbe', 'background:#808080;color:white;padding:2px 4px;border-radius:3px', {
+    debug.compare('Chip-Farbe', {
       wert,
       wertKey,
       gefundeneFarbe: config.farben?.[wertKey],
@@ -763,7 +763,7 @@ export function compareTimeline(items, config = {}) {
  * @param {Object} config - Feld-Config aus Schema + Perspektiven-Config
  */
 export function compareMorph(feldName, typ, items, config = {}) {
-  console.log('%c[COMPARE-MORPH] compareMorph aufgerufen', 'background:#e86080;color:white;padding:2px 6px;border-radius:3px;font-weight:bold', {
+  debug.compare('compareMorph aufgerufen', {
     feldName,
     typ,
     itemsAnzahl: items.length,
@@ -794,7 +794,7 @@ export function compareMorph(feldName, typ, items, config = {}) {
   
   // Wenn Perspektive einen Typ definiert hat → diesen nutzen
   if (config.perspektive && typHandler[typ]) {
-    console.log('%c[COMPARE-MORPH] ★ PERSPEKTIVEN-OVERRIDE aktiv!', 'background:#a855f7;color:white;padding:4px 8px;border-radius:3px;font-weight:bold;font-size:12px', {
+    debug.compare('PERSPEKTIVEN-OVERRIDE aktiv', {
       feldName,
       typ,
       perspektive: config.perspektive,
@@ -807,7 +807,7 @@ export function compareMorph(feldName, typ, items, config = {}) {
   // DATENGETRIEBEN: Typ-Handler basierend auf erkanntem Datentyp
   // Kein hardcoded feldHandler mehr! Die Datenstruktur bestimmt den Morph.
   if (typHandler[typ]) {
-    console.log('%c[COMPARE-MORPH] Typ-Handler verwendet', 'background:#5aa0d8;color:white;padding:2px 6px;border-radius:3px', {
+    debug.compare('Typ-Handler verwendet', {
       feldName,
       typ
     });

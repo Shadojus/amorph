@@ -125,7 +125,7 @@ export default function init(ctx) {
       // Perspektiven-spezifische Morph-Config holen (falls vorhanden)
       const perspMorphConfig = getPerspektivenMorphConfig(feldName, aktivePerspektiven);
       
-      console.log('%c[VERGLEICH] Morph-Config für Feld', 'background:#14b8a6;color:white;padding:2px 6px;border-radius:3px', {
+      debug.vergleich('Morph-Config für Feld', {
         feldName,
         aktivePerspektiven,
         perspMorphConfig,
@@ -144,7 +144,7 @@ export default function init(ctx) {
         perspektive: perspMorphConfig?.perspektive
       };
       
-      console.log('%c[VERGLEICH] 🎨 Farben-Setup', 'background:#a855f7;color:white;padding:2px 6px;border-radius:3px', {
+      debug.vergleich('Farben-Setup', {
         feldName,
         schemaFarben: cfg?.farben,
         perspektiveFarben: perspMorphConfig?.farben,
@@ -154,7 +154,7 @@ export default function init(ctx) {
       // Typ: Perspektiven-Config kann den Morph-Typ überschreiben
       const morphTyp = perspMorphConfig?.typ || typ;
       
-      console.log('%c[VERGLEICH] Morph-Typ Entscheidung', 'background:#e8b04a;color:black;padding:2px 6px;border-radius:3px', {
+      debug.vergleich('Morph-Typ Entscheidung', {
         feldName,
         schemaTyp: typ,
         perspektivenTyp: perspMorphConfig?.typ,
@@ -204,7 +204,7 @@ export default function init(ctx) {
             }).join(', ');
             morphEl.style.setProperty('--feld-bg-gradient', `linear-gradient(135deg, ${bgStops})`);
             
-            console.log('%c[VERGLEICH] 🌈 MULTI-Perspektiven Glow!', 'background:linear-gradient(90deg,#e8b04a,#60c090,#5aa0d8,#a855f7);color:white;padding:2px 8px;border-radius:3px;font-weight:bold', {
+            debug.vergleich('MULTI-Perspektiven Glow', {
               feldName,
               anzahl: alleFarben.perspektiven.length,
               perspektiven: alleFarben.perspektiven.map(p => p.id)
@@ -222,7 +222,7 @@ export default function init(ctx) {
             if (persp.farben[2]) morphEl.style.setProperty('--feld-p-farbe-2', persp.farben[2]);
             if (persp.farben[3]) morphEl.style.setProperty('--feld-p-farbe-3', persp.farben[3]);
             
-            console.log('%c[VERGLEICH] 🎨 Single-Perspektive Glow', 'background:#5aa0d8;color:white;padding:2px 8px;border-radius:3px', {
+            debug.vergleich('Single-Perspektive Glow', {
               feldName,
               perspektive: persp.id,
               farben: persp.farben
@@ -319,7 +319,7 @@ export default function init(ctx) {
   // Perspektiven-Änderungen beachten
   document.addEventListener('perspektiven:geaendert', (e) => {
     aktivePerspektiven = e.detail?.aktiv || [];
-    console.log('%c[VERGLEICH] Perspektiven Event empfangen', 'background:#a855f7;color:white;padding:2px 6px;border-radius:3px', {
+    debug.vergleich('Perspektiven Event empfangen', {
       aktiv: aktivePerspektiven,
       detail: e.detail
     });
