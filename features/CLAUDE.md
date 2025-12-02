@@ -2,13 +2,14 @@
 
 Eigenständig. Isoliert. Optional.
 
-## 🚧 AKTUELLER ENTWICKLUNGSSTAND
+## 🚧 AKTUELLER ENTWICKLUNGSSTAND (02.12.2025)
 
 ### Fertig
 - ✅ **Header-Feature**: 3-Zeilen-Layout mit Dark Glasmorphism
   - Zeile 0: FUNGINOMI (Link /) + Part of Bifroest (Link bifroest.io)
   - Zeile 1: Suchleiste + aktive Filter-Badges
   - Zeile 2: Ansicht-Switch + Perspektiven-Buttons
+  - **View-aware Suche**: Prüft `aktiveAnsicht` vor DB-Query
 - ✅ **Grid-Feature**: Karten-Layout (Standard-Ansicht)
 - ✅ **Detail-Feature (Pinboard)**: Ausgewählte Daten als Pinnwand
   - Gruppierung nach Pilz/Feld/Perspektive/Frei
@@ -20,7 +21,10 @@ Eigenständig. Isoliert. Optional.
   - Radar/Spinnendiagramm
   - 3D isometrische Projektion
   - Dimensionen-Auswahl
-- ✅ **Ansichten-Feature**: Nur Auswahl-State (View-Logik in separaten Features)
+  - **Suche-Highlights**: Hört auf `header:suche:ergebnisse` Event
+- ✅ **Ansichten-Feature**: Auswahl-State + Ansicht-State Tracking
+  - Hört auf `amorph:ansicht-wechsel` Event
+  - Aktualisiert `state.aktiveAnsicht` automatisch
 - ✅ **Perspektiven**: 4-Farben-Grid, Multi-Color Glow, Auto-Aktivierung
 - ✅ **Semantische Suche**: Keywords → Feldwerte aus Schema
 

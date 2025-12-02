@@ -4,11 +4,13 @@
  * Steuert die Interaktion zwischen beiden
  * 
  * NEU: Aktive Perspektiven werden als Badges in der Suchleiste angezeigt
+ * NEU: Im Vergleich-View wird keine DB-Suche ausgeführt, nur Highlights
  */
 
 import { debug } from '../../observer/debug.js';
 import { header as headerMorph } from '../../morphs/header.js';
 import { getPerspektivenKeywords, getPerspektivenListe } from '../../util/semantic.js';
+import { getState as getAnsichtState } from '../ansichten/index.js';
 
 export default function init(ctx) {
   debug.features('Header Feature Init');
@@ -61,11 +63,27 @@ export default function init(ctx) {
   async function suchen() {
     const query = input?.value.trim() || '';
     
+    // Prüfen ob wir im Vergleich-View sind
+    const aktiveAnsicht = getAnsichtState().aktiveAnsicht;
+    const imVergleichsView = aktiveAnsicht === 'vergleich';
+    
+    console.log('%c[HEADER-SUCHE] Ansicht-Check', 'background:#f59e0b;color:black;padding:2px 6px;border-radius:3px', {
+      query,
+      aktiveAnsicht,
+      imVergleichsView
+    });
+    
+    // Im Vergleich-View: NUR Highlights anwenden, KEINE DB-Suche
+    if (imVergleichsView) {
+      console.log('%c[HEADER-SUCHE] ⚡ Vergleich-View: Nur Highlights, keine DB-Suche!', 'background:#10b981;color:white;padding:2px 6px;border-radius:3px');
+      // Event emittieren für Vergleich-View Highlights
+      ctx.emit('suche:ergebnisse', { query, ergebnisse: [], matchedTerms: new Set(), nurHighlights: true });
+      return;
+    }
+    
     sucheForm?.classList.add('ladend');
     
     try {
-      debug.suche('Suche', { query });
-      
       // ctx.search führt die Suche aus UND rendert die Ergebnisse
       const ergebnisse = await ctx.search(query);
       letzteSuchergebnisse = ergebnisse || [];
@@ -96,7 +114,9 @@ export default function init(ctx) {
       // Perspektiven anwenden nach Render
       setTimeout(() => anwendenPerspektiven(), 50);
       
-      ctx.emit('suche:ergebnisse', { query, ergebnisse: letzteSuchergebnisse });
+      // Event mit Query und MatchedTerms für andere Views (z.B. Vergleich)
+      const matchedTerms = ctx.dataSource?.getMatchedTerms ? ctx.dataSource.getMatchedTerms() : new Set();
+      ctx.emit('suche:ergebnisse', { query, ergebnisse: letzteSuchergebnisse, matchedTerms });
       
     } catch (e) {
       debug.fehler('Suchfehler', e);

@@ -478,6 +478,15 @@ function formatWert(wert) {
 export default function init(ctx) {
   debug.ansichten('Ansichten Feature Init (nur Auswahl-State)');
   
+  // Auf Ansicht-Wechsel hören und State aktualisieren
+  document.addEventListener('amorph:ansicht-wechsel', (e) => {
+    const neueAnsicht = e.detail?.ansicht;
+    if (neueAnsicht && ['karten', 'detail', 'vergleich'].includes(neueAnsicht)) {
+      setAktiveAnsicht(neueAnsicht);
+      debug.ansichten('Ansicht-State aktualisiert', { aktiveAnsicht: neueAnsicht });
+    }
+  });
+  
   // Dieses Feature verwaltet nur den Auswahl-State.
   // Die Detail- und Vergleich-Views werden von ihren eigenen Features gehandhabt.
   // Der Ansicht-Switch im Header sendet 'amorph:ansicht-wechsel' Events,

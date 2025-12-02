@@ -2,6 +2,34 @@
 
 Laterale Lösung: Informationen durch Raumeinteilung und Vektoren verknüpfen.
 
+## 🚧 AKTUELLER STAND (02.12.2025)
+
+### ✅ Fertig
+- Sammel-Diagramm mit Pilz-Legende (farbige Punkte)
+- Perspektiven-aware Morphs (Label + Farben aus aktivierter Perspektive)
+- Multi-Perspektiven Glow (wenn Feld zu mehreren Perspektiven gehört)
+- **Suche-Highlights**: Markiert Suchbegriffe im Vergleich-View
+  - Hört auf `header:suche:ergebnisse` Event
+  - Wendet Highlights auf Compare-Containers an
+  - Keine Interferenz mit DB-Suche (nur lokale Highlights)
+
+### Event-Handling
+
+```javascript
+// Hört auf Suche-Events für Highlighting
+document.addEventListener('header:suche:ergebnisse', (e) => {
+  const { query, matchedTerms } = e.detail;
+  
+  if (!query) {
+    removeHighlights();  // Highlights entfernen wenn leer
+    return;
+  }
+  
+  // Highlights auf Compare-Container anwenden
+  highlightInContainer(compareContainer, [query]);
+});
+```
+
 ## Konzept
 
 Der Vektorraum visualisiert **Ähnlichkeiten und Unterschiede** zwischen Pilzen:

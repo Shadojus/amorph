@@ -2,7 +2,7 @@
 
 Formlos. Zustandslos. Transformierend.
 
-## 🚀 Aktueller Stand (01.12.2025)
+## 🚀 Aktueller Stand (02.12.2025)
 
 ### ✅ Fertig
 - Schema-basierte Datenbank-Transformation (YAML → Morphs → DOM)
@@ -19,6 +19,23 @@ Formlos. Zustandslos. Transformierend.
   - **Vergleich (Vektorraum)**: Laterale Visualisierung mit 2D/Radar/3D
 - **Feld-Auswahl-System**: Einzelne FELDER sind anklickbar
 - Overlay-System für Detail/Vergleich Views
+- **View-aware Suche**: DB-Suche nur in Grid-View, Highlights in Vergleich-View
+- **Ansicht-State Tracking**: State wird via `amorph:ansicht-wechsel` Event synchronisiert
+
+### 📊 Systembewertung (02.12.2025)
+
+| Bereich | ⭐ | Status |
+|---------|-----|--------|
+| Architektur | 5/5 | Saubere Feature-Isolation |
+| Event-System | 5/5 | Gut durchdachte Custom Events |
+| State-Management | 4/5 | Funktioniert, etwas verteilt |
+| Morph-System | 5/5 | Flexibel & perspektiven-aware |
+| Perspektiven | 5/5 | Elegante semantische Filterung |
+| Suche | 5/5 | Semantik + View-aware Highlights |
+| Debug-System | 5/5 | Exzellente farbige Kategorie-Logs |
+| Performance | 4/5 | Lazy Loading, viele DOM-Mutations |
+
+**Gesamtbewertung: 4.5/5 ⭐**
 
 ### Feld-Auswahl
 User kann einzelne Felder in Cards auswählen:

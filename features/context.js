@@ -23,6 +23,7 @@ export function createFeatureContext(name, container, config, dataSource, callba
     dom: bereich,
     config: Object.freeze(featureConfig),
     container, // Zugriff auf App-Container
+    dataSource, // Zugriff auf DataSource (für matchedTerms etc.)
     
     on: (event, handler) => {
       debug.features(`Event registriert: ${name}:${event}`);
@@ -31,7 +32,10 @@ export function createFeatureContext(name, container, config, dataSource, callba
     
     emit: (event, detail) => {
       debug.features(`Event emittiert: ${name}:${event}`, detail);
+      // Lokal auf Feature-EventTarget
       eventTarget.dispatchEvent(new CustomEvent(event, { detail }));
+      // Global auf document (mit Feature-Prefix für Cross-Feature-Kommunikation)
+      document.dispatchEvent(new CustomEvent(`${name}:${event}`, { detail }));
     },
     
     // Daten abfragen

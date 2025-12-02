@@ -2,9 +2,39 @@
 
 Durchsucht die Datenbank, lädt neue Morphs. Immer frisch.
 
-## 🚧 AKTUELLER STAND
+## 🚧 AKTUELLER STAND (02.12.2025)
 
-Suche funktioniert. Semantische Suche aus Schema, Keywords → Feldwerte.
+### ✅ Fertig
+- Semantische Suche aus Schema, Keywords → Feldwerte
+- **View-aware Suche**: 
+  - In **Grid-View**: Normale DB-Suche + Render
+  - In **Vergleich-View**: Nur Highlights, KEINE DB-Suche!
+- `matchedTerms` werden via Event an andere Features übergeben
+- Highlights nutzen `highlightInContainer()` aus `util/semantic.js`
+
+### View-aware Logik (NEU 02.12.2025)
+
+```javascript
+// In header/index.js suchen()
+import { getAnsichtState } from '../ansichten/index.js';
+
+function suchen(query) {
+  const { aktiveAnsicht } = getAnsichtState();
+  
+  // Im Vergleich-View: Nur Highlights, keine DB-Suche!
+  if (aktiveAnsicht === 'vergleich') {
+    emittiere('header:suche:ergebnisse', { 
+      query, 
+      ergebnisse: [], 
+      matchedTerms: new Set(),
+      nurHighlights: true 
+    });
+    return;
+  }
+  
+  // Normal: DB-Suche ausführen...
+}
+```
 
 ## Kernprinzip
 

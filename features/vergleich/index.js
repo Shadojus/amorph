@@ -28,14 +28,14 @@ import {
   compareMorph,
   erstelleFarben
 } from '../../morphs/compare.js';
-import { localSearch, highlightInContainer, clearHighlights } from '../../util/fetch.js';
+import { highlightInContainer, clearHighlights } from '../../util/fetch.js';
 
 export default function init(ctx) {
   debug.features('Vergleich/Sammel-Diagramm Feature Init');
   
   // Aktive Perspektiven tracken
   let aktivePerspektiven = [];
-  // Suche State
+  // Suche State (kommt vom Header-Feature)
   let aktuelleQuery = '';
   let aktuelleMatchedTerms = new Set();
   
@@ -43,11 +43,6 @@ export default function init(ctx) {
   container.className = 'amorph-sammeldiagramm';
   container.innerHTML = `
     <div class="amorph-sammel-toolbar">
-      <div class="sammel-suche">
-        <input type="text" placeholder="Im Vergleich suchen..." class="vergleich-suche-input" />
-        <button class="vergleich-suche-btn" title="Suchen">🔍</button>
-        <button class="vergleich-suche-clear" title="Suche löschen" style="display:none">✕</button>
-      </div>
       <span class="sammel-anzahl">0 Felder</span>
       <span class="sammel-perspektiven"></span>
     </div>
@@ -66,11 +61,6 @@ export default function init(ctx) {
   const legende = container.querySelector('.amorph-sammel-legende');
   const leerAnzeige = container.querySelector('.amorph-sammel-leer');
   const anzahlSpan = container.querySelector('.sammel-anzahl');
-  
-  // Suche Elemente
-  const sucheInput = container.querySelector('.vergleich-suche-input');
-  const sucheBtn = container.querySelector('.vergleich-suche-btn');
-  const clearBtn = container.querySelector('.vergleich-suche-clear');
   const perspektivenSpan = container.querySelector('.sammel-perspektiven');
   
   /**
@@ -265,119 +255,48 @@ export default function init(ctx) {
   }
   
   /**
-   * Lokale Suche im Vergleich-View
-   * Durchsucht die bereits geladenen Daten und markiert Treffer
+   * Highlights anwenden basierend auf Header-Suche
+   * Nutzt die gleiche Logik wie im Grid-View
    */
-  function sucheAusfuehren(query) {
+  function applyHighlights(query, matchedTerms) {
     aktuelleQuery = query?.trim() || '';
-    
-    // Clear-Button anzeigen/verstecken
-    clearBtn.style.display = aktuelleQuery ? 'block' : 'none';
+    aktuelleMatchedTerms = matchedTerms || new Set();
     
     if (!aktuelleQuery) {
-      // Leere Suche: Highlights entfernen, alle Morphs zeigen
+      // Leere Suche: Highlights entfernen
       clearHighlights(diagramme);
-      aktuelleMatchedTerms = new Set();
-      
-      // Alle Morphs wieder sichtbar
-      const alleMorphs = diagramme.querySelectorAll('.amorph-compare');
-      alleMorphs.forEach(m => {
-        m.classList.remove('suche-treffer', 'suche-kein-treffer');
-      });
-      
-      debug.suche('Vergleich: Suche gelöscht');
+      clearHighlights(legende);
+      debug.suche('Vergleich: Highlights entfernt');
       return;
     }
     
-    // Alle Pilz-Daten aus der aktuellen Auswahl sammeln
-    const nachPilz = getAuswahlNachPilz();
-    const pilzDaten = Array.from(nachPilz.values()).map(d => d.pilzDaten).filter(Boolean);
-    
-    // Lokale Suche auf den Pilz-Daten
-    const { results, matchedTerms, scores } = localSearch(pilzDaten, aktuelleQuery);
-    aktuelleMatchedTerms = matchedTerms;
-    
-    debug.suche('Vergleich: Lokale Suche', { 
-      query: aktuelleQuery, 
-      pilze: pilzDaten.length,
-      treffer: results.length,
-      matchedTerms: [...matchedTerms].slice(0, 10)
-    });
-    
-    // IDs der Treffer-Pilze
-    const trefferIds = new Set(results.map(p => String(p.id)));
-    
-    // Morphs markieren basierend auf Treffer
-    const alleMorphs = diagramme.querySelectorAll('.amorph-compare');
-    alleMorphs.forEach(morphEl => {
-      // Prüfen ob dieses Morph Treffer-Daten enthält
-      // Die Pilz-IDs sind in den data-Attributen oder den .legende-items
-      const morphLegende = morphEl.querySelectorAll('.legende-item');
-      let hatTreffer = false;
-      
-      // Direkter Text-Match im Morph prüfen
-      const morphText = morphEl.textContent.toLowerCase();
-      for (const term of matchedTerms) {
-        if (morphText.includes(term.toLowerCase())) {
-          hatTreffer = true;
-          break;
-        }
-      }
-      
-      if (hatTreffer) {
-        morphEl.classList.add('suche-treffer');
-        morphEl.classList.remove('suche-kein-treffer');
-      } else {
-        morphEl.classList.remove('suche-treffer');
-        morphEl.classList.add('suche-kein-treffer');
-      }
-    });
-    
-    // Highlights anwenden
+    // Highlights anwenden auf Diagramme und Legende
     clearHighlights(diagramme);
-    const anzahl = highlightInContainer(diagramme, aktuelleQuery, matchedTerms);
+    clearHighlights(legende);
+    const anzahl = highlightInContainer(diagramme, aktuelleQuery, aktuelleMatchedTerms);
+    highlightInContainer(legende, aktuelleQuery, aktuelleMatchedTerms);
     
-    debug.suche('Vergleich: Highlights angewendet', { anzahl });
+    debug.suche('Vergleich: Highlights angewendet', { query: aktuelleQuery, anzahl });
   }
   
-  // Suche Event Handler
-  function onSuche() {
-    sucheAusfuehren(sucheInput.value);
-  }
-  
-  sucheBtn.addEventListener('click', onSuche);
-  
-  sucheInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      onSuche();
+  // Auf Header-Suche Event hören
+  document.addEventListener('header:suche:ergebnisse', (e) => {
+    const { query, matchedTerms } = e.detail || {};
+    debug.suche('Vergleich: Suche-Event empfangen', { query, matchedTerms: matchedTerms?.size });
+    
+    // Highlights anwenden wenn Vergleich sichtbar
+    if (ctx.dom.offsetParent !== null) {
+      setTimeout(() => applyHighlights(query, matchedTerms), 100);
     }
-    if (e.key === 'Escape') {
-      sucheInput.value = '';
-      sucheAusfuehren('');
-    }
-  });
-  
-  // Live-Suche (Debounced)
-  let sucheTimeout;
-  sucheInput.addEventListener('input', () => {
-    clearTimeout(sucheTimeout);
-    sucheTimeout = setTimeout(onSuche, 200);
-  });
-  
-  clearBtn.addEventListener('click', () => {
-    sucheInput.value = '';
-    sucheAusfuehren('');
-    sucheInput.focus();
   });
   
   // Events
   document.addEventListener('amorph:auswahl-geaendert', () => {
     if (ctx.dom.offsetParent !== null) {
       render();
-      // Suche neu anwenden nach Render
+      // Highlights neu anwenden nach Render
       if (aktuelleQuery) {
-        setTimeout(() => sucheAusfuehren(aktuelleQuery), 50);
+        setTimeout(() => applyHighlights(aktuelleQuery, aktuelleMatchedTerms), 50);
       }
     }
   });
@@ -385,7 +304,13 @@ export default function init(ctx) {
   document.addEventListener('amorph:ansicht-wechsel', (e) => {
     if (e.detail.ansicht === 'vergleich') {
       ctx.dom.style.display = 'block';
-      setTimeout(render, 50);
+      setTimeout(() => {
+        render();
+        // Highlights anwenden wenn Query vorhanden
+        if (aktuelleQuery) {
+          applyHighlights(aktuelleQuery, aktuelleMatchedTerms);
+        }
+      }, 50);
     } else {
       ctx.dom.style.display = 'none';
     }
@@ -414,7 +339,13 @@ export default function init(ctx) {
     }
     
     // Neu rendern wenn sichtbar
-    if (ctx.dom.offsetParent !== null) render();
+    if (ctx.dom.offsetParent !== null) {
+      render();
+      // Highlights nach Perspektiven-Wechsel neu anwenden
+      if (aktuelleQuery) {
+        setTimeout(() => applyHighlights(aktuelleQuery, aktuelleMatchedTerms), 100);
+      }
+    }
   });
   
   ctx.dom.appendChild(container);

@@ -303,24 +303,67 @@ export function localSearch(items, query) {
  * @param {Object} options - { selectors: Array von CSS-Selektoren }
  */
 export function highlightInContainer(container, query, matchedTerms = new Set(), options = {}) {
+  // Erweiterte Selektoren für Grid-View UND Vergleich-View
+  // Alle Text-tragenden Elemente die durchsucht werden sollen
+  // HINWEIS: SVG-Elemente (wie radar-label) werden übersprungen da innerHTML sie zerstört
   const selectors = options.selectors || [
-    '.amorph-text', '.amorph-tag', '.compare-label', '.compare-value',
-    '.compare-bar-label', '.compare-list-item', '.legende-item span:not(.legende-dot):not(.legende-farbe)',
-    '.radar-label', '.timeline-event', '.wirkstoffe-name'
+    // Grid-View
+    '.amorph-text', '.amorph-tag', '.amorph-label', '.amorph-value',
+    // Vergleich-View Compare-Morphs - Labels
+    '.compare-label', 
+    // Bar
+    '.bar-name', '.bar-wert',
+    // Rating
+    '.rating-name', '.rating-wert',
+    // Tag/Chips
+    '.chip-wert', '.chip-pilze span',
+    // List
+    '.list-wert', '.compare-list-item',
+    // Radar (nur HTML-Teile, nicht SVG)
+    '.radar-achse', '.radar-compact-row',
+    // Pie
+    '.pie-pilz',
+    // Text
+    '.compare-text-row',
+    // Timeline
+    '.timeline-event', '.timeline-label',
+    // Wirkstoffe
+    '.wirkstoffe-name', '.wirkstoffe-label',
+    // Image
+    '.img-label',
+    // Legende (wichtig für Pilznamen)
+    '.legende-item', '.compare-legende .legende-item'
   ];
   
   // Highlight-Begriffe sammeln
-  let highlightTerms = new Set(matchedTerms);
+  let highlightTerms = new Set();
   
-  // Falls keine matchedTerms, Fallback auf Query-Wörter
-  if (highlightTerms.size === 0 && query) {
+  // matchedTerms übernehmen (falls vorhanden)
+  if (matchedTerms && matchedTerms.size > 0) {
+    for (const term of matchedTerms) {
+      if (term && term.length >= 2) {
+        highlightTerms.add(String(term).toLowerCase());
+      }
+    }
+  }
+  
+  // Query-Wörter IMMER hinzufügen (für direktes Matching)
+  if (query) {
     const stopwords = new Set([
       'der', 'die', 'das', 'und', 'oder', 'für', 'mit', 'von', 'zu', 'bei',
       'was', 'ist', 'ein', 'eine', 'kann', 'man', 'wie', 'wo', 'wer', 'welche'
     ]);
-    const words = query.toLowerCase().split(/\s+/)
+    
+    // Ganze Query (falls kurz genug und sinnvoll)
+    const cleanQuery = query.toLowerCase().trim();
+    if (cleanQuery.length >= 2 && cleanQuery.length <= 30) {
+      highlightTerms.add(cleanQuery);
+    }
+    
+    // Einzelne Wörter
+    const words = cleanQuery.split(/\s+/)
       .map(w => w.replace(/[?!.,;:'"()]/g, ''))
-      .filter(w => w.length > 2 && !stopwords.has(w));
+      .filter(w => w.length >= 2 && !stopwords.has(w));
     for (const word of words) {
       highlightTerms.add(word);
     }
@@ -328,14 +371,23 @@ export function highlightInContainer(container, query, matchedTerms = new Set(),
   
   if (highlightTerms.size === 0) return 0;
   
+  debug.suche('highlightInContainer - Suche nach', { terms: [...highlightTerms] });
+  
   let count = 0;
   const elements = container.querySelectorAll(selectors.join(', '));
   
   for (const el of elements) {
+    // Skip SVG-Elemente (können nicht mit innerHTML manipuliert werden)
+    if (el instanceof SVGElement || el.closest('svg')) {
+      continue;
+    }
+    
     // Skip wenn schon Highlights drin
     if (el.querySelector('.amorph-highlight')) continue;
     
     const originalText = el.textContent;
+    if (!originalText || originalText.trim().length === 0) continue;
+    
     let html = escapeHtml(originalText);
     let hasMatch = false;
     
@@ -365,8 +417,11 @@ export function highlightInContainer(container, query, matchedTerms = new Set(),
 export function clearHighlights(container) {
   const highlights = container.querySelectorAll('.amorph-highlight');
   for (const mark of highlights) {
+    // Skip SVG-Elemente
+    if (mark instanceof SVGElement || mark.closest('svg')) continue;
+    
     const text = document.createTextNode(mark.textContent);
-    mark.parentNode.replaceChild(text, mark);
+    mark.parentNode?.replaceChild(text, mark);
   }
   // Normalisieren um aufeinanderfolgende Textnodes zu vereinen
   container.normalize();
