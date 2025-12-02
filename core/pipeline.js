@@ -1,17 +1,40 @@
 /**
  * Transformationspipeline
  * DATEN → MORPHS → DOM
+ * 
+ * DATENGETRIEBEN: Morphs werden aus der Datenstruktur erkannt!
+ * Erkennungsregeln kommen aus config/morphs.yaml
  */
 
 import { morphs } from '../morphs/index.js';
 import { debug } from '../observer/debug.js';
 import { getFeldMorphs, getVersteckteFelder, getFeldConfig, sortBySchemaOrder } from '../util/semantic.js';
 
+// Erkennung-Config wird beim ersten Aufruf geladen
+let erkennungConfig = null;
+
+/**
+ * Setzt die Erkennungs-Konfiguration (aus morphs.yaml)
+ */
+export function setErkennungConfig(config) {
+  erkennungConfig = config?.erkennung || null;
+  debug.morphs('Erkennungs-Config geladen', { 
+    hatBadge: !!erkennungConfig?.badge,
+    hatRating: !!erkennungConfig?.rating,
+    hatProgress: !!erkennungConfig?.progress
+  });
+}
+
 export function transform(daten, config, customMorphs = {}) {
   debug.morphs('Transform Start', { 
     typ: Array.isArray(daten) ? 'array' : typeof daten,
     anzahl: Array.isArray(daten) ? daten.length : 1
   });
+  
+  // Erkennungs-Config aus morphs.yaml laden falls vorhanden
+  if (!erkennungConfig && config?.morphs?.erkennung) {
+    setErkennungConfig(config.morphs);
+  }
   
   const alleMorphs = { ...morphs, ...customMorphs };
   
@@ -112,30 +135,43 @@ function detectType(wert) {
 
 /**
  * Erkennt den besten Morph für Zahlen
+ * Regeln kommen aus config/morphs.yaml → erkennung
  */
 function detectNumberType(wert) {
-  // Rating: 0-5 oder 0-10 Skala (mit Dezimalstellen)
-  if (wert >= 0 && wert <= 10 && !Number.isInteger(wert)) {
+  const cfg = erkennungConfig || {};
+  
+  // Rating: aus Config oder Fallback 0-10 mit Dezimalstellen
+  const rating = cfg.rating || { min: 0, max: 10, dezimalstellen: true };
+  if (wert >= rating.min && wert <= rating.max && rating.dezimalstellen && !Number.isInteger(wert)) {
     return 'rating';
   }
-  // Progress: 0-100 Prozent
-  if (wert >= 0 && wert <= 100 && Number.isInteger(wert)) {
+  
+  // Progress: aus Config oder Fallback 0-100 Ganzzahl
+  const progress = cfg.progress || { min: 0, max: 100, ganzzahl: true };
+  if (wert >= progress.min && wert <= progress.max && (!progress.ganzzahl || Number.isInteger(wert))) {
     return 'progress';
   }
+  
   return 'number';
 }
 
 /**
  * Erkennt den besten Morph für Strings
+ * Keywords kommen aus config/morphs.yaml → erkennung.badge
  */
 function detectStringType(wert) {
   const lower = wert.toLowerCase().trim();
+  const cfg = erkennungConfig?.badge || {};
   
-  // Badge: Kurze Status-Wörter
-  const badgeKeywords = ['aktiv', 'inaktiv', 'ja', 'nein', 'essbar', 'giftig', 'tödlich', 
-                         'active', 'inactive', 'yes', 'no', 'online', 'offline', 
-                         'offen', 'geschlossen', 'verfügbar', 'vergriffen'];
-  if (wert.length <= 20 && badgeKeywords.some(kw => lower.includes(kw))) {
+  // Badge: Keywords aus Config oder Fallback
+  const keywords = cfg.keywords || [
+    'aktiv', 'inaktiv', 'ja', 'nein', 'essbar', 'giftig', 'tödlich',
+    'active', 'inactive', 'yes', 'no', 'online', 'offline',
+    'offen', 'geschlossen', 'verfügbar', 'vergriffen'
+  ];
+  const maxLaenge = cfg.maxLaenge || 25;
+  
+  if (wert.length <= maxLaenge && keywords.some(kw => lower.includes(kw))) {
     return 'badge';
   }
   
@@ -144,37 +180,47 @@ function detectStringType(wert) {
 
 /**
  * Erkennt den besten Morph für Arrays
+ * Regeln kommen aus config/morphs.yaml → erkennung.array
  */
 function detectArrayType(wert) {
   if (wert.length === 0) return 'array';
   
   const first = wert[0];
+  const cfg = erkennungConfig?.array || {};
+  
+  // Helper: Stellt sicher dass wir ein Array haben
+  const ensureArray = (val, fallback) => {
+    if (Array.isArray(val)) return val;
+    if (typeof val === 'string') return val.split(',').map(s => s.trim());
+    return fallback;
+  };
   
   // Alle Elemente sind Objekte?
   if (typeof first === 'object' && first !== null) {
-    // Pie Chart: Arrays mit {label, value/count}
-    if (('label' in first || 'name' in first || 'category' in first) && 
-        ('value' in first || 'count' in first || 'amount' in first)) {
-      return 'pie';
-    }
+    const keys = Object.keys(first);
     
-    // Bar Chart: Arrays mit numerischen Werten und Labels
-    if (('label' in first || 'name' in first) && 
-        ('value' in first || 'amount' in first || 'score' in first)) {
-      return 'bar';
-    }
-    
-    // Radar Chart: Arrays mit Achsen-Daten (3+ Elemente)
-    if (wert.length >= 3 && 
-        ('axis' in first || 'dimension' in first || 'factor' in first) &&
-        ('value' in first || 'score' in first)) {
+    // Radar: aus Config oder Fallback
+    const radarCfg = cfg.radar || {};
+    const radarKeys = ensureArray(radarCfg.benoetigtKeys, ['axis', 'value', 'score', 'dimension', 'factor']);
+    if (wert.length >= (radarCfg.minItems || 3) && 
+        radarKeys.some(k => k in first)) {
       return 'radar';
     }
     
-    // Timeline: Arrays mit Datums-Feldern
-    if ('date' in first || 'time' in first || 'datum' in first || 
-        'monat' in first || 'periode' in first) {
+    // Timeline: aus Config oder Fallback
+    const timelineCfg = cfg.timeline || {};
+    const timelineKeys = ensureArray(timelineCfg.benoetigtKeys, ['date', 'time', 'datum', 'monat', 'periode']);
+    if (timelineKeys.some(k => k in first)) {
       return 'timeline';
+    }
+    
+    // Pie/Bar: Arrays mit label/value Struktur
+    const labelKeys = ['label', 'name', 'category'];
+    const valueKeys = ['value', 'count', 'amount', 'score'];
+    const hasLabel = labelKeys.some(k => k in first);
+    const hasValue = valueKeys.some(k => k in first);
+    if (hasLabel && hasValue) {
+      return wert.length <= 6 ? 'pie' : 'bar';
     }
   }
   
@@ -188,20 +234,30 @@ function detectArrayType(wert) {
 
 /**
  * Erkennt den besten Morph für Objekte
+ * Regeln kommen aus config/morphs.yaml → erkennung.objekt
  */
 function detectObjectType(wert) {
   const keys = Object.keys(wert);
+  const cfg = erkennungConfig?.objekt || {};
   
-  // Range: hat min und max
-  if ('min' in wert && 'max' in wert) {
+  // Helper: Stellt sicher dass wir ein Array haben (YAML-Parser kann String zurückgeben)
+  const ensureArray = (val, fallback) => {
+    if (Array.isArray(val)) return val;
+    if (typeof val === 'string') return val.split(',').map(s => s.trim());
+    return fallback;
+  };
+  
+  // Range: aus Config oder Fallback (min + max)
+  const rangeCfg = cfg.range || {};
+  const rangeKeys = ensureArray(rangeCfg.benoetigtKeys, ['min', 'max']);
+  if (rangeKeys.every(k => k in wert)) {
+    // Prüfen ob es Stats ist (hat zusätzlich avg/mean)
+    const statsCfg = cfg.stats || {};
+    const statsKeys = ensureArray(statsCfg.benoetigtKeys, ['min', 'max', 'avg', 'mean', 'median']);
+    if (statsKeys.filter(k => k in wert).length >= 3) {
+      return 'stats';
+    }
     return 'range';
-  }
-  
-  // Stats: Objekt mit statistischen Feldern
-  const statKeys = ['min', 'max', 'avg', 'average', 'mean', 'count', 'total', 'sum', 'median'];
-  const hasStats = keys.some(k => statKeys.includes(k.toLowerCase()));
-  if (hasStats && keys.length >= 2 && keys.length <= 8) {
-    return 'stats';
   }
   
   // Rating: hat rating/score/stars Feld
@@ -219,9 +275,12 @@ function detectObjectType(wert) {
     return 'badge';
   }
   
-  // Pie: Objekt mit nur numerischen Werten (Verteilung)
+  // Pie: aus Config oder Fallback (nur numerische Werte)
+  const pieCfg = cfg.pie || { nurNumerisch: true, minKeys: 2, maxKeys: 8 };
   const allNumeric = keys.every(k => typeof wert[k] === 'number');
-  if (allNumeric && keys.length >= 2 && keys.length <= 8) {
+  if (pieCfg.nurNumerisch && allNumeric && 
+      keys.length >= (pieCfg.minKeys || 2) && 
+      keys.length <= (pieCfg.maxKeys || 8)) {
     return 'pie';
   }
   

@@ -106,75 +106,71 @@ felder:
     suche:
       gewicht: 40
   
+  # Temperatur: Daten haben {min, max} → automatisch range
   temperatur:
-    typ: range
     label: Temperatur
     einheit: °C
 
-  # === NEUE VISUELLE MORPHS ===
-  
-  # RATING deaktiviert - nicht mehr benötigt
-  # bewertung:
-  #   typ: rating
-  #   label: Bewertung
-  #   maxStars: 5
-  
-  # PROGRESS - Beliebtheit als Balken (0-100)
+  # === FELDER MIT AUTO-ERKANNTEN MORPHS ===
+  # Die Morphs werden aus der DATENSTRUKTUR erkannt, nicht hier definiert!
+  # 
+  # Erkennungsregeln (in pipeline.js detectType):
+  # - Objekt mit nur Zahlen → pie
+  # - Objekt mit min/max → range  
+  # - Objekt mit min/max/avg → stats
+  # - Array mit {axis, value} → radar
+  # - Array mit {label, value} → bar
+  # - Array mit {date, event} → timeline
+  # - Zahl 0-100 ganzzahlig → progress
+  # - Zahl 0-10 mit Dezimal → rating
+  # - Kurzer String mit Status-Keywords → badge
+
+  # Beliebtheit: Zahl 0-100 → automatisch progress
   beliebtheit:
-    typ: progress
     label: Beliebtheit
     einheit: "%"
   
-  # PROGRESS - Toxizität als Balken
+  # Toxizität: Zahl 0-100 → automatisch progress
   toxizitaet:
-    typ: progress
     label: Toxizität
     einheit: "%"
   
-  # PROGRESS - Medizinischer Wert
+  # Medizinischer Wert: Zahl 0-100 → automatisch progress
   medizinisch:
-    typ: progress
     label: Medizinischer Wert
     einheit: "%"
   
-  # PROGRESS - Forschungsinteresse
+  # Forschung: Zahl 0-100 → automatisch progress
   forschung:
-    typ: progress
     label: Forschung
     einheit: "%"
   
-  # PIE - Nährwert-Verteilung
+  # Nährwerte: {Protein: 26, Fett: 8, ...} → automatisch pie
   naehrwerte:
-    typ: pie
     label: Zusammensetzung
     totalLabel: "Anteil"
   
-  # RADAR - Eigenschaften-Profil
+  # Profil: [{axis, value}, ...] → automatisch radar
   profil:
-    typ: radar
     label: Profil
   
-  # BAR - Wirkstoffe als Balkendiagramm
+  # Wirkstoffe: [{label, value, unit}, ...] → automatisch bar
   wirkstoffe:
-    typ: bar
     label: Wirkstoffe
     maxBalken: 5
   
-  # STATS - Ernte-Statistiken
+  # Ernte-Statistik: {min, max, avg, count} → automatisch stats
   ernte_stats:
-    typ: stats
     label: Ernte-Statistik
     einheit: "g"
   
-  # TIMELINE - Lebenszyklus
+  # Lebenszyklus: [{date, event}, ...] → automatisch timeline
   lebenszyklus:
-    typ: timeline
     label: Lebenszyklus
     maxEvents: 6
   
-  # BADGE - Verfügbarkeits-Status
+  # Verfügbarkeit: Kurzer Status-String → automatisch badge
   verfuegbarkeit:
-    typ: badge
     label: Status
   
   # Symptome (für Giftpilze)
@@ -434,20 +430,8 @@ perspektiven:
       - bewertung
       - naehrwerte
       - profil
-    # Spezielle Morph-Konfiguration für Vergleich-View
-    morphs:
-      geschmack: 
-        typ: tag  # Chips gruppiert nach Geschmack
-        label: "Geschmacksvergleich"
-      zubereitung:
-        typ: tag  # Nach Zubereitung gruppiert
-        label: "Zubereitungsarten"
-      naehrwerte:
-        typ: bar  # Balkenvergleich für Nährwerte
-        label: "Nährwertvergleich"
-      essbarkeit:
-        typ: tag
-        label: "Essbarkeit"
+    # ENTFERNT: morphs-Block - Perspektiven filtern nur, transformieren nicht!
+    # Die Darstellung wird aus der DATENSTRUKTUR abgeleitet.
     keywords:
       - essbar
       - essen
@@ -481,18 +465,7 @@ perspektiven:
       - symptome
       - toxizitaet
       - profil
-    morphs:
-      essbarkeit:
-        typ: tag
-        label: "Gefahrenstufe"
-        prioritaet: 1  # Ganz oben zeigen
-      verwechslung:
-        typ: list
-        label: "Verwechslungsgefahr"
-        highlight: true
-      profil:
-        typ: radar
-        label: "Gefahrenprofil"
+    # ENTFERNT: morphs-Block - Darstellung aus Datenstruktur
     keywords:
       - giftig
       - gift
@@ -525,19 +498,7 @@ perspektiven:
       - verfuegbarkeit
       - lebenszyklus
       - ernte_stats
-    morphs:
-      standort:
-        typ: list
-        label: "Fundorte"
-      saison:
-        typ: tag
-        label: "Beste Saison"
-      temperatur:
-        typ: bar
-        label: "Temperaturbereich"
-      lebenszyklus:
-        typ: timeline
-        label: "Wachstumsphasen"
+    # ENTFERNT: morphs-Block - Darstellung aus Datenstruktur
     keywords:
       - standort
       - wald
@@ -571,16 +532,7 @@ perspektiven:
       - naehrwerte
       - profil
       - ernte_stats
-    morphs:
-      wirkstoffe:
-        typ: wirkstoffe
-        label: "Wirkstoffanalyse"
-      naehrwerte:
-        typ: pie
-        label: "Nährwertverteilung"
-      profil:
-        typ: radar
-        label: "Inhaltsstoffprofil"
+    # ENTFERNT: morphs-Block - Darstellung aus Datenstruktur
     keywords:
       - wissenschaft
       - forschung
@@ -608,13 +560,7 @@ perspektiven:
       - medizinisch
       - profil
       - beschreibung
-    morphs:
-      wirkstoffe:
-        typ: wirkstoffe
-        label: "Medizinische Wirkstoffe"
-      profil:
-        typ: radar
-        label: "Heilwirkungsprofil"
+    # ENTFERNT: morphs-Block - Darstellung aus Datenstruktur
     keywords:
       - medizin
       - heilkunde
@@ -643,19 +589,7 @@ perspektiven:
       - naehrwerte
       - wirkstoffe
       - profil
-    morphs:
-      bewertung:
-        typ: bar
-        label: "Bewertungsvergleich"
-      beliebtheit:
-        typ: bar
-        label: "Beliebtheit"
-      ernte_stats:
-        typ: bar
-        label: "Ernte-Statistiken"
-      profil:
-        typ: radar
-        label: "Datenprofil"
+    # ENTFERNT: morphs-Block - Darstellung aus Datenstruktur
     keywords:
       - statistik
       - daten

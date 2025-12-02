@@ -4,16 +4,19 @@
  * Formlos. Zustandslos. Transformierend.
  * 
  * DATENBANK → MORPHS → DOM
+ * 
+ * DATENGETRIEBEN: Erkennungsregeln und Farben aus Config!
  */
 
 import { loadConfig } from './core/config.js';
-import { transform, render } from './core/pipeline.js';
+import { transform, render, setErkennungConfig } from './core/pipeline.js';
 import { setupObservers, stopObservers } from './observer/index.js';
 import { loadFeatures, unloadFeatures } from './features/index.js';
 import { createDataSource } from './util/fetch.js';
 import { getSession } from './util/session.js';
 import { setSchema } from './util/semantic.js';
 import { debug } from './observer/debug.js';
+import { setFarbenConfig } from './morphs/compare.js';
 import './core/container.js'; // Web Component registrieren
 
 /**
@@ -51,6 +54,18 @@ export async function amorph(options = {}) {
   // Schema für semantische Suche setzen
   if (config.schema) {
     setSchema(config.schema);
+  }
+  
+  // Erkennungs-Config für Pipeline setzen (aus morphs.yaml)
+  if (config.morphs?.erkennung) {
+    setErkennungConfig(config.morphs);
+    debug.config('Erkennung-Config geladen', Object.keys(config.morphs.erkennung));
+  }
+  
+  // Farben-Config für Compare setzen (aus morphs.yaml)
+  if (config.morphs?.farben) {
+    setFarbenConfig(config.morphs);
+    debug.config('Farben-Config geladen', Object.keys(config.morphs.farben));
   }
   
   // Datenquelle erstellen

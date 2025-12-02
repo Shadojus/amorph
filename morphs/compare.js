@@ -5,26 +5,51 @@
  * Zeigen mehrere Werte desselben Feldes nebeneinander
  * 
  * Mobile-first: Kompakt, lateral, touch-freundlich
+ * 
+ * DATENGETRIEBEN: Farben aus config/morphs.yaml
  */
 
 import { debug } from '../observer/debug.js';
 
-// Pilz-Farben für konsistente Zuordnung
-const FARBEN = [
+// Farben-Config wird von außen gesetzt (aus morphs.yaml)
+let farbenConfig = null;
+
+// Fallback-Farben falls Config nicht geladen
+const FALLBACK_FARBEN = [
   '#e8b04a', '#60c090', '#d06080', '#5aa0d8', 
   '#a080d0', '#d0a050', '#50b0b0', '#d08050'
 ];
+
+/**
+ * Setzt die Farben-Konfiguration (aus morphs.yaml)
+ */
+export function setFarbenConfig(config) {
+  farbenConfig = config?.farben || null;
+  debug.morphs('Compare Farben-Config geladen', { 
+    pilze: farbenConfig?.pilze?.length || 0,
+    diagramme: farbenConfig?.diagramme?.length || 0
+  });
+}
+
+/**
+ * Holt die konfigurierten Farben (pilze, diagramme, etc.)
+ */
+function getFarben(typ = 'pilze') {
+  return farbenConfig?.[typ] || FALLBACK_FARBEN;
+}
 
 /**
  * Erstellt Farbzuordnung für Pilze
  */
 export function erstelleFarben(pilzIds) {
   const farben = new Map();
+  const palette = getFarben('pilze');
   pilzIds.forEach((id, i) => {
     // IDs können strings oder numbers sein - normalisieren
     const normalizedId = String(id);
-    farben.set(normalizedId, FARBEN[i % FARBEN.length]);
-    debug.morphs('Farbe zugewiesen', { id: normalizedId, farbe: FARBEN[i % FARBEN.length] });
+    const farbe = palette[i % palette.length];
+    farben.set(normalizedId, farbe);
+    debug.morphs('Farbe zugewiesen', { id: normalizedId, farbe });
   });
   return farben;
 }
@@ -779,26 +804,8 @@ export function compareMorph(feldName, typ, items, config = {}) {
     return typHandler[typ]();
   }
   
-  // Feld-spezifische Handler (Standard-Darstellung ohne Perspektive)
-  const feldHandler = {
-    bild: () => compareImage(items, config),
-    profil: () => compareRadar(items, config),
-    naehrwerte: () => comparePie(items, config),
-    bewertung: () => compareRating(items, config),
-    zubereitung: () => compareTag(items, config),
-    wirkstoffe: () => compareWirkstoffe(items, config),
-    lebenszyklus: () => compareTimeline(items, config),
-  };
-  
-  if (feldHandler[feldName]) {
-    console.log('%c[COMPARE-MORPH] Feld-Handler verwendet', 'background:#5cc98a;color:white;padding:2px 6px;border-radius:3px', {
-      feldName,
-      handler: feldName
-    });
-    return feldHandler[feldName]();
-  }
-  
-  // Typ-basierte Handler (für alle anderen Felder)
+  // DATENGETRIEBEN: Typ-Handler basierend auf erkanntem Datentyp
+  // Kein hardcoded feldHandler mehr! Die Datenstruktur bestimmt den Morph.
   if (typHandler[typ]) {
     console.log('%c[COMPARE-MORPH] Typ-Handler verwendet', 'background:#5aa0d8;color:white;padding:2px 6px;border-radius:3px', {
       feldName,
