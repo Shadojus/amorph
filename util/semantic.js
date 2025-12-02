@@ -435,7 +435,7 @@ export function getFarben(palette = 'pilze') {
 
 /**
  * Gibt Badge-Konfiguration aus morphs.yaml zurück
- * Enthält AUTO_VARIANTS und VARIANT_COLORS
+ * Enthält variants (String → Variant-Name) und colors (Variant → Farben)
  * @returns {Object|null} { variants: {...}, colors: {...} }
  */
 export function getBadgeConfig() {
@@ -444,9 +444,20 @@ export function getBadgeConfig() {
     return null;
   }
   
-  // Badge-Keywords kommen aus erkennung.badge, Farben aus badge.farben
+  // Badge-Config liegt direkt unter morphsConfigCache.badge
+  const badgeCfg = morphsConfigCache.badge;
+  if (!badgeCfg) {
+    debug.morphs('Badge-Config nicht in morphs.yaml gefunden, nutze Fallbacks');
+    return null;
+  }
+  
+  debug.morphs('Badge-Config geladen', { 
+    variants: Object.keys(badgeCfg.variants || {}),
+    colors: Object.keys(badgeCfg.colors || {})
+  });
+  
   return {
-    variants: morphsConfigCache.badge?.variants || null,
-    colors: morphsConfigCache.badge?.colors || null
+    variants: badgeCfg.variants || null,
+    colors: badgeCfg.colors || null
   };
 }

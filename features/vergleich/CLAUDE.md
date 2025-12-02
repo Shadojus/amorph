@@ -2,31 +2,44 @@
 
 Laterale Lösung: Informationen durch Raumeinteilung und Vektoren verknüpfen.
 
-## 🚧 AKTUELLER STAND (02.12.2025)
+## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
 
 ### ✅ Fertig
 - Sammel-Diagramm mit Pilz-Legende (farbige Punkte)
 - Perspektiven-aware Morphs (Label + Farben aus aktivierter Perspektive)
 - Multi-Perspektiven Glow (wenn Feld zu mehreren Perspektiven gehört)
+- **Compare-Morphs Integration**: Nutzt typ-basierte Compare-Morphs aus `morphs/compare.js`
 - **Suche-Highlights**: Markiert Suchbegriffe im Vergleich-View
   - Hört auf `header:suche:ergebnisse` Event
   - Wendet Highlights auf Compare-Containers an
   - Keine Interferenz mit DB-Suche (nur lokale Highlights)
+- **Datengetriebene Morph-Auswahl**: `compareMorph()` wählt basierend auf TYP, nicht Feldname
+
+### Verwendete Compare-Morphs
+
+| Typ | Compare-Morph | Beschreibung |
+|-----|---------------|--------------|
+| `rating` | `compareRating` | Sterne-Vergleich |
+| `progress` | `compareBar` | Horizontale Balken |
+| `range` | `compareBar` | Balken für Bereiche |
+| `tag`/`badge` | `compareTag` | Gruppierte Chips |
+| `list` | `compareList` | Listen mit Überlappung |
+| `image` | `compareImage` | Bildergalerie |
+| `radar` | `compareRadar` | Überlappende Radar-Charts |
+| `pie` | `comparePie` | Mini-Pie-Charts nebeneinander |
+| `*` | `compareText` | Fallback Text-Vergleich |
 
 ### Event-Handling
 
 ```javascript
 // Hört auf Suche-Events für Highlighting
 document.addEventListener('header:suche:ergebnisse', (e) => {
-  const { query, matchedTerms } = e.detail;
+  const { query, matchedTerms, nurHighlights } = e.detail;
   
-  if (!query) {
-    removeHighlights();  // Highlights entfernen wenn leer
-    return;
+  if (nurHighlights) {
+    // Im Vergleich-View: Nur Highlights, keine DB-Suche
+    highlightInContainer(compareContainer, [query]);
   }
-  
-  // Highlights auf Compare-Container anwenden
-  highlightInContainer(compareContainer, [query]);
 });
 ```
 

@@ -214,9 +214,12 @@ function detectArrayType(wert) {
       return 'timeline';
     }
     
-    // Pie/Bar: Arrays mit label/value Struktur
-    const labelKeys = ['label', 'name', 'category'];
-    const valueKeys = ['value', 'count', 'amount', 'score'];
+    // Pie/Bar: Arrays mit label/value Struktur (aus Config)
+    const arrayCfg = cfg.array || cfg || {};
+    const pieCfg = arrayCfg.pie || {};
+    const barCfg = arrayCfg.bar || {};
+    const labelKeys = ensureArray(pieCfg.benoetigtKeys || barCfg.benoetigtKeys, ['label', 'name', 'category']);
+    const valueKeys = ensureArray(pieCfg.alternativeKeys || barCfg.alternativeKeys, ['value', 'count', 'amount', 'score']);
     const hasLabel = labelKeys.some(k => k in first);
     const hasValue = valueKeys.some(k => k in first);
     if (hasLabel && hasValue) {
@@ -260,18 +263,29 @@ function detectObjectType(wert) {
     return 'range';
   }
   
-  // Rating: hat rating/score/stars Feld
-  if ('rating' in wert || 'score' in wert || 'stars' in wert) {
+  // Rating: aus Config oder Fallback (hat rating/score/stars Feld)
+  const ratingCfg = cfg.rating || {};
+  const ratingKeys = ensureArray(ratingCfg.benoetigtKeys, ['rating']);
+  const ratingAltKeys = ensureArray(ratingCfg.alternativeKeys, ['score', 'stars']);
+  if (ratingKeys.some(k => k in wert) || ratingAltKeys.some(k => k in wert)) {
     return 'rating';
   }
   
-  // Progress: hat value/current und max/total
-  if (('value' in wert || 'current' in wert) && ('max' in wert || 'total' in wert)) {
+  // Progress: aus Config oder Fallback (value/current + max/total)
+  const progressCfg = cfg.progress || {};
+  const progressKeys = ensureArray(progressCfg.benoetigtKeys, ['value']);
+  const progressAltKeys = ensureArray(progressCfg.alternativeKeys, ['current', 'max', 'total']);
+  const hasProgressPrimary = progressKeys.some(k => k in wert) || progressAltKeys.filter(k => ['current'].includes(k)).some(k => k in wert);
+  const hasProgressMax = ['max', 'total'].some(k => k in wert);
+  if (hasProgressPrimary && hasProgressMax) {
     return 'progress';
   }
   
-  // Badge: hat status/variant Feld
-  if ('status' in wert || 'variant' in wert) {
+  // Badge: aus Config oder Fallback (status/variant Feld)
+  const badgeCfg = cfg.badge || {};
+  const badgeKeys = ensureArray(badgeCfg.benoetigtKeys, ['status']);
+  const badgeAltKeys = ensureArray(badgeCfg.alternativeKeys, ['variant']);
+  if (badgeKeys.some(k => k in wert) || badgeAltKeys.some(k => k in wert)) {
     return 'badge';
   }
   

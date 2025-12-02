@@ -40,6 +40,7 @@ import { debug } from '../observer/debug.js';
 export const morphs = {
   // Basis-Morphs
   text,
+  string: text,  // Alias: Schema nutzt 'string', Morph heißt 'text'
   number,
   boolean,
   tag,

@@ -2,20 +2,43 @@
 
 Layout-Optionen für die Darstellung.
 
-## 🚧 AKTUELLER STAND
+## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
 
-Grid-Feature funktioniert. Layouts: Liste, Grid, Kompakt.
+### ✅ Fertig
+- Grid-Feature funktioniert vollständig
+- Layouts: Liste, Grid, Kompakt
+- Layout wird auf `[data-amorph-container]` via `data-layout` gesetzt
+- CSS übernimmt die Darstellung basierend auf Layout
+- Toolbar mit Icons und Labels aus Config
 
-### TODO für Feld-Auswahl
-- Jedes Feld in einer Card muss klickbar sein
+### Feld-Auswahl (via ansichten-Feature)
+- Jedes Feld in einer Card ist klickbar
 - Klick auf Feld → Event `amorph:feld-auswahl` mit `{pilzId, feldName, wert}`
 - Ausgewählte Felder bekommen `.feld-ausgewaehlt` Klasse
 
 ## Layouts
 
-- **Liste**: Vertikal, ein Element pro Zeile
-- **Grid**: Karten-Layout, mehrere Spalten
-- **Kompakt**: Minimale Höhe, dichte Darstellung
+| Layout | Beschreibung | Icon |
+|--------|--------------|------|
+| `liste` | Vertikal, ein Element pro Zeile | ☰ |
+| `grid` | Karten-Layout, mehrere Spalten | ⊞ |
+| `kompakt` | Minimale Höhe, dichte Darstellung | ▤ |
+
+## Config-Loading
+
+```javascript
+// Config aus features.yaml → grid
+const layouts = ctx.config.layouts || ['liste', 'grid', 'kompakt'];
+let current = ctx.config.default || 'liste';
+
+// Icons und Labels (könnte auch aus Config kommen)
+const icons = { liste: '☰', grid: '⊞', kompakt: '▤' };
+const labels = {
+  liste: 'Listenansicht',
+  grid: 'Rasteransicht',
+  kompakt: 'Kompakte Ansicht'
+};
+```
 
 ## Implementierung
 

@@ -478,10 +478,20 @@ function formatWert(wert) {
 export default function init(ctx) {
   debug.ansichten('Ansichten Feature Init (nur Auswahl-State)');
   
+  // Ansichten-Liste aus Config laden (statt hardcoded)
+  const ansichtConfig = ctx.config?.ansicht || ctx.config || {};
+  const erlaubteAnsichten = (ansichtConfig.ansichten || []).map(a => a.id || a);
+  // Fallback wenn keine Config
+  const ansichtenListe = erlaubteAnsichten.length > 0 
+    ? erlaubteAnsichten 
+    : ['karten', 'detail', 'vergleich'];
+  
+  debug.ansichten('Erlaubte Ansichten aus Config', { ansichten: ansichtenListe });
+  
   // Auf Ansicht-Wechsel hören und State aktualisieren
   document.addEventListener('amorph:ansicht-wechsel', (e) => {
     const neueAnsicht = e.detail?.ansicht;
-    if (neueAnsicht && ['karten', 'detail', 'vergleich'].includes(neueAnsicht)) {
+    if (neueAnsicht && ansichtenListe.includes(neueAnsicht)) {
       setAktiveAnsicht(neueAnsicht);
       debug.ansichten('Ansicht-State aktualisiert', { aktiveAnsicht: neueAnsicht });
     }

@@ -2,29 +2,28 @@
 
 Black Glasmorphism Design. Elegant, dezent, leuchtend.
 
-## 🚧 AKTUELLER STAND
+## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
 
 ### Implementiert
 - Basis Dark Theme mit Glass-Effekten
-- Multi-Color Glow für Perspektiven
-- Auswahl-Glow mit pulsierender Animation (für Cards)
-- ✅ **Header 3-Zeilen-Layout** (01.12.2025):
+- Multi-Color Glow für Perspektiven (4-Farben-Grid)
+- Auswahl-Glow mit pulsierender Animation
+- **Header 3-Zeilen-Layout**:
   - Branding-Zeile: FUNGINOMI + Bifroest (beide Links)
   - Suche-Zeile: Input + Clear-Button + aktive Filter-Badges  
   - Controls-Zeile: Ansicht-Switch + Perspektiven-Buttons
-- ✅ **Aktive Filter-Badges**: Farbige Perspektiven-Badges in Suchleiste
-- ✅ **Dark Glasmorphism Header**: Alle Header-Elemente im Glass-Stil
-- ✅ **Feld-Auswahl-Intensiv** (01.12.2025): Ausgewählte Felder verstärken den existierenden Perspektiven-Effekt
-- ✅ **Bild-Größe**: Images in Overlays haben max-height Begrenzung
+- **Aktive Filter-Badges**: Farbige Perspektiven-Badges in Suchleiste
+- **Dark Glasmorphism Header**: Alle Header-Elemente im Glass-Stil
+- **Feld-Auswahl-Intensiv**: Ausgewählte Felder verstärken den Perspektiven-Effekt
+- **Compare-Morph Styles**: Layouts für Vergleichs-Visualisierungen
+- **Vektorraum-Layout**: CSS für laterale Vergleiche
 
-## Design-System
+### ⚠️ Bekannter Hardcode
 
-AMORPH nutzt ein **Black Glasmorphism** Design:
-- Schwarze Glass-Cards mit `backdrop-filter: blur()`
-- Dezente weiße Borders (5-15% Opacity)
-- **Multi-Color Glow-Effekte** mit CSS `color-mix()`
-- Pulsierende Animationen für aktive Elemente
-- Woodfloor-Texturen als Hintergrund
+| Datei | Was | Status |
+|-------|-----|--------|
+| `ansichten/index.js` | `250px`, `180px` Bildhöhen | 🟡 Sollte CSS-Variable sein |
+| `morphs/image.js` | `'Bild nicht verfügbar'` Alt-Text | 🟡 Sollte i18n sein |
 
 ## Dateien
 
@@ -32,25 +31,26 @@ AMORPH nutzt ein **Black Glasmorphism** Design:
 styles/
 ├── index.css        ← Importiert alles
 ├── base.css         ← CSS-Variablen, Reset, Dark Theme
-├── morphs.css       ← Styles für alle Morphs
+├── morphs.css       ← Styles für alle Basis-Morphs
 ├── features.css     ← Header, Suche, Perspektiven-Buttons
 ├── layouts.css      ← Glass-Cards, Liste/Grid Layouts
 ├── perspektiven.css ← Feld-Glow, Multi-Perspektiven
-└── ansichten.css    ← Overlay, Detail-View, Vergleich, Auswahl-Glow
+├── ansichten.css    ← Overlay, Detail-View, Auswahl-Glow
+├── pinboard.css     ← Pinboard/Detail-View Layout
+└── vektorraum.css   ← Vergleich-View Layouts, Compare-Morphs
 ```
 
-## CSS Variablen
+## CSS-Variablen (Wichtigste)
 
 ```css
 :root {
-  /* Dark Theme (Standard) */
+  /* Dark Theme */
   --color-bg: #0a0a0a;
   --color-surface: rgba(255, 255, 255, 0.03);
   --color-text: #f0f0f0;
-  --color-text-muted: rgba(255, 255, 255, 0.5);
   --color-border: rgba(255, 255, 255, 0.08);
   
-  /* Perspektiven-Farben (dynamisch gesetzt) */
+  /* Perspektiven-Farben (dynamisch von JS gesetzt) */
   --p-farbe: #3b82f6;       /* Hauptfarbe */
   --p-farbe-1: var(--p-farbe);
   --p-farbe-2: var(--p-farbe);
@@ -62,9 +62,9 @@ styles/
 }
 ```
 
-## Multi-Color Glow
+## Multi-Color Glow System
 
-Aktive Perspektiven nutzen alle 4 Farben für den Glow:
+4 Farben pro Perspektive aus `schema.yaml`:
 
 ```css
 .amorph-perspektive-btn.aktiv {
@@ -75,6 +75,10 @@ Aktive Perspektiven nutzen alle 4 Farben für den Glow:
   animation: glow-pulse-multi 2.5s ease-in-out infinite;
 }
 ```
+
+## Morph-Klassen
+
+Jeder Morph hat seine CSS-Klasse:
 - `.amorph-number`
 - `.amorph-boolean`
 - `.amorph-tag`

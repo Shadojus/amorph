@@ -2,17 +2,23 @@
 
 Durchsucht die Datenbank, lädt neue Morphs. Immer frisch.
 
-## 🚧 AKTUELLER STAND (02.12.2025)
+## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
 
 ### ✅ Fertig
-- Semantische Suche aus Schema, Keywords → Feldwerte
+- Semantische Suche mit Keywords aus Schema
 - **View-aware Suche**: 
   - In **Grid-View**: Normale DB-Suche + Render
   - In **Vergleich-View**: Nur Highlights, KEINE DB-Suche!
 - `matchedTerms` werden via Event an andere Features übergeben
 - Highlights nutzen `highlightInContainer()` aus `util/semantic.js`
+- Live-Suche mit konfigurierbarem Debounce
 
-### View-aware Logik (NEU 02.12.2025)
+### ⚠️ Hinweis: Header übernimmt
+
+Die Suche-Logik ist jetzt primär in `features/header/index.js` implementiert.
+Dieses Feature dient als Referenz/Dokumentation.
+
+### View-aware Logik
 
 ```javascript
 // In header/index.js suchen()
@@ -44,60 +50,25 @@ Eingabe → Datenbank-Query → Neue Daten → Neu Rendern
 
 Kein lokaler Cache. Kein Filtern im Browser. Die Datenbank ist die Wahrheit.
 
-## Implementierung
+## Config-Loading
 
 ```javascript
-// features/suche/index.js
-export default function init(ctx) {
-  // UI
-  const form = document.createElement('div');
-  form.className = 'amorph-suche';
-  
-  const input = document.createElement('input');
-  input.type = 'search';
-  input.placeholder = ctx.config.placeholder || 'Suchen...';
-  input.setAttribute('aria-label', 'Suche');
-  
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.textContent = '🔍';
-  button.setAttribute('aria-label', 'Suchen');
-  
-  form.appendChild(input);
-  form.appendChild(button);
-  
-  // Suche
-  async function suchen() {
-    const query = input.value.trim();
-    if (!query && !ctx.config.erlaubeLeer) return;
-    
-    form.classList.add('ladend');
-    
-    try {
-      // IMMER aus Datenbank laden
-      const ergebnisse = await ctx.fetch({
-        search: query,
-        limit: ctx.config.limit || 50,
-        felder: ctx.config.suchfelder
-      });
-      
-      ctx.emit('ergebnisse', { query, anzahl: ergebnisse.length });
-      ctx.requestRender();
-      
-    } catch (e) {
-      console.error('Suchfehler:', e);
-      ctx.emit('fehler', { query, error: e.message });
-    } finally {
-      form.classList.remove('ladend');
-    }
-  }
-  
-  // Events
-  button.addEventListener('click', suchen);
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') suchen();
-    if (e.key === 'Escape') {
-      input.value = '';
+// Config aus features.yaml → suche
+const sucheConfig = {
+  placeholder: ctx.config.placeholder || 'Suchen...',
+  live: ctx.config.live || false,           // Live-Suche aktiviert?
+  debounce: ctx.config.debounce || 300,     // ms
+  limit: ctx.config.limit || 50,            // Max Ergebnisse
+  suchfelder: ctx.config.suchfelder || []   // Spezifische Felder
+};
+```
+
+## Events
+
+| Event | Beschreibung |
+|-------|--------------|
+| `header:suche:ergebnisse` | Query + Ergebnisse + matchedTerms + nurHighlights |
+| `header:suche:fehler` | Bei Suchfehlern |
       ctx.requestRender(); // Alles anzeigen
     }
   });

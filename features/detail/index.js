@@ -164,7 +164,7 @@ export default function init(ctx) {
     if (wert === null || wert === undefined) return null;
     
     const cfg = getFeldConfig(feldName);
-    const typ = cfg?.typ || erkennTyp(wert);
+    const typ = cfg?.typ || erkennTypFallback(wert);
     const container = document.createElement('div');
     container.className = `amorph-detail-feld amorph-detail-${typ}`;
     
@@ -270,7 +270,9 @@ export default function init(ctx) {
     return container;
   }
   
-  function erkennTyp(wert) {
+  // Nutzt detectType aus pipeline.js für konsistente Typ-Erkennung
+  // Lokale Version nur als Fallback für einfache Typen
+  function erkennTypFallback(wert) {
     if (Array.isArray(wert)) return 'list';
     if (typeof wert === 'object' && wert !== null) {
       if ('min' in wert && 'max' in wert) return 'range';

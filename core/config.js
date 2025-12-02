@@ -178,8 +178,17 @@ function parseYAML(text) {
 }
 
 function parseValue(value) {
-  // Inline-Kommentare entfernen (aber nicht in Strings)
-  if (!value.startsWith('"') && !value.startsWith("'")) {
+  // Inline-Kommentare entfernen
+  // Bei quoted Strings: Kommentar NACH dem String entfernen
+  if (value.startsWith('"') || value.startsWith("'")) {
+    const quote = value[0];
+    const endQuoteIdx = value.indexOf(quote, 1);
+    if (endQuoteIdx > 0) {
+      // Alles nach dem schließenden Quote entfernen
+      value = value.slice(0, endQuoteIdx + 1);
+    }
+  } else {
+    // Unquoted: Kommentar entfernen
     const commentIdx = value.indexOf(' #');
     if (commentIdx > 0) {
       value = value.slice(0, commentIdx).trim();

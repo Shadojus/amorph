@@ -157,6 +157,80 @@ config:
     erlaubteDomains:
       - localhost
 
+# === BADGE KONFIGURATION ===
+# Variants und Farben für automatische Badge-Erkennung
+badge:
+  # Welche String-Werte welche Variante bekommen
+  variants:
+    success:
+      - aktiv
+      - active
+      - ja
+      - yes
+      - "true"
+      - essbar
+      - fertig
+      - ok
+      - gut
+    danger:
+      - inaktiv
+      - inactive
+      - nein
+      - "no"
+      - "false"
+      - giftig
+      - tödlich
+      - fehler
+    warning:
+      - warnung
+      - warning
+      - bedingt
+      - vorsicht
+      - pending
+      - moderat
+    info:
+      - info
+      - hinweis
+      - note
+      - tipp
+      - neu
+      - beta
+    neutral:
+      - unbekannt
+      - unknown
+      - n/a
+      - "-"
+      - keine
+      - none
+  
+  # Farben pro Variante
+  colors:
+    success:
+      bg: "rgba(34, 197, 94, 0.2)"
+      border: "rgba(34, 197, 94, 0.6)"
+      text: "#22c55e"
+      icon: "✓"
+    danger:
+      bg: "rgba(239, 68, 68, 0.2)"
+      border: "rgba(239, 68, 68, 0.6)"
+      text: "#ef4444"
+      icon: "✕"
+    warning:
+      bg: "rgba(245, 158, 11, 0.2)"
+      border: "rgba(245, 158, 11, 0.6)"
+      text: "#f59e0b"
+      icon: "⚠"
+    info:
+      bg: "rgba(59, 130, 246, 0.2)"
+      border: "rgba(59, 130, 246, 0.6)"
+      text: "#3b82f6"
+      icon: "ℹ"
+    neutral:
+      bg: "rgba(148, 163, 184, 0.2)"
+      border: "rgba(148, 163, 184, 0.4)"
+      text: "#94a3b8"
+      icon: "•"
+
 # === FARB-PALETTEN ===
 # Zentrale Farbdefinitionen für Morphs
 farben:

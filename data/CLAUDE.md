@@ -1,35 +1,90 @@
 # Data
 
-Beispieldaten für AMORPH.
+Beispieldaten für AMORPH. **Datenstruktur bestimmt den Morph!**
 
-## 🚧 AKTUELLER STAND
+## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
 
-Pilze-Daten funktionieren. Keine Änderungen nötig für Feld-Auswahl.
+Pilze-Daten komplett mit allen Morph-Typen:
+- Einfache Strings, Zahlen, Arrays
+- Objekte mit `{min, max}` → `range`
+- Objekte mit `{min, max, avg}` → `stats`
+- Arrays mit `[{axis, value}]` → `radar`
+- Arrays mit `[{date, event}]` → `timeline`
+- Objekte mit nur Zahlen → `pie`
+- Arrays mit `[{label, value}]` → `bar`
 
-## pilze.json
-
-10 Pilze mit verschiedenen Datentypen:
+## pilze.json - Datenstruktur
 
 ```javascript
 {
-  "id": "string",           // Eindeutige ID
-  "slug": "string",         // URL-freundlicher Name
-  "name": "string",         // Deutscher Name
-  "wissenschaftlich": "string", // Lateinischer Name
-  "essbarkeit": "string",   // essbar, giftig, tödlich, etc.
-  "beschreibung": "string", // Ausführlicher Text
-  "temperatur": {           // Range-Typ
-    "min": 10,
-    "max": 25
+  // Basis-Felder (typ aus schema.yaml)
+  "id": "string",
+  "slug": "string",
+  "name": "string",
+  "wissenschaftlich": "string",
+  "essbarkeit": "string",        // → badge (via keywords)
+  "beschreibung": "string",      // → text
+  "saison": "string",            // → tag
+  "bild": "string",              // → image
+
+  // AUTO-ERKANNT aus Struktur
+  "temperatur": { "min": 10, "max": 25 },  // → range
+  "standort": ["Nadelwald", "Mischwald"],  // → list
+  "verwechslung": ["Gallenröhrling"],      // → list
+  
+  // Zahlen-Erkennung
+  "bewertung": 4.8,              // 0-10 Dezimal → rating
+  "beliebtheit": 92,             // 0-100 Integer → progress
+
+  // Objekt-Erkennung
+  "naehrwerte": {                // Nur Zahlen → pie
+    "Protein": 26,
+    "Kohlenhydrate": 52,
+    "Fett": 8
   },
-  "standort": ["array"],    // Liste von Strings
-  "verwechslung": ["array"],// Liste von Strings
-  "bild": "string",         // URL zum Bild
-  "geschmack": "string",    // Optional
-  "zubereitung": "string",  // Optional
-  "symptome": "string"      // Optional (bei giftigen)
+  
+  // Array-Erkennung  
+  "profil": [                    // [{axis, value}] 3+ → radar
+    { "axis": "Geschmack", "value": 95 },
+    { "axis": "Textur", "value": 85 },
+    { "axis": "Aroma", "value": 90 }
+  ],
+  
+  "wirkstoffe": [                // [{label, value}] → bar
+    { "label": "Ergothionein", "value": 4.2, "unit": "mg" }
+  ],
+  
+  "ernte_stats": {               // {min, max, avg} → stats
+    "min": 80,
+    "max": 350,
+    "avg": 180,
+    "count": 156
+  },
+  
+  "lebenszyklus": [              // [{date, event}] → timeline
+    { "date": "Frühjahr", "event": "Myzel-Aktivierung" },
+    { "date": "Herbst", "event": "Haupternte", "active": true }
+  ],
+  
+  "verfuegbarkeit": "verfügbar"  // String mit Keyword → badge
 }
 ```
+
+## Datengetrieben-Prinzip
+
+**Keine expliziten Typ-Angaben nötig!** Die Pipeline erkennt:
+
+| Datenstruktur | Erkannter Morph |
+|---------------|-----------------|
+| `{min, max}` | range |
+| `{min, max, avg}` | stats |
+| `{A: 30, B: 50}` (nur Zahlen) | pie |
+| `[{axis, value}]` (3+) | radar |
+| `[{date, event}]` | timeline |
+| `[{label, value}]` | bar (6+) oder pie (≤6) |
+| `4.8` (0-10 Dezimal) | rating |
+| `92` (0-100 Integer) | progress |
+| `"essbar"` (Badge-Keyword) | badge |
 
 ## Eigene Daten
 

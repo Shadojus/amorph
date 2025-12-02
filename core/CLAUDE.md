@@ -2,23 +2,71 @@
 
 Das Herz von AMORPH. Drei Dateien, eine Aufgabe: Daten transformieren.
 
-## 🚧 AKTUELLER STAND
+## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
 
-### Implementiert
-- ✅ Config-Loader lädt alle YAML-Dateien
-- ✅ Pipeline transformiert Daten durch Morphs
-- ✅ Container Web Component rendert Morphs
+### ✅ Implementiert
+- Config-Loader lädt alle YAML-Dateien
+- **YAML-Parser verbessert**: Inline-Kommentare nach quoted Strings werden korrekt entfernt
+- Pipeline transformiert Daten durch Morphs
+- Container Web Component rendert Morphs
+- **Morph-Registry**: `string` als Alias für `text`
+- **Datengetriebene Typ-Erkennung** aus `morphs.yaml`
 
-### TODO für Feld-Auswahl
-- Pipeline muss Morph-Elementen `data-feld-name` und `data-pilz-id` mitgeben
-- Container muss Click-Events auf Feld-Ebene abfangen
-- Events dispatchen für Feld-Auswahl
+### ⚠️ Bekannte Hardcodes in pipeline.js
+
+| Zeile | Was | Status |
+|-------|-----|--------|
+| 218-219 | `labelKeys`, `valueKeys` Arrays | 🔴 Sollte in Config |
+| 262-277 | Objekt-Signalkeys für rating/progress/badge | 🔴 Sollte in Config |
+
+### Typ-Erkennung (Datengetrieben)
+
+```javascript
+// Erkennungs-Kaskade:
+1. erkennungConfig aus morphs.yaml laden
+2. detectType(wert) aufrufen:
+   - typeof === 'number' → detectNumberType()
+   - typeof === 'string' → detectStringType()
+   - Array.isArray()     → detectArrayType()
+   - typeof === 'object' → detectObjectType()
+
+// detectNumberType() - aus morphs.yaml/erkennung
+rating:   { min: 0, max: 10, dezimalstellen: true }
+progress: { min: 0, max: 100, ganzzahl: true }
+
+// detectStringType() - aus morphs.yaml/erkennung.badge.keywords
+keywords: [aktiv, inaktiv, essbar, giftig, ...]
+
+// detectArrayType() - aus morphs.yaml/erkennung.array
+radar:    { benoetigtKeys: [axis, value], minItems: 3 }
+timeline: { benoetigtKeys: [date, event] }
+pie/bar:  labelKeys + valueKeys (⚠️ noch hardcoded!)
+
+// detectObjectType() - aus morphs.yaml/erkennung.objekt
+range: { benoetigtKeys: [min, max] }
+stats: { benoetigtKeys: [min, max, avg] }
+pie:   { nurNumerisch: true, minKeys: 2, maxKeys: 8 }
+```
+
+### YAML-Parser Fix (02.12.2025)
+
+```javascript
+// Problem: "# Gold" blieb an "#e8b04a" kleben
+// Lösung: Kommentar NACH schließendem Quote entfernen
+if (value.startsWith('"') || value.startsWith("'")) {
+  const quote = value[0];
+  const endQuoteIdx = value.indexOf(quote, 1);
+  if (endQuoteIdx > 0) {
+    value = value.slice(0, endQuoteIdx + 1); // Alles nach Quote weg
+  }
+}
+```
 
 ## Übersicht
 
 ```
 config.js   → Lädt und validiert Konfiguration
-pipeline.js → Transformiert Daten durch Morphs  
+pipeline.js → Transformiert Daten durch Morphs (DATENGETRIEBEN!)
 container.js → Web Component als Morph-Container
 ```
 

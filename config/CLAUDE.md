@@ -2,16 +2,83 @@
 
 Eine Datei = Ein Aspekt. **Schema ist die Single Source of Truth.**
 
-## 🚧 AKTUELLER STAND
+## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
 
-### Implementiert
-- ✅ Black Glasmorphism Design
-- ✅ 4-Farben-Grid pro Perspektive (Multi-Color Glow)
-- ✅ Semantische Suche aus Schema
-- ✅ Auto-Perspektiven bei Suchergebnissen
+### ✅ Implementiert
+- Black Glasmorphism Design
+- 4-Farben-Grid pro Perspektive (Multi-Color Glow)
+- Semantische Suche aus Schema
+- Auto-Perspektiven bei Suchergebnissen
+- **Farben-Palette** in `morphs.yaml` (für Diagramme, Pilze, Badges)
+- **Badge-Keywords** in `morphs.yaml` (für Auto-Variant-Detection)
+- **Typ-Erkennungsregeln** in `morphs.yaml` (für datengetriebene Morphs)
 
-### TODO für Feld-Auswahl
-- Eventuell: Schema erweitern um `auswaehlbar: true/false` pro Feld
+### morphs.yaml - Die Erkennungs-Zentrale
+
+```yaml
+# morphs.yaml
+
+# === FARBEN ===
+farben:
+  pilze:      # Für Vergleichs-Farbzuweisung
+    - "#e8b04a"
+    - "#60c090"
+  diagramme:  # Für Pie/Bar Charts  
+    - "#22c55e"
+    - "#3b82f6"
+
+# === TYP-ERKENNUNG (DATENGETRIEBEN) ===
+erkennung:
+  # String → Badge Erkennung
+  badge:
+    keywords:
+      - verfügbar
+      - saisonal
+      - essbar
+      - giftig
+      # ... 35+ Keywords
+  
+  # Nummern-Erkennung
+  rating:
+    min: 0
+    max: 10
+    nurDezimal: true    # Zahl mit Dezimalstelle → rating
+  progress:
+    min: 0
+    max: 100
+    nurGanzzahl: true   # Integer → progress
+  
+  # Objekt-Erkennung
+  objekt:
+    range:
+      benoetigtKeys: [min, max]
+    stats:
+      benoetigtKeys: [min, max, avg]
+    # ⚠️ rating/progress/badge Signalkeys noch hardcoded in pipeline.js!
+  
+  # Array-Erkennung
+  array:
+    radar:
+      benoetigtKeys: [axis, value]
+      minItems: 3
+    timeline:
+      benoetigtKeys: [date, event]
+    # ⚠️ labelKeys/valueKeys für pie/bar noch hardcoded in pipeline.js!
+```
+
+### ⚠️ Was noch NICHT in Config ist
+
+| Was | Wo hardcoded | Fix-Aufwand |
+|-----|--------------|-------------|
+| `labelKeys: ['label', 'name', 'category']` | pipeline.js:218 | 10 min |
+| `valueKeys: ['value', 'count', 'amount', 'score']` | pipeline.js:219 | 10 min |
+| Objekt-Signalkeys für rating/progress/badge | pipeline.js:262-277 | 15 min |
+| Badge-Variant-Colors (RGBA-Werte) | badge.js:24-28 | 15 min |
+
+Morphs laden Config-Werte via:
+- `getFarben(palette)` - Aus `util/semantic.js`
+- `getBadgeConfig()` - Aus `util/semantic.js`
+- `setErkennungConfig()` - In `core/pipeline.js`
 
 ## Dateien
 

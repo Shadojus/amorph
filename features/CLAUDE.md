@@ -2,57 +2,81 @@
 
 Eigenständig. Isoliert. Optional.
 
-## 🚧 AKTUELLER ENTWICKLUNGSSTAND (02.12.2025)
+## 🚧 AKTUELLER ENTWICKLUNGSSTAND (02.12.2025 - FINAL)
 
-### Fertig
-- ✅ **Header-Feature**: 3-Zeilen-Layout mit Dark Glasmorphism
+### ✅ Fertig
+- **Header-Feature**: 3-Zeilen-Layout mit Dark Glasmorphism
   - Zeile 0: FUNGINOMI (Link /) + Part of Bifroest (Link bifroest.io)
   - Zeile 1: Suchleiste + aktive Filter-Badges
   - Zeile 2: Ansicht-Switch + Perspektiven-Buttons
   - **View-aware Suche**: Prüft `aktiveAnsicht` vor DB-Query
+  - **IntersectionObserver** statt `window.addEventListener('scroll')` (Feature-Isolation!)
 - ✅ **Grid-Feature**: Karten-Layout (Standard-Ansicht)
-- ✅ **Detail-Feature (Pinboard)**: Ausgewählte Daten als Pinnwand
-  - Gruppierung nach Pilz/Feld/Perspektive/Frei
-  - Drag & Drop für Gruppen
-  - Zoom & Pan
-  - Verbindungslinien
-- ✅ **Vergleich-Feature (Vektorraum)**: Laterale Visualisierung
-  - 2D Streudiagramm
-  - Radar/Spinnendiagramm
-  - 3D isometrische Projektion
-  - Dimensionen-Auswahl
-  - **Suche-Highlights**: Hört auf `header:suche:ergebnisse` Event
+- ✅ **Vergleich-Feature (Vektorraum)**: Laterale Visualisierung mit Compare-Morphs
 - ✅ **Ansichten-Feature**: Auswahl-State + Ansicht-State Tracking
-  - Hört auf `amorph:ansicht-wechsel` Event
-  - Aktualisiert `state.aktiveAnsicht` automatisch
 - ✅ **Perspektiven**: 4-Farben-Grid, Multi-Color Glow, Auto-Aktivierung
 - ✅ **Semantische Suche**: Keywords → Feldwerte aus Schema
 
-### ✅ Feld-Auswahl (IMPLEMENTIERT)
+### ⚠️ Bekannter Hardcode in Ansichten
 
-```
-VORHER: Ganze Cards wurden ausgewählt
-↓
-JETZT: Einzelne FELDER werden ausgewählt
-```
+| Datei | Zeile | Was | Status |
+|-------|-------|-----|--------|
+| `ansichten/index.js` | 484 | `['karten', 'detail', 'vergleich']` Array | 🟡 Sollte aus features.yaml kommen |
+| `detail/index.js` | 276 | Doppelte `erkennTyp()` Funktion | 🟡 Sollte `detectType()` aus pipeline.js nutzen |
 
-**Funktionen**:
-- User klickt einzelne Datenfelder an (Name, Temperatur, Bild...)
-- Ausgewählte Felder glühen grün mit Checkmark
-- Detail-View zeigt nur ausgewählte Felder gruppiert nach Pilz
-- Vergleich-View stellt gleiche Feldtypen nebeneinander
+### ⚠️ Feature-Isolation Regeln
 
-**State**:
 ```javascript
-state.auswahl = Map<"pilzId:feldName", {pilzId, feldName, wert, pilzDaten}>
+// ✅ ERLAUBT in Features:
+ctx.dom                      // Eigener DOM-Bereich
+ctx.config                   // Gefrorene Config (read-only)
+ctx.on('event', handler)     // Eigene Events
+ctx.emit('event', data)      // Events senden (wird auch global dispatched)
+ctx.search(query)            // Suche ausführen
+document.createElement()     // DOM erstellen
+document.addEventListener()  // Für globalen Event-Bus (Cross-Feature)
+IntersectionObserver         // Für Scroll-Detection
+
+// ❌ VERMEIDEN in Features:
+window.addEventListener('scroll')  // → Nutze IntersectionObserver!
+window.* (außer für Observers)     // Keine globalen Side-Effects
+document.body.* (außer mount)      // Nur eigenen ctx.dom manipulieren
 ```
 
-## Ansichten-System
+### Ansichten-System (2 Modi)
 
-Drei Modi für Datensätze:
-- **Karten (Grid)**: Standard - einzelne FELDER sind anklickbar
-- **Detail**: Zeigt ausgewählte Felder gruppiert nach Pilz
-- **Vergleich**: Gleiche Feldtypen nebeneinander zum Vergleichen
+| Ansicht | Feature | Beschreibung |
+|---------|---------|--------------|
+| **Karten (Grid)** | `grid/` | Standard - einzelne FELDER sind anklickbar |
+| **Vergleich** | `vergleich/` | Gleiche Feldtypen nebeneinander mit Compare-Morphs |
+
+Die `detail/` Ansicht ist aktuell deaktiviert (in features.yaml auskommentiert).
+
+### Feld-Auswahl System
+
+```javascript
+// State-Struktur
+state.auswahl = Map<"pilzId:feldName", {pilzId, feldName, wert, pilzDaten}>
+
+// Events
+'amorph:feld-ausgewaehlt'   // Feld wurde angeklickt
+'amorph:auswahl-geaendert'  // Auswahl hat sich geändert
+'amorph:ansicht-wechsel'    // Ansicht wurde gewechselt
+```
+
+## Feature-Context API
+
+```javascript
+export default function init(ctx) {
+  ctx.dom       // Eigener DOM-Container
+  ctx.config    // Gefrorene Feature-Config
+  ctx.on()      // Events empfangen
+  ctx.emit()    // Events senden
+  ctx.search()  // Suche ausführen + rendern
+  ctx.mount()   // In Container einfügen
+  ctx.destroy() // Aufräumen
+}
+```
 
 Ein Feature ist eine abgeschlossene Erweiterung. Es bekommt einen eingeschränkten Kontext - keinen globalen Zugriff.
 

@@ -2,9 +2,12 @@
 
 Build- und Entwicklungs-Tools.
 
-## 🚧 AKTUELLER STAND
+## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
 
-Scripts funktionieren. Keine Änderungen nötig.
+### ✅ Fertig
+- `check.js` - Konfigurationsprüfung
+- `build.js` - Produktions-Build
+- Development Server via `npx serve`
 
 ## check.js
 
@@ -18,7 +21,7 @@ node scripts/check.js
 
 **Prüft:**
 - Pflichtdateien: manifest.yaml, daten.yaml
-- Optionale Dateien: morphs.yaml, observer.yaml, features.yaml
+- Optionale Dateien: morphs.yaml, observer.yaml, features.yaml, schema.yaml
 - Datenquelle erreichbar
 - YAML-Syntax gültig
 
@@ -34,6 +37,7 @@ Optionale Dateien:
   ✅ morphs.yaml
   ✅ observer.yaml
   ✅ features.yaml
+  ✅ schema.yaml
 
 Datenquelle:
   ✅ JSON-Datei gefunden: ./data/pilze.json

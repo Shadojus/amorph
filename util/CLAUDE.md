@@ -2,9 +2,62 @@
 
 Kleine Helfer. Keine Abhängigkeiten.
 
-## 🚧 AKTUELLER STAND
+## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
 
-Utils funktionieren. Keine Änderungen nötig.
+### ✅ Implementiert
+- `dom.js` - Sichere DOM-Manipulation
+- `fetch.js` - Datenbank-Zugriff + Highlight-System
+- `session.js` - Session-Handling
+- `semantic.js` - **Config-Gateway** (Schema + Morphs-Config)
+
+### semantic.js - Das Config-Gateway
+
+**Zentrale Anlaufstelle für alle Config-Werte aus YAML:**
+
+```javascript
+// === SCHEMA-ZUGRIFF ===
+setSchema(schema)              // Schema setzen (wird beim Start aufgerufen)
+getSchema()                    // Ganzes Schema holen
+getFeldReihenfolge()           // Array der Feldnamen in definierter Reihenfolge
+sortBySchemaOrder(obj)         // Objekt nach Schema-Reihenfolge sortieren
+getFeldConfig(feldname)        // Config für einzelnes Feld
+getFeldMorphs()                // Map feldName → typ aus Schema
+getVersteckteFelder()          // Array der versteckten Felder
+getAlleFeldConfigs()           // Alle Feld-Configs
+
+// === MORPHS-CONFIG ZUGRIFF ===
+setMorphsConfig(config)        // Morphs-Config setzen (wird beim Start aufgerufen)
+getFarben(palette)             // Holt Farben: 'pilze', 'diagramme', 'standard'
+getBadgeConfig()               // Holt Badge-Variants & Colors
+
+// === SEMANTISCHE SUCHE ===
+semanticScore(item, query)     // Berechnet Relevanz-Score für Item
+getSuchfelder()                // Array der durchsuchbaren Felder
+
+// === PERSPEKTIVEN ===
+getPerspektivenKeywords()      // Keywords für Auto-Aktivierung
+getPerspektivenListe()         // Alle Perspektiven als Array
+getPerspektivenMorphConfig()   // Morph-Config basierend auf Perspektiven
+getAllePerspektivenFarben()    // 4-Farben-Grid für aktive Perspektiven
+```
+
+### ⚠️ Bekannter Hardcode in semantic.js
+
+| Zeile | Was | Status |
+|-------|-----|--------|
+| 159 | `'ganzjährig'` String-Check | 🟡 Sollte aus Schema kommen |
+| 304 | `['#808080']` Fallback-Farbe | ✅ Akzeptabler Fallback |
+
+### fetch.js - Datenquellen + Highlights
+
+```javascript
+// Datenquelle erstellen
+createDataSource(config)
+
+// Highlight-System für Suchtreffer
+highlightMatches(element, matchedTerms)  // Markiert Suchtreffer im DOM
+clearHighlights(container)               // Entfernt alle Highlights
+```
 
 ## dom.js
 

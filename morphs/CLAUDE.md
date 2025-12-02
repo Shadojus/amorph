@@ -1,18 +1,57 @@
 # Morphs
 
-Reine Funktionen. Keine Klassen. Kein Zustand.
+Reine Funktionen. Keine Klassen. Kein Zustand. **Keine Seiteneffekte!**
 
-## 🚧 AKTUELLER STAND
+## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
+
+### ⚠️ MORPH-PURITY REGEL
+
+```javascript
+// ✅ ERLAUBT in Morphs:
+document.createElement()     // DOM erstellen
+element.appendChild()        // DOM aufbauen
+element.addEventListener()   // Lokale Events auf eigenem Element
+config.onCallback?.()        // Callbacks aufrufen
+
+// ❌ VERBOTEN in Morphs:
+document.dispatchEvent()     // → Nutze Callbacks!
+document.addEventListener()  // → Nutze Methoden auf Element!
+window.addEventListener()    // → Nie global!
+window.location             // → Nur für URL-Parsing (read-only)
+```
+
+**Warum?** Morphs sind REINE Transformationen: `(wert, config) → HTMLElement`
+
+### ⚠️ Bekannte Hardcodes in Morphs
+
+| Datei | Zeile | Was | Status |
+|-------|-------|-----|--------|
+| `badge.js` | 15-20 | `AUTO_VARIANTS_FALLBACK` Keywords | 🟡 Hat Config-Lookup, Fallback akzeptabel |
+| `badge.js` | 24-28 | `VARIANT_COLORS_FALLBACK` Farben | 🟡 Hat Config-Lookup, Fallback akzeptabel |
+| `pie.js` | 16-18 | `FARBEN_FALLBACK` Array | ✅ Hat Config-Lookup via `getFarben()` |
+| `compare.js` | 18-20 | `FALLBACK_FARBEN` Array | ✅ Hat Config-Lookup via `setFarbenConfig()` |
+
+### Config-Lookup Pattern (Best Practice)
+
+```javascript
+// ✅ SO machen es pie.js und badge.js:
+import { getFarben, getBadgeConfig } from '../util/semantic.js';
+
+// Fallback nur als Sicherheit
+const FARBEN_FALLBACK = ['#22c55e', '#3b82f6', ...];
+
+function getDiagrammFarben() {
+  return getFarben('diagramme') || FARBEN_FALLBACK;
+}
+```
 
 ### Implementiert
 - **Basis-Morphs**: text, number, boolean, tag, range, list, object, image, link
+- **Alias**: `string` → `text` (Schema kann `typ: string` nutzen)
 - **Feature-Morphs**: suche, perspektiven, header
-- **Header-Morph** (01.12.2025): 3-Zeilen-Layout
-  - `amorph-header-branding`: FUNGINOMI + Bifroest (beide klickbare Links)
-  - `amorph-header-suche`: Suchleiste + Clear-Button + aktive Filter-Badges
-  - `amorph-header-controls`: Ansicht-Switch + Perspektiven-Buttons
+- **Header-Morph**: Nutzt Callback-Pattern statt Events
 - **Visuelle Morphs**: pie, bar, radar, rating, progress, stats, timeline, badge
-- **Compare-Morphs** (NEU): Spezialisierte Vergleichs-Visualisierungen
+- **Compare-Morphs**: Spezialisierte Vergleichs-Visualisierungen
   - `compareBar` - Horizontale Balkendiagramme für Zahlenvergleiche
   - `compareRating` - Sterne-Vergleich für Bewertungen
   - `compareTag` - Gruppierte Chips nach Wert (z.B. Essbarkeit)
@@ -21,32 +60,38 @@ Reine Funktionen. Keine Klassen. Kein Zustand.
   - `compareRadar` - Überlappende SVG-Radar-Charts
   - `comparePie` - Nebeneinander Mini-Pie-Charts
   - `compareText` - Fallback Text-Vergleich
-  - `compareMorph` - Auto-Selektor wählt passenden Compare-Morph
+  - `compareMorph` - Auto-Selektor wählt passenden Compare-Morph basierend auf TYP
   - `erstelleFarben` - Konsistente Farbzuweisung für Pilze
-- Jeder Morph erzeugt `<span class="amorph-{type}">` oder `<div class="amorph-{type}">` Element
-- Automatische Typ-Erkennung basierend auf Datenstruktur
 
-## 📊 MORPH-SCHEMA-ZUORDNUNG
+## 📊 DATENGETRIEBENE MORPH-ERKENNUNG
 
-Die Pipeline erkennt automatisch den passenden Morph anhand der Datenstruktur.
-Für explizite Zuweisung kann der Typ im Schema definiert werden.
+Die Pipeline erkennt automatisch den passenden Morph anhand der **DATENSTRUKTUR** (nicht Feldname!).
 
-### Automatische Erkennung
+### Erkennungs-Kaskade
 
-| Datenstruktur | Erkannter Morph | Beispiel |
-|---------------|-----------------|----------|
-| `{min: 10, max: 25}` | `range` | Temperatur, Preisbereich |
-| `[{label: "A", value: 10}, ...]` | `pie` | Verteilungen |
-| `[{label: "X", value: 5}, ...]` | `bar` | Vergleiche |
-| `[{axis: "Y", value: 80}, ...] (3+)` | `radar` | Profile mit 3+ Dimensionen |
-| `{date: "2024", event: "..."}` Array | `timeline` | Chronologische Ereignisse |
-| `{min, max, avg, count}` | `stats` | Statistische Zusammenfassungen |
-| `{rating: 4.5}` oder `{score: 8}` | `rating` | Bewertungen |
-| `{value: 75, max: 100}` | `progress` | Fortschritt, Auslastung |
-| `"essbar"` (Status-Wort) | `badge` | Status-Labels |
-| Zahl 0-10 mit Dezimalen | `rating` | 4.5 → ⭐⭐⭐⭐⯨ |
-| Zahl 0-100 (Integer) | `progress` | 75 → Balken 75% |
-| `{A: 10, B: 20, C: 30}` (nur Zahlen) | `pie` | Verteilung |
+```
+1. Schema-Typ: felder.feldname.typ (schema.yaml)
+        ↓ falls nicht definiert
+2. Erkennung: detectType(wert) mit erkennungConfig (morphs.yaml)
+        ↓ falls keine Regel greift
+3. Regeln: morphs.yaml/regeln (typ-basiert)
+        ↓ falls keine Regel greift
+4. Defaults: string→text, number→number, array→list, object→object
+```
+
+### Automatische Erkennung (aus morphs.yaml)
+
+| Datenstruktur | Erkannter Morph | Config-Quelle |
+|---------------|-----------------|---------------|
+| `{min: 10, max: 25}` | `range` | `erkennung.objekt.range.benoetigtKeys` |
+| `{min, max, avg, count}` | `stats` | `erkennung.objekt.stats.benoetigtKeys` |
+| `{A: 30, B: 50}` (nur Zahlen) | `pie` | `erkennung.objekt.pie.nurNumerisch` |
+| `[{axis: "X", value: 80}]` (3+) | `radar` | `erkennung.array.radar.benoetigtKeys` |
+| `[{date: "...", event: "..."}]` | `timeline` | `erkennung.array.timeline.benoetigtKeys` |
+| `[{label: "A", value: 10}]` | `pie`/`bar` | ⚠️ `labelKeys`/`valueKeys` (hardcoded!) |
+| Zahl 0-10 mit Dezimalen | `rating` | `erkennung.rating` |
+| Zahl 0-100 Integer | `progress` | `erkennung.progress` |
+| String mit Badge-Keyword | `badge` | `erkennung.badge.keywords` |
 
 ### Schema-Definition für explizite Zuweisung
 

@@ -2,11 +2,20 @@
 
 Verschiedene Blickwinkel auf dieselben Daten.
 
-## 🚧 AKTUELLER STAND
+## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
 
-✅ Perspektiven funktionieren mit Multi-Color Glow.
-✅ 4-Farben-Grid pro Perspektive.
-✅ Auto-Aktivierung bei Suchergebnissen.
+### ✅ Fertig
+- Perspektiven funktionieren vollständig
+- Multi-Color Glow bei mehreren aktiven Perspektiven
+- 4-Farben-Grid pro Perspektive (aus schema.yaml)
+- Auto-Aktivierung bei relevanten Suchergebnissen
+- Keywords aus Schema für Auto-Detection
+- Badges in Suchleiste für aktive Perspektiven
+
+### ⚠️ Hinweis: Header übernimmt
+
+Die Perspektiven-Logik ist jetzt primär in `features/header/index.js` implementiert.
+Dieses Feature dient als Referenz/Dokumentation.
 
 ## Konzept
 
@@ -14,90 +23,59 @@ Eine Perspektive ist ein Filter + Styling. Sie zeigt bestimmte Felder und färbt
 
 ```
 Kulinarisch 🍳  →  Zeigt: essbarkeit, geschmack, zubereitung
-                   Farbe: Grün
+                   Farben: [#4ade80, #22c55e, #16a34a, #15803d]
                    
 Sicherheit ⚠️   →  Zeigt: giftigkeit, verwechslungsgefahr
-                   Farbe: Rot
+                   Farben: [#ef4444, #dc2626, #b91c1c, #991b1b]
 ```
 
-## Implementierung
+## Config aus schema.yaml
+
+```yaml
+perspektiven:
+  - id: kulinarisch
+    label: Kulinarisch
+    symbol: 🍳
+    farben: ['#4ade80', '#22c55e', '#16a34a', '#15803d']
+    felder: [essbarkeit, geschmack, zubereitung]
+    keywords: [essbar, essen, kochen, rezept]
+    
+  - id: sicherheit
+    label: Sicherheit
+    symbol: ⚠️
+    farben: ['#ef4444', '#dc2626', '#b91c1c', '#991b1b']
+    felder: [giftigkeit, verwechslungsgefahr]
+    keywords: [giftig, gefährlich, verwechseln]
+```
+
+## Multi-Perspektiven Farben
+
+Wenn ein Feld zu mehreren aktiven Perspektiven gehört:
 
 ```javascript
-// features/perspektiven/index.js
-export default function init(ctx) {
-  const perspektiven = ctx.config.liste || [];
-  const maxAktiv = ctx.config.maxAktiv || 4;
-  let aktiv = new Set();
-  
-  // Navigation
-  const nav = document.createElement('nav');
-  nav.className = 'amorph-perspektiven';
-  nav.setAttribute('role', 'toolbar');
-  
-  for (const p of perspektiven) {
-    const btn = document.createElement('button');
-    btn.className = 'amorph-perspektive-btn';
-    btn.dataset.perspektive = p.id;
-    btn.setAttribute('aria-pressed', 'false');
-    btn.innerHTML = `
-      <span class="symbol">${p.symbol || ''}</span>
-      <span class="name">${p.name}</span>
-    `;
-    
-    if (p.farbe) {
-      btn.style.setProperty('--p-farbe', p.farbe);
-    }
-    
-    btn.addEventListener('click', () => toggle(p.id, btn));
-    nav.appendChild(btn);
-  }
-  
-  function toggle(id, btn) {
-    if (aktiv.has(id)) {
-      deaktivieren(id, btn);
-    } else {
-      aktivieren(id, btn);
-    }
-    anwenden();
-  }
-  
-  function aktivieren(id, btn) {
-    // Max erreicht?
-    if (aktiv.size >= maxAktiv) {
-      const erste = aktiv.values().next().value;
-      const ersteBtn = nav.querySelector(`[data-perspektive="${erste}"]`);
-      deaktivieren(erste, ersteBtn);
-    }
-    
-    aktiv.add(id);
-    btn.setAttribute('aria-pressed', 'true');
-    btn.classList.add('aktiv');
-  }
-  
-  function deaktivieren(id, btn) {
-    aktiv.delete(id);
-    btn.setAttribute('aria-pressed', 'false');
-    btn.classList.remove('aktiv');
-  }
-  
-  function anwenden() {
-    // CSS-Klassen setzen
-    const container = document.querySelector('[data-amorph-container]');
-    if (!container) return;
-    
-    // Alle entfernen
-    for (const p of perspektiven) {
-      container.classList.remove(`perspektive-${p.id}`);
-    }
-    
-    // Aktive hinzufügen
-    for (const id of aktiv) {
-      container.classList.add(`perspektive-${id}`);
-    }
-    
-    // CSS-Variablen für Farben
-    const farben = perspektiven
-      .filter(p => aktiv.has(p.id))
+// In header/index.js
+if (perspektivFarben.length === 1) {
+  // Einzelne Perspektive - alle 4 Farben setzen
+  feld.style.setProperty('--feld-perspektive-farbe', farben[0]);
+} else {
+  // Mehrere Perspektiven - Multicolor-Gradient
+  feld.setAttribute('data-perspektive-multi', 'true');
+  // Gradient aus allen Hauptfarben
+  const gradientStops = perspektivFarben.map(({ hauptfarbe }, i) => {
+    return `${hauptfarbe} ${start}%, ${hauptfarbe} ${end}%`;
+  }).join(', ');
+  feld.style.setProperty('--feld-gradient', `linear-gradient(180deg, ${gradientStops})`);
+}
+```
+
+## CSS-Klassen
+
+- `.amorph-perspektiven` - Navigation Container
+- `.amorph-perspektive-btn` - Einzelner Button
+- `.amorph-perspektive-btn.aktiv` - Aktive Perspektive
+- `.amorph-perspektive-btn.hat-treffer` - Hat relevante Suchergebnisse
+- `[data-perspektive-sichtbar]` - Feld gehört zu aktiver Perspektive
+- `[data-perspektive-multi]` - Feld gehört zu mehreren Perspektiven
       .map(p => p.farbe)
       .filter(Boolean);
     
