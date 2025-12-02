@@ -33,6 +33,8 @@ export default function init(ctx) {
   const headerConfig = {
     suche: ctx.config.suche || {},
     perspektiven: perspektivenConfig,
+    branding: ctx.config.branding || {},      // NEU: Branding aus manifest.yaml
+    appName: ctx.config.appName || 'AMORPH',  // NEU: App-Name Fallback
     ansicht: {
       ...(ctx.config.ansicht || {}),
       // Callback für Ansicht-Wechsel (Morph → Feature → Event-Bus)

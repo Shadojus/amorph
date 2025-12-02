@@ -1,6 +1,13 @@
 # Schema-Definition für AMORPH
 # Definiert Datenstruktur, Suchverhalten und Perspektiven
 
+# === META-KONFIGURATION ===
+# Welche Felder haben spezielle Bedeutung?
+meta:
+  nameField: name          # Welches Feld ist der angezeigte Name?
+  idField: id              # Welches Feld ist die eindeutige ID?
+  bildField: bild          # Welches Feld ist das Hauptbild?
+
 # === FELD-REIHENFOLGE ===
 # In welcher Reihenfolge werden Felder angezeigt?
 reihenfolge:

@@ -19,7 +19,8 @@ export function setSchema(schema) {
   debug.suche('Schema geladen', { 
     felder: Object.keys(schema?.felder || {}),
     semantik: Object.keys(schema?.semantik || {}),
-    perspektiven: Object.keys(schema?.perspektiven || {})
+    perspektiven: Object.keys(schema?.perspektiven || {}),
+    meta: schema?.meta
   });
 }
 
@@ -28,6 +29,41 @@ export function setSchema(schema) {
  */
 export function getSchema() {
   return schemaCache;
+}
+
+/**
+ * Meta-Konfiguration aus Schema holen
+ * Definiert welche Felder spezielle Bedeutung haben
+ * @returns {Object} { nameField, idField, bildField }
+ */
+export function getSchemaMeta() {
+  return schemaCache?.meta || {
+    nameField: 'name',    // Fallback: 'name'
+    idField: 'id',        // Fallback: 'id'
+    bildField: 'bild'     // Fallback: 'bild'
+  };
+}
+
+/**
+ * Holt den Namen eines Items basierend auf Schema-Meta-Config
+ * @param {Object} item - Das Daten-Item
+ * @returns {string} Der Name des Items
+ */
+export function getItemName(item) {
+  if (!item) return '';
+  const meta = getSchemaMeta();
+  return item[meta.nameField] || item.name || item.titel || item.id || '';
+}
+
+/**
+ * Holt die ID eines Items basierend auf Schema-Meta-Config
+ * @param {Object} item - Das Daten-Item
+ * @returns {string|number} Die ID des Items
+ */
+export function getItemId(item) {
+  if (!item) return '';
+  const meta = getSchemaMeta();
+  return item[meta.idField] || item.id || '';
 }
 
 /**

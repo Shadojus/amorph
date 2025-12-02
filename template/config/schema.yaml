@@ -1,6 +1,13 @@
 # Schema-Definition
 # Passe diese Datei an deine Datenstruktur an
 
+# === META-KONFIGURATION ===
+# Welche Felder haben spezielle Bedeutung?
+meta:
+  nameField: titel         # Welches Feld ist der angezeigte Name?
+  idField: id              # Welches Feld ist die eindeutige ID?
+  bildField: bild          # Welches Feld ist das Hauptbild?
+
 # === FELDER ===
 felder:
   id:

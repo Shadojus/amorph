@@ -15,6 +15,8 @@
  * NEU: Lokale Suche mit Fuzzy-Matching
  * - Durchsucht die bereits geladenen Daten
  * - Highlights wie im Grid-View
+ * 
+ * DATENGETRIEBEN: Item-Namen aus schema.meta.nameField
  */
 
 import { debug } from '../../observer/debug.js';
@@ -23,7 +25,7 @@ import {
   getAuswahlNachFeld,
   getState 
 } from '../ansichten/index.js';
-import { getFeldConfig, getPerspektivenMorphConfig, getPerspektivenListe, getAllePerspektivenFarben } from '../../util/semantic.js';
+import { getFeldConfig, getPerspektivenMorphConfig, getPerspektivenListe, getAllePerspektivenFarben, getItemName } from '../../util/semantic.js';
 import { 
   compareMorph,
   erstelleFarben
@@ -104,7 +106,7 @@ export default function init(ctx) {
         items: rawItems.map(i => ({
           pilzId: i.pilzId,
           hatPilzDaten: !!i.pilzDaten,
-          pilzName: i.pilzDaten?.name,
+          pilzName: getItemName(i.pilzDaten),  // DATENGETRIEBEN: aus schema.meta.nameField
           wert: typeof i.wert
         }))
       });
@@ -116,7 +118,7 @@ export default function init(ctx) {
         const normalizedId = String(item.pilzId);
         return {
           pilzId: normalizedId,
-          pilzName: item.pilzDaten?.name || normalizedId,
+          pilzName: getItemName(item.pilzDaten) || normalizedId,  // DATENGETRIEBEN
           wert: item.wert,
           farbe: pilzFarben.get(normalizedId) || '#888'
         };

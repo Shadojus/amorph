@@ -27,10 +27,12 @@ ansicht:
       label: Karten
       icon: ⊞
       layout: grid
+      minAuswahl: 0     # Immer verfügbar
     - id: vergleich
       label: Vergleich
       icon: ▥
       layout: kompakt
+      minAuswahl: 1     # Nur wenn mindestens 1 Feld ausgewählt
 
 # Externe Features (optional)
 # extern:

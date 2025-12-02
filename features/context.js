@@ -9,11 +9,14 @@ export function createFeatureContext(name, container, config, dataSource, callba
   
   const eventTarget = new EventTarget();
   
-  // Für Header: Zugriff auf alle Feature-Configs
+  // Für Header: Zugriff auf alle Feature-Configs + Manifest (für Branding)
   const featureConfig = name === 'header' 
     ? { 
         suche: config.features?.suche || {},
-        perspektiven: config.features?.perspektiven || {}
+        perspektiven: config.features?.perspektiven || {},
+        ansicht: config.features?.ansicht || {},
+        branding: config.manifest?.branding || {},    // NEU: Branding aus manifest.yaml
+        appName: config.manifest?.name || 'AMORPH'    // NEU: Fallback App-Name
       }
     : (config.features?.[name] || {});
   

@@ -31,7 +31,8 @@ amorph-container[data-morph="item"] {
 
 /* Scroll-Container für Card-Inhalt - Scrollbar nur beim Scrollen */
 amorph-container[data-morph="item"] {
-  max-height: 500px;
+  min-height: 420px;  /* Längere Cards für mehr Content */
+  max-height: 600px;  /* Mehr Platz bevor Scroll */
   overflow-y: auto;
   overflow-x: hidden;
   /* Scrollbar verstecken bis Hover/Scroll */

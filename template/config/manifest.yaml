@@ -3,3 +3,20 @@ name: Meine App
 version: 1.0.0
 beschreibung: Eine AMORPH-Anwendung
 autor: Dein Name
+
+# === BRANDING ===
+# App-Branding (Zeile 0 im Header)
+branding:
+  titel: MEINE APP                    # App-Name/Logo (links)
+  titelUrl: /                         # Link bei Klick auf Titel
+  
+  # Optional: Partner/Netzwerk (rechts) - entfernen wenn nicht gewünscht
+  # partner:
+  #   text: Part of                   # Text vor Partner-Name
+  #   name: Network                   # Partner-Name
+  #   url: https://example.com        # Partner-Link
+
+# === FARBEN ===
+# Standard-Palette wenn nicht spezifisch definiert
+farben:
+  palette: standard                   # Welche Palette aus morphs.yaml nutzen

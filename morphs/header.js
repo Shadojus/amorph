@@ -3,10 +3,10 @@
  * Container für Suche + Perspektiven + Ansicht-Switch
  * Sticky am oberen Rand - Dark Glasmorphism Design
  * 
- * Layout:
- * Zeile 0: FUNGINOMI (links) ........................ Part of Bifroest (rechts)
- * Zeile 1: [🔍 Suche...] [aktive Badges]
- * Zeile 2: [Grid][Detail][Vergl] | [Perspektiven-Buttons...]
+ * KOMPAKTES LAYOUT (wie das alte, gute):
+ * Zeile 0: FUNGINOMI .......................... Part of Bifroest
+ * Zeile 1: [🔍 Suche] [aktive Filter-Badges...] [⊞][▥]
+ * Zeile 2: [Perspektiven-Grid mit bunten Glow-Effekten]
  */
 
 import { debug } from '../observer/debug.js';
@@ -19,32 +19,43 @@ export function header(config, morphConfig = {}) {
   const container = document.createElement('div');
   container.className = 'amorph-header';
   
-  // === ZEILE 0: Branding (FUNGINOMI + Bifroest) ===
+  // === BRANDING aus Config (oder Fallbacks) ===
+  const branding = config.branding || {};
+  const appTitel = branding.titel || config.appName || 'AMORPH';
+  const appTitelUrl = branding.titelUrl || '/';
+  const partner = branding.partner || {};
+  const partnerText = partner.text || 'Part of the';
+  const partnerName = partner.name || '';
+  const partnerUrl = partner.url || '';
+  
+  // === ZEILE 0: Branding (kompakt) ===
   const zeile0 = document.createElement('div');
   zeile0.className = 'amorph-header-row amorph-header-branding';
   
   // App-Titel/Logo (links)
   const titel = document.createElement('a');
   titel.className = 'amorph-header-titel';
-  titel.href = '/';
-  titel.innerHTML = '<span class="titel-text">FUNGINOMI</span>';
+  titel.href = appTitelUrl;
+  titel.innerHTML = `<span class="titel-text">${appTitel}</span>`;
   zeile0.appendChild(titel);
   
-  // Bifroest Link (rechts)
-  const bifroest = document.createElement('a');
-  bifroest.className = 'amorph-header-bifroest';
-  bifroest.href = 'https://bifroest.io';
-  bifroest.target = '_blank';
-  bifroest.innerHTML = 'Part of the <span class="bifroest-name">Bifroest</span>';
-  zeile0.appendChild(bifroest);
+  // Partner Link (rechts) - nur wenn konfiguriert
+  if (partnerName && partnerUrl) {
+    const partnerLink = document.createElement('a');
+    partnerLink.className = 'amorph-header-bifroest';
+    partnerLink.href = partnerUrl;
+    partnerLink.target = '_blank';
+    partnerLink.innerHTML = `${partnerText} <span class="bifroest-name">${partnerName}</span>`;
+    zeile0.appendChild(partnerLink);
+  }
   
   container.appendChild(zeile0);
   
-  // === ZEILE 1: Suche (volle Breite) ===
+  // === ZEILE 1: Suche (MIT aktiven Badges DRIN) + Ansicht-Switch ===
   const zeile1 = document.createElement('div');
-  zeile1.className = 'amorph-header-row amorph-header-suche';
+  zeile1.className = 'amorph-header-row amorph-header-main';
   
-  // Suche-Container (mit Input + aktive Filter Badges)
+  // Suche-Wrapper (enthält Input + aktive Filter-Badges)
   const sucheWrapper = document.createElement('div');
   sucheWrapper.className = 'amorph-suche-wrapper';
   
@@ -54,36 +65,36 @@ export function header(config, morphConfig = {}) {
     sucheContainer.setAttribute('data-field', 'suche');
     sucheContainer.appendChild(suche(config.suche));
     sucheWrapper.appendChild(sucheContainer);
-    
-    // Container für aktive Filter-Badges (werden dynamisch gefüllt)
-    const aktiveBadges = document.createElement('div');
-    aktiveBadges.className = 'amorph-aktive-filter';
-    sucheWrapper.appendChild(aktiveBadges);
   }
+  
+  // Container für aktive Filter-Badges (INNERHALB der Suchleiste!)
+  const aktiveBadges = document.createElement('div');
+  aktiveBadges.className = 'amorph-aktive-filter';
+  sucheWrapper.appendChild(aktiveBadges);
+  
   zeile1.appendChild(sucheWrapper);
+  
+  // Ansicht-Switch (Grid, Vergleich) - RECHTS
+  if (config.ansicht !== false) {
+    const ansichtSwitch = erstelleAnsichtSwitch(config.ansicht || {});
+    zeile1.appendChild(ansichtSwitch);
+  }
   
   container.appendChild(zeile1);
   
-  // === ZEILE 2: Ansichten + Perspektiven ===
-  const zeile2 = document.createElement('div');
-  zeile2.className = 'amorph-header-row amorph-header-nav';
-  
-  // Ansicht-Switch (Grid, Detail, Vergleich) - links
-  if (config.ansicht !== false) {
-    const ansichtSwitch = erstelleAnsichtSwitch(config.ansicht || {});
-    zeile2.appendChild(ansichtSwitch);
-  }
-  
-  // Perspektiven - rechts daneben
+  // === ZEILE 2: Perspektiven-Grid (volle Breite, buntes Styling) ===
   if (config.perspektiven) {
+    const zeile2 = document.createElement('div');
+    zeile2.className = 'amorph-header-row amorph-header-perspektiven';
+    
     const perspektivenContainer = document.createElement('amorph-container');
     perspektivenContainer.setAttribute('data-morph', 'perspektiven');
     perspektivenContainer.setAttribute('data-field', 'perspektiven');
     perspektivenContainer.appendChild(perspektiven(config.perspektiven));
     zeile2.appendChild(perspektivenContainer);
+    
+    container.appendChild(zeile2);
   }
-  
-  container.appendChild(zeile2);
   
   return container;
 }
@@ -91,6 +102,7 @@ export function header(config, morphConfig = {}) {
 /**
  * Erstellt den Ansicht-Switch (Karten, Detail, Vergleich)
  * Direktes Tab-Wechseln - kein Popup!
+ * NEU: Vergleich-Button zeigt Auswahl-Anzahl!
  */
 function erstelleAnsichtSwitch(config) {
   const ansichten = config.ansichten || [
@@ -109,18 +121,25 @@ function erstelleAnsichtSwitch(config) {
     const btn = document.createElement('button');
     btn.className = 'amorph-ansicht-btn';
     btn.dataset.ansicht = ansicht.id;
-    btn.dataset.minAuswahl = ansicht.minAuswahl;
+    // minAuswahl aus Config oder Fallback (vergleich braucht mindestens 1)
+    const minAuswahl = ansicht.minAuswahl ?? (ansicht.id === 'vergleich' ? 1 : 0);
+    btn.dataset.minAuswahl = minAuswahl;
     btn.setAttribute('role', 'tab');
     btn.setAttribute('aria-selected', ansicht.id === aktiv ? 'true' : 'false');
     btn.setAttribute('title', ansicht.label);
-    btn.textContent = ansicht.icon;
+    
+    // Icon + Counter-Badge für Vergleich
+    btn.innerHTML = `<span class="btn-icon">${ansicht.icon}</span>`;
+    if (ansicht.id === 'vergleich') {
+      btn.innerHTML += `<span class="btn-counter" data-count="0"></span>`;
+    }
     
     if (ansicht.id === aktiv) {
       btn.classList.add('aktiv');
     }
     
-    // Detail + Vergleich initial disabled bis Auswahl vorhanden
-    if (ansicht.minAuswahl > 0) {
+    // Vergleich initial disabled bis Auswahl vorhanden
+    if (minAuswahl > 0) {
       btn.disabled = true;
       btn.classList.add('disabled');
     }
@@ -149,8 +168,16 @@ function erstelleAnsichtSwitch(config) {
     switchContainer.appendChild(btn);
   }
   
-  // Update-Funktion für externe Aufrufe (statt document.addEventListener)
+  // Update-Funktion für externe Aufrufe
   switchContainer.updateAuswahl = (anzahl) => {
+    // Vergleich-Button Counter aktualisieren
+    const vergleichBtn = switchContainer.querySelector('[data-ansicht="vergleich"]');
+    const counter = vergleichBtn?.querySelector('.btn-counter');
+    if (counter) {
+      counter.dataset.count = anzahl;
+      counter.textContent = anzahl > 0 ? anzahl : '';
+    }
+    
     // Buttons enablen/disablen basierend auf Auswahl-Anzahl
     for (const btn of switchContainer.querySelectorAll('.amorph-ansicht-btn')) {
       const minAuswahl = parseInt(btn.dataset.minAuswahl || '0');
