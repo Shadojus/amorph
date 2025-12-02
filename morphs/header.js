@@ -95,8 +95,7 @@ export function header(config, morphConfig = {}) {
 function erstelleAnsichtSwitch(config) {
   const ansichten = config.ansichten || [
     { id: 'karten', label: 'Karten', icon: '⊞', minAuswahl: 0 },
-    { id: 'detail', label: 'Detail', icon: '☰', minAuswahl: 1 },
-    { id: 'vergleich', label: 'Vergleich', icon: '▥', minAuswahl: 2 }
+    { id: 'vergleich', label: 'Vergleich', icon: '▥', minAuswahl: 1 }
   ];
   
   const aktiv = config.default || 'karten';

@@ -159,10 +159,18 @@ export function compareRating(items, config = {}) {
  * COMPARE TAG - Chip-Vergleich für kategorische Daten
  * 
  * Perfekt für: essbarkeit, saison, verfuegbarkeit
+ * Nutzt Schema-Farben für Kategorien (essbar: grün, giftig: rot, etc.)
  */
 export function compareTag(items, config = {}) {
   const el = document.createElement('div');
   el.className = 'amorph-compare amorph-compare-tag';
+  
+  console.log('%c[COMPARE-TAG] 🏷️ Tag-Morph erstellen', 'background:#d06080;color:white;padding:2px 6px;border-radius:3px', {
+    itemsAnzahl: items.length,
+    label: config.label,
+    schemaFarben: config.farben,
+    perspektiveFarben: config.perspektiveFarben
+  });
   
   if (config.label) {
     const label = document.createElement('div');
@@ -188,8 +196,17 @@ export function compareTag(items, config = {}) {
     const chip = document.createElement('div');
     chip.className = 'compare-chip';
     
-    // Farbe aus Config oder erste Pilz-Farbe
-    const tagFarbe = config.farben?.[String(wert).toLowerCase()] || pilze[0]?.farbe || '#666';
+    // Farbe aus Schema-Config (z.B. essbarkeit.farben.essbar)
+    // Fallback: erste Pilz-Farbe oder grau
+    const wertKey = String(wert || '').toLowerCase();
+    const tagFarbe = config.farben?.[wertKey] || pilze[0]?.farbe || '#666';
+    
+    console.log('%c[COMPARE-TAG] Chip-Farbe', 'background:#808080;color:white;padding:2px 4px;border-radius:3px', {
+      wert,
+      wertKey,
+      gefundeneFarbe: config.farben?.[wertKey],
+      verwendeteFarbe: tagFarbe
+    });
     
     chip.innerHTML = `
       <span class="chip-wert" style="background:${tagFarbe}">${wert || '–'}</span>
@@ -709,30 +726,29 @@ export function compareTimeline(items, config = {}) {
 /**
  * HAUPT-EXPORT: Wählt automatisch den richtigen Compare-Morph
  * 
+ * Priorität:
+ * 1. Explizit übergebener `typ` (von Perspektiven-Config)
+ * 2. Feld-spezifische Handler (für spezielle Felder wie bild, profil)
+ * 3. Schema-Typ basierte Handler
+ * 4. Fallback zu Text
+ * 
  * @param {string} feldName - Name des Feldes
- * @param {string} typ - Schema-Typ (rating, progress, tag, list, etc.)
+ * @param {string} typ - Schema-Typ oder Perspektiven-Typ (rating, progress, tag, list, etc.)
  * @param {Array} items - [{pilzId, pilzName, wert, farbe}]
- * @param {Object} config - Feld-Config aus Schema
+ * @param {Object} config - Feld-Config aus Schema + Perspektiven-Config
  */
 export function compareMorph(feldName, typ, items, config = {}) {
-  debug.morphs('compareMorph', { feldName, typ, items: items.length });
+  console.log('%c[COMPARE-MORPH] compareMorph aufgerufen', 'background:#e86080;color:white;padding:2px 6px;border-radius:3px;font-weight:bold', {
+    feldName,
+    typ,
+    itemsAnzahl: items.length,
+    perspektive: config.perspektive,
+    label: config.label,
+    hatFarben: !!config.farben
+  });
+  debug.morphs('compareMorph', { feldName, typ, items: items.length, perspektive: config.perspektive });
   
-  // Spezielle Feld-Handler
-  const feldHandler = {
-    bild: () => compareImage(items, config),
-    profil: () => compareRadar(items, config),
-    naehrwerte: () => comparePie(items, config),
-    bewertung: () => compareRating(items, config),
-    zubereitung: () => compareTag(items, config), // Nach Wert gruppieren, nicht nach Pilz
-    wirkstoffe: () => compareWirkstoffe(items, config),
-    lebenszyklus: () => compareTimeline(items, config),
-  };
-  
-  if (feldHandler[feldName]) {
-    return feldHandler[feldName]();
-  }
-  
-  // Typ-basierte Handler
+  // Typ-basierte Handler (höchste Priorität - erlaubt Perspektiven-Override)
   const typHandler = {
     rating: () => compareRating(items, config),
     progress: () => compareBar(items, { ...config, max: 100 }),
@@ -746,10 +762,48 @@ export function compareMorph(feldName, typ, items, config = {}) {
     pie: () => comparePie(items, config),
     bar: () => compareBar(items, config),
     stats: () => compareBar(items, config),
-    timeline: () => compareText(items, config), // TODO: Timeline-Vergleich
+    timeline: () => compareTimeline(items, config),
+    wirkstoffe: () => compareWirkstoffe(items, config),
+    text: () => compareText(items, config),
   };
   
+  // Wenn Perspektive einen Typ definiert hat → diesen nutzen
+  if (config.perspektive && typHandler[typ]) {
+    console.log('%c[COMPARE-MORPH] ★ PERSPEKTIVEN-OVERRIDE aktiv!', 'background:#a855f7;color:white;padding:4px 8px;border-radius:3px;font-weight:bold;font-size:12px', {
+      feldName,
+      typ,
+      perspektive: config.perspektive,
+      verwendeterHandler: typ
+    });
+    debug.morphs('Perspektiven-Morph', { feldName, typ, perspektive: config.perspektive });
+    return typHandler[typ]();
+  }
+  
+  // Feld-spezifische Handler (Standard-Darstellung ohne Perspektive)
+  const feldHandler = {
+    bild: () => compareImage(items, config),
+    profil: () => compareRadar(items, config),
+    naehrwerte: () => comparePie(items, config),
+    bewertung: () => compareRating(items, config),
+    zubereitung: () => compareTag(items, config),
+    wirkstoffe: () => compareWirkstoffe(items, config),
+    lebenszyklus: () => compareTimeline(items, config),
+  };
+  
+  if (feldHandler[feldName]) {
+    console.log('%c[COMPARE-MORPH] Feld-Handler verwendet', 'background:#5cc98a;color:white;padding:2px 6px;border-radius:3px', {
+      feldName,
+      handler: feldName
+    });
+    return feldHandler[feldName]();
+  }
+  
+  // Typ-basierte Handler (für alle anderen Felder)
   if (typHandler[typ]) {
+    console.log('%c[COMPARE-MORPH] Typ-Handler verwendet', 'background:#5aa0d8;color:white;padding:2px 6px;border-radius:3px', {
+      feldName,
+      typ
+    });
     return typHandler[typ]();
   }
   

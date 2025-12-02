@@ -228,7 +228,7 @@ function scoreItem(item, query) {
 /**
  * Extrahiert alle Text-Werte aus einem Objekt (rekursiv)
  */
-function extractAllTexts(obj, texts = []) {
+export function extractAllTexts(obj, texts = []) {
   if (obj === null || obj === undefined) return texts;
   
   if (typeof obj === 'string') {
@@ -246,4 +246,139 @@ function extractAllTexts(obj, texts = []) {
   }
   
   return texts;
+}
+
+/**
+ * Lokale Suche auf vorhandenen Daten (ohne DB-Query)
+ * Für Vergleich-View und andere Views wo Daten schon existieren
+ * 
+ * @param {Array} items - Array von Daten-Objekten
+ * @param {string} query - Suchbegriff
+ * @returns {{ results: Array, matchedTerms: Set, scores: Map }}
+ */
+export function localSearch(items, query) {
+  if (!query?.trim() || !items?.length) {
+    return { results: items || [], matchedTerms: new Set(), scores: new Map() };
+  }
+  
+  const q = query.toLowerCase().trim();
+  const matchedTerms = new Set();
+  const scores = new Map();
+  
+  const scored = items.map(item => {
+    const result = scoreItemWithMatches(item, q);
+    return { item, score: result.score, matches: result.matches };
+  });
+  
+  // Treffer sammeln
+  const filtered = scored.filter(s => s.score > 0);
+  
+  for (const s of filtered) {
+    for (const match of s.matches) {
+      matchedTerms.add(match);
+    }
+    scores.set(s.item, s.score);
+  }
+  
+  const results = filtered
+    .sort((a, b) => b.score - a.score)
+    .map(s => s.item);
+  
+  debug.suche('localSearch komplett', { 
+    query: q, 
+    treffer: results.length, 
+    matchedTerms: [...matchedTerms].slice(0, 10)
+  });
+  
+  return { results, matchedTerms, scores };
+}
+
+/**
+ * Highlight-Funktion für beliebige Container
+ * Markiert Treffer in Text-Elementen
+ * 
+ * @param {Element} container - DOM-Element in dem gesucht wird
+ * @param {string} query - Original-Query
+ * @param {Set} matchedTerms - Gefundene Begriffe
+ * @param {Object} options - { selectors: Array von CSS-Selektoren }
+ */
+export function highlightInContainer(container, query, matchedTerms = new Set(), options = {}) {
+  const selectors = options.selectors || [
+    '.amorph-text', '.amorph-tag', '.compare-label', '.compare-value',
+    '.compare-bar-label', '.compare-list-item', '.legende-item span:not(.legende-dot):not(.legende-farbe)',
+    '.radar-label', '.timeline-event', '.wirkstoffe-name'
+  ];
+  
+  // Highlight-Begriffe sammeln
+  let highlightTerms = new Set(matchedTerms);
+  
+  // Falls keine matchedTerms, Fallback auf Query-Wörter
+  if (highlightTerms.size === 0 && query) {
+    const stopwords = new Set([
+      'der', 'die', 'das', 'und', 'oder', 'für', 'mit', 'von', 'zu', 'bei',
+      'was', 'ist', 'ein', 'eine', 'kann', 'man', 'wie', 'wo', 'wer', 'welche'
+    ]);
+    const words = query.toLowerCase().split(/\s+/)
+      .map(w => w.replace(/[?!.,;:'"()]/g, ''))
+      .filter(w => w.length > 2 && !stopwords.has(w));
+    for (const word of words) {
+      highlightTerms.add(word);
+    }
+  }
+  
+  if (highlightTerms.size === 0) return 0;
+  
+  let count = 0;
+  const elements = container.querySelectorAll(selectors.join(', '));
+  
+  for (const el of elements) {
+    // Skip wenn schon Highlights drin
+    if (el.querySelector('.amorph-highlight')) continue;
+    
+    const originalText = el.textContent;
+    let html = escapeHtml(originalText);
+    let hasMatch = false;
+    
+    for (const term of highlightTerms) {
+      if (term.length < 2) continue;
+      
+      const regex = new RegExp(`(${escapeRegex(term)})`, 'gi');
+      if (regex.test(originalText)) {
+        html = html.replace(new RegExp(`(${escapeRegex(term)})`, 'gi'), '<mark class="amorph-highlight">$1</mark>');
+        hasMatch = true;
+      }
+    }
+    
+    if (hasMatch) {
+      el.innerHTML = html;
+      count++;
+    }
+  }
+  
+  debug.suche('highlightInContainer', { terms: [...highlightTerms], markiert: count });
+  return count;
+}
+
+/**
+ * Entfernt alle Highlights aus einem Container
+ */
+export function clearHighlights(container) {
+  const highlights = container.querySelectorAll('.amorph-highlight');
+  for (const mark of highlights) {
+    const text = document.createTextNode(mark.textContent);
+    mark.parentNode.replaceChild(text, mark);
+  }
+  // Normalisieren um aufeinanderfolgende Textnodes zu vereinen
+  container.normalize();
+}
+
+// Hilfsfunktionen
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function escapeRegex(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }

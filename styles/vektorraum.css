@@ -24,11 +24,328 @@
   background: rgba(0, 0, 0, 0.5);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+/* === VERGLEICH SUCHE === */
+.sammel-suche {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  max-width: 320px;
+}
+
+.vergleich-suche-input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: white;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.vergleich-suche-input:focus {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 8px rgba(90, 160, 216, 0.3);
+}
+
+.vergleich-suche-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.vergleich-suche-btn,
+.vergleich-suche-clear {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  transition: all 0.15s ease;
+}
+
+.vergleich-suche-btn:hover,
+.vergleich-suche-clear:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+.vergleich-suche-clear {
+  font-size: 12px;
+  padding: 6px 8px;
+}
+
+/* === SUCHE TREFFER STYLING === */
+.amorph-compare.suche-treffer {
+  position: relative;
+}
+
+.amorph-compare.suche-treffer::after {
+  content: '✓';
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(96, 192, 144, 0.9);
+  color: white;
+  font-size: 10px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 8px rgba(96, 192, 144, 0.5);
+}
+
+.amorph-compare.suche-kein-treffer {
+  opacity: 0.4;
+  filter: grayscale(0.5);
+}
+
+/* Highlight Styling (wie im Grid-View) */
+.amorph-sammeldiagramm .amorph-highlight {
+  background: rgba(232, 176, 74, 0.4);
+  color: white;
+  padding: 0 2px;
+  border-radius: 2px;
+  box-shadow: 0 0 4px rgba(232, 176, 74, 0.5);
 }
 
 .sammel-anzahl {
   font-size: 13px;
   color: rgba(255, 255, 255, 0.6);
+}
+
+.sammel-perspektiven {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  display: none;
+}
+
+.sammel-perspektiven:not(:empty) {
+  display: inline;
+}
+
+/* ============================================
+   PERSPEKTIVEN-STYLING FÜR COMPARE-MORPHS
+   Konsistent mit Grid-View (perspektiven.css)
+   
+   CSS-Variablen (gesetzt von vergleich/index.js):
+   - Single-Perspektive: --feld-perspektive-farbe, --feld-p-farbe-1, -2, -3
+   - Multi-Perspektiven: --p-farbe-0, --p-farbe-1, ..., --feld-gradient, --feld-bg-gradient
+   ============================================ */
+
+/* === BASIS: Perspektive aktiv (Single) === */
+.amorph-compare.perspektive-aktiv {
+  position: relative;
+  padding-left: var(--space-md, 12px);
+  margin-left: 4px;
+  /* Dezenter Glasmorphism Hintergrund mit 4-Farben-Grid */
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--feld-perspektive-farbe, #e8b04a) 8%, rgba(0,0,0,0.3)) 0%,
+    color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe, #d4943a)) 5%, rgba(0,0,0,0.3)) 50%,
+    color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe, #f0c866)) 3%, rgba(0,0,0,0.3)) 100%
+  );
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border: none;
+  border-radius: 12px;
+}
+
+/* Leuchtender vertikaler Glow-Streifen (wie im Grid) */
+.amorph-compare.perspektive-aktiv::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  /* 4-Farben Gradient aus der Perspektive */
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--feld-perspektive-farbe, #e8b04a) 70%, transparent) 0%,
+    color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe, #d4943a)) 60%, transparent) 33%,
+    color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe, #f0c866)) 50%, transparent) 66%,
+    color-mix(in srgb, var(--feld-p-farbe-3, var(--feld-perspektive-farbe, #cc7a2a)) 40%, transparent) 100%
+  );
+  border-radius: 2px;
+  /* Dezenter Glow-Effekt */
+  box-shadow: 
+    0 0 4px color-mix(in srgb, var(--feld-perspektive-farbe, #e8b04a) 50%, transparent),
+    0 0 8px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 30%, transparent);
+  animation: compare-glow-single 4s ease-in-out infinite;
+}
+
+/* Label mit Perspektiven-Farbe */
+.amorph-compare.perspektive-aktiv .compare-label {
+  color: var(--feld-perspektive-farbe, #e8b04a);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--feld-perspektive-farbe, #e8b04a) 40%, transparent);
+}
+
+/* ============================================
+   MULTI-PERSPEKTIVEN: Mehrere aktive Perspektiven
+   ============================================ */
+.amorph-compare.perspektive-aktiv[data-perspektive-multi="true"] {
+  /* Multi-Gradient Hintergrund (wie Grid-View: --feld-bg-gradient) */
+  background: var(--feld-bg-gradient, linear-gradient(135deg, rgba(232, 176, 74, 0.06), rgba(232, 96, 128, 0.06)));
+}
+
+/* Multi-Perspektiven: Animierter Gradient Glow-Streifen */
+.amorph-compare.perspektive-aktiv[data-perspektive-multi="true"]::before {
+  width: 3px;
+  /* Animierter vertikaler Gradient aus allen Perspektiven (wie Grid-View: --feld-gradient) */
+  background: var(--feld-gradient, linear-gradient(180deg, #e8b04a, #60c090));
+  background-size: 100% 200%;
+  /* Kombinierter leuchtender Glow aus allen Farben */
+  box-shadow: 
+    0 0 6px var(--p-farbe-0, #e8b04a),
+    0 0 6px var(--p-farbe-1, #60c090),
+    0 0 12px color-mix(in srgb, var(--p-farbe-0, #e8b04a) 60%, transparent),
+    0 0 12px color-mix(in srgb, var(--p-farbe-1, #60c090) 60%, transparent),
+    0 0 20px color-mix(in srgb, var(--p-farbe-2, #5aa0d8) 40%, transparent),
+    0 0 20px color-mix(in srgb, var(--p-farbe-3, #a855f7) 40%, transparent);
+  animation: compare-multi-flow 3s ease-in-out infinite;
+}
+
+/* Multi-Perspektiven Label mit Gradient-Text */
+.amorph-compare.perspektive-aktiv[data-perspektive-multi="true"] .compare-label {
+  background: var(--feld-gradient, linear-gradient(90deg, #e8b04a, #60c090));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+  text-shadow: none;
+}
+
+/* === ANIMATIONEN === */
+/* Single-Perspektive Glow */
+@keyframes compare-glow-single {
+  0%, 100% { 
+    opacity: 0.85;
+    box-shadow: 
+      0 0 4px color-mix(in srgb, var(--feld-perspektive-farbe, #e8b04a) 50%, transparent),
+      0 0 8px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 30%, transparent);
+  }
+  50% { 
+    opacity: 1;
+    box-shadow: 
+      0 0 8px color-mix(in srgb, var(--feld-perspektive-farbe, #e8b04a) 70%, transparent),
+      0 0 16px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 50%, transparent),
+      0 0 24px color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe)) 30%, transparent);
+  }
+}
+
+/* Multi-Perspektiven animierter Flow */
+@keyframes compare-multi-flow {
+  0%, 100% { 
+    background-position: 0% 0%;
+    filter: brightness(0.9);
+  }
+  50% { 
+    background-position: 0% 100%;
+    filter: brightness(1.1);
+  }
+}
+
+/* ============================================
+   MORPH-SPEZIFISCHE STYLES
+   
+   WICHTIG: Pilz-Farben werden per Inline-Style gesetzt!
+   Diese Farben dienen der Legende (welcher Pilz = welche Farbe)
+   Die CSS sollte NUR Glow-Effekte hinzufügen, NICHT Farben überschreiben.
+   ============================================ */
+
+/* Bar Fill - Nur Glow hinzufügen, Farbe kommt vom inline-style */
+.amorph-compare.perspektive-aktiv .bar-fill {
+  box-shadow: 0 0 6px currentColor;
+}
+
+/* Bar Fill Container (kein inline-style) kann Perspektiven-Farbe bekommen */
+.amorph-compare.perspektive-aktiv .compare-bars {
+  /* Dezenter Perspektiven-Hintergrund */
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--feld-perspektive-farbe, transparent) 5%, transparent) 0%,
+    transparent 100%
+  );
+  border-radius: 4px;
+  padding: 4px;
+}
+
+/* ============================================
+   WICHTIG: Radar/Pie Shapes mit Inline-Style NICHT überschreiben!
+   Die Inline-Styles enthalten Pilz-Farben für die Legende.
+   Perspektiven-Farben gelten nur für den Container-Glow.
+   ============================================ */
+
+/* Radar Shapes behalten ihre Pilz-Farben (inline-style) */
+/* KEIN !important - Inline-Styles haben Vorrang */
+.amorph-compare.perspektive-aktiv .radar-shape {
+  /* Nur Glow-Effekt hinzufügen, keine Farbe überschreiben */
+  filter: drop-shadow(0 0 4px currentColor);
+}
+
+/* Timeline Event - Single */
+.amorph-compare.perspektive-aktiv:not([data-perspektive-multi]) .timeline-event {
+  border-left: 3px solid var(--feld-perspektive-farbe, #e8b04a);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--feld-perspektive-farbe, #e8b04a) 10%, transparent) 0%,
+    color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 5%, rgba(255,255,255,0.04)) 100%
+  );
+}
+
+/* Timeline Event - Multi */
+.amorph-compare.perspektive-aktiv[data-perspektive-multi] .timeline-event {
+  border-left: 3px solid;
+  border-image: var(--feld-gradient) 1;
+  background: var(--feld-bg-gradient, rgba(255,255,255,0.04));
+}
+
+/* Wirkstoffe Bar - Single */
+.amorph-compare.perspektive-aktiv:not([data-perspektive-multi]) .wirkstoffe-bar .bar-fill {
+  background: linear-gradient(90deg, var(--feld-perspektive-farbe, #e8b04a), var(--feld-p-farbe-1, var(--feld-perspektive-farbe))) !important;
+  box-shadow: 0 0 4px color-mix(in srgb, var(--feld-perspektive-farbe, #e8b04a) 30%, transparent);
+}
+
+/* Wirkstoffe Bar - Multi */
+.amorph-compare.perspektive-aktiv[data-perspektive-multi] .wirkstoffe-bar .bar-fill {
+  background: var(--feld-gradient) !important;
+  box-shadow: 0 0 4px color-mix(in srgb, var(--p-farbe-0) 25%, transparent), 0 0 8px color-mix(in srgb, var(--p-farbe-1) 20%, transparent);
+}
+
+/* Pie Slices - Single (4-Farben-Grid) */
+.amorph-compare.perspektive-aktiv:not([data-perspektive-multi]) .mini-pie-svg .pie-slice:nth-child(1) { fill: var(--feld-perspektive-farbe, #e8b04a); }
+.amorph-compare.perspektive-aktiv:not([data-perspektive-multi]) .mini-pie-svg .pie-slice:nth-child(2) { fill: var(--feld-p-farbe-1, var(--feld-perspektive-farbe)); }
+.amorph-compare.perspektive-aktiv:not([data-perspektive-multi]) .mini-pie-svg .pie-slice:nth-child(3) { fill: var(--feld-p-farbe-2, var(--feld-perspektive-farbe)); }
+.amorph-compare.perspektive-aktiv:not([data-perspektive-multi]) .mini-pie-svg .pie-slice:nth-child(4) { fill: var(--feld-p-farbe-3, var(--feld-perspektive-farbe)); }
+
+/* Pie Slices - Multi (Farben der verschiedenen Perspektiven) */
+.amorph-compare.perspektive-aktiv[data-perspektive-multi] .mini-pie-svg .pie-slice:nth-child(1) { fill: var(--p-farbe-0, #e8b04a); }
+.amorph-compare.perspektive-aktiv[data-perspektive-multi] .mini-pie-svg .pie-slice:nth-child(2) { fill: var(--p-farbe-1, #60c090); }
+.amorph-compare.perspektive-aktiv[data-perspektive-multi] .mini-pie-svg .pie-slice:nth-child(3) { fill: var(--p-farbe-2, #5aa0d8); }
+.amorph-compare.perspektive-aktiv[data-perspektive-multi] .mini-pie-svg .pie-slice:nth-child(4) { fill: var(--p-farbe-3, #a855f7); }
+
+/* List Item gemeinsam - Single */
+.amorph-compare.perspektive-aktiv:not([data-perspektive-multi]) .compare-list-item.gemeinsam {
+  background: color-mix(in srgb, var(--feld-perspektive-farbe, #e8b04a) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--feld-perspektive-farbe, #e8b04a) 30%, transparent);
+}
+
+/* List Item gemeinsam - Multi */
+.amorph-compare.perspektive-aktiv[data-perspektive-multi] .compare-list-item.gemeinsam {
+  background: var(--feld-bg-gradient, rgba(96, 192, 144, 0.1));
+  border: 1px solid color-mix(in srgb, var(--p-farbe-0) 25%, color-mix(in srgb, var(--p-farbe-1) 25%, transparent));
 }
 
 /* === CONTENT === */

@@ -113,11 +113,11 @@ felder:
 
   # === NEUE VISUELLE MORPHS ===
   
-  # RATING - Sterne-Bewertung (0-5)
-  bewertung:
-    typ: rating
-    label: Bewertung
-    maxStars: 5
+  # RATING deaktiviert - nicht mehr benötigt
+  # bewertung:
+  #   typ: rating
+  #   label: Bewertung
+  #   maxStars: 5
   
   # PROGRESS - Beliebtheit als Balken (0-100)
   beliebtheit:
@@ -434,6 +434,20 @@ perspektiven:
       - bewertung
       - naehrwerte
       - profil
+    # Spezielle Morph-Konfiguration für Vergleich-View
+    morphs:
+      geschmack: 
+        typ: tag  # Chips gruppiert nach Geschmack
+        label: "Geschmacksvergleich"
+      zubereitung:
+        typ: tag  # Nach Zubereitung gruppiert
+        label: "Zubereitungsarten"
+      naehrwerte:
+        typ: bar  # Balkenvergleich für Nährwerte
+        label: "Nährwertvergleich"
+      essbarkeit:
+        typ: tag
+        label: "Essbarkeit"
     keywords:
       - essbar
       - essen
@@ -467,6 +481,18 @@ perspektiven:
       - symptome
       - toxizitaet
       - profil
+    morphs:
+      essbarkeit:
+        typ: tag
+        label: "Gefahrenstufe"
+        prioritaet: 1  # Ganz oben zeigen
+      verwechslung:
+        typ: list
+        label: "Verwechslungsgefahr"
+        highlight: true
+      profil:
+        typ: radar
+        label: "Gefahrenprofil"
     keywords:
       - giftig
       - gift
@@ -499,6 +525,19 @@ perspektiven:
       - verfuegbarkeit
       - lebenszyklus
       - ernte_stats
+    morphs:
+      standort:
+        typ: list
+        label: "Fundorte"
+      saison:
+        typ: tag
+        label: "Beste Saison"
+      temperatur:
+        typ: bar
+        label: "Temperaturbereich"
+      lebenszyklus:
+        typ: timeline
+        label: "Wachstumsphasen"
     keywords:
       - standort
       - wald
@@ -532,6 +571,16 @@ perspektiven:
       - naehrwerte
       - profil
       - ernte_stats
+    morphs:
+      wirkstoffe:
+        typ: wirkstoffe
+        label: "Wirkstoffanalyse"
+      naehrwerte:
+        typ: pie
+        label: "Nährwertverteilung"
+      profil:
+        typ: radar
+        label: "Inhaltsstoffprofil"
     keywords:
       - wissenschaft
       - forschung
@@ -559,6 +608,13 @@ perspektiven:
       - medizinisch
       - profil
       - beschreibung
+    morphs:
+      wirkstoffe:
+        typ: wirkstoffe
+        label: "Medizinische Wirkstoffe"
+      profil:
+        typ: radar
+        label: "Heilwirkungsprofil"
     keywords:
       - medizin
       - heilkunde
@@ -587,6 +643,19 @@ perspektiven:
       - naehrwerte
       - wirkstoffe
       - profil
+    morphs:
+      bewertung:
+        typ: bar
+        label: "Bewertungsvergleich"
+      beliebtheit:
+        typ: bar
+        label: "Beliebtheit"
+      ernte_stats:
+        typ: bar
+        label: "Ernte-Statistiken"
+      profil:
+        typ: radar
+        label: "Datenprofil"
     keywords:
       - statistik
       - daten

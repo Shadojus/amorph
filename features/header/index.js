@@ -305,7 +305,13 @@ export default function init(ctx) {
       });
     }
     
-    ctx.emit('perspektiven:geaendert', { aktiv: Array.from(aktivePerspektiven) });
+    // Event emittieren - sowohl ctx-intern als auch document-weit
+    const eventData = { aktiv: Array.from(aktivePerspektiven) };
+    console.log('%c[HEADER] Perspektiven-Event wird gesendet', 'background:#e8b04a;color:black;padding:4px 8px;border-radius:3px;font-weight:bold', eventData);
+    ctx.emit('perspektiven:geaendert', eventData);
+    document.dispatchEvent(new CustomEvent('perspektiven:geaendert', { 
+      detail: eventData
+    }));
   }
   
   function setPerspektive(id, aktiv) {
