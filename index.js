@@ -14,7 +14,7 @@ import { setupObservers, stopObservers } from './observer/index.js';
 import { loadFeatures, unloadFeatures } from './features/index.js';
 import { createDataSource } from './util/fetch.js';
 import { getSession } from './util/session.js';
-import { setSchema } from './util/semantic.js';
+import { setSchema, setMorphsConfig } from './util/semantic.js';
 import { debug } from './observer/debug.js';
 import { setFarbenConfig } from './morphs/compare.js';
 import './core/container.js'; // Web Component registrieren
@@ -60,6 +60,12 @@ export async function amorph(options = {}) {
   if (config.morphs?.erkennung) {
     setErkennungConfig(config.morphs);
     debug.config('Erkennung-Config geladen', Object.keys(config.morphs.erkennung));
+  }
+  
+  // Morphs-Config für Farben und Badge-Keywords setzen (aus morphs.yaml)
+  if (config.morphs) {
+    setMorphsConfig(config.morphs);
+    debug.config('Morphs-Config geladen', Object.keys(config.morphs));
   }
   
   // Farben-Config für Compare setzen (aus morphs.yaml)

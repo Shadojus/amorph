@@ -551,7 +551,7 @@ function erstelleMiniPie(data) {
   const r = size / 2 - 2;
   
   const total = data.reduce((sum, d) => sum + (d.value || d.count || 0), 0);
-  const pieColors = ['#60c090', '#5aa0d8', '#e8b04a', '#d06080', '#a080d0'];
+  const pieColors = farbenConfig?.diagramme || FALLBACK_FARBEN;
   
   let currentAngle = -Math.PI / 2;
   

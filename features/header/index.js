@@ -33,7 +33,17 @@ export default function init(ctx) {
   const headerConfig = {
     suche: ctx.config.suche || {},
     perspektiven: perspektivenConfig,
-    ansicht: ctx.config.ansicht || {}
+    ansicht: {
+      ...(ctx.config.ansicht || {}),
+      // Callback für Ansicht-Wechsel (Morph → Feature → Event-Bus)
+      onAnsichtWechsel: (ansichtId) => {
+        debug.header('Ansicht-Wechsel Callback', { ansicht: ansichtId });
+        // Global emittieren für andere Features (detail, vergleich, grid, ansichten)
+        document.dispatchEvent(new CustomEvent('amorph:ansicht-wechsel', {
+          detail: { ansicht: ansichtId }
+        }));
+      }
+    }
   };
   
   debug.features('Header Config', headerConfig);
@@ -45,6 +55,15 @@ export default function init(ctx) {
   
   const headerEl = headerMorph(headerConfig);
   container.appendChild(headerEl);
+  
+  // Ansicht-Switch finden und Auswahl-Updates verbinden
+  const ansichtSwitch = headerEl.querySelector('.amorph-ansicht-switch');
+  if (ansichtSwitch?.updateAuswahl) {
+    // Lausche auf Auswahl-Änderungen und leite an Morph weiter
+    document.addEventListener('amorph:auswahl-geaendert', (e) => {
+      ansichtSwitch.updateAuswahl(e.detail.anzahl);
+    });
+  }
   
   // Elemente finden
   const sucheForm = headerEl.querySelector('.amorph-suche');
@@ -149,19 +168,32 @@ export default function init(ctx) {
   }
   
   // === SCROLL DETECTION für Header-Styling ===
-  function handleScroll() {
+  // Nutzt Intersection Observer statt window.addEventListener (Feature-Isolation)
+  function setupScrollDetection() {
     const featureWrapper = container.closest('.amorph-feature-header') || container.parentElement;
-    if (featureWrapper) {
-      if (window.scrollY > 10) {
-        featureWrapper.classList.add('scrolled');
-      } else {
-        featureWrapper.classList.remove('scrolled');
+    if (!featureWrapper) return;
+    
+    // Sentinel-Element für Intersection Observer
+    const sentinel = document.createElement('div');
+    sentinel.className = 'amorph-scroll-sentinel';
+    sentinel.style.cssText = 'position: absolute; top: 10px; left: 0; width: 1px; height: 1px; pointer-events: none;';
+    document.body.insertAdjacentElement('afterbegin', sentinel);
+    
+    // Intersection Observer statt scroll-Event
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          featureWrapper.classList.remove('scrolled');
+        } else {
+          featureWrapper.classList.add('scrolled');
+        }
       }
-    }
+    }, { threshold: 0 });
+    
+    observer.observe(sentinel);
+    debug.header('Scroll-Detection via IntersectionObserver eingerichtet');
   }
-  window.addEventListener('scroll', handleScroll, { passive: true });
-  // Initial check
-  handleScroll();
+  setupScrollDetection();
   
   // === PERSPEKTIVEN LOGIK ===
   function togglePerspektive(id, btn) {

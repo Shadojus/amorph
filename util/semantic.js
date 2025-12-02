@@ -8,6 +8,9 @@ import { debug } from '../observer/debug.js';
 // Schema-Cache
 let schemaCache = null;
 
+// Morphs-Config Cache (für Farben, Badge-Keywords etc.)
+let morphsConfigCache = null;
+
 /**
  * Schema setzen (wird von außen aufgerufen nach Config-Load)
  */
@@ -398,4 +401,52 @@ export function getFeldConfig(feldname) {
 export function getAlleFeldConfigs() {
   if (!schemaCache?.felder) return {};
   return schemaCache.felder;
+}
+
+// ========== MORPHS-CONFIG FUNKTIONEN ==========
+
+/**
+ * Morphs-Config setzen (wird von außen aufgerufen nach Config-Load)
+ * Enthält Erkennungsregeln, Farben, Badge-Config etc.
+ */
+export function setMorphsConfig(config) {
+  morphsConfigCache = config;
+  debug.morphs('Morphs-Config geladen', { 
+    hatFarben: !!config?.farben,
+    hatErkennung: !!config?.erkennung
+  });
+}
+
+/**
+ * Gibt Farb-Palette aus morphs.yaml zurück
+ * @param {string} palette - Name der Palette ('pilze', 'diagramme', 'standard')
+ * @returns {string[]|string|null} Farb-Array oder einzelne Farbe
+ */
+export function getFarben(palette = 'pilze') {
+  if (!morphsConfigCache?.farben) {
+    debug.warn('getFarben: Keine Morphs-Config geladen!');
+    return null;
+  }
+  
+  const farben = morphsConfigCache.farben[palette];
+  debug.morphs('Farben geladen', { palette, anzahl: Array.isArray(farben) ? farben.length : 1 });
+  return farben;
+}
+
+/**
+ * Gibt Badge-Konfiguration aus morphs.yaml zurück
+ * Enthält AUTO_VARIANTS und VARIANT_COLORS
+ * @returns {Object|null} { variants: {...}, colors: {...} }
+ */
+export function getBadgeConfig() {
+  if (!morphsConfigCache) {
+    debug.warn('getBadgeConfig: Keine Morphs-Config geladen!');
+    return null;
+  }
+  
+  // Badge-Keywords kommen aus erkennung.badge, Farben aus badge.farben
+  return {
+    variants: morphsConfigCache.badge?.variants || null,
+    colors: morphsConfigCache.badge?.colors || null
+  };
 }

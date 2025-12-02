@@ -10,17 +10,17 @@
  */
 
 import { debug } from '../observer/debug.js';
+import { getFarben } from '../util/semantic.js';
 
-const FARBEN = [
-  '#22c55e', // grün
-  '#3b82f6', // blau
-  '#f59e0b', // orange
-  '#ef4444', // rot
-  '#8b5cf6', // lila
-  '#06b6d4', // cyan
-  '#ec4899', // pink
-  '#84cc16', // lime
+// Farben werden aus config/morphs.yaml geladen
+const FARBEN_FALLBACK = [
+  '#22c55e', '#3b82f6', '#f59e0b', '#ef4444',
+  '#8b5cf6', '#06b6d4', '#ec4899', '#84cc16'
 ];
+
+function getDiagrammFarben() {
+  return getFarben('diagramme') || FARBEN_FALLBACK;
+}
 
 export function pie(wert, config = {}) {
   debug.morphs('pie', { typ: typeof wert, istArray: Array.isArray(wert) });
@@ -44,10 +44,11 @@ export function pie(wert, config = {}) {
     return el;
   }
   
-  // Prozente und Farben zuweisen
+  // Prozente und Farben zuweisen (aus Config)
+  const farben = getDiagrammFarben();
   segmente.forEach((seg, i) => {
     seg.percent = (seg.value / total) * 100;
-    seg.color = config.farben?.[seg.label] || FARBEN[i % FARBEN.length];
+    seg.color = config.farben?.[seg.label] || farben[i % farben.length];
   });
   
   // Conic Gradient generieren

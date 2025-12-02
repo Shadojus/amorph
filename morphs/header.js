@@ -138,10 +138,10 @@ function erstelleAnsichtSwitch(config) {
       btn.classList.add('aktiv');
       btn.setAttribute('aria-selected', 'true');
       
-      // Event für Ansicht-Wechsel dispatchen
-      document.dispatchEvent(new CustomEvent('amorph:ansicht-wechsel', {
-        detail: { ansicht: ansicht.id }
-      }));
+      // Callback aufrufen statt document.dispatchEvent (Morph-Purity)
+      if (typeof config.onAnsichtWechsel === 'function') {
+        config.onAnsichtWechsel(ansicht.id);
+      }
       
       debug.features('Ansicht gewechselt', { ansicht: ansicht.id });
     });
@@ -149,10 +149,8 @@ function erstelleAnsichtSwitch(config) {
     switchContainer.appendChild(btn);
   }
   
-  // Auf Auswahl-Änderungen reagieren
-  document.addEventListener('amorph:auswahl-geaendert', (e) => {
-    const anzahl = e.detail.anzahl;
-    
+  // Update-Funktion für externe Aufrufe (statt document.addEventListener)
+  switchContainer.updateAuswahl = (anzahl) => {
     // Buttons enablen/disablen basierend auf Auswahl-Anzahl
     for (const btn of switchContainer.querySelectorAll('.amorph-ansicht-btn')) {
       const minAuswahl = parseInt(btn.dataset.minAuswahl || '0');
@@ -169,7 +167,7 @@ function erstelleAnsichtSwitch(config) {
         }
       }
     }
-  });
+  };
   
   return switchContainer;
 }
