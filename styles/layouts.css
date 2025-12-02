@@ -111,7 +111,7 @@ amorph-container[data-field="name"] {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  padding: 16px;
+  padding: 8px 16px 16px;  /* Weniger Padding oben */
   align-items: stretch;
 }
 

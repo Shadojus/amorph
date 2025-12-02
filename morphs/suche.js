@@ -12,9 +12,10 @@ export function suche(config, morphConfig = {}) {
   form.className = 'amorph-suche';
   
   const input = document.createElement('input');
-  input.type = 'search';
+  input.type = 'text';  // Kein 'search' - damit kein X-Button erscheint
   input.placeholder = config.placeholder || 'Suchen...';
   input.setAttribute('aria-label', 'Suche');
+  input.setAttribute('autocomplete', 'off');
   
   const button = document.createElement('button');
   button.type = 'button';

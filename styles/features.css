@@ -115,22 +115,24 @@
     padding: 2px;
   }
   [data-morph="suche"] {
-    min-width: 80px;
-    max-width: 120px;
+    min-width: 60px;   /* Noch kleiner! */
+    max-width: 90px;
+    flex: 0 0 auto;
   }
   .amorph-suche input {
-    padding: 5px 6px;
-    font-size: 0.75rem;
+    padding: 5px 4px;
+    font-size: 0.72rem;
+    width: 100%;
   }
   .amorph-suche::before {
-    margin: 0 4px 0 6px;
-    font-size: 0.6rem;
+    margin: 0 3px 0 5px;
+    font-size: 0.55rem;
   }
   /* Kleine pulsierende Badges auf Mobile */
   .amorph-filter-badge {
-    padding: 3px 7px;
-    font-size: 0.6rem;
-    border-radius: 10px;
+    padding: 2px 6px;
+    font-size: 0.62rem;
+    border-radius: 8px;
   }
   /* Ansicht-Switch kompakter */
   .amorph-ansicht-switch {
@@ -219,8 +221,8 @@
 /* Suche-Container innerhalb Wrapper */
 [data-morph="suche"] {
   flex: 0 0 auto;
-  min-width: 100px;
-  max-width: 180px;
+  min-width: 80px;
+  max-width: 140px;
 }
 
 .amorph-suche {
@@ -292,21 +294,21 @@
   display: none;
 }
 
-/* Aktive Perspektiven-Badges - klein, pulsierend, OHNE Icon */
+/* Aktive Perspektiven-Badges - größerer Text, kompaktes Padding, pulsierend */
 .amorph-filter-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 4px 10px;
-  font-size: 0.68rem;
+  padding: 3px 8px;  /* Weniger Padding */
+  font-size: 0.72rem;  /* Größerer Text */
   font-weight: 600;
   text-transform: capitalize;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   /* Buntes Styling */
   background: color-mix(in srgb, var(--badge-farbe, #d4a020) 25%, rgba(0,0,0,0.6));
   color: var(--badge-farbe, #d4a020);
   border: 1px solid color-mix(in srgb, var(--badge-farbe, #d4a020) 45%, transparent);
-  border-radius: 12px;
+  border-radius: 10px;
   cursor: pointer;
   white-space: nowrap;
   /* Subtiler Glow */
