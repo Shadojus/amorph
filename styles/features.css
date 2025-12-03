@@ -7,12 +7,12 @@
   top: 0;
   z-index: 100;
   padding: 10px 16px 12px;
-  /* DARK LIQUID GLASS - Tiefes Schwarz mit subtiler Transparenz */
+  /* DARK LIQUID GLASS - Noch transparenter! */
   background: linear-gradient(
     180deg,
-    rgba(5, 5, 8, 0.92) 0%,
-    rgba(8, 8, 12, 0.88) 50%,
-    rgba(5, 5, 8, 0.92) 100%
+    rgba(5, 5, 8, 0.58) 0%,
+    rgba(8, 8, 12, 0.52) 50%,
+    rgba(5, 5, 8, 0.58) 100%
   );
   backdrop-filter: blur(24px) saturate(1.4);
   -webkit-backdrop-filter: blur(24px) saturate(1.4);
@@ -278,9 +278,10 @@
 .amorph-aktive-filter {
   display: flex;
   flex-wrap: nowrap;
-  gap: 4px;
+  justify-content: flex-end;
+  gap: 2px;  /* Weniger Abstand! */
   flex: 1;
-  padding-right: 6px;
+  padding-right: 4px;
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -294,21 +295,22 @@
   display: none;
 }
 
-/* Aktive Perspektiven-Badges - größerer Text, kompaktes Padding, pulsierend */
+/* Aktive Perspektiven-Badges - kompakt, pulsierend */
 .amorph-filter-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 3px 8px;  /* Weniger Padding */
-  font-size: 0.72rem;  /* Größerer Text */
-  font-weight: 600;
+  padding: 2px 5px;  /* Weniger Padding! */
+  font-size: 0.75rem;
+  font-weight: 400;
+  font-stretch: extra-condensed;  /* Noch schmaler! */
   text-transform: capitalize;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.01em;
   /* Buntes Styling */
   background: color-mix(in srgb, var(--badge-farbe, #d4a020) 25%, rgba(0,0,0,0.6));
   color: var(--badge-farbe, #d4a020);
-  border: 1px solid color-mix(in srgb, var(--badge-farbe, #d4a020) 45%, transparent);
-  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--badge-farbe, #d4a020) 25%, transparent);  /* Transparenter! */
+  border-radius: 6px;  /* Eckiger! */
   cursor: pointer;
   white-space: nowrap;
   /* Subtiler Glow */
@@ -375,20 +377,25 @@
   font-size: 1rem;
 }
 
-/* Counter-Badge im Vergleich-Button */
+/* Counter-Badge im Vergleich-Button - KLEIN, RECHTECKIG, RECHTS OBEN */
 .amorph-ansicht-btn .btn-counter {
-  font-size: 0.65rem;
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  font-size: 0.55rem;
   font-weight: 700;
-  min-width: 16px;
-  height: 16px;
-  line-height: 16px;
+  min-width: 14px;
+  height: 14px;
+  padding: 0 3px;
+  line-height: 14px;
   text-align: center;
   background: var(--color-accent, #22c55e);
   color: black;
-  border-radius: 8px;
+  border-radius: 3px;  /* Rechteckig! */
   opacity: 0;
   transform: scale(0);
   transition: all 0.2s ease;
+  z-index: 5;
 }
 
 .amorph-ansicht-btn .btn-counter[data-count]:not([data-count="0"]) {
@@ -450,20 +457,24 @@
 .amorph-perspektive-btn {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 5px 11px;
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  gap: 2px;  /* Weniger Abstand Symbol-Text */
+  padding: 2px 4px;  /* Kompakter! */
+  font-size: 0.72rem;
+  font-weight: 400;
+  font-stretch: ultra-condensed;
+  letter-spacing: -0.02em;
+
   text-transform: capitalize;
-  /* MULTI-COLOR: Jede Perspektive hat eigene Farbe via --p-farbe! */
+  /* MULTI-COLOR 4-FARBEN GRADIENT! */
   background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--p-farbe, #888) 15%, rgba(0,0,0,0.5)) 0%,
-    color-mix(in srgb, var(--p-farbe, #888) 8%, rgba(0,0,0,0.6)) 100%
+    120deg,
+    color-mix(in srgb, var(--p-farbe, #888) 18%, rgba(0,0,0,0.5)) 0%,
+    color-mix(in srgb, var(--p-farbe-2, var(--p-farbe, #888)) 12%, rgba(0,0,0,0.55)) 33%,
+    color-mix(in srgb, var(--p-farbe-3, var(--p-farbe, #888)) 12%, rgba(0,0,0,0.55)) 66%,
+    color-mix(in srgb, var(--p-farbe-4, var(--p-farbe, #888)) 15%, rgba(0,0,0,0.5)) 100%
   );
   color: var(--p-farbe, #aaa);
-  border: 1px solid color-mix(in srgb, var(--p-farbe, #888) 30%, transparent);
+  border: 1px solid color-mix(in srgb, var(--p-farbe, #888) 18%, transparent);  /* Transparenter! */
   border-radius: 14px;
   cursor: pointer;
   transition: all 0.25s ease;
@@ -471,20 +482,33 @@
   z-index: 1;
   /* Multi-Color Glow! */
   box-shadow: 
-    0 0 8px color-mix(in srgb, var(--p-farbe, #888) 18%, transparent),
+    0 0 8px color-mix(in srgb, var(--p-farbe, #888) 15%, transparent),
     inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+/* Emoji-Symbole kleiner */
+.amorph-perspektive-btn .btn-symbol {
+  font-size: 0.7em;
+  line-height: 1;
+  transform: scaleX(1.14);  /* Kompensiert scaleX vom Parent */
+}
+
+.amorph-perspektive-btn .btn-name {
+  line-height: 1;
 }
 
 .amorph-perspektive-btn:hover {
   background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--p-farbe, #888) 25%, rgba(0,0,0,0.4)) 0%,
-    color-mix(in srgb, var(--p-farbe, #888) 15%, rgba(0,0,0,0.5)) 100%
+    120deg,
+    color-mix(in srgb, var(--p-farbe, #888) 28%, rgba(0,0,0,0.35)) 0%,
+    color-mix(in srgb, var(--p-farbe-2, var(--p-farbe, #888)) 22%, rgba(0,0,0,0.4)) 33%,
+    color-mix(in srgb, var(--p-farbe-3, var(--p-farbe, #888)) 22%, rgba(0,0,0,0.4)) 66%,
+    color-mix(in srgb, var(--p-farbe-4, var(--p-farbe, #888)) 25%, rgba(0,0,0,0.35)) 100%
   );
   color: var(--p-farbe, #888);
-  border-color: color-mix(in srgb, var(--p-farbe, #888) 50%, transparent);
+  border-color: color-mix(in srgb, var(--p-farbe, #888) 35%, transparent);  /* Transparenter! */
   box-shadow: 
-    0 0 16px color-mix(in srgb, var(--p-farbe, #888) 35%, transparent),
+    0 0 16px color-mix(in srgb, var(--p-farbe, #888) 30%, transparent),
     inset 0 1px 0 rgba(255,255,255,0.08);
   transform: translateY(-1px);
 }
