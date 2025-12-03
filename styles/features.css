@@ -199,62 +199,52 @@
   align-items: center;
   gap: 0;
   min-width: 0;
-  /* Dark Liquid Glass Pill */
-  background: rgba(0, 0, 0, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 22px;
-  padding: 2px;
-  transition: all 0.25s ease;
-  box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.02),
-    0 2px 8px rgba(0, 0, 0, 0.3);
+  height: 32px;  /* Einheitliche Höhe */
+  /* Dark Liquid Glass */
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;  /* Einheitlich mit anderen Elementen */
+  padding: 0 4px;
+  transition: all 0.2s ease;
 }
 
 .amorph-suche-wrapper:focus-within {
-  border-color: rgba(255, 255, 255, 0.15);
-  background: rgba(0, 0, 0, 0.55);
-  box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.03),
-    0 0 20px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 /* Suche-Container innerhalb Wrapper */
 [data-morph="suche"] {
   flex: 0 0 auto;
-  min-width: 80px;
-  max-width: 140px;
+  min-width: 70px;
+  max-width: 120px;
 }
 
 .amorph-suche {
   display: flex;
   align-items: center;
-  gap: 0;
-  min-width: 0;
-  padding: 0 4px;
+  height: 100%;
   background: transparent;
   border: none;
-  border-radius: 20px;
-  transition: all 0.2s ease;
 }
 
 /* Lupe Icon vor Input */
 .amorph-suche::before {
   content: '🔍';
-  font-size: 0.7rem;
-  opacity: 0.3;
-  margin: 0 6px 0 8px;
+  font-size: 0.65rem;
+  opacity: 0.35;
+  margin: 0 4px 0 2px;
   flex-shrink: 0;
 }
 
 .amorph-suche input {
   flex: 1;
-  min-width: 80px;
-  padding: 10px 12px 10px 0;
-  font-size: 0.9rem;
+  min-width: 50px;
+  padding: 0;
+  font-size: 0.78rem;
   background: transparent;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.85);
   border: none;
-  transition: all 0.25s ease;
 }
 
 .amorph-suche input:focus {
@@ -274,14 +264,14 @@
   opacity: 0.5;
 }
 
-/* === AKTIVE FILTER BADGES (klein, pulsierend, IN der Suchleiste) === */
+/* === AKTIVE FILTER BADGES (IN der Suchleiste) === */
 .amorph-aktive-filter {
   display: flex;
   flex-wrap: nowrap;
   justify-content: flex-end;
-  gap: 2px;  /* Weniger Abstand! */
+  gap: 3px;
   flex: 1;
-  padding-right: 4px;
+  padding: 0 2px;
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -295,39 +285,25 @@
   display: none;
 }
 
-/* Aktive Perspektiven-Badges - kompakt, pulsierend */
+/* Aktive Perspektiven-Badges - einheitlich mit Perspektiven-Buttons */
 .amorph-filter-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 2px 5px;  /* Weniger Padding! */
-  font-size: 0.75rem;
-  font-weight: 400;
-  font-stretch: extra-condensed;  /* Noch schmaler! */
+  height: 22px;
+  padding: 0 6px;
+  font-size: 0.68rem;
+  font-weight: 500;
   text-transform: capitalize;
-  letter-spacing: -0.01em;
-  /* Buntes Styling */
-  background: color-mix(in srgb, var(--badge-farbe, #d4a020) 25%, rgba(0,0,0,0.6));
-  color: var(--badge-farbe, #d4a020);
-  border: 1px solid color-mix(in srgb, var(--badge-farbe, #d4a020) 25%, transparent);  /* Transparenter! */
-  border-radius: 6px;  /* Eckiger! */
+  letter-spacing: 0;
+  /* Farbe von Perspektive */
+  background: color-mix(in srgb, var(--badge-farbe, #888) 20%, rgba(0,0,0,0.5));
+  color: var(--badge-farbe, #888);
+  border: 1px solid color-mix(in srgb, var(--badge-farbe, #888) 30%, transparent);
+  border-radius: 6px;
   cursor: pointer;
   white-space: nowrap;
-  /* Subtiler Glow */
-  box-shadow: 0 0 6px color-mix(in srgb, var(--badge-farbe, #d4a020) 20%, transparent);
-  /* PULSIER-ANIMATION! */
-  animation: badge-pulse 2s ease-in-out infinite;
-}
-
-@keyframes badge-pulse {
-  0%, 100% { 
-    opacity: 1;
-    box-shadow: 0 0 6px color-mix(in srgb, var(--badge-farbe, #d4a020) 20%, transparent);
-  }
-  50% { 
-    opacity: 0.85;
-    box-shadow: 0 0 12px color-mix(in srgb, var(--badge-farbe, #d4a020) 35%, transparent);
-  }
+  transition: all 0.2s ease;
 }
 
 /* Kein Icon in aktiven Badges */
@@ -336,65 +312,61 @@
 }
 
 .amorph-filter-badge:hover {
-  animation: none;
-  background: color-mix(in srgb, var(--badge-farbe, #d4a020) 35%, rgba(0,0,0,0.5));
-  box-shadow: 0 0 14px color-mix(in srgb, var(--badge-farbe, #d4a020) 40%, transparent);
+  background: color-mix(in srgb, var(--badge-farbe, #888) 30%, rgba(0,0,0,0.4));
+  border-color: color-mix(in srgb, var(--badge-farbe, #888) 45%, transparent);
 }
 
-/* === ANSICHT-UMSCHALTER (Dark Liquid Glass) === */
+/* === ANSICHT-UMSCHALTER === */
 .amorph-ansicht-switch {
   display: flex;
   gap: 2px;
+  height: 32px;  /* Gleiche Höhe wie Suche */
   padding: 3px;
-  /* Dark Liquid Glass */
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;  /* Einheitlich */
   flex-shrink: 0;
-  margin-left: 8px;
-  box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.02),
-    0 2px 8px rgba(0, 0, 0, 0.3);
+  margin-left: 6px;
 }
 
 .amorph-ansicht-btn {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 6px 10px;
-  font-size: 1rem;
-  line-height: 1;
+  justify-content: center;
+  width: 28px;
+  height: 24px;
+  font-size: 0.85rem;
   background: transparent;
   color: rgba(255, 255, 255, 0.35);
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
 .amorph-ansicht-btn .btn-icon {
-  font-size: 1rem;
+  font-size: 0.85rem;
 }
 
-/* Counter-Badge im Vergleich-Button - KLEIN, RECHTECKIG, RECHTS OBEN */
+/* Counter-Badge im Vergleich-Button */
 .amorph-ansicht-btn .btn-counter {
   position: absolute;
-  top: -4px;
-  right: -4px;
-  font-size: 0.55rem;
-  font-weight: 700;
-  min-width: 14px;
-  height: 14px;
-  padding: 0 3px;
-  line-height: 14px;
+  top: -3px;
+  right: -3px;
+  font-size: 0.5rem;
+  font-weight: 600;
+  min-width: 12px;
+  height: 12px;
+  padding: 0 2px;
+  line-height: 12px;
   text-align: center;
   background: var(--color-accent, #22c55e);
   color: black;
-  border-radius: 3px;  /* Rechteckig! */
+  border-radius: 3px;
   opacity: 0;
   transform: scale(0);
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   z-index: 5;
 }
 
@@ -405,36 +377,35 @@
 
 .amorph-ansicht-btn:hover:not(.disabled) {
   color: rgba(255, 255, 255, 0.7);
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .amorph-ansicht-btn.aktiv,
 .amorph-ansicht-btn[aria-selected="true"] {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.15);
   color: #fff;
 }
 
 /* Disabled Buttons */
 .amorph-ansicht-btn.disabled,
 .amorph-ansicht-btn:disabled {
-  opacity: 0.25;
+  opacity: 0.3;
   cursor: not-allowed;
 }
 
-/* Glow wenn aktivierbar */
+/* Counter Glow */
 .amorph-ansicht-btn:not(.disabled) .btn-counter[data-count]:not([data-count="0"]) {
-  box-shadow: 0 0 8px var(--color-accent, #22c55e);
+  box-shadow: 0 0 6px var(--color-accent, #22c55e);
 }
 
-/* === PERSPEKTIVEN GRID (Multi-Color!) === */
+/* === PERSPEKTIVEN GRID === */
 .amorph-perspektiven {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 4px;
   justify-content: center;
   align-items: center;
-  overflow: visible;
-  padding: 4px 0;
+  padding: 2px 0;
 }
 
 /* Perspektiven in eigener Zeile */
@@ -453,44 +424,30 @@
   }
 }
 
-/* === PERSPEKTIVEN BUTTONS (MULTI-COLOR mit eigenem Farbton!) === */
+/* === PERSPEKTIVEN BUTTONS === */
 .amorph-perspektive-btn {
   display: inline-flex;
   align-items: center;
-  gap: 2px;  /* Weniger Abstand Symbol-Text */
-  padding: 2px 4px;  /* Kompakter! */
-  font-size: 0.72rem;
-  font-weight: 400;
-  font-stretch: ultra-condensed;
-  letter-spacing: -0.02em;
-
+  gap: 3px;
+  height: 24px;  /* Einheitliche Höhe */
+  padding: 0 8px;
+  font-size: 0.68rem;
+  font-weight: 500;
   text-transform: capitalize;
-  /* MULTI-COLOR 4-FARBEN GRADIENT! */
-  background: linear-gradient(
-    120deg,
-    color-mix(in srgb, var(--p-farbe, #888) 18%, rgba(0,0,0,0.5)) 0%,
-    color-mix(in srgb, var(--p-farbe-2, var(--p-farbe, #888)) 12%, rgba(0,0,0,0.55)) 33%,
-    color-mix(in srgb, var(--p-farbe-3, var(--p-farbe, #888)) 12%, rgba(0,0,0,0.55)) 66%,
-    color-mix(in srgb, var(--p-farbe-4, var(--p-farbe, #888)) 15%, rgba(0,0,0,0.5)) 100%
-  );
+  /* Multi-Color Gradient */
+  background: color-mix(in srgb, var(--p-farbe, #888) 15%, rgba(0,0,0,0.45));
   color: var(--p-farbe, #aaa);
-  border: 1px solid color-mix(in srgb, var(--p-farbe, #888) 18%, transparent);  /* Transparenter! */
-  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--p-farbe, #888) 25%, transparent);
+  border-radius: 6px;  /* Einheitlich mit Badges */
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.15s ease;
   position: relative;
-  z-index: 1;
-  /* Multi-Color Glow! */
-  box-shadow: 
-    0 0 8px color-mix(in srgb, var(--p-farbe, #888) 15%, transparent),
-    inset 0 1px 0 rgba(255,255,255,0.05);
 }
 
-/* Emoji-Symbole kleiner */
+/* Emoji-Symbole */
 .amorph-perspektive-btn .btn-symbol {
-  font-size: 0.7em;
+  font-size: 0.75em;
   line-height: 1;
-  transform: scaleX(1.14);  /* Kompensiert scaleX vom Parent */
 }
 
 .amorph-perspektive-btn .btn-name {
@@ -498,19 +455,8 @@
 }
 
 .amorph-perspektive-btn:hover {
-  background: linear-gradient(
-    120deg,
-    color-mix(in srgb, var(--p-farbe, #888) 28%, rgba(0,0,0,0.35)) 0%,
-    color-mix(in srgb, var(--p-farbe-2, var(--p-farbe, #888)) 22%, rgba(0,0,0,0.4)) 33%,
-    color-mix(in srgb, var(--p-farbe-3, var(--p-farbe, #888)) 22%, rgba(0,0,0,0.4)) 66%,
-    color-mix(in srgb, var(--p-farbe-4, var(--p-farbe, #888)) 25%, rgba(0,0,0,0.35)) 100%
-  );
-  color: var(--p-farbe, #888);
-  border-color: color-mix(in srgb, var(--p-farbe, #888) 35%, transparent);  /* Transparenter! */
-  box-shadow: 
-    0 0 16px color-mix(in srgb, var(--p-farbe, #888) 30%, transparent),
-    inset 0 1px 0 rgba(255,255,255,0.08);
-  transform: translateY(-1px);
+  background: color-mix(in srgb, var(--p-farbe, #888) 25%, rgba(0,0,0,0.35));
+  border-color: color-mix(in srgb, var(--p-farbe, #888) 40%, transparent);
 }
 
 /* VERSTECKEN wenn aktiv (Badge wird in Suchleiste angezeigt) */
