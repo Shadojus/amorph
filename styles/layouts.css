@@ -40,6 +40,11 @@ amorph-container[data-morph="item"] {
   scrollbar-color: transparent transparent;
 }
 
+/* Letztes Element in Card - Extra Platz für Scroll */
+amorph-container[data-morph="item"] > amorph-container[data-field]:last-of-type {
+  margin-bottom: 24px;
+}
+
 /* Webkit Scrollbar - nur bei Hover sichtbar */
 amorph-container[data-morph="item"]::-webkit-scrollbar {
   width: 4px;

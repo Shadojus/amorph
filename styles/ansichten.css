@@ -396,12 +396,9 @@ amorph-container[data-morph="item"]:hover {
   padding: 6px 12px;
   font-size: var(--ui-font-md, 0.72rem);
   background: rgba(234, 179, 8, 0.12);
-  color: #eab308;
+  color: rgba(234, 179, 8, 0.85);
   border: 1px solid rgba(234, 179, 8, 0.25);
   border-radius: var(--ui-radius-md, 6px);
-}
-  border: 1px solid rgba(234, 179, 8, 0.3);
-  border-radius: 20px;
 }
 
 /* Grid für Vergleichs-Cards */

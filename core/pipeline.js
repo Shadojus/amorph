@@ -48,6 +48,12 @@ export function transform(daten, config, customMorphs = {}) {
       return null;
     }
     
+    // Leere Werte überspringen (null, undefined, leere Strings, leere Arrays)
+    if (wert === null || wert === undefined) return null;
+    if (wert === '') return null;
+    if (Array.isArray(wert) && wert.length === 0) return null;
+    if (typeof wert === 'object' && !Array.isArray(wert) && Object.keys(wert).length === 0) return null;
+    
     const typ = detectType(wert);
     const morphName = findMorph(typ, wert, feldname, config.morphs, schemaFeldMorphs);
     let morph = alleMorphs[morphName];

@@ -203,58 +203,58 @@ badge:
       - keine
       - none
   
-  # Farben pro Variante
+  # Farben pro Variante - gedämpft für harmonisches Design
   colors:
     success:
-      bg: "rgba(34, 197, 94, 0.2)"
-      border: "rgba(34, 197, 94, 0.6)"
-      text: "#22c55e"
+      bg: "rgba(34, 197, 94, 0.12)"
+      border: "rgba(34, 197, 94, 0.35)"
+      text: "rgba(34, 197, 94, 0.85)"
       icon: "✓"
     danger:
-      bg: "rgba(239, 68, 68, 0.2)"
-      border: "rgba(239, 68, 68, 0.6)"
-      text: "#ef4444"
+      bg: "rgba(239, 68, 68, 0.12)"
+      border: "rgba(239, 68, 68, 0.35)"
+      text: "rgba(239, 68, 68, 0.85)"
       icon: "✕"
     warning:
-      bg: "rgba(245, 158, 11, 0.2)"
-      border: "rgba(245, 158, 11, 0.6)"
-      text: "#f59e0b"
+      bg: "rgba(245, 158, 11, 0.12)"
+      border: "rgba(245, 158, 11, 0.35)"
+      text: "rgba(245, 158, 11, 0.85)"
       icon: "⚠"
     info:
-      bg: "rgba(59, 130, 246, 0.2)"
-      border: "rgba(59, 130, 246, 0.6)"
-      text: "#3b82f6"
+      bg: "rgba(59, 130, 246, 0.12)"
+      border: "rgba(59, 130, 246, 0.35)"
+      text: "rgba(59, 130, 246, 0.85)"
       icon: "ℹ"
     neutral:
-      bg: "rgba(148, 163, 184, 0.2)"
-      border: "rgba(148, 163, 184, 0.4)"
-      text: "#94a3b8"
+      bg: "rgba(148, 163, 184, 0.1)"
+      border: "rgba(148, 163, 184, 0.25)"
+      text: "rgba(148, 163, 184, 0.7)"
       icon: "•"
 
 # === FARB-PALETTEN ===
 # Zentrale Farbdefinitionen für Morphs
 farben:
-  # Pilz-Farben für Vergleiche (8 distinkte Farben)
+  # Pilz-Farben für Vergleiche (8 distinkte, gedämpfte Farben)
   pilze:
-    - "#e8b04a"  # Gold
-    - "#60c090"  # Grün
-    - "#d06080"  # Rosa
-    - "#5aa0d8"  # Blau
-    - "#a080d0"  # Lila
-    - "#d0a050"  # Orange
-    - "#50b0b0"  # Türkis
-    - "#d08050"  # Korall
+    - "rgba(232, 176, 74, 0.7)"   # Gold
+    - "rgba(96, 192, 144, 0.7)"   # Grün
+    - "rgba(208, 96, 128, 0.7)"   # Rosa
+    - "rgba(90, 160, 216, 0.7)"   # Blau
+    - "rgba(160, 128, 208, 0.7)"  # Lila
+    - "rgba(208, 160, 80, 0.7)"   # Orange
+    - "rgba(80, 176, 176, 0.7)"   # Türkis
+    - "rgba(208, 128, 80, 0.7)"   # Korall
   
-  # Diagramm-Farben für Pie/Bar Charts
+  # Diagramm-Farben für Pie/Bar Charts - gedämpft
   diagramme:
-    - "#22c55e"  # Grün
-    - "#3b82f6"  # Blau
-    - "#f59e0b"  # Orange
-    - "#ef4444"  # Rot
-    - "#8b5cf6"  # Lila
-    - "#06b6d4"  # Cyan
-    - "#ec4899"  # Pink
-    - "#84cc16"  # Lime
+    - "rgba(34, 197, 94, 0.7)"   # Grün
+    - "rgba(59, 130, 246, 0.7)"  # Blau
+    - "rgba(245, 158, 11, 0.7)"  # Orange
+    - "rgba(239, 68, 68, 0.7)"   # Rot
+    - "rgba(139, 92, 246, 0.7)"  # Lila
+    - "rgba(6, 182, 212, 0.7)"   # Cyan
+    - "rgba(236, 72, 153, 0.7)"  # Pink
+    - "rgba(132, 204, 22, 0.7)"  # Lime
   
   # Fallback-Farbe
   standard: "#3b82f6"
