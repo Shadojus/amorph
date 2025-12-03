@@ -2,6 +2,18 @@
 /* Black Glasmorphism - Dezent & Elegant */
 
 :root {
+  /* === UNIFIED DESIGN SYSTEM === */
+  /* Einheitliche Größen für alle interaktiven Elemente */
+  --ui-height-sm: 20px;
+  --ui-height-md: 24px;
+  --ui-height-lg: 32px;
+  --ui-radius-sm: 4px;
+  --ui-radius-md: 6px;
+  --ui-radius-lg: 8px;
+  --ui-font-sm: 0.65rem;
+  --ui-font-md: 0.72rem;
+  --ui-font-lg: 0.85rem;
+  
   /* === FARBSCHEMA === */
   /* Akzentfarbe: Dezentes Cyan - nur für Highlights */
   --color-accent: rgba(80, 220, 200, 1);

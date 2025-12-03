@@ -216,9 +216,24 @@ amorph-container[data-field="name"] {
 
 /* === FELD-CONTAINER IN KARTEN === */
 amorph-container[data-morph="item"] amorph-container[data-field] {
-  padding: var(--space-sm) var(--space-sm);
-  margin: 2px 0;
-  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  margin: 1px 0;
+  border-radius: var(--ui-radius-md);
+  /* Subtiler Hintergrund nur bei komplexen Morphs */
+  background: transparent;
+  border: none;
+}
+
+/* Komplexe Morphs bekommen Container-Style */
+amorph-container[data-morph="item"] amorph-container[data-field="naehrwerte"],
+amorph-container[data-morph="item"] amorph-container[data-field="profil"],
+amorph-container[data-morph="item"] amorph-container[data-field="wirkstoffe"],
+amorph-container[data-morph="item"] amorph-container[data-field="ernte_stats"],
+amorph-container[data-morph="item"] amorph-container[data-field="lebenszyklus"] {
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  padding: 8px;
+  margin: 4px 0;
 }
 
 amorph-container[data-morph="item"] amorph-container[data-field]:last-child {
