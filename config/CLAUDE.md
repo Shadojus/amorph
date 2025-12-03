@@ -2,7 +2,13 @@
 
 Eine Datei = Ein Aspekt. **Schema ist die Single Source of Truth.**
 
-## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
+## 🚧 AKTUELLER STAND (03.12.2025)
+
+### ✅ Neu (03.12.2025)
+- **Gedämpfte Farben** in `morphs.yaml`:
+  - Diagramm-Farben: 70% Transparenz (rgba statt hex)
+  - Pilz-Farben: 70% Transparenz
+  - Badge-Farben: bg 12%, border 35%, text 85%
 
 ### ✅ Implementiert
 - Black Glasmorphism Design

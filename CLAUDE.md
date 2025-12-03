@@ -2,7 +2,15 @@
 
 Formlos. Zustandslos. Transformierend.
 
-## 🚀 Aktueller Stand (02.12.2025)
+## 🚀 Aktueller Stand (03.12.2025)
+
+### ✅ Neu (03.12.2025)
+- **Unified Design System** - Einheitliche CSS-Variablen für Höhen, Radii, Fonts
+- **Neutrale Grundfarbe** - Accent von Cyan/Jade zu Weiß (Perspektiven liefern Farben)
+- **Gedämpfte Morph-Farben** - 70% Transparenz für harmonisches Design
+- **Leere Felder überspringen** - Pipeline filtert `null`, `undefined`, `''`, `[]`, `{}`
+- **Leuchtende Counter** - Zahlen ohne Background mit text-shadow Glow
+- **Kompaktere Perspektiven-Buttons** - Inaktive Buttons kleiner und dezenter
 
 ### ✅ Fertig
 - Schema-basierte Datenbank-Transformation (YAML → Morphs → DOM)

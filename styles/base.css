@@ -15,11 +15,11 @@
   --ui-font-lg: 0.85rem;
   
   /* === FARBSCHEMA === */
-  /* Akzentfarbe: Dezentes Cyan - nur für Highlights */
-  --color-accent: rgba(80, 220, 200, 1);
-  --color-accent-dim: rgba(80, 220, 200, 0.6);
-  --color-accent-glow: rgba(80, 220, 200, 0.3);
-  --color-accent-subtle: rgba(80, 220, 200, 0.1);
+  /* Akzentfarbe: Neutrales Weiß - Perspektiven liefern Farben */
+  --color-accent: rgba(255, 255, 255, 0.9);
+  --color-accent-dim: rgba(255, 255, 255, 0.6);
+  --color-accent-glow: rgba(255, 255, 255, 0.25);
+  --color-accent-subtle: rgba(255, 255, 255, 0.08);
   
   /* Highlight-Farbe für Markierungen */
   --color-highlight: rgba(255, 220, 100, 0.8);

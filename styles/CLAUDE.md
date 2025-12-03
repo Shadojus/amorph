@@ -2,7 +2,17 @@
 
 Black Glasmorphism Design. Elegant, dezent, leuchtend.
 
-## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
+## 🚧 AKTUELLER STAND (03.12.2025)
+
+### ✅ Neu (03.12.2025)
+- **Unified Design System**:
+  - `--ui-height-sm/md/lg`: 20px / 24px / 32px
+  - `--ui-radius-sm/md/lg`: 4px / 6px / 8px  
+  - `--ui-font-sm/md/lg`: 0.65rem / 0.72rem / 0.85rem
+- **Neutrale Accent-Farbe**: Weiß statt Cyan (Perspektiven liefern Farben)
+- **Kompaktere Morphs**: Tags, Badges, Progress, Pie, Radar alle harmonisiert
+- **Leuchtende Counter**: Kein Background, nur text-shadow Glow
+- **Perspektiven-Buttons**: Inaktive kleiner (20px), dezentere Farben
 
 ### Implementiert
 - Basis Dark Theme mit Glass-Effekten

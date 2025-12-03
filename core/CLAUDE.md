@@ -2,7 +2,10 @@
 
 Das Herz von AMORPH. Drei Dateien, eine Aufgabe: Daten transformieren.
 
-## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
+## 🚧 AKTUELLER STAND (03.12.2025)
+
+### ✅ Neu (03.12.2025)
+- **Leere Werte überspringen**: Pipeline filtert `null`, `undefined`, `''`, `[]`, `{}` automatisch
 
 ### ✅ Implementiert
 - Config-Loader lädt alle YAML-Dateien
