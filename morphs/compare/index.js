@@ -6,13 +6,16 @@
  * - Generische Compare-Morphs (compareBar, compareRadar, etc.)
  * - Smart Composites (smartCompare, diffCompare)
  * - compareMorph() Dispatcher
+ * 
+ * DATENGETRIEBEN: detectType nutzt config/morphs.yaml!
  */
 
 import { debug } from '../../observer/debug.js';
 
 // Base-Utilities
 export { 
-  setFarbenConfig, 
+  setFarbenConfig,
+  setErkennungConfig,
   getFarben, 
   erstelleFarben, 
   createSection, 
@@ -21,7 +24,7 @@ export {
   detectType 
 } from './base.js';
 
-// Compare-Morphs
+// Compare-Morphs (aus refactored primitives/)
 export {
   compareByType,
   compareBar,
@@ -39,7 +42,7 @@ export {
   compareProgress,
   compareBoolean,
   compareObject
-} from './morphs.js';
+} from './primitives/index.js';
 
 // Smart Composites
 export {
@@ -69,37 +72,19 @@ import {
   compareProgress,
   compareBoolean,
   compareObject
-} from './morphs.js';
+} from './primitives/index.js';
 
 import { smartCompare, diffCompare } from './composites.js';
 
-/**
- * Typ → Compare-Morph Mapping
- */
-const typHandler = {
-  rating: compareRating,
-  progress: compareProgress,
-  number: compareBar,
-  range: compareRange,
-  stats: compareStats,
-  tag: compareTag,
-  badge: compareTag,
-  list: compareList,
-  image: compareImage,
-  radar: compareRadar,
-  pie: comparePie,
-  bar: compareBar,
-  timeline: compareTimeline,
-  text: compareText,
-  string: compareText,
-  boolean: compareBoolean,
-  object: compareObject
-};
+// HINWEIS: compareByType in morphs.js ist die SINGLE SOURCE OF TRUTH
+// für Typ → Compare-Morph Mapping (inkl. intelligenter BarGroup-Erkennung)
 
 /**
  * HAUPT-DISPATCHER: Wählt automatisch den richtigen Compare-Morph
  * 
  * DATENGETRIEBEN: Typ wird erkannt, nicht übergeben!
+ * 
+ * Delegiert an compareByType() für konsistentes Mapping.
  * 
  * @param {string} feldName - Name des Feldes
  * @param {string} typ - Erkannter oder übergebener Typ
@@ -109,16 +94,8 @@ const typHandler = {
 export function compareMorph(feldName, typ, items, config = {}) {
   debug.morphs('compareMorph', { feldName, typ, items: items?.length });
   
-  // Handler finden
-  const handler = typHandler[typ];
-  
-  if (handler) {
-    return handler(items, config);
-  }
-  
-  // Fallback
-  debug.warn(`Kein Compare-Handler für Typ: ${typ}, nutze text`);
-  return compareText(items, config);
+  // Delegiere an compareByType - SINGLE SOURCE OF TRUTH
+  return compareByType(typ, items, config);
 }
 
 /**

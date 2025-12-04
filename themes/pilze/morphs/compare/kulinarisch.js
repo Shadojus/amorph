@@ -10,7 +10,7 @@ import { debug } from '../../../../observer/debug.js';
 import { detectType, createSection, createLegende } from '../../../../morphs/compare/base.js';
 import { 
   compareTag, compareList, compareBar, compareRadar, comparePie, compareRating 
-} from '../../../../morphs/compare/morphs.js';
+} from '../../../../morphs/compare/primitives/index.js';
 
 /**
  * @param {Array} items - [{id, name, data, farbe}]

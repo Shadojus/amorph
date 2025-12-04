@@ -27,7 +27,7 @@ import { perspektiven } from './perspektiven.js';
 import { header } from './header.js';
 
 // ============================================================================
-// COMPARE - Generische Compare-Wrapper
+// COMPARE - Generische Compare-Wrapper (aus primitives/)
 // ============================================================================
 import { 
   compareByType,
@@ -45,7 +45,7 @@ import {
   compareStats as compareStatsMorph,
   compareBoolean as compareBooleanMorph,
   compareObject as compareObjectMorph
-} from './compare/morphs.js';
+} from './compare/primitives/index.js';
 import { erstelleFarben, detectType, createSection, createHeader } from './compare/base.js';
 
 // Smart Composites - Intelligente Morph-Kombinationen

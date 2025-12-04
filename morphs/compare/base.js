@@ -4,13 +4,18 @@
  * Gemeinsame Funktionen für alle Compare-Morphs:
  * - Farb-Zuweisung für Items
  * - Section/Container-Erstellung
- * - Typ-Erkennung (wie Pipeline)
+ * - Typ-Erkennung (config-driven aus morphs.yaml)
+ * 
+ * DATENGETRIEBEN: Keywords und Regeln kommen aus config/morphs.yaml!
  */
 
 import { debug } from '../../observer/debug.js';
 
 // Farben-Config wird von außen gesetzt (aus morphs.yaml)
 let farbenConfig = null;
+
+// Erkennung-Config wird von außen gesetzt (aus morphs.yaml)
+let erkennungConfig = null;
 
 // Fallback-Farben
 const FALLBACK_FARBEN = [
@@ -26,6 +31,18 @@ export function setFarbenConfig(config) {
   debug.morphs('Compare Farben-Config geladen', { 
     items: farbenConfig?.items?.length || 0,
     diagramme: farbenConfig?.diagramme?.length || 0
+  });
+}
+
+/**
+ * Setzt die Erkennungs-Konfiguration (aus morphs.yaml)
+ * WICHTIG: Macht detectType config-driven statt hardcoded!
+ */
+export function setErkennungConfig(config) {
+  erkennungConfig = config?.erkennung || null;
+  debug.morphs('Compare Erkennung-Config geladen', { 
+    hatBadge: !!erkennungConfig?.badge,
+    keywords: erkennungConfig?.badge?.keywords?.length || 0
   });
 }
 
@@ -71,14 +88,14 @@ export function createSection(label, farbe = null) {
   header.className = 'compare-section-header';
   header.textContent = label;
   section.appendChild(header);
-  
+
   const content = document.createElement('div');
   content.className = 'compare-section-content';
   section.appendChild(content);
-  
+
   // Helper um Content hinzuzufügen
   section.addContent = (el) => content.appendChild(el);
-  
+
   return section;
 }
 
@@ -120,13 +137,29 @@ export function createLegende(items) {
     `;
     legende.appendChild(el);
   });
-  
+
   return legende;
+}
+
+// =============================================================================
+// TYP-ERKENNUNG - 100% CONFIG-DRIVEN (aus morphs.yaml)
+// =============================================================================
+
+/**
+ * Helper: Stellt sicher dass wir ein Array haben
+ * (YAML-Parser kann manchmal String statt Array zurückgeben)
+ */
+function ensureArray(val, fallback) {
+  if (Array.isArray(val)) return val;
+  if (typeof val === 'string') return val.split(',').map(s => s.trim());
+  return fallback;
 }
 
 /**
  * DATENGETRIEBEN: Erkennt den Typ aus der Datenstruktur
- * Gleiche Logik wie Pipeline, aber ohne Config-Abhängigkeit
+ * 
+ * WICHTIG: Nutzt erkennungConfig aus morphs.yaml!
+ * Keine hardcodierten Keywords mehr.
  */
 export function detectType(wert) {
   if (wert === null || wert === undefined) return 'empty';
@@ -138,70 +171,133 @@ export function detectType(wert) {
   return 'text';
 }
 
+/**
+ * Erkennt den besten Morph für Zahlen
+ * Regeln kommen aus config/morphs.yaml → erkennung
+ */
 function detectNumberType(wert) {
-  // Rating: 0-10 mit Dezimalstellen
-  if (wert >= 0 && wert <= 10 && !Number.isInteger(wert)) {
+  const cfg = erkennungConfig || {};
+  
+  // Rating: aus Config oder Fallback 0-10 mit Dezimalstellen
+  const rating = cfg.rating || { min: 0, max: 10, dezimalstellen: true };
+  if (wert >= rating.min && wert <= rating.max && rating.dezimalstellen && !Number.isInteger(wert)) {
     return 'rating';
   }
-  // Progress: 0-100 Ganzzahl
-  if (wert >= 0 && wert <= 100 && Number.isInteger(wert)) {
+  
+  // Progress: aus Config oder Fallback 0-100 Ganzzahl
+  const progress = cfg.progress || { min: 0, max: 100, ganzzahl: true };
+  if (wert >= progress.min && wert <= progress.max && (!progress.ganzzahl || Number.isInteger(wert))) {
     return 'progress';
   }
+  
   return 'number';
 }
 
+/**
+ * Erkennt den besten Morph für Strings
+ * Keywords kommen aus config/morphs.yaml → erkennung.badge
+ * 
+ * KEINE HARDCODIERTEN KEYWORDS MEHR!
+ */
 function detectStringType(wert) {
   const lower = wert.toLowerCase().trim();
-  const statusKeywords = [
-    'aktiv', 'inaktiv', 'ja', 'nein', 'essbar', 'giftig', 'tödlich',
-    'verfügbar', 'vergriffen', 'saisonal', 'warnung'
-  ];
+  const cfg = erkennungConfig?.badge || {};
   
-  if (wert.length <= 25 && statusKeywords.some(kw => lower.includes(kw))) {
+  // Badge: Keywords NUR aus Config (Fallback ist leer = reiner text)
+  // Das garantiert 100% Datengetriebenheit
+  const keywords = cfg.keywords || [];
+  const maxLaenge = cfg.maxLaenge || 25;
+  
+  if (keywords.length > 0 && wert.length <= maxLaenge && keywords.some(kw => lower.includes(kw.toLowerCase()))) {
     return 'badge';
   }
+  
   return 'text';
 }
 
+/**
+ * Erkennt den besten Morph für Arrays
+ * Regeln kommen aus config/morphs.yaml → erkennung.array
+ */
 function detectArrayType(wert) {
   if (wert.length === 0) return 'list';
   
   const first = wert[0];
+  const cfg = erkennungConfig?.array || {};
+  
+  // String-Arrays → List
   if (typeof first === 'string') return 'list';
   
-  if (typeof first === 'object') {
-    // Radar: [{axis, value}]
-    if ('axis' in first && 'value' in first) return 'radar';
-    if ('dimension' in first && 'value' in first) return 'radar';
+  // Objekt-Arrays: Struktur analysieren
+  if (typeof first === 'object' && first !== null) {
+    const keys = Object.keys(first);
     
-    // Timeline: [{date, event}]
-    if ('date' in first && 'event' in first) return 'timeline';
-    if ('datum' in first && 'ereignis' in first) return 'timeline';
+    // Radar: aus Config oder Fallback
+    const radarCfg = cfg.radar || {};
+    const radarKeys = ensureArray(radarCfg.benoetigtKeys, ['axis', 'value']);
+    const radarAltKeys = ensureArray(radarCfg.alternativeKeys, ['dimension', 'score', 'factor']);
+    const allRadarKeys = [...radarKeys, ...radarAltKeys];
+    if (wert.length >= (radarCfg.minItems || 3) && allRadarKeys.some(k => k in first)) {
+      return 'radar';
+    }
     
-    // Bar: [{label, value}]
-    if ('label' in first && 'value' in first) return 'bar';
-    if ('name' in first && 'value' in first) return 'bar';
+    // Timeline: aus Config oder Fallback
+    const timelineCfg = cfg.timeline || {};
+    const timelineKeys = ensureArray(timelineCfg.benoetigtKeys, ['date', 'event']);
+    const timelineAltKeys = ensureArray(timelineCfg.alternativeKeys, ['time', 'datum', 'monat', 'periode', 'label']);
+    const allTimelineKeys = [...timelineKeys, ...timelineAltKeys];
+    if (allTimelineKeys.some(k => k in first)) {
+      return 'timeline';
+    }
+    
+    // Bar/Pie: aus Config oder Fallback
+    const barCfg = cfg.bar || {};
+    const pieCfg = cfg.pie || {};
+    const labelKeys = ensureArray(barCfg.benoetigtKeys || pieCfg.benoetigtKeys, ['label', 'value']);
+    const valueAltKeys = ensureArray(barCfg.alternativeKeys || pieCfg.alternativeKeys, ['name', 'amount', 'count', 'score']);
+    const hasLabel = labelKeys.some(k => k in first);
+    const hasValue = valueAltKeys.some(k => k in first) || 'value' in first;
+    
+    if (hasLabel && hasValue) {
+      return wert.length <= 6 ? 'pie' : 'bar';
+    }
+  }
+  
+  // Zahlen-Arrays → Bar
+  if (wert.every(v => typeof v === 'number')) {
+    return 'bar';
   }
   
   return 'list';
 }
 
+/**
+ * Erkennt den besten Morph für Objekte
+ * Regeln kommen aus config/morphs.yaml → erkennung.objekt
+ */
 function detectObjectType(wert) {
   const keys = Object.keys(wert);
+  const cfg = erkennungConfig?.objekt || {};
   
-  // Range: {min, max}
-  if (keys.includes('min') && keys.includes('max') && keys.length <= 3) {
+  // Range: aus Config oder Fallback (min + max)
+  const rangeCfg = cfg.range || {};
+  const rangeKeys = ensureArray(rangeCfg.benoetigtKeys, ['min', 'max']);
+  if (rangeKeys.every(k => k in wert) && keys.length <= (rangeCfg.maxKeys || 3)) {
+    // Prüfen ob es Stats ist (hat zusätzlich avg/mean)
+    const statsCfg = cfg.stats || {};
+    const statsKeys = ensureArray(statsCfg.benoetigtKeys, ['min', 'max', 'avg']);
+    if (statsKeys.filter(k => k in wert).length >= 3) {
+      return 'stats';
+    }
     return 'range';
   }
   
-  // Stats: {min, max, avg, ...}
-  if (keys.includes('min') && keys.includes('max') && keys.includes('avg')) {
-    return 'stats';
-  }
-  
-  // Pie: Objekt mit nur numerischen Werten
-  const allNumeric = Object.values(wert).every(v => typeof v === 'number');
-  if (allNumeric && keys.length >= 2 && keys.length <= 8) {
+  // Pie: aus Config oder Fallback (nur numerische Werte)
+  const pieCfg = cfg.pie || { nurNumerisch: true, minKeys: 2, maxKeys: 8 };
+  const allNumeric = keys.every(k => typeof wert[k] === 'number');
+  if (pieCfg.nurNumerisch !== false && allNumeric && 
+      keys.length >= (pieCfg.minKeys || 2) && 
+      keys.length <= (pieCfg.maxKeys || 8)) {
     return 'pie';
   }
   
@@ -210,6 +306,7 @@ function detectObjectType(wert) {
 
 export default {
   setFarbenConfig,
+  setErkennungConfig,
   getFarben,
   erstelleFarben,
   createSection,

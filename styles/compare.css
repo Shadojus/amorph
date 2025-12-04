@@ -557,3 +557,625 @@
   color: rgba(255, 255, 255, 0.85);
   text-align: right;
 }
+
+/* === PERSPEKTIVEN COMPARE === */
+.compare-perspektive {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.compare-perspektive-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.compare-perspektive-header .perspektive-symbol {
+  font-size: 20px;
+}
+
+.compare-perspektive-header .perspektive-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--p-farbe, rgba(255, 255, 255, 0.9));
+}
+
+.compare-perspektive-header .perspektive-count {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-left: auto;
+}
+
+/* Compare Legende (in Perspektiven) */
+.compare-legende {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.compare-legende-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.compare-legende-item .legende-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.compare-legende-item .legende-name {
+  white-space: nowrap;
+}
+
+/* Compare Sections */
+.compare-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.compare-section {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 14px;
+  border-left: 3px solid var(--section-farbe, rgba(255, 255, 255, 0.2));
+}
+
+.compare-section.section-primary {
+  border-left-width: 4px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.compare-section.section-danger {
+  background: rgba(220, 38, 38, 0.1);
+  border-left-color: #dc2626;
+}
+
+.compare-section-header {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--section-farbe, rgba(255, 255, 255, 0.85));
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.compare-section-content {
+  /* Inhalt der Section */
+}
+
+/* === COMPARE TEXT (Simple) === */
+.compare-text-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.compare-text-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.compare-text-wrap:last-child {
+  border-bottom: none;
+}
+
+.compare-text-wrap .text-header {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.compare-text-wrap .text-inhalt {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+}
+
+/* Text Simple (für kulinarisch etc.) */
+.compare-text-simple {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.compare-text-simple .text-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.compare-text-simple .text-name {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.compare-text-simple .text-wert {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.4;
+}
+
+/* === COMPARE ERNTE STATS === */
+.compare-ernte-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ernte-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ernte-row .ernte-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.ernte-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ernte-bar {
+  display: grid;
+  grid-template-columns: 80px 1fr 50px;
+  align-items: center;
+  gap: 8px;
+}
+
+.ernte-bar .bar-name {
+  font-size: 10px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ernte-bar .bar-track {
+  height: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.ernte-bar .bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.3s ease;
+  opacity: 0.8;
+}
+
+.ernte-bar .bar-value {
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: right;
+}
+
+/* === COMPARE PROGRESS === */
+.amorph-compare-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.progress-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 50px;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress-row .progress-name {
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.progress-row .progress-bar-container {
+  height: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.progress-row .progress-bar {
+  height: 100%;
+  border-radius: 8px;
+  transition: width 0.3s ease;
+}
+
+.progress-row .progress-wert {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: right;
+}
+
+/* === COMPARE BOOLEAN === */
+.amorph-compare-boolean .compare-boolean-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.compare-boolean-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
+}
+
+.compare-boolean-wrap .boolean-name {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.compare-boolean-wrap .boolean-wert {
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.compare-boolean-wrap .boolean-wert.boolean-ja {
+  color: #22c55e;
+}
+
+.compare-boolean-wrap .boolean-wert.boolean-nein {
+  color: #ef4444;
+}
+
+/* === COMPARE OBJECT === */
+.amorph-compare-object {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.object-header,
+.object-row {
+  display: grid;
+  grid-template-columns: 100px repeat(auto-fit, minmax(80px, 1fr));
+  gap: 8px;
+  padding: 8px 10px;
+}
+
+.object-header {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 8px 8px 0 0;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.object-header .object-key-header {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.object-header .object-name {
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.object-row {
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.object-row:last-child {
+  border-radius: 0 0 8px 8px;
+  border-bottom: none;
+}
+
+.object-row .object-key {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.object-row .object-cell {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+}
+
+/* === COMPARE RANGE === */
+.amorph-compare-range {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.range-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 70px;
+  align-items: center;
+  gap: 10px;
+}
+
+.range-row .range-name {
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.range-row .range-track {
+  height: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  position: relative;
+}
+
+.range-row .range-bar {
+  position: absolute;
+  height: 100%;
+  border-radius: 6px;
+  min-width: 8px;
+}
+
+.range-row .range-werte {
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: right;
+}
+
+.range-skala {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 90px 0 90px;
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* === COMPARE STATS === */
+.amorph-compare-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stats-header,
+.stats-row {
+  display: grid;
+  grid-template-columns: 80px repeat(auto-fit, minmax(70px, 1fr));
+  gap: 8px;
+  padding: 8px 10px;
+}
+
+.stats-header {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 8px 8px 0 0;
+}
+
+.stats-header .stats-label {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.stats-header .stats-name {
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stats-row {
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.stats-row:last-child {
+  border-radius: 0 0 8px 8px;
+  border-bottom: none;
+}
+
+.stats-row .stats-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.stats-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.stats-cell .stats-bar-bg {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.stats-cell .stats-bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.stats-cell .stats-wert {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+}
+
+.stats-cell.stats-max .stats-wert {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* === COMPARE WIRKSTOFFE (Theme) === */
+.compare-wirkstoffe {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.compare-wirkstoffe .wirkstoffe-row {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  align-items: start;
+  gap: 10px;
+}
+
+.compare-wirkstoffe .wirkstoffe-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  padding-top: 3px;
+}
+
+.compare-wirkstoffe .wirkstoffe-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.compare-wirkstoffe .wirkstoffe-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 16px;
+}
+
+.compare-wirkstoffe .wirkstoffe-bar .bar-fill {
+  height: 100%;
+  border-radius: 8px;
+  min-width: 6px;
+}
+
+.compare-wirkstoffe .wirkstoffe-bar .bar-value {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.6);
+  white-space: nowrap;
+}
+
+/* === COMPARE TIMELINE (Theme) === */
+.amorph-compare-timeline .timeline-track {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-left: 12px;
+  border-left: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.timeline-punkt {
+  position: relative;
+  padding-left: 16px;
+}
+
+.timeline-punkt .timeline-marker {
+  position: absolute;
+  left: -18px;
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.timeline-punkt .timeline-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.timeline-punkt .timeline-datum {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.timeline-punkt .timeline-text {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.timeline-punkt .timeline-name {
+  font-size: 10px;
+  font-weight: 500;
+}
+
+/* === PIE (Theme) === */
+.compare-pie-wrap .pie-name {
+  font-size: 11px;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+/* === RESPONSIVE PERSPEKTIVEN === */
+@media (min-width: 480px) {
+  .compare-perspektive {
+    padding: 20px;
+  }
+  
+  .compare-section {
+    padding: 16px;
+  }
+  
+  .compare-text-simple .text-row {
+    flex-direction: row;
+    gap: 12px;
+  }
+  
+  .compare-text-simple .text-name {
+    min-width: 100px;
+    flex-shrink: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .compare-perspektive-header .perspektive-name {
+    font-size: 16px;
+  }
+  
+  .compare-sections {
+    gap: 20px;
+  }
+  
+  .ernte-row {
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .ernte-row .ernte-label {
+    min-width: 100px;
+  }
+  
+  .ernte-bars {
+    flex: 1;
+  }
+}

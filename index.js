@@ -16,7 +16,7 @@ import { createDataSource } from './util/fetch.js';
 import { getSession } from './util/session.js';
 import { setSchema, setMorphsConfig } from './util/semantic.js';
 import { debug } from './observer/debug.js';
-import { setFarbenConfig } from './morphs/compare/base.js';
+import { setFarbenConfig, setErkennungConfig as setCompareErkennungConfig } from './morphs/compare/base.js';
 import './core/container.js'; // Web Component registrieren
 
 /**
@@ -59,6 +59,7 @@ export async function amorph(options = {}) {
   // Erkennungs-Config für Pipeline setzen (aus morphs.yaml)
   if (config.morphs?.erkennung) {
     setErkennungConfig(config.morphs);
+    setCompareErkennungConfig(config.morphs);  // Auch für Compare-Morphs!
     debug.config('Erkennung-Config geladen', Object.keys(config.morphs.erkennung));
   }
   

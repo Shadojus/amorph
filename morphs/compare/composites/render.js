@@ -20,7 +20,7 @@ import {
   compareImage,
   compareBoolean,
   compareObject
-} from '../morphs.js';
+} from '../primitives/index.js';
 
 /**
  * Rendert ein einzelnes Feld mit passendem Morph
