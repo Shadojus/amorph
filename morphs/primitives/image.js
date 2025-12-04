@@ -1,4 +1,4 @@
-import { debug } from '../observer/debug.js';
+import { debug } from '../../observer/debug.js';
 
 export function image(wert, config = {}) {
   const el = document.createElement('figure');

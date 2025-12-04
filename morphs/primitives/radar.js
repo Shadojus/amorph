@@ -9,7 +9,7 @@
  * Output: SVG Radar-Chart (min 3 Achsen)
  */
 
-import { debug } from '../observer/debug.js';
+import { debug } from '../../observer/debug.js';
 
 export function radar(wert, config = {}) {
   debug.morphs('radar', { typ: typeof wert, istArray: Array.isArray(wert) });

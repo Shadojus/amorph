@@ -1,4 +1,4 @@
-import { debug } from '../observer/debug.js';
+import { debug } from '../../observer/debug.js';
 
 export function boolean(wert, config = {}) {
   debug.morphs('boolean', { wert: !!wert, alsIcon: config.alsIcon });

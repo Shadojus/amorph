@@ -8,7 +8,7 @@
  * Output: Kompakte Statistik-Karte mit Icons
  */
 
-import { debug } from '../observer/debug.js';
+import { debug } from '../../observer/debug.js';
 
 // Bekannte Statistik-Felder mit Icons
 const STAT_ICONS = {

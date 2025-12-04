@@ -269,6 +269,16 @@ export function getPerspektivenListe() {
 }
 
 /**
+ * Holt eine einzelne Perspektive nach ID
+ * @param {string} perspId - Perspektiven-ID
+ * @returns {Object|null} Perspektive oder null
+ */
+export function getPerspektive(perspId) {
+  const liste = getPerspektivenListe();
+  return liste.find(p => p.id === perspId) || null;
+}
+
+/**
  * Holt Perspektiven-spezifische Morph-Config für ein Feld
  * @param {string} feldName - Name des Feldes
  * @param {string[]} aktivePerspektiven - Array der aktiven Perspektiven-IDs

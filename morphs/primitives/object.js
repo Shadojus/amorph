@@ -1,4 +1,4 @@
-import { debug } from '../observer/debug.js';
+import { debug } from '../../observer/debug.js';
 
 export function object(wert, config = {}, morphen) {
   const el = document.createElement('dl');

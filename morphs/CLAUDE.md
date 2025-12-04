@@ -2,7 +2,43 @@
 
 Reine Funktionen. Keine Klassen. Kein Zustand. **Keine Seiteneffekte!**
 
-## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
+## 🚧 AKTUELLER STAND (04.12.2025 - REFACTORED)
+
+### 📁 Neue Ordnerstruktur
+
+```
+morphs/
+├── primitives/       # 17 Basis-Morphs (domänenunabhängig)
+│   ├── text.js       # String-Darstellung
+│   ├── number.js     # Zahlen
+│   ├── boolean.js    # Ja/Nein
+│   ├── tag.js        # Farbige Chips
+│   ├── range.js      # Min-Max Slider
+│   ├── list.js       # String-Listen
+│   ├── object.js     # Key-Value Paare
+│   ├── image.js      # Bilder
+│   ├── link.js       # URLs
+│   ├── pie.js        # Kreisdiagramm
+│   ├── bar.js        # Balkendiagramm
+│   ├── radar.js      # Radar-Chart
+│   ├── rating.js     # Sterne-Bewertung
+│   ├── progress.js   # Fortschrittsbalken
+│   ├── stats.js      # Statistik-Karte
+│   ├── timeline.js   # Zeitliche Abfolge
+│   ├── badge.js      # Status-Labels
+│   └── index.js      # Re-Export aller Primitives
+│
+├── compare/          # Generische Compare-Morphs
+│   ├── base.js       # Utils (erstelleFarben, detectType, createSection)
+│   ├── morphs.js     # Compare-Wrapper (compareBar, compareRadar, etc.)
+│   └── index.js      # Re-Export
+│
+├── suche.js          # Feature: Suchfeld
+├── perspektiven.js   # Feature: Perspektiven-Buttons
+├── header.js         # Feature: App-Header
+├── index.js          # Zentrale Registry
+└── CLAUDE.md         # Diese Dokumentation
+```
 
 ### ⚠️ MORPH-PURITY REGEL
 
@@ -26,10 +62,10 @@ window.location             // → Nur für URL-Parsing (read-only)
 
 | Datei | Zeile | Was | Status |
 |-------|-------|-----|--------|
-| `badge.js` | 15-20 | `AUTO_VARIANTS_FALLBACK` Keywords | 🟡 Hat Config-Lookup, Fallback akzeptabel |
-| `badge.js` | 24-28 | `VARIANT_COLORS_FALLBACK` Farben | 🟡 Hat Config-Lookup, Fallback akzeptabel |
-| `pie.js` | 16-18 | `FARBEN_FALLBACK` Array | ✅ Hat Config-Lookup via `getFarben()` |
-| `compare.js` | 18-20 | `FALLBACK_FARBEN` Array | ✅ Hat Config-Lookup via `setFarbenConfig()` |
+| `primitives/badge.js` | 15-20 | `AUTO_VARIANTS_FALLBACK` Keywords | 🟡 Hat Config-Lookup, Fallback akzeptabel |
+| `primitives/badge.js` | 24-28 | `VARIANT_COLORS_FALLBACK` Farben | 🟡 Hat Config-Lookup, Fallback akzeptabel |
+| `primitives/pie.js` | 16-18 | `FARBEN_FALLBACK` Array | ✅ Hat Config-Lookup via `getFarben()` |
+| `compare/base.js` | 18-20 | `FALLBACK_FARBEN` Array | ✅ Hat Config-Lookup via `setFarbenConfig()` |
 
 ### Config-Lookup Pattern (Best Practice)
 
@@ -46,12 +82,10 @@ function getDiagrammFarben() {
 ```
 
 ### Implementiert
-- **Basis-Morphs**: text, number, boolean, tag, range, list, object, image, link
+- **Primitives** (in `primitives/`): text, number, boolean, tag, range, list, object, image, link, pie, bar, radar, rating, progress, stats, timeline, badge
 - **Alias**: `string` → `text` (Schema kann `typ: string` nutzen)
 - **Feature-Morphs**: suche, perspektiven, header
-- **Header-Morph**: Nutzt Callback-Pattern statt Events
-- **Visuelle Morphs**: pie, bar, radar, rating, progress, stats, timeline, badge
-- **Compare-Morphs**: Spezialisierte Vergleichs-Visualisierungen
+- **Compare-Morphs** (in `compare/`): Spezialisierte Vergleichs-Visualisierungen
   - `compareBar` - Horizontale Balkendiagramme für Zahlenvergleiche
   - `compareRating` - Sterne-Vergleich für Bewertungen
   - `compareTag` - Gruppierte Chips nach Wert (z.B. Essbarkeit)
@@ -60,8 +94,12 @@ function getDiagrammFarben() {
   - `compareRadar` - Überlappende SVG-Radar-Charts
   - `comparePie` - Nebeneinander Mini-Pie-Charts
   - `compareText` - Fallback Text-Vergleich
-  - `compareMorph` - Auto-Selektor wählt passenden Compare-Morph basierend auf TYP
-  - `erstelleFarben` - Konsistente Farbzuweisung für Pilze
+  - `compareTimeline` - Timeline-Vergleich
+  - `compareStats` - Statistik-Vergleich
+  - `compareRange` - Range/Progress Vergleich
+  - `compareByType(typ, items, config)` - Auto-Selektor wählt passenden Compare-Morph
+  - `detectType(wert)` - Erkennt Typ aus Datenstruktur
+  - `erstelleFarben(ids)` - Konsistente Farbzuweisung für Items
 
 ## 📊 DATENGETRIEBENE MORPH-ERKENNUNG
 

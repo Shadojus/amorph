@@ -16,7 +16,7 @@ import { createDataSource } from './util/fetch.js';
 import { getSession } from './util/session.js';
 import { setSchema, setMorphsConfig } from './util/semantic.js';
 import { debug } from './observer/debug.js';
-import { setFarbenConfig } from './morphs/compare.js';
+import { setFarbenConfig } from './morphs/compare/base.js';
 import './core/container.js'; // Web Component registrieren
 
 /**

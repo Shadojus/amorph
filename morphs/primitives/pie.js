@@ -9,8 +9,8 @@
  * Output: Kompaktes Donut-Diagramm mit Legende
  */
 
-import { debug } from '../observer/debug.js';
-import { getFarben } from '../util/semantic.js';
+import { debug } from '../../observer/debug.js';
+import { getFarben } from '../../util/semantic.js';
 
 // Farben werden aus config/morphs.yaml geladen
 const FARBEN_FALLBACK = [

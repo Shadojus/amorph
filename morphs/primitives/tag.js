@@ -1,4 +1,4 @@
-import { debug } from '../observer/debug.js';
+import { debug } from '../../observer/debug.js';
 
 export function tag(wert, config = {}) {
   const hatFarbe = !!config.farben?.[wert];

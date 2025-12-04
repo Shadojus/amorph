@@ -8,7 +8,7 @@
  * Output: Horizontaler Balken mit Prozent
  */
 
-import { debug } from '../observer/debug.js';
+import { debug } from '../../observer/debug.js';
 
 export function progress(wert, config = {}) {
   debug.morphs('progress', { wert, typ: typeof wert });
@@ -99,6 +99,5 @@ function detectMax(value, config) {
 function formatValue(value, unit) {
   if (value >= 1000000) return `${(value / 1000000).toFixed(1)}M${unit}`;
   if (value >= 1000) return `${(value / 1000).toFixed(1)}K${unit}`;
-  if (value >= 1) return `${value.toFixed(0)}${unit}`;
-  return `${value.toFixed(2)}${unit}`;
+  return `${value}${unit}`;
 }

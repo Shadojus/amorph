@@ -1,65 +1,25 @@
 /**
- * 🔄 COMPARE MORPHS - Vergleichs-Visualisierungen
+ * COMPARE MORPHS - Generische Vergleichs-Wrapper
  * 
- * Spezialisierte Morphs für Detail/Vergleich-Ansichten
- * Zeigen mehrere Werte desselben Feldes nebeneinander
+ * Diese Morphs wrappen die Primitives für Vergleichs-Darstellung.
+ * Sie erhalten Arrays von Items und stellen sie vergleichbar dar.
  * 
- * Mobile-first: Kompakt, lateral, touch-freundlich
- * 
- * DATENGETRIEBEN: Farben aus config/morphs.yaml
+ * DATENGETRIEBEN: Typ wird aus Datenstruktur erkannt, nicht aus Feldnamen!
  */
 
-import { debug } from '../observer/debug.js';
+import { debug } from '../../observer/debug.js';
+import { detectType, createSection } from './base.js';
 
-// Farben-Config wird von außen gesetzt (aus morphs.yaml)
-let farbenConfig = null;
-
-// Fallback-Farben falls Config nicht geladen
-const FALLBACK_FARBEN = [
-  '#e8b04a', '#60c090', '#d06080', '#5aa0d8', 
-  '#a080d0', '#d0a050', '#50b0b0', '#d08050'
-];
-
-/**
- * Setzt die Farben-Konfiguration (aus morphs.yaml)
- */
-export function setFarbenConfig(config) {
-  farbenConfig = config?.farben || null;
-  debug.morphs('Compare Farben-Config geladen', { 
-    pilze: farbenConfig?.pilze?.length || 0,
-    diagramme: farbenConfig?.diagramme?.length || 0
-  });
-}
-
-/**
- * Holt die konfigurierten Farben (pilze, diagramme, etc.)
- */
-function getFarben(typ = 'pilze') {
-  return farbenConfig?.[typ] || FALLBACK_FARBEN;
-}
-
-/**
- * Erstellt Farbzuordnung für Pilze
- */
-export function erstelleFarben(pilzIds) {
-  const farben = new Map();
-  const palette = getFarben('pilze');
-  pilzIds.forEach((id, i) => {
-    // IDs können strings oder numbers sein - normalisieren
-    const normalizedId = String(id);
-    const farbe = palette[i % palette.length];
-    farben.set(normalizedId, farbe);
-    debug.morphs('Farbe zugewiesen', { id: normalizedId, farbe });
-  });
-  return farben;
-}
+// Primitive Morphs für Single-Item Rendering
+import { 
+  bar, radar, pie, rating, progress, stats, 
+  tag, badge, list, range, timeline, image 
+} from '../primitives/index.js';
 
 /**
  * COMPARE BAR - Horizontale Balken für numerische Vergleiche
  * 
- * Perfekt für: bewertung, beliebtheit, temperatur, progress-Werte
- * 
- * @param {Array<{pilzId, pilzName, wert, farbe}>} items
+ * @param {Array} items - [{id, name, wert, farbe}]
  * @param {Object} config - {max, einheit, label}
  */
 export function compareBar(items, config = {}) {
@@ -92,38 +52,22 @@ export function compareBar(items, config = {}) {
   const bars = document.createElement('div');
   bars.className = 'compare-bars';
   
-  items.forEach((item, i) => {
+  items.forEach((item) => {
     const row = document.createElement('div');
     row.className = 'compare-bar-row';
     
-    // Wert berechnen - komplexe Objekte richtig formatieren
-    let displayWert, numWert;
-    if (Array.isArray(item.wert)) {
-      // Array von Objekten [{label, value, unit}] oder [{date, event}]
-      displayWert = item.wert.map(v => {
-        if (v.label && v.value !== undefined) return `${v.label}: ${v.value}${v.unit || ''}`;
-        if (v.date && v.event) return `${v.event}`;
-        return String(v);
-      }).join(', ');
-      numWert = item.wert.reduce((sum, v) => sum + (Number(v.value) || 0), 0);
-    } else if (typeof item.wert === 'object' && item.wert !== null) {
-      if ('min' in item.wert) {
-        numWert = (item.wert.min + item.wert.max) / 2;
-        displayWert = `${item.wert.min}–${item.wert.max}`;
-      } else {
-        // Generisches Objekt
-        displayWert = Object.entries(item.wert).map(([k, v]) => `${k}: ${v}`).join(', ');
-        numWert = 0;
-      }
-    } else {
-      numWert = Number(item.wert) || 0;
-      displayWert = String(item.wert);
-    }
+    let numWert = typeof item.wert === 'object' && 'min' in item.wert
+      ? (item.wert.min + item.wert.max) / 2
+      : Number(item.wert) || 0;
+    
+    const displayWert = typeof item.wert === 'object' && 'min' in item.wert
+      ? `${item.wert.min}–${item.wert.max}`
+      : String(item.wert);
     
     const pct = Math.min(100, (numWert / maxWert) * 100);
     
     row.innerHTML = `
-      <span class="bar-name" style="color:${item.farbe}">${item.pilzName}</span>
+      <span class="bar-name" style="color:${item.farbe}">${item.name}</span>
       <div class="bar-track">
         <div class="bar-fill" style="width:${pct}%;background:${item.farbe}"></div>
       </div>
@@ -139,8 +83,6 @@ export function compareBar(items, config = {}) {
 
 /**
  * COMPARE RATING - Sterne-Vergleich
- * 
- * Perfekt für: bewertung
  */
 export function compareRating(items, config = {}) {
   const el = document.createElement('div');
@@ -168,7 +110,7 @@ export function compareRating(items, config = {}) {
     ).join('');
     
     row.innerHTML = `
-      <span class="rating-name" style="color:${item.farbe}">${item.pilzName}</span>
+      <span class="rating-name" style="color:${item.farbe}">${item.name}</span>
       <div class="rating-stars">${stars}</div>
       <span class="rating-wert">${item.wert}</span>
     `;
@@ -182,20 +124,10 @@ export function compareRating(items, config = {}) {
 
 /**
  * COMPARE TAG - Chip-Vergleich für kategorische Daten
- * 
- * Perfekt für: essbarkeit, saison, verfuegbarkeit
- * Nutzt Schema-Farben für Kategorien (essbar: grün, giftig: rot, etc.)
  */
 export function compareTag(items, config = {}) {
   const el = document.createElement('div');
   el.className = 'amorph-compare amorph-compare-tag';
-  
-  debug.compare('Tag-Morph erstellen', {
-    itemsAnzahl: items.length,
-    label: config.label,
-    schemaFarben: config.farben,
-    perspektiveFarben: config.perspektiveFarben
-  });
   
   if (config.label) {
     const label = document.createElement('div');
@@ -212,31 +144,22 @@ export function compareTag(items, config = {}) {
   items.forEach(item => {
     const key = String(item.wert || '').toLowerCase();
     if (!nachWert.has(key)) {
-      nachWert.set(key, { wert: item.wert, pilze: [] });
+      nachWert.set(key, { wert: item.wert, items: [] });
     }
-    nachWert.get(key).pilze.push(item);
+    nachWert.get(key).items.push(item);
   });
   
-  nachWert.forEach(({wert, pilze}) => {
+  nachWert.forEach(({ wert, items: gruppeItems }) => {
     const chip = document.createElement('div');
     chip.className = 'compare-chip';
     
-    // Farbe aus Schema-Config (z.B. essbarkeit.farben.essbar)
-    // Fallback: erste Pilz-Farbe oder grau
     const wertKey = String(wert || '').toLowerCase();
-    const tagFarbe = config.farben?.[wertKey] || pilze[0]?.farbe || '#666';
-    
-    debug.compare('Chip-Farbe', {
-      wert,
-      wertKey,
-      gefundeneFarbe: config.farben?.[wertKey],
-      verwendeteFarbe: tagFarbe
-    });
+    const tagFarbe = config.farben?.[wertKey] || gruppeItems[0]?.farbe || '#666';
     
     chip.innerHTML = `
       <span class="chip-wert" style="background:${tagFarbe}">${wert || '–'}</span>
-      <span class="chip-pilze">${pilze.map(p => 
-        `<span style="color:${p.farbe}">${p.pilzName}</span>`
+      <span class="chip-items">${gruppeItems.map(p => 
+        `<span style="color:${p.farbe}">${p.name}</span>`
       ).join(', ')}</span>
     `;
     
@@ -249,8 +172,6 @@ export function compareTag(items, config = {}) {
 
 /**
  * COMPARE LIST - Listen-Vergleich mit Overlap-Anzeige
- * 
- * Perfekt für: standort, geschmack, verwechslung
  */
 export function compareList(items, config = {}) {
   const el = document.createElement('div');
@@ -263,7 +184,7 @@ export function compareList(items, config = {}) {
     el.appendChild(label);
   }
   
-  // Alle einzigartigen Werte sammeln und zählen wer sie hat
+  // Alle einzigartigen Werte sammeln
   const alleWerte = new Map();
   items.forEach(item => {
     const liste = Array.isArray(item.wert) ? item.wert : [item.wert];
@@ -281,22 +202,21 @@ export function compareList(items, config = {}) {
   // Sortiere: Gemeinsame zuerst
   const sorted = [...alleWerte.entries()].sort((a, b) => b[1].length - a[1].length);
   
-  sorted.forEach(([wert, pilze]) => {
+  sorted.forEach(([wert, ownerItems]) => {
     const row = document.createElement('div');
     row.className = 'compare-list-item';
     
-    // Gemeinsam = highlight
-    if (pilze.length > 1) {
+    if (ownerItems.length > 1) {
       row.classList.add('gemeinsam');
     }
     
-    const dots = pilze.map(p => 
-      `<span class="pilz-dot" style="background:${p.farbe}" title="${p.pilzName}"></span>`
+    const dots = ownerItems.map(p => 
+      `<span class="item-dot" style="background:${p.farbe}" title="${p.name}"></span>`
     ).join('');
     
     row.innerHTML = `
       <span class="list-wert">${wert}</span>
-      <span class="list-pilze">${dots}</span>
+      <span class="list-items">${dots}</span>
     `;
     
     container.appendChild(row);
@@ -307,9 +227,7 @@ export function compareList(items, config = {}) {
 }
 
 /**
- * COMPARE IMAGE - Bildergalerie-Vergleich
- * 
- * Perfekt für: bild
+ * COMPARE IMAGE - Bildergalerie
  */
 export function compareImage(items, config = {}) {
   const el = document.createElement('div');
@@ -326,8 +244,8 @@ export function compareImage(items, config = {}) {
     imgWrap.style.borderColor = item.farbe;
     
     imgWrap.innerHTML = `
-      <img src="${item.wert}" alt="${item.pilzName}" loading="lazy">
-      <span class="img-label" style="background:${item.farbe}">${item.pilzName}</span>
+      <img src="${item.wert}" alt="${item.name}" loading="lazy">
+      <span class="img-label" style="background:${item.farbe}">${item.name}</span>
     `;
     
     gallery.appendChild(imgWrap);
@@ -339,14 +257,12 @@ export function compareImage(items, config = {}) {
 
 /**
  * COMPARE RADAR - Überlappende Radar-Charts
- * 
- * Perfekt für: profil (multi-dimensionale Daten)
  */
 export function compareRadar(items, config = {}) {
   const el = document.createElement('div');
   el.className = 'amorph-compare amorph-compare-radar';
   
-  if (items.length === 0 || !items[0]?.wert) {
+  if (!items.length || !items[0]?.wert) {
     el.innerHTML = '<div class="compare-leer">Keine Profil-Daten</div>';
     return el;
   }
@@ -358,7 +274,6 @@ export function compareRadar(items, config = {}) {
     : Object.keys(firstWert);
   
   if (achsen.length < 3) {
-    // Fallback zu kompakter Darstellung
     return compareRadarCompact(items, config);
   }
   
@@ -386,7 +301,7 @@ export function compareRadar(items, config = {}) {
     svg.appendChild(polygon);
   }
   
-  // Achsen-Linien mit Beschriftung
+  // Achsen-Linien
   achsen.forEach((achse, i) => {
     const angle = (Math.PI * 2 * i) / achsen.length - Math.PI / 2;
     const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
@@ -397,13 +312,11 @@ export function compareRadar(items, config = {}) {
     line.setAttribute('class', 'radar-axis');
     svg.appendChild(line);
     
-    // Achsen-Beschriftung
+    // Label
     const labelR = radius + 12;
-    const labelX = cx + Math.cos(angle) * labelR;
-    const labelY = cy + Math.sin(angle) * labelR;
     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text.setAttribute('x', labelX);
-    text.setAttribute('y', labelY);
+    text.setAttribute('x', cx + Math.cos(angle) * labelR);
+    text.setAttribute('y', cy + Math.sin(angle) * labelR);
     text.setAttribute('class', 'radar-label');
     text.setAttribute('text-anchor', 'middle');
     text.setAttribute('dominant-baseline', 'middle');
@@ -411,7 +324,7 @@ export function compareRadar(items, config = {}) {
     svg.appendChild(text);
   });
   
-  // Daten-Shapes für jeden Pilz
+  // Daten-Shapes für jeden Item
   items.forEach(item => {
     const werte = normalisiereRadarWerte(item.wert, achsen);
     const points = achsen.map((achse, i) => {
@@ -437,7 +350,7 @@ export function compareRadar(items, config = {}) {
     legende.innerHTML += `
       <span class="legende-item">
         <span class="legende-dot" style="background:${item.farbe}"></span>
-        ${item.pilzName}
+        ${item.name}
       </span>
     `;
   });
@@ -446,14 +359,10 @@ export function compareRadar(items, config = {}) {
   return el;
 }
 
-/**
- * Kompakte Radar-Alternative für wenige Achsen
- */
 function compareRadarCompact(items, config) {
   const el = document.createElement('div');
   el.className = 'amorph-compare amorph-compare-radar-compact';
   
-  // Alle Achsen sammeln
   const alleAchsen = new Set();
   items.forEach(item => {
     const wert = item.wert;
@@ -475,9 +384,8 @@ function compareRadarCompact(items, config) {
     items.forEach(item => {
       const werte = normalisiereRadarWerte(item.wert, [achse]);
       const val = werte[achse] || 0;
-      
       bars.innerHTML += `
-        <div class="radar-mini-bar" style="width:${val}%;background:${item.farbe}" title="${item.pilzName}: ${val}"></div>
+        <div class="radar-mini-bar" style="width:${val}%;background:${item.farbe}" title="${item.name}: ${val}"></div>
       `;
     });
     
@@ -505,8 +413,6 @@ function normalisiereRadarWerte(wert, achsen) {
 
 /**
  * COMPARE PIE - Nebeneinander Pie-Charts
- * 
- * Perfekt für: naehrwerte
  */
 export function comparePie(items, config = {}) {
   const el = document.createElement('div');
@@ -519,10 +425,8 @@ export function comparePie(items, config = {}) {
     const pieWrap = document.createElement('div');
     pieWrap.className = 'compare-pie-wrap';
     
-    // Pilz-Name
-    pieWrap.innerHTML = `<div class="pie-pilz" style="color:${item.farbe}">${item.pilzName}</div>`;
+    pieWrap.innerHTML = `<div class="pie-name" style="color:${item.farbe}">${item.name}</div>`;
     
-    // Mini-Pie erstellen
     const pieData = typeof item.wert === 'object' && !Array.isArray(item.wert) 
       ? Object.entries(item.wert).map(([k, v]) => ({ label: k, value: v }))
       : item.wert;
@@ -551,7 +455,7 @@ function erstelleMiniPie(data) {
   const r = size / 2 - 2;
   
   const total = data.reduce((sum, d) => sum + (d.value || d.count || 0), 0);
-  const pieColors = farbenConfig?.diagramme || FALLBACK_FARBEN;
+  const pieColors = ['#22c55e', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'];
   
   let currentAngle = -Math.PI / 2;
   
@@ -569,9 +473,7 @@ function erstelleMiniPie(data) {
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     path.setAttribute('d', `M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z`);
     path.setAttribute('fill', pieColors[i % pieColors.length]);
-    path.setAttribute('class', 'pie-slice');
     
-    // Tooltip
     const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
     title.textContent = `${d.label || d.name}: ${value}`;
     path.appendChild(title);
@@ -584,9 +486,7 @@ function erstelleMiniPie(data) {
 }
 
 /**
- * COMPARE TEXT - Einfacher Text-Vergleich
- * 
- * Fallback für: beschreibung, zubereitung, etc.
+ * COMPARE TEXT - Einfacher Text-Vergleich (Fallback)
  */
 export function compareText(items, config = {}) {
   const el = document.createElement('div');
@@ -606,14 +506,11 @@ export function compareText(items, config = {}) {
     const row = document.createElement('div');
     row.className = 'compare-text-row';
     
-    // Komplexe Werte richtig formatieren
     let displayWert;
     if (Array.isArray(item.wert)) {
-      // Array von Objekten
       displayWert = item.wert.map(v => {
         if (v.label && v.value !== undefined) return `${v.label}: ${v.value}${v.unit || ''}`;
         if (v.date && v.event) return `${v.date}: ${v.event}`;
-        if (v.axis && v.value !== undefined) return `${v.axis}: ${v.value}`;
         return String(v);
       }).join(' · ');
     } else if (typeof item.wert === 'object' && item.wert !== null) {
@@ -623,7 +520,7 @@ export function compareText(items, config = {}) {
     }
     
     row.innerHTML = `
-      <span class="text-pilz" style="border-color:${item.farbe}">${item.pilzName}</span>
+      <span class="text-name" style="border-color:${item.farbe}">${item.name}</span>
       <span class="text-wert">${displayWert}</span>
     `;
     rows.appendChild(row);
@@ -634,74 +531,7 @@ export function compareText(items, config = {}) {
 }
 
 /**
- * COMPARE WIRKSTOFFE - Spezialisiert für [{label, value, unit}]
- */
-export function compareWirkstoffe(items, config = {}) {
-  const el = document.createElement('div');
-  el.className = 'amorph-compare amorph-compare-wirkstoffe';
-  
-  if (config.label) {
-    const label = document.createElement('div');
-    label.className = 'compare-label';
-    label.textContent = config.label;
-    el.appendChild(label);
-  }
-  
-  // Alle Wirkstoffe sammeln
-  const alleWirkstoffe = new Map();
-  items.forEach(item => {
-    if (!Array.isArray(item.wert)) return;
-    item.wert.forEach(w => {
-      const key = w.label || w.name;
-      if (!alleWirkstoffe.has(key)) {
-        alleWirkstoffe.set(key, { label: key, unit: w.unit || '', werte: [] });
-      }
-      alleWirkstoffe.get(key).werte.push({
-        pilz: item.pilzName,
-        farbe: item.farbe,
-        value: w.value
-      });
-    });
-  });
-  
-  const container = document.createElement('div');
-  container.className = 'wirkstoffe-container';
-  
-  alleWirkstoffe.forEach(({label, unit, werte}) => {
-    const row = document.createElement('div');
-    row.className = 'wirkstoffe-row';
-    
-    const labelEl = document.createElement('span');
-    labelEl.className = 'wirkstoffe-label';
-    labelEl.textContent = label;
-    row.appendChild(labelEl);
-    
-    const barContainer = document.createElement('div');
-    barContainer.className = 'wirkstoffe-bars';
-    
-    const maxVal = Math.max(...werte.map(w => Number(w.value) || 0), 1);
-    
-    werte.forEach(({pilz, farbe, value}) => {
-      const pct = Math.min(100, (Number(value) / maxVal) * 100);
-      const bar = document.createElement('div');
-      bar.className = 'wirkstoffe-bar';
-      bar.innerHTML = `
-        <div class="bar-fill" style="width:${pct}%;background:${farbe}" title="${pilz}"></div>
-        <span class="bar-value">${value}${unit}</span>
-      `;
-      barContainer.appendChild(bar);
-    });
-    
-    row.appendChild(barContainer);
-    container.appendChild(row);
-  });
-  
-  el.appendChild(container);
-  return el;
-}
-
-/**
- * COMPARE TIMELINE - Spezialisiert für [{date, event}]
+ * COMPARE TIMELINE - Timeline-Vergleich
  */
 export function compareTimeline(items, config = {}) {
   const el = document.createElement('div');
@@ -718,14 +548,14 @@ export function compareTimeline(items, config = {}) {
   container.className = 'timeline-container';
   
   items.forEach(item => {
-    const pilzRow = document.createElement('div');
-    pilzRow.className = 'timeline-pilz';
+    const row = document.createElement('div');
+    row.className = 'timeline-row';
     
-    const pilzLabel = document.createElement('div');
-    pilzLabel.className = 'timeline-pilz-name';
-    pilzLabel.style.color = item.farbe;
-    pilzLabel.textContent = item.pilzName;
-    pilzRow.appendChild(pilzLabel);
+    const nameEl = document.createElement('div');
+    nameEl.className = 'timeline-name';
+    nameEl.style.color = item.farbe;
+    nameEl.textContent = item.name;
+    row.appendChild(nameEl);
     
     const events = document.createElement('div');
     events.className = 'timeline-events';
@@ -740,8 +570,8 @@ export function compareTimeline(items, config = {}) {
       });
     }
     
-    pilzRow.appendChild(events);
-    container.appendChild(pilzRow);
+    row.appendChild(events);
+    container.appendChild(row);
   });
   
   el.appendChild(container);
@@ -749,78 +579,115 @@ export function compareTimeline(items, config = {}) {
 }
 
 /**
- * HAUPT-EXPORT: Wählt automatisch den richtigen Compare-Morph
- * 
- * Priorität:
- * 1. Explizit übergebener `typ` (von Perspektiven-Config)
- * 2. Feld-spezifische Handler (für spezielle Felder wie bild, profil)
- * 3. Schema-Typ basierte Handler
- * 4. Fallback zu Text
- * 
- * @param {string} feldName - Name des Feldes
- * @param {string} typ - Schema-Typ oder Perspektiven-Typ (rating, progress, tag, list, etc.)
- * @param {Array} items - [{pilzId, pilzName, wert, farbe}]
- * @param {Object} config - Feld-Config aus Schema + Perspektiven-Config
+ * COMPARE STATS - Stats-Vergleich
  */
-export function compareMorph(feldName, typ, items, config = {}) {
-  debug.compare('compareMorph aufgerufen', {
-    feldName,
-    typ,
-    itemsAnzahl: items.length,
-    perspektive: config.perspektive,
-    label: config.label,
-    hatFarben: !!config.farben
+export function compareStats(items, config = {}) {
+  return compareBar(items, config);  // Stats als Balken darstellen
+}
+
+/**
+ * COMPARE RANGE - Range-Vergleich mit Überlappung
+ */
+export function compareRange(items, config = {}) {
+  const el = document.createElement('div');
+  el.className = 'amorph-compare amorph-compare-range';
+  
+  if (config.label) {
+    const label = document.createElement('div');
+    label.className = 'compare-label';
+    label.textContent = config.label;
+    el.appendChild(label);
+  }
+  
+  // Gesamt-Range ermitteln
+  let globalMin = Infinity, globalMax = -Infinity;
+  items.forEach(item => {
+    if (item.wert?.min !== undefined) globalMin = Math.min(globalMin, item.wert.min);
+    if (item.wert?.max !== undefined) globalMax = Math.max(globalMax, item.wert.max);
   });
-  debug.morphs('compareMorph', { feldName, typ, items: items.length, perspektive: config.perspektive });
   
-  // Typ-basierte Handler (höchste Priorität - erlaubt Perspektiven-Override)
-  const typHandler = {
-    rating: () => compareRating(items, config),
-    progress: () => compareBar(items, { ...config, max: 100 }),
-    number: () => compareBar(items, config),
-    range: () => compareBar(items, config),
-    tag: () => compareTag(items, config),
-    badge: () => compareTag(items, config),
-    list: () => compareList(items, config),
-    image: () => compareImage(items, config),
-    radar: () => compareRadar(items, config),
-    pie: () => comparePie(items, config),
-    bar: () => compareBar(items, config),
-    stats: () => compareBar(items, config),
-    timeline: () => compareTimeline(items, config),
-    wirkstoffe: () => compareWirkstoffe(items, config),
-    text: () => compareText(items, config),
-  };
+  const container = document.createElement('div');
+  container.className = 'range-container';
   
-  // Wenn Perspektive einen Typ definiert hat → diesen nutzen
-  if (config.perspektive && typHandler[typ]) {
-    debug.compare('PERSPEKTIVEN-OVERRIDE aktiv', {
-      feldName,
-      typ,
-      perspektive: config.perspektive,
-      verwendeterHandler: typ
-    });
-    debug.morphs('Perspektiven-Morph', { feldName, typ, perspektive: config.perspektive });
-    return typHandler[typ]();
+  items.forEach(item => {
+    if (!item.wert?.min || !item.wert?.max) return;
+    
+    const row = document.createElement('div');
+    row.className = 'range-row';
+    
+    const startPct = ((item.wert.min - globalMin) / (globalMax - globalMin)) * 100;
+    const widthPct = ((item.wert.max - item.wert.min) / (globalMax - globalMin)) * 100;
+    
+    row.innerHTML = `
+      <span class="range-name" style="color:${item.farbe}">${item.name}</span>
+      <div class="range-track">
+        <div class="range-fill" style="left:${startPct}%;width:${widthPct}%;background:${item.farbe}"></div>
+      </div>
+      <span class="range-wert">${item.wert.min}–${item.wert.max}${config.einheit || ''}</span>
+    `;
+    
+    container.appendChild(row);
+  });
+  
+  el.appendChild(container);
+  return el;
+}
+
+/**
+ * COMPARE BY TYPE - Automatische Typ-Selektion
+ * 
+ * Wählt den passenden Compare-Morph basierend auf dem erkannten Typ.
+ * 
+ * @param {string} typ - Erkannter Typ (aus detectType oder Schema)
+ * @param {Array} items - [{id, name, wert, farbe}]
+ * @param {Object} config - Morph-Konfiguration
+ */
+export function compareByType(typ, items, config = {}) {
+  debug.morphs('compareByType', { typ, itemCount: items?.length, config });
+  
+  switch (typ) {
+    case 'bar':
+    case 'number':
+      return compareBar(items, config);
+      
+    case 'rating':
+      return compareRating(items, config);
+      
+    case 'radar':
+      return compareRadar(items, config);
+      
+    case 'pie':
+      return comparePie(items, config);
+      
+    case 'tag':
+    case 'badge':
+      return compareTag(items, config);
+      
+    case 'list':
+      return compareList(items, config);
+      
+    case 'image':
+      return compareImage(items, config);
+      
+    case 'timeline':
+      return compareTimeline(items, config);
+      
+    case 'stats':
+      return compareStats(items, config);
+      
+    case 'range':
+    case 'progress':
+      return compareRange(items, config);
+      
+    case 'text':
+    case 'string':
+    default:
+      return compareText(items, config);
   }
-  
-  // DATENGETRIEBEN: Typ-Handler basierend auf erkanntem Datentyp
-  // Kein hardcoded feldHandler mehr! Die Datenstruktur bestimmt den Morph.
-  if (typHandler[typ]) {
-    debug.compare('Typ-Handler verwendet', {
-      feldName,
-      typ
-    });
-    return typHandler[typ]();
-  }
-  
-  // Fallback
-  return compareText(items, config);
 }
 
 export default {
-  erstelleFarben,
-  compareMorph,
+  compareByType,
   compareBar,
   compareRating,
   compareTag,
@@ -829,6 +696,7 @@ export default {
   compareRadar,
   comparePie,
   compareText,
-  compareWirkstoffe,
-  compareTimeline
+  compareTimeline,
+  compareStats,
+  compareRange
 };

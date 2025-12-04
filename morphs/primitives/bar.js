@@ -10,7 +10,7 @@
  * Output: Kompaktes horizontales Balkendiagramm
  */
 
-import { debug } from '../observer/debug.js';
+import { debug } from '../../observer/debug.js';
 
 export function bar(wert, config = {}) {
   debug.morphs('bar', { typ: typeof wert, istArray: Array.isArray(wert) });

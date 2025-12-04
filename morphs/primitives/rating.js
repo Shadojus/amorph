@@ -8,7 +8,7 @@
  * Output: ⭐⭐⭐⭐⯨ (4.5/5)
  */
 
-import { debug } from '../observer/debug.js';
+import { debug } from '../../observer/debug.js';
 
 export function rating(wert, config = {}) {
   debug.morphs('rating', { wert, typ: typeof wert });

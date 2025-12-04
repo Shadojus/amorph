@@ -1,4 +1,4 @@
-import { debug } from '../observer/debug.js';
+import { debug } from '../../observer/debug.js';
 
 export function text(wert, config = {}) {
   debug.morphs('text', { wert: String(wert).slice(0, 50), config });

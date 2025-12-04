@@ -1,4 +1,4 @@
-import { debug } from '../observer/debug.js';
+import { debug } from '../../observer/debug.js';
 
 export function range(wert, config = {}) {
   debug.morphs('range', { min: wert.min, max: wert.max, einheit: config.einheit });

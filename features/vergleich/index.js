@@ -8,9 +8,10 @@
  * - Bild-Galerie für Bilder
  * - Radar/Pie für komplexe Daten
  * 
- * NEU: Perspektiven-basierte Morph-Auswahl
- * - Jede Perspektive kann spezielle Morph-Konfigurationen definieren
- * - Aktive Perspektiven beeinflussen die Darstellung
+ * NEU: Perspektiven-basierte Compare-Views
+ * - Theme-spezifische Compare-Morphs unter themes/[thema]/morphs/compare/
+ * - Jede Perspektive hat einen eigenen Compare-Morph
+ * - Fallback auf generische Compare-Morphs wenn kein Theme-Morph existiert
  * 
  * NEU: Lokale Suche mit Fuzzy-Matching
  * - Durchsucht die bereits geladenen Daten
@@ -25,15 +26,45 @@ import {
   getAuswahlNachFeld,
   getState 
 } from '../ansichten/index.js';
-import { getFeldConfig, getPerspektivenMorphConfig, getPerspektivenListe, getAllePerspektivenFarben, getItemName } from '../../util/semantic.js';
+import { getFeldConfig, getPerspektivenMorphConfig, getPerspektivenListe, getAllePerspektivenFarben, getItemName, getPerspektive } from '../../util/semantic.js';
 import { 
   compareMorph,
-  erstelleFarben
-} from '../../morphs/compare.js';
+  erstelleFarben,
+  detectType,
+  compareByType,
+  createSection
+} from '../../morphs/index.js';
 import { highlightInContainer, clearHighlights } from '../../util/fetch.js';
 
-export default function init(ctx) {
+// Theme Compare Morphs (dynamisch geladen)
+let themeCompareMorphs = null;
+
+/**
+ * Lädt die Theme-spezifischen Compare-Morphs
+ * Pfad: themes/[thema]/morphs/compare/index.js
+ */
+async function loadThemeCompareMorphs(thema = 'pilze') {
+  if (themeCompareMorphs) return themeCompareMorphs;
+  
+  try {
+    const module = await import(`../../themes/${thema}/morphs/compare/index.js`);
+    themeCompareMorphs = module;
+    debug.vergleich('Theme Compare-Morphs geladen', { 
+      thema, 
+      perspektiven: Object.keys(module.perspektivenMorphs || {}) 
+    });
+    return themeCompareMorphs;
+  } catch (err) {
+    debug.vergleich('Keine Theme Compare-Morphs gefunden, nutze Fallback', { thema, error: err.message });
+    return null;
+  }
+}
+
+export default async function init(ctx) {
   debug.features('Vergleich/Sammel-Diagramm Feature Init');
+  
+  // Theme Compare-Morphs laden (async)
+  await loadThemeCompareMorphs();
   
   // Aktive Perspektiven tracken
   let aktivePerspektiven = [];
@@ -66,7 +97,7 @@ export default function init(ctx) {
   const perspektivenSpan = container.querySelector('.sammel-perspektiven');
   
   /**
-   * Hauptrender - Nutzt neue Compare-Morphs
+   * Hauptrender - Nutzt Theme Compare-Morphs wenn Perspektiven aktiv
    */
   function render() {
     const nachFeld = getAuswahlNachFeld();
@@ -89,6 +120,77 @@ export default function init(ctx) {
     const pilzIds = Array.from(nachPilz.keys());
     const pilzFarben = erstelleFarben(pilzIds);
     
+    // Items für Compare-Morphs vorbereiten (alle Pilze mit vollständigen Daten)
+    const compareItems = Array.from(nachPilz.entries()).map(([id, data]) => ({
+      id: String(id),
+      name: getItemName(data.pilzDaten) || id,
+      data: data.pilzDaten || {},
+      farbe: pilzFarben.get(String(id)) || '#888'
+    }));
+    
+    // =====================================================================
+    // PERSPEKTIVEN-MODUS: Theme Compare-Morphs nutzen
+    // =====================================================================
+    if (aktivePerspektiven.length > 0 && themeCompareMorphs?.perspektivenMorphs) {
+      debug.vergleich('Perspektiven-Modus aktiv', { 
+        perspektiven: aktivePerspektiven,
+        verfügbar: Object.keys(themeCompareMorphs.perspektivenMorphs)
+      });
+      
+      // Pro aktiver Perspektive einen Compare-Block rendern
+      for (const perspId of aktivePerspektiven) {
+        const compareFn = themeCompareMorphs.perspektivenMorphs[perspId];
+        
+        if (!compareFn) {
+          debug.vergleich('Kein Theme-Morph für Perspektive', { perspId });
+          continue;
+        }
+        
+        // Perspektive aus Schema holen
+        const perspektive = getPerspektive(perspId);
+        if (!perspektive) {
+          debug.vergleich('Perspektive nicht im Schema', { perspId });
+          continue;
+        }
+        
+        try {
+          // Theme Compare-Morph aufrufen
+          const perspEl = compareFn(compareItems, perspektive, {});
+          
+          if (perspEl) {
+            // Perspektiven-Container stylen
+            perspEl.classList.add('compare-perspektive-block');
+            perspEl.setAttribute('data-perspektive', perspId);
+            
+            // Perspektiven-Farben als CSS-Variablen setzen
+            if (perspektive.farben) {
+              perspektive.farben.forEach((farbe, i) => {
+                perspEl.style.setProperty(`--persp-farbe-${i}`, farbe);
+              });
+            }
+            
+            diagramme.appendChild(perspEl);
+            debug.vergleich('Theme Compare-Morph gerendert', { perspId, items: compareItems.length });
+          }
+        } catch (err) {
+          debug.vergleich('Fehler beim Theme Compare-Morph', { perspId, error: err.message });
+        }
+      }
+      
+      // Legende
+      renderLegende(nachPilz, pilzFarben);
+      debug.features('Perspektiven-Compare gerendert', { 
+        perspektiven: aktivePerspektiven.length, 
+        pilze: nachPilz.size 
+      });
+      return;
+    }
+    
+    // =====================================================================
+    // FALLBACK-MODUS: Feld-für-Feld mit generischen Compare-Morphs
+    // =====================================================================
+    debug.vergleich('Fallback-Modus (keine Perspektiven aktiv)');
+    
     // Pro Feld ein Diagramm mit Compare-Morphs
     for (const [feldName, rawItems] of nachFeld) {
       if (!rawItems.length) continue;
@@ -97,7 +199,9 @@ export default function init(ctx) {
       if (feldName === 'name') continue;
       
       const cfg = getFeldConfig(feldName);
-      const typ = cfg?.typ || 'text';
+      // DATENGETRIEBEN: Typ aus Schema ODER aus Datenstruktur erkennen
+      const firstWert = rawItems[0]?.wert;
+      const typ = cfg?.typ || detectType(firstWert) || 'text';
       
       // DEBUG
       debug.features('Vergleich rawItems', { 

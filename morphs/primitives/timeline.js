@@ -9,7 +9,7 @@
  * Output: Vertikale Timeline mit Punkten und Labels
  */
 
-import { debug } from '../observer/debug.js';
+import { debug } from '../../observer/debug.js';
 
 export function timeline(wert, config = {}) {
   debug.morphs('timeline', { typ: typeof wert, anzahl: Array.isArray(wert) ? wert.length : 0 });

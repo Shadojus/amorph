@@ -1,4 +1,4 @@
-import { debug } from '../observer/debug.js';
+import { debug } from '../../observer/debug.js';
 
 export function number(wert, config = {}) {
   debug.morphs('number', { wert, einheit: config.einheit });

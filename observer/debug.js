@@ -59,11 +59,16 @@ class DebugObserver {
     this.maxHistory = 500;
     this.filter = null; // Kann auf bestimmte Kategorien filtern
     this.startTime = Date.now();
+    // Exzessive Kategorien standardmäßig stummschalten
+    this.muted = new Set(['morphs', 'mount', 'unmount', 'scroll', 'intersection']);
+    this.verbose = false; // Wenn true: alle Kategorien loggen (muted ignorieren)
   }
   
   log(kategorie, nachricht, daten = null) {
     if (!this.enabled) return;
     if (this.filter && !this.filter.includes(kategorie)) return;
+    // Stummgeschaltete Kategorien nur bei verbose=true loggen
+    if (!this.verbose && this.muted.has(kategorie)) return;
     
     const zeit = new Date().toLocaleTimeString('de-DE');
     const elapsed = Date.now() - this.startTime;
@@ -174,6 +179,22 @@ class DebugObserver {
     console.log(`%c[DEBUG]%c Filter entfernt`, STYLES.observer, STYLES.muted);
   }
   
+  // Kategorien stummschalten/aktivieren
+  mute(kategorie) {
+    this.muted.add(kategorie);
+    console.log(`%c[DEBUG]%c ${kategorie} stummgeschaltet`, STYLES.observer, STYLES.muted);
+  }
+  
+  unmute(kategorie) {
+    this.muted.delete(kategorie);
+    console.log(`%c[DEBUG]%c ${kategorie} aktiviert`, STYLES.observer, STYLES.muted);
+  }
+  
+  setVerbose(value = true) {
+    this.verbose = value;
+    console.log(`%c[DEBUG]%c Verbose: ${value ? 'AN' : 'AUS'}`, STYLES.observer, STYLES.muted);
+  }
+  
   clear() {
     this.history = [];
     this.startTime = Date.now();
@@ -202,4 +223,7 @@ if (typeof window !== 'undefined') {
   window.amorphStats = () => debug.summary();
   window.amorphFilter = (kat) => debug.setFilter(kat);
   window.amorphClear = () => debug.clearFilter();
+  window.amorphVerbose = (v = true) => debug.setVerbose(v);
+  window.amorphMute = (kat) => debug.mute(kat);
+  window.amorphUnmute = (kat) => debug.unmute(kat);
 }

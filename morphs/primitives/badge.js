@@ -8,8 +8,8 @@
  * Output: Farbiges Badge mit Icon
  */
 
-import { debug } from '../observer/debug.js';
-import { getBadgeConfig } from '../util/semantic.js';
+import { debug } from '../../observer/debug.js';
+import { getBadgeConfig } from '../../util/semantic.js';
 
 // Fallback-Werte wenn Config nicht geladen
 const AUTO_VARIANTS_FALLBACK = {
@@ -98,11 +98,11 @@ export function badge(wert, config = {}) {
 }
 
 function detectVariant(text) {
-  const lower = text.toLowerCase().trim();
-  const variants = getAutoVariants();
+  const lower = String(text).toLowerCase().trim();
+  const autoVariants = getAutoVariants();
   
-  for (const [variant, keywords] of Object.entries(variants)) {
-    if (keywords.some(kw => lower.includes(kw) || lower === kw)) {
+  for (const [variant, keywords] of Object.entries(autoVariants)) {
+    if (keywords.some(kw => lower.includes(kw))) {
       return variant;
     }
   }
