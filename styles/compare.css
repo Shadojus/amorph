@@ -5,10 +5,10 @@
 .amorph-compare {
   width: 100%;
   padding: 12px;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  margin-bottom: 12px;
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  margin-bottom: 10px;
 }
 
 .compare-label {
@@ -283,6 +283,7 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
+  box-shadow: 0 0 6px currentColor;
 }
 
 /* Radar Scale Labels */
@@ -580,11 +581,73 @@
 
 /* === PERSPEKTIVEN COMPARE === */
 .compare-perspektive {
-  background: rgba(0, 0, 0, 0.25);
+  position: relative;
+  /* Woodfloor Hintergrund wie Grid-Cards */
+  background: 
+    linear-gradient(
+      160deg,
+      rgba(0, 0, 0, 0.88) 0%,
+      rgba(0, 0, 0, 0.92) 50%,
+      rgba(0, 0, 0, 0.85) 100%
+    ),
+    url('../images/woodfloor/Moss_Woodsf_Laub.png');
+  background-size: cover, cover;
+  background-position: center, center;
+  /* Dark Glasmorphism */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   padding: 16px;
+  padding-left: 20px;
   margin-bottom: 20px;
+  /* Glasmorphism Schatten */
+  box-shadow: 
+    inset 0 0 40px rgba(0, 0, 0, 0.3),
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.compare-perspektive:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 
+    inset 0 0 40px rgba(0, 0, 0, 0.2),
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(255, 255, 255, 0.03);
+}
+
+/* Leuchtender Perspektiven-Balken - wie im Grid */
+.compare-perspektive::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  bottom: 12px;
+  width: 2px;
+  border-radius: 2px 0 0 2px;
+  background: var(--p-gradient, var(--p-farbe, var(--color-accent)));
+  background-size: 100% 200%;
+  box-shadow: 
+    0 0 4px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 50%, transparent),
+    0 0 8px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 30%, transparent);
+  animation: perspektive-glow 4s ease-in-out infinite;
+}
+
+@keyframes perspektive-glow {
+  0%, 100% { 
+    opacity: 0.85;
+    box-shadow: 
+      0 0 6px var(--p-farbe, var(--color-accent)),
+      0 0 12px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 50%, transparent);
+  }
+  50% { 
+    opacity: 1;
+    box-shadow: 
+      0 0 10px var(--p-farbe, var(--color-accent)),
+      0 0 20px color-mix(in srgb, var(--p-farbe, var(--color-accent)) 70%, transparent);
+  }
 }
 
 .compare-perspektive-header {
@@ -619,8 +682,9 @@
   gap: 12px;
   margin-bottom: 16px;
   padding: 8px 12px;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .compare-legende-item {
@@ -635,6 +699,7 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
+  box-shadow: 0 0 6px currentColor;
   flex-shrink: 0;
 }
 
@@ -646,24 +711,23 @@
 .compare-sections {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 .compare-section {
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 12px;
-  padding: 14px;
-  border-left: 3px solid var(--section-farbe, rgba(255, 255, 255, 0.2));
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .compare-section.section-primary {
-  border-left-width: 4px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.15);
 }
 
 .compare-section.section-danger {
-  background: rgba(220, 38, 38, 0.1);
-  border-left-color: #dc2626;
+  background: rgba(220, 38, 38, 0.06);
+  border-color: rgba(220, 38, 38, 0.15);
 }
 
 .compare-section-header {
@@ -1223,6 +1287,7 @@
   width: 8px;
   height: 8px;
   border-radius: 2px;
+  box-shadow: 0 0 4px currentColor;
 }
 
 /* === BAR GROUP LEGENDE === */
@@ -1248,4 +1313,5 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
+  box-shadow: 0 0 5px currentColor;
 }
