@@ -2,9 +2,9 @@
 
 Kleine Helfer. Keine Abhängigkeiten.
 
-## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
+## Übersicht
 
-### ✅ Implementiert
+Verfügbare Utilities:
 - `dom.js` - Sichere DOM-Manipulation
 - `fetch.js` - Datenbank-Zugriff + Highlight-System
 - `session.js` - Session-Handling
@@ -40,13 +40,6 @@ getPerspektivenListe()         // Alle Perspektiven als Array
 getPerspektivenMorphConfig()   // Morph-Config basierend auf Perspektiven
 getAllePerspektivenFarben()    // 4-Farben-Grid für aktive Perspektiven
 ```
-
-### ⚠️ Bekannter Hardcode in semantic.js
-
-| Zeile | Was | Status |
-|-------|-----|--------|
-| 159 | `'ganzjährig'` String-Check | 🟡 Sollte aus Schema kommen |
-| 304 | `['#808080']` Fallback-Farbe | ✅ Akzeptabler Fallback |
 
 ### fetch.js - Datenquellen + Highlights
 

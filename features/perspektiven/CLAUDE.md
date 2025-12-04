@@ -2,20 +2,16 @@
 
 Verschiedene Blickwinkel auf dieselben Daten.
 
-## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
+## Übersicht
 
-### ✅ Fertig
-- Perspektiven funktionieren vollständig
+Das Perspektiven-Feature bietet:
 - Multi-Color Glow bei mehreren aktiven Perspektiven
 - 4-Farben-Grid pro Perspektive (aus schema.yaml)
 - Auto-Aktivierung bei relevanten Suchergebnissen
 - Keywords aus Schema für Auto-Detection
 - Badges in Suchleiste für aktive Perspektiven
 
-### ⚠️ Hinweis: Header übernimmt
-
-Die Perspektiven-Logik ist jetzt primär in `features/header/index.js` implementiert.
-Dieses Feature dient als Referenz/Dokumentation.
+**Hinweis**: Die Perspektiven-Logik ist primär in `features/header/index.js` implementiert.
 
 ## Konzept
 

@@ -2,10 +2,9 @@
 
 Layout-Optionen für die Darstellung.
 
-## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
+## Übersicht
 
-### ✅ Fertig
-- Grid-Feature funktioniert vollständig
+Das Grid-Feature bietet:
 - Layouts: Liste, Grid, Kompakt
 - Layout wird auf `[data-amorph-container]` via `data-layout` gesetzt
 - CSS übernimmt die Darstellung basierend auf Layout

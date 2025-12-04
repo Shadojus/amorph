@@ -30,6 +30,14 @@ export function timeline(wert, config = {}) {
     return el;
   }
   
+  // Titel falls vorhanden
+  if (config.titel || config.title) {
+    const titel = document.createElement('div');
+    titel.className = 'amorph-timeline-titel';
+    titel.textContent = config.titel || config.title;
+    el.appendChild(titel);
+  }
+  
   // Linie
   const line = document.createElement('div');
   line.className = 'amorph-timeline-line';

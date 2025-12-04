@@ -58,6 +58,18 @@ export function radar(wert, config = {}) {
   grid.setAttribute('class', 'amorph-radar-grid');
   svg.appendChild(grid);
   
+  // Skalen-Beschriftung (33%, 66%, 100%)
+  const skalaWerte = isSmallScale ? ['3.3', '6.6', '10'] : ['33', '66', '100'];
+  for (let level = 1; level <= 3; level++) {
+    const r = (radius / 3) * level;
+    const skalaText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    skalaText.setAttribute('x', cx + 4);
+    skalaText.setAttribute('y', cy - r - 2);
+    skalaText.setAttribute('class', 'amorph-radar-scale');
+    skalaText.textContent = skalaWerte[level - 1];
+    svg.appendChild(skalaText);
+  }
+  
   // Achsen-Linien
   for (let i = 0; i < achsen.length; i++) {
     const end = berechnePoint(i, achsen.length, 100, cx, cy, radius);

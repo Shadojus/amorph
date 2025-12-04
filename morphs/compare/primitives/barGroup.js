@@ -82,6 +82,20 @@ export function compareBarGroup(items, config = {}) {
   });
   
   el.appendChild(container);
+  
+  // Legende für Items
+  const legende = document.createElement('div');
+  legende.className = 'bar-group-legende';
+  items.forEach(item => {
+    legende.innerHTML += `
+      <span class="legende-item">
+        <span class="legende-dot" style="background:${item.farbe}"></span>
+        ${item.name}
+      </span>
+    `;
+  });
+  el.appendChild(legende);
+  
   return el;
 }
 

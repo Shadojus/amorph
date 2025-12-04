@@ -31,6 +31,33 @@ export function comparePie(items, config = {}) {
   });
   
   el.appendChild(container);
+  
+  // Gemeinsame Legende für alle Pie-Charts (falls Daten vorhanden)
+  const erstePieData = items[0]?.wert;
+  if (erstePieData) {
+    const pieData = typeof erstePieData === 'object' && !Array.isArray(erstePieData)
+      ? Object.entries(erstePieData).map(([k, v]) => ({ label: k, value: v }))
+      : erstePieData;
+    
+    if (Array.isArray(pieData) && pieData.length > 0) {
+      const legende = document.createElement('div');
+      legende.className = 'compare-pie-legende';
+      
+      const pieColors = ['#22c55e', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'];
+      pieData.forEach((d, i) => {
+        const item = document.createElement('span');
+        item.className = 'pie-legende-item';
+        item.innerHTML = `
+          <span class="pie-legende-dot" style="background:${pieColors[i % pieColors.length]}"></span>
+          <span class="pie-legende-label">${d.label || d.name || 'Unbekannt'}</span>
+        `;
+        legende.appendChild(item);
+      });
+      
+      el.appendChild(legende);
+    }
+  }
+  
   return el;
 }
 

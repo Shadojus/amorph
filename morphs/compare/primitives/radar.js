@@ -47,6 +47,17 @@ export function compareRadar(items, config = {}) {
     svg.appendChild(polygon);
   }
   
+  // Skalen-Beschriftung (33, 66, 100)
+  for (let level = 1; level <= 3; level++) {
+    const r = (radius / 3) * level;
+    const skalaText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    skalaText.setAttribute('x', cx + 3);
+    skalaText.setAttribute('y', cy - r - 1);
+    skalaText.setAttribute('class', 'radar-scale-label');
+    skalaText.textContent = String(Math.round((level / 3) * 100));
+    svg.appendChild(skalaText);
+  }
+  
   // Achsen-Linien
   achsen.forEach((achse, i) => {
     const angle = (Math.PI * 2 * i) / achsen.length - Math.PI / 2;

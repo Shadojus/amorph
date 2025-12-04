@@ -2,22 +2,16 @@
 
 Verwaltet Feld-Auswahl-State UND Ansicht-State.
 
-## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
-
-### ✅ Fertig
-- Feld-Auswahl State vollständig implementiert
-- Ansicht-State (Grid/Detail/Vergleich) wird synchron gehalten
-- Event-basierte Kommunikation mit anderen Features
-
-### Architektur
-
-Die View-Logik wurde in separate Features ausgelagert:
-- **`features/detail/`** - Pinboard-View
-- **`features/vergleich/`** - Vektorraum-View
+## Übersicht
 
 Dieses Feature verwaltet:
 - **Auswahl-State** (welche Felder ausgewählt sind)
 - **Ansicht-State** (welche View aktiv ist)
+- Event-basierte Kommunikation mit anderen Features
+
+Die View-Logik wurde in separate Features ausgelagert:
+- **`features/grid/`** - Grid/Karten-View
+- **`features/vergleich/`** - Vektorraum-View
 
 ### State-Synchronisation
 

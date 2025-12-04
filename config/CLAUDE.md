@@ -2,22 +2,14 @@
 
 Eine Datei = Ein Aspekt. **Schema ist die Single Source of Truth.**
 
-## 🚧 AKTUELLER STAND (03.12.2025)
+## Übersicht
 
-### ✅ Neu (03.12.2025)
-- **Gedämpfte Farben** in `morphs.yaml`:
-  - Diagramm-Farben: 70% Transparenz (rgba statt hex)
-  - Pilz-Farben: 70% Transparenz
-  - Badge-Farben: bg 12%, border 35%, text 85%
+Das AMORPH Config-System ist vollständig datengetrieben:
 
-### ✅ Implementiert
-- Black Glasmorphism Design
-- 4-Farben-Grid pro Perspektive (Multi-Color Glow)
-- Semantische Suche aus Schema
-- Auto-Perspektiven bei Suchergebnissen
-- **Farben-Palette** in `morphs.yaml` (für Diagramme, Pilze, Badges)
-- **Badge-Keywords** in `morphs.yaml` (für Auto-Variant-Detection)
-- **Typ-Erkennungsregeln** in `morphs.yaml` (für datengetriebene Morphs)
+- **Schema-First**: Alle Feld-Definitionen in `schema.yaml`
+- **Typ-Erkennung**: Automatisch aus Datenstruktur via `morphs.yaml`
+- **Farben-System**: Zentrale Paletten für Diagramme, Badges, Perspektiven
+- **Feature-Isolation**: Jedes Feature lädt nur benötigte Config
 
 ### morphs.yaml - Die Erkennungs-Zentrale
 
@@ -69,17 +61,7 @@ erkennung:
       minItems: 3
     timeline:
       benoetigtKeys: [date, event]
-    # ⚠️ labelKeys/valueKeys für pie/bar noch hardcoded in pipeline.js!
 ```
-
-### ⚠️ Was noch NICHT in Config ist
-
-| Was | Wo hardcoded | Fix-Aufwand |
-|-----|--------------|-------------|
-| `labelKeys: ['label', 'name', 'category']` | pipeline.js:218 | 10 min |
-| `valueKeys: ['value', 'count', 'amount', 'score']` | pipeline.js:219 | 10 min |
-| Objekt-Signalkeys für rating/progress/badge | pipeline.js:262-277 | 15 min |
-| Badge-Variant-Colors (RGBA-Werte) | badge.js:24-28 | 15 min |
 
 Morphs laden Config-Werte via:
 - `getFarben(palette)` - Aus `util/semantic.js`

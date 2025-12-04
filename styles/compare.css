@@ -62,7 +62,7 @@
   height: 100%;
   border-radius: 9px;
   transition: width 0.3s ease;
-  opacity: 0.85;
+  opacity: 0.55;
 }
 
 .compare-bar-row .bar-wert {
@@ -70,6 +70,18 @@
   font-weight: 500;
   color: white;
   text-align: right;
+}
+
+/* Compare Bar Scale */
+.compare-bar-scale {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 88px 0 88px;
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.35);
+  font-variant-numeric: tabular-nums;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 8px;
 }
 
 /* === COMPARE RATING === */
@@ -98,11 +110,11 @@
 }
 
 .compare-rating-row .rating-stars .star {
-  color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.15);
 }
 
 .compare-rating-row .rating-stars .star.filled {
-  color: #fbbf24;
+  color: rgba(251, 191, 36, 0.55);
 }
 
 .compare-rating-row .rating-wert {
@@ -160,8 +172,8 @@
 }
 
 .compare-list-item.gemeinsam {
-  background: rgba(96, 192, 144, 0.15);
-  border: 1px solid rgba(96, 192, 144, 0.3);
+  background: rgba(96, 192, 144, 0.08);
+  border: 1px solid rgba(96, 192, 144, 0.18);
 }
 
 .compare-list-item .list-wert {
@@ -241,8 +253,9 @@
 }
 
 .compare-radar-svg .radar-shape {
-  fill-opacity: 0.2;
-  stroke-width: 2;
+  fill-opacity: 0.12;
+  stroke-width: 1.5;
+  stroke-opacity: 0.5;
 }
 
 .compare-radar-svg .radar-label {
@@ -270,6 +283,13 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
+}
+
+/* Radar Scale Labels */
+.radar-scale-label {
+  font-size: 7px;
+  fill: rgba(255, 255, 255, 0.3);
+  font-variant-numeric: tabular-nums;
 }
 
 /* Compact Radar */
@@ -300,7 +320,7 @@
 .radar-mini-bar {
   height: 6px;
   border-radius: 3px;
-  opacity: 0.75;
+  opacity: 0.5;
 }
 
 /* === COMPARE PIE === */
@@ -1178,4 +1198,54 @@
   .ernte-bars {
     flex: 1;
   }
+}
+
+/* === COMPARE PIE LEGENDE === */
+.compare-pie-legende {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.pie-legende-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.pie-legende-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+/* === BAR GROUP LEGENDE === */
+.bar-group-legende {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.bar-group-legende .legende-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.bar-group-legende .legende-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
 }

@@ -2,29 +2,21 @@
 
 Eigenständig. Isoliert. Optional.
 
-## 🚧 AKTUELLER ENTWICKLUNGSSTAND (02.12.2025 - FINAL)
+## Übersicht
 
-### ✅ Fertig
+Das Feature-System besteht aus:
+
 - **Header-Feature**: 3-Zeilen-Layout mit Dark Glasmorphism
   - Zeile 0: FUNGINOMI (Link /) + Part of Bifroest (Link bifroest.io)
   - Zeile 1: Suchleiste + aktive Filter-Badges
   - Zeile 2: Ansicht-Switch + Perspektiven-Buttons
-  - **View-aware Suche**: Prüft `aktiveAnsicht` vor DB-Query
-  - **IntersectionObserver** statt `window.addEventListener('scroll')` (Feature-Isolation!)
-- ✅ **Grid-Feature**: Karten-Layout (Standard-Ansicht)
-- ✅ **Vergleich-Feature (Vektorraum)**: Laterale Visualisierung mit Compare-Morphs
-- ✅ **Ansichten-Feature**: Auswahl-State + Ansicht-State Tracking
-- ✅ **Perspektiven**: 4-Farben-Grid, Multi-Color Glow, Auto-Aktivierung
-- ✅ **Semantische Suche**: Keywords → Feldwerte aus Schema
+- **Grid-Feature**: Karten-Layout (Standard-Ansicht)
+- **Vergleich-Feature (Vektorraum)**: Laterale Visualisierung mit Compare-Morphs
+- **Ansichten-Feature**: Auswahl-State + Ansicht-State Tracking
+- **Perspektiven**: 4-Farben-Grid, Multi-Color Glow, Auto-Aktivierung
+- **Semantische Suche**: Keywords → Feldwerte aus Schema
 
-### ⚠️ Bekannter Hardcode in Ansichten
-
-| Datei | Zeile | Was | Status |
-|-------|-------|-----|--------|
-| `ansichten/index.js` | 484 | `['karten', 'detail', 'vergleich']` Array | 🟡 Sollte aus features.yaml kommen |
-| `detail/index.js` | 276 | Doppelte `erkennTyp()` Funktion | 🟡 Sollte `detectType()` aus pipeline.js nutzen |
-
-### ⚠️ Feature-Isolation Regeln
+### Feature-Architektur
 
 ```javascript
 // ✅ ERLAUBT in Features:
@@ -49,8 +41,6 @@ document.body.* (außer mount)      // Nur eigenen ctx.dom manipulieren
 |---------|---------|--------------|
 | **Karten (Grid)** | `grid/` | Standard - einzelne FELDER sind anklickbar |
 | **Vergleich** | `vergleich/` | Gleiche Feldtypen nebeneinander mit Compare-Morphs |
-
-Die `detail/` Ansicht ist aktuell deaktiviert (in features.yaml auskommentiert).
 
 ### Feld-Auswahl System
 

@@ -2,9 +2,7 @@
 
 Reine Funktionen. Keine Klassen. Kein Zustand. **Keine Seiteneffekte!**
 
-## 🚧 AKTUELLER STAND (04.12.2025 - REFACTORED v2)
-
-### 📁 Ordnerstruktur
+## Ordnerstruktur
 
 ```
 morphs/
@@ -29,15 +27,11 @@ morphs/
 │   └── index.js          # Re-Export
 │
 ├── compare/              # Generische Compare-Morphs
-│   ├── base.js           # Utils (erstelleFarben, detectType)
-│   ├── morphs.js         # 16 Compare-Morphs
-│   ├── composites.js     # Re-Export aus composites/
-│   ├── composites/       # Intelligente Composite-Morphs
-│   │   ├── types.js      # Typ-Kategorien
-│   │   ├── analyze.js    # Analyse-Funktionen
-│   │   ├── render.js     # Rendering-Helpers
-│   │   ├── smartCompare.js
-│   │   ├── diffCompare.js
+│   ├── base.js           # Utils (erstelleFarben, detectType, createSection)
+│   ├── primitives/       # 16 Compare-Primitive
+│   │   ├── bar.js, barGroup.js, rating.js, tag.js, list.js
+│   │   ├── image.js, radar.js, pie.js, text.js, timeline.js
+│   │   ├── stats.js, progress.js, boolean.js, object.js, range.js
 │   │   └── index.js
 │   └── index.js          # Haupt-Export
 │
@@ -72,13 +66,7 @@ text, number, boolean, tag, badge, range, list, object, image, link, pie, bar, r
 | `compareObject` | `{key:value}` | Tabellen-Diff |
 | `compareText` | `string` | Text-Vergleich |
 
-#### Composite-Morphs (2)
-| Morph | Beschreibung |
-|-------|--------------|
-| `smartCompare` | Analysiert, gruppiert, baut optimalen Vergleich |
-| `diffCompare` | Zeigt Unterschiede/Gemeinsamkeiten |
-
-### ⚠️ MORPH-PURITY REGEL
+### MORPH-PURITY REGEL
 
 ```javascript
 // ✅ ERLAUBT in Morphs:
@@ -95,10 +83,8 @@ window.location             // → Nur für URL-Parsing (read-only)
 ```
 
 **Warum?** Morphs sind REINE Transformationen: `(wert, config) → HTMLElement`
-  - `detectType(wert)` - Erkennt Typ aus Datenstruktur
-  - `erstelleFarben(ids)` - Konsistente Farbzuweisung für Items
 
-## 📊 DATENGETRIEBENE MORPH-ERKENNUNG
+## DATENGETRIEBENE MORPH-ERKENNUNG
 
 Die Pipeline erkennt automatisch den passenden Morph anhand der **DATENSTRUKTUR** (nicht Feldname!).
 
@@ -123,7 +109,7 @@ Die Pipeline erkennt automatisch den passenden Morph anhand der **DATENSTRUKTUR*
 | `{A: 30, B: 50}` (nur Zahlen) | `pie` | `erkennung.objekt.pie.nurNumerisch` |
 | `[{axis: "X", value: 80}]` (3+) | `radar` | `erkennung.array.radar.benoetigtKeys` |
 | `[{date: "...", event: "..."}]` | `timeline` | `erkennung.array.timeline.benoetigtKeys` |
-| `[{label: "A", value: 10}]` | `pie`/`bar` | ⚠️ `labelKeys`/`valueKeys` (hardcoded!) |
+| `[{label: "A", value: 10}]` | `pie`/`bar` | `erkennung.array.pie/bar.labelKeys` |
 | Zahl 0-10 mit Dezimalen | `rating` | `erkennung.rating` |
 | Zahl 0-100 Integer | `progress` | `erkennung.progress` |
 | String mit Badge-Keyword | `badge` | `erkennung.badge.keywords` |

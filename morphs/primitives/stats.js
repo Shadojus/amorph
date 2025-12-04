@@ -46,6 +46,14 @@ export function stats(wert, config = {}) {
     return el;
   }
   
+  // Titel falls vorhanden
+  if (config.titel || config.title) {
+    const titel = document.createElement('div');
+    titel.className = 'amorph-stats-titel';
+    titel.textContent = config.titel || config.title;
+    el.appendChild(titel);
+  }
+  
   const einheit = config.einheit || wert.unit || wert.einheit || '';
   
   // Stats extrahieren

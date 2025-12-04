@@ -100,6 +100,31 @@ export function createSection(label, farbe = null) {
 }
 
 /**
+ * Erstellt Section nur wenn Feld noch nicht gerendert wurde (Deduplizierung)
+ * 
+ * @param {string} feldName - Eindeutiger Feldname für Deduplizierung
+ * @param {string} label - Überschrift der Section
+ * @param {string} farbe - Akzentfarbe (optional)
+ * @param {Set} skipFelder - Set von bereits gerenderten Feldnamen
+ * @returns {Object|null} Section oder null wenn bereits gerendert
+ */
+export function createSectionIfNew(feldName, label, farbe = null, skipFelder = null) {
+  // Wenn skipFelder existiert und Feld bereits gerendert wurde → null
+  if (skipFelder && skipFelder.has(feldName)) {
+    debug.morphs('Section übersprungen (bereits gerendert)', { feldName });
+    return null;
+  }
+  
+  // Feld als gerendert markieren
+  if (skipFelder) {
+    skipFelder.add(feldName);
+  }
+  
+  // Normale Section erstellen
+  return createSection(label, farbe);
+}
+
+/**
  * Erstellt einen Perspektiven-Header
  */
 export function createHeader(config) {

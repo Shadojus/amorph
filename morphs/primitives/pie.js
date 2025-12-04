@@ -54,6 +54,14 @@ export function pie(wert, config = {}) {
   // Conic Gradient generieren
   const gradient = generiereGradient(segmente);
   
+  // Titel falls vorhanden
+  if (config.titel || config.title) {
+    const titel = document.createElement('div');
+    titel.className = 'amorph-pie-titel';
+    titel.textContent = config.titel || config.title;
+    el.appendChild(titel);
+  }
+  
   // Container
   const container = document.createElement('div');
   container.className = 'amorph-pie-container';

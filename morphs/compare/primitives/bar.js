@@ -63,6 +63,16 @@ export function compareBar(items, config = {}) {
   });
   
   el.appendChild(bars);
+  
+  // Skala unter den Balken
+  const scale = document.createElement('div');
+  scale.className = 'compare-bar-scale';
+  scale.innerHTML = `
+    <span class="scale-min">0</span>
+    <span class="scale-max">${maxWert}${config.einheit || ''}</span>
+  `;
+  el.appendChild(scale);
+  
   return el;
 }
 

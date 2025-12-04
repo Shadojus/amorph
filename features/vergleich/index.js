@@ -137,6 +137,9 @@ export default async function init(ctx) {
         verfügbar: Object.keys(themeCompareMorphs.perspektivenMorphs)
       });
       
+      // DEDUPLIZIERUNG: Felder die bereits gerendert wurden tracken
+      const gerenderteFelder = new Set();
+      
       // Pro aktiver Perspektive einen Compare-Block rendern
       for (const perspId of aktivePerspektiven) {
         const compareFn = themeCompareMorphs.perspektivenMorphs[perspId];
@@ -154,8 +157,10 @@ export default async function init(ctx) {
         }
         
         try {
-          // Theme Compare-Morph aufrufen
-          const perspEl = compareFn(compareItems, perspektive, {});
+          // Theme Compare-Morph aufrufen MIT gerenderteFelder für Deduplizierung
+          const perspEl = compareFn(compareItems, perspektive, { 
+            skipFelder: gerenderteFelder 
+          });
           
           if (perspEl) {
             // Perspektiven-Container stylen

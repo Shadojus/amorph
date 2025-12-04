@@ -4,10 +4,11 @@
  * Zeigt: Bewertung, Beliebtheit, Ernte-Stats, Nährwerte, Wirkstoffe, Profil
  * 
  * DATENGETRIEBEN: Erkennt Typen aus der Datenstruktur
+ * DEDUPLIZIERUNG: Respektiert config.skipFelder
  */
 
 import { debug } from '../../../../observer/debug.js';
-import { createSection, createLegende } from '../../../../morphs/compare/base.js';
+import { createSectionIfNew, createLegende } from '../../../../morphs/compare/base.js';
 import { 
   compareBar, compareRating, comparePie, compareRadar, compareStats 
 } from '../../../../morphs/compare/primitives/index.js';
@@ -15,10 +16,12 @@ import {
 /**
  * @param {Array} items - [{id, name, data, farbe}]
  * @param {Object} perspektive - {id, name, symbol, farben, felder}
- * @param {Object} schema - {felder, ...}
+ * @param {Object} config - {skipFelder: Set} für Deduplizierung
  */
-export function compareStatistik(items, perspektive, schema) {
+export function compareStatistik(items, perspektive, config = {}) {
   debug.morphs('compareStatistik', { items: items.length });
+  
+  const skipFelder = config.skipFelder || null;
   
   const container = document.createElement('div');
   container.className = 'compare-perspektive compare-statistik';
@@ -43,53 +46,63 @@ export function compareStatistik(items, perspektive, schema) {
   // 1. Bewertung (Rating)
   const bewertungItems = items.filter(i => i.data.bewertung !== undefined);
   if (bewertungItems.length > 0) {
-    const section = createSection('Bewertung', perspektive.farben?.[0]);
-    const mapped = bewertungItems.map(i => ({
-      id: i.id, name: i.name, wert: i.data.bewertung, farbe: i.farbe
-    }));
-    section.addContent(compareRating(mapped, { max: 5 }));
-    sections.appendChild(section);
+    const section = createSectionIfNew('bewertung', 'Bewertung', perspektive.farben?.[0], skipFelder);
+    if (section) {
+      const mapped = bewertungItems.map(i => ({
+        id: i.id, name: i.name, wert: i.data.bewertung, farbe: i.farbe
+      }));
+      section.addContent(compareRating(mapped, { max: 5 }));
+      sections.appendChild(section);
+    }
   }
   
   // 2. Beliebtheit (Bar)
   const beliebtheitItems = items.filter(i => i.data.beliebtheit !== undefined);
   if (beliebtheitItems.length > 0) {
-    const section = createSection('Beliebtheit', perspektive.farben?.[1]);
-    const mapped = beliebtheitItems.map(i => ({
-      id: i.id, name: i.name, wert: i.data.beliebtheit, farbe: i.farbe
-    }));
-    section.addContent(compareBar(mapped, { max: 100, einheit: '%' }));
-    sections.appendChild(section);
+    const section = createSectionIfNew('beliebtheit', 'Beliebtheit', perspektive.farben?.[1], skipFelder);
+    if (section) {
+      const mapped = beliebtheitItems.map(i => ({
+        id: i.id, name: i.name, wert: i.data.beliebtheit, farbe: i.farbe
+      }));
+      section.addContent(compareBar(mapped, { max: 100, einheit: '%' }));
+      sections.appendChild(section);
+    }
   }
   
   // 3. Ernte-Statistik (Stats -> Bar für avg)
   const ernteItems = items.filter(i => i.data.ernte_stats);
   if (ernteItems.length > 0) {
-    const section = createSection('Ernte-Statistik', perspektive.farben?.[2]);
-    section.addContent(createErnteSummary(ernteItems));
-    sections.appendChild(section);
+    const section = createSectionIfNew('ernte_stats', 'Ernte-Statistik', perspektive.farben?.[2], skipFelder);
+    if (section) {
+      section.addContent(createErnteSummary(ernteItems));
+      sections.appendChild(section);
+    }
   }
   
   // 4. Nährwerte (Pie)
   const naehrwerteItems = items.filter(i => i.data.naehrwerte);
   if (naehrwerteItems.length > 0) {
-    const section = createSection('Nährwert-Verteilung', perspektive.farben?.[3]);
-    const mapped = naehrwerteItems.map(i => ({
-      id: i.id, name: i.name, wert: i.data.naehrwerte, farbe: i.farbe
-    }));
-    section.addContent(comparePie(mapped, {}));
-    sections.appendChild(section);
+    const section = createSectionIfNew('naehrwerte', 'Nährwert-Verteilung', perspektive.farben?.[3], skipFelder);
+    if (section) {
+      const mapped = naehrwerteItems.map(i => ({
+        id: i.id, name: i.name, wert: i.data.naehrwerte, farbe: i.farbe
+      }));
+      section.addContent(comparePie(mapped, {}));
+      sections.appendChild(section);
+    }
   }
   
   // 5. Profil (Radar)
   const profilItems = items.filter(i => i.data.profil);
   if (profilItems.length > 0) {
-    const section = createSection('Eigenschaften-Radar', perspektive.farben?.[0]);
-    const mapped = profilItems.map(i => ({
-      id: i.id, name: i.name, wert: i.data.profil, farbe: i.farbe
-    }));
-    section.addContent(compareRadar(mapped, {}));
-    sections.appendChild(section);
+    const section = createSectionIfNew('profil', 'Eigenschaften-Radar', perspektive.farben?.[0], skipFelder);
+    if (section) {
+      const mapped = profilItems.map(i => ({
+        id: i.id, name: i.name, wert: i.data.profil, farbe: i.farbe
+      }));
+      section.addContent(compareRadar(mapped, {}));
+      sections.appendChild(section);
+    }
   }
   
   container.appendChild(sections);

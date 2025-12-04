@@ -2,18 +2,9 @@
 
 Beispieldaten für AMORPH. **Datenstruktur bestimmt den Morph!**
 
-## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
-
-Pilze-Daten komplett mit allen Morph-Typen:
-- Einfache Strings, Zahlen, Arrays
-- Objekte mit `{min, max}` → `range`
-- Objekte mit `{min, max, avg}` → `stats`
-- Arrays mit `[{axis, value}]` → `radar`
-- Arrays mit `[{date, event}]` → `timeline`
-- Objekte mit nur Zahlen → `pie`
-- Arrays mit `[{label, value}]` → `bar`
-
 ## pilze.json - Datenstruktur
+
+Das Daten-Format unterstützt alle Morph-Typen durch automatische Erkennung:
 
 ```javascript
 {

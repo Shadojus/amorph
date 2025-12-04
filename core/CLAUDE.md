@@ -2,27 +2,17 @@
 
 Das Herz von AMORPH. Drei Dateien, eine Aufgabe: Daten transformieren.
 
-## 🚧 AKTUELLER STAND (03.12.2025)
+## Übersicht
 
-### ✅ Neu (03.12.2025)
-- **Leere Werte überspringen**: Pipeline filtert `null`, `undefined`, `''`, `[]`, `{}` automatisch
-
-### ✅ Implementiert
-- Config-Loader lädt alle YAML-Dateien
-- **YAML-Parser verbessert**: Inline-Kommentare nach quoted Strings werden korrekt entfernt
-- Pipeline transformiert Daten durch Morphs
-- Container Web Component rendert Morphs
-- **Morph-Registry**: `string` als Alias für `text`
-- **Datengetriebene Typ-Erkennung** aus `morphs.yaml`
-
-### ⚠️ Bekannte Hardcodes in pipeline.js
-
-| Zeile | Was | Status |
-|-------|-----|--------|
-| 218-219 | `labelKeys`, `valueKeys` Arrays | 🔴 Sollte in Config |
-| 262-277 | Objekt-Signalkeys für rating/progress/badge | 🔴 Sollte in Config |
+```
+config.js   → Lädt und validiert YAML-Konfiguration
+pipeline.js → Transformiert Daten durch Morphs (DATENGETRIEBEN!)
+container.js → Web Component als Morph-Container
+```
 
 ### Typ-Erkennung (Datengetrieben)
+
+Die Pipeline erkennt automatisch den passenden Morph-Typ aus der Datenstruktur:
 
 ```javascript
 // Erkennungs-Kaskade:
@@ -43,7 +33,7 @@ keywords: [aktiv, inaktiv, essbar, giftig, ...]
 // detectArrayType() - aus morphs.yaml/erkennung.array
 radar:    { benoetigtKeys: [axis, value], minItems: 3 }
 timeline: { benoetigtKeys: [date, event] }
-pie/bar:  labelKeys + valueKeys (⚠️ noch hardcoded!)
+pie/bar:  labelKeys + valueKeys
 
 // detectObjectType() - aus morphs.yaml/erkennung.objekt
 range: { benoetigtKeys: [min, max] }
@@ -51,27 +41,12 @@ stats: { benoetigtKeys: [min, max, avg] }
 pie:   { nurNumerisch: true, minKeys: 2, maxKeys: 8 }
 ```
 
-### YAML-Parser Fix (02.12.2025)
+### Features
 
-```javascript
-// Problem: "# Gold" blieb an "#e8b04a" kleben
-// Lösung: Kommentar NACH schließendem Quote entfernen
-if (value.startsWith('"') || value.startsWith("'")) {
-  const quote = value[0];
-  const endQuoteIdx = value.indexOf(quote, 1);
-  if (endQuoteIdx > 0) {
-    value = value.slice(0, endQuoteIdx + 1); // Alles nach Quote weg
-  }
-}
-```
-
-## Übersicht
-
-```
-config.js   → Lädt und validiert Konfiguration
-pipeline.js → Transformiert Daten durch Morphs (DATENGETRIEBEN!)
-container.js → Web Component als Morph-Container
-```
+- **YAML-Parser**: Lädt und parsed alle Config-Dateien
+- **Leere Werte überspringen**: Pipeline filtert `null`, `undefined`, `''`, `[]`, `{}`
+- **Morph-Registry**: Alias-Support (`string` → `text`)
+- **Web Component Container**: Shadow DOM Isolation
 
 ## config.js
 

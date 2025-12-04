@@ -2,9 +2,9 @@
 
 Build- und Entwicklungs-Tools.
 
-## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
+## Übersicht
 
-### ✅ Fertig
+Verfügbare Scripts:
 - `check.js` - Konfigurationsprüfung
 - `build.js` - Produktions-Build
 - Development Server via `npx serve`

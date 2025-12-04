@@ -2,18 +2,16 @@
 
 Laterale Lösung: Informationen durch Raumeinteilung und Vektoren verknüpfen.
 
-## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
+## Übersicht
 
-### ✅ Fertig
+Das Vergleich-Feature bietet:
 - Sammel-Diagramm mit Pilz-Legende (farbige Punkte)
 - Perspektiven-aware Morphs (Label + Farben aus aktivierter Perspektive)
 - Multi-Perspektiven Glow (wenn Feld zu mehreren Perspektiven gehört)
-- **Compare-Morphs Integration**: Nutzt typ-basierte Compare-Morphs aus `morphs/compare.js`
+- **Compare-Morphs Integration**: Nutzt typ-basierte Compare-Morphs aus `morphs/compare/`
 - **Suche-Highlights**: Markiert Suchbegriffe im Vergleich-View
-  - Hört auf `header:suche:ergebnisse` Event
-  - Wendet Highlights auf Compare-Containers an
-  - Keine Interferenz mit DB-Suche (nur lokale Highlights)
 - **Datengetriebene Morph-Auswahl**: `compareMorph()` wählt basierend auf TYP, nicht Feldname
+- **Feld-Deduplizierung**: Jedes Feld nur einmal über alle Perspektiven
 
 ### Verwendete Compare-Morphs
 
@@ -21,7 +19,7 @@ Laterale Lösung: Informationen durch Raumeinteilung und Vektoren verknüpfen.
 |-----|---------------|--------------|
 | `rating` | `compareRating` | Sterne-Vergleich |
 | `progress` | `compareBar` | Horizontale Balken |
-| `range` | `compareBar` | Balken für Bereiche |
+| `range` | `compareRange` | Range-Visualisierung |
 | `tag`/`badge` | `compareTag` | Gruppierte Chips |
 | `list` | `compareList` | Listen mit Überlappung |
 | `image` | `compareImage` | Bildergalerie |

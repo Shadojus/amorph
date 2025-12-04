@@ -4,10 +4,11 @@
  * Zeigt: Wissenschaftlicher Name, Wirkstoffe, Nährwerte, Profil
  * 
  * DATENGETRIEBEN: Erkennt Typen aus der Datenstruktur
+ * DEDUPLIZIERUNG: Respektiert config.skipFelder
  */
 
 import { debug } from '../../../../observer/debug.js';
-import { createSection, createLegende } from '../../../../morphs/compare/base.js';
+import { createSectionIfNew, createLegende } from '../../../../morphs/compare/base.js';
 import { 
   compareText, compareBar, comparePie, compareRadar 
 } from '../../../../morphs/compare/primitives/index.js';
@@ -15,10 +16,12 @@ import {
 /**
  * @param {Array} items - [{id, name, data, farbe}]
  * @param {Object} perspektive - {id, name, symbol, farben, felder}
- * @param {Object} schema - {felder, ...}
+ * @param {Object} config - {skipFelder: Set} für Deduplizierung
  */
-export function compareWissenschaft(items, perspektive, schema) {
+export function compareWissenschaft(items, perspektive, config = {}) {
   debug.morphs('compareWissenschaft', { items: items.length });
+  
+  const skipFelder = config.skipFelder || null;
   
   const container = document.createElement('div');
   container.className = 'compare-perspektive compare-wissenschaft';
@@ -43,42 +46,50 @@ export function compareWissenschaft(items, perspektive, schema) {
   // 1. Wissenschaftlicher Name (Text)
   const wissNameItems = items.filter(i => i.data.wissenschaftlich);
   if (wissNameItems.length > 0) {
-    const section = createSection('Taxonomie', perspektive.farben?.[0]);
-    const mapped = wissNameItems.map(i => ({
-      id: i.id, name: i.name, wert: i.data.wissenschaftlich, farbe: i.farbe
-    }));
-    section.addContent(compareText(mapped, {}));
-    sections.appendChild(section);
+    const section = createSectionIfNew('wissenschaftlich', 'Taxonomie', perspektive.farben?.[0], skipFelder);
+    if (section) {
+      const mapped = wissNameItems.map(i => ({
+        id: i.id, name: i.name, wert: i.data.wissenschaftlich, farbe: i.farbe
+      }));
+      section.addContent(compareText(mapped, {}));
+      sections.appendChild(section);
+    }
   }
   
   // 2. Wirkstoffe (Bar) - gruppiert nach Wirkstoff
   const wirkstoffItems = items.filter(i => i.data.wirkstoffe?.length > 0);
   if (wirkstoffItems.length > 0) {
-    const section = createSection('Wirkstoffe', perspektive.farben?.[1]);
-    section.addContent(createWirkstoffVergleich(wirkstoffItems));
-    sections.appendChild(section);
+    const section = createSectionIfNew('wirkstoffe', 'Wirkstoffe', perspektive.farben?.[1], skipFelder);
+    if (section) {
+      section.addContent(createWirkstoffVergleich(wirkstoffItems));
+      sections.appendChild(section);
+    }
   }
   
   // 3. Nährwerte (Pie)
   const naehrwerteItems = items.filter(i => i.data.naehrwerte);
   if (naehrwerteItems.length > 0) {
-    const section = createSection('Zusammensetzung', perspektive.farben?.[2]);
-    const mapped = naehrwerteItems.map(i => ({
-      id: i.id, name: i.name, wert: i.data.naehrwerte, farbe: i.farbe
-    }));
-    section.addContent(comparePie(mapped, {}));
-    sections.appendChild(section);
+    const section = createSectionIfNew('naehrwerte', 'Zusammensetzung', perspektive.farben?.[2], skipFelder);
+    if (section) {
+      const mapped = naehrwerteItems.map(i => ({
+        id: i.id, name: i.name, wert: i.data.naehrwerte, farbe: i.farbe
+      }));
+      section.addContent(comparePie(mapped, {}));
+      sections.appendChild(section);
+    }
   }
   
   // 4. Profil (Radar)
   const profilItems = items.filter(i => i.data.profil);
   if (profilItems.length > 0) {
-    const section = createSection('Eigenschaften-Profil', perspektive.farben?.[3]);
-    const mapped = profilItems.map(i => ({
-      id: i.id, name: i.name, wert: i.data.profil, farbe: i.farbe
-    }));
-    section.addContent(compareRadar(mapped, {}));
-    sections.appendChild(section);
+    const section = createSectionIfNew('profil', 'Eigenschaften-Profil', perspektive.farben?.[3], skipFelder);
+    if (section) {
+      const mapped = profilItems.map(i => ({
+        id: i.id, name: i.name, wert: i.data.profil, farbe: i.farbe
+      }));
+      section.addContent(compareRadar(mapped, {}));
+      sections.appendChild(section);
+    }
   }
   
   container.appendChild(sections);

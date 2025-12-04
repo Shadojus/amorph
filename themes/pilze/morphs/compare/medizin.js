@@ -4,10 +4,11 @@
  * Zeigt: Medizinischer Wert, Wirkstoffe, Wissenschaftlicher Name, Profil
  * 
  * DATENGETRIEBEN: Erkennt Typen aus der Datenstruktur
+ * DEDUPLIZIERUNG: Respektiert config.skipFelder
  */
 
 import { debug } from '../../../../observer/debug.js';
-import { createSection, createLegende } from '../../../../morphs/compare/base.js';
+import { createSectionIfNew, createLegende } from '../../../../morphs/compare/base.js';
 import { 
   compareBar, compareText, compareRadar 
 } from '../../../../morphs/compare/primitives/index.js';
@@ -15,10 +16,12 @@ import {
 /**
  * @param {Array} items - [{id, name, data, farbe}]
  * @param {Object} perspektive - {id, name, symbol, farben, felder}
- * @param {Object} schema - {felder, ...}
+ * @param {Object} config - {skipFelder: Set} für Deduplizierung
  */
-export function compareMedizin(items, perspektive, schema) {
+export function compareMedizin(items, perspektive, config = {}) {
   debug.morphs('compareMedizin', { items: items.length });
+  
+  const skipFelder = config.skipFelder || null;
   
   const container = document.createElement('div');
   container.className = 'compare-perspektive compare-medizin';
@@ -43,54 +46,64 @@ export function compareMedizin(items, perspektive, schema) {
   // 1. Medizinischer Wert (Bar) - Hauptindikator
   const medizinItems = items.filter(i => i.data.medizinisch !== undefined);
   if (medizinItems.length > 0) {
-    const section = createSection('Medizinischer Wert', perspektive.farben?.[0]);
-    section.classList.add('section-primary');
-    const mapped = medizinItems.map(i => ({
-      id: i.id, name: i.name, wert: i.data.medizinisch, farbe: i.farbe
-    }));
-    section.addContent(compareBar(mapped, { max: 100, einheit: '%' }));
-    sections.appendChild(section);
+    const section = createSectionIfNew('medizinisch', 'Medizinischer Wert', perspektive.farben?.[0], skipFelder);
+    if (section) {
+      section.classList.add('section-primary');
+      const mapped = medizinItems.map(i => ({
+        id: i.id, name: i.name, wert: i.data.medizinisch, farbe: i.farbe
+      }));
+      section.addContent(compareBar(mapped, { max: 100, einheit: '%' }));
+      sections.appendChild(section);
+    }
   }
   
   // 2. Wissenschaftlicher Name
   const wissNameItems = items.filter(i => i.data.wissenschaftlich);
   if (wissNameItems.length > 0) {
-    const section = createSection('Wissenschaftlicher Name', perspektive.farben?.[1]);
-    const mapped = wissNameItems.map(i => ({
-      id: i.id, name: i.name, wert: i.data.wissenschaftlich, farbe: i.farbe
-    }));
-    section.addContent(compareText(mapped, {}));
-    sections.appendChild(section);
+    const section = createSectionIfNew('wissenschaftlich', 'Wissenschaftlicher Name', perspektive.farben?.[1], skipFelder);
+    if (section) {
+      const mapped = wissNameItems.map(i => ({
+        id: i.id, name: i.name, wert: i.data.wissenschaftlich, farbe: i.farbe
+      }));
+      section.addContent(compareText(mapped, {}));
+      sections.appendChild(section);
+    }
   }
   
   // 3. Wirkstoffe (gruppiert)
   const wirkstoffItems = items.filter(i => i.data.wirkstoffe?.length > 0);
   if (wirkstoffItems.length > 0) {
-    const section = createSection('Relevante Wirkstoffe', perspektive.farben?.[2]);
-    section.addContent(createWirkstoffVergleich(wirkstoffItems));
-    sections.appendChild(section);
+    const section = createSectionIfNew('wirkstoffe', 'Relevante Wirkstoffe', perspektive.farben?.[2], skipFelder);
+    if (section) {
+      section.addContent(createWirkstoffVergleich(wirkstoffItems));
+      sections.appendChild(section);
+    }
   }
   
   // 4. Profil (Radar)
   const profilItems = items.filter(i => i.data.profil);
   if (profilItems.length > 0) {
-    const section = createSection('Wirkungsprofil', perspektive.farben?.[3]);
-    const mapped = profilItems.map(i => ({
-      id: i.id, name: i.name, wert: i.data.profil, farbe: i.farbe
-    }));
-    section.addContent(compareRadar(mapped, {}));
-    sections.appendChild(section);
+    const section = createSectionIfNew('profil', 'Wirkungsprofil', perspektive.farben?.[3], skipFelder);
+    if (section) {
+      const mapped = profilItems.map(i => ({
+        id: i.id, name: i.name, wert: i.data.profil, farbe: i.farbe
+      }));
+      section.addContent(compareRadar(mapped, {}));
+      sections.appendChild(section);
+    }
   }
   
   // 5. Beschreibung
   const beschreibungItems = items.filter(i => i.data.beschreibung);
   if (beschreibungItems.length > 0) {
-    const section = createSection('Beschreibung', perspektive.farben?.[0]);
-    const mapped = beschreibungItems.map(i => ({
-      id: i.id, name: i.name, wert: i.data.beschreibung, farbe: i.farbe
-    }));
-    section.addContent(compareText(mapped, {}));
-    sections.appendChild(section);
+    const section = createSectionIfNew('beschreibung', 'Beschreibung', perspektive.farben?.[0], skipFelder);
+    if (section) {
+      const mapped = beschreibungItems.map(i => ({
+        id: i.id, name: i.name, wert: i.data.beschreibung, farbe: i.farbe
+      }));
+      section.addContent(compareText(mapped, {}));
+      sections.appendChild(section);
+    }
   }
   
   container.appendChild(sections);

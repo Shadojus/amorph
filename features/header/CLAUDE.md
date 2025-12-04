@@ -2,15 +2,15 @@
 
 Das Header-Feature kombiniert Suche + Perspektiven in einem Container und steuert die Interaktion zwischen beiden.
 
-## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
+## Übersicht
 
-### ✅ Fertig
+Das Header-Feature enthält:
 - **Suche + Perspektiven kombiniert**: Ein Header für alles
-- **Live-Suche**: Mit konfigurierbarerm Debounce
+- **Live-Suche**: Mit konfigurierbarem Debounce
 - **Auto-Perspektiven**: Basierend auf Query und Ergebnissen
 - **Perspektiven-Badges**: Aktive Perspektiven als Chips in Suchleiste
-- **Scroll-Detection**: Via IntersectionObserver (nicht window-Event)
-- **Ansicht-Wechsel**: Integrierter Switch für Grid/Detail/Vergleich
+- **Scroll-Detection**: Via IntersectionObserver
+- **Ansicht-Wechsel**: Integrierter Switch für Grid/Vergleich
 - **Vergleich-View Modus**: Nur Highlights, keine DB-Suche
 
 ### Komponenten
@@ -20,7 +20,7 @@ Das Header-Feature kombiniert Suche + Perspektiven in einem Container und steuer
 | `suche` | Textsuche mit Live-Modus |
 | `perspektiven` | Farbige Filter-Buttons |
 | `aktive-filter` | Badges der aktiven Perspektiven |
-| `ansicht-switch` | Grid/Detail/Vergleich Toggle |
+| `ansicht-switch` | Grid/Vergleich Toggle |
 
 ### Config-Loading
 

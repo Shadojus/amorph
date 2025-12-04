@@ -26,6 +26,14 @@ export function bar(wert, config = {}) {
     return el;
   }
   
+  // Titel anzeigen falls vorhanden
+  if (config.titel || config.title) {
+    const titel = document.createElement('div');
+    titel.className = 'amorph-bar-titel';
+    titel.textContent = config.titel || config.title;
+    el.appendChild(titel);
+  }
+  
   // Max für Skalierung
   const max = Math.max(...balken.map(b => b.value));
   const einheit = config.einheit || balken[0]?.unit || '';
@@ -60,6 +68,18 @@ export function bar(wert, config = {}) {
     row.appendChild(value);
     
     el.appendChild(row);
+  }
+  
+  // Achsenbeschriftung (X-Achse mit Skala)
+  if (config.showScale !== false && max > 0) {
+    const scale = document.createElement('div');
+    scale.className = 'amorph-bar-scale';
+    scale.innerHTML = `
+      <span class="amorph-bar-scale-min">0${einheit}</span>
+      <span class="amorph-bar-scale-mid">${formatValue(max / 2, einheit)}</span>
+      <span class="amorph-bar-scale-max">${formatValue(max, einheit)}</span>
+    `;
+    el.appendChild(scale);
   }
   
   return el;

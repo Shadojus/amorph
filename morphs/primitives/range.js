@@ -9,6 +9,14 @@ export function range(wert, config = {}) {
   const max = wert.max ?? 100;
   const einheit = config.einheit || wert.einheit || '';
   
+  // Label falls vorhanden
+  if (config.label) {
+    const label = document.createElement('span');
+    label.className = 'amorph-range-label';
+    label.textContent = config.label;
+    el.appendChild(label);
+  }
+  
   const text = document.createElement('span');
   text.className = 'amorph-range-text';
   text.textContent = `${min}${einheit} – ${max}${einheit}`;
@@ -29,6 +37,17 @@ export function range(wert, config = {}) {
     bar.style.setProperty('--range-end', `${endPercent}%`);
     
     el.appendChild(bar);
+    
+    // Skalen-Beschriftung falls gewünscht
+    if (config.showScale) {
+      const scale = document.createElement('span');
+      scale.className = 'amorph-range-scale';
+      scale.innerHTML = `
+        <span class="range-scale-min">${skalaMin}${einheit}</span>
+        <span class="range-scale-max">${skalaMax}${einheit}</span>
+      `;
+      el.appendChild(scale);
+    }
   }
   
   return el;

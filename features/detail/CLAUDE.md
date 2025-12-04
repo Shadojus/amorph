@@ -2,17 +2,7 @@
 
 Ausgewählte Daten als interaktive Pinnwand.
 
-## 🚧 STATUS (02.12.2025)
-
-**DEAKTIVIERT** - In `features.yaml` auskommentiert. Vergleich-Feature übernimmt die Funktion.
-
-### ⚠️ Bekannter Hardcode
-
-| Zeile | Was | Status |
-|-------|-----|--------|
-| 276 | `erkennTyp()` Funktion | 🟡 Doppelt zu `detectType()` in pipeline.js |
-
-**Empfehlung:** `erkennTyp()` durch Import von `detectType` ersetzen.
+**Status:** Aktuell deaktiviert - Vergleich-Feature übernimmt die Funktion.
 
 ## Konzept
 

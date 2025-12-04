@@ -2,9 +2,9 @@
 
 Durchsucht die Datenbank, lädt neue Morphs. Immer frisch.
 
-## 🚧 AKTUELLER STAND (02.12.2025 - FINAL)
+## Übersicht
 
-### ✅ Fertig
+Das Suche-Feature bietet:
 - Semantische Suche mit Keywords aus Schema
 - **View-aware Suche**: 
   - In **Grid-View**: Normale DB-Suche + Render
@@ -13,10 +13,7 @@ Durchsucht die Datenbank, lädt neue Morphs. Immer frisch.
 - Highlights nutzen `highlightInContainer()` aus `util/semantic.js`
 - Live-Suche mit konfigurierbarem Debounce
 
-### ⚠️ Hinweis: Header übernimmt
-
-Die Suche-Logik ist jetzt primär in `features/header/index.js` implementiert.
-Dieses Feature dient als Referenz/Dokumentation.
+**Hinweis**: Die Suche-Logik ist primär in `features/header/index.js` implementiert.
 
 ### View-aware Logik
 

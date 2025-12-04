@@ -2,76 +2,34 @@
 
 Formlos. Zustandslos. Transformierend.
 
-## 🚀 Aktueller Stand (03.12.2025)
+## Systemübersicht
 
-### ✅ Neu (03.12.2025)
-- **Unified Design System** - Einheitliche CSS-Variablen für Höhen, Radii, Fonts
-- **Neutrale Grundfarbe** - Accent von Cyan/Jade zu Weiß (Perspektiven liefern Farben)
-- **Gedämpfte Morph-Farben** - 70% Transparenz für harmonisches Design
-- **Leere Felder überspringen** - Pipeline filtert `null`, `undefined`, `''`, `[]`, `{}`
-- **Leuchtende Counter** - Zahlen ohne Background mit text-shadow Glow
-- **Kompaktere Perspektiven-Buttons** - Inaktive Buttons kleiner und dezenter
+AMORPH ist ein datengetriebenes Transformations-Framework das Daten aus einer Datenbank in DOM-Elemente wandelt. Das System basiert auf:
 
-### ✅ Fertig
-- Schema-basierte Datenbank-Transformation (YAML → Morphs → DOM)
+- **Schema-basierte Transformation** (YAML → Morphs → DOM)
 - **Black Glasmorphism Design** mit Multi-Color Glow
-- Semantische Suche mit Keyword-Mapping
-- Perspektiven-System mit 4-Farben-Grid
+- **Semantische Suche** mit Keyword-Mapping
+- **Perspektiven-System** mit 4-Farben-Grid
+- **Datengetriebene Morphs** - Typ-Erkennung aus Datenstruktur, nicht Feldname!
+
+### Features
+
 - **Header 3-Zeilen-Layout**:
-  - Zeile 0 (Branding): FUNGINOMI (Link zur Startseite) | Part of Bifroest (Link zu bifroest.io)
+  - Zeile 0 (Branding): FUNGINOMI + Bifroest Links
   - Zeile 1 (Suche): Suchleiste mit aktiven Filter-Badges
   - Zeile 2 (Controls): Ansicht-Switch + Perspektiven-Buttons
-- **2 Ansichten als separate Features**:
+- **2 Ansichten**:
   - **Grid (Karten)**: Karten-Layout (Standard)
   - **Vergleich (Vektorraum)**: Laterale Visualisierung mit Compare-Morphs
 - **Feld-Auswahl-System**: Einzelne FELDER sind anklickbar
-- Overlay-System für Vergleich View
 - **View-aware Suche**: DB-Suche nur in Grid-View, Highlights in Vergleich-View
-- **Ansicht-State Tracking**: State wird via `amorph:ansicht-wechsel` Event synchronisiert
-- **DATENGETRIEBENE MORPHS**: Typ-Erkennung aus Datenstruktur, nicht Feldname!
 
-### 📊 Systembewertung (02.12.2025 - ULTRA-FINAL)
+### Architektur-Prinzipien
 
-| Bereich | ⭐ | Status |
-|---------|-----|--------|
-| Architektur | 5/5 | Saubere Feature-Isolation |
-| Event-System | 5/5 | Gut durchdachte Custom Events |
-| State-Management | 4/5 | Funktioniert, etwas verteilt |
-| Morph-System | 5/5 | **Reine Funktionen, keine Side-Effects** |
-| Perspektiven | 5/5 | Elegante semantische Filterung |
-| Suche | 5/5 | Semantik + View-aware Highlights |
-| Debug-System | 5/5 | Exzellente farbige Kategorie-Logs |
-| Config-Zentralisierung | 5/5 | **Alle Hardcodes behoben!** |
-| Datenfluss | 5/5 | **Kohärente Pipeline** |
-| Code-Qualität | 5/5 | **~6.500 Zeilen, gut strukturiert** |
-
-**Gesamtbewertung: 4.95/5 ⭐** 
-- Harmonie-Score: 96%
-- Datengetriebenheit: **97%** (nach Fixes)
-
-> **ANALYSE-BERICHTE**:
-> - [`ULTRA_HARMONIE_BERICHT.md`](./ULTRA_HARMONIE_BERICHT.md) - Architektur-Analyse
-> - [`DATENGETRIEBENHEIT_BERICHT.md`](./DATENGETRIEBENHEIT_BERICHT.md) - Config vs Hardcode Analyse
-
-### ✅ Behobene Hardcodes (02.12.2025)
-
-| Datei | Was | Status |
-|-------|-----|--------|
-| `pipeline.js` | `labelKeys`, `valueKeys` Arrays | ✅ Aus morphs.yaml |
-| `pipeline.js` | Objekt-Signalkeys (rating/progress/badge) | ✅ Aus morphs.yaml |
-| `morphs.yaml` | Badge variants + colors Config | ✅ Hinzugefügt |
-| `ansichten/index.js` | Ansichten-Liste | ✅ Aus features.yaml |
-| `detail/index.js` | `erkennTyp()` → `erkennTypFallback()` | ✅ Refactored |
-
-### ✅ Architektur-Fixes (02.12.2025)
-
-- **Morph-Purity**: Keine `document.dispatchEvent()` in Morphs → Callback-Pattern
-- **Feature-Isolation**: `window.addEventListener('scroll')` → `IntersectionObserver`
-- **Config-Zentralisierung**: Hardcoded Farben/Keywords → `morphs.yaml`
-- **YAML-Parser**: Inline-Kommentare nach Strings korrekt entfernt
-- **Morph-Registry**: `string` als Alias für `text` registriert
-- **Badge-Config**: Vollständige variants/colors in morphs.yaml
-- **Pipeline-Config**: labelKeys, valueKeys, rating/progress/badge Keys aus Config
+- **Morph-Purity**: Keine Side-Effects, nur DOM-Erzeugung
+- **Feature-Isolation**: Saubere Trennung der Komponenten
+- **Config-Zentralisierung**: Alle Werte aus YAML-Config
+- **Event-System**: Custom Events für Kommunikation
 
 ### Feld-Auswahl
 User kann einzelne Felder in Cards auswählen:

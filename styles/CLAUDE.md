@@ -2,38 +2,16 @@
 
 Black Glasmorphism Design. Elegant, dezent, leuchtend.
 
-## 🚧 AKTUELLER STAND (03.12.2025)
+## Übersicht
 
-### ✅ Neu (03.12.2025)
-- **Unified Design System**:
-  - `--ui-height-sm/md/lg`: 20px / 24px / 32px
-  - `--ui-radius-sm/md/lg`: 4px / 6px / 8px  
-  - `--ui-font-sm/md/lg`: 0.65rem / 0.72rem / 0.85rem
-- **Neutrale Accent-Farbe**: Weiß statt Cyan (Perspektiven liefern Farben)
-- **Kompaktere Morphs**: Tags, Badges, Progress, Pie, Radar alle harmonisiert
-- **Leuchtende Counter**: Kein Background, nur text-shadow Glow
-- **Perspektiven-Buttons**: Inaktive kleiner (20px), dezentere Farben
-
-### Implementiert
-- Basis Dark Theme mit Glass-Effekten
-- Multi-Color Glow für Perspektiven (4-Farben-Grid)
-- Auswahl-Glow mit pulsierender Animation
-- **Header 3-Zeilen-Layout**:
-  - Branding-Zeile: FUNGINOMI + Bifroest (beide Links)
-  - Suche-Zeile: Input + Clear-Button + aktive Filter-Badges  
-  - Controls-Zeile: Ansicht-Switch + Perspektiven-Buttons
-- **Aktive Filter-Badges**: Farbige Perspektiven-Badges in Suchleiste
-- **Dark Glasmorphism Header**: Alle Header-Elemente im Glass-Stil
-- **Feld-Auswahl-Intensiv**: Ausgewählte Felder verstärken den Perspektiven-Effekt
+Das Style-System bietet:
+- **Unified Design System** mit CSS-Variablen für Höhen, Radii, Fonts
+- **Basis Dark Theme** mit Glass-Effekten
+- **Multi-Color Glow** für Perspektiven (4-Farben-Grid)
+- **Header 3-Zeilen-Layout**: Branding, Suche, Controls
+- **Feld-Auswahl-System**: Glow-Effekte für ausgewählte Felder
 - **Compare-Morph Styles**: Layouts für Vergleichs-Visualisierungen
 - **Vektorraum-Layout**: CSS für laterale Vergleiche
-
-### ⚠️ Bekannter Hardcode
-
-| Datei | Was | Status |
-|-------|-----|--------|
-| `ansichten/index.js` | `250px`, `180px` Bildhöhen | 🟡 Sollte CSS-Variable sein |
-| `morphs/image.js` | `'Bild nicht verfügbar'` Alt-Text | 🟡 Sollte i18n sein |
 
 ## Dateien
 
@@ -47,7 +25,8 @@ styles/
 ├── perspektiven.css ← Feld-Glow, Multi-Perspektiven
 ├── ansichten.css    ← Overlay, Detail-View, Auswahl-Glow
 ├── pinboard.css     ← Pinboard/Detail-View Layout
-└── vektorraum.css   ← Vergleich-View Layouts, Compare-Morphs
+├── compare.css      ← Compare-Morphs, Perspektiven-Containers
+└── vektorraum.css   ← Vergleich-View Layouts
 ```
 
 ## CSS-Variablen (Wichtigste)
