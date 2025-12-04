@@ -38,9 +38,26 @@ import {
   compareImage, 
   compareRadar as compareRadarMorph, 
   comparePie as comparePieMorph, 
-  compareText as compareTextMorph
+  compareText as compareTextMorph,
+  compareTimeline as compareTimelineMorph,
+  compareRange as compareRangeMorph,
+  compareProgress as compareProgressMorph,
+  compareStats as compareStatsMorph,
+  compareBoolean as compareBooleanMorph,
+  compareObject as compareObjectMorph
 } from './compare/morphs.js';
 import { erstelleFarben, detectType, createSection, createHeader } from './compare/base.js';
+
+// Smart Composites - Intelligente Morph-Kombinationen
+import { 
+  smartCompare, 
+  diffCompare, 
+  analyzeItems, 
+  findRelatedFields 
+} from './compare/composites.js';
+
+// compareByData aus compare/index.js
+import { compareByData } from './compare/index.js';
 
 // Legacy-Alias für compareMorph (wird von vergleich/index.js genutzt)
 const compareMorph = (feldName, typ, items, config) => {
@@ -71,6 +88,12 @@ const compareList = compareListMorph;
 const compareRadar = compareRadarMorph;
 const comparePie = comparePieMorph;
 const compareText = compareTextMorph;
+const compareTimeline = compareTimelineMorph;
+const compareRange = compareRangeMorph;
+const compareProgress = compareProgressMorph;
+const compareStats = compareStatsMorph;
+const compareBoolean = compareBooleanMorph;
+const compareObject = compareObjectMorph;
 
 import { debug } from '../observer/debug.js';
 
@@ -105,7 +128,7 @@ export const morphs = {
   timeline, // Zeitliche Abfolge
   badge,    // Farbige Status-Labels
   
-  // Compare-Morphs (Vergleich) - Legacy-Aliase
+  // Compare-Morphs (Vergleich) - Alle Typen
   compareMorph,
   compareBar,
   compareRating,
@@ -115,10 +138,21 @@ export const morphs = {
   compareRadar,
   comparePie,
   compareText,
-  erstelleFarben,
+  compareTimeline,
+  compareRange,
+  compareProgress,
+  compareBoolean,
+  compareStats,
+  compareObject,
   
-  // Neue Compare-Utilities
+  // Compare-Composites (Intelligente Kombinations-Morphs)
+  smartCompare,
+  diffCompare,
+  
+  // Compare-Utilities
+  erstelleFarben,
   compareByType,
+  compareByData,
   detectType,
   createSection,
   createHeader
@@ -128,7 +162,8 @@ export const morphs = {
 debug.morphs('registry', { 
   primitives: ['text', 'number', 'boolean', 'tag', 'range', 'list', 'object', 'image', 'link', 'pie', 'bar', 'radar', 'rating', 'progress', 'stats', 'timeline', 'badge'],
   features: ['suche', 'perspektiven', 'header'],
-  compare: ['compareMorph', 'compareBar', 'compareRating', 'compareTag', 'compareList', 'compareImage', 'compareRadar', 'comparePie', 'compareText']
+  compare: ['compareMorph', 'compareBar', 'compareRating', 'compareTag', 'compareList', 'compareImage', 'compareRadar', 'comparePie', 'compareText', 'compareTimeline', 'compareRange', 'compareProgress', 'compareBoolean', 'compareStats', 'compareObject'],
+  composites: ['smartCompare', 'diffCompare']
 });
 
 // ============================================================================
@@ -142,10 +177,14 @@ export {
   // Features
   suche, perspektiven, header,
   
-  // Compare Morphs
+  // Compare Morphs - Alle
   compareMorph, compareBar, compareRating, compareTag, compareList, 
-  compareImage, compareRadar, comparePie, compareText,
+  compareImage, compareRadar, comparePie, compareText, compareTimeline,
+  compareRange, compareProgress, compareBoolean, compareStats, compareObject,
+  
+  // Composites
+  smartCompare, diffCompare,
   
   // Compare Utilities
-  erstelleFarben, detectType, createSection, createHeader, compareByType
+  erstelleFarben, detectType, createSection, createHeader, compareByType, compareByData
 };

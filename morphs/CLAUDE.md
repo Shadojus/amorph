@@ -2,43 +2,81 @@
 
 Reine Funktionen. Keine Klassen. Kein Zustand. **Keine Seiteneffekte!**
 
-## 🚧 AKTUELLER STAND (04.12.2025 - REFACTORED)
+## 🚧 AKTUELLER STAND (04.12.2025 - REFACTORED v2)
 
-### 📁 Neue Ordnerstruktur
+### 📁 Ordnerstruktur
 
 ```
 morphs/
-├── primitives/       # 17 Basis-Morphs (domänenunabhängig)
-│   ├── text.js       # String-Darstellung
-│   ├── number.js     # Zahlen
-│   ├── boolean.js    # Ja/Nein
-│   ├── tag.js        # Farbige Chips
-│   ├── range.js      # Min-Max Slider
-│   ├── list.js       # String-Listen
-│   ├── object.js     # Key-Value Paare
-│   ├── image.js      # Bilder
-│   ├── link.js       # URLs
-│   ├── pie.js        # Kreisdiagramm
-│   ├── bar.js        # Balkendiagramm
-│   ├── radar.js      # Radar-Chart
-│   ├── rating.js     # Sterne-Bewertung
-│   ├── progress.js   # Fortschrittsbalken
-│   ├── stats.js      # Statistik-Karte
-│   ├── timeline.js   # Zeitliche Abfolge
-│   ├── badge.js      # Status-Labels
-│   └── index.js      # Re-Export aller Primitives
+├── primitives/           # 17 Basis-Morphs (domänenunabhängig)
+│   ├── text.js           # String-Darstellung
+│   ├── number.js         # Zahlen
+│   ├── boolean.js        # Ja/Nein
+│   ├── tag.js            # Farbige Chips
+│   ├── badge.js          # Status-Labels
+│   ├── range.js          # Min-Max Slider
+│   ├── list.js           # String-Listen
+│   ├── object.js         # Key-Value Paare
+│   ├── image.js          # Bilder
+│   ├── link.js           # URLs
+│   ├── pie.js            # Kreisdiagramm
+│   ├── bar.js            # Balkendiagramm
+│   ├── radar.js          # Radar-Chart
+│   ├── rating.js         # Sterne-Bewertung
+│   ├── progress.js       # Fortschrittsbalken
+│   ├── stats.js          # Statistik-Karte
+│   ├── timeline.js       # Zeitliche Abfolge
+│   └── index.js          # Re-Export
 │
-├── compare/          # Generische Compare-Morphs
-│   ├── base.js       # Utils (erstelleFarben, detectType, createSection)
-│   ├── morphs.js     # Compare-Wrapper (compareBar, compareRadar, etc.)
-│   └── index.js      # Re-Export
+├── compare/              # Generische Compare-Morphs
+│   ├── base.js           # Utils (erstelleFarben, detectType)
+│   ├── morphs.js         # 16 Compare-Morphs
+│   ├── composites.js     # Re-Export aus composites/
+│   ├── composites/       # Intelligente Composite-Morphs
+│   │   ├── types.js      # Typ-Kategorien
+│   │   ├── analyze.js    # Analyse-Funktionen
+│   │   ├── render.js     # Rendering-Helpers
+│   │   ├── smartCompare.js
+│   │   ├── diffCompare.js
+│   │   └── index.js
+│   └── index.js          # Haupt-Export
 │
-├── suche.js          # Feature: Suchfeld
-├── perspektiven.js   # Feature: Perspektiven-Buttons
-├── header.js         # Feature: App-Header
-├── index.js          # Zentrale Registry
-└── CLAUDE.md         # Diese Dokumentation
+├── suche.js              # Feature: Suchfeld
+├── perspektiven.js       # Feature: Perspektiven-Buttons
+├── header.js             # Feature: App-Header
+├── index.js              # Zentrale Registry
+└── CLAUDE.md             # Diese Dokumentation
 ```
+
+### Implementierte Morphs
+
+#### Primitives (17)
+text, number, boolean, tag, badge, range, list, object, image, link, pie, bar, radar, rating, progress, stats, timeline
+
+#### Compare-Morphs (16)
+| Morph | Datentyp | Visualisierung |
+|-------|----------|----------------|
+| `compareBar` | `number` | Horizontale Balken |
+| `compareBarGroup` | `[{label,value}]` | Gruppierte Balken |
+| `compareRating` | `0-5, 0-10` | Sterne ★★★☆☆ |
+| `compareProgress` | `0-100` | Prozent-Balken |
+| `compareRange` | `{min,max}` | Range-Visualisierung |
+| `compareStats` | `{min,max,avg}` | Box-Plot Style |
+| `compareTag` | `string` | Farbige Tags |
+| `compareList` | `string[]` | Listen-Vergleich |
+| `compareRadar` | `[{axis,value}]` | Überlagerte Radars |
+| `comparePie` | `{key:number}` | Kreisdiagramme |
+| `compareTimeline` | `[{date,event}]` | Zeitliche Events |
+| `compareImage` | `url` | Bildergalerie |
+| `compareBoolean` | `true/false` | Ja/Nein Icons |
+| `compareObject` | `{key:value}` | Tabellen-Diff |
+| `compareText` | `string` | Text-Vergleich |
+
+#### Composite-Morphs (2)
+| Morph | Beschreibung |
+|-------|--------------|
+| `smartCompare` | Analysiert, gruppiert, baut optimalen Vergleich |
+| `diffCompare` | Zeigt Unterschiede/Gemeinsamkeiten |
 
 ### ⚠️ MORPH-PURITY REGEL
 
@@ -57,47 +95,6 @@ window.location             // → Nur für URL-Parsing (read-only)
 ```
 
 **Warum?** Morphs sind REINE Transformationen: `(wert, config) → HTMLElement`
-
-### ⚠️ Bekannte Hardcodes in Morphs
-
-| Datei | Zeile | Was | Status |
-|-------|-------|-----|--------|
-| `primitives/badge.js` | 15-20 | `AUTO_VARIANTS_FALLBACK` Keywords | 🟡 Hat Config-Lookup, Fallback akzeptabel |
-| `primitives/badge.js` | 24-28 | `VARIANT_COLORS_FALLBACK` Farben | 🟡 Hat Config-Lookup, Fallback akzeptabel |
-| `primitives/pie.js` | 16-18 | `FARBEN_FALLBACK` Array | ✅ Hat Config-Lookup via `getFarben()` |
-| `compare/base.js` | 18-20 | `FALLBACK_FARBEN` Array | ✅ Hat Config-Lookup via `setFarbenConfig()` |
-
-### Config-Lookup Pattern (Best Practice)
-
-```javascript
-// ✅ SO machen es pie.js und badge.js:
-import { getFarben, getBadgeConfig } from '../util/semantic.js';
-
-// Fallback nur als Sicherheit
-const FARBEN_FALLBACK = ['#22c55e', '#3b82f6', ...];
-
-function getDiagrammFarben() {
-  return getFarben('diagramme') || FARBEN_FALLBACK;
-}
-```
-
-### Implementiert
-- **Primitives** (in `primitives/`): text, number, boolean, tag, range, list, object, image, link, pie, bar, radar, rating, progress, stats, timeline, badge
-- **Alias**: `string` → `text` (Schema kann `typ: string` nutzen)
-- **Feature-Morphs**: suche, perspektiven, header
-- **Compare-Morphs** (in `compare/`): Spezialisierte Vergleichs-Visualisierungen
-  - `compareBar` - Horizontale Balkendiagramme für Zahlenvergleiche
-  - `compareRating` - Sterne-Vergleich für Bewertungen
-  - `compareTag` - Gruppierte Chips nach Wert (z.B. Essbarkeit)
-  - `compareList` - Listen mit Überlappungs-Hervorhebung
-  - `compareImage` - Bildergalerie mit farbigen Rahmen
-  - `compareRadar` - Überlappende SVG-Radar-Charts
-  - `comparePie` - Nebeneinander Mini-Pie-Charts
-  - `compareText` - Fallback Text-Vergleich
-  - `compareTimeline` - Timeline-Vergleich
-  - `compareStats` - Statistik-Vergleich
-  - `compareRange` - Range/Progress Vergleich
-  - `compareByType(typ, items, config)` - Auto-Selektor wählt passenden Compare-Morph
   - `detectType(wert)` - Erkennt Typ aus Datenstruktur
   - `erstelleFarben(ids)` - Konsistente Farbzuweisung für Items
 

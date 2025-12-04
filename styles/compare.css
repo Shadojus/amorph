@@ -493,3 +493,67 @@
   color: rgba(255, 255, 255, 0.5);
   font-size: 10px;
 }
+
+/* === COMPARE BAR GROUP (für Arrays wie Wirkstoffe) === */
+.amorph-compare-bar-group .bar-group-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bar-group {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.bar-group-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.bar-group-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bar-group-bar {
+  display: grid;
+  grid-template-columns: 80px 1fr 60px;
+  align-items: center;
+  gap: 8px;
+}
+
+.bar-group-bar .bar-name {
+  font-size: 10px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bar-group-bar .bar-track {
+  height: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.bar-group-bar .bar-fill {
+  height: 100%;
+  border-radius: 7px;
+  transition: width 0.3s ease;
+  opacity: 0.8;
+}
+
+.bar-group-bar .bar-wert {
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: right;
+}

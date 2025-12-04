@@ -4,6 +4,7 @@
  * Exportiert:
  * - Base-Utilities (erstelleFarben, detectType, etc.)
  * - Generische Compare-Morphs (compareBar, compareRadar, etc.)
+ * - Smart Composites (smartCompare, diffCompare)
  * - compareMorph() Dispatcher
  */
 
@@ -24,6 +25,7 @@ export {
 export {
   compareByType,
   compareBar,
+  compareBarGroup,
   compareRating,
   compareTag,
   compareList,
@@ -33,8 +35,22 @@ export {
   compareText,
   compareTimeline,
   compareStats,
-  compareRange
+  compareRange,
+  compareProgress,
+  compareBoolean,
+  compareObject
 } from './morphs.js';
+
+// Smart Composites
+export {
+  analyzeItems,
+  findRelatedFields,
+  smartCompare,
+  diffCompare,
+  calculateDiff,
+  TYPE_CATEGORIES,
+  TYPE_TO_CATEGORY
+} from './composites.js';
 
 import { detectType } from './base.js';
 import {
@@ -49,15 +65,20 @@ import {
   compareText,
   compareTimeline,
   compareStats,
-  compareRange
+  compareRange,
+  compareProgress,
+  compareBoolean,
+  compareObject
 } from './morphs.js';
+
+import { smartCompare, diffCompare } from './composites.js';
 
 /**
  * Typ → Compare-Morph Mapping
  */
 const typHandler = {
   rating: compareRating,
-  progress: (items, config) => compareBar(items, { ...config, max: 100 }),
+  progress: compareProgress,
   number: compareBar,
   range: compareRange,
   stats: compareStats,
@@ -71,7 +92,8 @@ const typHandler = {
   timeline: compareTimeline,
   text: compareText,
   string: compareText,
-  object: compareText
+  boolean: compareBoolean,
+  object: compareObject
 };
 
 /**
@@ -122,5 +144,7 @@ export default {
   compareMorph,
   compareByData,
   compareByType,
-  detectType
+  detectType,
+  smartCompare,
+  diffCompare
 };

@@ -5,6 +5,12 @@
  * Sie erhalten Arrays von Items und stellen sie vergleichbar dar.
  * 
  * DATENGETRIEBEN: Typ wird aus Datenstruktur erkannt, nicht aus Feldnamen!
+ * 
+ * LATERAL THINKING:
+ * - Radar-Charts: ÜBERLAGERT, nicht nebeneinander
+ * - Ranges: Auf gemeinsamer Skala mit Überlappungs-Highlight
+ * - Stats: Als Box-Plots oder Range-Bars
+ * - Progress: Als vergleichende Balken mit Differenz-Anzeige
  */
 
 import { debug } from '../../observer/debug.js';
@@ -78,6 +84,90 @@ export function compareBar(items, config = {}) {
   });
   
   el.appendChild(bars);
+  return el;
+}
+
+/**
+ * COMPARE BAR GROUP - Für Arrays von Bar-Objekten (z.B. Wirkstoffe)
+ * Jedes Item hat einen Array von {label, value, unit}
+ * Zeigt gruppierte Balken pro Label, vergleicht Items side-by-side
+ */
+export function compareBarGroup(items, config = {}) {
+  const el = document.createElement('div');
+  el.className = 'amorph-compare amorph-compare-bar-group';
+  
+  if (!items?.length) {
+    el.innerHTML = '<div class="compare-leer">Keine Daten</div>';
+    return el;
+  }
+  
+  if (config.label) {
+    const label = document.createElement('div');
+    label.className = 'compare-label';
+    label.textContent = config.label;
+    el.appendChild(label);
+  }
+  
+  // Alle Labels sammeln (z.B. alle Wirkstoffe)
+  const alleLabels = new Map(); // label -> [{item, value, unit}]
+  
+  items.forEach(item => {
+    const arr = item.wert;
+    if (!Array.isArray(arr)) return;
+    
+    arr.forEach(entry => {
+      const lbl = entry.label || entry.name || 'Unbekannt';
+      if (!alleLabels.has(lbl)) {
+        alleLabels.set(lbl, []);
+      }
+      alleLabels.get(lbl).push({
+        item,
+        value: entry.value,
+        unit: entry.unit || ''
+      });
+    });
+  });
+  
+  // Globales Maximum pro Label ermitteln
+  const container = document.createElement('div');
+  container.className = 'bar-group-container';
+  
+  alleLabels.forEach((entries, lbl) => {
+    const group = document.createElement('div');
+    group.className = 'bar-group';
+    
+    const maxVal = Math.max(...entries.map(e => e.value || 0), 1);
+    const unit = entries[0]?.unit || '';
+    
+    // Label-Header
+    const header = document.createElement('div');
+    header.className = 'bar-group-label';
+    header.textContent = lbl;
+    group.appendChild(header);
+    
+    // Bars für jeden Item
+    const barsWrap = document.createElement('div');
+    barsWrap.className = 'bar-group-bars';
+    
+    entries.forEach(entry => {
+      const pct = Math.min(100, (entry.value / maxVal) * 100);
+      const bar = document.createElement('div');
+      bar.className = 'bar-group-bar';
+      bar.innerHTML = `
+        <span class="bar-name" style="color:${entry.item.farbe}">${entry.item.name}</span>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:${pct}%;background:${entry.item.farbe}"></div>
+        </div>
+        <span class="bar-wert">${entry.value}${unit}</span>
+      `;
+      barsWrap.appendChild(bar);
+    });
+    
+    group.appendChild(barsWrap);
+    container.appendChild(group);
+  });
+  
+  el.appendChild(container);
   return el;
 }
 
@@ -579,10 +669,230 @@ export function compareTimeline(items, config = {}) {
 }
 
 /**
- * COMPARE STATS - Stats-Vergleich
+ * COMPARE STATS - Box-Plot Style Statistik-Vergleich
+ * Zeigt min/max als Range, avg als Marker, optional count
  */
 export function compareStats(items, config = {}) {
-  return compareBar(items, config);  // Stats als Balken darstellen
+  const el = document.createElement('div');
+  el.className = 'amorph-compare amorph-compare-stats';
+  
+  if (config.label) {
+    const label = document.createElement('div');
+    label.className = 'compare-label';
+    label.textContent = config.label;
+    el.appendChild(label);
+  }
+  
+  // Globale Grenzen ermitteln
+  let globalMin = Infinity, globalMax = -Infinity;
+  items.forEach(item => {
+    const s = item.wert;
+    if (s?.min !== undefined) globalMin = Math.min(globalMin, s.min);
+    if (s?.max !== undefined) globalMax = Math.max(globalMax, s.max);
+  });
+  
+  const range = globalMax - globalMin || 1;
+  const container = document.createElement('div');
+  container.className = 'stats-container';
+  
+  items.forEach(item => {
+    const s = item.wert;
+    if (!s?.min || !s?.max) return;
+    
+    const row = document.createElement('div');
+    row.className = 'stats-row';
+    
+    const leftPct = ((s.min - globalMin) / range) * 100;
+    const widthPct = ((s.max - s.min) / range) * 100;
+    const avgPct = s.avg !== undefined ? ((s.avg - globalMin) / range) * 100 : null;
+    
+    row.innerHTML = `
+      <span class="stats-name" style="color:${item.farbe}">${item.name}</span>
+      <div class="stats-track">
+        <div class="stats-range" style="left:${leftPct}%;width:${widthPct}%;background:${item.farbe}20;border-color:${item.farbe}">
+          ${avgPct !== null ? `<div class="stats-avg" style="left:${((s.avg - s.min) / (s.max - s.min)) * 100}%;background:${item.farbe}"></div>` : ''}
+        </div>
+      </div>
+      <span class="stats-values">
+        <span class="stats-min">${s.min}</span>
+        ${s.avg !== undefined ? `<span class="stats-avg-label">⌀${s.avg}</span>` : ''}
+        <span class="stats-max">${s.max}</span>
+        ${s.count !== undefined ? `<span class="stats-count">(n=${s.count})</span>` : ''}
+      </span>
+    `;
+    
+    container.appendChild(row);
+  });
+  
+  // Skala
+  const scale = document.createElement('div');
+  scale.className = 'stats-scale';
+  scale.innerHTML = `
+    <span>${globalMin}${config.einheit || ''}</span>
+    <span>${globalMax}${config.einheit || ''}</span>
+  `;
+  
+  el.appendChild(container);
+  el.appendChild(scale);
+  return el;
+}
+
+/**
+ * COMPARE PROGRESS - Fortschritts-Balken mit Differenz-Anzeige
+ * Zeigt Prozentwerte mit visuellem Vergleich
+ */
+export function compareProgress(items, config = {}) {
+  const el = document.createElement('div');
+  el.className = 'amorph-compare amorph-compare-progress';
+  
+  if (config.label) {
+    const label = document.createElement('div');
+    label.className = 'compare-label';
+    label.textContent = config.label;
+    el.appendChild(label);
+  }
+  
+  // Sortiere nach Wert für Ranking
+  const sorted = [...items].sort((a, b) => (Number(b.wert) || 0) - (Number(a.wert) || 0));
+  const maxVal = Math.max(...items.map(i => Number(i.wert) || 0), config.max || 100);
+  const leader = sorted[0];
+  
+  const container = document.createElement('div');
+  container.className = 'progress-container';
+  
+  sorted.forEach((item, idx) => {
+    const val = Number(item.wert) || 0;
+    const pct = (val / maxVal) * 100;
+    const diff = leader && idx > 0 ? val - Number(leader.wert) : null;
+    
+    const row = document.createElement('div');
+    row.className = 'progress-row';
+    if (idx === 0) row.classList.add('leader');
+    
+    row.innerHTML = `
+      <span class="progress-rank">${idx + 1}</span>
+      <span class="progress-name" style="color:${item.farbe}">${item.name}</span>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:${pct}%;background:${item.farbe}"></div>
+      </div>
+      <span class="progress-value">${val}${config.einheit || '%'}</span>
+      ${diff !== null ? `<span class="progress-diff" style="color:${diff >= 0 ? '#60c090' : '#d06080'}">${diff >= 0 ? '+' : ''}${diff}</span>` : ''}
+    `;
+    
+    container.appendChild(row);
+  });
+  
+  el.appendChild(container);
+  return el;
+}
+
+/**
+ * COMPARE BOOLEAN - Ja/Nein Vergleich mit Gruppierung
+ */
+export function compareBoolean(items, config = {}) {
+  const el = document.createElement('div');
+  el.className = 'amorph-compare amorph-compare-boolean';
+  
+  if (config.label) {
+    const label = document.createElement('div');
+    label.className = 'compare-label';
+    label.textContent = config.label;
+    el.appendChild(label);
+  }
+  
+  // Gruppiere nach Wert
+  const jaItems = items.filter(i => i.wert === true || i.wert === 'ja' || i.wert === 'yes');
+  const neinItems = items.filter(i => i.wert === false || i.wert === 'nein' || i.wert === 'no' || !i.wert);
+  
+  const container = document.createElement('div');
+  container.className = 'boolean-container';
+  
+  if (jaItems.length > 0) {
+    const jaGroup = document.createElement('div');
+    jaGroup.className = 'boolean-group ja';
+    jaGroup.innerHTML = `
+      <span class="boolean-icon">✓</span>
+      <span class="boolean-items">${jaItems.map(i => 
+        `<span class="boolean-item" style="color:${i.farbe}">${i.name}</span>`
+      ).join('')}</span>
+    `;
+    container.appendChild(jaGroup);
+  }
+  
+  if (neinItems.length > 0) {
+    const neinGroup = document.createElement('div');
+    neinGroup.className = 'boolean-group nein';
+    neinGroup.innerHTML = `
+      <span class="boolean-icon">✗</span>
+      <span class="boolean-items">${neinItems.map(i => 
+        `<span class="boolean-item" style="color:${i.farbe}">${i.name}</span>`
+      ).join('')}</span>
+    `;
+    container.appendChild(neinGroup);
+  }
+  
+  el.appendChild(container);
+  return el;
+}
+
+/**
+ * COMPARE OBJECT - Generischer Objekt-Vergleich als Tabelle
+ */
+export function compareObject(items, config = {}) {
+  const el = document.createElement('div');
+  el.className = 'amorph-compare amorph-compare-object';
+  
+  if (config.label) {
+    const label = document.createElement('div');
+    label.className = 'compare-label';
+    label.textContent = config.label;
+    el.appendChild(label);
+  }
+  
+  // Alle Keys sammeln
+  const allKeys = new Set();
+  items.forEach(item => {
+    if (typeof item.wert === 'object' && item.wert !== null) {
+      Object.keys(item.wert).forEach(k => allKeys.add(k));
+    }
+  });
+  
+  if (allKeys.size === 0) {
+    el.innerHTML += '<div class="compare-leer">Keine Daten</div>';
+    return el;
+  }
+  
+  // Tabelle erstellen
+  const table = document.createElement('table');
+  table.className = 'object-table';
+  
+  // Header
+  const thead = document.createElement('thead');
+  thead.innerHTML = `
+    <tr>
+      <th></th>
+      ${items.map(i => `<th style="color:${i.farbe}">${i.name}</th>`).join('')}
+    </tr>
+  `;
+  table.appendChild(thead);
+  
+  // Body
+  const tbody = document.createElement('tbody');
+  [...allKeys].forEach(key => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="object-key">${key}</td>
+      ${items.map(i => {
+        const val = i.wert?.[key];
+        return `<td class="object-val">${val !== undefined ? val : '–'}</td>`;
+      }).join('')}
+    `;
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  
+  el.appendChild(table);
+  return el;
 }
 
 /**
@@ -645,6 +955,12 @@ export function compareRange(items, config = {}) {
 export function compareByType(typ, items, config = {}) {
   debug.morphs('compareByType', { typ, itemCount: items?.length, config });
   
+  // Intelligente Bar-Erkennung: Wenn wert ein Array von Objekten ist → BarGroup
+  if ((typ === 'bar' || typ === 'number') && items?.length && Array.isArray(items[0]?.wert)) {
+    debug.morphs('compareByType: Bar mit Array-Wert → BarGroup');
+    return compareBarGroup(items, config);
+  }
+  
   switch (typ) {
     case 'bar':
     case 'number':
@@ -676,8 +992,16 @@ export function compareByType(typ, items, config = {}) {
       return compareStats(items, config);
       
     case 'range':
-    case 'progress':
       return compareRange(items, config);
+      
+    case 'progress':
+      return compareProgress(items, config);
+      
+    case 'boolean':
+      return compareBoolean(items, config);
+      
+    case 'object':
+      return compareObject(items, config);
       
     case 'text':
     case 'string':
@@ -689,6 +1013,7 @@ export function compareByType(typ, items, config = {}) {
 export default {
   compareByType,
   compareBar,
+  compareBarGroup,
   compareRating,
   compareTag,
   compareList,
@@ -698,5 +1023,8 @@ export default {
   compareText,
   compareTimeline,
   compareStats,
-  compareRange
+  compareRange,
+  compareProgress,
+  compareBoolean,
+  compareObject
 };

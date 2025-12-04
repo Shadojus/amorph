@@ -8,10 +8,45 @@ Wiederverwendbare Compare-Wrapper für Vergleichsansichten. Diese Morphs sind **
 
 ```
 morphs/compare/
-├── base.js       # Utilities: erstelleFarben, detectType, createSection, createHeader
-├── morphs.js     # Compare-Wrapper: compareBar, compareRadar, comparePie, etc.
-└── index.js      # Re-Export aller Funktionen
+├── base.js         # Utilities: erstelleFarben, detectType, createSection
+├── morphs.js       # 16 Compare-Morphs: compareBar, compareRadar, etc.
+├── composites.js   # Re-Export aus composites/
+├── composites/     # Intelligente Composite-Morphs
+│   ├── types.js        # Typ-Kategorien
+│   ├── analyze.js      # Analyse-Funktionen
+│   ├── render.js       # Rendering-Helpers
+│   ├── smartCompare.js # Smart Compare Composite
+│   ├── diffCompare.js  # Diff Compare Composite
+│   └── index.js        # Exports
+└── index.js        # Haupt-Export
 ```
+
+## Compare-Morphs (morphs.js)
+
+| Morph | Datentyp | Visualisierung |
+|-------|----------|----------------|
+| `compareBar` | `number` | Horizontale Balken |
+| `compareBarGroup` | `[{label,value}]` | Gruppierte Balken |
+| `compareRating` | `0-5, 0-10` | Sterne ★★★☆☆ |
+| `compareProgress` | `0-100` | Prozent-Balken |
+| `compareRange` | `{min,max}` | Range-Visualisierung |
+| `compareStats` | `{min,max,avg}` | Box-Plot Style |
+| `compareTag` | `string (badge)` | Farbige Tags |
+| `compareList` | `string[]` | Listen-Vergleich |
+| `compareRadar` | `[{axis,value}]` | **Überlagerte** Radar-Charts |
+| `comparePie` | `{key:number}` | Kreisdiagramme |
+| `compareTimeline` | `[{date,event}]` | Zeitliche Events |
+| `compareImage` | `url` | Bildergalerie |
+| `compareBoolean` | `true/false` | Ja/Nein mit Icons |
+| `compareObject` | `{key:value}` | Tabellen-Diff |
+| `compareText` | `string` | Text-Vergleich |
+
+## Composite-Morphs (composites/)
+
+| Morph | Beschreibung |
+|-------|--------------|
+| `smartCompare` | Analysiert Daten, gruppiert Felder, baut optimalen Vergleich |
+| `diffCompare` | Zeigt Unterschiede/Gemeinsamkeiten zwischen Items |
 
 ## Kernfunktionen
 
@@ -22,13 +57,13 @@ morphs/compare/
 erstelleFarben(ids: string[]) → Map<string, string>
 
 // Datentyp aus Struktur erkennen (DATENGETRIEBEN!)
-detectType(value: any) → 'rating' | 'progress' | 'number' | 'radar' | 'pie' | 'list' | 'tag' | 'text'
+detectType(value: any) → 'rating' | 'progress' | 'number' | 'radar' | ...
 
 // Section-Container erstellen
-createSection(label, farbe?) → { el: HTMLElement, content: HTMLElement }
+createSection(label, farbe?) → HTMLElement
 
 // Header für Compare-View erstellen
-createHeader(items, label?) → HTMLElement
+createHeader(config) → HTMLElement
 ```
 
 ### morphs.js
@@ -37,15 +72,8 @@ createHeader(items, label?) → HTMLElement
 // Automatische Typ-Selektion
 compareByType(typ, items, config) → HTMLElement
 
-// Spezifische Compare-Morphs
-compareBar(items, config)    → Balken-Vergleich
-compareRadar(items, config)  → Radar-Chart Overlay
-comparePie(items, config)    → Pie-Chart nebeneinander
-compareTag(items, config)    → Tag-Vergleich mit Farben
-compareList(items, config)   → Listen-Vergleich
-compareText(items, config)   → Text-Fallback
-compareRating(items, config) → Rating mit Sternen
-compareImage(items, config)  → Bild-Galerie
+// Bei Array-Werten automatisch BarGroup
+if (typ === 'bar' && Array.isArray(items[0].wert)) → compareBarGroup
 ```
 
 ## Item-Format
@@ -54,26 +82,27 @@ Alle Compare-Morphs erwarten Items im Format:
 
 ```javascript
 {
-  id: string,     // Eindeutige ID (pilz-id, item-id)
+  id: string,     // Eindeutige ID
   name: string,   // Anzeigename
   wert: any,      // Der zu vergleichende Wert
-  farbe: string   // CSS-Farbe für dieses Item
+  farbe: string   // CSS-Farbe
 }
 ```
 
 ## Typ-Erkennung (DATENGETRIEBEN)
 
-Der Typ wird aus der **Datenstruktur** erkannt, NICHT aus dem Feldnamen:
-
 ```javascript
-detectType(5.0)                    // → 'number' (einfache Zahl)
-detectType({ min: 1, max: 5 })     // → 'rating' (min/max Range)
-detectType({ aktuell: 3, max: 5 }) // → 'progress' (aktuell/max)
-detectType({ a: 1, b: 2, c: 3 })   // → 'radar' (3+ numerische Achsen)
-detectType({ a: 1, b: 2 })         // → 'pie' (2 numerische Achsen)
-detectType(['tag1', 'tag2'])       // → 'list' (Array von Strings)
-detectType('essbar')               // → 'tag' (einzelner String)
-detectType('...')                  // → 'text' (Fallback)
+detectType(4.5)                           // → 'rating' (0-10 dezimal)
+detectType(85)                            // → 'progress' (0-100 int)
+detectType({ min: 10, max: 25 })          // → 'range'
+detectType({ min: 80, max: 350, avg: 180 })// → 'stats'
+detectType([{ axis: 'A', value: 80 }])    // → 'radar'
+detectType([{ date: 'Mai', event: 'X' }]) // → 'timeline'
+detectType([{ label: 'A', value: 4.2 }])  // → 'bar' (Array!)
+detectType({ Protein: 26, Fett: 8 })      // → 'pie'
+detectType(['tag1', 'tag2'])              // → 'list'
+detectType(true)                          // → 'boolean'
+detectType({ key: 'value' })              // → 'object'
 ```
 
 ## Nutzung
