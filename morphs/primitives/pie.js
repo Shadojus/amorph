@@ -12,16 +12,16 @@
 import { debug } from '../../observer/debug.js';
 import { getFarben } from '../../util/semantic.js';
 
-// Pilz-Farben: Nur Blau-Töne - klar getrennt von Perspektiven-Farben
+// Pilz-Farben: Glass-Morphism Palette (wird dynamisch gefiltert)
 const FARBEN_FALLBACK = [
-  'rgba(180, 200, 255, 0.80)',   // Eisblau
-  'rgba(130, 170, 255, 0.75)',   // Himmelblau
-  'rgba(100, 140, 220, 0.70)',   // Mittelblau
-  'rgba(70, 120, 200, 0.65)',    // Königsblau
-  'rgba(90, 100, 180, 0.65)',    // Indigo-Blau
-  'rgba(60, 90, 160, 0.60)',     // Dunkelblau
-  'rgba(80, 130, 190, 0.67)',    // Stahlblau
-  'rgba(110, 160, 230, 0.73)'    // Kornblumenblau
+  'rgba(200, 210, 220, 0.70)',   // Silber
+  'rgba(160, 175, 195, 0.65)',   // Stahl
+  'rgba(130, 145, 165, 0.60)',   // Schiefer
+  'rgba(180, 200, 255, 0.70)',   // Eisblau
+  'rgba(130, 170, 255, 0.65)',   // Himmelblau
+  'rgba(100, 120, 200, 0.60)',   // Indigo
+  'rgba(140, 210, 170, 0.65)',   // Jade
+  'rgba(180, 160, 220, 0.65)'    // Lavendel
 ];
 
 function getDiagrammFarben() {

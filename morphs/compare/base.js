@@ -17,19 +17,103 @@ let farbenConfig = null;
 // Erkennung-Config wird von außen gesetzt (aus morphs.yaml)
 let erkennungConfig = null;
 
-// Pilz-Farben: Nur Blau-Töne - klar getrennt von Perspektiven-Farben
-// Perspektiven nutzen: Gold, Grün, Cyan, Rosa, Violett, Türkis
-// Pilze nutzen: Nur Blau-Spektrum
+// Pilz-Farben: Große Palette von Glass-Morphism Farben
+// Diese werden dynamisch gefiltert basierend auf aktiven Perspektiven
 const FALLBACK_FARBEN = [
-  'rgba(180, 200, 255, 0.75)',   // Eisblau - hell
-  'rgba(130, 170, 255, 0.70)',   // Himmelblau
-  'rgba(100, 140, 220, 0.65)',   // Mittelblau
-  'rgba(70, 120, 200, 0.60)',    // Königsblau
-  'rgba(90, 100, 180, 0.60)',    // Indigo-Blau
-  'rgba(60, 90, 160, 0.55)',     // Dunkelblau
-  'rgba(80, 130, 190, 0.62)',    // Stahlblau
-  'rgba(110, 160, 230, 0.68)'    // Kornblumenblau
+  { name: 'Silber', rgb: [200, 210, 220], color: 'rgba(200, 210, 220, 0.70)' },
+  { name: 'Stahl', rgb: [160, 175, 195], color: 'rgba(160, 175, 195, 0.65)' },
+  { name: 'Schiefer', rgb: [130, 145, 165], color: 'rgba(130, 145, 165, 0.60)' },
+  { name: 'Eisblau', rgb: [180, 200, 255], color: 'rgba(180, 200, 255, 0.70)' },
+  { name: 'Himmelblau', rgb: [130, 170, 255], color: 'rgba(130, 170, 255, 0.65)' },
+  { name: 'Indigo', rgb: [100, 120, 200], color: 'rgba(100, 120, 200, 0.60)' },
+  { name: 'Bernstein', rgb: [240, 190, 100], color: 'rgba(240, 190, 100, 0.65)' },
+  { name: 'Kupfer', rgb: [220, 150, 100], color: 'rgba(220, 150, 100, 0.60)' },
+  { name: 'Jade', rgb: [140, 210, 170], color: 'rgba(140, 210, 170, 0.65)' },
+  { name: 'Moos', rgb: [120, 180, 130], color: 'rgba(120, 180, 130, 0.60)' },
+  { name: 'Lavendel', rgb: [180, 160, 220], color: 'rgba(180, 160, 220, 0.65)' },
+  { name: 'Rose', rgb: [220, 160, 180], color: 'rgba(220, 160, 180, 0.60)' }
 ];
+
+// Cache für aktive Perspektiven-Farben
+let aktivePerspektivenFarben = [];
+
+/**
+ * Berechnet die Farbdistanz zwischen zwei RGB-Werten
+ * Verwendet euklidische Distanz im RGB-Raum
+ */
+function farbDistanz(rgb1, rgb2) {
+  const dr = rgb1[0] - rgb2[0];
+  const dg = rgb1[1] - rgb2[1];
+  const db = rgb1[2] - rgb2[2];
+  return Math.sqrt(dr * dr + dg * dg + db * db);
+}
+
+/**
+ * Extrahiert RGB-Werte aus einem rgba() String
+ */
+function parseRgba(rgbaString) {
+  const match = rgbaString.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+  if (match) {
+    return [parseInt(match[1]), parseInt(match[2]), parseInt(match[3])];
+  }
+  return null;
+}
+
+/**
+ * Setzt die aktiven Perspektiven-Farben (wird vom Vergleich-Feature aufgerufen)
+ * @param {string[]} farben - Array von rgba() Farbstrings
+ */
+export function setAktivePerspektivenFarben(farben) {
+  aktivePerspektivenFarben = farben
+    .map(f => parseRgba(f))
+    .filter(Boolean);
+  
+  debug.morphs('Aktive Perspektiven-Farben gesetzt', { 
+    anzahl: aktivePerspektivenFarben.length,
+    farben: aktivePerspektivenFarben 
+  });
+}
+
+/**
+ * Filtert Farben die zu ähnlich zu den aktiven Perspektiven sind
+ * @param {Array} palette - Array von Farb-Objekten {name, rgb, color}
+ * @param {number} schwellenwert - Minimale Distanz (0-255)
+ */
+function filtereFarben(palette, schwellenwert = 80) {
+  if (aktivePerspektivenFarben.length === 0) {
+    return palette;
+  }
+  
+  const gefiltert = palette.filter(farbe => {
+    // Prüfe Distanz zu jeder aktiven Perspektiven-Farbe
+    for (const perspFarbe of aktivePerspektivenFarben) {
+      const distanz = farbDistanz(farbe.rgb, perspFarbe);
+      if (distanz < schwellenwert) {
+        debug.morphs(`Farbe ${farbe.name} zu ähnlich zu Perspektive`, { distanz, schwellenwert });
+        return false;
+      }
+    }
+    return true;
+  });
+  
+  debug.morphs('Farben gefiltert', { 
+    original: palette.length, 
+    gefiltert: gefiltert.length,
+    aktivePerspektiven: aktivePerspektivenFarben.length 
+  });
+  
+  // Falls alle gefiltert wurden, nimm die mit der größten Distanz
+  if (gefiltert.length === 0) {
+    const mitDistanz = palette.map(farbe => {
+      const minDistanz = Math.min(...aktivePerspektivenFarben.map(pf => farbDistanz(farbe.rgb, pf)));
+      return { ...farbe, distanz: minDistanz };
+    });
+    mitDistanz.sort((a, b) => b.distanz - a.distanz);
+    return mitDistanz.slice(0, Math.min(4, palette.length));
+  }
+  
+  return gefiltert;
+}
 
 /**
  * Setzt die Farben-Konfiguration (aus morphs.yaml)
@@ -56,23 +140,46 @@ export function setErkennungConfig(config) {
 
 /**
  * Holt die konfigurierten Farben
+ * @param {string} typ - 'pilze' oder 'diagramme'
+ * @returns {Array} Array von Farb-Objekten oder Strings
  */
-export function getFarben(typ = 'items') {
-  return farbenConfig?.[typ] || FALLBACK_FARBEN;
+export function getFarben(typ = 'pilze') {
+  const configFarben = farbenConfig?.[typ];
+  
+  // Wenn Config vorhanden und Array von Objekten mit rgb
+  if (Array.isArray(configFarben) && configFarben[0]?.rgb) {
+    return configFarben;
+  }
+  
+  return FALLBACK_FARBEN;
 }
 
 /**
  * Erstellt Farbzuordnung für Items (Pilze, Pflanzen, etc.)
+ * Filtert automatisch Farben die zu ähnlich zu aktiven Perspektiven sind
  * @param {Array} itemIds - Array von Item-IDs
- * @returns {Map} ID → Farbe
+ * @returns {Map} ID → Farbe (rgba String)
  */
 export function erstelleFarben(itemIds) {
   const farben = new Map();
-  const palette = getFarben('items');
+  
+  // Hole Palette und filtere nach aktiven Perspektiven
+  const vollePalette = getFarben('pilze');
+  const schwellenwert = farbenConfig?.aehnlichkeit_schwellenwert || 80;
+  const gefilterte = filtereFarben(vollePalette, schwellenwert);
+  
+  debug.morphs('erstelleFarben', { 
+    items: itemIds.length, 
+    paletteVoll: vollePalette.length,
+    paletteGefiltert: gefilterte.length,
+    aktivePerspektiven: aktivePerspektivenFarben.length
+  });
   
   itemIds.forEach((id, i) => {
     const normalizedId = String(id);
-    const farbe = palette[i % palette.length];
+    const farbObj = gefilterte[i % gefilterte.length];
+    // Extrahiere color String aus Objekt oder verwende direkt
+    const farbe = farbObj?.color || farbObj;
     farben.set(normalizedId, farbe);
   });
   
@@ -363,6 +470,7 @@ function detectObjectType(wert) {
 export default {
   setFarbenConfig,
   setErkennungConfig,
+  setAktivePerspektivenFarben,
   getFarben,
   erstelleFarben,
   createSection,

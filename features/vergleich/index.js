@@ -33,7 +33,8 @@ import {
   erstelleFarben,
   detectType,
   compareByType,
-  createSection
+  createSection,
+  setAktivePerspektivenFarben
 } from '../../morphs/index.js';
 import { highlightInContainer, clearHighlights } from '../../util/fetch.js';
 
@@ -139,7 +140,24 @@ export default async function init(ctx) {
     anzahlSpan.textContent = `${auswahl.size} Felder · ${nachPilz.size} Pilze`;
     diagramme.innerHTML = '';
     
+    // =====================================================================
+    // PERSPEKTIVEN-FARBEN SETZEN (bevor Pilz-Farben erstellt werden!)
+    // =====================================================================
+    // Sammle alle Hauptfarben der aktiven Perspektiven
+    const perspektivenFarben = aktivePerspektiven.map(perspId => {
+      const perspektive = getPerspektive(perspId);
+      return perspektive?.farben?.[0] || null;
+    }).filter(Boolean);
+    
+    // Setze die aktiven Perspektiven-Farben für die Farbfilterung
+    setAktivePerspektivenFarben(perspektivenFarben);
+    debug.vergleich('Perspektiven-Farben für Filterung gesetzt', { 
+      perspektiven: aktivePerspektiven,
+      farben: perspektivenFarben 
+    });
+    
     // Pilz-Farben erstellen (konsistent über alle Diagramme)
+    // Diese werden jetzt automatisch gefiltert basierend auf den Perspektiven-Farben
     const pilzIds = Array.from(nachPilz.keys());
     const pilzFarben = erstelleFarben(pilzIds);
     

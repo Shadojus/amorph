@@ -46,7 +46,7 @@ import {
   compareBoolean as compareBooleanMorph,
   compareObject as compareObjectMorph
 } from './compare/primitives/index.js';
-import { erstelleFarben, detectType, createSection, createHeader } from './compare/base.js';
+import { erstelleFarben, detectType, createSection, createHeader, setAktivePerspektivenFarben } from './compare/base.js';
 
 // Smart Composites - Intelligente Morph-Kombinationen
 import { 
@@ -167,6 +167,7 @@ export const morphs = {
   
   // Compare-Utilities
   erstelleFarben,
+  setAktivePerspektivenFarben,
   compareByType,
   compareByData,
   detectType,
@@ -202,5 +203,5 @@ export {
   smartCompare, diffCompare,
   
   // Compare Utilities
-  erstelleFarben, detectType, createSection, createHeader, compareByType, compareByData
+  erstelleFarben, setAktivePerspektivenFarben, detectType, createSection, createHeader, compareByType, compareByData
 };
