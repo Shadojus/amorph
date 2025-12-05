@@ -50,7 +50,7 @@ export function compareMedizin(items, perspektive, config = {}) {
     if (section) {
       section.classList.add('section-primary');
       const mapped = medizinItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.medizinisch, farbe: i.farbe
+        id: i.id, name: i.name, wert: i.data.medizinisch, farbe: i.farbe, textFarbe: i.textFarbe
       }));
       section.addContent(compareBar(mapped, { max: 100, einheit: '%' }));
       sections.appendChild(section);
@@ -63,7 +63,7 @@ export function compareMedizin(items, perspektive, config = {}) {
     const section = createSectionIfNew('wissenschaftlich', 'Wissenschaftlicher Name', perspektive.farben?.[1], skipFelder);
     if (section) {
       const mapped = wissNameItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.wissenschaftlich, farbe: i.farbe
+        id: i.id, name: i.name, wert: i.data.wissenschaftlich, farbe: i.farbe, textFarbe: i.textFarbe
       }));
       section.addContent(compareText(mapped, {}));
       sections.appendChild(section);
@@ -86,7 +86,7 @@ export function compareMedizin(items, perspektive, config = {}) {
     const section = createSectionIfNew('profil', 'Wirkungsprofil', perspektive.farben?.[3], skipFelder);
     if (section) {
       const mapped = profilItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.profil, farbe: i.farbe
+        id: i.id, name: i.name, wert: i.data.profil, farbe: i.farbe, textFarbe: i.textFarbe
       }));
       section.addContent(compareRadar(mapped, {}));
       sections.appendChild(section);
@@ -99,7 +99,7 @@ export function compareMedizin(items, perspektive, config = {}) {
     const section = createSectionIfNew('beschreibung', 'Beschreibung', perspektive.farben?.[0], skipFelder);
     if (section) {
       const mapped = beschreibungItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.beschreibung, farbe: i.farbe
+        id: i.id, name: i.name, wert: i.data.beschreibung, farbe: i.farbe, textFarbe: i.textFarbe
       }));
       section.addContent(compareText(mapped, {}));
       sections.appendChild(section);

@@ -94,7 +94,8 @@ export function compareRadar(items, config = {}) {
     const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
     polygon.setAttribute('points', points);
     polygon.setAttribute('class', 'radar-shape');
-    polygon.setAttribute('style', `stroke:${item.farbe};fill:${item.farbe}`);
+    // stroke = kräftige Farbe (textFarbe), fill = transparente Farbe
+    polygon.setAttribute('style', `stroke:${item.textFarbe || item.farbe};fill:${item.farbe}`);
     svg.appendChild(polygon);
   });
   
@@ -106,7 +107,7 @@ export function compareRadar(items, config = {}) {
   items.forEach(item => {
     legende.innerHTML += `
       <span class="legende-item">
-        <span class="legende-dot" style="background:${item.farbe}"></span>
+        <span class="legende-dot" style="background:${item.textFarbe || item.farbe}"></span>
         ${item.name}
       </span>
     `;

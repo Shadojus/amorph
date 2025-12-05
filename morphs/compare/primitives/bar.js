@@ -52,7 +52,7 @@ export function compareBar(items, config = {}) {
     const pct = Math.min(100, (numWert / maxWert) * 100);
     
     row.innerHTML = `
-      <span class="bar-name" style="color:${item.farbe}">${item.name}</span>
+      <span class="bar-name" style="color:${item.textFarbe || item.farbe}">${item.name}</span>
       <div class="bar-track">
         <div class="bar-fill" style="width:${pct}%;background:${item.farbe}"></div>
       </div>

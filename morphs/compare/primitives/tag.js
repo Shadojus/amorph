@@ -4,6 +4,14 @@
 
 import { debug } from '../../../observer/debug.js';
 
+// Hex zu RGBA konvertieren
+function hexToRgba(hex, alpha = 1) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
 export function compareTag(items, config = {}) {
   const el = document.createElement('div');
   el.className = 'amorph-compare amorph-compare-tag';
@@ -35,10 +43,17 @@ export function compareTag(items, config = {}) {
     const wertKey = String(wert || '').toLowerCase();
     const tagFarbe = config.farben?.[wertKey] || gruppeItems[0]?.farbe || '#666';
     
+    // Farbe transparenter machen für Glass-Effekt
+    const transparenteFarbe = tagFarbe.startsWith('rgba') 
+      ? tagFarbe.replace(/,[\s]*[\d.]+\)$/, ', 0.35)')
+      : tagFarbe.startsWith('#') 
+        ? hexToRgba(tagFarbe, 0.35)
+        : `rgba(100, 100, 100, 0.35)`;
+    
     chip.innerHTML = `
-      <span class="chip-wert" style="background:${tagFarbe}">${wert || '–'}</span>
+      <span class="chip-wert" style="background:${transparenteFarbe}">${wert || '–'}</span>
       <span class="chip-items">${gruppeItems.map(p => 
-        `<span style="color:${p.farbe}">${p.name}</span>`
+        `<span style="color:${p.textFarbe || p.farbe}">${p.name}</span>`
       ).join(', ')}</span>
     `;
     

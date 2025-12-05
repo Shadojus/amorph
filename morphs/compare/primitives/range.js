@@ -46,7 +46,7 @@ export function compareRange(items, config = {}) {
     const row = document.createElement('div');
     row.className = 'range-row';
     row.innerHTML = `
-      <div class="range-name" style="color:${item.farbe}">${item.name}</div>
+      <div class="range-name" style="color:${item.textFarbe || item.farbe}">${item.name}</div>
       <div class="range-track">
         <div class="range-bar" style="left:${leftProzent}%;width:${widthProzent}%;background:${item.farbe}"></div>
       </div>

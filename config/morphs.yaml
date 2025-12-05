@@ -233,52 +233,64 @@ badge:
 
 # === FARB-PALETTEN ===
 # Pilz-Farben: Neon-Farben - klar unterscheidbar
-# Sehr transparent für gefüllte Flächen (Glass Morphism)
+# Jede Farbe hat: fill (24% für Flächen), text (85% für Schrift)
 # Die erstelleFarben() Funktion filtert dynamisch Farben aus die zu ähnlich 
 # zu den aktiven Perspektiven-Farben sind
 farben:
-  # Neon Pilz-Palette - leuchtend aber transparent
+  # Neon Pilz-Palette - fill = 24% transparent, text = 85% kräftig
   pilze:
     - name: "Neon Cyan"
       rgb: [0, 255, 255]
-      color: "rgba(0, 255, 255, 0.25)"
+      fill: "rgba(0, 255, 255, 0.24)"
+      text: "rgba(0, 255, 255, 0.85)"
     - name: "Neon Magenta"
       rgb: [255, 0, 255]
-      color: "rgba(255, 0, 255, 0.25)"
+      fill: "rgba(255, 0, 255, 0.24)"
+      text: "rgba(255, 0, 255, 0.85)"
     - name: "Neon Grün"
       rgb: [0, 255, 128]
-      color: "rgba(0, 255, 128, 0.25)"
+      fill: "rgba(0, 255, 128, 0.24)"
+      text: "rgba(0, 255, 128, 0.85)"
     - name: "Neon Pink"
       rgb: [255, 0, 128]
-      color: "rgba(255, 0, 128, 0.25)"
+      fill: "rgba(255, 0, 128, 0.24)"
+      text: "rgba(255, 0, 128, 0.85)"
     - name: "Neon Gelb"
       rgb: [255, 255, 0]
-      color: "rgba(255, 255, 0, 0.25)"
+      fill: "rgba(255, 255, 0, 0.24)"
+      text: "rgba(255, 255, 0, 0.85)"
     - name: "Neon Orange"
       rgb: [255, 128, 0]
-      color: "rgba(255, 128, 0, 0.25)"
+      fill: "rgba(255, 128, 0, 0.24)"
+      text: "rgba(255, 128, 0, 0.85)"
     - name: "Neon Blau"
       rgb: [0, 128, 255]
-      color: "rgba(0, 128, 255, 0.25)"
+      fill: "rgba(0, 128, 255, 0.24)"
+      text: "rgba(0, 128, 255, 0.85)"
     - name: "Neon Violett"
       rgb: [128, 0, 255]
-      color: "rgba(128, 0, 255, 0.25)"
+      fill: "rgba(128, 0, 255, 0.24)"
+      text: "rgba(128, 0, 255, 0.85)"
     - name: "Neon Rot"
       rgb: [255, 50, 50]
-      color: "rgba(255, 50, 50, 0.25)"
+      fill: "rgba(255, 50, 50, 0.24)"
+      text: "rgba(255, 50, 50, 0.85)"
     - name: "Neon Lime"
       rgb: [200, 255, 0]
-      color: "rgba(200, 255, 0, 0.25)"
+      fill: "rgba(200, 255, 0, 0.24)"
+      text: "rgba(200, 255, 0, 0.85)"
     - name: "Neon Türkis"
       rgb: [0, 255, 200]
-      color: "rgba(0, 255, 200, 0.25)"
+      fill: "rgba(0, 255, 200, 0.24)"
+      text: "rgba(0, 255, 200, 0.85)"
     - name: "Neon Koralle"
       rgb: [255, 100, 100]
-      color: "rgba(255, 100, 100, 0.25)"
+      fill: "rgba(255, 100, 100, 0.24)"
+      text: "rgba(255, 100, 100, 0.85)"
   
   # Ähnlichkeits-Schwellenwert für Farbvergleich (0-255)
   # Je höher, desto mehr Farben werden als "zu ähnlich" ausgeschlossen
   aehnlichkeit_schwellenwert: 100
   
   # Fallback-Farbe wenn alle gefiltert wurden
-  standard: "rgba(0, 255, 255, 0.25)"
+  standard: "rgba(0, 255, 255, 0.15)"

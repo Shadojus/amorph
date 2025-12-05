@@ -15,7 +15,7 @@ export function comparePie(items, config = {}) {
     const pieWrap = document.createElement('div');
     pieWrap.className = 'compare-pie-wrap';
     
-    pieWrap.innerHTML = `<div class="pie-name" style="color:${item.farbe}">${item.name}</div>`;
+    pieWrap.innerHTML = `<div class="pie-name" style="color:${item.textFarbe || item.farbe}">${item.name}</div>`;
     
     const pieData = typeof item.wert === 'object' && !Array.isArray(item.wert) 
       ? Object.entries(item.wert).map(([k, v]) => ({ label: k, value: v }))

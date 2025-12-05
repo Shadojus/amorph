@@ -36,7 +36,7 @@ export function compareTimeline(items, config = {}) {
       <div class="timeline-label">
         <span class="timeline-datum">${evt.datum}</span>
         <span class="timeline-text">${evt.label}</span>
-        <span class="timeline-name" style="color:${evt.farbe}">${evt.name}</span>
+        <span class="timeline-name" style="color:${evt.textFarbe || evt.farbe}">${evt.name}</span>
       </div>
     `;
     timeline.appendChild(punkt);

@@ -12,16 +12,16 @@
 import { debug } from '../../observer/debug.js';
 import { getFarben } from '../../util/semantic.js';
 
-// Pilz-Farben: Neon-Farben - sehr transparent
+// Pilz-Farben: Neon-Farben - 24% transparent für Füllungen
 const FARBEN_FALLBACK = [
-  'rgba(0, 255, 255, 0.25)',     // Neon Cyan
-  'rgba(255, 0, 255, 0.25)',     // Neon Magenta
-  'rgba(0, 255, 128, 0.25)',     // Neon Grün
-  'rgba(255, 0, 128, 0.25)',     // Neon Pink
-  'rgba(255, 255, 0, 0.25)',     // Neon Gelb
-  'rgba(255, 128, 0, 0.25)',     // Neon Orange
-  'rgba(0, 128, 255, 0.25)',     // Neon Blau
-  'rgba(128, 0, 255, 0.25)'      // Neon Violett
+  'rgba(0, 255, 255, 0.24)',     // Neon Cyan
+  'rgba(255, 0, 255, 0.24)',     // Neon Magenta
+  'rgba(0, 255, 128, 0.24)',     // Neon Grün
+  'rgba(255, 0, 128, 0.24)',     // Neon Pink
+  'rgba(255, 255, 0, 0.24)',     // Neon Gelb
+  'rgba(255, 128, 0, 0.24)',     // Neon Orange
+  'rgba(0, 128, 255, 0.24)',     // Neon Blau
+  'rgba(128, 0, 255, 0.24)'      // Neon Violett
 ];
 
 function getDiagrammFarben() {

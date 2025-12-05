@@ -49,7 +49,7 @@ export function compareWissenschaft(items, perspektive, config = {}) {
     const section = createSectionIfNew('wissenschaftlich', 'Taxonomie', perspektive.farben?.[0], skipFelder);
     if (section) {
       const mapped = wissNameItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.wissenschaftlich, farbe: i.farbe
+        id: i.id, name: i.name, wert: i.data.wissenschaftlich, farbe: i.farbe, textFarbe: i.textFarbe
       }));
       section.addContent(compareText(mapped, {}));
       sections.appendChild(section);
@@ -72,7 +72,7 @@ export function compareWissenschaft(items, perspektive, config = {}) {
     const section = createSectionIfNew('naehrwerte', 'Zusammensetzung', perspektive.farben?.[2], skipFelder);
     if (section) {
       const mapped = naehrwerteItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.naehrwerte, farbe: i.farbe
+        id: i.id, name: i.name, wert: i.data.naehrwerte, farbe: i.farbe, textFarbe: i.textFarbe
       }));
       section.addContent(comparePie(mapped, {}));
       sections.appendChild(section);
@@ -85,7 +85,7 @@ export function compareWissenschaft(items, perspektive, config = {}) {
     const section = createSectionIfNew('profil', 'Eigenschaften-Profil', perspektive.farben?.[3], skipFelder);
     if (section) {
       const mapped = profilItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.profil, farbe: i.farbe
+        id: i.id, name: i.name, wert: i.data.profil, farbe: i.farbe, textFarbe: i.textFarbe
       }));
       section.addContent(compareRadar(mapped, {}));
       sections.appendChild(section);

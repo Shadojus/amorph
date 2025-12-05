@@ -30,7 +30,7 @@ export function compareRating(items, config = {}) {
     ).join('');
     
     row.innerHTML = `
-      <span class="rating-name" style="color:${item.farbe}">${item.name}</span>
+      <span class="rating-name" style="color:${item.textFarbe || item.farbe}">${item.name}</span>
       <div class="rating-stars">${stars}</div>
       <span class="rating-wert">${item.wert}</span>
     `;

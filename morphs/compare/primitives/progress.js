@@ -17,7 +17,7 @@ export function compareProgress(items, config = {}) {
     const row = document.createElement('div');
     row.className = 'progress-row';
     row.innerHTML = `
-      <div class="progress-name" style="color:${item.farbe}">${item.name}</div>
+      <div class="progress-name" style="color:${item.textFarbe || item.farbe}">${item.name}</div>
       <div class="progress-bar-container">
         <div class="progress-bar" style="width:${prozent}%;background:${item.farbe}"></div>
       </div>

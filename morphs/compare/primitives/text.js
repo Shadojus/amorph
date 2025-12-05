@@ -15,7 +15,7 @@ export function compareText(items, config = {}) {
     const textWrap = document.createElement('div');
     textWrap.className = 'compare-text-wrap';
     textWrap.innerHTML = `
-      <div class="text-header" style="color:${item.farbe}">${item.name}</div>
+      <div class="text-header" style="color:${item.textFarbe || item.farbe}">${item.name}</div>
       <div class="text-inhalt">${item.wert || '–'}</div>
     `;
     container.appendChild(textWrap);

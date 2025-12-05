@@ -68,7 +68,7 @@ export function compareBarGroup(items, config = {}) {
       const bar = document.createElement('div');
       bar.className = 'bar-group-bar';
       bar.innerHTML = `
-        <span class="bar-name" style="color:${entry.item.farbe}">${entry.item.name}</span>
+        <span class="bar-name" style="color:${entry.item.textFarbe || entry.item.farbe}">${entry.item.name}</span>
         <div class="bar-track">
           <div class="bar-fill" style="width:${pct}%;background:${entry.item.farbe}"></div>
         </div>

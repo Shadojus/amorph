@@ -49,7 +49,7 @@ export function compareStatistik(items, perspektive, config = {}) {
     const section = createSectionIfNew('bewertung', 'Bewertung', perspektive.farben?.[0], skipFelder);
     if (section) {
       const mapped = bewertungItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.bewertung, farbe: i.farbe
+        id: i.id, name: i.name, wert: i.data.bewertung, farbe: i.farbe, textFarbe: i.textFarbe
       }));
       section.addContent(compareRating(mapped, { max: 5 }));
       sections.appendChild(section);
@@ -62,7 +62,7 @@ export function compareStatistik(items, perspektive, config = {}) {
     const section = createSectionIfNew('beliebtheit', 'Beliebtheit', perspektive.farben?.[1], skipFelder);
     if (section) {
       const mapped = beliebtheitItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.beliebtheit, farbe: i.farbe
+        id: i.id, name: i.name, wert: i.data.beliebtheit, farbe: i.farbe, textFarbe: i.textFarbe
       }));
       section.addContent(compareBar(mapped, { max: 100, einheit: '%' }));
       sections.appendChild(section);
@@ -85,7 +85,7 @@ export function compareStatistik(items, perspektive, config = {}) {
     const section = createSectionIfNew('naehrwerte', 'Nährwert-Verteilung', perspektive.farben?.[3], skipFelder);
     if (section) {
       const mapped = naehrwerteItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.naehrwerte, farbe: i.farbe
+        id: i.id, name: i.name, wert: i.data.naehrwerte, farbe: i.farbe, textFarbe: i.textFarbe
       }));
       section.addContent(comparePie(mapped, {}));
       sections.appendChild(section);
@@ -98,7 +98,7 @@ export function compareStatistik(items, perspektive, config = {}) {
     const section = createSectionIfNew('profil', 'Eigenschaften-Radar', perspektive.farben?.[0], skipFelder);
     if (section) {
       const mapped = profilItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.profil, farbe: i.farbe
+        id: i.id, name: i.name, wert: i.data.profil, farbe: i.farbe, textFarbe: i.textFarbe
       }));
       section.addContent(compareRadar(mapped, {}));
       sections.appendChild(section);
