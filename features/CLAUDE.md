@@ -10,11 +10,11 @@ Das Feature-System besteht aus:
   - Zeile 0: FUNGINOMI (Link /) + Part of Bifroest (Link bifroest.io)
   - Zeile 1: Suchleiste + aktive Filter-Badges
   - Zeile 2: Ansicht-Switch + Perspektiven-Buttons
-- **Grid-Feature**: Karten-Layout (Standard-Ansicht)
-- **Vergleich-Feature (Vektorraum)**: Laterale Visualisierung mit Compare-Morphs
+- **Grid-Feature**: Karten-Layout mit Glasmorphism (Standard-Ansicht)
+- **Vergleich-Feature (Vektorraum)**: Laterale Visualisierung mit Compare-Morphs + Glasmorphism
 - **Ansichten-Feature**: Auswahl-State + Ansicht-State Tracking
-- **Perspektiven**: 4-Farben-Grid, Multi-Color Glow, Auto-Aktivierung
-- **Semantische Suche**: Keywords → Feldwerte aus Schema
+- **Perspektiven**: 4-Farben-Grid, Multi-Color Glow, Auto-Aktivierung (aus schema/perspektiven/)
+- **Semantische Suche**: Keywords → Feldwerte aus schema/semantik.yaml
 
 ### Feature-Architektur
 
@@ -41,6 +41,12 @@ document.body.* (außer mount)      // Nur eigenen ctx.dom manipulieren
 |---------|---------|--------------|
 | **Karten (Grid)** | `grid/` | Standard - einzelne FELDER sind anklickbar |
 | **Vergleich** | `vergleich/` | Gleiche Feldtypen nebeneinander mit Compare-Morphs |
+
+Beide Ansichten nutzen identisches **Glasmorphism-Design**:
+- Woodfloor-Hintergrund
+- `backdrop-filter: blur(16px)`
+- 88-92% schwarzes Overlay
+- Dezente weiße Borders
 
 ### Feld-Auswahl System
 

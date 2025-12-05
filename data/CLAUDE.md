@@ -8,7 +8,7 @@ Das Daten-Format unterstützt alle Morph-Typen durch automatische Erkennung:
 
 ```javascript
 {
-  // Basis-Felder (typ aus schema.yaml)
+  // Basis-Felder (typ aus schema/felder.yaml)
   "id": "string",
   "slug": "string",
   "name": "string",
@@ -19,7 +19,7 @@ Das Daten-Format unterstützt alle Morph-Typen durch automatische Erkennung:
   "bild": "string",              // → image
 
   // AUTO-ERKANNT aus Struktur
-  "temperatur": { "min": 10, "max": 25 },  // → range
+  "temperatur": { "min": 10, "max": 25 },  // → range (mit Legende)
   "standort": ["Nadelwald", "Mischwald"],  // → list
   "verwechslung": ["Gallenröhrling"],      // → list
   
@@ -28,36 +28,36 @@ Das Daten-Format unterstützt alle Morph-Typen durch automatische Erkennung:
   "beliebtheit": 92,             // 0-100 Integer → progress
 
   // Objekt-Erkennung
-  "naehrwerte": {                // Nur Zahlen → pie
+  "naehrwerte": {                // Nur Zahlen → pie (mit Legende)
     "Protein": 26,
     "Kohlenhydrate": 52,
     "Fett": 8
   },
   
   // Array-Erkennung  
-  "profil": [                    // [{axis, value}] 3+ → radar
+  "profil": [                    // [{axis, value}] 3+ → radar (mit Achsen)
     { "axis": "Geschmack", "value": 95 },
     { "axis": "Textur", "value": 85 },
     { "axis": "Aroma", "value": 90 }
   ],
   
-  "wirkstoffe": [                // [{label, value}] → bar
+  "wirkstoffe": [                // [{label, value}] → bar (mit Legende)
     { "label": "Ergothionein", "value": 4.2, "unit": "mg" }
   ],
   
-  "ernte_stats": {               // {min, max, avg} → stats
+  "ernte_stats": {               // {min, max, avg} → stats (mit Legende)
     "min": 80,
     "max": 350,
     "avg": 180,
     "count": 156
   },
   
-  "lebenszyklus": [              // [{date, event}] → timeline
+  "lebenszyklus": [              // [{date, event}] → timeline (mit Legende)
     { "date": "Frühjahr", "event": "Myzel-Aktivierung" },
     { "date": "Herbst", "event": "Haupternte", "active": true }
   ],
   
-  "verfuegbarkeit": "verfügbar"  // String mit Keyword → badge
+  "verfuegbarkeit": "verfügbar"  // String mit Keyword → badge (gedämpfte Farben)
 }
 ```
 
@@ -65,17 +65,17 @@ Das Daten-Format unterstützt alle Morph-Typen durch automatische Erkennung:
 
 **Keine expliziten Typ-Angaben nötig!** Die Pipeline erkennt:
 
-| Datenstruktur | Erkannter Morph |
-|---------------|-----------------|
-| `{min, max}` | range |
-| `{min, max, avg}` | stats |
-| `{A: 30, B: 50}` (nur Zahlen) | pie |
-| `[{axis, value}]` (3+) | radar |
-| `[{date, event}]` | timeline |
-| `[{label, value}]` | bar (6+) oder pie (≤6) |
-| `4.8` (0-10 Dezimal) | rating |
-| `92` (0-100 Integer) | progress |
-| `"essbar"` (Badge-Keyword) | badge |
+| Datenstruktur | Erkannter Morph | Features |
+|---------------|-----------------|----------|
+| `{min, max}` | range | + Legende |
+| `{min, max, avg}` | stats | + Legende |
+| `{A: 30, B: 50}` (nur Zahlen) | pie | + Segment-Legende |
+| `[{axis, value}]` (3+) | radar | + Achsen-Labels |
+| `[{date, event}]` | timeline | + Zeitachse |
+| `[{label, value}]` | bar (6+) oder pie (≤6) | + Legende |
+| `4.8` (0-10 Dezimal) | rating | Sterne |
+| `92` (0-100 Integer) | progress | Prozent |
+| `"essbar"` (Badge-Keyword) | badge | Gedämpfte Farben |
 
 ## Eigene Daten
 

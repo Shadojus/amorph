@@ -1,11 +1,16 @@
 # Feature: Grid
 
-Layout-Optionen für die Darstellung.
+Glasmorphism-Karten-Layout für die Hauptansicht.
 
 ## Übersicht
 
 Das Grid-Feature bietet:
 - Layouts: Liste, Grid, Kompakt
+- **Black Glasmorphism Design**:
+  - Woodfloor-Hintergrund
+  - `backdrop-filter: blur(16px)`
+  - 88-92% schwarzes Overlay
+  - Dezente weiße Borders + inset box-shadow
 - Layout wird auf `[data-amorph-container]` via `data-layout` gesetzt
 - CSS übernimmt die Darstellung basierend auf Layout
 - Toolbar mit Icons und Labels aus Config
@@ -14,6 +19,25 @@ Das Grid-Feature bietet:
 - Jedes Feld in einer Card ist klickbar
 - Klick auf Feld → Event `amorph:feld-auswahl` mit `{pilzId, feldName, wert}`
 - Ausgewählte Felder bekommen `.feld-ausgewaehlt` Klasse
+- Perspektiven-Glow verstärkt sich bei Auswahl
+
+## Glasmorphism
+
+```css
+.glass-card {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.88) 0%,
+    rgba(0, 0, 0, 0.92) 100%
+  );
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.05),
+    0 4px 24px rgba(0, 0, 0, 0.4);
+}
+```
 
 ## Layouts
 

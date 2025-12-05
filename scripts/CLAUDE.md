@@ -5,7 +5,7 @@ Build- und Entwicklungs-Tools.
 ## Übersicht
 
 Verfügbare Scripts:
-- `check.js` - Konfigurationsprüfung
+- `check.js` - Konfigurationsprüfung (inkl. modulares Schema)
 - `build.js` - Produktions-Build
 - Development Server via `npx serve`
 
@@ -21,7 +21,8 @@ node scripts/check.js
 
 **Prüft:**
 - Pflichtdateien: manifest.yaml, daten.yaml
-- Optionale Dateien: morphs.yaml, observer.yaml, features.yaml, schema.yaml
+- Optionale Dateien: morphs.yaml, observer.yaml, features.yaml
+- **Modulares Schema**: schema/basis.yaml, schema/felder.yaml, schema/perspektiven/
 - Datenquelle erreichbar
 - YAML-Syntax gültig
 
@@ -37,7 +38,13 @@ Optionale Dateien:
   ✅ morphs.yaml
   ✅ observer.yaml
   ✅ features.yaml
-  ✅ schema.yaml
+
+Modulares Schema:
+  ✅ schema/basis.yaml
+  ✅ schema/felder.yaml
+  ✅ schema/semantik.yaml
+  ✅ schema/perspektiven/index.yaml
+  ✅ 6 Perspektiven geladen
 
 Datenquelle:
   ✅ JSON-Datei gefunden: ./data/pilze.json
@@ -60,7 +67,7 @@ node scripts/build.js
 1. HTML kopieren
 2. CSS zusammenführen
 3. JavaScript-Module kopieren
-4. Config kopieren
+4. Config kopieren (inkl. schema/)
 5. Daten kopieren
 6. Umgebungsvariablen ersetzen
 
@@ -71,7 +78,7 @@ node scripts/build.js
 📄 HTML erstellen...
 🎨 CSS bündeln...
 📦 JavaScript kopieren...
-⚙️  Config kopieren...
+⚙️  Config kopieren (inkl. schema/)...
 📊 Daten kopieren...
 🔐 Umgebungsvariablen ersetzen...
 

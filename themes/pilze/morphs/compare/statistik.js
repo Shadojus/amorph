@@ -25,7 +25,7 @@ export function compareStatistik(items, perspektive, config = {}) {
   
   const container = document.createElement('div');
   container.className = 'compare-perspektive compare-statistik';
-  container.style.setProperty('--p-farbe', perspektive.farben?.[0] || '#14b8a6');
+  container.style.setProperty('--p-farbe', perspektive.farben?.[0] || 'rgba(120, 255, 220, 0.65)');
   
   // Header
   const header = document.createElement('div');

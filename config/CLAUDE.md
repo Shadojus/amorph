@@ -1,15 +1,33 @@
 # Konfiguration
 
-Eine Datei = Ein Aspekt. **Schema ist die Single Source of Truth.**
+Eine Datei = Ein Aspekt. **Modulares Schema-System als Single Source of Truth.**
 
 ## Übersicht
 
 Das AMORPH Config-System ist vollständig datengetrieben:
 
-- **Schema-First**: Alle Feld-Definitionen in `schema.yaml`
+- **Modulares Schema**: `config/schema/` mit Basis + austauschbaren Perspektiven
 - **Typ-Erkennung**: Automatisch aus Datenstruktur via `morphs.yaml`
 - **Farben-System**: Zentrale Paletten für Diagramme, Badges, Perspektiven
 - **Feature-Isolation**: Jedes Feature lädt nur benötigte Config
+
+### Schema-Ordner Struktur
+
+```
+config/schema/
+├── index.yaml           # Index und Dokumentation
+├── basis.yaml           # Kern-System (NICHT ÄNDERN)
+├── felder.yaml          # Feld-Definitionen (anpassbar)
+├── semantik.yaml        # Such-Mappings (anpassbar)
+└── perspektiven/        # Austauschbare Perspektiven
+    ├── index.yaml       # Aktive Perspektiven-Liste
+    ├── kulinarisch.yaml
+    ├── sicherheit.yaml
+    ├── anbau.yaml
+    ├── wissenschaft.yaml
+    ├── medizin.yaml
+    └── statistik.yaml
+```
 
 ### morphs.yaml - Die Erkennungs-Zentrale
 
@@ -74,7 +92,11 @@ Morphs laden Config-Werte via:
 config/
 ├── manifest.yaml      ← Was ist das?
 ├── daten.yaml         ← Woher kommen Daten?
-├── schema.yaml        ← WAS sind die Daten? (SINGLE SOURCE OF TRUTH)
+├── schema/            ← WAS sind die Daten? (MODULARES SYSTEM)
+│   ├── basis.yaml     ← Kern-Config (unveränderlich)
+│   ├── felder.yaml    ← Feld-Definitionen (anpassbar)
+│   ├── semantik.yaml  ← Such-Mappings (anpassbar)
+│   └── perspektiven/  ← Austauschbare Perspektiven
 ├── morphs.yaml        ← Wie darstellen? (nutzt Schema)
 ├── observer.yaml      ← Was beobachten?
 └── features.yaml      ← Was ist aktiv? (nutzt Schema)
@@ -82,22 +104,48 @@ config/
 
 ## Schema-First Prinzip
 
-**Alles kommt aus `schema.yaml`:**
-- Felder und ihre Typen → `morphs.yaml` muss sie nicht duplizieren
-- Perspektiven → `features.yaml` muss sie nicht duplizieren
-- Suchfelder und Gewichtung → automatisch aus Schema
-- Versteckte Felder → werden nicht gerendert
+**Alles kommt aus dem modularen Schema-System:**
+- Kern-Felder: `basis.yaml` (unveränderlich)
+- Anpassbare Felder: `felder.yaml` mit Typ, Label, Suche
+- Perspektiven: `perspektiven/*.yaml` (austauschbar)
+- Semantik: `semantik.yaml` für Keyword-Mappings
+
+### Optionale Feld-Attribute
+
+Jedes Feld kann diese optionalen Attribute haben:
 
 ```yaml
-# schema.yaml - EINE Datei für alles Domänen-spezifische
-felder:
-  name:
-    typ: string           # → Morph-Typ
-    label: Name           # → UI-Label
-    suche:                # → Suchverhalten
-      gewicht: 100
-  
-  essbarkeit:
+# In felder.yaml
+wissenschaftlich:
+  typ: string
+  label: Wissenschaftlicher Name
+  citation:                    # Quellenangabe
+    quelle: "MycoBank"
+    url: "https://www.mycobank.org"
+    datum: "2024-01"
+    autor: "Fungorum Index"
+    lizenz: "CC-BY-SA"
+  advertisement:               # Werbung
+    sponsor: "Fungi Labs"
+    typ: "sponsored_content"
+    kennzeichnung: true
+```
+
+### Perspektiven hinzufügen/entfernen
+
+```yaml
+# perspektiven/index.yaml
+aktiv:
+  - kulinarisch
+  - sicherheit
+  - anbau
+  - wissenschaft
+  - medizin
+  - statistik
+
+# Neue Perspektive: Datei erstellen + zu aktiv hinzufügen
+# Perspektive deaktivieren: Aus aktiv-Liste entfernen
+```
     typ: tag
     versteckt: false      # → Wird gerendert
 

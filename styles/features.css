@@ -1,42 +1,28 @@
 /* AMORPH v5 - Feature Styles */
-/* DARK LIQUID GLASS Design */
+/* Black Glasmorphism - Einheitliches Design System */
 
-/* === HEADER FEATURE WRAPPER - Dark Liquid Glass === */
+/* === HEADER FEATURE WRAPPER - Black Glasmorphism === */
 .amorph-feature-header {
   position: sticky;
   top: 0;
   z-index: 100;
-  padding: 10px 16px 12px;
-  /* DARK LIQUID GLASS - Noch transparenter! */
-  background: linear-gradient(
-    180deg,
-    rgba(5, 5, 8, 0.58) 0%,
-    rgba(8, 8, 12, 0.52) 50%,
-    rgba(5, 5, 8, 0.58) 100%
-  );
-  backdrop-filter: blur(24px) saturate(1.4);
-  -webkit-backdrop-filter: blur(24px) saturate(1.4);
-  /* Liquid Glass Border - subtiles Schimmern */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-  box-shadow: 
-    0 4px 32px rgba(0, 0, 0, 0.5),
-    0 1px 0 rgba(255, 255, 255, 0.02) inset,
-    0 -1px 0 rgba(0, 0, 0, 0.3) inset;
+  padding: 12px var(--space-lg) 14px;
+  /* Einheitliches Black Glass */
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur-strong);
+  -webkit-backdrop-filter: var(--glass-blur-strong);
+  /* Einheitliche Borders */
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), var(--glass-inset);
   overflow: visible;
   transition: all 0.3s ease;
 }
 
-/* Header-Schatten wenn gescrollt - noch dunkler */
+/* Header-Schatten wenn gescrollt */
 .amorph-feature-header.scrolled {
-  background: linear-gradient(
-    180deg,
-    rgba(2, 2, 4, 0.96) 0%,
-    rgba(5, 5, 8, 0.94) 100%
-  );
-  border-bottom-color: rgba(255, 255, 255, 0.06);
-  box-shadow: 
-    0 8px 48px rgba(0, 0, 0, 0.7),
-    0 1px 0 rgba(255, 255, 255, 0.03) inset;
+  background: var(--glass-bg-active);
+  border-bottom-color: var(--glass-border-hover);
+  box-shadow: var(--glass-shadow-hover), var(--glass-inset);
 }
 
 /* === HEADER ROWS === */
@@ -50,16 +36,16 @@
 /* Zeile 0: Branding - App-Name links, Partner rechts */
 .amorph-header-branding {
   justify-content: space-between;
-  padding-bottom: 6px;
-  margin-bottom: 6px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--glass-border);
 }
 
 /* Zeile 1: Hauptzeile - Suche + Badges + Ansicht-Switch (alles in einer Reihe!) */
 .amorph-header-main {
-  gap: 8px;
+  gap: var(--space-sm);
   flex-wrap: nowrap;
-  margin-bottom: 8px;
+  margin-bottom: var(--space-sm);
 }
 
 /* Zeile 2: Perspektiven-Grid (volle Breite) */
@@ -199,18 +185,19 @@
   align-items: center;
   gap: 0;
   min-width: 0;
-  height: 32px;  /* Einheitliche Höhe */
-  /* Dark Liquid Glass */
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 8px;  /* Einheitlich mit anderen Elementen */
-  padding: 0 4px;
+  height: var(--ui-height-lg);
+  /* Einheitliches Black Glass */
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--ui-radius-md);
+  padding: 0 var(--space-sm);
   transition: all 0.2s ease;
 }
 
 .amorph-suche-wrapper:focus-within {
-  border-color: rgba(255, 255, 255, 0.12);
-  background: rgba(0, 0, 0, 0.5);
+  border-color: var(--glass-border-hover);
+  background: var(--glass-bg-hover);
+  box-shadow: var(--glass-shadow);
 }
 
 /* Suche-Container innerhalb Wrapper */
@@ -320,13 +307,14 @@
 .amorph-ansicht-switch {
   display: flex;
   gap: 2px;
-  height: 32px;  /* Gleiche Höhe wie Suche */
+  height: var(--ui-height-lg);
   padding: 3px;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 8px;  /* Einheitlich */
+  /* Einheitliches Black Glass */
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--ui-radius-md);
   flex-shrink: 0;
-  margin-left: 6px;
+  margin-left: var(--space-sm);
 }
 
 .amorph-ansicht-btn {
@@ -334,19 +322,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 24px;
-  font-size: 0.85rem;
+  width: 30px;
+  height: var(--ui-height-md);
+  font-size: var(--ui-font-lg);
   background: transparent;
-  color: rgba(255, 255, 255, 0.35);
+  color: var(--color-text-dim);
   border: none;
-  border-radius: 5px;
+  border-radius: var(--ui-radius-sm);
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .amorph-ansicht-btn .btn-icon {
-  font-size: 0.85rem;
+  font-size: var(--ui-font-lg);
 }
 
 /* Counter-Badge im Vergleich-Button - nur leuchtende Zahl */
@@ -377,14 +365,15 @@
 }
 
 .amorph-ansicht-btn:hover:not(.disabled) {
-  color: rgba(255, 255, 255, 0.7);
-  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-muted);
+  background: var(--glass-bg-hover);
 }
 
 .amorph-ansicht-btn.aktiv,
 .amorph-ansicht-btn[aria-selected="true"] {
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
+  background: var(--glass-bg-active);
+  color: var(--color-text);
+  border: 1px solid var(--glass-border-hover);
 }
 
 /* Disabled Buttons */
@@ -403,7 +392,7 @@
 .amorph-perspektiven {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: var(--space-xs);
   justify-content: center;
   align-items: center;
   padding: 2px 0;
@@ -417,11 +406,11 @@
 /* Responsive Perspektiven */
 @media (max-width: 600px) {
   .amorph-perspektiven {
-    gap: 4px;
+    gap: var(--space-xs);
   }
   .amorph-perspektive-btn {
     padding: 4px 8px !important;
-    font-size: 0.62rem !important;
+    font-size: var(--ui-font-sm) !important;
   }
 }
 
@@ -429,17 +418,17 @@
 .amorph-perspektive-btn {
   display: inline-flex;
   align-items: center;
-  gap: 2px;
-  height: 20px;  /* Kompakter */
-  padding: 0 6px;
-  font-size: 0.6rem;
+  gap: 3px;
+  height: var(--ui-height-sm);
+  padding: 0 var(--space-sm);
+  font-size: var(--ui-font-sm);
   font-weight: 500;
   text-transform: capitalize;
-  /* Multi-Color Gradient */
-  background: color-mix(in srgb, var(--p-farbe, #888) 12%, rgba(0,0,0,0.4));
-  color: color-mix(in srgb, var(--p-farbe, #aaa) 70%, transparent);
-  border: 1px solid color-mix(in srgb, var(--p-farbe, #888) 18%, transparent);
-  border-radius: 4px;
+  /* Black Glass mit Perspektiven-Farbe */
+  background: color-mix(in srgb, var(--p-farbe, #888) 14%, var(--glass-bg));
+  color: color-mix(in srgb, var(--p-farbe, #aaa) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--p-farbe, #888) 22%, transparent);
+  border-radius: var(--ui-radius-sm);
   cursor: pointer;
   transition: all 0.15s ease;
   position: relative;
@@ -447,19 +436,19 @@
 
 /* Emoji-Symbole */
 .amorph-perspektive-btn .btn-symbol {
-  font-size: 0.7em;
+  font-size: 0.75em;
   line-height: 1;
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
 .amorph-perspektive-btn .btn-name {
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
 .amorph-perspektive-btn:hover {
-  background: color-mix(in srgb, var(--p-farbe, #888) 25%, rgba(0,0,0,0.35));
-  border-color: color-mix(in srgb, var(--p-farbe, #888) 40%, transparent);
+  background: color-mix(in srgb, var(--p-farbe, #888) 28%, var(--glass-bg-hover));
+  border-color: color-mix(in srgb, var(--p-farbe, #888) 45%, transparent);
 }
 
 /* VERSTECKEN wenn aktiv (Badge wird in Suchleiste angezeigt) */
@@ -502,19 +491,19 @@
 }
 
 /* === LEGACY ANSICHT-UMSCHALTER (überschrieben weiter oben) === */
-/* Glow wenn Buttons aktivierbar sind (nicht disabled) */
+/* Glow wenn Buttons aktivierbar sind (nicht disabled) - Glas-Stil */
 .amorph-ansicht-btn:not(.disabled):not([data-min-auswahl="0"]):not(.aktiv) {
-  box-shadow: 0 0 8px color-mix(in srgb, var(--color-accent, #22c55e) 40%, transparent);
-  background: rgba(34, 197, 94, 0.08);
-  color: var(--color-accent, #22c55e);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--color-accent, rgba(100, 220, 160, 0.45)) 40%, transparent);
+  background: rgba(100, 220, 160, 0.05);
+  color: var(--color-accent, rgba(100, 220, 160, 0.75));
 }
 
 @keyframes btn-glow-pulse {
   0%, 100% {
-    box-shadow: 0 0 8px color-mix(in srgb, var(--color-accent, #22c55e) 40%, transparent);
+    box-shadow: 0 0 8px color-mix(in srgb, var(--color-accent, rgba(100, 220, 160, 0.45)) 40%, transparent);
   }
   50% {
-    box-shadow: 0 0 16px color-mix(in srgb, var(--color-accent, #22c55e) 60%, transparent);
+    box-shadow: 0 0 16px color-mix(in srgb, var(--color-accent, rgba(100, 220, 160, 0.45)) 60%, transparent);
   }
 }
 

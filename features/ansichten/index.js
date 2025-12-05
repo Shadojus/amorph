@@ -107,6 +107,38 @@ export function toggleAuswahl(id, daten = null) {
   return state.auswahl.size;
 }
 
+/**
+ * Entfernt alle Felder eines bestimmten Feldnamens aus der Auswahl
+ * Wird vom Compare-View genutzt wenn ein Feld abgewählt wird
+ * @param {string} feldName - Name des Feldes (z.B. "temperatur", "essbarkeit")
+ * @returns {number} Anzahl entfernter Felder
+ */
+export function removeFeldAuswahl(feldName) {
+  let entfernt = 0;
+  
+  for (const [key, data] of state.auswahl) {
+    if (data.feldName === feldName) {
+      state.auswahl.delete(key);
+      entfernt++;
+    }
+  }
+  
+  if (entfernt > 0) {
+    debug.ansichten('Feld-Typ abgewählt', { feldName, entfernt, verbleibend: state.auswahl.size });
+    
+    document.dispatchEvent(new CustomEvent('amorph:auswahl-geaendert', {
+      detail: { 
+        auswahl: [...state.auswahl.keys()], 
+        anzahl: state.auswahl.size,
+        pilzIds: getAuswahlPilzIds(),
+        entferntesFeld: feldName
+      }
+    }));
+  }
+  
+  return entfernt;
+}
+
 export function clearAuswahl() {
   state.auswahl.clear();
   state.detailPilzId = null;

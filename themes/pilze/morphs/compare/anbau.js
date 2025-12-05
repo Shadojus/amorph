@@ -25,7 +25,7 @@ export function compareAnbau(items, perspektive, config = {}) {
   
   const container = document.createElement('div');
   container.className = 'compare-perspektive compare-anbau';
-  container.style.setProperty('--p-farbe', perspektive.farben?.[0] || '#5cc98a');
+  container.style.setProperty('--p-farbe', perspektive.farben?.[0] || 'rgba(180, 255, 200, 0.65)');
   
   // Header
   const header = document.createElement('div');

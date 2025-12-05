@@ -20,12 +20,14 @@ const AUTO_VARIANTS_FALLBACK = {
   neutral: ['unbekannt', 'unknown', 'n/a', '-', 'keine', 'none']
 };
 
+// Harmonische Farben basierend auf Farbkreis - Echter Glas-Stil
+// Durchscheinend leuchtend auf schwarzem Grund
 const VARIANT_COLORS_FALLBACK = {
-  success: { bg: 'rgba(34, 197, 94, 0.2)', border: 'rgba(34, 197, 94, 0.6)', text: '#22c55e', icon: '✓' },
-  danger: { bg: 'rgba(239, 68, 68, 0.2)', border: 'rgba(239, 68, 68, 0.6)', text: '#ef4444', icon: '✕' },
-  warning: { bg: 'rgba(245, 158, 11, 0.2)', border: 'rgba(245, 158, 11, 0.6)', text: '#f59e0b', icon: '⚠' },
-  info: { bg: 'rgba(59, 130, 246, 0.2)', border: 'rgba(59, 130, 246, 0.6)', text: '#3b82f6', icon: 'ℹ' },
-  neutral: { bg: 'rgba(148, 163, 184, 0.2)', border: 'rgba(148, 163, 184, 0.4)', text: '#94a3b8', icon: '•' }
+  success: { bg: 'rgba(100, 220, 160, 0.10)', border: 'rgba(100, 220, 160, 0.28)', text: 'rgba(100, 220, 160, 0.82)', icon: '✓' },
+  danger: { bg: 'rgba(240, 110, 110, 0.10)', border: 'rgba(240, 110, 110, 0.28)', text: 'rgba(240, 110, 110, 0.82)', icon: '✕' },
+  warning: { bg: 'rgba(240, 190, 80, 0.10)', border: 'rgba(240, 190, 80, 0.28)', text: 'rgba(240, 190, 80, 0.82)', icon: '⚠' },
+  info: { bg: 'rgba(90, 160, 240, 0.10)', border: 'rgba(90, 160, 240, 0.28)', text: 'rgba(90, 160, 240, 0.82)', icon: 'ℹ' },
+  neutral: { bg: 'rgba(140, 160, 180, 0.08)', border: 'rgba(140, 160, 180, 0.20)', text: 'rgba(140, 160, 180, 0.68)', icon: '•' }
 };
 
 // Aus Config laden (gecached)

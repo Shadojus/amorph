@@ -166,6 +166,29 @@ export async function amorph(options = {}) {
     debug.amorph('Feld-Auswahl Toggle', { itemId, feldName, selected: isSelected });
   });
   
+  // Auf Auswahl-Änderungen von außen reagieren (z.B. vom Compare-View)
+  document.addEventListener('amorph:auswahl-geaendert', async (e) => {
+    const { entferntesFeld } = e.detail || {};
+    
+    // Wenn ein spezifisches Feld entfernt wurde, aktualisiere nur diese
+    if (entferntesFeld) {
+      const { istFeldAusgewaehlt } = await import('./features/ansichten/index.js');
+      
+      // Finde alle Felder mit diesem Namen im Container
+      const felder = container.querySelectorAll(`amorph-container[data-field="${entferntesFeld}"]`);
+      felder.forEach(feldContainer => {
+        const card = feldContainer.closest('amorph-container[data-morph="item"]');
+        if (!card) return;
+        
+        const itemId = card.dataset.itemId;
+        const isSelected = istFeldAusgewaehlt(itemId, entferntesFeld);
+        feldContainer.classList.toggle('feld-ausgewaehlt', isSelected);
+      });
+      
+      debug.amorph('Feld-Klassen aktualisiert (von außen)', { entferntesFeld, anzahlFelder: felder.length });
+    }
+  });
+  
   // Aufräumen bei Bedarf
   return {
     destroy() {

@@ -1,32 +1,31 @@
 /* AMORPH v5 - Layout Styles */
-/* Black Glasmorphism - Dezent & Scrollbar */
+/* Black Glasmorphism - Einheitliches Design System */
 
 /* === ITEM CONTAINER (Glass Cards) === */
 amorph-container[data-morph="item"] {
-  /* Woodfloor Hintergrund mit schwarzem Glasmorphism Overlay */
+  /* Pure Black Glasmorphism - Schwarze Seele des Glases */
   background: 
     linear-gradient(
       160deg,
-      rgba(0, 0, 0, 0.88) 0%,
-      rgba(0, 0, 0, 0.92) 50%,
-      rgba(0, 0, 0, 0.85) 100%
+      rgba(0, 0, 0, 0.92) 0%,
+      rgba(0, 0, 0, 0.95) 50%,
+      rgba(0, 0, 0, 0.90) 100%
     ),
     url('../images/woodfloor/Moss_Woodsf_Laub.png');
   background-size: cover, cover;
   background-position: center, center;
-  /* Dark Glasmorphism */
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  /* Einheitliches Black Glasmorphism */
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
   padding: var(--space-md);
   transition: all 0.3s ease;
   overflow: visible;
-  /* Glasmorphism Schatten */
+  /* Einheitliche Schatten */
   box-shadow: 
-    inset 0 0 40px rgba(0, 0, 0, 0.3),
-    0 4px 20px rgba(0, 0, 0, 0.4),
-    0 1px 3px rgba(0, 0, 0, 0.2);
+    var(--glass-inset),
+    var(--glass-shadow);
 }
 
 /* Scroll-Container für Card-Inhalt - Scrollbar nur beim Scrollen */
@@ -72,12 +71,12 @@ amorph-container[data-morph="item"] > .amorph-item-content {
 /* Card Hover - Scrollbar + visuelles Feedback */
 amorph-container[data-morph="item"]:hover {
   scrollbar-color: rgba(255,255,255,0.2) transparent;
-  border-color: rgba(255, 255, 255, 0.12);
+  border-color: var(--glass-border-hover);
   transform: translateY(-2px);
   box-shadow: 
-    inset 0 0 40px rgba(0, 0, 0, 0.2),
-    0 8px 32px rgba(0, 0, 0, 0.5),
-    0 0 20px rgba(255, 255, 255, 0.03);
+    var(--glass-inset),
+    var(--glass-shadow-hover),
+    0 0 24px rgba(255, 255, 255, 0.02);
 }
 
 /* Name in Karten - weiß, nicht cyan */

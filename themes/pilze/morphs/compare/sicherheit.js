@@ -25,7 +25,7 @@ export function compareSicherheit(items, perspektive, config = {}) {
   
   const container = document.createElement('div');
   container.className = 'compare-perspektive compare-sicherheit';
-  container.style.setProperty('--p-farbe', perspektive.farben?.[0] || '#e86080');
+  container.style.setProperty('--p-farbe', perspektive.farben?.[0] || 'rgba(255, 140, 160, 0.65)');
   
   // Header
   const header = document.createElement('div');

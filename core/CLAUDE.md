@@ -5,9 +5,36 @@ Das Herz von AMORPH. Drei Dateien, eine Aufgabe: Daten transformieren.
 ## Übersicht
 
 ```
-config.js   → Lädt und validiert YAML-Konfiguration
+config.js   → Lädt YAML-Konfiguration + modulares Schema
 pipeline.js → Transformiert Daten durch Morphs (DATENGETRIEBEN!)
 container.js → Web Component als Morph-Container
+```
+
+### Schema-Laden (Modular)
+
+```javascript
+// config.js - Lädt modulares Schema-System
+async function loadSchemaModular(basePath) {
+  const schema = {};
+  
+  // 1. Basis-Dateien laden
+  schema.basis = await loadYAML(basePath + 'schema/basis.yaml');
+  schema.felder = await loadYAML(basePath + 'schema/felder.yaml');
+  schema.semantik = await loadYAML(basePath + 'schema/semantik.yaml');
+  
+  // 2. Aktive Perspektiven aus index.yaml
+  const perspektivenIndex = await loadYAML(basePath + 'schema/perspektiven/index.yaml');
+  const aktivePerspektiven = perspektivenIndex.aktiv || [];
+  
+  // 3. Perspektiven-Dateien laden
+  schema.perspektiven = [];
+  for (const id of aktivePerspektiven) {
+    const p = await loadYAML(basePath + `schema/perspektiven/${id}.yaml`);
+    schema.perspektiven.push(p);
+  }
+  
+  return schema;
+}
 ```
 
 ### Typ-Erkennung (Datengetrieben)
@@ -44,13 +71,14 @@ pie:   { nurNumerisch: true, minKeys: 2, maxKeys: 8 }
 ### Features
 
 - **YAML-Parser**: Lädt und parsed alle Config-Dateien
+- **Modulares Schema**: Basis + Felder + Semantik + Perspektiven
 - **Leere Werte überspringen**: Pipeline filtert `null`, `undefined`, `''`, `[]`, `{}`
 - **Morph-Registry**: Alias-Support (`string` → `text`)
 - **Web Component Container**: Shadow DOM Isolation
 
 ## config.js
 
-Lädt alle YAML-Dateien aus dem Config-Ordner. Keine Magie, keine Verschachtelung.
+Lädt alle YAML-Dateien aus dem Config-Ordner inkl. modulares Schema.
 
 ```javascript
 // config.js
@@ -65,6 +93,7 @@ const CONFIG_FILES = [
 export async function loadConfig(basePath = './config/') {
   const config = {};
   
+  // Standard-Config laden
   for (const file of CONFIG_FILES) {
     const name = file.replace('.yaml', '');
     try {
@@ -73,7 +102,7 @@ export async function loadConfig(basePath = './config/') {
         if (name === 'manifest' || name === 'daten') {
           throw new Error(`Pflichtdatei fehlt: ${file}`);
         }
-        continue; // Optionale Dateien überspringen
+        continue;
       }
       const text = await response.text();
       config[name] = parseYAML(text);
@@ -83,21 +112,13 @@ export async function loadConfig(basePath = './config/') {
     }
   }
   
+  // Modulares Schema laden
+  config.schema = await loadSchemaModular(basePath);
+  
   validateConfig(config);
   return config;
 }
-
-function parseYAML(text) {
-  // Einfacher YAML-Parser für flache Strukturen
-  // Für Produktion: js-yaml library
-  const result = {};
-  let currentKey = null;
-  let currentObject = result;
-  const stack = [result];
-  
-  const lines = text.split('\n');
-  
-  for (const line of lines) {
+```
     if (line.trim() === '' || line.trim().startsWith('#')) continue;
     
     const indent = line.search(/\S/);

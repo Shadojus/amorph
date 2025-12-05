@@ -1,0 +1,34 @@
+# AMORPH Schema - Index
+# Definiert welche Schema-Dateien geladen werden
+
+# Schema-Version
+version: "2.0"
+
+# === MODULARE STRUKTUR ===
+# Das Schema ist in mehrere Dateien aufgeteilt:
+
+module:
+  # Basis-System (unveränderlich)
+  basis: ./basis.yaml
+  
+  # Feld-Definitionen (anpassbar)
+  felder: ./felder.yaml
+  
+  # Semantische Suche (anpassbar)
+  semantik: ./semantik.yaml
+  
+  # Perspektiven (dynamisch aus Ordner geladen)
+  perspektiven: ./perspektiven/
+
+# === LADE-REIHENFOLGE ===
+# 1. basis.yaml - Kern-System
+# 2. felder.yaml - Feld-Definitionen  
+# 3. semantik.yaml - Such-Mappings
+# 4. perspektiven/*.yaml - Alle Perspektiven-Dateien
+
+# === HINWEISE ===
+# - basis.yaml sollte nicht verändert werden
+# - felder.yaml kann projektspezifisch angepasst werden
+# - Neue Perspektiven: Einfach neue .yaml in perspektiven/ erstellen
+# - Perspektiven können aktiviert/deaktiviert werden durch
+#   Hinzufügen/Entfernen der Datei

@@ -1,0 +1,39 @@
+# Perspektive: Medizin - Psilocybin-Violett
+# Mystisches Violett wie Reishi und Heilpilze
+
+id: medizin
+name: Medizin
+symbol: 💊
+
+# Psilocybin-Violett Töne - mystisch leuchtend (0.65)
+farben:
+  - "rgba(200, 160, 255, 0.65)"   # Reishi-Violett Hell
+  - "rgba(185, 145, 245, 0.65)"   # Psilocybin-Lila
+  - "rgba(170, 130, 235, 0.65)"   # Heilpilz-Lavendel
+  - "rgba(155, 115, 225, 0.65)"   # Mykotherapie-Purple
+
+# Welche Felder gehören zu dieser Perspektive?
+felder:
+  - bild
+  - name
+  - wissenschaftlich
+  - wirkstoffe
+  - medizinisch
+  - profil
+  - beschreibung
+
+# Keywords für automatische Perspektiven-Erkennung bei Suche
+keywords:
+  - medizin
+  - heilkunde
+  - therapie
+  - gesundheit
+  - heilpilz
+  - immunsystem
+  - antioxidativ
+  - wirkung
+  - behandlung
+  - heilung
+  - krebs
+  - entzündung
+  - antibakteriell

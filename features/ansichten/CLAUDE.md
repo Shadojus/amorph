@@ -10,8 +10,10 @@ Dieses Feature verwaltet:
 - Event-basierte Kommunikation mit anderen Features
 
 Die View-Logik wurde in separate Features ausgelagert:
-- **`features/grid/`** - Grid/Karten-View
-- **`features/vergleich/`** - Vektorraum-View
+- **`features/grid/`** - Grid/Karten-View (mit Glasmorphism)
+- **`features/vergleich/`** - Vektorraum-View (mit Glasmorphism)
+
+Beide Views nutzen identisches **Black Glasmorphism Design**.
 
 ### State-Synchronisation
 

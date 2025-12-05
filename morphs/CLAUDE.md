@@ -11,24 +11,24 @@ morphs/
 │   ├── number.js         # Zahlen
 │   ├── boolean.js        # Ja/Nein
 │   ├── tag.js            # Farbige Chips
-│   ├── badge.js          # Status-Labels
-│   ├── range.js          # Min-Max Slider
+│   ├── badge.js          # Status-Labels (gedämpfte Farben)
+│   ├── range.js          # Min-Max Slider + Legende
 │   ├── list.js           # String-Listen
 │   ├── object.js         # Key-Value Paare
 │   ├── image.js          # Bilder
 │   ├── link.js           # URLs
-│   ├── pie.js            # Kreisdiagramm
-│   ├── bar.js            # Balkendiagramm
-│   ├── radar.js          # Radar-Chart
+│   ├── pie.js            # Kreisdiagramm + Legende
+│   ├── bar.js            # Balkendiagramm + Achsenbeschriftung
+│   ├── radar.js          # Radar-Chart + Achsen-Labels
 │   ├── rating.js         # Sterne-Bewertung
 │   ├── progress.js       # Fortschrittsbalken
-│   ├── stats.js          # Statistik-Karte
-│   ├── timeline.js       # Zeitliche Abfolge
+│   ├── stats.js          # Statistik-Karte + Legende
+│   ├── timeline.js       # Zeitliche Abfolge + Legende
 │   └── index.js          # Re-Export
 │
 ├── compare/              # Generische Compare-Morphs
 │   ├── base.js           # Utils (erstelleFarben, detectType, createSection)
-│   ├── primitives/       # 16 Compare-Primitive
+│   ├── primitives/       # 16 Compare-Primitive (alle mit Legenden)
 │   │   ├── bar.js, barGroup.js, rating.js, tag.js, list.js
 │   │   ├── image.js, radar.js, pie.js, text.js, timeline.js
 │   │   ├── stats.js, progress.js, boolean.js, object.js, range.js
@@ -44,23 +44,25 @@ morphs/
 
 ### Implementierte Morphs
 
-#### Primitives (17)
-text, number, boolean, tag, badge, range, list, object, image, link, pie, bar, radar, rating, progress, stats, timeline
+#### Primitives (17) - Mit Legenden
+- text, number, boolean, tag, badge, range, list, object, image, link
+- **Diagramme mit Legenden**: pie, bar, radar, stats, timeline (alle mit Achsenbeschriftungen)
+- rating, progress
 
-#### Compare-Morphs (16)
+#### Compare-Morphs (16) - Mit Legenden
 | Morph | Datentyp | Visualisierung |
 |-------|----------|----------------|
-| `compareBar` | `number` | Horizontale Balken |
-| `compareBarGroup` | `[{label,value}]` | Gruppierte Balken |
+| `compareBar` | `number` | Horizontale Balken + Wert-Legende |
+| `compareBarGroup` | `[{label,value}]` | Gruppierte Balken + Farbige Legende |
 | `compareRating` | `0-5, 0-10` | Sterne ★★★☆☆ |
-| `compareProgress` | `0-100` | Prozent-Balken |
-| `compareRange` | `{min,max}` | Range-Visualisierung |
-| `compareStats` | `{min,max,avg}` | Box-Plot Style |
+| `compareProgress` | `0-100` | Prozent-Balken + Legende |
+| `compareRange` | `{min,max}` | Range-Visualisierung + Legende |
+| `compareStats` | `{min,max,avg}` | Box-Plot Style + Legende |
 | `compareTag` | `string` | Farbige Tags |
 | `compareList` | `string[]` | Listen-Vergleich |
-| `compareRadar` | `[{axis,value}]` | Überlagerte Radars |
-| `comparePie` | `{key:number}` | Kreisdiagramme |
-| `compareTimeline` | `[{date,event}]` | Zeitliche Events |
+| `compareRadar` | `[{axis,value}]` | Überlagerte Radars + Pilz-Legende |
+| `comparePie` | `{key:number}` | Kreisdiagramme + Segment-Legende |
+| `compareTimeline` | `[{date,event}]` | Zeitliche Events + Pilz-Legende |
 | `compareImage` | `url` | Bildergalerie |
 | `compareBoolean` | `true/false` | Ja/Nein Icons |
 | `compareObject` | `{key:value}` | Tabellen-Diff |
@@ -91,13 +93,26 @@ Die Pipeline erkennt automatisch den passenden Morph anhand der **DATENSTRUKTUR*
 ### Erkennungs-Kaskade
 
 ```
-1. Schema-Typ: felder.feldname.typ (schema.yaml)
+1. Schema-Typ: felder.feldname.typ (schema/felder.yaml)
         ↓ falls nicht definiert
 2. Erkennung: detectType(wert) mit erkennungConfig (morphs.yaml)
         ↓ falls keine Regel greift
 3. Regeln: morphs.yaml/regeln (typ-basiert)
         ↓ falls keine Regel greift
 4. Defaults: string→text, number→number, array→list, object→object
+```
+
+## Badge-Farben (Gedämpft)
+
+Badges verwenden gedämpfte Farben für ein elegantes Design:
+```javascript
+// Beispiel aus badge.js
+variants: {
+  essbar: '#60c090',      // Gedämpftes Grün
+  giftig: '#d06080',      // Gedämpftes Rot
+  verfügbar: '#60a0d0',   // Gedämpftes Blau
+  // ...
+}
 ```
 
 ### Automatische Erkennung (aus morphs.yaml)

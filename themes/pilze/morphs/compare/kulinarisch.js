@@ -25,7 +25,7 @@ export function compareKulinarisch(items, perspektive, config = {}) {
   
   const container = document.createElement('div');
   container.className = 'compare-perspektive compare-kulinarisch';
-  container.style.setProperty('--p-farbe', perspektive.farben?.[0] || '#e8b04a');
+  container.style.setProperty('--p-farbe', perspektive.farben?.[0] || 'rgba(255, 200, 120, 0.65)');
   
   // Header
   const header = document.createElement('div');

@@ -2,12 +2,12 @@
 
 Ausgewählte Daten als interaktive Pinnwand.
 
-**Status:** Aktuell deaktiviert - Vergleich-Feature übernimmt die Funktion.
+**Status:** Aktuell deaktiviert - Vergleich-Feature übernimmt die Funktion mit Glasmorphism-Design.
 
 ## Konzept
 
 Das Pinboard ist eine **visuelle Arbeitsfläche** für ausgewählte Daten:
-- Daten werden als "Pins" (Karten) dargestellt
+- Daten werden als "Pins" (Karten) mit Glasmorphism dargestellt
 - Pins können **gruppiert** werden (nach Pilz, Feld, Perspektive)
 - Pins sind **drag & drop** repositionierbar
 - **Verbindungslinien** zeigen Beziehungen
@@ -19,7 +19,7 @@ Das Pinboard ist eine **visuelle Arbeitsfläche** für ausgewählte Daten:
 |-------|------|--------------|
 | Pilz | 🍄 | Alle Felder eines Pilzes zusammen |
 | Feld | 📋 | Gleiche Felder verschiedener Pilze zusammen |
-| Perspektive | 👁️ | Nach Perspektiven-Zugehörigkeit |
+| Perspektive | 👁️ | Nach Perspektiven-Zugehörigkeit (aus schema/perspektiven/) |
 | Frei | ✨ | Jeder Pin einzeln, frei positionierbar |
 
 ## Layout

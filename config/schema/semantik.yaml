@@ -1,0 +1,228 @@
+# AMORPH Schema - Semantische Suche (anpassbar)
+# Keyword-Mappings für intelligente Suche
+# Kann pro Projekt angepasst werden
+
+semantik:
+  # === ESSBARKEIT ===
+  essbar:
+    keywords:
+      - essbar
+      - essen
+      - kann man essen
+      - speisepilz
+      - genießbar
+      - lecker
+      - kochen
+      - zubereiten
+      - rezept
+    feld: essbarkeit
+    werte:
+      - essbar
+      - bedingt essbar
+    score: 50
+  
+  giftig:
+    keywords:
+      - giftig
+      - gift
+      - gefährlich
+      - tödlich
+      - vergiftung
+      - symptome
+      - nicht essen
+      - vorsicht
+    feld: essbarkeit
+    werte:
+      - giftig
+      - tödlich
+    score: 50
+
+  # === STANDORT ===
+  wald:
+    keywords:
+      - wald
+      - wälder
+      - forst
+      - waldpilz
+    feld: standort
+    enthält:
+      - wald
+    score: 40
+  
+  wiese:
+    keywords:
+      - wiese
+      - wiesen
+      - gras
+      - rasen
+      - weide
+    feld: standort
+    enthält:
+      - wiese
+      - weide
+      - rasen
+    score: 40
+  
+  nadelwald:
+    keywords:
+      - fichte
+      - fichten
+      - nadelwald
+      - nadel
+      - kiefer
+      - kiefern
+    feld: standort
+    enthält:
+      - fichte
+      - nadel
+      - kiefer
+    score: 40
+  
+  laubwald:
+    keywords:
+      - eiche
+      - eichen
+      - buche
+      - buchen
+      - birke
+      - birken
+      - laubwald
+    feld: standort
+    enthält:
+      - eiche
+      - buche
+      - birke
+    score: 40
+
+  # === SAISON ===
+  frühling:
+    keywords:
+      - frühling
+      - frühjahr
+      - märz
+      - april
+      - mai
+    feld: saison
+    enthält:
+      - märz
+      - april
+      - mai
+    score: 40
+  
+  sommer:
+    keywords:
+      - sommer
+      - juni
+      - juli
+      - august
+    feld: saison
+    enthält:
+      - juni
+      - juli
+      - august
+    score: 40
+  
+  herbst:
+    keywords:
+      - herbst
+      - september
+      - oktober
+      - november
+    feld: saison
+    enthält:
+      - september
+      - oktober
+      - november
+    score: 40
+  
+  winter:
+    keywords:
+      - winter
+      - dezember
+      - januar
+      - februar
+    feld: saison
+    enthält:
+      - dezember
+      - januar
+      - februar
+    score: 40
+  
+  jetzt:
+    keywords:
+      - jetzt
+      - aktuell
+      - gerade
+      - heute
+      - momentan
+    feld: saison
+    aktuell: true
+    score: 40
+
+  # === GESCHMACK ===
+  nussig:
+    keywords:
+      - nussig
+      - nuss
+    feld: geschmack
+    enthält:
+      - nussig
+      - nuss
+    score: 40
+  
+  mild:
+    keywords:
+      - mild
+      - sanft
+      - leicht
+    feld: geschmack
+    enthält:
+      - mild
+    score: 40
+  
+  würzig:
+    keywords:
+      - würzig
+      - würze
+      - intensiv
+      - kräftig
+      - aromatisch
+    feld: geschmack
+    enthält:
+      - würzig
+      - aromatisch
+      - intensiv
+    score: 40
+
+  # === ZUBEREITUNG ===
+  braten:
+    keywords:
+      - braten
+      - pfanne
+      - anbraten
+    feld: zubereitung
+    enthält:
+      - braten
+    score: 40
+  
+  trocknen:
+    keywords:
+      - trocknen
+      - dörren
+      - getrocknet
+    feld: zubereitung
+    enthält:
+      - trocknen
+    score: 40
+
+  # === VERWECHSLUNG ===
+  verwechslung:
+    keywords:
+      - verwechslung
+      - verwechseln
+      - ähnlich
+      - aussehen
+      - doppelgänger
+    feld: verwechslung
+    existiert: true
+    score: 30

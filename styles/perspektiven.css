@@ -143,23 +143,23 @@ amorph-container[data-field] {
 
 /* === MULTI-PERSPEKTIVEN AUSGEWÄHLT: Dezenter Multicolor-Gradient === */
 [data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field][data-perspektive-multi].feld-ausgewaehlt {
-  /* Sehr dezenter Gradient aus allen Perspektiven-Farben */
-  background: var(--feld-bg-gradient, linear-gradient(135deg, rgba(232, 176, 74, 0.06), rgba(232, 96, 128, 0.06))) !important;
+  /* Sehr dezenter Gradient aus allen Perspektiven-Farben - Biolumineszenz */
+  background: var(--feld-bg-gradient, linear-gradient(135deg, rgba(255, 200, 120, 0.06), rgba(255, 140, 160, 0.06))) !important;
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
   border-radius: 6px;
 }
 
 [data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field][data-perspektive-multi].feld-ausgewaehlt::before {
-  /* Multi-Gradient Balken - dezenter */
-  background: var(--feld-gradient, linear-gradient(180deg, #e8b04a, #e86080)) !important;
+  /* Multi-Gradient Balken - Biolumineszenz */
+  background: var(--feld-gradient, linear-gradient(180deg, rgba(255, 200, 120, 0.65), rgba(255, 140, 160, 0.65))) !important;
   width: 2px !important;
   /* Dezenterer Glow */
   box-shadow: 
-    0 0 4px color-mix(in srgb, var(--p-farbe-0, #e8b04a) 60%, transparent),
-    0 0 4px color-mix(in srgb, var(--p-farbe-1, #e86080) 60%, transparent),
-    0 0 8px color-mix(in srgb, var(--p-farbe-0, #e8b04a) 30%, transparent),
-    0 0 8px color-mix(in srgb, var(--p-farbe-1, #e86080) 30%, transparent) !important;
+    0 0 4px color-mix(in srgb, var(--p-farbe-0, rgba(255, 200, 120, 0.65)) 60%, transparent),
+    0 0 4px color-mix(in srgb, var(--p-farbe-1, rgba(255, 140, 160, 0.65)) 60%, transparent),
+    0 0 8px color-mix(in srgb, var(--p-farbe-0, rgba(255, 200, 120, 0.65)) 30%, transparent),
+    0 0 8px color-mix(in srgb, var(--p-farbe-1, rgba(255, 140, 160, 0.65)) 30%, transparent) !important;
   animation: multi-auswahl-glow 4s ease-in-out infinite !important;
 }
 

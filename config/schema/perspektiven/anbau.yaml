@@ -1,0 +1,44 @@
+# Perspektive: Anbau - Myzel-Phosphor
+# Biolumineszentes Grün wie wachsendes Myzel-Netzwerk
+
+id: anbau
+name: Anbau
+symbol: 🌱
+
+# Myzel-Phosphor Töne - leuchtend biolumineszent (0.65 für Unterscheidung)
+farben:
+  - "rgba(180, 255, 200, 0.65)"   # Phosphor-Mint Hell
+  - "rgba(150, 240, 180, 0.65)"   # Myzel-Grün
+  - "rgba(120, 225, 165, 0.65)"   # Sporen-Mint
+  - "rgba(100, 210, 150, 0.65)"   # Substrat-Grün
+
+# Welche Felder gehören zu dieser Perspektive?
+felder:
+  - bild
+  - name
+  - standort
+  - saison
+  - temperatur
+  - verfuegbarkeit
+  - lebenszyklus
+  - ernte_stats
+
+# Keywords für automatische Perspektiven-Erkennung bei Suche
+keywords:
+  - standort
+  - wald
+  - wiese
+  - substrat
+  - temperatur
+  - wachsen
+  - finden
+  - sammeln
+  - saison
+  - herbst
+  - sommer
+  - frühling
+  - holz
+  - baum
+  - boden
+  - feucht
+  - schattig

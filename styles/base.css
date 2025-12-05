@@ -1,58 +1,68 @@
 /* AMORPH v5 - Base Styles */
-/* Black Glasmorphism - Dezent & Elegant */
+/* Black Glasmorphism - Einheitliches Design System */
 
 :root {
   /* === UNIFIED DESIGN SYSTEM === */
   /* Einheitliche Größen für alle interaktiven Elemente */
-  --ui-height-sm: 20px;
-  --ui-height-md: 24px;
-  --ui-height-lg: 32px;
-  --ui-radius-sm: 4px;
-  --ui-radius-md: 6px;
-  --ui-radius-lg: 8px;
-  --ui-font-sm: 0.65rem;
-  --ui-font-md: 0.72rem;
-  --ui-font-lg: 0.85rem;
+  --ui-height-sm: 22px;
+  --ui-height-md: 26px;
+  --ui-height-lg: 34px;
+  --ui-radius-sm: 6px;
+  --ui-radius-md: 8px;
+  --ui-radius-lg: 12px;
+  --ui-font-sm: 0.68rem;
+  --ui-font-md: 0.75rem;
+  --ui-font-lg: 0.88rem;
   
   /* === FARBSCHEMA === */
   /* Akzentfarbe: Neutrales Weiß - Perspektiven liefern Farben */
-  --color-accent: rgba(255, 255, 255, 0.9);
-  --color-accent-dim: rgba(255, 255, 255, 0.6);
-  --color-accent-glow: rgba(255, 255, 255, 0.25);
-  --color-accent-subtle: rgba(255, 255, 255, 0.08);
+  --color-accent: rgba(255, 255, 255, 0.92);
+  --color-accent-dim: rgba(255, 255, 255, 0.65);
+  --color-accent-glow: rgba(255, 255, 255, 0.28);
+  --color-accent-subtle: rgba(255, 255, 255, 0.1);
   
-  /* Highlight-Farbe für Markierungen */
-  --color-highlight: rgba(255, 220, 100, 0.8);
-  --color-highlight-bg: rgba(255, 220, 100, 0.15);
+  /* Highlight-Farbe für Markierungen - Glas-Bernstein */
+  --color-highlight: rgba(240, 190, 80, 0.90);
+  --color-highlight-bg: rgba(240, 190, 80, 0.15);
   
   /* Hintergrund */
   --color-bg: #000000;
-  --color-bg-elevated: #080808;
+  --color-bg-elevated: #0a0a0a;
   
   /* Text - Hauptsächlich Weiß */
-  --color-text: rgba(255, 255, 255, 0.92);
-  --color-text-muted: rgba(255, 255, 255, 0.55);
-  --color-text-dim: rgba(255, 255, 255, 0.35);
+  --color-text: rgba(255, 255, 255, 0.94);
+  --color-text-muted: rgba(255, 255, 255, 0.6);
+  --color-text-dim: rgba(255, 255, 255, 0.38);
   
-  /* Semantische Farben */
-  --color-success: rgba(100, 220, 150, 0.9);
-  --color-warning: rgba(255, 200, 80, 0.9);
-  --color-error: rgba(255, 100, 120, 0.9);
+  /* Semantische Farben - Glas-Stil, leuchtend durchscheinend */
+  --color-success: rgba(100, 220, 160, 0.90);
+  --color-warning: rgba(240, 190, 80, 0.90);
+  --color-error: rgba(240, 110, 110, 0.90);
   
-  /* === GLASMORPHISM - Sehr dezent === */
-  --glass-bg: rgba(255, 255, 255, 0.02);
-  --glass-bg-hover: rgba(255, 255, 255, 0.04);
+  /* === BLACK GLASMORPHISM - Schwarze Seele des Glases === */
+  /* Hintergründe: Reines Schwarz mit Transparenz */
+  --glass-bg: rgba(0, 0, 0, 0.45);
+  --glass-bg-hover: rgba(0, 0, 0, 0.55);
+  --glass-bg-active: rgba(0, 0, 0, 0.65);
+  /* Borders: Sehr dezentes Weiß für Glaskanten */
   --glass-border: rgba(255, 255, 255, 0.06);
-  --glass-border-hover: rgba(255, 255, 255, 0.12);
-  --glass-blur: blur(16px);
-  --glass-blur-strong: blur(24px);
+  --glass-border-hover: rgba(255, 255, 255, 0.1);
+  --glass-border-active: rgba(255, 255, 255, 0.14);
+  /* Blur-Effekte */
+  --glass-blur: blur(20px);
+  --glass-blur-strong: blur(32px);
+  /* Schatten: Tiefe schwarze Schatten */
+  --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+  --glass-shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.7);
+  /* Inset: Subtiler Lichtschimmer oben */
+  --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.03);
   
-  /* Abstände */
-  --space-xs: 0.25rem;
-  --space-sm: 0.5rem;
-  --space-md: 1rem;
-  --space-lg: 1.5rem;
-  --space-xl: 2rem;
+  /* Abstände - Einheitlich */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
   
   /* Schrift */
   --font-family: system-ui, -apple-system, sans-serif;
@@ -61,16 +71,16 @@
   --font-size-lg: 1.125rem;
   --font-size-xl: 1.25rem;
   
-  /* Rundungen - Sanfter */
+  /* Rundungen - Einheitlich abgestuft */
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
   --radius-xl: 18px;
   
-  /* Schatten - Subtil */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  /* Schatten - Einheitlich */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 8px 36px rgba(0, 0, 0, 0.55);
 }
 
 /* Reset */

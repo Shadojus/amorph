@@ -1,0 +1,42 @@
+# Perspektive: Sicherheit - Amanita-Rosa
+# Warnendes Rosa-Pink wie der Fliegenpilz
+
+id: sicherheit
+name: Sicherheit
+symbol: ⚠️
+
+# Amanita-Rosa Töne - warnend leuchtend (0.65)
+farben:
+  - "rgba(255, 140, 160, 0.65)"   # Amanita-Rosa Hell
+  - "rgba(245, 120, 145, 0.65)"   # Fliegenpilz-Rosa
+  - "rgba(235, 105, 135, 0.65)"   # Giftwarnung-Pink
+  - "rgba(225, 90, 125, 0.65)"    # Toxin-Magenta
+
+# Welche Felder gehören zu dieser Perspektive?
+felder:
+  - bild
+  - name
+  - essbarkeit
+  - verfuegbarkeit
+  - verwechslung
+  - symptome
+  - toxizitaet
+  - profil
+
+# Keywords für automatische Perspektiven-Erkennung bei Suche
+keywords:
+  - giftig
+  - gift
+  - gefährlich
+  - tödlich
+  - vergiftung
+  - symptom
+  - verwechslung
+  - warnung
+  - vorsicht
+  - leber
+  - niere
+  - halluzination
+  - übelkeit
+  - erbrechen
+  - durchfall

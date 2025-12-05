@@ -1,0 +1,43 @@
+# Perspektive: Kulinarisch - Trüffel-Gold
+# Warmes Gold wie Pfifferlinge und edle Speisepilze
+
+id: kulinarisch
+name: Kulinarisch
+symbol: 🍳
+
+# Trüffel-Gold Töne - warm leuchtend (0.65)
+farben:
+  - "rgba(255, 200, 120, 0.65)"   # Pfifferling-Gold Hell
+  - "rgba(245, 185, 100, 0.65)"   # Trüffel-Gold
+  - "rgba(235, 170, 85, 0.65)"    # Steinpilz-Ocker
+  - "rgba(225, 155, 70, 0.65)"    # Waldgold
+
+# Welche Felder gehören zu dieser Perspektive?
+felder:
+  - bild
+  - name
+  - geschmack
+  - zubereitung
+  - essbarkeit
+  - bewertung
+  - naehrwerte
+  - profil
+
+# Keywords für automatische Perspektiven-Erkennung bei Suche
+keywords:
+  - essbar
+  - essen
+  - kochen
+  - braten
+  - geschmack
+  - zubereitung
+  - rezept
+  - speise
+  - würzig
+  - mild
+  - nussig
+  - umami
+  - aroma
+  - lecker
+  - köstlich
+  - delikat

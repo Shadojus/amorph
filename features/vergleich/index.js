@@ -24,7 +24,8 @@ import { debug } from '../../observer/debug.js';
 import { 
   getAuswahlNachPilz,
   getAuswahlNachFeld,
-  getState 
+  getState,
+  removeFeldAuswahl
 } from '../ansichten/index.js';
 import { getFeldConfig, getPerspektivenMorphConfig, getPerspektivenListe, getAllePerspektivenFarben, getItemName, getPerspektive } from '../../util/semantic.js';
 import { 
@@ -95,6 +96,28 @@ export default async function init(ctx) {
   const leerAnzeige = container.querySelector('.amorph-sammel-leer');
   const anzahlSpan = container.querySelector('.sammel-anzahl');
   const perspektivenSpan = container.querySelector('.sammel-perspektiven');
+  
+  // Click-Handler für Abwahl-Buttons
+  diagramme.addEventListener('click', (e) => {
+    const removeBtn = e.target.closest('.compare-section-remove');
+    if (!removeBtn) return;
+    
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const feldName = removeBtn.dataset.feldName;
+    if (!feldName) return;
+    
+    debug.vergleich('Feld abwählen via Button', { feldName });
+    
+    // Alle Felder dieses Typs aus der Auswahl entfernen
+    const entfernt = removeFeldAuswahl(feldName);
+    
+    if (entfernt > 0) {
+      // UI wird automatisch durch amorph:auswahl-geaendert Event aktualisiert
+      debug.vergleich('Felder entfernt', { feldName, entfernt });
+    }
+  });
   
   /**
    * Hauptrender - Nutzt Theme Compare-Morphs wenn Perspektiven aktiv

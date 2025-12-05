@@ -1,0 +1,39 @@
+# Perspektive: Statistik - Foxfire-Türkis
+# Biolumineszentes Türkis wie leuchtende Nachtpilze
+
+id: statistik
+name: Statistik
+symbol: 📊
+
+# Foxfire-Türkis Töne - biolumineszent (0.65)
+farben:
+  - "rgba(120, 255, 220, 0.65)"   # Foxfire Hell
+  - "rgba(100, 240, 205, 0.65)"   # Biolumineszenz-Cyan
+  - "rgba(85, 225, 195, 0.65)"    # Nachtpilz-Türkis
+  - "rgba(70, 210, 185, 0.65)"    # Myzel-Leuchten
+
+# Welche Felder gehören zu dieser Perspektive?
+felder:
+  - bild
+  - name
+  - bewertung
+  - beliebtheit
+  - ernte_stats
+  - naehrwerte
+  - wirkstoffe
+  - profil
+
+# Keywords für automatische Perspektiven-Erkennung bei Suche
+keywords:
+  - statistik
+  - daten
+  - zahlen
+  - vergleich
+  - übersicht
+  - analyse
+  - menge
+  - häufigkeit
+  - durchschnitt
+  - ranking
+  - top
+  - beste

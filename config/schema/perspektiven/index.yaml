@@ -1,0 +1,16 @@
+# Perspektiven-Index
+# Hier alle verfügbaren Perspektiven auflisten
+# Neue Perspektive hinzufügen = Datei erstellen + hier eintragen
+
+aktiv:
+  - kulinarisch
+  - sicherheit
+  - anbau
+  - wissenschaft
+  - medizin
+  - statistik
+
+# Perspektive deaktivieren: Aus der Liste entfernen (Datei kann bleiben)
+# Neue Perspektive: 
+#   1. Neue .yaml Datei erstellen (z.B. oekologie.yaml)
+#   2. Hier in die Liste eintragen (z.B. - oekologie)

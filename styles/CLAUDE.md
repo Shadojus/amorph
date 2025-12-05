@@ -6,12 +6,13 @@ Black Glasmorphism Design. Elegant, dezent, leuchtend.
 
 Das Style-System bietet:
 - **Unified Design System** mit CSS-Variablen für Höhen, Radii, Fonts
-- **Basis Dark Theme** mit Glass-Effekten
+- **Black Glasmorphism** mit Woodfloor-Hintergrund und `backdrop-filter: blur(16px)`
 - **Multi-Color Glow** für Perspektiven (4-Farben-Grid)
 - **Header 3-Zeilen-Layout**: Branding, Suche, Controls
 - **Feld-Auswahl-System**: Glow-Effekte für ausgewählte Felder
-- **Compare-Morph Styles**: Layouts für Vergleichs-Visualisierungen
-- **Vektorraum-Layout**: CSS für laterale Vergleiche
+- **Compare-Morph Styles**: Glasmorphism für Vergleichs-Visualisierungen
+- **Diagramm-Legenden**: Styles für alle Legenden und Achsenbeschriftungen
+- **Einheitliches Design**: Grid- und Compare-View haben identisches Glasmorphism
 
 ## Dateien
 
@@ -19,13 +20,13 @@ Das Style-System bietet:
 styles/
 ├── index.css        ← Importiert alles
 ├── base.css         ← CSS-Variablen, Reset, Dark Theme
-├── morphs.css       ← Styles für alle Basis-Morphs
+├── morphs.css       ← Styles für alle Basis-Morphs + Legenden
 ├── features.css     ← Header, Suche, Perspektiven-Buttons
 ├── layouts.css      ← Glass-Cards, Liste/Grid Layouts
 ├── perspektiven.css ← Feld-Glow, Multi-Perspektiven
 ├── ansichten.css    ← Overlay, Detail-View, Auswahl-Glow
 ├── pinboard.css     ← Pinboard/Detail-View Layout
-├── compare.css      ← Compare-Morphs, Perspektiven-Containers
+├── compare.css      ← Compare-Morphs mit Glasmorphism (wie Grid)
 └── vektorraum.css   ← Vergleich-View Layouts
 ```
 
@@ -40,20 +41,47 @@ styles/
   --color-border: rgba(255, 255, 255, 0.08);
   
   /* Perspektiven-Farben (dynamisch von JS gesetzt) */
-  --p-farbe: #3b82f6;       /* Hauptfarbe */
+  --p-farbe: #3b82f6;
   --p-farbe-1: var(--p-farbe);
   --p-farbe-2: var(--p-farbe);
   --p-farbe-3: var(--p-farbe);
   
   /* Glasmorphism */
-  --glass-blur: 20px;
-  --glass-bg: rgba(0, 0, 0, 0.7);
+  --glass-blur: 16px;
+  --glass-bg: rgba(0, 0, 0, 0.88);
+  --glass-bg-strong: rgba(0, 0, 0, 0.92);
+}
+```
+
+## Black Glasmorphism
+
+Einheitliches Design für Grid- und Compare-View:
+
+```css
+/* Basis-Glasmorphism für Cards */
+.glass-card {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.88) 0%,
+    rgba(0, 0, 0, 0.92) 100%
+  );
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.05),
+    0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Woodfloor-Hintergrund */
+.amorph-container {
+  background-image: url('./images/woodfloor/...');
 }
 ```
 
 ## Multi-Color Glow System
 
-4 Farben pro Perspektive aus `schema.yaml`:
+4 Farben pro Perspektive aus `schema/perspektiven/*.yaml`:
 
 ```css
 .amorph-perspektive-btn.aktiv {
@@ -65,17 +93,44 @@ styles/
 }
 ```
 
+## Diagramm-Legenden
+
+```css
+/* Legende für Pie, Bar, Radar, Stats, Timeline */
+.morph-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+/* Achsenbeschriftungen */
+.axis-label {
+  font-size: 0.7rem;
+  fill: rgba(255, 255, 255, 0.6);
+}
+```
+
 ## Morph-Klassen
 
 Jeder Morph hat seine CSS-Klasse:
-- `.amorph-number`
-- `.amorph-boolean`
-- `.amorph-tag`
-- `.amorph-range`
-- `.amorph-list`
-- `.amorph-object`
-- `.amorph-image`
-- `.amorph-link`
+- `.amorph-number`, `.amorph-boolean`, `.amorph-tag`, `.amorph-badge`
+- `.amorph-range`, `.amorph-list`, `.amorph-object`, `.amorph-image`, `.amorph-link`
+- `.amorph-pie`, `.amorph-bar`, `.amorph-radar` (mit Legenden)
+- `.amorph-stats`, `.amorph-timeline` (mit Legenden)
 
 ## Layout-Klassen
 
@@ -86,17 +141,6 @@ Werden automatisch über `data-layout` Attribut gesetzt:
 [data-layout="grid"] { ... }
 [data-layout="kompakt"] { ... }
 ```
-
-## Perspektiven
-
-Werden über Body-Klassen gesteuert:
-
-```css
-.perspektive-kulinarisch { ... }
-.perspektive-sicherheit { ... }
-```
-
-## Dark Mode
 
 Automatisch via `prefers-color-scheme`:
 

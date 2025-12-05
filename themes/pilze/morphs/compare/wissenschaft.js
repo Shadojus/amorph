@@ -25,7 +25,7 @@ export function compareWissenschaft(items, perspektive, config = {}) {
   
   const container = document.createElement('div');
   container.className = 'compare-perspektive compare-wissenschaft';
-  container.style.setProperty('--p-farbe', perspektive.farben?.[0] || '#5aa0d8');
+  container.style.setProperty('--p-farbe', perspektive.farben?.[0] || 'rgba(140, 200, 255, 0.65)');
   
   // Header
   const header = document.createElement('div');

@@ -61,13 +61,29 @@ import { compareByData } from './compare/index.js';
 
 // Legacy-Alias für compareMorph (wird von vergleich/index.js genutzt)
 const compareMorph = (feldName, typ, items, config) => {
-  // Container mit Feldname als Header
+  // Container mit Feldname als Header + Abwahl-Button
   const container = document.createElement('div');
   container.className = 'compare-section';
+  container.dataset.feldName = feldName;
   
-  const header = document.createElement('h3');
+  const header = document.createElement('div');
   header.className = 'compare-section-header';
-  header.textContent = config?.label || feldName;
+  
+  // Label
+  const label = document.createElement('span');
+  label.className = 'compare-section-label';
+  label.textContent = config?.label || feldName;
+  header.appendChild(label);
+  
+  // Abwahl-Button
+  const removeBtn = document.createElement('button');
+  removeBtn.className = 'compare-section-remove';
+  removeBtn.type = 'button';
+  removeBtn.title = `${config?.label || feldName} abwählen`;
+  removeBtn.innerHTML = '×';
+  removeBtn.dataset.feldName = feldName;
+  header.appendChild(removeBtn);
+  
   container.appendChild(header);
   
   const content = compareByType(typ, items.map(i => ({

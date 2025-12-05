@@ -6,10 +6,11 @@ Verschiedene Blickwinkel auf dieselben Daten.
 
 Das Perspektiven-Feature bietet:
 - Multi-Color Glow bei mehreren aktiven Perspektiven
-- 4-Farben-Grid pro Perspektive (aus schema.yaml)
+- 4-Farben-Grid pro Perspektive (aus schema/perspektiven/*.yaml)
 - Auto-Aktivierung bei relevanten Suchergebnissen
 - Keywords aus Schema für Auto-Detection
 - Badges in Suchleiste für aktive Perspektiven
+- **Modulares System**: Perspektiven aus einzelnen YAML-Dateien
 
 **Hinweis**: Die Perspektiven-Logik ist primär in `features/header/index.js` implementiert.
 
@@ -25,24 +26,63 @@ Sicherheit ⚠️   →  Zeigt: giftigkeit, verwechslungsgefahr
                    Farben: [#ef4444, #dc2626, #b91c1c, #991b1b]
 ```
 
-## Config aus schema.yaml
+## Config aus schema/perspektiven/
+
+### Ordnerstruktur
+
+```
+config/schema/perspektiven/
+├── index.yaml        # Liste aktiver Perspektiven
+├── kulinarisch.yaml
+├── sicherheit.yaml
+├── anbau.yaml
+├── wissenschaft.yaml
+├── medizin.yaml
+└── statistik.yaml
+```
+
+### index.yaml (Steuerung)
 
 ```yaml
-perspektiven:
-  - id: kulinarisch
-    label: Kulinarisch
-    symbol: 🍳
-    farben: ['#4ade80', '#22c55e', '#16a34a', '#15803d']
-    felder: [essbarkeit, geschmack, zubereitung]
-    keywords: [essbar, essen, kochen, rezept]
-    
-  - id: sicherheit
-    label: Sicherheit
-    symbol: ⚠️
-    farben: ['#ef4444', '#dc2626', '#b91c1c', '#991b1b']
-    felder: [giftigkeit, verwechslungsgefahr]
-    keywords: [giftig, gefährlich, verwechseln]
+aktiv:
+  - kulinarisch
+  - sicherheit
+  - anbau
+  - wissenschaft
+  - medizin
+  - statistik
 ```
+
+### Perspektiven-Datei (z.B. kulinarisch.yaml)
+
+```yaml
+id: kulinarisch
+name: Kulinarisch
+symbol: 🍳
+farben:
+  - '#4ade80'
+  - '#22c55e'
+  - '#16a34a'
+  - '#15803d'
+felder:
+  - essbarkeit
+  - geschmack
+  - zubereitung
+keywords:
+  - essbar
+  - essen
+  - kochen
+  - rezept
+```
+
+## Neue Perspektive hinzufügen
+
+1. Neue YAML-Datei erstellen: `config/schema/perspektiven/meine_perspektive.yaml`
+2. ID zu `index.yaml` hinzufügen: `aktiv: [..., meine_perspektive]`
+
+## Perspektive deaktivieren
+
+ID aus `index.yaml` entfernen (Datei kann bleiben).
 
 ## Multi-Perspektiven Farben
 

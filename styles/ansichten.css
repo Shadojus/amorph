@@ -6,22 +6,32 @@
 .amorph-item amorph-container[data-field] {
   cursor: pointer;
   position: relative;
-  transition: all 0.2s ease;
+  /* Spezifische Transitions statt 'all' - verhindert weißes Blinken */
+  transition: 
+    background-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.15s ease;
   border-radius: var(--radius-sm, 4px);
+  /* Initial transparent - kein weiß */
+  background-color: transparent;
 }
 
 .amorph-item amorph-container[data-field]:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 /* === FELD-AUSWAHL - Dezenter Glasmorphism mit Farbverlauf === */
 amorph-container[data-field].feld-ausgewaehlt {
   /* Sanfter Farbverlauf - von Perspektiven-Farbe zu transparent */
+  /* Goldene Fallback-Farbe statt weiß für sofortiges Feedback */
+  --_accent: var(--feld-perspektive-farbe, var(--color-accent, #e8b04a));
+  --_farbe1: var(--feld-p-farbe-1, var(--_accent));
+  --_farbe2: var(--feld-p-farbe-2, var(--_accent));
   background: linear-gradient(
     135deg,
-    color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent, #e8b04a)) 15%, transparent) 0%,
-    color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe, #d4943a)) 10%, transparent) 50%,
-    color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe, #f0c866)) 5%, transparent) 100%
+    color-mix(in srgb, var(--_accent) 15%, transparent) 0%,
+    color-mix(in srgb, var(--_farbe1) 10%, transparent) 50%,
+    color-mix(in srgb, var(--_farbe2) 5%, transparent) 100%
   ) !important;
   /* Glasmorphism */
   backdrop-filter: blur(4px);
@@ -158,7 +168,7 @@ amorph-container[data-morph="item"]:hover {
   padding: 8px 16px;
   font-size: var(--font-size-sm);
   font-weight: 500;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.4);
   color: var(--color-text-muted);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20px;
@@ -167,7 +177,7 @@ amorph-container[data-morph="item"]:hover {
 }
 
 .amorph-action-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.55);
   color: var(--color-text);
   border-color: rgba(255, 255, 255, 0.15);
 }
@@ -198,7 +208,7 @@ amorph-container[data-morph="item"]:hover {
 }
 
 .amorph-action-clear:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.4);
   color: var(--color-text);
 }
 
@@ -234,7 +244,7 @@ amorph-container[data-morph="item"]:hover {
   width: 44px;
   height: 44px;
   font-size: 24px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.5);
   color: var(--color-text);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 50%;
@@ -244,7 +254,7 @@ amorph-container[data-morph="item"]:hover {
 }
 
 .amorph-view-close:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.65);
   transform: scale(1.1);
 }
 
@@ -267,7 +277,7 @@ amorph-container[data-morph="item"]:hover {
   width: 44px;
   height: 44px;
   font-size: 20px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.4);
   color: var(--color-text, white);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 50%;
@@ -276,7 +286,7 @@ amorph-container[data-morph="item"]:hover {
 }
 
 .amorph-detail-nav-btn:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.55);
   border-color: rgba(255, 255, 255, 0.2);
 }
 

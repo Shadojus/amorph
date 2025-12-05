@@ -21,6 +21,7 @@ const STYLES = {
   morphs: 'color: #60a5fa; font-weight: bold',
   suche: 'color: #34d399; font-weight: bold',
   features: 'color: #fbbf24; font-weight: bold',
+  schema: 'color: #c084fc; font-weight: bold',  // Neu für modulares Schema
   // ... weitere
 };
 
@@ -29,6 +30,7 @@ import { debug } from '../observer/debug.js';
 debug.morphs('Badge erkannt', { wert, variant });
 debug.suche('Ergebnisse', { anzahl: results.length });
 debug.features('Ansicht-Wechsel', { von: 'karten', zu: 'vergleich' });
+debug.schema('Perspektiven geladen', { anzahl: perspektiven.length });
 ```
 
 ### Debug-Kategorien
@@ -37,6 +39,7 @@ debug.features('Ansicht-Wechsel', { von: 'karten', zu: 'vergleich' });
 |-----------|-------|------------|
 | `amorph` | Pink | System-Start, globale Meldungen |
 | `config` | Lila | Config-Laden, YAML-Parsing |
+| `schema` | Violett | Modulares Schema, Perspektiven-Laden |
 | `morphs` | Blau | Morph-Erkennung, Transformation |
 | `suche` | Grün | Suchanfragen, Ergebnisse |
 | `features` | Gold | Feature-Init, Events |

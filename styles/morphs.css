@@ -35,9 +35,9 @@
   padding: 0 8px;
   font-size: var(--ui-font-md);
   font-weight: 500;
-  background: rgba(255, 255, 255, 0.05);
-  color: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.4);
+  color: var(--color-text);
+  border: 1px solid var(--glass-border);
   border-radius: var(--ui-radius-md);
   text-transform: capitalize;
   white-space: nowrap;
@@ -45,8 +45,8 @@
 
 /* Tag mit Custom-Farbe */
 .amorph-tag[style*="--tag-farbe"] {
-  background: color-mix(in srgb, var(--tag-farbe) 15%, rgba(0,0,0,0.4));
-  border-color: color-mix(in srgb, var(--tag-farbe) 30%, transparent);
+  background: color-mix(in srgb, var(--tag-farbe) 15%, rgba(0,0,0,0.5));
+  border-color: color-mix(in srgb, var(--tag-farbe) 25%, transparent);
   color: var(--tag-farbe);
 }
 
@@ -67,7 +67,7 @@
 .amorph-range-bar {
   flex: 1;
   height: 4px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 2px;
   position: relative;
   min-width: 80px;
@@ -83,13 +83,13 @@
   height: 100%;
   background: var(--color-accent);
   border-radius: 2px;
-  opacity: 0.8;
+  opacity: 0.7;
 }
 
 .amorph-range-label {
   font-size: 9px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-text-muted);
   margin-right: 6px;
 }
 
@@ -98,7 +98,7 @@
   justify-content: space-between;
   width: 100%;
   font-size: 7px;
-  color: rgba(255, 255, 255, 0.3);
+  color: var(--color-text-dim);
   margin-top: 2px;
 }
 
@@ -128,8 +128,8 @@
 
 /* List als Tags */
 .amorph-list[data-style="tags"] li {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--glass-border);
   height: var(--ui-height-md);
   padding: 0 8px;
   display: inline-flex;
@@ -176,7 +176,7 @@
   object-fit: cover;
   border-radius: var(--radius-md);
   display: block;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
 }
 
 .amorph-image figcaption {
@@ -186,7 +186,7 @@
 }
 
 .amorph-image[data-error] img {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(0, 0, 0, 0.4);
   min-height: 100px;
 }
 
@@ -230,26 +230,26 @@
 }
 
 /* =====================================================
-   VISUELLE MORPHS - Black Glasmorphism Design
+   VISUELLE MORPHS - Black Glasmorphism Design System
    ===================================================== */
 
 /* === PIE CHART === */
 .amorph-pie {
-  padding: 8px;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: var(--ui-radius-lg, 8px);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  padding: var(--space-sm);
+  background: var(--glass-bg);
+  border-radius: var(--ui-radius-lg);
+  border: 1px solid var(--glass-border);
 }
 
 .amorph-pie-titel {
-  font-size: 10px;
+  font-size: var(--ui-font-sm);
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding-bottom: 4px;
-  margin-bottom: 4px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: var(--space-xs);
+  margin-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--glass-border);
 }
 
 .amorph-pie-leer {
@@ -281,23 +281,23 @@
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.85);
+  background: var(--glass-bg-active);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border);
 }
 
 .amorph-pie-total {
   font-size: 11px;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text);
 }
 
 .amorph-pie-label {
   font-size: 6px;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-text-muted);
   text-transform: uppercase;
 }
 
@@ -325,7 +325,7 @@
 
 .amorph-pie-legend-label {
   flex: 1;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--color-text);
   font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -333,7 +333,7 @@
 }
 
 .amorph-pie-legend-value {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--color-text-muted);
   font-variant-numeric: tabular-nums;
   font-weight: 600;
   font-size: 9px;
@@ -345,19 +345,19 @@
   flex-direction: column;
   gap: 5px;
   padding: var(--space-sm);
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--glass-bg);
   border-radius: var(--radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
 }
 
 .amorph-bar-titel {
-  font-size: 10px;
+  font-size: var(--ui-font-sm);
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding-bottom: 4px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--glass-border);
   margin-bottom: 2px;
 }
 
@@ -370,16 +370,17 @@
 .amorph-bar-scale {
   display: flex;
   justify-content: space-between;
-  padding: 4px 60px 0 60px;
+  padding: var(--space-xs) 60px 0 60px;
   font-size: 7px;
-  color: rgba(255, 255, 255, 0.35);
+  color: var(--color-text-dim);
   font-variant-numeric: tabular-nums;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid var(--glass-border);
   margin-top: 2px;
 }
 
 .amorph-bar-scale-mid {
-  color: rgba(255, 255, 255, 0.25);
+  color: var(--color-text-dim);
+  opacity: 0.7;
 }
 
 .amorph-bar-row {
@@ -392,7 +393,7 @@
   flex: 0 0 55px;
   font-size: 9px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--color-text-muted);
   text-align: right;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -402,19 +403,19 @@
 .amorph-bar-track {
   flex: 1;
   height: 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 6px;
+  background: var(--glass-bg);
+  border-radius: var(--ui-radius-sm);
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
 }
 
 .amorph-bar-fill {
   height: 100%;
   background: linear-gradient(90deg, 
-    color-mix(in srgb, var(--color-accent) 35%, transparent),
-    color-mix(in srgb, var(--color-accent) 50%, transparent)
+    color-mix(in srgb, var(--color-accent) 42%, transparent),
+    color-mix(in srgb, var(--color-accent) 58%, transparent)
   );
-  border-radius: 6px;
+  border-radius: var(--ui-radius-sm);
   transition: width 0.3s ease;
 }
 
@@ -422,17 +423,17 @@
   flex: 0 0 45px;
   font-size: 9px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-text-muted);
   font-variant-numeric: tabular-nums;
 }
 
 /* === RADAR CHART === */
 .amorph-radar {
   position: relative;
-  padding: 8px;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: var(--ui-radius-lg, 8px);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  padding: var(--space-sm);
+  background: var(--glass-bg);
+  border-radius: var(--ui-radius-lg);
+  border: 1px solid var(--glass-border);
 }
 
 .amorph-radar-leer {
@@ -457,20 +458,20 @@
 }
 
 .amorph-radar-axis {
-  stroke: rgba(255, 255, 255, 0.05);
+  stroke: var(--glass-border);
   stroke-width: 0.5;
 }
 
 .amorph-radar-shape {
-  fill: color-mix(in srgb, var(--color-accent) 8%, transparent);
-  stroke: color-mix(in srgb, var(--color-accent) 30%, transparent);
+  fill: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  stroke: color-mix(in srgb, var(--color-accent) 38%, transparent);
   stroke-width: 1.5;
   stroke-linejoin: round;
 }
 
 .amorph-radar-point {
-  fill: color-mix(in srgb, var(--color-accent) 50%, transparent);
-  stroke: rgba(0, 0, 0, 0.6);
+  fill: color-mix(in srgb, var(--color-accent) 58%, transparent);
+  stroke: var(--glass-bg-active);
   stroke-width: 1;
   filter: none;
 }
@@ -489,14 +490,14 @@
   transform: translate(-50%, -50%);
   font-size: 8px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--color-text-muted);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
   white-space: nowrap;
 }
 
 .amorph-radar-scale {
   font-size: 6px;
-  fill: rgba(255, 255, 255, 0.25);
+  fill: var(--color-text-dim);
   font-variant-numeric: tabular-nums;
 }
 
@@ -504,12 +505,12 @@
 .amorph-rating {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-sm);
   height: var(--ui-height-md);
-  padding: 0 8px;
-  background: rgba(0, 0, 0, 0.2);
+  padding: 0 var(--space-sm);
+  background: var(--glass-bg);
   border-radius: var(--ui-radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
 }
 
 .amorph-rating-stars {
@@ -522,57 +523,57 @@
 }
 
 .amorph-rating-full {
-  color: rgba(212, 169, 74, 0.65);
+  color: rgba(240, 190, 80, 0.62);
 }
 
 .amorph-rating-half {
-  color: rgba(212, 169, 74, 0.35);
+  color: rgba(240, 190, 80, 0.30);
 }
 
 .amorph-rating-empty {
-  color: rgba(255, 255, 255, 0.1);
+  color: var(--glass-border);
 }
 
 .amorph-rating-value {
   font-size: var(--ui-font-sm);
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-text-muted);
   font-variant-numeric: tabular-nums;
 }
 
 /* === PROGRESS === */
 .amorph-progress {
-  padding: 6px 8px;
-  background: rgba(0, 0, 0, 0.2);
+  padding: var(--space-sm);
+  background: var(--glass-bg);
   border-radius: var(--ui-radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
 }
 
 .amorph-progress-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 4px;
+  margin-bottom: var(--space-xs);
   font-size: var(--ui-font-sm);
 }
 
 .amorph-progress-label {
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--color-text-muted);
 }
 
 .amorph-progress-value {
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--color-text-dim);
   font-variant-numeric: tabular-nums;
 }
 
 .amorph-progress-track {
   position: relative;
   height: 10px;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--glass-bg);
   border-radius: 5px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
 }
 
 .amorph-progress-fill {
@@ -581,24 +582,25 @@
   transition: width 0.3s ease;
 }
 
+/* Progress-Farben - Glas-Stil */
 .amorph-progress-high {
   background: linear-gradient(90deg, 
-    color-mix(in srgb, #22c55e 25%, transparent),
-    color-mix(in srgb, #22c55e 40%, transparent)
+    rgba(100, 220, 160, 0.28),
+    rgba(100, 220, 160, 0.45)
   );
 }
 
 .amorph-progress-medium {
   background: linear-gradient(90deg, 
-    color-mix(in srgb, #f59e0b 25%, transparent),
-    color-mix(in srgb, #f59e0b 40%, transparent)
+    rgba(240, 190, 80, 0.28),
+    rgba(240, 190, 80, 0.45)
   );
 }
 
 .amorph-progress-low {
-  background: linear-gradient(90deg, 
-    color-mix(in srgb, #ef4444 25%, transparent),
-    color-mix(in srgb, #ef4444 40%, transparent)
+  background: linear-gradient(90deg,
+    rgba(240, 110, 110, 0.28),
+    rgba(240, 110, 110, 0.45)
   );
 }
 
@@ -705,7 +707,7 @@
   top: 8px;
   bottom: 8px;
   width: 1px;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .amorph-timeline-item {

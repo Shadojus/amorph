@@ -43,7 +43,15 @@ export function comparePie(items, config = {}) {
       const legende = document.createElement('div');
       legende.className = 'compare-pie-legende';
       
-      const pieColors = ['#22c55e', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'];
+      // Echte Glasfarben - durchscheinend, leuchtend
+      const pieColors = [
+        'rgba(100, 220, 160, 0.45)',
+        'rgba(90, 160, 240, 0.45)',
+        'rgba(240, 190, 80, 0.45)',
+        'rgba(240, 110, 110, 0.45)',
+        'rgba(170, 130, 220, 0.45)',
+        'rgba(80, 210, 210, 0.45)'
+      ];
       pieData.forEach((d, i) => {
         const item = document.createElement('span');
         item.className = 'pie-legende-item';
@@ -72,7 +80,15 @@ function erstelleMiniPie(data) {
   const r = size / 2 - 2;
   
   const total = data.reduce((sum, d) => sum + (d.value || d.count || 0), 0);
-  const pieColors = ['#22c55e', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'];
+  // Echte Glasfarben - durchscheinend, leuchtend
+  const pieColors = [
+    'rgba(100, 220, 160, 0.45)',   // Glas-Smaragd
+    'rgba(90, 160, 240, 0.45)',    // Glas-Saphir
+    'rgba(240, 190, 80, 0.45)',    // Glas-Bernstein
+    'rgba(240, 110, 110, 0.45)',   // Glas-Rubin
+    'rgba(170, 130, 220, 0.45)',   // Glas-Amethyst
+    'rgba(80, 210, 210, 0.45)'     // Glas-Aquamarin
+  ];
   
   let currentAngle = -Math.PI / 2;
   

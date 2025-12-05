@@ -29,11 +29,11 @@
 
 /* Highlight Styling (wie im Grid-View) */
 .amorph-sammeldiagramm .amorph-highlight {
-  background: rgba(232, 176, 74, 0.4);
+  background: rgba(240, 190, 80, 0.35);
   color: white;
   padding: 0 2px;
   border-radius: 2px;
-  box-shadow: 0 0 4px rgba(232, 176, 74, 0.5);
+  box-shadow: 0 0 4px rgba(240, 190, 80, 0.4);
 }
 
 .sammel-anzahl {
@@ -45,7 +45,7 @@
   font-size: 12px;
   color: rgba(255, 255, 255, 0.5);
   padding: 4px 10px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.4);
   border-radius: 12px;
   display: none;
 }
@@ -71,9 +71,9 @@
   /* Dezenter Glasmorphism Hintergrund mit 4-Farben-Grid */
   background: linear-gradient(
     135deg,
-    color-mix(in srgb, var(--feld-perspektive-farbe, #e8b04a) 8%, rgba(0,0,0,0.3)) 0%,
-    color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe, #d4943a)) 5%, rgba(0,0,0,0.3)) 50%,
-    color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe, #f0c866)) 3%, rgba(0,0,0,0.3)) 100%
+    color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 8%, rgba(0,0,0,0.3)) 0%,
+    color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe, rgba(245, 185, 100, 0.65))) 5%, rgba(0,0,0,0.3)) 50%,
+    color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe, rgba(235, 170, 85, 0.65))) 3%, rgba(0,0,0,0.3)) 100%
   );
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
@@ -92,23 +92,23 @@
   /* 4-Farben Gradient aus der Perspektive */
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--feld-perspektive-farbe, #e8b04a) 70%, transparent) 0%,
-    color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe, #d4943a)) 60%, transparent) 33%,
-    color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe, #f0c866)) 50%, transparent) 66%,
-    color-mix(in srgb, var(--feld-p-farbe-3, var(--feld-perspektive-farbe, #cc7a2a)) 40%, transparent) 100%
+    color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 70%, transparent) 0%,
+    color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe, rgba(245, 185, 100, 0.65))) 60%, transparent) 33%,
+    color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe, rgba(235, 170, 85, 0.65))) 50%, transparent) 66%,
+    color-mix(in srgb, var(--feld-p-farbe-3, var(--feld-perspektive-farbe, rgba(225, 155, 70, 0.65))) 40%, transparent) 100%
   );
   border-radius: 2px;
   /* Dezenter Glow-Effekt */
   box-shadow: 
-    0 0 4px color-mix(in srgb, var(--feld-perspektive-farbe, #e8b04a) 50%, transparent),
+    0 0 4px color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 50%, transparent),
     0 0 8px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 30%, transparent);
   animation: compare-glow-single 4s ease-in-out infinite;
 }
 
 /* Label mit Perspektiven-Farbe */
 .amorph-compare.perspektive-aktiv .compare-label {
-  color: var(--feld-perspektive-farbe, #e8b04a);
-  text-shadow: 0 0 8px color-mix(in srgb, var(--feld-perspektive-farbe, #e8b04a) 40%, transparent);
+  color: var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.9));
+  text-shadow: 0 0 8px color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 40%, transparent);
 }
 
 /* ============================================
@@ -116,29 +116,29 @@
    ============================================ */
 .amorph-compare.perspektive-aktiv[data-perspektive-multi="true"] {
   /* Multi-Gradient Hintergrund (wie Grid-View: --feld-bg-gradient) */
-  background: var(--feld-bg-gradient, linear-gradient(135deg, rgba(232, 176, 74, 0.06), rgba(232, 96, 128, 0.06)));
+  background: var(--feld-bg-gradient, linear-gradient(135deg, rgba(255, 200, 120, 0.06), rgba(255, 140, 160, 0.06)));
 }
 
 /* Multi-Perspektiven: Animierter Gradient Glow-Streifen */
 .amorph-compare.perspektive-aktiv[data-perspektive-multi="true"]::before {
   width: 3px;
   /* Animierter vertikaler Gradient aus allen Perspektiven (wie Grid-View: --feld-gradient) */
-  background: var(--feld-gradient, linear-gradient(180deg, #e8b04a, #60c090));
+  background: var(--feld-gradient, linear-gradient(180deg, rgba(255, 200, 120, 0.65), rgba(180, 255, 200, 0.65)));
   background-size: 100% 200%;
   /* Kombinierter leuchtender Glow aus allen Farben */
   box-shadow: 
-    0 0 6px var(--p-farbe-0, #e8b04a),
-    0 0 6px var(--p-farbe-1, #60c090),
-    0 0 12px color-mix(in srgb, var(--p-farbe-0, #e8b04a) 60%, transparent),
-    0 0 12px color-mix(in srgb, var(--p-farbe-1, #60c090) 60%, transparent),
-    0 0 20px color-mix(in srgb, var(--p-farbe-2, #5aa0d8) 40%, transparent),
-    0 0 20px color-mix(in srgb, var(--p-farbe-3, #a855f7) 40%, transparent);
+    0 0 6px var(--p-farbe-0, rgba(255, 200, 120, 0.65)),
+    0 0 6px var(--p-farbe-1, rgba(180, 255, 200, 0.65)),
+    0 0 12px color-mix(in srgb, var(--p-farbe-0, rgba(255, 200, 120, 0.65)) 60%, transparent),
+    0 0 12px color-mix(in srgb, var(--p-farbe-1, rgba(180, 255, 200, 0.65)) 60%, transparent),
+    0 0 20px color-mix(in srgb, var(--p-farbe-2, rgba(140, 200, 255, 0.65)) 40%, transparent),
+    0 0 20px color-mix(in srgb, var(--p-farbe-3, rgba(200, 160, 255, 0.65)) 40%, transparent);
   animation: compare-multi-flow 3s ease-in-out infinite;
 }
 
 /* Multi-Perspektiven Label mit Gradient-Text */
 .amorph-compare.perspektive-aktiv[data-perspektive-multi="true"] .compare-label {
-  background: var(--feld-gradient, linear-gradient(90deg, #e8b04a, #60c090));
+  background: var(--feld-gradient, linear-gradient(90deg, rgba(255, 200, 120, 0.9), rgba(180, 255, 200, 0.9)));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -152,13 +152,13 @@
   0%, 100% { 
     opacity: 0.85;
     box-shadow: 
-      0 0 4px color-mix(in srgb, var(--feld-perspektive-farbe, #e8b04a) 50%, transparent),
+      0 0 4px color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 50%, transparent),
       0 0 8px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 30%, transparent);
   }
   50% { 
     opacity: 1;
     box-shadow: 
-      0 0 8px color-mix(in srgb, var(--feld-perspektive-farbe, #e8b04a) 70%, transparent),
+      0 0 8px color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 70%, transparent),
       0 0 16px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 50%, transparent),
       0 0 24px color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe)) 30%, transparent);
   }
@@ -216,10 +216,10 @@
 
 /* Timeline Event - Single */
 .amorph-compare.perspektive-aktiv:not([data-perspektive-multi]) .timeline-event {
-  border-left: 3px solid var(--feld-perspektive-farbe, #e8b04a);
+  border-left: 3px solid var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65));
   background: linear-gradient(
     90deg,
-    color-mix(in srgb, var(--feld-perspektive-farbe, #e8b04a) 10%, transparent) 0%,
+    color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 10%, transparent) 0%,
     color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 5%, rgba(255,255,255,0.04)) 100%
   );
 }
@@ -233,8 +233,8 @@
 
 /* Wirkstoffe Bar - Single */
 .amorph-compare.perspektive-aktiv:not([data-perspektive-multi]) .wirkstoffe-bar .bar-fill {
-  background: linear-gradient(90deg, var(--feld-perspektive-farbe, #e8b04a), var(--feld-p-farbe-1, var(--feld-perspektive-farbe))) !important;
-  box-shadow: 0 0 4px color-mix(in srgb, var(--feld-perspektive-farbe, #e8b04a) 30%, transparent);
+  background: linear-gradient(90deg, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)), var(--feld-p-farbe-1, var(--feld-perspektive-farbe))) !important;
+  box-shadow: 0 0 4px color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 30%, transparent);
 }
 
 /* Wirkstoffe Bar - Multi */
@@ -244,26 +244,26 @@
 }
 
 /* Pie Slices - Single (4-Farben-Grid) */
-.amorph-compare.perspektive-aktiv:not([data-perspektive-multi]) .mini-pie-svg .pie-slice:nth-child(1) { fill: var(--feld-perspektive-farbe, #e8b04a); }
+.amorph-compare.perspektive-aktiv:not([data-perspektive-multi]) .mini-pie-svg .pie-slice:nth-child(1) { fill: var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)); }
 .amorph-compare.perspektive-aktiv:not([data-perspektive-multi]) .mini-pie-svg .pie-slice:nth-child(2) { fill: var(--feld-p-farbe-1, var(--feld-perspektive-farbe)); }
 .amorph-compare.perspektive-aktiv:not([data-perspektive-multi]) .mini-pie-svg .pie-slice:nth-child(3) { fill: var(--feld-p-farbe-2, var(--feld-perspektive-farbe)); }
 .amorph-compare.perspektive-aktiv:not([data-perspektive-multi]) .mini-pie-svg .pie-slice:nth-child(4) { fill: var(--feld-p-farbe-3, var(--feld-perspektive-farbe)); }
 
 /* Pie Slices - Multi (Farben der verschiedenen Perspektiven) */
-.amorph-compare.perspektive-aktiv[data-perspektive-multi] .mini-pie-svg .pie-slice:nth-child(1) { fill: var(--p-farbe-0, #e8b04a); }
-.amorph-compare.perspektive-aktiv[data-perspektive-multi] .mini-pie-svg .pie-slice:nth-child(2) { fill: var(--p-farbe-1, #60c090); }
-.amorph-compare.perspektive-aktiv[data-perspektive-multi] .mini-pie-svg .pie-slice:nth-child(3) { fill: var(--p-farbe-2, #5aa0d8); }
-.amorph-compare.perspektive-aktiv[data-perspektive-multi] .mini-pie-svg .pie-slice:nth-child(4) { fill: var(--p-farbe-3, #a855f7); }
+.amorph-compare.perspektive-aktiv[data-perspektive-multi] .mini-pie-svg .pie-slice:nth-child(1) { fill: var(--p-farbe-0, rgba(255, 200, 120, 0.65)); }
+.amorph-compare.perspektive-aktiv[data-perspektive-multi] .mini-pie-svg .pie-slice:nth-child(2) { fill: var(--p-farbe-1, rgba(180, 255, 200, 0.65)); }
+.amorph-compare.perspektive-aktiv[data-perspektive-multi] .mini-pie-svg .pie-slice:nth-child(3) { fill: var(--p-farbe-2, rgba(140, 200, 255, 0.65)); }
+.amorph-compare.perspektive-aktiv[data-perspektive-multi] .mini-pie-svg .pie-slice:nth-child(4) { fill: var(--p-farbe-3, rgba(200, 160, 255, 0.65)); }
 
 /* List Item gemeinsam - Single */
 .amorph-compare.perspektive-aktiv:not([data-perspektive-multi]) .compare-list-item.gemeinsam {
-  background: color-mix(in srgb, var(--feld-perspektive-farbe, #e8b04a) 12%, transparent);
-  border: 1px solid color-mix(in srgb, var(--feld-perspektive-farbe, #e8b04a) 30%, transparent);
+  background: color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 30%, transparent);
 }
 
 /* List Item gemeinsam - Multi */
 .amorph-compare.perspektive-aktiv[data-perspektive-multi] .compare-list-item.gemeinsam {
-  background: var(--feld-bg-gradient, rgba(96, 192, 144, 0.1));
+  background: var(--feld-bg-gradient, rgba(180, 255, 200, 0.1));
   border: 1px solid color-mix(in srgb, var(--p-farbe-0) 25%, color-mix(in srgb, var(--p-farbe-1) 25%, transparent));
 }
 
@@ -325,7 +325,7 @@
 
 .sammel-bar .bar-track {
   height: 20px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.4);
   border-radius: 10px;
   overflow: hidden;
 }
@@ -406,7 +406,7 @@
 .sammel-list-item .list-tag {
   padding: 3px 8px;
   font-size: 10px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.4);
   border-radius: 10px;
   color: white;
 }
@@ -443,7 +443,7 @@
   font-size: 11px;
   color: rgba(255, 255, 255, 0.8);
   padding: 3px 8px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.35);
   border-radius: 6px;
 }
 
@@ -488,7 +488,7 @@
 
 .sammel-timeline-item .timeline-event {
   padding: 2px 6px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.35);
   border-radius: 4px;
 }
 

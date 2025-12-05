@@ -17,10 +17,16 @@ let farbenConfig = null;
 // Erkennung-Config wird von außen gesetzt (aus morphs.yaml)
 let erkennungConfig = null;
 
-// Fallback-Farben
+// Echter Glas-Stil - durchscheinend leuchtend auf schwarzem Grund
 const FALLBACK_FARBEN = [
-  '#e8b04a', '#60c090', '#d06080', '#5aa0d8', 
-  '#a080d0', '#d0a050', '#50b0b0', '#d08050'
+  'rgba(100, 220, 160, 0.45)',   // Glas-Smaragd
+  'rgba(90, 160, 240, 0.45)',    // Glas-Saphir
+  'rgba(240, 190, 80, 0.45)',    // Glas-Bernstein
+  'rgba(240, 110, 110, 0.45)',   // Glas-Rubin
+  'rgba(170, 130, 220, 0.45)',   // Glas-Amethyst
+  'rgba(80, 210, 210, 0.45)',    // Glas-Aquamarin
+  'rgba(220, 130, 170, 0.45)',   // Glas-Rosa
+  'rgba(170, 210, 100, 0.45)'    // Glas-Peridot
 ];
 
 /**
@@ -72,11 +78,12 @@ export function erstelleFarben(itemIds) {
 }
 
 /**
- * Erstellt einen Section-Container
+ * Erstellt einen Section-Container mit optionalem Abwahl-Button
  * @param {string} label - Überschrift
  * @param {string} farbe - Akzentfarbe (optional)
+ * @param {string} feldName - Feldname für Abwahl-Funktionalität (optional)
  */
-export function createSection(label, farbe = null) {
+export function createSection(label, farbe = null, feldName = null) {
   const section = document.createElement('div');
   section.className = 'compare-section';
   
@@ -84,9 +91,31 @@ export function createSection(label, farbe = null) {
     section.style.setProperty('--section-farbe', farbe);
   }
   
+  // Feldname als data-Attribut für spätere Referenz
+  if (feldName) {
+    section.dataset.feldName = feldName;
+  }
+  
   const header = document.createElement('div');
   header.className = 'compare-section-header';
-  header.textContent = label;
+  
+  // Label-Text
+  const labelSpan = document.createElement('span');
+  labelSpan.className = 'compare-section-label';
+  labelSpan.textContent = label;
+  header.appendChild(labelSpan);
+  
+  // Abwahl-Button (nur wenn feldName vorhanden)
+  if (feldName) {
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'compare-section-remove';
+    removeBtn.type = 'button';
+    removeBtn.title = `${label} abwählen`;
+    removeBtn.innerHTML = '×';
+    removeBtn.dataset.feldName = feldName;
+    header.appendChild(removeBtn);
+  }
+  
   section.appendChild(header);
 
   const content = document.createElement('div');
@@ -120,8 +149,8 @@ export function createSectionIfNew(feldName, label, farbe = null, skipFelder = n
     skipFelder.add(feldName);
   }
   
-  // Normale Section erstellen
-  return createSection(label, farbe);
+  // Normale Section erstellen MIT feldName für Abwahl-Button
+  return createSection(label, farbe, feldName);
 }
 
 /**

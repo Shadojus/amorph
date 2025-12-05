@@ -1,0 +1,159 @@
+# AMORPH Schema - Felder (anpassbar)
+# Definiert alle verfügbaren Datenfelder
+# Kann pro Projekt angepasst werden
+
+# === FELD-REIHENFOLGE ===
+# In welcher Reihenfolge werden Felder angezeigt?
+reihenfolge:
+  - bild
+  - name
+  - wissenschaftlich
+  - essbarkeit
+  - bewertung
+  - verfuegbarkeit
+  - geschmack
+  - saison
+  - temperatur
+  - beliebtheit
+  - naehrwerte
+  - profil
+  - wirkstoffe
+  - ernte_stats
+  - lebenszyklus
+  - standort
+  - zubereitung
+  - verwechslung
+  - beschreibung
+
+# === FELDER ===
+# Jedes Feld kann optional haben:
+#   - citation: {quelle, url, datum, autor, lizenz, verifiziert}
+#   - advertisement: {sponsor, typ, url, kampagne, kennzeichnung}
+
+felder:
+  # --- Textfelder ---
+  wissenschaftlich:
+    typ: string
+    label: Wissenschaftlicher Name
+    suche:
+      gewicht: 40
+    citation:
+      quelle: Index Fungorum
+      url: "http://www.indexfungorum.org"
+      verifiziert: true
+  
+  beschreibung:
+    typ: string
+    label: Beschreibung
+    suche:
+      gewicht: 20
+  
+  zubereitung:
+    typ: string
+    label: Zubereitung
+    suche:
+      gewicht: 30
+  
+  symptome:
+    typ: string
+    label: Symptome
+    suche:
+      gewicht: 30
+
+  # --- Tags/Kategorien ---
+  essbarkeit:
+    typ: tag
+    label: Essbarkeit
+    suche:
+      gewicht: 50
+    farben:
+      essbar: "#60c090"
+      bedingt essbar: "#d0a050"
+      nicht essbar: "#808080"
+      giftig: "#d06080"
+      tödlich: "#a04060"
+  
+  saison:
+    typ: tag
+    label: Saison
+    suche:
+      gewicht: 40
+
+  # --- Listen ---
+  standort:
+    typ: list
+    label: Standort
+    suche:
+      gewicht: 40
+  
+  verwechslung:
+    typ: list
+    label: Verwechslung mit
+    suche:
+      gewicht: 30
+  
+  geschmack:
+    typ: list
+    label: Geschmack
+    suche:
+      gewicht: 40
+
+  # --- Bereiche (auto-erkannt: min/max → range) ---
+  temperatur:
+    label: Temperatur
+    einheit: °C
+
+  # --- Progress (auto-erkannt: Zahl 0-100) ---
+  beliebtheit:
+    label: Beliebtheit
+    einheit: "%"
+    # Beispiel: Beliebtheitsdaten könnten gesponsert sein
+    advertisement:
+      sponsor: "Pilz-Community"
+      typ: sponsored
+      kennzeichnung: false
+    einheit: "%"
+  
+  toxizitaet:
+    label: Toxizität
+    einheit: "%"
+  
+  medizinisch:
+    label: Medizinischer Wert
+    einheit: "%"
+  
+  forschung:
+    label: Forschung
+    einheit: "%"
+
+  # --- Rating (auto-erkannt: Zahl 0-10) ---
+  bewertung:
+    label: Bewertung
+
+  # --- Badge (auto-erkannt: Status-String) ---
+  verfuegbarkeit:
+    label: Status
+
+  # --- Pie (auto-erkannt: Objekt mit Zahlen) ---
+  naehrwerte:
+    label: Zusammensetzung
+    totalLabel: "Anteil"
+
+  # --- Radar (auto-erkannt: Array mit axis/value) ---
+  profil:
+    label: Profil
+
+  # --- Bar (auto-erkannt: Array mit label/value) ---
+  wirkstoffe:
+    label: Wirkstoffe
+    maxBalken: 5
+
+  # --- Stats (auto-erkannt: Objekt mit min/max/avg) ---
+  ernte_stats:
+    label: Ernte-Statistik
+    einheit: "g"
+
+  # --- Timeline (auto-erkannt: Array mit date/event) ---
+  lebenszyklus:
+    label: Lebenszyklus
+    maxEvents: 6

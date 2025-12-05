@@ -8,15 +8,15 @@ Verfügbare Utilities:
 - `dom.js` - Sichere DOM-Manipulation
 - `fetch.js` - Datenbank-Zugriff + Highlight-System
 - `session.js` - Session-Handling
-- `semantic.js` - **Config-Gateway** (Schema + Morphs-Config)
+- `semantic.js` - **Config-Gateway** (Modulares Schema + Morphs-Config)
 
 ### semantic.js - Das Config-Gateway
 
-**Zentrale Anlaufstelle für alle Config-Werte aus YAML:**
+**Zentrale Anlaufstelle für alle Config-Werte aus dem modularen Schema-System:**
 
 ```javascript
-// === SCHEMA-ZUGRIFF ===
-setSchema(schema)              // Schema setzen (wird beim Start aufgerufen)
+// === SCHEMA-ZUGRIFF (aus config/schema/) ===
+setSchema(schema)              // Modulares Schema setzen
 getSchema()                    // Ganzes Schema holen
 getFeldReihenfolge()           // Array der Feldnamen in definierter Reihenfolge
 sortBySchemaOrder(obj)         // Objekt nach Schema-Reihenfolge sortieren
@@ -28,15 +28,15 @@ getAlleFeldConfigs()           // Alle Feld-Configs
 // === MORPHS-CONFIG ZUGRIFF ===
 setMorphsConfig(config)        // Morphs-Config setzen (wird beim Start aufgerufen)
 getFarben(palette)             // Holt Farben: 'pilze', 'diagramme', 'standard'
-getBadgeConfig()               // Holt Badge-Variants & Colors
+getBadgeConfig()               // Holt Badge-Variants & Colors (gedämpfte Farben)
 
-// === SEMANTISCHE SUCHE ===
+// === SEMANTISCHE SUCHE (aus schema/semantik.yaml) ===
 semanticScore(item, query)     // Berechnet Relevanz-Score für Item
 getSuchfelder()                // Array der durchsuchbaren Felder
 
-// === PERSPEKTIVEN ===
+// === PERSPEKTIVEN (aus schema/perspektiven/*.yaml) ===
 getPerspektivenKeywords()      // Keywords für Auto-Aktivierung
-getPerspektivenListe()         // Alle Perspektiven als Array
+getPerspektivenListe()         // Alle aktiven Perspektiven als Array
 getPerspektivenMorphConfig()   // Morph-Config basierend auf Perspektiven
 getAllePerspektivenFarben()    // 4-Farben-Grid für aktive Perspektiven
 ```

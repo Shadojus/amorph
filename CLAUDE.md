@@ -6,7 +6,7 @@ Formlos. Zustandslos. Transformierend.
 
 AMORPH ist ein datengetriebenes Transformations-Framework das Daten aus einer Datenbank in DOM-Elemente wandelt. Das System basiert auf:
 
-- **Schema-basierte Transformation** (YAML → Morphs → DOM)
+- **Modulares Schema-System** (config/schema/ mit Basis + Perspektiven)
 - **Black Glasmorphism Design** mit Multi-Color Glow
 - **Semantische Suche** mit Keyword-Mapping
 - **Perspektiven-System** mit 4-Farben-Grid
@@ -19,16 +19,17 @@ AMORPH ist ein datengetriebenes Transformations-Framework das Daten aus einer Da
   - Zeile 1 (Suche): Suchleiste mit aktiven Filter-Badges
   - Zeile 2 (Controls): Ansicht-Switch + Perspektiven-Buttons
 - **2 Ansichten**:
-  - **Grid (Karten)**: Karten-Layout (Standard)
+  - **Grid (Karten)**: Karten-Layout mit Glasmorphism (Standard)
   - **Vergleich (Vektorraum)**: Laterale Visualisierung mit Compare-Morphs
 - **Feld-Auswahl-System**: Einzelne FELDER sind anklickbar
 - **View-aware Suche**: DB-Suche nur in Grid-View, Highlights in Vergleich-View
+- **Diagramm-Legenden**: Alle Diagramme (Pie, Bar, Radar, Stats, Timeline, Range) mit Legenden/Achsenbeschriftungen
 
 ### Architektur-Prinzipien
 
 - **Morph-Purity**: Keine Side-Effects, nur DOM-Erzeugung
 - **Feature-Isolation**: Saubere Trennung der Komponenten
-- **Config-Zentralisierung**: Alle Werte aus YAML-Config
+- **Schema-Modularität**: Basis unveränderlich, Perspektiven austauschbar
 - **Event-System**: Custom Events für Kommunikation
 
 ### Feld-Auswahl
@@ -36,24 +37,26 @@ User kann einzelne Felder in Cards auswählen:
 - Klick auf Feld → existierender Perspektiven-Balken wird **intensiver**
 - Hintergrund leuchtet stärker in Perspektiven-Farbe
 - Balken wird breiter (2px → 5px) mit verstärktem Multi-Color Glow
-- Detail-View zeigt ausgewählte Felder gruppiert nach Pilz
 - Vergleich-View stellt gleiche Feldtypen nebeneinander
 
-### Feld-Reihenfolge
-Definiert in `config/schema.yaml`:
-```yaml
-reihenfolge:
-  - bild         # Immer zuerst
-  - name
-  - wissenschaftlich
-  - essbarkeit
-  # ... weitere Felder
+### Modulares Schema-System
+
+```
+config/schema/
+├── index.yaml           # Schema-Index
+├── basis.yaml           # Unveränderliche Kern-Config
+├── felder.yaml          # Anpassbare Feld-Definitionen
+├── semantik.yaml        # Such-Mappings
+└── perspektiven/        # Austauschbare Perspektiven
+    ├── index.yaml       # Liste aktiver Perspektiven
+    ├── kulinarisch.yaml
+    ├── sicherheit.yaml
+    └── ...
 ```
 
-```javascript
-// State-Struktur
-state.auswahl = Map<"pilzId:feldName", {pilzId, feldName, wert, pilzDaten}>
-```
+**Jedes Feld unterstützt optionale Attribute:**
+- `citation` - Quellenangabe (quelle, url, datum, autor, lizenz)
+- `advertisement` - Werbung (sponsor, typ, url, kampagne, kennzeichnung)
 
 ## Was ist AMORPH?
 
@@ -78,11 +81,11 @@ DATEN (JSON) → detectType() → MORPH → DOM
 if (feldName === 'temperatur') return 'range';  // VERBOTEN!
 ```
 
-Das Schema (`config/schema.yaml`) ist die **Single Source of Truth** für:
-- Explizite Typ-Overrides: `felder.essbarkeit.typ: tag`
-- Feld-spezifische Farben: `felder.essbarkeit.farben`
-- Semantische Suchregeln
-- Perspektiven-Definitionen
+Das Schema (`config/schema/`) ist die **Single Source of Truth** für:
+- Kern-Felder: `basis.yaml` (unveränderlich)
+- Anpassbare Felder: `felder.yaml`
+- Semantik: `semantik.yaml`
+- Perspektiven: `perspektiven/*.yaml` (austauschbar)
 
 Die Typ-Erkennung (`core/pipeline.js`) kommt aus `config/morphs.yaml`:
 - `erkennung.badge.keywords` - Welche Strings als Badge erkannt werden
@@ -93,11 +96,12 @@ Die Typ-Erkennung (`core/pipeline.js`) kommt aus `config/morphs.yaml`:
 ## Design: Black Glasmorphism
 
 AMORPH nutzt ein elegantes **Black Glasmorphism** Design:
-- Tiefschwarzer Hintergrund mit `backdrop-filter: blur()`
-- Glass-Cards mit dezenten weißen Borders (5-15% Opacity)
+- Tiefschwarzer Hintergrund mit Woodfloor-Textur
+- Glass-Cards mit `backdrop-filter: blur(16px)` und 88-92% schwarzem Overlay
+- Dezente weiße Borders (5-15% Opacity) + `inset box-shadow`
 - **Multi-Color Glow-Effekte** mit CSS `color-mix()`
-- Woodfloor-Texturen als subtiler Hintergrund
 - Pulsierende Animationen für aktive Elemente
+- **Einheitliches Design** in Grid- und Compare-View
 
 ### Header-Layout (3 Zeilen)
 

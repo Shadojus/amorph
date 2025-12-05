@@ -7,7 +7,7 @@ Das Header-Feature kombiniert Suche + Perspektiven in einem Container und steuer
 Das Header-Feature enthält:
 - **Suche + Perspektiven kombiniert**: Ein Header für alles
 - **Live-Suche**: Mit konfigurierbarem Debounce
-- **Auto-Perspektiven**: Basierend auf Query und Ergebnissen
+- **Auto-Perspektiven**: Basierend auf Query und Ergebnissen (Keywords aus schema/perspektiven/)
 - **Perspektiven-Badges**: Aktive Perspektiven als Chips in Suchleiste
 - **Scroll-Detection**: Via IntersectionObserver
 - **Ansicht-Wechsel**: Integrierter Switch für Grid/Vergleich
@@ -18,7 +18,7 @@ Das Header-Feature enthält:
 | Komponente | Funktion |
 |------------|----------|
 | `suche` | Textsuche mit Live-Modus |
-| `perspektiven` | Farbige Filter-Buttons |
+| `perspektiven` | Farbige Filter-Buttons (aus schema/perspektiven/*.yaml) |
 | `aktive-filter` | Badges der aktiven Perspektiven |
 | `ansicht-switch` | Grid/Vergleich Toggle |
 
@@ -27,13 +27,13 @@ Das Header-Feature enthält:
 ```javascript
 const headerConfig = {
   suche: ctx.config.suche || {},           // features.yaml → suche
-  perspektiven: perspektivenConfig,         // features.yaml + schema.yaml
+  perspektiven: perspektivenConfig,         // schema/perspektiven/*.yaml
   ansicht: ctx.config.ansicht || {}         // features.yaml → ansicht
 };
 
-// Keywords aus Schema für Auto-Perspektiven
-const schemaKeywords = getPerspektivenKeywords();  // schema.yaml → perspektiven[].keywords
-const schemaListe = getPerspektivenListe();        // schema.yaml → perspektiven[]
+// Keywords aus modularem Schema für Auto-Perspektiven
+const schemaKeywords = getPerspektivenKeywords();  // schema/perspektiven/*.yaml
+const schemaListe = getPerspektivenListe();        // schema/perspektiven/index.yaml → aktiv
 ```
 
 ### Event-System

@@ -5,26 +5,42 @@ Laterale Lösung: Informationen durch Raumeinteilung und Vektoren verknüpfen.
 ## Übersicht
 
 Das Vergleich-Feature bietet:
+- **Glasmorphism Design** (identisch zu Grid-View)
 - Sammel-Diagramm mit Pilz-Legende (farbige Punkte)
-- Perspektiven-aware Morphs (Label + Farben aus aktivierter Perspektive)
+- Perspektiven-aware Morphs (Label + Farben aus schema/perspektiven/)
 - Multi-Perspektiven Glow (wenn Feld zu mehreren Perspektiven gehört)
 - **Compare-Morphs Integration**: Nutzt typ-basierte Compare-Morphs aus `morphs/compare/`
 - **Suche-Highlights**: Markiert Suchbegriffe im Vergleich-View
 - **Datengetriebene Morph-Auswahl**: `compareMorph()` wählt basierend auf TYP, nicht Feldname
 - **Feld-Deduplizierung**: Jedes Feld nur einmal über alle Perspektiven
+- **Diagramm-Legenden**: Alle Visualisierungen mit Legenden/Achsenbeschriftungen
 
-### Verwendete Compare-Morphs
+### Glasmorphism (wie Grid-View)
+
+```css
+.compare-perspektive {
+  background: linear-gradient(135deg, rgba(0,0,0,0.88), rgba(0,0,0,0.92));
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
+}
+```
+
+### Verwendete Compare-Morphs (alle mit Legenden)
 
 | Typ | Compare-Morph | Beschreibung |
 |-----|---------------|--------------|
 | `rating` | `compareRating` | Sterne-Vergleich |
-| `progress` | `compareBar` | Horizontale Balken |
-| `range` | `compareRange` | Range-Visualisierung |
+| `progress` | `compareBar` | Horizontale Balken + Legende |
+| `range` | `compareRange` | Range-Visualisierung + Legende |
 | `tag`/`badge` | `compareTag` | Gruppierte Chips |
 | `list` | `compareList` | Listen mit Überlappung |
 | `image` | `compareImage` | Bildergalerie |
-| `radar` | `compareRadar` | Überlappende Radar-Charts |
-| `pie` | `comparePie` | Mini-Pie-Charts nebeneinander |
+| `radar` | `compareRadar` | Überlappende Radar-Charts + Pilz-Legende |
+| `pie` | `comparePie` | Mini-Pie-Charts + Segment-Legende |
+| `stats` | `compareStats` | Box-Plot Style + Legende |
+| `timeline` | `compareTimeline` | Zeitliche Events + Pilz-Legende |
+| `bar` | `compareBarGroup` | Gruppierte Balken + Farbige Legende |
 | `*` | `compareText` | Fallback Text-Vergleich |
 
 ### Event-Handling
