@@ -105,10 +105,20 @@
   animation: compare-glow-single 4s ease-in-out infinite;
 }
 
-/* Label mit Perspektiven-Farbe */
-.amorph-compare.perspektive-aktiv .compare-label {
-  color: var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.9));
-  text-shadow: 0 0 8px color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 40%, transparent);
+/* Label mit Perspektiven-Farbe - gleiche Optik wie der vertikale Balken */
+.amorph-compare.perspektive-aktiv .compare-label,
+.amorph-compare.perspektive-aktiv .compare-section-header {
+  color: var(--feld-perspektive-farbe, rgba(255, 200, 120, 1));
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  border-bottom-color: color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 50%, transparent);
+  /* Glow-Effekt wie der Balken */
+  text-shadow: 
+    0 0 4px var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)),
+    0 0 8px var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.5)),
+    0 0 16px var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.3));
+  /* Pulsieren wie der Balken */
+  animation: compare-label-pulse 4s ease-in-out infinite;
 }
 
 /* ============================================
@@ -147,7 +157,7 @@
 }
 
 /* === ANIMATIONEN === */
-/* Single-Perspektive Glow */
+/* Single-Perspektive Glow für Balken */
 @keyframes compare-glow-single {
   0%, 100% { 
     opacity: 0.85;
@@ -161,6 +171,18 @@
       0 0 8px color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 70%, transparent),
       0 0 16px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 50%, transparent),
       0 0 24px color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe)) 30%, transparent);
+  }
+}
+
+/* Single-Perspektive Glow für Labels - Pulsieren mit brightness */
+@keyframes compare-label-pulse {
+  0%, 100% { 
+    opacity: 0.85;
+    filter: brightness(0.9) blur(0px);
+  }
+  50% { 
+    opacity: 1;
+    filter: brightness(1.3) blur(0.3px);
   }
 }
 

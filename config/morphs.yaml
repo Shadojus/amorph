@@ -232,30 +232,71 @@ badge:
       icon: "•"
 
 # === FARB-PALETTEN ===
-# Echte Glasfarben - durchscheinend, leuchtend auf Schwarz
-# Wie farbiges Glas mit Licht dahinter
+# Pilz-Farben: Große Palette von Glass-Morphism Farben
+# Die erstelleFarben() Funktion filtert dynamisch Farben aus die zu ähnlich 
+# zu den aktiven Perspektiven-Farben sind
 farben:
-  # Pilz-Farben für Vergleiche (8 distinkte Glasfarben)
+  # Vollständige Pilz-Palette (12 distinkte Glass-Morphism Farben)
+  # Diese werden dynamisch gefiltert basierend auf aktiven Perspektiven
   pilze:
-    - "rgba(100, 220, 160, 0.40)"   # Glas-Smaragd
-    - "rgba(90, 160, 240, 0.40)"    # Glas-Saphir
-    - "rgba(240, 190, 80, 0.40)"    # Glas-Bernstein
-    - "rgba(240, 110, 110, 0.40)"   # Glas-Rubin
-    - "rgba(170, 130, 220, 0.40)"   # Glas-Amethyst
-    - "rgba(80, 210, 210, 0.40)"    # Glas-Aquamarin
-    - "rgba(220, 130, 170, 0.40)"   # Glas-Rosa
-    - "rgba(170, 210, 100, 0.40)"   # Glas-Peridot
+    # Kühle Töne
+    - name: "Silber"
+      rgb: [200, 210, 220]
+      color: "rgba(200, 210, 220, 0.70)"
+    - name: "Stahl"
+      rgb: [160, 175, 195]
+      color: "rgba(160, 175, 195, 0.65)"
+    - name: "Schiefer"
+      rgb: [130, 145, 165]
+      color: "rgba(130, 145, 165, 0.60)"
+    # Blaue Töne
+    - name: "Eisblau"
+      rgb: [180, 200, 255]
+      color: "rgba(180, 200, 255, 0.70)"
+    - name: "Himmelblau"
+      rgb: [130, 170, 255]
+      color: "rgba(130, 170, 255, 0.65)"
+    - name: "Indigo"
+      rgb: [100, 120, 200]
+      color: "rgba(100, 120, 200, 0.60)"
+    # Warme Töne
+    - name: "Bernstein"
+      rgb: [240, 190, 100]
+      color: "rgba(240, 190, 100, 0.65)"
+    - name: "Kupfer"
+      rgb: [220, 150, 100]
+      color: "rgba(220, 150, 100, 0.60)"
+    - name: "Terrakotta"
+      rgb: [200, 130, 100]
+      color: "rgba(200, 130, 100, 0.55)"
+    # Grüne Töne
+    - name: "Jade"
+      rgb: [140, 210, 170]
+      color: "rgba(140, 210, 170, 0.65)"
+    - name: "Moos"
+      rgb: [120, 180, 130]
+      color: "rgba(120, 180, 130, 0.60)"
+    - name: "Olive"
+      rgb: [150, 170, 100]
+      color: "rgba(150, 170, 100, 0.55)"
+    # Violette Töne
+    - name: "Lavendel"
+      rgb: [180, 160, 220]
+      color: "rgba(180, 160, 220, 0.65)"
+    - name: "Pflaume"
+      rgb: [160, 120, 180]
+      color: "rgba(160, 120, 180, 0.60)"
+    # Rosa Töne
+    - name: "Rose"
+      rgb: [220, 160, 180]
+      color: "rgba(220, 160, 180, 0.60)"
+    - name: "Koralle"
+      rgb: [240, 150, 150]
+      color: "rgba(240, 150, 150, 0.55)"
   
-  # Diagramm-Farben für Pie/Bar Charts - leuchtend durchscheinend
-  diagramme:
-    - "rgba(100, 220, 160, 0.45)"   # Glas-Smaragd
-    - "rgba(90, 160, 240, 0.45)"    # Glas-Saphir
-    - "rgba(240, 190, 80, 0.45)"    # Glas-Bernstein
-    - "rgba(240, 110, 110, 0.45)"   # Glas-Rubin
-    - "rgba(170, 130, 220, 0.45)"   # Glas-Amethyst
-    - "rgba(80, 210, 210, 0.45)"    # Glas-Aquamarin
-    - "rgba(220, 130, 170, 0.45)"   # Glas-Rosa
-    - "rgba(170, 210, 100, 0.45)"   # Glas-Peridot
+  # Ähnlichkeits-Schwellenwert für Farbvergleich (0-255)
+  # Je höher, desto mehr Farben werden als "zu ähnlich" ausgeschlossen
+  aehnlichkeit_schwellenwert: 80
   
-  # Fallback-Farbe - Glas-Saphir
-  standard: "rgba(90, 160, 240, 0.55)"
+  # Fallback-Farbe wenn alle gefiltert wurden
+  standard: "rgba(160, 175, 195, 0.65)"

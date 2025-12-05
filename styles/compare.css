@@ -1,25 +1,69 @@
 /* AMORPH v5 - Compare Morphs CSS */
 /* Mobile-First Vergleichs-Visualisierungen */
 
+/* === ANIMATIONEN === */
+/* Kaputte Lampe - nur text-shadow flackert, nicht der Container */
+@keyframes label-flicker {
+  0%, 100% { 
+    text-shadow: 0 0 2px var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.5));
+  }
+  
+  /* Erster Aussetzer */
+  3.2% { text-shadow: 0 0 1px var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.4)); }
+  3.4% { text-shadow: none; }
+  3.7% { text-shadow: 0 0 2px var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.5)); }
+  
+  /* Doppel-Flacker bei 17% */
+  17% { text-shadow: 0 0 2px var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.5)); }
+  17.1% { text-shadow: none; }
+  17.4% { text-shadow: 0 0 1px var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.35)); }
+  17.5% { text-shadow: none; }
+  17.9% { text-shadow: 0 0 2px var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.5)); }
+  
+  /* Einzelner Ausfall bei 41% */
+  41% { text-shadow: 0 0 2px var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.5)); }
+  41.15% { text-shadow: none; }
+  41.5% { text-shadow: 0 0 2px var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.5)); }
+  
+  /* Nervöses Mehrfach bei 52% */
+  52% { text-shadow: 0 0 2px var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.5)); }
+  52.1% { text-shadow: none; }
+  52.3% { text-shadow: 0 0 1px var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.3)); }
+  52.35% { text-shadow: none; }
+  52.5% { text-shadow: 0 0 1px var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.4)); }
+  52.55% { text-shadow: none; }
+  52.8% { text-shadow: 0 0 2px var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.5)); }
+  
+  /* Fast-Aus bei 83% */
+  83% { text-shadow: 0 0 2px var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.5)); }
+  83.1% { text-shadow: none; }
+  83.6% { text-shadow: 0 0 1px var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.25)); }
+  83.7% { text-shadow: none; }
+  84.2% { text-shadow: 0 0 2px var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.5)); }
+}
+
 /* === BASIS === */
 .amorph-compare {
   width: 100%;
   padding: 12px;
-  background: rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.03);
   border-radius: 8px;
   margin-bottom: 10px;
 }
 
 .compare-label {
-  font-size: 11px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--feld-perspektive-farbe, rgba(255, 200, 120, 1));
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   margin-bottom: 10px;
   padding-bottom: 6px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 50%, transparent);
+  /* Dezenter Glow */
+  text-shadow: 0 0 2px var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.5));
+  animation: label-flicker 12s ease-in-out infinite;
 }
 
 /* === SECTION HEADER mit Abwahl-Button === */
@@ -28,14 +72,17 @@
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  font-size: 11px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--feld-perspektive-farbe, rgba(255, 200, 120, 1));
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   margin-bottom: 10px;
   padding-bottom: 6px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 50%, transparent);
+  /* Dezenter Glow */
+  text-shadow: 0 0 2px var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.5));
+  animation: label-flicker 12s ease-in-out infinite;
 }
 
 .compare-section-label {
@@ -49,7 +96,7 @@
   border: none;
   border-radius: 4px;
   background: transparent;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.40);
   font-size: 16px;
   font-weight: 300;
   line-height: 1;
@@ -73,7 +120,7 @@
 }
 
 .compare-leer {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.40);
   font-size: 12px;
   text-align: center;
   padding: 20px;
@@ -103,7 +150,7 @@
 
 .compare-bar-row .bar-track {
   height: 18px;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.20);
   border-radius: 9px;
   overflow: hidden;
 }
@@ -128,7 +175,7 @@
   justify-content: space-between;
   padding: 6px 88px 0 88px;
   font-size: 9px;
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.40);
   font-variant-numeric: tabular-nums;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   margin-top: 8px;
@@ -169,7 +216,7 @@
 
 .compare-rating-row .rating-wert {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.60);
 }
 
 /* === COMPARE TAG === */
@@ -182,7 +229,7 @@
 .compare-chip {
   display: flex;
   align-items: center;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.15);
   border-radius: 20px;
   overflow: hidden;
 }
@@ -197,7 +244,7 @@
 .compare-chip .chip-pilze {
   padding: 6px 10px 6px 6px;
   font-size: 10px;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.60);
 }
 
 .compare-chip .chip-pilze span {
@@ -216,7 +263,7 @@
   align-items: center;
   gap: 6px;
   padding: 5px 10px;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.20);
   border-radius: 16px;
   font-size: 11px;
 }
@@ -227,7 +274,7 @@
 }
 
 .compare-list-item .list-wert {
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .compare-list-item .list-pilze {
@@ -326,7 +373,7 @@
   align-items: center;
   gap: 5px;
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .compare-legende .legende-dot {
@@ -359,7 +406,7 @@
 
 .radar-compact-row .radar-achse {
   font-size: 10px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.60);
 }
 
 .radar-compact-bars {
@@ -410,7 +457,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.40);
   font-size: 20px;
 }
 
@@ -430,7 +477,7 @@
 .compare-text-row .text-pilz {
   font-size: 11px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.60);
   padding-left: 8px;
   border-left: 3px solid;
 }
@@ -494,7 +541,7 @@
 .wirkstoffe-label {
   font-size: 11px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.60);
 }
 
 .wirkstoffe-bars {
@@ -519,7 +566,7 @@
 
 .wirkstoffe-bar .bar-value {
   font-size: 10px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.60);
   white-space: nowrap;
 }
 
@@ -553,7 +600,7 @@
   align-items: center;
   gap: 4px;
   padding: 4px 10px;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.18);
   border-left: 3px solid;
   border-radius: 0 8px 8px 0;
   font-size: 11px;
@@ -561,7 +608,7 @@
 }
 
 .timeline-event .event-date {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.60);
   font-size: 10px;
 }
 
@@ -573,7 +620,7 @@
 }
 
 .bar-group {
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.18);
   border-radius: 8px;
   padding: 10px 12px;
 }
@@ -610,7 +657,7 @@
 
 .bar-group-bar .bar-track {
   height: 14px;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.20);
   border-radius: 7px;
   overflow: hidden;
 }
@@ -721,7 +768,7 @@
 
 .compare-perspektive-header .perspektive-count {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.60);
   margin-left: auto;
 }
 
@@ -742,7 +789,7 @@
   align-items: center;
   gap: 6px;
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .compare-legende-item .legende-dot {
@@ -819,7 +866,7 @@
 
 .compare-text-wrap .text-inhalt {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.85);
   line-height: 1.5;
 }
 
@@ -863,7 +910,7 @@
 .ernte-row .ernte-label {
   font-size: 11px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.60);
 }
 
 .ernte-bars {
@@ -889,7 +936,7 @@
 
 .ernte-bar .bar-track {
   height: 12px;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.20);
   border-radius: 6px;
   overflow: hidden;
 }
@@ -904,7 +951,7 @@
 .ernte-bar .bar-value {
   font-size: 10px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.60);
   text-align: right;
 }
 
@@ -932,7 +979,7 @@
 
 .progress-row .progress-bar-container {
   height: 16px;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.20);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -963,7 +1010,7 @@
   align-items: center;
   gap: 6px;
   padding: 10px 14px;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.18);
   border-radius: 10px;
 }
 
@@ -974,7 +1021,7 @@
 
 .compare-boolean-wrap .boolean-wert {
   font-size: 24px;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.40);
 }
 
 .compare-boolean-wrap .boolean-wert.boolean-ja {
@@ -1001,14 +1048,14 @@
 }
 
 .object-header {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.20);
   border-radius: 8px 8px 0 0;
   font-size: 11px;
   font-weight: 600;
 }
 
 .object-header .object-key-header {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.60);
 }
 
 .object-header .object-name {
@@ -1019,7 +1066,7 @@
 }
 
 .object-row {
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.12);
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
@@ -1031,7 +1078,7 @@
 .object-row .object-key {
   font-size: 11px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.60);
 }
 
 .object-row .object-cell {
@@ -1064,7 +1111,7 @@
 
 .range-row .range-track {
   height: 12px;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.20);
   border-radius: 6px;
   position: relative;
 }
@@ -1079,7 +1126,7 @@
 .range-row .range-werte {
   font-size: 10px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.60);
   text-align: right;
 }
 
@@ -1088,7 +1135,7 @@
   justify-content: space-between;
   padding: 6px 90px 0 90px;
   font-size: 9px;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.40);
 }
 
 /* === COMPARE STATS === */
@@ -1107,13 +1154,13 @@
 }
 
 .stats-header {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.20);
   border-radius: 8px 8px 0 0;
 }
 
 .stats-header .stats-label {
   font-size: 10px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.60);
 }
 
 .stats-header .stats-name {
@@ -1126,7 +1173,7 @@
 }
 
 .stats-row {
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.12);
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
@@ -1138,7 +1185,7 @@
 .stats-row .stats-label {
   font-size: 11px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.60);
 }
 
 .stats-cell {
@@ -1149,7 +1196,7 @@
 
 .stats-cell .stats-bar-bg {
   height: 8px;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.20);
   border-radius: 4px;
   overflow: hidden;
 }
@@ -1162,13 +1209,13 @@
 
 .stats-cell .stats-wert {
   font-size: 10px;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.60);
   text-align: center;
 }
 
 .stats-cell.stats-max .stats-wert {
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 /* === COMPARE WIRKSTOFFE (Theme) === */
@@ -1188,7 +1235,7 @@
 .compare-wirkstoffe .wirkstoffe-label {
   font-size: 11px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.60);
   padding-top: 3px;
 }
 
@@ -1213,7 +1260,7 @@
 
 .compare-wirkstoffe .wirkstoffe-bar .bar-value {
   font-size: 10px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.60);
   white-space: nowrap;
 }
 
@@ -1249,7 +1296,7 @@
 
 .timeline-punkt .timeline-datum {
   font-size: 10px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.60);
 }
 
 .timeline-punkt .timeline-text {
@@ -1330,7 +1377,7 @@
   align-items: center;
   gap: 4px;
   font-size: 10px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.60);
 }
 
 .pie-legende-dot {
@@ -1356,7 +1403,7 @@
   align-items: center;
   gap: 4px;
   font-size: 10px;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.60);
 }
 
 .bar-group-legende .legende-dot {

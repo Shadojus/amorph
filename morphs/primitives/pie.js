@@ -12,17 +12,16 @@
 import { debug } from '../../observer/debug.js';
 import { getFarben } from '../../util/semantic.js';
 
-// Echte Glasfarben - durchscheinend, leuchtend auf Schwarz
-// Wie farbiges Glas mit Licht dahinter
+// Pilz-Farben: Nur Blau-Töne - klar getrennt von Perspektiven-Farben
 const FARBEN_FALLBACK = [
-  'rgba(100, 220, 160, 0.45)',   // Glas-Smaragd
-  'rgba(90, 160, 240, 0.45)',    // Glas-Saphir
-  'rgba(240, 190, 80, 0.45)',    // Glas-Bernstein
-  'rgba(240, 110, 110, 0.45)',   // Glas-Rubin
-  'rgba(170, 130, 220, 0.45)',   // Glas-Amethyst
-  'rgba(80, 210, 210, 0.45)',    // Glas-Aquamarin
-  'rgba(220, 130, 170, 0.45)',   // Glas-Rosa
-  'rgba(170, 210, 100, 0.45)'    // Glas-Peridot
+  'rgba(180, 200, 255, 0.80)',   // Eisblau
+  'rgba(130, 170, 255, 0.75)',   // Himmelblau
+  'rgba(100, 140, 220, 0.70)',   // Mittelblau
+  'rgba(70, 120, 200, 0.65)',    // Königsblau
+  'rgba(90, 100, 180, 0.65)',    // Indigo-Blau
+  'rgba(60, 90, 160, 0.60)',     // Dunkelblau
+  'rgba(80, 130, 190, 0.67)',    // Stahlblau
+  'rgba(110, 160, 230, 0.73)'    // Kornblumenblau
 ];
 
 function getDiagrammFarben() {
