@@ -232,71 +232,53 @@ badge:
       icon: "•"
 
 # === FARB-PALETTEN ===
-# Pilz-Farben: Große Palette von Glass-Morphism Farben
+# Pilz-Farben: Neon-Farben - klar unterscheidbar
+# Sehr transparent für gefüllte Flächen (Glass Morphism)
 # Die erstelleFarben() Funktion filtert dynamisch Farben aus die zu ähnlich 
 # zu den aktiven Perspektiven-Farben sind
 farben:
-  # Vollständige Pilz-Palette (12 distinkte Glass-Morphism Farben)
-  # Diese werden dynamisch gefiltert basierend auf aktiven Perspektiven
+  # Neon Pilz-Palette - leuchtend aber transparent
   pilze:
-    # Kühle Töne
-    - name: "Silber"
-      rgb: [200, 210, 220]
-      color: "rgba(200, 210, 220, 0.70)"
-    - name: "Stahl"
-      rgb: [160, 175, 195]
-      color: "rgba(160, 175, 195, 0.65)"
-    - name: "Schiefer"
-      rgb: [130, 145, 165]
-      color: "rgba(130, 145, 165, 0.60)"
-    # Blaue Töne
-    - name: "Eisblau"
-      rgb: [180, 200, 255]
-      color: "rgba(180, 200, 255, 0.70)"
-    - name: "Himmelblau"
-      rgb: [130, 170, 255]
-      color: "rgba(130, 170, 255, 0.65)"
-    - name: "Indigo"
-      rgb: [100, 120, 200]
-      color: "rgba(100, 120, 200, 0.60)"
-    # Warme Töne
-    - name: "Bernstein"
-      rgb: [240, 190, 100]
-      color: "rgba(240, 190, 100, 0.65)"
-    - name: "Kupfer"
-      rgb: [220, 150, 100]
-      color: "rgba(220, 150, 100, 0.60)"
-    - name: "Terrakotta"
-      rgb: [200, 130, 100]
-      color: "rgba(200, 130, 100, 0.55)"
-    # Grüne Töne
-    - name: "Jade"
-      rgb: [140, 210, 170]
-      color: "rgba(140, 210, 170, 0.65)"
-    - name: "Moos"
-      rgb: [120, 180, 130]
-      color: "rgba(120, 180, 130, 0.60)"
-    - name: "Olive"
-      rgb: [150, 170, 100]
-      color: "rgba(150, 170, 100, 0.55)"
-    # Violette Töne
-    - name: "Lavendel"
-      rgb: [180, 160, 220]
-      color: "rgba(180, 160, 220, 0.65)"
-    - name: "Pflaume"
-      rgb: [160, 120, 180]
-      color: "rgba(160, 120, 180, 0.60)"
-    # Rosa Töne
-    - name: "Rose"
-      rgb: [220, 160, 180]
-      color: "rgba(220, 160, 180, 0.60)"
-    - name: "Koralle"
-      rgb: [240, 150, 150]
-      color: "rgba(240, 150, 150, 0.55)"
+    - name: "Neon Cyan"
+      rgb: [0, 255, 255]
+      color: "rgba(0, 255, 255, 0.25)"
+    - name: "Neon Magenta"
+      rgb: [255, 0, 255]
+      color: "rgba(255, 0, 255, 0.25)"
+    - name: "Neon Grün"
+      rgb: [0, 255, 128]
+      color: "rgba(0, 255, 128, 0.25)"
+    - name: "Neon Pink"
+      rgb: [255, 0, 128]
+      color: "rgba(255, 0, 128, 0.25)"
+    - name: "Neon Gelb"
+      rgb: [255, 255, 0]
+      color: "rgba(255, 255, 0, 0.25)"
+    - name: "Neon Orange"
+      rgb: [255, 128, 0]
+      color: "rgba(255, 128, 0, 0.25)"
+    - name: "Neon Blau"
+      rgb: [0, 128, 255]
+      color: "rgba(0, 128, 255, 0.25)"
+    - name: "Neon Violett"
+      rgb: [128, 0, 255]
+      color: "rgba(128, 0, 255, 0.25)"
+    - name: "Neon Rot"
+      rgb: [255, 50, 50]
+      color: "rgba(255, 50, 50, 0.25)"
+    - name: "Neon Lime"
+      rgb: [200, 255, 0]
+      color: "rgba(200, 255, 0, 0.25)"
+    - name: "Neon Türkis"
+      rgb: [0, 255, 200]
+      color: "rgba(0, 255, 200, 0.25)"
+    - name: "Neon Koralle"
+      rgb: [255, 100, 100]
+      color: "rgba(255, 100, 100, 0.25)"
   
   # Ähnlichkeits-Schwellenwert für Farbvergleich (0-255)
   # Je höher, desto mehr Farben werden als "zu ähnlich" ausgeschlossen
-  aehnlichkeit_schwellenwert: 80
+  aehnlichkeit_schwellenwert: 100
   
   # Fallback-Farbe wenn alle gefiltert wurden
-  standard: "rgba(160, 175, 195, 0.65)"
+  standard: "rgba(0, 255, 255, 0.25)"

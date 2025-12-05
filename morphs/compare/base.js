@@ -17,21 +17,20 @@ let farbenConfig = null;
 // Erkennung-Config wird von außen gesetzt (aus morphs.yaml)
 let erkennungConfig = null;
 
-// Pilz-Farben: Große Palette von Glass-Morphism Farben
-// Diese werden dynamisch gefiltert basierend auf aktiven Perspektiven
+// Pilz-Farben: Neon-Farben - klar unterscheidbar, sehr transparent
 const FALLBACK_FARBEN = [
-  { name: 'Silber', rgb: [200, 210, 220], color: 'rgba(200, 210, 220, 0.70)' },
-  { name: 'Stahl', rgb: [160, 175, 195], color: 'rgba(160, 175, 195, 0.65)' },
-  { name: 'Schiefer', rgb: [130, 145, 165], color: 'rgba(130, 145, 165, 0.60)' },
-  { name: 'Eisblau', rgb: [180, 200, 255], color: 'rgba(180, 200, 255, 0.70)' },
-  { name: 'Himmelblau', rgb: [130, 170, 255], color: 'rgba(130, 170, 255, 0.65)' },
-  { name: 'Indigo', rgb: [100, 120, 200], color: 'rgba(100, 120, 200, 0.60)' },
-  { name: 'Bernstein', rgb: [240, 190, 100], color: 'rgba(240, 190, 100, 0.65)' },
-  { name: 'Kupfer', rgb: [220, 150, 100], color: 'rgba(220, 150, 100, 0.60)' },
-  { name: 'Jade', rgb: [140, 210, 170], color: 'rgba(140, 210, 170, 0.65)' },
-  { name: 'Moos', rgb: [120, 180, 130], color: 'rgba(120, 180, 130, 0.60)' },
-  { name: 'Lavendel', rgb: [180, 160, 220], color: 'rgba(180, 160, 220, 0.65)' },
-  { name: 'Rose', rgb: [220, 160, 180], color: 'rgba(220, 160, 180, 0.60)' }
+  { name: 'Neon Cyan', rgb: [0, 255, 255], color: 'rgba(0, 255, 255, 0.25)' },
+  { name: 'Neon Magenta', rgb: [255, 0, 255], color: 'rgba(255, 0, 255, 0.25)' },
+  { name: 'Neon Grün', rgb: [0, 255, 128], color: 'rgba(0, 255, 128, 0.25)' },
+  { name: 'Neon Pink', rgb: [255, 0, 128], color: 'rgba(255, 0, 128, 0.25)' },
+  { name: 'Neon Gelb', rgb: [255, 255, 0], color: 'rgba(255, 255, 0, 0.25)' },
+  { name: 'Neon Orange', rgb: [255, 128, 0], color: 'rgba(255, 128, 0, 0.25)' },
+  { name: 'Neon Blau', rgb: [0, 128, 255], color: 'rgba(0, 128, 255, 0.25)' },
+  { name: 'Neon Violett', rgb: [128, 0, 255], color: 'rgba(128, 0, 255, 0.25)' },
+  { name: 'Neon Rot', rgb: [255, 50, 50], color: 'rgba(255, 50, 50, 0.25)' },
+  { name: 'Neon Lime', rgb: [200, 255, 0], color: 'rgba(200, 255, 0, 0.25)' },
+  { name: 'Neon Türkis', rgb: [0, 255, 200], color: 'rgba(0, 255, 200, 0.25)' },
+  { name: 'Neon Koralle', rgb: [255, 100, 100], color: 'rgba(255, 100, 100, 0.25)' }
 ];
 
 // Cache für aktive Perspektiven-Farben

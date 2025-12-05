@@ -12,16 +12,16 @@
 import { debug } from '../../observer/debug.js';
 import { getFarben } from '../../util/semantic.js';
 
-// Pilz-Farben: Glass-Morphism Palette (wird dynamisch gefiltert)
+// Pilz-Farben: Neon-Farben - sehr transparent
 const FARBEN_FALLBACK = [
-  'rgba(200, 210, 220, 0.70)',   // Silber
-  'rgba(160, 175, 195, 0.65)',   // Stahl
-  'rgba(130, 145, 165, 0.60)',   // Schiefer
-  'rgba(180, 200, 255, 0.70)',   // Eisblau
-  'rgba(130, 170, 255, 0.65)',   // Himmelblau
-  'rgba(100, 120, 200, 0.60)',   // Indigo
-  'rgba(140, 210, 170, 0.65)',   // Jade
-  'rgba(180, 160, 220, 0.65)'    // Lavendel
+  'rgba(0, 255, 255, 0.25)',     // Neon Cyan
+  'rgba(255, 0, 255, 0.25)',     // Neon Magenta
+  'rgba(0, 255, 128, 0.25)',     // Neon Grün
+  'rgba(255, 0, 128, 0.25)',     // Neon Pink
+  'rgba(255, 255, 0, 0.25)',     // Neon Gelb
+  'rgba(255, 128, 0, 0.25)',     // Neon Orange
+  'rgba(0, 128, 255, 0.25)',     // Neon Blau
+  'rgba(128, 0, 255, 0.25)'      // Neon Violett
 ];
 
 function getDiagrammFarben() {
