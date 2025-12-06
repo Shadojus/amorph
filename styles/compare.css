@@ -146,8 +146,8 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  /* Nutze Pilz-Farbe wenn gesetzt, sonst weiß */
-  color: var(--pilz-text, rgba(255, 255, 255, 0.85));
+  /* Nutze item-spezifische Farbe, dann Pilz-Klasse, dann Fallback */
+  color: var(--item-text, var(--pilz-text, rgba(255, 255, 255, 0.85)));
 }
 
 .compare-bar-row .bar-track {
@@ -161,8 +161,8 @@
   height: 100%;
   border-radius: 9px;
   transition: width 0.3s ease;
-  /* opacity entfernt - Farbe hat bereits Alpha-Wert */
-  /* background-color wird per Inline-Style gesetzt */
+  /* Nutze item-spezifische Farbe, dann Pilz-Klasse, dann Fallback */
+  background-color: var(--item-fill, var(--pilz-fill, rgba(100, 100, 100, 0.5)));
 }
 
 .compare-bar-row .bar-wert {
@@ -568,7 +568,8 @@
   height: 100%;
   border-radius: 7px;
   min-width: 4px;
-  opacity: 0.8;
+  /* Nutze CSS Custom Property für Highlighting-Kompatibilität */
+  background-color: var(--item-fill, var(--pilz-fill, rgba(100, 100, 100, 0.5)));
 }
 
 .wirkstoffe-bar .bar-value {
@@ -940,6 +941,8 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  /* Nutze CSS Custom Property */
+  color: var(--item-text, var(--pilz-text, rgba(255, 255, 255, 0.85)));
 }
 
 .ernte-bar .bar-track {
@@ -953,7 +956,8 @@
   height: 100%;
   border-radius: 6px;
   transition: width 0.3s ease;
-  /* opacity entfernt - Farbe hat Alpha-Wert, background per Inline-Style */
+  /* Nutze CSS Custom Property */
+  background-color: var(--item-fill, var(--pilz-fill, rgba(100, 100, 100, 0.5)));
 }
 
 .ernte-bar .bar-value {

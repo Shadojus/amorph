@@ -136,15 +136,19 @@ function createErnteSummary(items) {
       const pct = Math.min(100, (val / maxVal) * 100);
       const fillColor = item.farbe || 'rgba(100,100,100,0.5)';
       const textColor = item.textFarbe || 'white';
-      bars.innerHTML += `
-        <div class="ernte-bar ${item.farbKlasse || ''}">
-          <span class="bar-name" style="color:${textColor}">${item.name}</span>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:${pct}%;background-color:${fillColor}"></div>
-          </div>
-          <span class="bar-value">${val}g</span>
+      // CSS Custom Properties für Highlighting-Kompatibilität
+      const barEl = document.createElement('div');
+      barEl.className = `ernte-bar ${item.farbKlasse || ''}`;
+      barEl.style.setProperty('--item-text', textColor);
+      barEl.style.setProperty('--item-fill', fillColor);
+      barEl.innerHTML = `
+        <span class="bar-name">${item.name}</span>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:${pct}%"></div>
         </div>
+        <span class="bar-value">${val}g</span>
       `;
+      bars.appendChild(barEl);
     });
     
     row.appendChild(bars);

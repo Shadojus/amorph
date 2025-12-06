@@ -139,9 +139,11 @@ function createWirkstoffVergleich(items) {
       const pct = Math.min(100, (Number(value) / maxVal) * 100);
       const bar = document.createElement('div');
       bar.className = `wirkstoffe-bar ${farbKlasse || ''}`;
-      const fillColor = item.farbe || 'rgba(100,100,100,0.5)';
+      // CSS Custom Properties für Highlighting-Kompatibilität
+      const fillColor = farbe || 'rgba(100,100,100,0.5)';
+      bar.style.setProperty('--item-fill', fillColor);
       bar.innerHTML = `
-        <div class="bar-fill" style="width:${pct}%;background-color:${fillColor}" title="${name}"></div>
+        <div class="bar-fill" style="width:${pct}%" title="${name}"></div>
         <span class="bar-value">${value}${unit}</span>
       `;
       barContainer.appendChild(bar);
