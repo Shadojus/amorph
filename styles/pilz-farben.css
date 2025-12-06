@@ -1,0 +1,448 @@
+/* =====================================================
+   PILZ-FARBEN - Neon Color System für Compare-Views
+   =====================================================
+   
+   Jeder Pilz bekommt eine CSS-Klasse: .pilz-farbe-0 bis .pilz-farbe-11
+   
+   Custom Properties pro Pilz:
+   --pilz-text:       Kräftige Farbe für Schrift (85%)
+   --pilz-fill:       Transparente Farbe für Flächen/Balken (24%)
+   --pilz-line:       Farbe für Linien/Strokes (70%)
+   --pilz-bg:         Sehr transparente Hintergrundfarbe (12%)
+   --pilz-glow:       Glow-Effekt Farbe (50%)
+   --pilz-rgb:        Reine RGB-Werte für custom alpha
+   
+   Verwendung:
+   - Text/Namen:      color: var(--pilz-text)
+   - Balken/Flächen:  background: var(--pilz-fill)
+   - Linien/Borders:  border-color: var(--pilz-line)
+   - Hintergründe:    background: var(--pilz-bg)
+   - Glow-Effekte:    box-shadow: 0 0 10px var(--pilz-glow)
+   - Custom Alpha:    rgba(var(--pilz-rgb), 0.5)
+   ===================================================== */
+
+/* === PILZ FARBE 0: Neon Cyan === */
+.pilz-farbe-0 {
+  --pilz-rgb: 0, 255, 255;
+  --pilz-text: rgba(0, 255, 255, 0.85);
+  --pilz-fill: rgba(0, 255, 255, 0.24);
+  --pilz-line: rgba(0, 255, 255, 0.70);
+  --pilz-bg: rgba(0, 255, 255, 0.12);
+  --pilz-glow: rgba(0, 255, 255, 0.50);
+}
+
+/* Direkte Styles für Pilz-Farbe 0 - HÖHERE SPEZIFITÄT als compare.css */
+.compare-radar-svg .radar-shape.pilz-farbe-0,
+.compare-radar-svg polygon.pilz-farbe-0,
+svg .radar-shape.pilz-farbe-0,
+.radar-shape.pilz-farbe-0 { 
+  fill: rgba(0, 255, 255, 0.24) !important; 
+  fill-opacity: 1 !important;
+  stroke: rgba(0, 255, 255, 0.70) !important; 
+  stroke-opacity: 1 !important;
+  stroke-width: 2.5 !important;
+}
+.pilz-farbe-0 .bar-name, .pilz-farbe-0 .rating-name, .pilz-farbe-0 .range-name { color: rgba(0, 255, 255, 0.85) !important; }
+.pilz-farbe-0 .bar-fill, .pilz-farbe-0 .range-bar, .pilz-farbe-0 .progress-bar { background-color: rgba(0, 255, 255, 0.24) !important; }
+.pilz-farbe-0 .legende-dot { background-color: rgba(0, 255, 255, 0.70) !important; }
+.pilz-farbe-0.legende-item { color: rgba(0, 255, 255, 0.85) !important; }
+
+/* === PILZ FARBE 1: Neon Magenta === */
+.pilz-farbe-1 {
+  --pilz-rgb: 255, 0, 255;
+  --pilz-text: rgba(255, 0, 255, 0.85);
+  --pilz-fill: rgba(255, 0, 255, 0.24);
+  --pilz-line: rgba(255, 0, 255, 0.70);
+  --pilz-bg: rgba(255, 0, 255, 0.12);
+  --pilz-glow: rgba(255, 0, 255, 0.50);
+}
+/* Pilz-Farbe 1 - HÖHERE SPEZIFITÄT */
+.compare-radar-svg .radar-shape.pilz-farbe-1,
+.compare-radar-svg polygon.pilz-farbe-1,
+svg .radar-shape.pilz-farbe-1,
+.radar-shape.pilz-farbe-1 { 
+  fill: rgba(255, 0, 255, 0.24) !important; 
+  fill-opacity: 1 !important;
+  stroke: rgba(255, 0, 255, 0.70) !important; 
+  stroke-opacity: 1 !important;
+  stroke-width: 2.5 !important;
+}
+.pilz-farbe-1 .bar-name, .pilz-farbe-1 .rating-name, .pilz-farbe-1 .range-name { color: rgba(255, 0, 255, 0.85) !important; }
+.pilz-farbe-1 .bar-fill, .pilz-farbe-1 .range-bar, .pilz-farbe-1 .progress-bar { background-color: rgba(255, 0, 255, 0.24) !important; }
+.pilz-farbe-1 .legende-dot { background-color: rgba(255, 0, 255, 0.70) !important; }
+.pilz-farbe-1.legende-item { color: rgba(255, 0, 255, 0.85) !important; }
+
+/* === PILZ FARBE 2: Neon Grün === */
+.pilz-farbe-2 {
+  --pilz-rgb: 0, 255, 128;
+  --pilz-text: rgba(0, 255, 128, 0.85);
+  --pilz-fill: rgba(0, 255, 128, 0.24);
+  --pilz-line: rgba(0, 255, 128, 0.70);
+  --pilz-bg: rgba(0, 255, 128, 0.12);
+  --pilz-glow: rgba(0, 255, 128, 0.50);
+}
+/* Pilz-Farbe 2 - HÖHERE SPEZIFITÄT */
+.compare-radar-svg .radar-shape.pilz-farbe-2,
+.compare-radar-svg polygon.pilz-farbe-2,
+svg .radar-shape.pilz-farbe-2,
+.radar-shape.pilz-farbe-2 { 
+  fill: rgba(0, 255, 128, 0.24) !important; 
+  fill-opacity: 1 !important;
+  stroke: rgba(0, 255, 128, 0.70) !important; 
+  stroke-opacity: 1 !important;
+  stroke-width: 2.5 !important;
+}
+.pilz-farbe-2 .bar-name, .pilz-farbe-2 .rating-name, .pilz-farbe-2 .range-name { color: rgba(0, 255, 128, 0.85) !important; }
+.pilz-farbe-2 .bar-fill, .pilz-farbe-2 .range-bar, .pilz-farbe-2 .progress-bar { background-color: rgba(0, 255, 128, 0.24) !important; }
+.pilz-farbe-2 .legende-dot { background-color: rgba(0, 255, 128, 0.70) !important; }
+.pilz-farbe-2.legende-item { color: rgba(0, 255, 128, 0.85) !important; }
+
+/* === PILZ FARBE 3: Neon Pink === */
+.pilz-farbe-3 {
+  --pilz-rgb: 255, 0, 128;
+  --pilz-text: rgba(255, 0, 128, 0.85);
+  --pilz-fill: rgba(255, 0, 128, 0.24);
+  --pilz-line: rgba(255, 0, 128, 0.70);
+  --pilz-bg: rgba(255, 0, 128, 0.12);
+  --pilz-glow: rgba(255, 0, 128, 0.50);
+}
+.pilz-farbe-3.radar-shape { fill: rgba(255, 0, 128, 0.24) !important; stroke: rgba(255, 0, 128, 0.70) !important; }
+.pilz-farbe-3 .bar-name, .pilz-farbe-3 .rating-name, .pilz-farbe-3 .range-name { color: rgba(255, 0, 128, 0.85) !important; }
+.pilz-farbe-3 .bar-fill, .pilz-farbe-3 .range-bar, .pilz-farbe-3 .progress-bar { background-color: rgba(255, 0, 128, 0.24) !important; }
+.pilz-farbe-3 .legende-dot { background-color: rgba(255, 0, 128, 0.70) !important; }
+.pilz-farbe-3.legende-item { color: rgba(255, 0, 128, 0.85) !important; }
+
+/* === PILZ FARBE 4: Neon Gelb === */
+.pilz-farbe-4 {
+  --pilz-rgb: 255, 255, 0;
+  --pilz-text: rgba(255, 255, 0, 0.85);
+  --pilz-fill: rgba(255, 255, 0, 0.24);
+  --pilz-line: rgba(255, 255, 0, 0.70);
+  --pilz-bg: rgba(255, 255, 0, 0.12);
+  --pilz-glow: rgba(255, 255, 0, 0.50);
+}
+.pilz-farbe-4.radar-shape { fill: rgba(255, 255, 0, 0.24) !important; stroke: rgba(255, 255, 0, 0.70) !important; }
+.pilz-farbe-4 .bar-name, .pilz-farbe-4 .rating-name, .pilz-farbe-4 .range-name { color: rgba(255, 255, 0, 0.85) !important; }
+.pilz-farbe-4 .bar-fill, .pilz-farbe-4 .range-bar, .pilz-farbe-4 .progress-bar { background-color: rgba(255, 255, 0, 0.24) !important; }
+.pilz-farbe-4 .legende-dot { background-color: rgba(255, 255, 0, 0.70) !important; }
+.pilz-farbe-4.legende-item { color: rgba(255, 255, 0, 0.85) !important; }
+
+/* === PILZ FARBE 5: Neon Orange === */
+.pilz-farbe-5 {
+  --pilz-rgb: 255, 128, 0;
+  --pilz-text: rgba(255, 128, 0, 0.85);
+  --pilz-fill: rgba(255, 128, 0, 0.24);
+  --pilz-line: rgba(255, 128, 0, 0.70);
+  --pilz-bg: rgba(255, 128, 0, 0.12);
+  --pilz-glow: rgba(255, 128, 0, 0.50);
+}
+.pilz-farbe-5.radar-shape { fill: rgba(255, 128, 0, 0.24) !important; stroke: rgba(255, 128, 0, 0.70) !important; }
+.pilz-farbe-5 .bar-name, .pilz-farbe-5 .rating-name, .pilz-farbe-5 .range-name { color: rgba(255, 128, 0, 0.85) !important; }
+.pilz-farbe-5 .bar-fill, .pilz-farbe-5 .range-bar, .pilz-farbe-5 .progress-bar { background-color: rgba(255, 128, 0, 0.24) !important; }
+.pilz-farbe-5 .legende-dot { background-color: rgba(255, 128, 0, 0.70) !important; }
+.pilz-farbe-5.legende-item { color: rgba(255, 128, 0, 0.85) !important; }
+
+/* === PILZ FARBE 6: Neon Blau === */
+.pilz-farbe-6 {
+  --pilz-rgb: 0, 128, 255;
+  --pilz-text: rgba(0, 128, 255, 0.85);
+  --pilz-fill: rgba(0, 128, 255, 0.24);
+  --pilz-line: rgba(0, 128, 255, 0.70);
+  --pilz-bg: rgba(0, 128, 255, 0.12);
+  --pilz-glow: rgba(0, 128, 255, 0.50);
+}
+.pilz-farbe-6.radar-shape { fill: rgba(0, 128, 255, 0.24) !important; stroke: rgba(0, 128, 255, 0.70) !important; }
+.pilz-farbe-6 .bar-name, .pilz-farbe-6 .rating-name, .pilz-farbe-6 .range-name { color: rgba(0, 128, 255, 0.85) !important; }
+.pilz-farbe-6 .bar-fill, .pilz-farbe-6 .range-bar, .pilz-farbe-6 .progress-bar { background-color: rgba(0, 128, 255, 0.24) !important; }
+.pilz-farbe-6 .legende-dot { background-color: rgba(0, 128, 255, 0.70) !important; }
+.pilz-farbe-6.legende-item { color: rgba(0, 128, 255, 0.85) !important; }
+
+/* === PILZ FARBE 7: Neon Violett === */
+.pilz-farbe-7 {
+  --pilz-rgb: 128, 0, 255;
+  --pilz-text: rgba(128, 0, 255, 0.85);
+  --pilz-fill: rgba(128, 0, 255, 0.24);
+  --pilz-line: rgba(128, 0, 255, 0.70);
+  --pilz-bg: rgba(128, 0, 255, 0.12);
+  --pilz-glow: rgba(128, 0, 255, 0.50);
+}
+.pilz-farbe-7.radar-shape { fill: rgba(128, 0, 255, 0.24) !important; stroke: rgba(128, 0, 255, 0.70) !important; }
+.pilz-farbe-7 .bar-name, .pilz-farbe-7 .rating-name, .pilz-farbe-7 .range-name { color: rgba(128, 0, 255, 0.85) !important; }
+.pilz-farbe-7 .bar-fill, .pilz-farbe-7 .range-bar, .pilz-farbe-7 .progress-bar { background-color: rgba(128, 0, 255, 0.24) !important; }
+.pilz-farbe-7 .legende-dot { background-color: rgba(128, 0, 255, 0.70) !important; }
+.pilz-farbe-7.legende-item { color: rgba(128, 0, 255, 0.85) !important; }
+
+/* === PILZ FARBE 8: Neon Rot === */
+.pilz-farbe-8 {
+  --pilz-rgb: 255, 50, 50;
+  --pilz-text: rgba(255, 50, 50, 0.85);
+  --pilz-fill: rgba(255, 50, 50, 0.24);
+  --pilz-line: rgba(255, 50, 50, 0.70);
+  --pilz-bg: rgba(255, 50, 50, 0.12);
+  --pilz-glow: rgba(255, 50, 50, 0.50);
+}
+.pilz-farbe-8.radar-shape { fill: rgba(255, 50, 50, 0.24) !important; stroke: rgba(255, 50, 50, 0.70) !important; }
+.pilz-farbe-8 .bar-name, .pilz-farbe-8 .rating-name, .pilz-farbe-8 .range-name { color: rgba(255, 50, 50, 0.85) !important; }
+.pilz-farbe-8 .bar-fill, .pilz-farbe-8 .range-bar, .pilz-farbe-8 .progress-bar { background-color: rgba(255, 50, 50, 0.24) !important; }
+.pilz-farbe-8 .legende-dot { background-color: rgba(255, 50, 50, 0.70) !important; }
+.pilz-farbe-8.legende-item { color: rgba(255, 50, 50, 0.85) !important; }
+
+/* === PILZ FARBE 9: Neon Lime === */
+.pilz-farbe-9 {
+  --pilz-rgb: 200, 255, 0;
+  --pilz-text: rgba(200, 255, 0, 0.85);
+  --pilz-fill: rgba(200, 255, 0, 0.24);
+  --pilz-line: rgba(200, 255, 0, 0.70);
+  --pilz-bg: rgba(200, 255, 0, 0.12);
+  --pilz-glow: rgba(200, 255, 0, 0.50);
+}
+.pilz-farbe-9.radar-shape { fill: rgba(200, 255, 0, 0.24) !important; stroke: rgba(200, 255, 0, 0.70) !important; }
+.pilz-farbe-9 .bar-name, .pilz-farbe-9 .rating-name, .pilz-farbe-9 .range-name { color: rgba(200, 255, 0, 0.85) !important; }
+.pilz-farbe-9 .bar-fill, .pilz-farbe-9 .range-bar, .pilz-farbe-9 .progress-bar { background-color: rgba(200, 255, 0, 0.24) !important; }
+.pilz-farbe-9 .legende-dot { background-color: rgba(200, 255, 0, 0.70) !important; }
+.pilz-farbe-9.legende-item { color: rgba(200, 255, 0, 0.85) !important; }
+
+/* === PILZ FARBE 10: Neon Türkis === */
+.pilz-farbe-10 {
+  --pilz-rgb: 0, 255, 200;
+  --pilz-text: rgba(0, 255, 200, 0.85);
+  --pilz-fill: rgba(0, 255, 200, 0.24);
+  --pilz-line: rgba(0, 255, 200, 0.70);
+  --pilz-bg: rgba(0, 255, 200, 0.12);
+  --pilz-glow: rgba(0, 255, 200, 0.50);
+}
+.pilz-farbe-10.radar-shape { fill: rgba(0, 255, 200, 0.24) !important; stroke: rgba(0, 255, 200, 0.70) !important; }
+.pilz-farbe-10 .bar-name, .pilz-farbe-10 .rating-name, .pilz-farbe-10 .range-name { color: rgba(0, 255, 200, 0.85) !important; }
+.pilz-farbe-10 .bar-fill, .pilz-farbe-10 .range-bar, .pilz-farbe-10 .progress-bar { background-color: rgba(0, 255, 200, 0.24) !important; }
+.pilz-farbe-10 .legende-dot { background-color: rgba(0, 255, 200, 0.70) !important; }
+.pilz-farbe-10.legende-item { color: rgba(0, 255, 200, 0.85) !important; }
+
+/* === PILZ FARBE 11: Neon Koralle === */
+.pilz-farbe-11 {
+  --pilz-rgb: 255, 100, 100;
+  --pilz-text: rgba(255, 100, 100, 0.85);
+  --pilz-fill: rgba(255, 100, 100, 0.24);
+  --pilz-line: rgba(255, 100, 100, 0.70);
+  --pilz-bg: rgba(255, 100, 100, 0.12);
+  --pilz-glow: rgba(255, 100, 100, 0.50);
+}
+.pilz-farbe-11.radar-shape { fill: rgba(255, 100, 100, 0.24) !important; stroke: rgba(255, 100, 100, 0.70) !important; }
+.pilz-farbe-11 .bar-name, .pilz-farbe-11 .rating-name, .pilz-farbe-11 .range-name { color: rgba(255, 100, 100, 0.85) !important; }
+.pilz-farbe-11 .bar-fill, .pilz-farbe-11 .range-bar, .pilz-farbe-11 .progress-bar { background-color: rgba(255, 100, 100, 0.24) !important; }
+.pilz-farbe-11 .legende-dot { background-color: rgba(255, 100, 100, 0.70) !important; }
+.pilz-farbe-11.legende-item { color: rgba(255, 100, 100, 0.85) !important; }
+
+/* =====================================================
+   GLOBALE OPACITY-VARIABLEN (anpassbar)
+   ===================================================== */
+:root {
+  --pilz-opacity-text: 0.85;
+  --pilz-opacity-fill: 0.24;
+  --pilz-opacity-line: 0.70;
+  --pilz-opacity-bg: 0.12;
+  --pilz-opacity-glow: 0.50;
+}
+
+/* =====================================================
+   UTILITY CLASSES für direkte Anwendung
+   ===================================================== */
+
+/* Text-Farben */
+.pilz-text { color: var(--pilz-text) !important; }
+
+/* Hintergrund-Füllungen */
+.pilz-fill { background-color: var(--pilz-fill) !important; }
+.pilz-bg { background-color: var(--pilz-bg) !important; }
+
+/* Linien/Borders */
+.pilz-border { border-color: var(--pilz-line) !important; }
+.pilz-line { stroke: var(--pilz-line) !important; }
+
+/* SVG-Füllungen */
+.pilz-svg-fill { fill: var(--pilz-fill) !important; }
+.pilz-svg-stroke { stroke: var(--pilz-line) !important; }
+
+/* Glow-Effekte */
+.pilz-glow { 
+  text-shadow: 0 0 8px var(--pilz-glow);
+}
+.pilz-box-glow {
+  box-shadow: 0 0 10px var(--pilz-glow);
+}
+
+/* =====================================================
+   COMPARE-MORPH SPEZIFISCHE STYLES
+   Diese nutzen die CSS-Variablen automatisch
+   
+   WICHTIG: Selektoren müssen spezifischer sein als compare.css!
+   Daher: .compare-bar-row[class*="pilz-farbe-"] statt nur [class*="pilz-farbe-"]
+   ===================================================== */
+
+/* Bar Namen - HÖHERE SPEZIFITÄT als compare.css */
+.compare-bar-row[class*="pilz-farbe-"] .bar-name,
+.compare-rating-row[class*="pilz-farbe-"] .rating-name,
+.compare-range-row[class*="pilz-farbe-"] .range-name,
+.compare-progress-row[class*="pilz-farbe-"] .progress-name,
+.compare-boolean-row[class*="pilz-farbe-"] .boolean-name,
+[class*="pilz-farbe-"] .bar-name,
+[class*="pilz-farbe-"] .range-name,
+[class*="pilz-farbe-"] .progress-name,
+[class*="pilz-farbe-"] .rating-name,
+[class*="pilz-farbe-"] .boolean-name,
+[class*="pilz-farbe-"] .pie-name,
+[class*="pilz-farbe-"] .text-header,
+[class*="pilz-farbe-"] .stats-name,
+[class*="pilz-farbe-"] .object-name,
+[class*="pilz-farbe-"] .timeline-name {
+  color: var(--pilz-text) !important;
+}
+
+/* Bar Füllungen - HÖHERE SPEZIFITÄT als compare.css */
+.compare-bar-row[class*="pilz-farbe-"] .bar-fill,
+.compare-range-row[class*="pilz-farbe-"] .range-bar,
+.compare-progress-row[class*="pilz-farbe-"] .progress-bar,
+[class*="pilz-farbe-"] .bar-fill,
+[class*="pilz-farbe-"] .range-bar,
+[class*="pilz-farbe-"] .progress-bar,
+[class*="pilz-farbe-"] .stats-bar,
+[class*="pilz-farbe-"] .radar-mini-bar {
+  background-color: var(--pilz-fill) !important;
+}
+
+/* Werte-Text - pilz-farbe-X ist auf Parent-Row */
+[class*="pilz-farbe-"] .bar-wert,
+[class*="pilz-farbe-"] .range-wert,
+[class*="pilz-farbe-"] .progress-wert {
+  color: var(--pilz-text) !important;
+}
+
+/* Legende Dots - pilz-farbe-X ist auf Parent-Item */
+[class*="pilz-farbe-"] .legende-dot,
+[class*="pilz-farbe-"] .item-dot,
+.legende-dot[class*="pilz-farbe-"],
+.item-dot[class*="pilz-farbe-"] {
+  background-color: var(--pilz-line) !important;
+}
+
+/* =====================================================
+   SVG ELEMENTS - pilz-farbe-X ist DIREKT auf dem Element!
+   ===================================================== */
+
+/* Radar Shape - Klasse ist direkt auf <polygon> */
+.radar-shape[class*="pilz-farbe-"] {
+  fill: var(--pilz-fill) !important;
+  stroke: var(--pilz-line) !important;
+  stroke-width: 2;
+}
+
+/* Auch für Child-Fall */
+[class*="pilz-farbe-"] .radar-shape {
+  fill: var(--pilz-fill) !important;
+  stroke: var(--pilz-line) !important;
+}
+
+/* Pie Segment - falls direkt auf Element */
+.pie-segment[class*="pilz-farbe-"] {
+  fill: var(--pilz-fill) !important;
+  stroke: var(--pilz-line) !important;
+}
+
+/* =====================================================
+   LEGENDE ITEMS - pilz-farbe-X ist DIREKT auf .legende-item
+   ===================================================== */
+.legende-item[class*="pilz-farbe-"] .legende-dot {
+  background-color: var(--pilz-line) !important;
+}
+
+.legende-item[class*="pilz-farbe-"] {
+  color: var(--pilz-text) !important;
+}
+
+/* =====================================================
+   TIMELINE - pilz-farbe-X ist auf .timeline-punkt
+   ===================================================== */
+.timeline-punkt[class*="pilz-farbe-"] .timeline-marker {
+  background-color: var(--pilz-fill) !important;
+  border-color: var(--pilz-line) !important;
+}
+
+.timeline-punkt[class*="pilz-farbe-"] .timeline-name {
+  color: var(--pilz-text) !important;
+}
+
+/* =====================================================
+   WEITERE ELEMENTE mit direkter Klasse
+   ===================================================== */
+
+/* Borders - pilz-farbe-X ist auf Parent */
+[class*="pilz-farbe-"] .compare-pie-wrap,
+[class*="pilz-farbe-"] .img-wrap,
+.compare-pie-wrap[class*="pilz-farbe-"],
+.img-wrap[class*="pilz-farbe-"] {
+  border-color: var(--pilz-line) !important;
+}
+
+/* Image Labels */
+[class*="pilz-farbe-"] .img-label,
+.img-label[class*="pilz-farbe-"] {
+  background-color: var(--pilz-fill) !important;
+  color: white;
+}
+
+/* Tag Text */
+[class*="pilz-farbe-"] .tag-text,
+[class*="pilz-farbe-"] .tag-wert,
+.tag-text[class*="pilz-farbe-"],
+.tag-wert[class*="pilz-farbe-"] {
+  color: var(--pilz-text) !important;
+}
+
+/* Boolean */
+[class*="pilz-farbe-"] .boolean-wert {
+  color: var(--pilz-text) !important;
+}
+
+/* Stats Cell - pilz-farbe-X direkt */
+.stats-cell[class*="pilz-farbe-"] .stats-bar {
+  background-color: var(--pilz-fill) !important;
+}
+
+.stats-cell[class*="pilz-farbe-"] .stats-wert {
+  color: var(--pilz-text) !important;
+}
+
+/* =====================================================
+   ERNTE-BAR - pilz-farbe-X ist direkt auf .ernte-bar
+   ===================================================== */
+.ernte-bar[class*="pilz-farbe-"] .bar-name {
+  color: var(--pilz-text) !important;
+}
+
+.ernte-bar[class*="pilz-farbe-"] .bar-fill {
+  background-color: var(--pilz-fill) !important;
+}
+
+/* =====================================================
+   WIRKSTOFFE-BAR - pilz-farbe-X ist direkt auf .wirkstoffe-bar
+   ===================================================== */
+.wirkstoffe-bar[class*="pilz-farbe-"] .bar-fill {
+  background-color: var(--pilz-fill) !important;
+}
+
+/* =====================================================
+   TEXT-ROW - pilz-farbe-X ist direkt auf .text-row
+   ===================================================== */
+.text-row[class*="pilz-farbe-"] .text-name {
+  color: var(--pilz-text) !important;
+}
+
+/* =====================================================
+   BAR-GROUP-BAR - pilz-farbe-X ist direkt auf .bar-group-bar
+   ===================================================== */
+.bar-group-bar[class*="pilz-farbe-"] .bar-name {
+  color: var(--pilz-text) !important;
+}
+
+.bar-group-bar[class*="pilz-farbe-"] .bar-fill {
+  background-color: var(--pilz-fill) !important;
+}

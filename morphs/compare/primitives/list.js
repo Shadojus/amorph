@@ -42,7 +42,7 @@ export function compareList(items, config = {}) {
     }
     
     const dots = ownerItems.map(p => 
-      `<span class="item-dot" style="background:${p.farbe}" title="${p.name}"></span>`
+      `<span class="item-dot ${p.farbKlasse || ''} pilz-bg" title="${p.name}"></span>`
     ).join('');
     
     row.innerHTML = `

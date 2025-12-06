@@ -15,14 +15,25 @@ export function compareProgress(items, config = {}) {
     const prozent = maxWert > 0 ? (wert / maxWert) * 100 : 0;
     
     const row = document.createElement('div');
-    row.className = 'progress-row';
-    row.innerHTML = `
-      <div class="progress-name" style="color:${item.textFarbe || item.farbe}">${item.name}</div>
-      <div class="progress-bar-container">
-        <div class="progress-bar" style="width:${prozent}%;background:${item.farbe}"></div>
-      </div>
-      <div class="progress-wert">${wert}%</div>
-    `;
+    row.className = `progress-row ${item.farbKlasse || ''}`;
+    
+    if (item.farbKlasse) {
+      row.innerHTML = `
+        <div class="progress-name">${item.name}</div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width:${prozent}%"></div>
+        </div>
+        <div class="progress-wert">${wert}%</div>
+      `;
+    } else {
+      row.innerHTML = `
+        <div class="progress-name" style="color:${item.textFarbe || item.farbe}">${item.name}</div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width:${prozent}%;background:${item.farbe}"></div>
+        </div>
+        <div class="progress-wert">${wert}%</div>
+      `;
+    }
     el.appendChild(row);
   });
   

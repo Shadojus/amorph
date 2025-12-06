@@ -49,7 +49,7 @@ export function compareWissenschaft(items, perspektive, config = {}) {
     const section = createSectionIfNew('wissenschaftlich', 'Taxonomie', perspektive.farben?.[0], skipFelder);
     if (section) {
       const mapped = wissNameItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.wissenschaftlich, farbe: i.farbe, textFarbe: i.textFarbe
+        id: i.id, name: i.name, wert: i.data.wissenschaftlich, farbe: i.farbe, textFarbe: i.textFarbe, farbKlasse: i.farbKlasse, farbKlasse: i.farbKlasse
       }));
       section.addContent(compareText(mapped, {}));
       sections.appendChild(section);
@@ -72,7 +72,7 @@ export function compareWissenschaft(items, perspektive, config = {}) {
     const section = createSectionIfNew('naehrwerte', 'Zusammensetzung', perspektive.farben?.[2], skipFelder);
     if (section) {
       const mapped = naehrwerteItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.naehrwerte, farbe: i.farbe, textFarbe: i.textFarbe
+        id: i.id, name: i.name, wert: i.data.naehrwerte, farbe: i.farbe, textFarbe: i.textFarbe, farbKlasse: i.farbKlasse, farbKlasse: i.farbKlasse
       }));
       section.addContent(comparePie(mapped, {}));
       sections.appendChild(section);
@@ -85,7 +85,7 @@ export function compareWissenschaft(items, perspektive, config = {}) {
     const section = createSectionIfNew('profil', 'Eigenschaften-Profil', perspektive.farben?.[3], skipFelder);
     if (section) {
       const mapped = profilItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.profil, farbe: i.farbe, textFarbe: i.textFarbe
+        id: i.id, name: i.name, wert: i.data.profil, farbe: i.farbe, textFarbe: i.textFarbe, farbKlasse: i.farbKlasse, farbKlasse: i.farbKlasse
       }));
       section.addContent(compareRadar(mapped, {}));
       sections.appendChild(section);
@@ -114,6 +114,7 @@ function createWirkstoffVergleich(items) {
       }
       alleWirkstoffe.get(key).werte.push({
         name: item.name,
+        farbKlasse: item.farbKlasse,
         farbe: item.farbe,
         value: w.value
       });
@@ -134,12 +135,13 @@ function createWirkstoffVergleich(items) {
     
     const maxVal = Math.max(...werte.map(w => Number(w.value) || 0), 1);
     
-    werte.forEach(({ name, farbe, value }) => {
+    werte.forEach(({ name, farbKlasse, farbe, value }) => {
       const pct = Math.min(100, (Number(value) / maxVal) * 100);
       const bar = document.createElement('div');
-      bar.className = 'wirkstoffe-bar';
+      bar.className = `wirkstoffe-bar ${farbKlasse || ''}`;
+      const fillColor = item.farbe || 'rgba(100,100,100,0.5)';
       bar.innerHTML = `
-        <div class="bar-fill" style="width:${pct}%;background:${farbe}" title="${name}"></div>
+        <div class="bar-fill" style="width:${pct}%;background-color:${fillColor}" title="${name}"></div>
         <span class="bar-value">${value}${unit}</span>
       `;
       barContainer.appendChild(bar);

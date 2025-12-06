@@ -158,16 +158,35 @@ export default async function init(ctx) {
     
     // Pilz-Farben erstellen (konsistent über alle Diagramme)
     // Diese werden jetzt automatisch gefiltert basierend auf den Perspektiven-Farben
+    // Rückgabe: Map mit {farbIndex, farbKlasse, fill, text, line, bg, glow}
     const pilzIds = Array.from(nachPilz.keys());
     const pilzFarben = erstelleFarben(pilzIds);
     
     // Items für Compare-Morphs vorbereiten (alle Pilze mit vollständigen Daten)
-    const compareItems = Array.from(nachPilz.entries()).map(([id, data]) => ({
-      id: String(id),
-      name: getItemName(data.pilzDaten) || id,
-      data: data.pilzDaten || {},
-      farbe: pilzFarben.get(String(id)) || '#888'
-    }));
+    // CSS-basiertes Farb-System: farbKlasse für CSS Custom Properties
+    const compareItems = Array.from(nachPilz.entries()).map(([id, data]) => {
+      const farbObj = pilzFarben.get(String(id)) || { 
+        farbKlasse: 'pilz-farbe-0', 
+        fill: '#888', 
+        text: '#888',
+        line: '#888',
+        bg: '#444',
+        glow: '#666'
+      };
+      return {
+        id: String(id),
+        name: getItemName(data.pilzDaten) || id,
+        data: data.pilzDaten || {},
+        // CSS-Klasse für Custom Properties
+        farbKlasse: farbObj.farbKlasse,
+        // Legacy: Inline-Styles (für Übergang)
+        farbe: farbObj.fill,
+        textFarbe: farbObj.text,
+        lineFarbe: farbObj.line,
+        bgFarbe: farbObj.bg,
+        glowFarbe: farbObj.glow
+      };
+    });
     
     // =====================================================================
     // PERSPEKTIVEN-MODUS: Theme Compare-Morphs nutzen

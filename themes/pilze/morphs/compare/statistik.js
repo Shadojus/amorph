@@ -49,7 +49,7 @@ export function compareStatistik(items, perspektive, config = {}) {
     const section = createSectionIfNew('bewertung', 'Bewertung', perspektive.farben?.[0], skipFelder);
     if (section) {
       const mapped = bewertungItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.bewertung, farbe: i.farbe, textFarbe: i.textFarbe
+        id: i.id, name: i.name, wert: i.data.bewertung, farbe: i.farbe, textFarbe: i.textFarbe, farbKlasse: i.farbKlasse, farbKlasse: i.farbKlasse
       }));
       section.addContent(compareRating(mapped, { max: 5 }));
       sections.appendChild(section);
@@ -62,7 +62,7 @@ export function compareStatistik(items, perspektive, config = {}) {
     const section = createSectionIfNew('beliebtheit', 'Beliebtheit', perspektive.farben?.[1], skipFelder);
     if (section) {
       const mapped = beliebtheitItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.beliebtheit, farbe: i.farbe, textFarbe: i.textFarbe
+        id: i.id, name: i.name, wert: i.data.beliebtheit, farbe: i.farbe, textFarbe: i.textFarbe, farbKlasse: i.farbKlasse, farbKlasse: i.farbKlasse
       }));
       section.addContent(compareBar(mapped, { max: 100, einheit: '%' }));
       sections.appendChild(section);
@@ -85,7 +85,7 @@ export function compareStatistik(items, perspektive, config = {}) {
     const section = createSectionIfNew('naehrwerte', 'Nährwert-Verteilung', perspektive.farben?.[3], skipFelder);
     if (section) {
       const mapped = naehrwerteItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.naehrwerte, farbe: i.farbe, textFarbe: i.textFarbe
+        id: i.id, name: i.name, wert: i.data.naehrwerte, farbe: i.farbe, textFarbe: i.textFarbe, farbKlasse: i.farbKlasse, farbKlasse: i.farbKlasse
       }));
       section.addContent(comparePie(mapped, {}));
       sections.appendChild(section);
@@ -98,7 +98,7 @@ export function compareStatistik(items, perspektive, config = {}) {
     const section = createSectionIfNew('profil', 'Eigenschaften-Radar', perspektive.farben?.[0], skipFelder);
     if (section) {
       const mapped = profilItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.profil, farbe: i.farbe, textFarbe: i.textFarbe
+        id: i.id, name: i.name, wert: i.data.profil, farbe: i.farbe, textFarbe: i.textFarbe, farbKlasse: i.farbKlasse, farbKlasse: i.farbKlasse
       }));
       section.addContent(compareRadar(mapped, {}));
       sections.appendChild(section);
@@ -134,11 +134,13 @@ function createErnteSummary(items) {
     items.forEach(item => {
       const val = item.data.ernte_stats?.[key] || 0;
       const pct = Math.min(100, (val / maxVal) * 100);
+      const fillColor = item.farbe || 'rgba(100,100,100,0.5)';
+      const textColor = item.textFarbe || 'white';
       bars.innerHTML += `
-        <div class="ernte-bar">
-          <span class="bar-name" style="color:${item.farbe}">${item.name}</span>
+        <div class="ernte-bar ${item.farbKlasse || ''}">
+          <span class="bar-name" style="color:${textColor}">${item.name}</span>
           <div class="bar-track">
-            <div class="bar-fill" style="width:${pct}%;background:${item.farbe}"></div>
+            <div class="bar-fill" style="width:${pct}%;background-color:${fillColor}"></div>
           </div>
           <span class="bar-value">${val}g</span>
         </div>

@@ -44,11 +44,16 @@ export function compareRange(items, config = {}) {
     const widthProzent = ((max - min) / range) * 100 || 2; // mindestens 2% für Punkte
     
     const row = document.createElement('div');
-    row.className = 'range-row';
+    row.className = `range-row ${item.farbKlasse || ''}`;
+    
+    // Inline-Styles für Name und Bar (CSS greift nicht zuverlässig)
+    const textColor = item.textFarbe || item.farbe || 'white';
+    const barColor = item.farbe || 'rgba(100,100,100,0.5)';
+    
     row.innerHTML = `
-      <div class="range-name" style="color:${item.textFarbe || item.farbe}">${item.name}</div>
+      <div class="range-name" style="color:${textColor}">${item.name}</div>
       <div class="range-track">
-        <div class="range-bar" style="left:${leftProzent}%;width:${widthProzent}%;background:${item.farbe}"></div>
+        <div class="range-bar" style="left:${leftProzent}%;width:${widthProzent}%;background-color:${barColor}"></div>
       </div>
       <div class="range-werte">${min}${min !== max ? ` – ${max}` : ''}</div>
     `;

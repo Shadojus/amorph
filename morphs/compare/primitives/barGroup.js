@@ -66,11 +66,11 @@ export function compareBarGroup(items, config = {}) {
     entries.forEach(entry => {
       const pct = Math.min(100, (entry.value / maxVal) * 100);
       const bar = document.createElement('div');
-      bar.className = 'bar-group-bar';
+      bar.className = `bar-group-bar ${entry.item.farbKlasse || ''}`;
       bar.innerHTML = `
-        <span class="bar-name" style="color:${entry.item.textFarbe || entry.item.farbe}">${entry.item.name}</span>
+        <span class="bar-name pilz-text">${entry.item.name}</span>
         <div class="bar-track">
-          <div class="bar-fill" style="width:${pct}%;background:${entry.item.farbe}"></div>
+          <div class="bar-fill pilz-fill" style="width:${pct}%"></div>
         </div>
         <span class="bar-wert">${entry.value}${unit}</span>
       `;
@@ -88,8 +88,8 @@ export function compareBarGroup(items, config = {}) {
   legende.className = 'bar-group-legende';
   items.forEach(item => {
     legende.innerHTML += `
-      <span class="legende-item">
-        <span class="legende-dot" style="background:${item.farbe}"></span>
+      <span class="legende-item ${item.farbKlasse || ''}">
+        <span class="legende-dot pilz-bg"></span>
         ${item.name}
       </span>
     `;

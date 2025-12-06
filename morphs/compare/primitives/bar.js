@@ -32,14 +32,13 @@ export function compareBar(items, config = {}) {
     label.textContent = config.label;
     el.appendChild(label);
   }
-  
   // Balken
   const bars = document.createElement('div');
   bars.className = 'compare-bars';
   
   items.forEach((item) => {
     const row = document.createElement('div');
-    row.className = 'compare-bar-row';
+    row.className = `compare-bar-row ${item.farbKlasse || ''}`;
     
     let numWert = typeof item.wert === 'object' && 'min' in item.wert
       ? (item.wert.min + item.wert.max) / 2
@@ -51,10 +50,14 @@ export function compareBar(items, config = {}) {
     
     const pct = Math.min(100, (numWert / maxWert) * 100);
     
+    // Inline-Styles mit Daten aus erstelleFarben() - textFarbe für Text, farbe für Fill
+    const textColor = item.textFarbe || 'rgba(255,255,255,0.85)';
+    const fillColor = item.farbe || 'rgba(100,100,100,0.5)';
+    
     row.innerHTML = `
-      <span class="bar-name" style="color:${item.textFarbe || item.farbe}">${item.name}</span>
+      <span class="bar-name" style="color:${textColor}">${item.name}</span>
       <div class="bar-track">
-        <div class="bar-fill" style="width:${pct}%;background:${item.farbe}"></div>
+        <div class="bar-fill" style="width:${pct}%;background-color:${fillColor};opacity:1"></div>
       </div>
       <span class="bar-wert">${displayWert}${config.einheit || ''}</span>
     `;

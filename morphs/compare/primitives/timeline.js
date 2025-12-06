@@ -16,6 +16,7 @@ export function compareTimeline(items, config = {}) {
       allEvents.push({
         name: item.name,
         farbe: item.farbe,
+        farbKlasse: item.farbKlasse,
         datum: evt.datum || evt.date || evt,
         label: evt.label || evt.name || ''
       });
@@ -29,14 +30,13 @@ export function compareTimeline(items, config = {}) {
   
   allEvents.forEach(evt => {
     const punkt = document.createElement('div');
-    punkt.className = 'timeline-punkt';
-    punkt.style.borderColor = evt.farbe;
+    punkt.className = `timeline-punkt ${evt.farbKlasse || ''}`;
     punkt.innerHTML = `
-      <div class="timeline-marker" style="background:${evt.farbe}"></div>
+      <div class="timeline-marker pilz-bg"></div>
       <div class="timeline-label">
         <span class="timeline-datum">${evt.datum}</span>
         <span class="timeline-text">${evt.label}</span>
-        <span class="timeline-name" style="color:${evt.textFarbe || evt.farbe}">${evt.name}</span>
+        <span class="timeline-name pilz-text">${evt.name}</span>
       </div>
     `;
     timeline.appendChild(punkt);

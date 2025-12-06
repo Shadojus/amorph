@@ -146,6 +146,8 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  /* Nutze Pilz-Farbe wenn gesetzt, sonst weiß */
+  color: var(--pilz-text, rgba(255, 255, 255, 0.85));
 }
 
 .compare-bar-row .bar-track {
@@ -159,7 +161,8 @@
   height: 100%;
   border-radius: 9px;
   transition: width 0.3s ease;
-  opacity: 0.55;
+  /* opacity entfernt - Farbe hat bereits Alpha-Wert */
+  /* background-color wird per Inline-Style gesetzt */
 }
 
 .compare-bar-row .bar-wert {
@@ -198,6 +201,7 @@
   font-size: 11px;
   font-weight: 500;
   min-width: 70px;
+  color: var(--pilz-text, rgba(255, 255, 255, 0.85));
 }
 
 .compare-rating-row .rating-stars {
@@ -350,7 +354,9 @@
 }
 
 .compare-radar-svg .radar-shape {
+  fill: var(--pilz-fill, currentColor);
   fill-opacity: 0.08;
+  stroke: var(--pilz-line, currentColor);
   stroke-width: 2.5;
   stroke-opacity: 0.9;
 }
@@ -380,7 +386,8 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  box-shadow: 0 0 6px currentColor;
+  background-color: var(--pilz-line, currentColor);
+  box-shadow: 0 0 6px var(--pilz-glow, currentColor);
 }
 
 /* Radar Scale Labels */
@@ -862,6 +869,7 @@
 .compare-text-wrap .text-header {
   font-size: 11px;
   font-weight: 600;
+  color: var(--pilz-text, rgba(255, 255, 255, 0.85));
 }
 
 .compare-text-wrap .text-inhalt {
@@ -945,7 +953,7 @@
   height: 100%;
   border-radius: 6px;
   transition: width 0.3s ease;
-  opacity: 0.8;
+  /* opacity entfernt - Farbe hat Alpha-Wert, background per Inline-Style */
 }
 
 .ernte-bar .bar-value {
@@ -975,6 +983,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: var(--pilz-text, rgba(255, 255, 255, 0.85));
 }
 
 .progress-row .progress-bar-container {
@@ -988,6 +997,7 @@
   height: 100%;
   border-radius: 8px;
   transition: width 0.3s ease;
+  background-color: var(--pilz-fill, rgba(100, 100, 100, 0.5));
 }
 
 .progress-row .progress-wert {
@@ -1017,6 +1027,7 @@
 .compare-boolean-wrap .boolean-name {
   font-size: 11px;
   font-weight: 500;
+  color: var(--pilz-text, rgba(255, 255, 255, 0.85));
 }
 
 .compare-boolean-wrap .boolean-wert {
@@ -1107,6 +1118,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: var(--pilz-text, rgba(255, 255, 255, 0.85));
 }
 
 .range-row .range-track {
@@ -1121,6 +1133,7 @@
   height: 100%;
   border-radius: 6px;
   min-width: 8px;
+  /* background-color wird per Inline-Style gesetzt */
 }
 
 .range-row .range-werte {
@@ -1170,6 +1183,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: var(--pilz-text, rgba(255, 255, 255, 0.85));
 }
 
 .stats-row {
@@ -1205,6 +1219,7 @@
   height: 100%;
   border-radius: 4px;
   transition: width 0.3s ease;
+  background-color: var(--pilz-fill, rgba(100, 100, 100, 0.5));
 }
 
 .stats-cell .stats-wert {
@@ -1285,6 +1300,7 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
+  background-color: var(--pilz-fill, rgba(100, 100, 100, 0.5));
 }
 
 .timeline-punkt .timeline-label {
@@ -1307,6 +1323,7 @@
 .timeline-punkt .timeline-name {
   font-size: 10px;
   font-weight: 500;
+  color: var(--pilz-text, rgba(255, 255, 255, 0.85));
 }
 
 /* === PIE (Theme) === */
@@ -1315,6 +1332,7 @@
   font-weight: 500;
   text-align: center;
   margin-bottom: 4px;
+  color: var(--pilz-text, rgba(255, 255, 255, 0.85));
 }
 
 /* === RESPONSIVE PERSPEKTIVEN === */

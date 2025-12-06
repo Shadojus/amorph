@@ -17,20 +17,21 @@ let farbenConfig = null;
 // Erkennung-Config wird von außen gesetzt (aus morphs.yaml)
 let erkennungConfig = null;
 
-// Pilz-Farben: Neon-Farben - klar unterscheidbar, sehr transparent
+// Pilz-Farben: Neon-Farben - klar unterscheidbar
+// Jede Farbe hat: index (für CSS-Klasse), fill (transparent für Flächen), text (kräftig für Schrift)
 const FALLBACK_FARBEN = [
-  { name: 'Neon Cyan', rgb: [0, 255, 255], color: 'rgba(0, 255, 255, 0.25)' },
-  { name: 'Neon Magenta', rgb: [255, 0, 255], color: 'rgba(255, 0, 255, 0.25)' },
-  { name: 'Neon Grün', rgb: [0, 255, 128], color: 'rgba(0, 255, 128, 0.25)' },
-  { name: 'Neon Pink', rgb: [255, 0, 128], color: 'rgba(255, 0, 128, 0.25)' },
-  { name: 'Neon Gelb', rgb: [255, 255, 0], color: 'rgba(255, 255, 0, 0.25)' },
-  { name: 'Neon Orange', rgb: [255, 128, 0], color: 'rgba(255, 128, 0, 0.25)' },
-  { name: 'Neon Blau', rgb: [0, 128, 255], color: 'rgba(0, 128, 255, 0.25)' },
-  { name: 'Neon Violett', rgb: [128, 0, 255], color: 'rgba(128, 0, 255, 0.25)' },
-  { name: 'Neon Rot', rgb: [255, 50, 50], color: 'rgba(255, 50, 50, 0.25)' },
-  { name: 'Neon Lime', rgb: [200, 255, 0], color: 'rgba(200, 255, 0, 0.25)' },
-  { name: 'Neon Türkis', rgb: [0, 255, 200], color: 'rgba(0, 255, 200, 0.25)' },
-  { name: 'Neon Koralle', rgb: [255, 100, 100], color: 'rgba(255, 100, 100, 0.25)' }
+  { index: 0, name: 'Neon Cyan', rgb: [0, 255, 255], fill: 'rgba(0, 255, 255, 0.24)', text: 'rgba(0, 255, 255, 0.85)' },
+  { index: 1, name: 'Neon Magenta', rgb: [255, 0, 255], fill: 'rgba(255, 0, 255, 0.24)', text: 'rgba(255, 0, 255, 0.85)' },
+  { index: 2, name: 'Neon Grün', rgb: [0, 255, 128], fill: 'rgba(0, 255, 128, 0.24)', text: 'rgba(0, 255, 128, 0.85)' },
+  { index: 3, name: 'Neon Pink', rgb: [255, 0, 128], fill: 'rgba(255, 0, 128, 0.24)', text: 'rgba(255, 0, 128, 0.85)' },
+  { index: 4, name: 'Neon Gelb', rgb: [255, 255, 0], fill: 'rgba(255, 255, 0, 0.24)', text: 'rgba(255, 255, 0, 0.85)' },
+  { index: 5, name: 'Neon Orange', rgb: [255, 128, 0], fill: 'rgba(255, 128, 0, 0.24)', text: 'rgba(255, 128, 0, 0.85)' },
+  { index: 6, name: 'Neon Blau', rgb: [0, 128, 255], fill: 'rgba(0, 128, 255, 0.24)', text: 'rgba(0, 128, 255, 0.85)' },
+  { index: 7, name: 'Neon Violett', rgb: [128, 0, 255], fill: 'rgba(128, 0, 255, 0.24)', text: 'rgba(128, 0, 255, 0.85)' },
+  { index: 8, name: 'Neon Rot', rgb: [255, 50, 50], fill: 'rgba(255, 50, 50, 0.24)', text: 'rgba(255, 50, 50, 0.85)' },
+  { index: 9, name: 'Neon Lime', rgb: [200, 255, 0], fill: 'rgba(200, 255, 0, 0.24)', text: 'rgba(200, 255, 0, 0.85)' },
+  { index: 10, name: 'Neon Türkis', rgb: [0, 255, 200], fill: 'rgba(0, 255, 200, 0.24)', text: 'rgba(0, 255, 200, 0.85)' },
+  { index: 11, name: 'Neon Koralle', rgb: [255, 100, 100], fill: 'rgba(255, 100, 100, 0.24)', text: 'rgba(255, 100, 100, 0.85)' }
 ];
 
 // Cache für aktive Perspektiven-Farben
@@ -157,7 +158,7 @@ export function getFarben(typ = 'pilze') {
  * Erstellt Farbzuordnung für Items (Pilze, Pflanzen, etc.)
  * Filtert automatisch Farben die zu ähnlich zu aktiven Perspektiven sind
  * @param {Array} itemIds - Array von Item-IDs
- * @returns {Map} ID → Farbe (rgba String)
+ * @returns {Map} ID → {farbIndex: number, farbKlasse: string, fill: rgba, text: rgba, line: rgba}
  */
 export function erstelleFarben(itemIds) {
   const farben = new Map();
@@ -176,10 +177,45 @@ export function erstelleFarben(itemIds) {
   
   itemIds.forEach((id, i) => {
     const normalizedId = String(id);
-    const farbObj = gefilterte[i % gefilterte.length];
-    // Extrahiere color String aus Objekt oder verwende direkt
-    const farbe = farbObj?.color || farbObj;
-    farben.set(normalizedId, farbe);
+    const paletteIndex = i % gefilterte.length;
+    const farbObj = gefilterte[paletteIndex];
+    
+    // Verwende den originalen Index aus der Palette für die CSS-Klasse
+    // Falls kein Index vorhanden, nutze den Palette-Index
+    const farbIndex = farbObj?.index ?? paletteIndex;
+    const farbKlasse = `pilz-farbe-${farbIndex}`;
+    
+    // Generiere aus RGB falls vorhanden
+    // BUGFIX: RGB könnte String sein vom YAML-Parser!
+    let rgb = farbObj?.rgb;
+    let r, g, b;
+    
+    if (Array.isArray(rgb)) {
+      [r, g, b] = rgb;
+    } else if (typeof rgb === 'string') {
+      // YAML hat es als String geparst, z.B. "[0, 255, 255]"
+      const match = rgb.match(/\[?\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\]?/);
+      if (match) {
+        r = parseInt(match[1]);
+        g = parseInt(match[2]);
+        b = parseInt(match[3]);
+      } else {
+        r = g = b = 100;
+      }
+    } else {
+      r = g = b = 100;
+    }
+    
+    farben.set(normalizedId, {
+      farbIndex,
+      farbKlasse,
+      rgb: `${r}, ${g}, ${b}`,
+      fill: `rgba(${r}, ${g}, ${b}, 0.24)`,
+      text: `rgba(${r}, ${g}, ${b}, 0.85)`,
+      line: `rgba(${r}, ${g}, ${b}, 0.70)`,
+      bg: `rgba(${r}, ${g}, ${b}, 0.12)`,
+      glow: `rgba(${r}, ${g}, ${b}, 0.50)`
+    });
   });
   
   return farben;

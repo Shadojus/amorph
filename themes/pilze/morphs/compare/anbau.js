@@ -49,7 +49,7 @@ export function compareAnbau(items, perspektive, config = {}) {
     const section = createSectionIfNew('standort', 'Fundorte', perspektive.farben?.[0], skipFelder);
     if (section) {
       const mapped = standortItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.standort, farbe: i.farbe, textFarbe: i.textFarbe
+        id: i.id, name: i.name, wert: i.data.standort, farbe: i.farbe, textFarbe: i.textFarbe, farbKlasse: i.farbKlasse
       }));
       section.addContent(compareList(mapped, {}));
       sections.appendChild(section);
@@ -62,7 +62,7 @@ export function compareAnbau(items, perspektive, config = {}) {
     const section = createSectionIfNew('saison', 'Saison', perspektive.farben?.[1], skipFelder);
     if (section) {
       const mapped = saisonItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.saison, farbe: i.farbe, textFarbe: i.textFarbe
+        id: i.id, name: i.name, wert: i.data.saison, farbe: i.farbe, textFarbe: i.textFarbe, farbKlasse: i.farbKlasse
       }));
       section.addContent(compareTag(mapped, {}));
       sections.appendChild(section);
@@ -75,7 +75,7 @@ export function compareAnbau(items, perspektive, config = {}) {
     const section = createSectionIfNew('temperatur', 'Temperatur', perspektive.farben?.[2], skipFelder);
     if (section) {
       const mapped = tempItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.temperatur, farbe: i.farbe, textFarbe: i.textFarbe
+        id: i.id, name: i.name, wert: i.data.temperatur, farbe: i.farbe, textFarbe: i.textFarbe, farbKlasse: i.farbKlasse
       }));
       section.addContent(compareRange(mapped, { einheit: '°C' }));
       sections.appendChild(section);
@@ -88,7 +88,7 @@ export function compareAnbau(items, perspektive, config = {}) {
     const section = createSectionIfNew('lebenszyklus', 'Lebenszyklus', perspektive.farben?.[3], skipFelder);
     if (section) {
       const mapped = lebenszyklusItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.lebenszyklus, farbe: i.farbe, textFarbe: i.textFarbe
+        id: i.id, name: i.name, wert: i.data.lebenszyklus, farbe: i.farbe, textFarbe: i.textFarbe, farbKlasse: i.farbKlasse
       }));
       section.addContent(compareTimeline(mapped, {}));
       sections.appendChild(section);
@@ -101,7 +101,7 @@ export function compareAnbau(items, perspektive, config = {}) {
     const section = createSectionIfNew('ernte_stats', 'Ernte-Statistik', perspektive.farben?.[0], skipFelder);
     if (section) {
       const mapped = ernteItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.ernte_stats.avg || 0, farbe: i.farbe, textFarbe: i.textFarbe
+        id: i.id, name: i.name, wert: i.data.ernte_stats.avg || 0, farbe: i.farbe, textFarbe: i.textFarbe, farbKlasse: i.farbKlasse
       }));
       section.addContent(compareBar(mapped, { einheit: 'g' }));
       sections.appendChild(section);

@@ -15,12 +15,11 @@ export function compareImage(items, config = {}) {
     if (!item.wert) return;
     
     const imgWrap = document.createElement('div');
-    imgWrap.className = 'compare-img-wrap';
-    imgWrap.style.borderColor = item.farbe;
+    imgWrap.className = `compare-img-wrap ${item.farbKlasse || ''}`;
     
     imgWrap.innerHTML = `
       <img src="${item.wert}" alt="${item.name}" loading="lazy">
-      <span class="img-label" style="background:${item.farbe}">${item.name}</span>
+      <span class="img-label pilz-fill pilz-text">${item.name}</span>
     `;
     
     gallery.appendChild(imgWrap);

@@ -50,7 +50,7 @@ export function compareSicherheit(items, perspektive, config = {}) {
     if (section) {
       section.classList.add('section-primary');
       const mapped = essbarkeitItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.essbarkeit, farbe: i.farbe, textFarbe: i.textFarbe
+        id: i.id, name: i.name, wert: i.data.essbarkeit, farbe: i.farbe, textFarbe: i.textFarbe, farbKlasse: i.farbKlasse, farbKlasse: i.farbKlasse
       }));
       section.addContent(compareTag(mapped, {}));
       sections.appendChild(section);
@@ -63,7 +63,7 @@ export function compareSicherheit(items, perspektive, config = {}) {
     const section = createSectionIfNew('toxizitaet', 'Toxizitätsgrad', perspektive.farben?.[1], skipFelder);
     if (section) {
       const mapped = toxizitaetItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.toxizitaet, farbe: i.farbe, textFarbe: i.textFarbe
+        id: i.id, name: i.name, wert: i.data.toxizitaet, farbe: i.farbe, textFarbe: i.textFarbe, farbKlasse: i.farbKlasse, farbKlasse: i.farbKlasse
       }));
       section.addContent(compareBar(mapped, { max: 100, einheit: '%' }));
       sections.appendChild(section);
@@ -76,7 +76,7 @@ export function compareSicherheit(items, perspektive, config = {}) {
     const section = createSectionIfNew('verwechslung', 'Verwechslungsgefahr', perspektive.farben?.[2], skipFelder);
     if (section) {
       const mapped = verwechslungItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.verwechslung, farbe: i.farbe, textFarbe: i.textFarbe
+        id: i.id, name: i.name, wert: i.data.verwechslung, farbe: i.farbe, textFarbe: i.textFarbe, farbKlasse: i.farbKlasse, farbKlasse: i.farbKlasse
       }));
       section.addContent(compareList(mapped, {}));
       sections.appendChild(section);
@@ -90,7 +90,7 @@ export function compareSicherheit(items, perspektive, config = {}) {
     if (section) {
       section.classList.add('section-danger');
       const mapped = symptomeItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.symptome, farbe: i.farbe, textFarbe: i.textFarbe
+        id: i.id, name: i.name, wert: i.data.symptome, farbe: i.farbe, textFarbe: i.textFarbe, farbKlasse: i.farbKlasse, farbKlasse: i.farbKlasse
       }));
       section.addContent(compareText(mapped, {}));
       sections.appendChild(section);
@@ -103,7 +103,7 @@ export function compareSicherheit(items, perspektive, config = {}) {
     const section = createSectionIfNew('verfuegbarkeit', 'Status', perspektive.farben?.[0], skipFelder);
     if (section) {
       const mapped = statusItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.verfuegbarkeit, farbe: i.farbe, textFarbe: i.textFarbe
+        id: i.id, name: i.name, wert: i.data.verfuegbarkeit, farbe: i.farbe, textFarbe: i.textFarbe, farbKlasse: i.farbKlasse, farbKlasse: i.farbKlasse
       }));
       section.addContent(compareTag(mapped, {}));
       sections.appendChild(section);

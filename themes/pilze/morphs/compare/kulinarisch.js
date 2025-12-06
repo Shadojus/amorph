@@ -50,7 +50,7 @@ export function compareKulinarisch(items, perspektive, config = {}) {
     const section = createSectionIfNew('essbarkeit', 'Essbarkeit', perspektive.farben?.[0], skipFelder);
     if (section) {
       const mapped = essbarkeitItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.essbarkeit, farbe: i.farbe, textFarbe: i.textFarbe
+        id: i.id, name: i.name, wert: i.data.essbarkeit, farbe: i.farbe, textFarbe: i.textFarbe, farbKlasse: i.farbKlasse, farbKlasse: i.farbKlasse
       }));
       section.addContent(compareTag(mapped, { label: null }));
       sections.appendChild(section);
@@ -63,7 +63,7 @@ export function compareKulinarisch(items, perspektive, config = {}) {
     const section = createSectionIfNew('geschmack', 'Geschmack', perspektive.farben?.[1], skipFelder);
     if (section) {
       const mapped = geschmackItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.geschmack, farbe: i.farbe, textFarbe: i.textFarbe
+        id: i.id, name: i.name, wert: i.data.geschmack, farbe: i.farbe, textFarbe: i.textFarbe, farbKlasse: i.farbKlasse, farbKlasse: i.farbKlasse
       }));
       section.addContent(compareList(mapped, { label: null }));
       sections.appendChild(section);
@@ -76,7 +76,7 @@ export function compareKulinarisch(items, perspektive, config = {}) {
     const section = createSectionIfNew('profil', 'Geschmacksprofil', perspektive.farben?.[2], skipFelder);
     if (section) {
       const mapped = profilItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.profil, farbe: i.farbe, textFarbe: i.textFarbe
+        id: i.id, name: i.name, wert: i.data.profil, farbe: i.farbe, textFarbe: i.textFarbe, farbKlasse: i.farbKlasse, farbKlasse: i.farbKlasse
       }));
       section.addContent(compareRadar(mapped, { label: null }));
       sections.appendChild(section);
@@ -89,7 +89,7 @@ export function compareKulinarisch(items, perspektive, config = {}) {
     const section = createSectionIfNew('naehrwerte', 'Nährwerte', perspektive.farben?.[3], skipFelder);
     if (section) {
       const mapped = naehrwerteItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.naehrwerte, farbe: i.farbe, textFarbe: i.textFarbe
+        id: i.id, name: i.name, wert: i.data.naehrwerte, farbe: i.farbe, textFarbe: i.textFarbe, farbKlasse: i.farbKlasse, farbKlasse: i.farbKlasse
       }));
       section.addContent(comparePie(mapped, { label: null }));
       sections.appendChild(section);
@@ -102,7 +102,7 @@ export function compareKulinarisch(items, perspektive, config = {}) {
     const section = createSectionIfNew('bewertung', 'Bewertung', perspektive.farben?.[0], skipFelder);
     if (section) {
       const mapped = bewertungItems.map(i => ({
-        id: i.id, name: i.name, wert: i.data.bewertung, farbe: i.farbe, textFarbe: i.textFarbe
+        id: i.id, name: i.name, wert: i.data.bewertung, farbe: i.farbe, textFarbe: i.textFarbe, farbKlasse: i.farbKlasse, farbKlasse: i.farbKlasse
       }));
       section.addContent(compareRating(mapped, { label: null, max: 5 }));
       sections.appendChild(section);
@@ -129,9 +129,9 @@ function createTextCompare(items, feldName) {
   
   items.forEach(item => {
     const row = document.createElement('div');
-    row.className = 'text-row';
+    row.className = `text-row ${item.farbKlasse || ''}`;
     row.innerHTML = `
-      <span class="text-name" style="color:${item.farbe}">${item.name}</span>
+      <span class="text-name">${item.name}</span>
       <span class="text-wert">${item.data[feldName] || '–'}</span>
     `;
     el.appendChild(row);

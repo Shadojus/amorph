@@ -26,7 +26,7 @@ export function compareStats(items, config = {}) {
   header.className = 'stats-header';
   header.innerHTML = '<div class="stats-label">Stat</div>';
   items.forEach(item => {
-    header.innerHTML += `<div class="stats-name" style="color:${item.textFarbe || item.farbe}">${item.name}</div>`;
+    header.innerHTML += `<div class="stats-name ${item.farbKlasse || ''} pilz-text">${item.name}</div>`;
   });
   el.appendChild(header);
   
@@ -50,10 +50,10 @@ export function compareStats(items, config = {}) {
       const isMax = numWert === maxWert && maxWert > 0;
       
       const cell = document.createElement('div');
-      cell.className = 'stats-cell' + (isMax ? ' stats-max' : '');
+      cell.className = `stats-cell ${item.farbKlasse || ''}` + (isMax ? ' stats-max' : '');
       cell.innerHTML = `
         <div class="stats-bar-bg">
-          <div class="stats-bar" style="width:${prozent}%;background:${item.farbe}"></div>
+          <div class="stats-bar pilz-fill" style="width:${prozent}%"></div>
         </div>
         <span class="stats-wert">${wert ?? '–'}</span>
       `;

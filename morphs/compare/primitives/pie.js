@@ -13,9 +13,14 @@ export function comparePie(items, config = {}) {
   
   items.forEach(item => {
     const pieWrap = document.createElement('div');
-    pieWrap.className = 'compare-pie-wrap';
+    pieWrap.className = `compare-pie-wrap ${item.farbKlasse || ''}`;
     
-    pieWrap.innerHTML = `<div class="pie-name" style="color:${item.textFarbe || item.farbe}">${item.name}</div>`;
+    // CSS-Variablen nutzen wenn farbKlasse vorhanden
+    if (item.farbKlasse) {
+      pieWrap.innerHTML = `<div class="pie-name">${item.name}</div>`;
+    } else {
+      pieWrap.innerHTML = `<div class="pie-name" style="color:${item.textFarbe || item.farbe}">${item.name}</div>`;
+    }
     
     const pieData = typeof item.wert === 'object' && !Array.isArray(item.wert) 
       ? Object.entries(item.wert).map(([k, v]) => ({ label: k, value: v }))

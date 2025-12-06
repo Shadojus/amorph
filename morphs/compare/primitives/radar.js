@@ -93,9 +93,13 @@ export function compareRadar(items, config = {}) {
     
     const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
     polygon.setAttribute('points', points);
-    polygon.setAttribute('class', 'radar-shape');
-    // stroke = kräftige Farbe (textFarbe), fill = transparente Farbe
-    polygon.setAttribute('style', `stroke:${item.textFarbe || item.farbe};fill:${item.farbe}`);
+    polygon.setAttribute('class', `radar-shape ${item.farbKlasse || ''}`);
+    
+    // Inline-Styles mit Daten aus erstelleFarben() - farbe=fill, textFarbe=line
+    const fillColor = item.farbe || 'rgba(100,100,100,0.24)';
+    const strokeColor = item.lineFarbe || item.textFarbe || item.farbe || 'rgba(100,100,100,0.70)';
+    polygon.setAttribute('style', `fill:${fillColor};stroke:${strokeColor};stroke-width:2.5`);
+    
     svg.appendChild(polygon);
   });
   
@@ -105,12 +109,15 @@ export function compareRadar(items, config = {}) {
   const legende = document.createElement('div');
   legende.className = 'compare-legende';
   items.forEach(item => {
-    legende.innerHTML += `
-      <span class="legende-item">
-        <span class="legende-dot" style="background:${item.textFarbe || item.farbe}"></span>
-        ${item.name}
-      </span>
-    `;
+    const legendeItem = document.createElement('span');
+    legendeItem.className = `legende-item ${item.farbKlasse || ''}`;
+    
+    if (item.farbKlasse) {
+      legendeItem.innerHTML = `<span class="legende-dot"></span>${item.name}`;
+    } else {
+      legendeItem.innerHTML = `<span class="legende-dot" style="background:${item.textFarbe || item.farbe}"></span>${item.name}`;
+    }
+    legende.appendChild(legendeItem);
   });
   el.appendChild(legende);
   
