@@ -1,426 +1,62 @@
 # Konfiguration
 
-Eine Datei = Ein Aspekt. **Modulares Schema-System als Single Source of Truth.**
-
-## Übersicht
-
-Das AMORPH Config-System ist vollständig datengetrieben:
-
-- **Modulares Schema**: `config/schema/` mit Basis + austauschbaren Perspektiven
-- **Typ-Erkennung**: Automatisch aus Datenstruktur via `morphs.yaml`
-- **Farben-System**: Zentrale Paletten für Diagramme, Badges, Perspektiven
-- **Feature-Isolation**: Jedes Feature lädt nur benötigte Config
-
-### Schema-Ordner Struktur
-
-```
-config/schema/
-├── index.yaml           # Index und Dokumentation
-├── basis.yaml           # Kern-System (NICHT ÄNDERN)
-├── felder.yaml          # Feld-Definitionen (anpassbar)
-├── semantik.yaml        # Such-Mappings (anpassbar)
-└── perspektiven/        # Austauschbare Perspektiven
-    ├── index.yaml       # Aktive Perspektiven-Liste
-    ├── kulinarisch.yaml
-    ├── sicherheit.yaml
-    ├── anbau.yaml
-    ├── wissenschaft.yaml
-    ├── medizin.yaml
-    └── statistik.yaml
-```
-
-### morphs.yaml - Die Erkennungs-Zentrale
-
-```yaml
-# morphs.yaml
-
-# === FARBEN ===
-farben:
-  pilze:      # Für Vergleichs-Farbzuweisung
-    - "#e8b04a"
-    - "#60c090"
-  diagramme:  # Für Pie/Bar Charts  
-    - "#22c55e"
-    - "#3b82f6"
-
-# === TYP-ERKENNUNG (DATENGETRIEBEN) ===
-erkennung:
-  # String → Badge Erkennung
-  badge:
-    keywords:
-      - verfügbar
-      - saisonal
-      - essbar
-      - giftig
-      # ... 35+ Keywords
-  
-  # Nummern-Erkennung
-  rating:
-    min: 0
-    max: 10
-    nurDezimal: true    # Zahl mit Dezimalstelle → rating
-  progress:
-    min: 0
-    max: 100
-    nurGanzzahl: true   # Integer → progress
-  
-  # Objekt-Erkennung
-  objekt:
-    range:
-      benoetigtKeys: [min, max]
-    stats:
-      benoetigtKeys: [min, max, avg]
-    # ⚠️ rating/progress/badge Signalkeys noch hardcoded in pipeline.js!
-  
-  # Array-Erkennung
-  array:
-    radar:
-      benoetigtKeys: [axis, value]
-      minItems: 3
-    timeline:
-      benoetigtKeys: [date, event]
-```
-
-Morphs laden Config-Werte via:
-- `getFarben(palette)` - Aus `util/semantic.js`
-- `getBadgeConfig()` - Aus `util/semantic.js`
-- `setErkennungConfig()` - In `core/pipeline.js`
+Eine Datei = Ein Aspekt. YAML als Single Source of Truth.
 
 ## Dateien
 
 ```
 config/
-├── manifest.yaml      ← Was ist das?
-├── daten.yaml         ← Woher kommen Daten?
-├── schema/            ← WAS sind die Daten? (MODULARES SYSTEM)
-│   ├── basis.yaml     ← Kern-Config (unveränderlich)
-│   ├── felder.yaml    ← Feld-Definitionen (anpassbar)
-│   ├── semantik.yaml  ← Such-Mappings (anpassbar)
-│   └── perspektiven/  ← Austauschbare Perspektiven
-├── morphs.yaml        ← Wie darstellen? (nutzt Schema)
-├── observer.yaml      ← Was beobachten?
-└── features.yaml      ← Was ist aktiv? (nutzt Schema)
+├── manifest.yaml   ← App-Name, Version, Titel
+├── daten.yaml      ← Datenquelle (JSON-Pfad)
+├── schema.yaml     ← Feld-Definitionen, Perspektiven
+├── morphs.yaml     ← Morph-Config, Typ-Erkennung
+├── features.yaml   ← Aktive Features
+└── observer.yaml   ← Debug, Analytics
 ```
-
-## Schema-First Prinzip
-
-**Alles kommt aus dem modularen Schema-System:**
-- Kern-Felder: `basis.yaml` (unveränderlich)
-- Anpassbare Felder: `felder.yaml` mit Typ, Label, Suche
-- Perspektiven: `perspektiven/*.yaml` (austauschbar)
-- Semantik: `semantik.yaml` für Keyword-Mappings
-
-### Optionale Feld-Attribute
-
-Jedes Feld kann diese optionalen Attribute haben:
-
-```yaml
-# In felder.yaml
-wissenschaftlich:
-  typ: string
-  label: Wissenschaftlicher Name
-  citation:                    # Quellenangabe
-    quelle: "MycoBank"
-    url: "https://www.mycobank.org"
-    datum: "2024-01"
-    autor: "Fungorum Index"
-    lizenz: "CC-BY-SA"
-  advertisement:               # Werbung
-    sponsor: "Fungi Labs"
-    typ: "sponsored_content"
-    kennzeichnung: true
-```
-
-### Perspektiven hinzufügen/entfernen
-
-```yaml
-# perspektiven/index.yaml
-aktiv:
-  - kulinarisch
-  - sicherheit
-  - anbau
-  - wissenschaft
-  - medizin
-  - statistik
-
-# Neue Perspektive: Datei erstellen + zu aktiv hinzufügen
-# Perspektive deaktivieren: Aus aktiv-Liste entfernen
-```
-    typ: tag
-    versteckt: false      # → Wird gerendert
-
-perspektiven:
-  kulinarisch:            # → Feature nutzt das
-    name: Kulinarisch
-    symbol: 🍳
-    keywords: [kochen, rezept]
-```
-
-**Vorteile:**
-- Domäne ändern = nur schema.yaml anpassen
-- Keine Duplikation zwischen Dateien
-- Automatische Konsistenz
 
 ## manifest.yaml
 
-Metadaten über die Anwendung.
-
 ```yaml
-name: Funginomi
-beschreibung: Pilz-Wissenssammlung
+name: funginomi
 version: 1.0.0
-sprache: de
+titel: FUNGINOMI - Pilz-Explorer
 ```
 
-**Pflichtfelder**: `name`
+## schema.yaml
 
-## daten.yaml
-
-Woher die Daten kommen. **Schema wird aus schema.yaml geladen!**
+Definiert Perspektiven und Felder:
 
 ```yaml
-quelle:
-  typ: json
-  url: ./data/items.json  # Projekt-spezifisch
-
-# Alternativen:
-# quelle:
-#   typ: pocketbase
-#   url: https://api.example.com
-#   sammlung: items
-
-# quelle:
-#   typ: rest
-#   url: https://api.example.com/items
-#   headers:
-#     Authorization: Bearer ${API_TOKEN}
-```
-
-**Pflichtfelder**: `quelle`, `quelle.typ`, `quelle.url`
-
-## schema.yaml (NEU - Single Source of Truth)
-
-Definiert die Datenstruktur, Suchverhalten und Perspektiven.
-
-```yaml
-# Felder und ihre Typen
-felder:
-  id:
-    typ: number
-    versteckt: true       # Wird nicht gerendert
-  
-  name:
-    typ: string
-    label: Name
-    suche:
-      gewicht: 100        # Höchste Priorität bei Suche
-      exakt: true
-  
-  kategorie:
-    typ: tag
-    label: Kategorie
-    suche:
-      gewicht: 50
-
-# Semantische Suche
-semantik:
-  aktiv:
-    keywords: [aktiv, verfügbar, online]
-    feld: status
-    werte: [aktiv, online]
-    score: 50
-
-# Perspektiven (für UI-Filter mit 4-Farben-Grid)
 perspektiven:
-  details:
-    name: Details
-    symbol: 📋
-    farben:              # 4 harmonische Farben
-      - \"#5aa0d8\"      # Hauptfarbe
-      - \"#4888c0\"      # Sekundär
-      - \"#70b8f0\"      # Hell
-      - \"#3870a8\"      # Dunkel
-    felder: [name, beschreibung]
-    keywords: [detail, info]
+  - id: kulinarisch
+    name: Kulinarisch
+    symbol: 🍳
+    farben: ["#22c55e", "#10b981", "#059669", "#047857"]
+    felder: [geschmack, zubereitung, essbar]
 ```
 
 ## morphs.yaml
 
-Nur noch für Morph-spezifische Konfiguration. **Feld-Typen kommen aus Schema!**
+Automatische Typ-Erkennung:
 
 ```yaml
-# Feld→Morph Mappings kommen aus schema.yaml/felder[].typ
-# Diese Datei nur für Fallback-Regeln und Morph-Config
-
-regeln:
-  - typ: range
-    morph: range
-  - typ: string
-    maxLaenge: 20
-    morph: tag
-
-config:
-  tag:
-    farben:
-      aktiv: "#22c55e"
-      fehler: "#ef4444"
-  range:
-    visualisierung: true
+erkennung:
+  rating:
+    min: 0
+    max: 10
+    dezimalstellen: true
+  badge:
+    keywords: [essbar, giftig, aktiv, inaktiv]
 ```
 
-## observer.yaml
+## Datengetriebene Erkennung
 
-Was beobachtet wird und wohin gemeldet.
+Pipeline erkennt Morphs automatisch aus Datenstruktur:
 
-```yaml
-interaktion:
-  ziel:
-    typ: redis
-    url: /api/redis-bridge
-    stream: events:klicks
-
-rendering:
-  ziel:
-    typ: console
-    level: debug
-
-session:
-  ziel:
-    typ: http
-    url: /api/analytics
-    batch: true
-```
-
-**Target-Typen**:
-- `console` - Browser Console
-- `http` - REST Endpoint
-- `websocket` - WebSocket Connection
-- `redis` - Redis via HTTP Bridge
-
-## features.yaml
-
-Welche Features aktiv sind. **Perspektiven-Liste kommt aus Schema!**
-
-```yaml
-aktiv:
-  - header    # Kombiniert suche + perspektiven
-  - grid
-
-suche:
-  live: true
-  debounce: 300
-  limit: 50
-  placeholder: "Suchen..."
-  # suchfelder kommen automatisch aus schema.yaml
-
-perspektiven:
-  maxAktiv: 4
-  # liste kommt automatisch aus schema.yaml/perspektiven!
-
-grid:
-  default: grid
-  layouts:
-    - liste
-    - grid
-```
-
-## Umgebungsvariablen
-
-Secrets nie direkt in YAML. Nutze `${VAR}`:
-
-```yaml
-quelle:
-  url: ${DATABASE_URL}
-  headers:
-    Authorization: Bearer ${API_TOKEN}
-```
-
-Werden beim Laden ersetzt.
-
-## Validierung
-
-```javascript
-// config/schema.js
-export const schemas = {
-  manifest: {
-    pflicht: ['name'],
-    optional: ['beschreibung', 'version', 'sprache']
-  },
-  daten: {
-    pflicht: ['quelle', 'quelle.typ', 'quelle.url'],
-    optional: ['schema']
-  },
-  morphs: {
-    pflicht: [],
-    optional: ['felder', 'regeln', 'config']
-  },
-  observer: {
-    pflicht: [],
-    optional: ['interaktion', 'rendering', 'session']
-  },
-  features: {
-    pflicht: [],
-    optional: ['aktiv', 'extern']
-  }
-};
-
-export function validate(config) {
-  const fehler = [];
-  
-  for (const [name, schema] of Object.entries(schemas)) {
-    if (!config[name] && schema.pflicht.length > 0) {
-      fehler.push(`${name}.yaml fehlt`);
-      continue;
-    }
-    
-    for (const feld of schema.pflicht) {
-      if (!getNestedValue(config[name], feld)) {
-        fehler.push(`${name}.yaml: ${feld} fehlt`);
-      }
-    }
-  }
-  
-  return fehler;
-}
-
-function getNestedValue(obj, path) {
-  return path.split('.').reduce((o, k) => o?.[k], obj);
-}
-```
-
-## Beispiel: Vollständige Konfiguration
-
-```yaml
-# manifest.yaml
-name: Meine App
-version: 1.0.0
-
-# daten.yaml  
-quelle:
-  typ: rest
-  url: https://api.example.com/items
-
-# morphs.yaml
-felder:
-  titel: text
-  preis: number
-  tags: list
-config:
-  number:
-    dezimalen: 2
-    einheit: €
-
-# observer.yaml
-rendering:
-  ziel:
-    typ: console
-
-# features.yaml
-aktiv:
-  - suche
-  - grid
-suche:
-  live: true
-```
-
-Das ist alles. Keine 500-Zeilen Konfigurationsdateien.
+| Datenstruktur | Erkannter Morph |
+|---------------|-----------------|
+| `{ min: 0, max: 10 }` | `range` |
+| `{ min, max, avg }` | `stats` |
+| `[{ axis, value }]` (3+) | `radar` |
+| `"essbar"` (keyword) | `badge` |
+| `4.5` (0-10, dezimal) | `rating` |

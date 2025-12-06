@@ -53,8 +53,8 @@
 }
 
 .compare-label {
-  font-size: 12px;
-  font-weight: 500;
+  font-size: var(--font-section-label);
+  font-weight: 600;
   color: var(--feld-perspektive-farbe, rgba(255, 200, 120, 1));
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -72,8 +72,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: var(--font-section-label);
+  font-weight: 600;
   color: var(--feld-perspektive-farbe, rgba(255, 200, 120, 1));
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -97,7 +97,7 @@
   border-radius: 4px;
   background: transparent;
   color: rgba(255, 255, 255, 0.40);
-  font-size: 16px;
+  font-size: var(--font-xl);
   font-weight: 300;
   line-height: 1;
   cursor: pointer;
@@ -121,7 +121,7 @@
 
 .compare-leer {
   color: rgba(255, 255, 255, 0.40);
-  font-size: 12px;
+  font-size: var(--font-section-label);
   text-align: center;
   padding: 20px;
 }
@@ -141,7 +141,7 @@
 }
 
 .compare-bar-row .bar-name {
-  font-size: 11px;
+  font-size: var(--font-pilz-name);
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
@@ -167,7 +167,7 @@
 }
 
 .compare-bar-row .bar-wert {
-  font-size: 11px;
+  font-size: var(--font-wert);
   font-weight: 500;
   color: white;
   text-align: right;
@@ -178,7 +178,7 @@
   display: flex;
   justify-content: space-between;
   padding: 6px 88px 0 88px;
-  font-size: 9px;
+  font-size: var(--font-scale);
   color: rgba(255, 255, 255, 0.40);
   font-variant-numeric: tabular-nums;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -199,7 +199,7 @@
 }
 
 .compare-rating-row .rating-name {
-  font-size: 11px;
+  font-size: var(--font-pilz-name);
   font-weight: 500;
   min-width: 70px;
   color: var(--pilz-text, rgba(255, 255, 255, 0.85));
@@ -207,7 +207,7 @@
 
 .compare-rating-row .rating-stars {
   flex: 1;
-  font-size: 14px;
+  font-size: var(--font-lg);
   letter-spacing: 1px;
 }
 
@@ -220,7 +220,7 @@
 }
 
 .compare-rating-row .rating-wert {
-  font-size: 12px;
+  font-size: var(--font-wert);
   color: rgba(255, 255, 255, 0.60);
 }
 
@@ -241,14 +241,14 @@
 
 .compare-chip .chip-wert {
   padding: 6px 10px;
-  font-size: 11px;
+  font-size: var(--font-pilz-name);
   font-weight: 500;
   color: white;
 }
 
 .compare-chip .chip-pilze {
   padding: 6px 10px 6px 6px;
-  font-size: 10px;
+  font-size: var(--font-label);
   color: rgba(255, 255, 255, 0.60);
 }
 
@@ -270,7 +270,7 @@
   padding: 5px 10px;
   background: rgba(0, 0, 0, 0.20);
   border-radius: 16px;
-  font-size: 11px;
+  font-size: var(--font-pilz-name);
 }
 
 .compare-list-item.gemeinsam {
@@ -320,7 +320,7 @@
   left: 0;
   right: 0;
   padding: 4px 6px;
-  font-size: 10px;
+  font-size: var(--font-label);
   font-weight: 500;
   color: white;
   text-align: center;
@@ -363,7 +363,7 @@
 }
 
 .compare-radar-svg .radar-label {
-  font-size: 8px;
+  font-size: var(--font-scale);
   fill: rgba(255, 255, 255, 0.7);
   font-weight: 500;
 }
@@ -379,7 +379,7 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 11px;
+  font-size: var(--font-pilz-name);
   color: rgba(255, 255, 255, 0.85);
 }
 
@@ -393,7 +393,7 @@
 
 /* Radar Scale Labels */
 .radar-scale-label {
-  font-size: 7px;
+  font-size: var(--font-2xs);
   fill: rgba(255, 255, 255, 0.3);
   font-variant-numeric: tabular-nums;
 }
@@ -413,7 +413,7 @@
 }
 
 .radar-compact-row .radar-achse {
-  font-size: 10px;
+  font-size: var(--font-label);
   color: rgba(255, 255, 255, 0.60);
 }
 
@@ -444,7 +444,7 @@
 }
 
 .compare-pie-wrap .pie-pilz {
-  font-size: 10px;
+  font-size: var(--font-label);
   font-weight: 500;
   text-align: center;
 }
@@ -466,7 +466,7 @@
   align-items: center;
   justify-content: center;
   color: rgba(255, 255, 255, 0.40);
-  font-size: 20px;
+  font-size: var(--font-big-number);
 }
 
 /* === COMPARE TEXT === */
@@ -483,15 +483,15 @@
 }
 
 .compare-text-row .text-pilz {
-  font-size: 11px;
-  font-weight: 500;
+  font-size: var(--font-pilz-name);
+  font-weight: 600;
   color: rgba(255, 255, 255, 0.60);
   padding-left: 8px;
   border-left: 3px solid;
 }
 
 .compare-text-row .text-wert {
-  font-size: 12px;
+  font-size: var(--font-section-label);
   color: white;
   line-height: 1.4;
   padding-left: 11px;
@@ -547,7 +547,7 @@
 }
 
 .wirkstoffe-label {
-  font-size: 11px;
+  font-size: var(--font-pilz-name);
   font-weight: 500;
   color: rgba(255, 255, 255, 0.60);
 }
@@ -592,7 +592,7 @@
 }
 
 .timeline-pilz-name {
-  font-size: 12px;
+  font-size: var(--font-section-label);
   font-weight: 600;
 }
 
@@ -611,13 +611,13 @@
   background: rgba(0, 0, 0, 0.18);
   border-left: 3px solid;
   border-radius: 0 8px 8px 0;
-  font-size: 11px;
+  font-size: var(--font-pilz-name);
   color: rgba(255, 255, 255, 0.85);
 }
 
 .timeline-event .event-date {
   color: rgba(255, 255, 255, 0.60);
-  font-size: 10px;
+  font-size: var(--font-label);
 }
 
 /* === COMPARE BAR GROUP (für Arrays wie Wirkstoffe) === */
@@ -634,7 +634,7 @@
 }
 
 .bar-group-label {
-  font-size: 12px;
+  font-size: var(--font-section-label);
   font-weight: 600;
   color: rgba(255, 255, 255, 0.85);
   margin-bottom: 8px;
@@ -656,7 +656,7 @@
 }
 
 .bar-group-bar .bar-name {
-  font-size: 10px;
+  font-size: var(--font-label);
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
@@ -678,7 +678,7 @@
 }
 
 .bar-group-bar .bar-wert {
-  font-size: 10px;
+  font-size: var(--font-label);
   font-weight: 500;
   color: rgba(255, 255, 255, 0.85);
   text-align: right;
@@ -765,17 +765,17 @@
 }
 
 .compare-perspektive-header .perspektive-symbol {
-  font-size: 20px;
+  font-size: var(--font-big-number);
 }
 
 .compare-perspektive-header .perspektive-name {
-  font-size: 14px;
+  font-size: var(--font-lg);
   font-weight: 600;
   color: var(--p-farbe, rgba(255, 255, 255, 0.9));
 }
 
 .compare-perspektive-header .perspektive-count {
-  font-size: 11px;
+  font-size: var(--font-pilz-name);
   color: rgba(255, 255, 255, 0.60);
   margin-left: auto;
 }
@@ -796,7 +796,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 11px;
+  font-size: var(--font-pilz-name);
   color: rgba(255, 255, 255, 0.85);
 }
 
@@ -836,7 +836,7 @@
 }
 
 .compare-section-header {
-  font-size: 12px;
+  font-size: var(--font-section-label);
   font-weight: 600;
   color: var(--section-farbe, rgba(255, 255, 255, 0.85));
   margin-bottom: 12px;
@@ -868,13 +868,13 @@
 }
 
 .compare-text-wrap .text-header {
-  font-size: 11px;
+  font-size: var(--font-pilz-name);
   font-weight: 600;
   color: var(--pilz-text, rgba(255, 255, 255, 0.85));
 }
 
 .compare-text-wrap .text-inhalt {
-  font-size: 13px;
+  font-size: var(--font-md);
   color: rgba(255, 255, 255, 0.85);
   line-height: 1.5;
 }
@@ -893,12 +893,12 @@
 }
 
 .compare-text-simple .text-name {
-  font-size: 11px;
+  font-size: var(--font-pilz-name);
   font-weight: 600;
 }
 
 .compare-text-simple .text-wert {
-  font-size: 12px;
+  font-size: var(--font-section-label);
   color: rgba(255, 255, 255, 0.85);
   line-height: 1.4;
 }
@@ -917,7 +917,7 @@
 }
 
 .ernte-row .ernte-label {
-  font-size: 11px;
+  font-size: var(--font-pilz-name);
   font-weight: 500;
   color: rgba(255, 255, 255, 0.60);
 }
@@ -936,7 +936,7 @@
 }
 
 .ernte-bar .bar-name {
-  font-size: 10px;
+  font-size: var(--font-label);
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
@@ -958,7 +958,7 @@
 }
 
 .ernte-bar .bar-value {
-  font-size: 10px;
+  font-size: var(--font-label);
   font-weight: 500;
   color: rgba(255, 255, 255, 0.60);
   text-align: right;
@@ -979,7 +979,7 @@
 }
 
 .progress-row .progress-name {
-  font-size: 11px;
+  font-size: var(--font-pilz-name);
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
@@ -1002,7 +1002,7 @@
 }
 
 .progress-row .progress-wert {
-  font-size: 11px;
+  font-size: var(--font-pilz-name);
   font-weight: 500;
   color: rgba(255, 255, 255, 0.85);
   text-align: right;
@@ -1026,13 +1026,13 @@
 }
 
 .compare-boolean-wrap .boolean-name {
-  font-size: 11px;
+  font-size: var(--font-pilz-name);
   font-weight: 500;
   color: var(--pilz-text, rgba(255, 255, 255, 0.85));
 }
 
 .compare-boolean-wrap .boolean-wert {
-  font-size: 24px;
+  font-size: var(--font-2xl);
   color: rgba(255, 255, 255, 0.40);
 }
 
@@ -1062,7 +1062,7 @@
 .object-header {
   background: rgba(0, 0, 0, 0.20);
   border-radius: 8px 8px 0 0;
-  font-size: 11px;
+  font-size: var(--font-pilz-name);
   font-weight: 600;
 }
 
@@ -1088,13 +1088,13 @@
 }
 
 .object-row .object-key {
-  font-size: 11px;
+  font-size: var(--font-pilz-name);
   font-weight: 500;
   color: rgba(255, 255, 255, 0.60);
 }
 
 .object-row .object-cell {
-  font-size: 11px;
+  font-size: var(--font-pilz-name);
   color: rgba(255, 255, 255, 0.85);
   text-align: center;
 }
@@ -1114,7 +1114,7 @@
 }
 
 .range-row .range-name {
-  font-size: 11px;
+  font-size: var(--font-pilz-name);
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
@@ -1138,7 +1138,7 @@
 }
 
 .range-row .range-werte {
-  font-size: 10px;
+  font-size: var(--font-label);
   font-weight: 500;
   color: rgba(255, 255, 255, 0.60);
   text-align: right;
@@ -1148,7 +1148,7 @@
   display: flex;
   justify-content: space-between;
   padding: 6px 90px 0 90px;
-  font-size: 9px;
+  font-size: var(--font-scale);
   color: rgba(255, 255, 255, 0.40);
 }
 
@@ -1173,12 +1173,12 @@
 }
 
 .stats-header .stats-label {
-  font-size: 10px;
+  font-size: var(--font-label);
   color: rgba(255, 255, 255, 0.60);
 }
 
 .stats-header .stats-name {
-  font-size: 11px;
+  font-size: var(--font-pilz-name);
   font-weight: 600;
   text-align: center;
   white-space: nowrap;
@@ -1198,7 +1198,7 @@
 }
 
 .stats-row .stats-label {
-  font-size: 11px;
+  font-size: var(--font-pilz-name);
   font-weight: 500;
   color: rgba(255, 255, 255, 0.60);
 }
@@ -1224,7 +1224,7 @@
 }
 
 .stats-cell .stats-wert {
-  font-size: 10px;
+  font-size: var(--font-label);
   color: rgba(255, 255, 255, 0.60);
   text-align: center;
 }
@@ -1249,7 +1249,7 @@
 }
 
 .compare-wirkstoffe .wirkstoffe-label {
-  font-size: 11px;
+  font-size: var(--font-pilz-name);
   font-weight: 500;
   color: rgba(255, 255, 255, 0.60);
   padding-top: 3px;
@@ -1275,7 +1275,7 @@
 }
 
 .compare-wirkstoffe .wirkstoffe-bar .bar-value {
-  font-size: 10px;
+  font-size: var(--font-label);
   color: rgba(255, 255, 255, 0.60);
   white-space: nowrap;
 }
@@ -1312,24 +1312,24 @@
 }
 
 .timeline-punkt .timeline-datum {
-  font-size: 10px;
+  font-size: var(--font-label);
   color: rgba(255, 255, 255, 0.60);
 }
 
 .timeline-punkt .timeline-text {
-  font-size: 12px;
+  font-size: var(--font-section-label);
   color: rgba(255, 255, 255, 0.85);
 }
 
 .timeline-punkt .timeline-name {
-  font-size: 10px;
+  font-size: var(--font-label);
   font-weight: 500;
   color: var(--pilz-text, rgba(255, 255, 255, 0.85));
 }
 
 /* === PIE (Theme) === */
 .compare-pie-wrap .pie-name {
-  font-size: 11px;
+  font-size: var(--font-pilz-name);
   font-weight: 500;
   text-align: center;
   margin-bottom: 4px;
@@ -1359,7 +1359,7 @@
 
 @media (min-width: 768px) {
   .compare-perspektive-header .perspektive-name {
-    font-size: 16px;
+    font-size: var(--font-xl);
   }
   
   .compare-sections {
@@ -1395,7 +1395,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 10px;
+  font-size: var(--font-label);
   color: rgba(255, 255, 255, 0.60);
 }
 
@@ -1421,7 +1421,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 10px;
+  font-size: var(--font-label);
   color: rgba(255, 255, 255, 0.60);
 }
 
