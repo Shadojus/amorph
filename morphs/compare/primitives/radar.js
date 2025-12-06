@@ -115,7 +115,8 @@ export function compareRadar(items, config = {}) {
     // Inline-Styles für zuverlässige Darstellung
     const dotColor = item.lineFarbe || item.textFarbe || item.farbe || 'rgba(100,100,100,0.7)';
     const textColor = item.textFarbe || 'rgba(255,255,255,0.85)';
-    legendeItem.innerHTML = `<span class="legende-dot" style="background:${dotColor}"></span><span style="color:${textColor}">${item.name}</span>`;
+    const itemName = item.name || item.id || '–';
+    legendeItem.innerHTML = `<span class="legende-dot" style="background:${dotColor}"></span><span style="color:${textColor}">${itemName}</span>`;
     legende.appendChild(legendeItem);
   });
   el.appendChild(legende);
@@ -148,8 +149,9 @@ function compareRadarCompact(items, config) {
     items.forEach(item => {
       const werte = normalisiereRadarWerte(item.wert, [achse]);
       const val = werte[achse] || 0;
+      const itemName = item.name || item.id || '–';
       bars.innerHTML += `
-        <div class="radar-mini-bar" style="width:${val}%;background:${item.farbe}" title="${item.name}: ${val}"></div>
+        <div class="radar-mini-bar" style="width:${val}%;background:${item.farbe}" title="${itemName}: ${val}"></div>
       `;
     });
     

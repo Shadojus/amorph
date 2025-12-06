@@ -17,7 +17,8 @@ export function comparePie(items, config = {}) {
     
     // Inline-Styles für zuverlässige Darstellung
     const textColor = item.textFarbe || 'rgba(255,255,255,0.85)';
-    pieWrap.innerHTML = `<div class="pie-name" style="color:${textColor}">${item.name}</div>`;
+    const itemName = item.name || item.id || '–';
+    pieWrap.innerHTML = `<div class="pie-name" style="color:${textColor}">${itemName}</div>`;
     
     const pieData = typeof item.wert === 'object' && !Array.isArray(item.wert) 
       ? Object.entries(item.wert).map(([k, v]) => ({ label: k, value: v }))

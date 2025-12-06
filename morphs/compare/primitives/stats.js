@@ -26,7 +26,8 @@ export function compareStats(items, config = {}) {
   header.className = 'stats-header';
   header.innerHTML = '<div class="stats-label">Stat</div>';
   items.forEach(item => {
-    header.innerHTML += `<div class="stats-name" style="color:${item.textFarbe || item.farbe || '#fff'}">${item.name}</div>`;
+    const itemName = item.name || item.id || '–';
+    header.innerHTML += `<div class="stats-name" style="color:${item.textFarbe || item.farbe || '#fff'}">${itemName}</div>`;
   });
   el.appendChild(header);
   

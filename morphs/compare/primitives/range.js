@@ -49,9 +49,10 @@ export function compareRange(items, config = {}) {
     // Inline-Styles für Name und Bar (CSS greift nicht zuverlässig)
     const textColor = item.textFarbe || item.farbe || 'white';
     const barColor = item.farbe || 'rgba(100,100,100,0.5)';
+    const itemName = item.name || item.id || '–';
     
     row.innerHTML = `
-      <div class="range-name" style="color:${textColor}">${item.name}</div>
+      <div class="range-name" style="color:${textColor}">${itemName}</div>
       <div class="range-track">
         <div class="range-bar" style="left:${leftProzent}%;width:${widthProzent}%;background-color:${barColor}"></div>
       </div>

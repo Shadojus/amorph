@@ -26,7 +26,8 @@ export function compareObject(items, config = {}) {
   header.className = 'object-header';
   header.innerHTML = '<div class="object-key-header">Feld</div>';
   items.forEach(item => {
-    header.innerHTML += `<div class="object-name" style="color:${item.textFarbe || item.farbe || '#fff'}">${item.name}</div>`;
+    const itemName = item.name || item.id || '–';
+    header.innerHTML += `<div class="object-name" style="color:${item.textFarbe || item.farbe || '#fff'}">${itemName}</div>`;
   });
   el.appendChild(header);
   

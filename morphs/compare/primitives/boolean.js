@@ -20,8 +20,9 @@ export function compareBoolean(items, config = {}) {
     
     // Inline-Styles für zuverlässige Darstellung
     const textColor = item.textFarbe || 'rgba(255,255,255,0.85)';
+    const itemName = item.name || item.id || '–';
     boolWrap.innerHTML = `
-      <div class="boolean-name" style="color:${textColor}">${item.name}</div>
+      <div class="boolean-name" style="color:${textColor}">${itemName}</div>
       <div class="boolean-wert ${isTrue ? 'boolean-ja' : ''} ${isFalse ? 'boolean-nein' : ''}">
         ${isTrue ? '✓' : isFalse ? '✗' : '–'}
       </div>

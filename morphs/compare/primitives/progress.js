@@ -20,9 +20,10 @@ export function compareProgress(items, config = {}) {
     // Immer Inline-Styles für zuverlässige Darstellung
     const textColor = item.textFarbe || 'rgba(255,255,255,0.85)';
     const fillColor = item.farbe || 'rgba(100,100,100,0.5)';
+    const itemName = item.name || item.id || '–';
     
     row.innerHTML = `
-      <div class="progress-name" style="color:${textColor}">${item.name}</div>
+      <div class="progress-name" style="color:${textColor}">${itemName}</div>
       <div class="progress-bar-container">
         <div class="progress-bar" style="width:${prozent}%;background-color:${fillColor}"></div>
       </div>

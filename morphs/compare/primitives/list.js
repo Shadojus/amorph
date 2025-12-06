@@ -44,7 +44,8 @@ export function compareList(items, config = {}) {
     // Inline-Styles für zuverlässige Darstellung der Dots
     const dots = ownerItems.map(p => {
       const bgColor = p.bgFarbe || p.farbe || 'rgba(100,100,100,0.5)';
-      return `<span class="item-dot" style="background-color:${bgColor}" title="${p.name}"></span>`;
+      const pName = p.name || p.id || '–';
+      return `<span class="item-dot" style="background-color:${bgColor}" title="${pName}"></span>`;
     }).join('');
     
     row.innerHTML = `

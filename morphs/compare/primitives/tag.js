@@ -36,7 +36,8 @@ export function compareTag(items, config = {}) {
     // Inline-Styles für jeden Namen (CSS greift nicht zuverlässig)
     const itemSpans = gruppeItems.map(p => {
       const textColor = p.textFarbe || p.farbe || 'white';
-      return `<span class="${p.farbKlasse || ''}" style="color:${textColor}">${p.name}</span>`;
+      const pName = p.name || p.id || '–';
+      return `<span class="${p.farbKlasse || ''}" style="color:${textColor}">${pName}</span>`;
     }).join(', ');
     
     chip.innerHTML = `

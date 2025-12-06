@@ -293,9 +293,25 @@ export default async function init(ctx) {
           bg: '#444',
           glow: '#666'
         };
+        
+        // Name extrahieren - mit robustem Fallback
+        const extractedName = getItemName(item.pilzDaten);
+        // WICHTIG: Leerer String ist falsy, also explizit prüfen
+        const itemName = extractedName && extractedName.trim() !== '' 
+          ? extractedName 
+          : (item.pilzDaten?.name || item.pilzDaten?.titel || `Pilz ${normalizedId}`);
+        
+        debug.vergleich('Item-Name Extraktion', {
+          pilzId: normalizedId,
+          hatPilzDaten: !!item.pilzDaten,
+          pilzDatenName: item.pilzDaten?.name,
+          extrahierterName: extractedName,
+          finalerName: itemName
+        });
+        
         return {
           id: normalizedId,
-          name: getItemName(item.pilzDaten) || normalizedId,  // DATENGETRIEBEN
+          name: itemName,
           wert: item.wert,
           // CSS-Klasse für Custom Properties
           farbKlasse: farbObj.farbKlasse,
@@ -354,6 +370,9 @@ export default async function init(ctx) {
         morphTyp,
         perspektive: perspMorphConfig?.perspektive || 'keine'
       });
+      
+      // DEBUG: Finales items Array DIREKT vor Übergabe
+      console.log(`[VERGLEICH] Items für ${feldName}:`, JSON.stringify(items.map(i => ({ id: i.id, name: i.name }))));
       
       // Compare-Morph erstellt das komplette Diagramm
       const morphEl = compareMorph(feldName, morphTyp, items, morphConfig);

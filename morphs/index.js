@@ -86,12 +86,9 @@ const compareMorph = (feldName, typ, items, config) => {
   
   container.appendChild(header);
   
-  const content = compareByType(typ, items.map(i => ({
-    id: i.pilzId,
-    name: i.pilzName,
-    wert: i.wert,
-    farbe: i.farbe
-  })), config);
+  // Items werden direkt durchgereicht - vergleich/index.js baut sie korrekt
+  // mit: {id, name, wert, farbe, textFarbe, farbKlasse, lineFarbe, bgFarbe, glowFarbe}
+  const content = compareByType(typ, items, config);
   
   container.appendChild(content);
   return container;

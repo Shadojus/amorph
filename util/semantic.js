@@ -52,7 +52,9 @@ export function getSchemaMeta() {
 export function getItemName(item) {
   if (!item) return '';
   const meta = getSchemaMeta();
-  return item[meta.nameField] || item.name || item.titel || item.id || '';
+  const name = item[meta.nameField] || item.name || item.titel || item.id || '';
+  // Verhindere dass String "undefined" zurückgegeben wird
+  return name === undefined || name === 'undefined' ? '' : String(name);
 }
 
 /**

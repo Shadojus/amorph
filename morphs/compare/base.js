@@ -17,21 +17,21 @@ let farbenConfig = null;
 // Erkennung-Config wird von außen gesetzt (aus morphs.yaml)
 let erkennungConfig = null;
 
-// Pilz-Farben: Neon-Farben - klar unterscheidbar
-// Jede Farbe hat: index (für CSS-Klasse), fill (transparent für Flächen), text (kräftig für Schrift)
+// Pilz-Farben: Nur RGB für Distanz-Berechnung
+// Die eigentlichen Farben kommen aus pilz-farben.css via CSS-Klassen
 const FALLBACK_FARBEN = [
-  { index: 0, name: 'Neon Cyan', rgb: [0, 255, 255], fill: 'rgba(0, 255, 255, 0.24)', text: 'rgba(0, 255, 255, 0.85)' },
-  { index: 1, name: 'Neon Magenta', rgb: [255, 0, 255], fill: 'rgba(255, 0, 255, 0.24)', text: 'rgba(255, 0, 255, 0.85)' },
-  { index: 2, name: 'Neon Grün', rgb: [0, 255, 128], fill: 'rgba(0, 255, 128, 0.24)', text: 'rgba(0, 255, 128, 0.85)' },
-  { index: 3, name: 'Neon Pink', rgb: [255, 0, 128], fill: 'rgba(255, 0, 128, 0.24)', text: 'rgba(255, 0, 128, 0.85)' },
-  { index: 4, name: 'Neon Gelb', rgb: [255, 255, 0], fill: 'rgba(255, 255, 0, 0.24)', text: 'rgba(255, 255, 0, 0.85)' },
-  { index: 5, name: 'Neon Orange', rgb: [255, 128, 0], fill: 'rgba(255, 128, 0, 0.24)', text: 'rgba(255, 128, 0, 0.85)' },
-  { index: 6, name: 'Neon Blau', rgb: [0, 128, 255], fill: 'rgba(0, 128, 255, 0.24)', text: 'rgba(0, 128, 255, 0.85)' },
-  { index: 7, name: 'Neon Violett', rgb: [128, 0, 255], fill: 'rgba(128, 0, 255, 0.24)', text: 'rgba(128, 0, 255, 0.85)' },
-  { index: 8, name: 'Neon Rot', rgb: [255, 50, 50], fill: 'rgba(255, 50, 50, 0.24)', text: 'rgba(255, 50, 50, 0.85)' },
-  { index: 9, name: 'Neon Lime', rgb: [200, 255, 0], fill: 'rgba(200, 255, 0, 0.24)', text: 'rgba(200, 255, 0, 0.85)' },
-  { index: 10, name: 'Neon Türkis', rgb: [0, 255, 200], fill: 'rgba(0, 255, 200, 0.24)', text: 'rgba(0, 255, 200, 0.85)' },
-  { index: 11, name: 'Neon Koralle', rgb: [255, 100, 100], fill: 'rgba(255, 100, 100, 0.24)', text: 'rgba(255, 100, 100, 0.85)' }
+  { index: 0, name: 'Neon Cyan', rgb: [0, 255, 255] },
+  { index: 1, name: 'Neon Magenta', rgb: [255, 0, 255] },
+  { index: 2, name: 'Neon Grün', rgb: [57, 255, 20] },
+  { index: 3, name: 'Neon Pink', rgb: [255, 20, 147] },
+  { index: 4, name: 'Neon Gelb', rgb: [255, 255, 0] },
+  { index: 5, name: 'Neon Orange', rgb: [255, 165, 0] },
+  { index: 6, name: 'Neon Blau', rgb: [0, 191, 255] },
+  { index: 7, name: 'Neon Violett', rgb: [191, 0, 255] },
+  { index: 8, name: 'Neon Rot', rgb: [255, 0, 60] },
+  { index: 9, name: 'Neon Lime', rgb: [204, 255, 0] },
+  { index: 10, name: 'Neon Türkis', rgb: [0, 255, 200] },
+  { index: 11, name: 'Neon Koralle', rgb: [255, 80, 80] }
 ];
 
 // Cache für aktive Perspektiven-Farben

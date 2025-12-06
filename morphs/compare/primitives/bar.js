@@ -53,9 +53,10 @@ export function compareBar(items, config = {}) {
     // Inline-Styles mit Daten aus erstelleFarben() - textFarbe für Text, farbe für Fill
     const textColor = item.textFarbe || 'rgba(255,255,255,0.85)';
     const fillColor = item.farbe || 'rgba(100,100,100,0.5)';
+    const itemName = item.name || item.id || '–';
     
     row.innerHTML = `
-      <span class="bar-name" style="color:${textColor}">${item.name}</span>
+      <span class="bar-name" style="color:${textColor}">${itemName}</span>
       <div class="bar-track">
         <div class="bar-fill" style="width:${pct}%;background-color:${fillColor};opacity:1"></div>
       </div>

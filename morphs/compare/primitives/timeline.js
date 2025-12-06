@@ -13,14 +13,16 @@ export function compareTimeline(items, config = {}) {
   items.forEach(item => {
     const events = Array.isArray(item.wert) ? item.wert : [item.wert];
     events.forEach(evt => {
+      // String vs. Object unterscheiden
+      const isString = typeof evt === 'string';
       allEvents.push({
-        name: item.name,
+        name: item.name || '',
         farbe: item.farbe,
         textFarbe: item.textFarbe,
         bgFarbe: item.bgFarbe,
         farbKlasse: item.farbKlasse,
-        datum: evt.datum || evt.date || evt,
-        label: evt.label || evt.name || ''
+        datum: isString ? evt : (evt?.datum || evt?.date || ''),
+        label: isString ? '' : (evt?.label || evt?.name || '')
       });
     });
   });
@@ -41,9 +43,9 @@ export function compareTimeline(items, config = {}) {
     punkt.innerHTML = `
       <div class="timeline-marker" style="background-color:${bgColor}"></div>
       <div class="timeline-label">
-        <span class="timeline-datum">${evt.datum}</span>
-        <span class="timeline-text">${evt.label}</span>
-        <span class="timeline-name" style="color:${textColor}">${evt.name}</span>
+        <span class="timeline-datum">${evt.datum || '–'}</span>
+        ${evt.label ? `<span class="timeline-text">${evt.label}</span>` : ''}
+        <span class="timeline-name" style="color:${textColor}">${evt.name || ''}</span>
       </div>
     `;
     timeline.appendChild(punkt);

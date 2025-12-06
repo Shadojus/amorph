@@ -94,6 +94,9 @@ import { smartCompare, diffCompare } from './composites.js';
 export function compareMorph(feldName, typ, items, config = {}) {
   debug.morphs('compareMorph', { feldName, typ, items: items?.length });
   
+  // DEBUG: Items beim Empfang
+  console.log(`[compareMorph] ${feldName}:`, JSON.stringify(items?.map(i => ({ id: i.id, name: i.name, nameType: typeof i.name }))));
+  
   // Delegiere an compareByType - SINGLE SOURCE OF TRUTH
   return compareByType(typ, items, config);
 }

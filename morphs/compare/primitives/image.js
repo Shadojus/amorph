@@ -20,9 +20,10 @@ export function compareImage(items, config = {}) {
     // Inline-Styles für zuverlässige Darstellung
     const bgColor = item.farbe || 'rgba(100,100,100,0.5)';
     const textColor = item.textFarbe || 'white';
+    const itemName = item.name || item.id || '–';
     imgWrap.innerHTML = `
-      <img src="${item.wert}" alt="${item.name}" loading="lazy">
-      <span class="img-label" style="background-color:${bgColor};color:${textColor}">${item.name}</span>
+      <img src="${item.wert}" alt="${itemName}" loading="lazy">
+      <span class="img-label" style="background-color:${bgColor};color:${textColor}">${itemName}</span>
     `;
     
     gallery.appendChild(imgWrap);

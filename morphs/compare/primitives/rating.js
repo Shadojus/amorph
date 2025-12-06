@@ -33,8 +33,9 @@ export function compareRating(items, config = {}) {
       `<span class="star ${i < filled ? 'filled' : ''}" style="${i < filled ? `color:${starColor}` : ''}">${i < filled ? '★' : '☆'}</span>`
     ).join('');
     
+    const itemName = item.name || item.id || '–';
     row.innerHTML = `
-      <span class="rating-name" style="color:${textColor}">${item.name}</span>
+      <span class="rating-name" style="color:${textColor}">${itemName}</span>
       <div class="rating-stars">${stars}</div>
       <span class="rating-wert">${item.wert}</span>
     `;
