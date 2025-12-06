@@ -17,9 +17,12 @@ export function compareImage(items, config = {}) {
     const imgWrap = document.createElement('div');
     imgWrap.className = `compare-img-wrap ${item.farbKlasse || ''}`;
     
+    // Inline-Styles für zuverlässige Darstellung
+    const bgColor = item.farbe || 'rgba(100,100,100,0.5)';
+    const textColor = item.textFarbe || 'white';
     imgWrap.innerHTML = `
       <img src="${item.wert}" alt="${item.name}" loading="lazy">
-      <span class="img-label pilz-fill pilz-text">${item.name}</span>
+      <span class="img-label" style="background-color:${bgColor};color:${textColor}">${item.name}</span>
     `;
     
     gallery.appendChild(imgWrap);

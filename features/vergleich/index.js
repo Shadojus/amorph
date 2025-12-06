@@ -282,14 +282,29 @@ export default async function init(ctx) {
       
       // Items für Compare-Morphs transformieren
       // Von: {pilzId, pilzDaten, wert, feldName}
-      // Zu:  {pilzId, pilzName, wert, farbe}
+      // Zu:  {id, name, wert, farbe, textFarbe, lineFarbe, bgFarbe, glowFarbe, farbKlasse}
       const items = rawItems.map(item => {
         const normalizedId = String(item.pilzId);
+        const farbObj = pilzFarben.get(normalizedId) || {
+          farbKlasse: '',
+          fill: '#888',
+          text: '#888',
+          line: '#888',
+          bg: '#444',
+          glow: '#666'
+        };
         return {
-          pilzId: normalizedId,
-          pilzName: getItemName(item.pilzDaten) || normalizedId,  // DATENGETRIEBEN
+          id: normalizedId,
+          name: getItemName(item.pilzDaten) || normalizedId,  // DATENGETRIEBEN
           wert: item.wert,
-          farbe: pilzFarben.get(normalizedId) || '#888'
+          // CSS-Klasse für Custom Properties
+          farbKlasse: farbObj.farbKlasse,
+          // Inline-Styles
+          farbe: farbObj.fill,
+          textFarbe: farbObj.text,
+          lineFarbe: farbObj.line,
+          bgFarbe: farbObj.bg,
+          glowFarbe: farbObj.glow
         };
       });
       

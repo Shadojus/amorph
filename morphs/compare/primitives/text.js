@@ -14,8 +14,11 @@ export function compareText(items, config = {}) {
   items.forEach(item => {
     const textWrap = document.createElement('div');
     textWrap.className = `compare-text-wrap ${item.farbKlasse || ''}`;
+    
+    // Inline-Styles für zuverlässige Darstellung
+    const textColor = item.textFarbe || 'rgba(255,255,255,0.85)';
     textWrap.innerHTML = `
-      <div class="text-header pilz-text">${item.name}</div>
+      <div class="text-header" style="color:${textColor}">${item.name}</div>
       <div class="text-inhalt">${item.wert || '–'}</div>
     `;
     container.appendChild(textWrap);

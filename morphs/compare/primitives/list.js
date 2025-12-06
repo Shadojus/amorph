@@ -41,9 +41,11 @@ export function compareList(items, config = {}) {
       row.classList.add('gemeinsam');
     }
     
-    const dots = ownerItems.map(p => 
-      `<span class="item-dot ${p.farbKlasse || ''} pilz-bg" title="${p.name}"></span>`
-    ).join('');
+    // Inline-Styles für zuverlässige Darstellung der Dots
+    const dots = ownerItems.map(p => {
+      const bgColor = p.bgFarbe || p.farbe || 'rgba(100,100,100,0.5)';
+      return `<span class="item-dot" style="background-color:${bgColor}" title="${p.name}"></span>`;
+    }).join('');
     
     row.innerHTML = `
       <span class="list-wert">${wert}</span>

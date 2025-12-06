@@ -40,12 +40,6 @@ export function compareBar(items, config = {}) {
     const row = document.createElement('div');
     row.className = `compare-bar-row ${item.farbKlasse || ''}`;
     
-    // CSS Custom Properties auf Parent setzen - ermöglicht Highlighting!
-    const textColor = item.textFarbe || 'rgba(255,255,255,0.85)';
-    const fillColor = item.farbe || 'rgba(100,100,100,0.5)';
-    row.style.setProperty('--item-text', textColor);
-    row.style.setProperty('--item-fill', fillColor);
-    
     let numWert = typeof item.wert === 'object' && 'min' in item.wert
       ? (item.wert.min + item.wert.max) / 2
       : Number(item.wert) || 0;
@@ -56,11 +50,14 @@ export function compareBar(items, config = {}) {
     
     const pct = Math.min(100, (numWert / maxWert) * 100);
     
-    // Kein Inline-Style auf Kindern - CSS nutzt var(--item-text) etc.
+    // Inline-Styles mit Daten aus erstelleFarben() - textFarbe für Text, farbe für Fill
+    const textColor = item.textFarbe || 'rgba(255,255,255,0.85)';
+    const fillColor = item.farbe || 'rgba(100,100,100,0.5)';
+    
     row.innerHTML = `
-      <span class="bar-name">${item.name}</span>
+      <span class="bar-name" style="color:${textColor}">${item.name}</span>
       <div class="bar-track">
-        <div class="bar-fill" style="width:${pct}%"></div>
+        <div class="bar-fill" style="width:${pct}%;background-color:${fillColor};opacity:1"></div>
       </div>
       <span class="bar-wert">${displayWert}${config.einheit || ''}</span>
     `;

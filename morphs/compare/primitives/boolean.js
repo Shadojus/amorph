@@ -17,8 +17,11 @@ export function compareBoolean(items, config = {}) {
     
     const boolWrap = document.createElement('div');
     boolWrap.className = `compare-boolean-wrap ${item.farbKlasse || ''}`;
+    
+    // Inline-Styles für zuverlässige Darstellung
+    const textColor = item.textFarbe || 'rgba(255,255,255,0.85)';
     boolWrap.innerHTML = `
-      <div class="boolean-name pilz-text">${item.name}</div>
+      <div class="boolean-name" style="color:${textColor}">${item.name}</div>
       <div class="boolean-wert ${isTrue ? 'boolean-ja' : ''} ${isFalse ? 'boolean-nein' : ''}">
         ${isTrue ? '✓' : isFalse ? '✗' : '–'}
       </div>

@@ -17,23 +17,17 @@ export function compareProgress(items, config = {}) {
     const row = document.createElement('div');
     row.className = `progress-row ${item.farbKlasse || ''}`;
     
-    if (item.farbKlasse) {
-      row.innerHTML = `
-        <div class="progress-name">${item.name}</div>
-        <div class="progress-bar-container">
-          <div class="progress-bar" style="width:${prozent}%"></div>
-        </div>
-        <div class="progress-wert">${wert}%</div>
-      `;
-    } else {
-      row.innerHTML = `
-        <div class="progress-name" style="color:${item.textFarbe || item.farbe}">${item.name}</div>
-        <div class="progress-bar-container">
-          <div class="progress-bar" style="width:${prozent}%;background:${item.farbe}"></div>
-        </div>
-        <div class="progress-wert">${wert}%</div>
-      `;
-    }
+    // Immer Inline-Styles für zuverlässige Darstellung
+    const textColor = item.textFarbe || 'rgba(255,255,255,0.85)';
+    const fillColor = item.farbe || 'rgba(100,100,100,0.5)';
+    
+    row.innerHTML = `
+      <div class="progress-name" style="color:${textColor}">${item.name}</div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" style="width:${prozent}%;background-color:${fillColor}"></div>
+      </div>
+      <div class="progress-wert">${wert}%</div>
+    `;
     el.appendChild(row);
   });
   

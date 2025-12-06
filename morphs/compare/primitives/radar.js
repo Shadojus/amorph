@@ -112,11 +112,10 @@ export function compareRadar(items, config = {}) {
     const legendeItem = document.createElement('span');
     legendeItem.className = `legende-item ${item.farbKlasse || ''}`;
     
-    if (item.farbKlasse) {
-      legendeItem.innerHTML = `<span class="legende-dot"></span>${item.name}`;
-    } else {
-      legendeItem.innerHTML = `<span class="legende-dot" style="background:${item.textFarbe || item.farbe}"></span>${item.name}`;
-    }
+    // Inline-Styles für zuverlässige Darstellung
+    const dotColor = item.lineFarbe || item.textFarbe || item.farbe || 'rgba(100,100,100,0.7)';
+    const textColor = item.textFarbe || 'rgba(255,255,255,0.85)';
+    legendeItem.innerHTML = `<span class="legende-dot" style="background:${dotColor}"></span><span style="color:${textColor}">${item.name}</span>`;
     legende.appendChild(legendeItem);
   });
   el.appendChild(legende);
