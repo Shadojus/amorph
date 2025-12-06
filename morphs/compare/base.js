@@ -19,19 +19,20 @@ let erkennungConfig = null;
 
 // Pilz-Farben: Nur RGB für Distanz-Berechnung
 // Die eigentlichen Farben kommen aus pilz-farben.css via CSS-Klassen
+// OVER THE TOP NEON - maximale Sättigung!
 const FALLBACK_FARBEN = [
-  { index: 0, name: 'Neon Cyan', rgb: [0, 255, 255] },
-  { index: 1, name: 'Neon Magenta', rgb: [255, 0, 255] },
-  { index: 2, name: 'Neon Grün', rgb: [57, 255, 20] },
-  { index: 3, name: 'Neon Pink', rgb: [255, 20, 147] },
-  { index: 4, name: 'Neon Gelb', rgb: [255, 255, 0] },
-  { index: 5, name: 'Neon Orange', rgb: [255, 165, 0] },
-  { index: 6, name: 'Neon Blau', rgb: [0, 191, 255] },
-  { index: 7, name: 'Neon Violett', rgb: [191, 0, 255] },
-  { index: 8, name: 'Neon Rot', rgb: [255, 0, 60] },
-  { index: 9, name: 'Neon Lime', rgb: [204, 255, 0] },
-  { index: 10, name: 'Neon Türkis', rgb: [0, 255, 200] },
-  { index: 11, name: 'Neon Koralle', rgb: [255, 80, 80] }
+  { index: 0, name: 'Electric Cyan', rgb: [0, 255, 255] },
+  { index: 1, name: 'Electric Magenta', rgb: [255, 0, 255] },
+  { index: 2, name: 'Radioactive Green', rgb: [0, 255, 0] },
+  { index: 3, name: 'Hot Pink', rgb: [255, 0, 150] },
+  { index: 4, name: 'Laser Yellow', rgb: [255, 255, 0] },
+  { index: 5, name: 'Blazing Orange', rgb: [255, 100, 0] },
+  { index: 6, name: 'Electric Blue', rgb: [0, 150, 255] },
+  { index: 7, name: 'Ultraviolet', rgb: [180, 0, 255] },
+  { index: 8, name: 'Nuclear Red', rgb: [255, 0, 50] },
+  { index: 9, name: 'Toxic Lime', rgb: [190, 255, 0] },
+  { index: 10, name: 'Plasma Aqua', rgb: [0, 255, 180] },
+  { index: 11, name: 'Lava Coral', rgb: [255, 50, 100] }
 ];
 
 // Cache für aktive Perspektiven-Farben

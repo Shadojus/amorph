@@ -21,10 +21,10 @@
    - Custom Alpha:    rgba(var(--pilz-rgb), 0.5)
    ===================================================== */
 
-/* === PILZ FARBE 0: Neon Cyan === */
+/* === PILZ FARBE 0: ELECTRIC CYAN === */
 .pilz-farbe-0 {
   --pilz-rgb: 0, 255, 255;
-  --pilz-text: rgba(0, 255, 255, 0.85);
+  --pilz-text: rgb(0, 255, 255);
   --pilz-fill: rgba(0, 255, 255, 0.24);
   --pilz-line: rgba(0, 255, 255, 0.70);
   --pilz-bg: rgba(0, 255, 255, 0.12);
@@ -42,15 +42,15 @@ svg .radar-shape.pilz-farbe-0,
   stroke-opacity: 1 !important;
   stroke-width: 2.5 !important;
 }
-.pilz-farbe-0 .bar-name, .pilz-farbe-0 .rating-name, .pilz-farbe-0 .range-name { color: rgba(0, 255, 255, 0.85) !important; }
+.pilz-farbe-0 .bar-name, .pilz-farbe-0 .rating-name, .pilz-farbe-0 .range-name { color: rgb(0, 255, 255) !important; }
 .pilz-farbe-0 .bar-fill, .pilz-farbe-0 .range-bar, .pilz-farbe-0 .progress-bar { background-color: rgba(0, 255, 255, 0.24) !important; }
 .pilz-farbe-0 .legende-dot { background-color: rgba(0, 255, 255, 0.70) !important; }
-.pilz-farbe-0.legende-item { color: rgba(0, 255, 255, 0.85) !important; }
+.pilz-farbe-0.legende-item { color: rgb(0, 255, 255) !important; }
 
-/* === PILZ FARBE 1: Neon Magenta === */
+/* === PILZ FARBE 1: ELECTRIC MAGENTA === */
 .pilz-farbe-1 {
   --pilz-rgb: 255, 0, 255;
-  --pilz-text: rgba(255, 0, 255, 0.85);
+  --pilz-text: rgb(255, 0, 255);
   --pilz-fill: rgba(255, 0, 255, 0.24);
   --pilz-line: rgba(255, 0, 255, 0.70);
   --pilz-bg: rgba(255, 0, 255, 0.12);
@@ -67,19 +67,19 @@ svg .radar-shape.pilz-farbe-1,
   stroke-opacity: 1 !important;
   stroke-width: 2.5 !important;
 }
-.pilz-farbe-1 .bar-name, .pilz-farbe-1 .rating-name, .pilz-farbe-1 .range-name { color: rgba(255, 0, 255, 0.85) !important; }
+.pilz-farbe-1 .bar-name, .pilz-farbe-1 .rating-name, .pilz-farbe-1 .range-name { color: rgb(255, 0, 255) !important; }
 .pilz-farbe-1 .bar-fill, .pilz-farbe-1 .range-bar, .pilz-farbe-1 .progress-bar { background-color: rgba(255, 0, 255, 0.24) !important; }
 .pilz-farbe-1 .legende-dot { background-color: rgba(255, 0, 255, 0.70) !important; }
-.pilz-farbe-1.legende-item { color: rgba(255, 0, 255, 0.85) !important; }
+.pilz-farbe-1.legende-item { color: rgb(255, 0, 255) !important; }
 
-/* === PILZ FARBE 2: Neon Grün === */
+/* === PILZ FARBE 2: RADIOACTIVE GREEN === */
 .pilz-farbe-2 {
-  --pilz-rgb: 0, 255, 128;
-  --pilz-text: rgba(0, 255, 128, 0.85);
-  --pilz-fill: rgba(0, 255, 128, 0.24);
-  --pilz-line: rgba(0, 255, 128, 0.70);
-  --pilz-bg: rgba(0, 255, 128, 0.12);
-  --pilz-glow: rgba(0, 255, 128, 0.50);
+  --pilz-rgb: 0, 255, 0;
+  --pilz-text: rgb(0, 255, 0);
+  --pilz-fill: rgba(0, 255, 0, 0.24);
+  --pilz-line: rgba(0, 255, 0, 0.70);
+  --pilz-bg: rgba(0, 255, 0, 0.12);
+  --pilz-glow: rgba(0, 255, 0, 0.50);
 }
 /* Pilz-Farbe 2 - HÖHERE SPEZIFITÄT */
 .compare-radar-svg .radar-shape.pilz-farbe-2,
@@ -92,145 +92,145 @@ svg .radar-shape.pilz-farbe-2,
   stroke-opacity: 1 !important;
   stroke-width: 2.5 !important;
 }
-.pilz-farbe-2 .bar-name, .pilz-farbe-2 .rating-name, .pilz-farbe-2 .range-name { color: rgba(0, 255, 128, 0.85) !important; }
-.pilz-farbe-2 .bar-fill, .pilz-farbe-2 .range-bar, .pilz-farbe-2 .progress-bar { background-color: rgba(0, 255, 128, 0.24) !important; }
-.pilz-farbe-2 .legende-dot { background-color: rgba(0, 255, 128, 0.70) !important; }
-.pilz-farbe-2.legende-item { color: rgba(0, 255, 128, 0.85) !important; }
+.pilz-farbe-2 .bar-name, .pilz-farbe-2 .rating-name, .pilz-farbe-2 .range-name { color: rgb(0, 255, 0) !important; }
+.pilz-farbe-2 .bar-fill, .pilz-farbe-2 .range-bar, .pilz-farbe-2 .progress-bar { background-color: rgba(0, 255, 0, 0.24) !important; }
+.pilz-farbe-2 .legende-dot { background-color: rgba(0, 255, 0, 0.70) !important; }
+.pilz-farbe-2.legende-item { color: rgb(0, 255, 0) !important; }
 
-/* === PILZ FARBE 3: Neon Pink === */
+/* === PILZ FARBE 3: HOT PINK === */
 .pilz-farbe-3 {
-  --pilz-rgb: 255, 0, 128;
-  --pilz-text: rgba(255, 0, 128, 0.85);
-  --pilz-fill: rgba(255, 0, 128, 0.24);
-  --pilz-line: rgba(255, 0, 128, 0.70);
-  --pilz-bg: rgba(255, 0, 128, 0.12);
-  --pilz-glow: rgba(255, 0, 128, 0.50);
+  --pilz-rgb: 255, 0, 150;
+  --pilz-text: rgb(255, 0, 150);
+  --pilz-fill: rgba(255, 0, 150, 0.24);
+  --pilz-line: rgba(255, 0, 150, 0.70);
+  --pilz-bg: rgba(255, 0, 150, 0.12);
+  --pilz-glow: rgba(255, 0, 150, 0.50);
 }
-.pilz-farbe-3.radar-shape { fill: rgba(255, 0, 128, 0.24) !important; stroke: rgba(255, 0, 128, 0.70) !important; }
-.pilz-farbe-3 .bar-name, .pilz-farbe-3 .rating-name, .pilz-farbe-3 .range-name { color: rgba(255, 0, 128, 0.85) !important; }
-.pilz-farbe-3 .bar-fill, .pilz-farbe-3 .range-bar, .pilz-farbe-3 .progress-bar { background-color: rgba(255, 0, 128, 0.24) !important; }
-.pilz-farbe-3 .legende-dot { background-color: rgba(255, 0, 128, 0.70) !important; }
-.pilz-farbe-3.legende-item { color: rgba(255, 0, 128, 0.85) !important; }
+.pilz-farbe-3.radar-shape { fill: rgba(255, 0, 150, 0.24) !important; stroke: rgba(255, 0, 150, 0.70) !important; }
+.pilz-farbe-3 .bar-name, .pilz-farbe-3 .rating-name, .pilz-farbe-3 .range-name { color: rgb(255, 0, 150) !important; }
+.pilz-farbe-3 .bar-fill, .pilz-farbe-3 .range-bar, .pilz-farbe-3 .progress-bar { background-color: rgba(255, 0, 150, 0.24) !important; }
+.pilz-farbe-3 .legende-dot { background-color: rgba(255, 0, 150, 0.70) !important; }
+.pilz-farbe-3.legende-item { color: rgb(255, 0, 150) !important; }
 
-/* === PILZ FARBE 4: Neon Gelb === */
+/* === PILZ FARBE 4: LASER YELLOW === */
 .pilz-farbe-4 {
   --pilz-rgb: 255, 255, 0;
-  --pilz-text: rgba(255, 255, 0, 0.85);
+  --pilz-text: rgb(255, 255, 0);
   --pilz-fill: rgba(255, 255, 0, 0.24);
   --pilz-line: rgba(255, 255, 0, 0.70);
   --pilz-bg: rgba(255, 255, 0, 0.12);
   --pilz-glow: rgba(255, 255, 0, 0.50);
 }
 .pilz-farbe-4.radar-shape { fill: rgba(255, 255, 0, 0.24) !important; stroke: rgba(255, 255, 0, 0.70) !important; }
-.pilz-farbe-4 .bar-name, .pilz-farbe-4 .rating-name, .pilz-farbe-4 .range-name { color: rgba(255, 255, 0, 0.85) !important; }
+.pilz-farbe-4 .bar-name, .pilz-farbe-4 .rating-name, .pilz-farbe-4 .range-name { color: rgb(255, 255, 0) !important; }
 .pilz-farbe-4 .bar-fill, .pilz-farbe-4 .range-bar, .pilz-farbe-4 .progress-bar { background-color: rgba(255, 255, 0, 0.24) !important; }
 .pilz-farbe-4 .legende-dot { background-color: rgba(255, 255, 0, 0.70) !important; }
-.pilz-farbe-4.legende-item { color: rgba(255, 255, 0, 0.85) !important; }
+.pilz-farbe-4.legende-item { color: rgb(255, 255, 0) !important; }
 
-/* === PILZ FARBE 5: Neon Orange === */
+/* === PILZ FARBE 5: BLAZING ORANGE === */
 .pilz-farbe-5 {
-  --pilz-rgb: 255, 128, 0;
-  --pilz-text: rgba(255, 128, 0, 0.85);
-  --pilz-fill: rgba(255, 128, 0, 0.24);
-  --pilz-line: rgba(255, 128, 0, 0.70);
-  --pilz-bg: rgba(255, 128, 0, 0.12);
-  --pilz-glow: rgba(255, 128, 0, 0.50);
+  --pilz-rgb: 255, 100, 0;
+  --pilz-text: rgb(255, 100, 0);
+  --pilz-fill: rgba(255, 100, 0, 0.24);
+  --pilz-line: rgba(255, 100, 0, 0.70);
+  --pilz-bg: rgba(255, 100, 0, 0.12);
+  --pilz-glow: rgba(255, 100, 0, 0.50);
 }
-.pilz-farbe-5.radar-shape { fill: rgba(255, 128, 0, 0.24) !important; stroke: rgba(255, 128, 0, 0.70) !important; }
-.pilz-farbe-5 .bar-name, .pilz-farbe-5 .rating-name, .pilz-farbe-5 .range-name { color: rgba(255, 128, 0, 0.85) !important; }
-.pilz-farbe-5 .bar-fill, .pilz-farbe-5 .range-bar, .pilz-farbe-5 .progress-bar { background-color: rgba(255, 128, 0, 0.24) !important; }
-.pilz-farbe-5 .legende-dot { background-color: rgba(255, 128, 0, 0.70) !important; }
-.pilz-farbe-5.legende-item { color: rgba(255, 128, 0, 0.85) !important; }
+.pilz-farbe-5.radar-shape { fill: rgba(255, 100, 0, 0.24) !important; stroke: rgba(255, 100, 0, 0.70) !important; }
+.pilz-farbe-5 .bar-name, .pilz-farbe-5 .rating-name, .pilz-farbe-5 .range-name { color: rgb(255, 100, 0) !important; }
+.pilz-farbe-5 .bar-fill, .pilz-farbe-5 .range-bar, .pilz-farbe-5 .progress-bar { background-color: rgba(255, 100, 0, 0.24) !important; }
+.pilz-farbe-5 .legende-dot { background-color: rgba(255, 100, 0, 0.70) !important; }
+.pilz-farbe-5.legende-item { color: rgb(255, 100, 0) !important; }
 
-/* === PILZ FARBE 6: Neon Blau === */
+/* === PILZ FARBE 6: ELECTRIC BLUE === */
 .pilz-farbe-6 {
-  --pilz-rgb: 0, 128, 255;
-  --pilz-text: rgba(0, 128, 255, 0.85);
-  --pilz-fill: rgba(0, 128, 255, 0.24);
-  --pilz-line: rgba(0, 128, 255, 0.70);
-  --pilz-bg: rgba(0, 128, 255, 0.12);
-  --pilz-glow: rgba(0, 128, 255, 0.50);
+  --pilz-rgb: 0, 150, 255;
+  --pilz-text: rgb(0, 150, 255);
+  --pilz-fill: rgba(0, 150, 255, 0.24);
+  --pilz-line: rgba(0, 150, 255, 0.70);
+  --pilz-bg: rgba(0, 150, 255, 0.12);
+  --pilz-glow: rgba(0, 150, 255, 0.50);
 }
-.pilz-farbe-6.radar-shape { fill: rgba(0, 128, 255, 0.24) !important; stroke: rgba(0, 128, 255, 0.70) !important; }
-.pilz-farbe-6 .bar-name, .pilz-farbe-6 .rating-name, .pilz-farbe-6 .range-name { color: rgba(0, 128, 255, 0.85) !important; }
-.pilz-farbe-6 .bar-fill, .pilz-farbe-6 .range-bar, .pilz-farbe-6 .progress-bar { background-color: rgba(0, 128, 255, 0.24) !important; }
-.pilz-farbe-6 .legende-dot { background-color: rgba(0, 128, 255, 0.70) !important; }
-.pilz-farbe-6.legende-item { color: rgba(0, 128, 255, 0.85) !important; }
+.pilz-farbe-6.radar-shape { fill: rgba(0, 150, 255, 0.24) !important; stroke: rgba(0, 150, 255, 0.70) !important; }
+.pilz-farbe-6 .bar-name, .pilz-farbe-6 .rating-name, .pilz-farbe-6 .range-name { color: rgb(0, 150, 255) !important; }
+.pilz-farbe-6 .bar-fill, .pilz-farbe-6 .range-bar, .pilz-farbe-6 .progress-bar { background-color: rgba(0, 150, 255, 0.24) !important; }
+.pilz-farbe-6 .legende-dot { background-color: rgba(0, 150, 255, 0.70) !important; }
+.pilz-farbe-6.legende-item { color: rgb(0, 150, 255) !important; }
 
-/* === PILZ FARBE 7: Neon Violett === */
+/* === PILZ FARBE 7: ULTRAVIOLET === */
 .pilz-farbe-7 {
-  --pilz-rgb: 128, 0, 255;
-  --pilz-text: rgba(128, 0, 255, 0.85);
-  --pilz-fill: rgba(128, 0, 255, 0.24);
-  --pilz-line: rgba(128, 0, 255, 0.70);
-  --pilz-bg: rgba(128, 0, 255, 0.12);
-  --pilz-glow: rgba(128, 0, 255, 0.50);
+  --pilz-rgb: 180, 0, 255;
+  --pilz-text: rgb(180, 0, 255);
+  --pilz-fill: rgba(180, 0, 255, 0.24);
+  --pilz-line: rgba(180, 0, 255, 0.70);
+  --pilz-bg: rgba(180, 0, 255, 0.12);
+  --pilz-glow: rgba(180, 0, 255, 0.50);
 }
-.pilz-farbe-7.radar-shape { fill: rgba(128, 0, 255, 0.24) !important; stroke: rgba(128, 0, 255, 0.70) !important; }
-.pilz-farbe-7 .bar-name, .pilz-farbe-7 .rating-name, .pilz-farbe-7 .range-name { color: rgba(128, 0, 255, 0.85) !important; }
-.pilz-farbe-7 .bar-fill, .pilz-farbe-7 .range-bar, .pilz-farbe-7 .progress-bar { background-color: rgba(128, 0, 255, 0.24) !important; }
-.pilz-farbe-7 .legende-dot { background-color: rgba(128, 0, 255, 0.70) !important; }
-.pilz-farbe-7.legende-item { color: rgba(128, 0, 255, 0.85) !important; }
+.pilz-farbe-7.radar-shape { fill: rgba(180, 0, 255, 0.24) !important; stroke: rgba(180, 0, 255, 0.70) !important; }
+.pilz-farbe-7 .bar-name, .pilz-farbe-7 .rating-name, .pilz-farbe-7 .range-name { color: rgb(180, 0, 255) !important; }
+.pilz-farbe-7 .bar-fill, .pilz-farbe-7 .range-bar, .pilz-farbe-7 .progress-bar { background-color: rgba(180, 0, 255, 0.24) !important; }
+.pilz-farbe-7 .legende-dot { background-color: rgba(180, 0, 255, 0.70) !important; }
+.pilz-farbe-7.legende-item { color: rgb(180, 0, 255) !important; }
 
-/* === PILZ FARBE 8: Neon Rot === */
+/* === PILZ FARBE 8: NUCLEAR RED === */
 .pilz-farbe-8 {
-  --pilz-rgb: 255, 50, 50;
-  --pilz-text: rgba(255, 50, 50, 0.85);
-  --pilz-fill: rgba(255, 50, 50, 0.24);
-  --pilz-line: rgba(255, 50, 50, 0.70);
-  --pilz-bg: rgba(255, 50, 50, 0.12);
-  --pilz-glow: rgba(255, 50, 50, 0.50);
+  --pilz-rgb: 255, 0, 50;
+  --pilz-text: rgb(255, 0, 50);
+  --pilz-fill: rgba(255, 0, 50, 0.24);
+  --pilz-line: rgba(255, 0, 50, 0.70);
+  --pilz-bg: rgba(255, 0, 50, 0.12);
+  --pilz-glow: rgba(255, 0, 50, 0.50);
 }
-.pilz-farbe-8.radar-shape { fill: rgba(255, 50, 50, 0.24) !important; stroke: rgba(255, 50, 50, 0.70) !important; }
-.pilz-farbe-8 .bar-name, .pilz-farbe-8 .rating-name, .pilz-farbe-8 .range-name { color: rgba(255, 50, 50, 0.85) !important; }
-.pilz-farbe-8 .bar-fill, .pilz-farbe-8 .range-bar, .pilz-farbe-8 .progress-bar { background-color: rgba(255, 50, 50, 0.24) !important; }
-.pilz-farbe-8 .legende-dot { background-color: rgba(255, 50, 50, 0.70) !important; }
-.pilz-farbe-8.legende-item { color: rgba(255, 50, 50, 0.85) !important; }
+.pilz-farbe-8.radar-shape { fill: rgba(255, 0, 50, 0.24) !important; stroke: rgba(255, 0, 50, 0.70) !important; }
+.pilz-farbe-8 .bar-name, .pilz-farbe-8 .rating-name, .pilz-farbe-8 .range-name { color: rgb(255, 0, 50) !important; }
+.pilz-farbe-8 .bar-fill, .pilz-farbe-8 .range-bar, .pilz-farbe-8 .progress-bar { background-color: rgba(255, 0, 50, 0.24) !important; }
+.pilz-farbe-8 .legende-dot { background-color: rgba(255, 0, 50, 0.70) !important; }
+.pilz-farbe-8.legende-item { color: rgb(255, 0, 50) !important; }
 
-/* === PILZ FARBE 9: Neon Lime === */
+/* === PILZ FARBE 9: TOXIC LIME === */
 .pilz-farbe-9 {
-  --pilz-rgb: 200, 255, 0;
-  --pilz-text: rgba(200, 255, 0, 0.85);
-  --pilz-fill: rgba(200, 255, 0, 0.24);
-  --pilz-line: rgba(200, 255, 0, 0.70);
-  --pilz-bg: rgba(200, 255, 0, 0.12);
-  --pilz-glow: rgba(200, 255, 0, 0.50);
+  --pilz-rgb: 190, 255, 0;
+  --pilz-text: rgb(190, 255, 0);
+  --pilz-fill: rgba(190, 255, 0, 0.24);
+  --pilz-line: rgba(190, 255, 0, 0.70);
+  --pilz-bg: rgba(190, 255, 0, 0.12);
+  --pilz-glow: rgba(190, 255, 0, 0.50);
 }
-.pilz-farbe-9.radar-shape { fill: rgba(200, 255, 0, 0.24) !important; stroke: rgba(200, 255, 0, 0.70) !important; }
-.pilz-farbe-9 .bar-name, .pilz-farbe-9 .rating-name, .pilz-farbe-9 .range-name { color: rgba(200, 255, 0, 0.85) !important; }
-.pilz-farbe-9 .bar-fill, .pilz-farbe-9 .range-bar, .pilz-farbe-9 .progress-bar { background-color: rgba(200, 255, 0, 0.24) !important; }
-.pilz-farbe-9 .legende-dot { background-color: rgba(200, 255, 0, 0.70) !important; }
-.pilz-farbe-9.legende-item { color: rgba(200, 255, 0, 0.85) !important; }
+.pilz-farbe-9.radar-shape { fill: rgba(190, 255, 0, 0.24) !important; stroke: rgba(190, 255, 0, 0.70) !important; }
+.pilz-farbe-9 .bar-name, .pilz-farbe-9 .rating-name, .pilz-farbe-9 .range-name { color: rgb(190, 255, 0) !important; }
+.pilz-farbe-9 .bar-fill, .pilz-farbe-9 .range-bar, .pilz-farbe-9 .progress-bar { background-color: rgba(190, 255, 0, 0.24) !important; }
+.pilz-farbe-9 .legende-dot { background-color: rgba(190, 255, 0, 0.70) !important; }
+.pilz-farbe-9.legende-item { color: rgb(190, 255, 0) !important; }
 
-/* === PILZ FARBE 10: Neon Türkis === */
+/* === PILZ FARBE 10: PLASMA AQUA === */
 .pilz-farbe-10 {
-  --pilz-rgb: 0, 255, 200;
-  --pilz-text: rgba(0, 255, 200, 0.85);
-  --pilz-fill: rgba(0, 255, 200, 0.24);
-  --pilz-line: rgba(0, 255, 200, 0.70);
-  --pilz-bg: rgba(0, 255, 200, 0.12);
-  --pilz-glow: rgba(0, 255, 200, 0.50);
+  --pilz-rgb: 0, 255, 180;
+  --pilz-text: rgb(0, 255, 180);
+  --pilz-fill: rgba(0, 255, 180, 0.24);
+  --pilz-line: rgba(0, 255, 180, 0.70);
+  --pilz-bg: rgba(0, 255, 180, 0.12);
+  --pilz-glow: rgba(0, 255, 180, 0.50);
 }
-.pilz-farbe-10.radar-shape { fill: rgba(0, 255, 200, 0.24) !important; stroke: rgba(0, 255, 200, 0.70) !important; }
-.pilz-farbe-10 .bar-name, .pilz-farbe-10 .rating-name, .pilz-farbe-10 .range-name { color: rgba(0, 255, 200, 0.85) !important; }
-.pilz-farbe-10 .bar-fill, .pilz-farbe-10 .range-bar, .pilz-farbe-10 .progress-bar { background-color: rgba(0, 255, 200, 0.24) !important; }
-.pilz-farbe-10 .legende-dot { background-color: rgba(0, 255, 200, 0.70) !important; }
-.pilz-farbe-10.legende-item { color: rgba(0, 255, 200, 0.85) !important; }
+.pilz-farbe-10.radar-shape { fill: rgba(0, 255, 180, 0.24) !important; stroke: rgba(0, 255, 180, 0.70) !important; }
+.pilz-farbe-10 .bar-name, .pilz-farbe-10 .rating-name, .pilz-farbe-10 .range-name { color: rgb(0, 255, 180) !important; }
+.pilz-farbe-10 .bar-fill, .pilz-farbe-10 .range-bar, .pilz-farbe-10 .progress-bar { background-color: rgba(0, 255, 180, 0.24) !important; }
+.pilz-farbe-10 .legende-dot { background-color: rgba(0, 255, 180, 0.70) !important; }
+.pilz-farbe-10.legende-item { color: rgb(0, 255, 180) !important; }
 
-/* === PILZ FARBE 11: Neon Koralle === */
+/* === PILZ FARBE 11: LAVA CORAL === */
 .pilz-farbe-11 {
-  --pilz-rgb: 255, 100, 100;
-  --pilz-text: rgba(255, 100, 100, 0.85);
-  --pilz-fill: rgba(255, 100, 100, 0.24);
-  --pilz-line: rgba(255, 100, 100, 0.70);
-  --pilz-bg: rgba(255, 100, 100, 0.12);
-  --pilz-glow: rgba(255, 100, 100, 0.50);
+  --pilz-rgb: 255, 50, 100;
+  --pilz-text: rgb(255, 50, 100);
+  --pilz-fill: rgba(255, 50, 100, 0.24);
+  --pilz-line: rgba(255, 50, 100, 0.70);
+  --pilz-bg: rgba(255, 50, 100, 0.12);
+  --pilz-glow: rgba(255, 50, 100, 0.50);
 }
-.pilz-farbe-11.radar-shape { fill: rgba(255, 100, 100, 0.24) !important; stroke: rgba(255, 100, 100, 0.70) !important; }
-.pilz-farbe-11 .bar-name, .pilz-farbe-11 .rating-name, .pilz-farbe-11 .range-name { color: rgba(255, 100, 100, 0.85) !important; }
-.pilz-farbe-11 .bar-fill, .pilz-farbe-11 .range-bar, .pilz-farbe-11 .progress-bar { background-color: rgba(255, 100, 100, 0.24) !important; }
-.pilz-farbe-11 .legende-dot { background-color: rgba(255, 100, 100, 0.70) !important; }
-.pilz-farbe-11.legende-item { color: rgba(255, 100, 100, 0.85) !important; }
+.pilz-farbe-11.radar-shape { fill: rgba(255, 50, 100, 0.24) !important; stroke: rgba(255, 50, 100, 0.70) !important; }
+.pilz-farbe-11 .bar-name, .pilz-farbe-11 .rating-name, .pilz-farbe-11 .range-name { color: rgb(255, 50, 100) !important; }
+.pilz-farbe-11 .bar-fill, .pilz-farbe-11 .range-bar, .pilz-farbe-11 .progress-bar { background-color: rgba(255, 50, 100, 0.24) !important; }
+.pilz-farbe-11 .legende-dot { background-color: rgba(255, 50, 100, 0.70) !important; }
+.pilz-farbe-11.legende-item { color: rgb(255, 50, 100) !important; }
 
 /* =====================================================
    GLOBALE OPACITY-VARIABLEN (anpassbar)
