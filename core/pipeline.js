@@ -92,6 +92,9 @@ export function transform(daten, config, customMorphs = {}) {
       // Daten als JSON für späteren Zugriff (für Detail/Vergleich)
       itemContainer.dataset.itemData = JSON.stringify(item);
       
+      // Keyboard Navigation: Fokussierbar machen
+      itemContainer.setAttribute('tabindex', '0');
+      
       if (typeof item === 'object' && item !== null) {
         // Felder in Schema-Reihenfolge rendern
         const sortedEntries = sortBySchemaOrder(item);

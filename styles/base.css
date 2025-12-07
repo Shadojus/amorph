@@ -78,6 +78,36 @@
   --gap-loose: var(--space-md);      /* 12px - zwischen Gruppen */
   --gap-section: var(--space-lg);    /* 16px - zwischen Sektionen */
   --padding-card: var(--space-md);   /* 12px - Card-Innenabstand */
+  
+  /* === ANIMATION-SYSTEM === */
+  /* Einheitliche Timing-Tokens */
+  --anim-duration-fast: 150ms;
+  --anim-duration-normal: 250ms;
+  --anim-duration-slow: 400ms;
+  --anim-duration-enter: 300ms;
+  --anim-duration-exit: 200ms;
+  
+  /* Easing-Funktionen */
+  --anim-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --anim-ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --anim-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --anim-ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  
+  /* Semantische Animation-Aliases */
+  --transition-color: color var(--anim-duration-fast) ease;
+  --transition-transform: transform var(--anim-duration-normal) var(--anim-ease-out);
+  --transition-opacity: opacity var(--anim-duration-normal) ease;
+  --transition-all: all var(--anim-duration-normal) var(--anim-ease-out);
+  --transition-glass: background var(--anim-duration-normal) ease, 
+                      border-color var(--anim-duration-normal) ease,
+                      box-shadow var(--anim-duration-normal) ease;
+  
+  /* === BREAKPOINTS === */
+  /* Referenz-Werte für Media Queries */
+  --bp-sm: 480px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1280px;
   --padding-section: var(--space-lg);/* 16px - Section-Innenabstand */
   --margin-element: var(--space-sm); /* 8px - Element-Außenabstand */
   --margin-section: var(--space-xl); /* 24px - Section-Außenabstand */

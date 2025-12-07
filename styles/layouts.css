@@ -20,7 +20,7 @@ amorph-container[data-morph="item"] {
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
   padding: var(--space-md);
-  transition: all 0.3s ease;
+  transition: var(--transition-glass), var(--transition-transform);
   overflow: visible;
   /* Einheitliche Schatten */
   box-shadow: 
@@ -135,19 +135,7 @@ amorph-container[data-field="name"] {
   gap: var(--space-xs);
 }
 
-/* Bei mittleren Bildschirmen: 2 Spalten */
-@media (max-width: 1000px) {
-  [data-layout="grid"] > amorph-container[data-morph="item"] {
-    width: calc(50% - 8px);
-  }
-}
-
-/* Bei kleinen Bildschirmen: 1 Spalte */
-@media (max-width: 640px) {
-  [data-layout="grid"] > amorph-container[data-morph="item"] {
-    width: 100%;
-  }
-}
+/* Bei kleinen Bildschirmen: siehe RESPONSIVE GRID unten */
 
 [data-layout="grid"] amorph-container[data-field="bild"] {
   order: -1;
@@ -244,10 +232,77 @@ amorph-container[data-morph="item"] amorph-container[data-field]:last-child {
   margin-bottom: 0;
 }
 
-/* === RESPONSIVE === */
-@media (max-width: 640px) {
+/* === RESPONSIVE GRID === */
+/* Breakpoints: sm=480px, md=768px, lg=1024px, xl=1280px */
+
+/* XL Screens (1280px+): 4 Spalten */
+@media (min-width: 1280px) {
+  [data-layout="grid"] > amorph-container[data-morph="item"] {
+    width: calc(25% - 12px);
+  }
+}
+
+/* LG Screens (1024px-1279px): 3 Spalten */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  [data-layout="grid"] > amorph-container[data-morph="item"] {
+    width: calc(33.333% - 11px);
+  }
+}
+
+/* MD Screens (768px-1023px): 2 Spalten */
+@media (min-width: 768px) and (max-width: 1023px) {
+  [data-layout="grid"] > amorph-container[data-morph="item"] {
+    width: calc(50% - 8px);
+  }
+  
+  [data-layout="grid"] {
+    gap: var(--space-md);
+  }
+}
+
+/* SM Screens (480px-767px): 2 Spalten, kompakter */
+@media (min-width: 480px) and (max-width: 767px) {
+  [data-layout="grid"] > amorph-container[data-morph="item"] {
+    width: calc(50% - 6px);
+  }
+  
+  [data-layout="grid"] {
+    gap: var(--space-sm);
+    padding: var(--space-sm);
+  }
+  
+  [data-layout="grid"] amorph-container[data-field="bild"] {
+    height: 140px;
+  }
+  
+  [data-layout="grid"] amorph-container[data-field="bild"] img {
+    height: 140px;
+  }
+}
+
+/* XS Screens (<480px): 1 Spalte, mobile-first */
+@media (max-width: 479px) {
   [data-amorph-container][data-layout="grid"] {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-xs);
+  }
+  
+  [data-layout="grid"] > amorph-container[data-morph="item"] {
+    width: 100%;
+  }
+  
+  [data-layout="grid"] amorph-container[data-field="bild"] {
+    height: 160px;
+  }
+  
+  [data-layout="grid"] amorph-container[data-field="bild"] img {
+    height: 160px;
+  }
+  
+  amorph-container[data-morph="item"] {
+    max-height: 350px;
+    padding: var(--space-sm);
   }
   
   [data-layout="liste"] amorph-container[data-morph="item"] {
@@ -257,9 +312,5 @@ amorph-container[data-morph="item"] amorph-container[data-field]:last-child {
   [data-layout="liste"] amorph-container[data-field="bild"] {
     grid-row: auto;
     max-width: 100%;
-  }
-  
-  amorph-container[data-morph="item"] {
-    max-height: 350px;
   }
 }

@@ -1,52 +1,33 @@
 # Feature: Header
 
-Das Header-Feature kombiniert Suche + Perspektiven in einem Container und steuert die Interaktion zwischen beiden.
+Das Header-Feature kombiniert Suche + Perspektiven + Auswahl in einem Container.
 
 ## Übersicht
 
-Das Header-Feature enthält:
-- **Suche + Perspektiven kombiniert**: Ein Header für alles
-- **Live-Suche**: Mit konfigurierbarem Debounce
-- **Auto-Perspektiven**: Basierend auf Query und Ergebnissen (Keywords aus schema/perspektiven/)
-- **Perspektiven-Badges**: Aktive Perspektiven als Chips in Suchleiste
-- **Scroll-Detection**: Via IntersectionObserver
-- **Ansicht-Wechsel**: Integrierter Switch für Grid/Vergleich
-- **Vergleich-View Modus**: Nur Highlights, keine DB-Suche
-
-### Komponenten
-
 | Komponente | Funktion |
 |------------|----------|
-| `suche` | Textsuche mit Live-Modus |
-| `perspektiven` | Farbige Filter-Buttons (aus schema/perspektiven/*.yaml) |
-| `aktive-filter` | Badges der aktiven Perspektiven |
-| `ansicht-switch` | Grid/Vergleich Toggle |
+| Zeile 0 | Branding (App-Name + Bifroest) |
+| Zeile 1 | Suche + Badges + Ansicht-Switch |
+| Zeile 2 | Perspektiven-Grid |
+| Zeile 3 | Ausgewählte Pilze (Badges + Links) |
 
-### Config-Loading
+### Features
 
-```javascript
-const headerConfig = {
-  suche: ctx.config.suche || {},           // features.yaml → suche
-  perspektiven: perspektivenConfig,         // schema/perspektiven/*.yaml
-  ansicht: ctx.config.ansicht || {}         // features.yaml → ansicht
-};
+- **Live-Suche**: Mit konfigurierbarem Debounce
+- **Auto-Perspektiven**: Basierend auf Query und Ergebnissen
+- **Auswahl-Badges**: Zeigt ausgewählte Pilze mit Link zur Einzelansicht
+- **Scroll-Detection**: Via IntersectionObserver
 
-// Keywords aus modularem Schema für Auto-Perspektiven
-const schemaKeywords = getPerspektivenKeywords();  // schema/perspektiven/*.yaml
-const schemaListe = getPerspektivenListe();        // schema/perspektiven/index.yaml → aktiv
-```
-
-### Event-System
+### Events
 
 **Emittiert:**
 - `header:suche:ergebnisse` → Query + Ergebnisse + matchedTerms
-- `header:perspektiven:geaendert` → aktive Perspektiven
-- `amorph:ansicht-wechsel` → Ansicht-ID (grid/detail/vergleich)
+- `perspektiven:geaendert` → aktive Perspektiven
+- `amorph:ansicht-wechsel` → Ansicht-ID
 
 **Hört auf:**
-- `amorph:auswahl-geaendert` → Aktualisiert Ansicht-Switch Counter
-
-### Perspektiven-Logik
+- `amorph:auswahl-geaendert` → Aktualisiert Auswahl-Zeile + Counter
+- `amorph:auto-search` → Triggert Suche aus URL-State
 
 ```javascript
 // Perspektiven mit Multi-Farben-Support

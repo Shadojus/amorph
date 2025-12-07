@@ -3,7 +3,7 @@
 
 /* === PERSPEKTIVEN-FILTER auf Feldern === */
 amorph-container[data-field] {
-  transition: all 0.2s ease;
+  transition: var(--transition-all);
 }
 
 /* Wenn Perspektiven aktiv: Felder die NICHT markiert sind, verstecken */

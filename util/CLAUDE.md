@@ -4,50 +4,31 @@ Kleine Helfer. Keine Abhängigkeiten.
 
 ## Übersicht
 
-Verfügbare Utilities:
-- `dom.js` - Sichere DOM-Manipulation
-- `fetch.js` - Datenbank-Zugriff + Highlight-System
-- `session.js` - Session-Handling
-- `semantic.js` - **Config-Gateway** (Modulares Schema + Morphs-Config)
+| Datei | Zweck |
+|-------|-------|
+| `dom.js` | Sichere DOM-Manipulation |
+| `fetch.js` | Datenbank-Zugriff + Infinite Scroll |
+| `session.js` | Session-Handling + URL-State |
+| `semantic.js` | Config-Gateway (Schema + Morphs-Config) |
+| `router.js` | Client-side Routing |
 
-### semantic.js - Das Config-Gateway
-
-**Zentrale Anlaufstelle für alle Config-Werte aus dem modularen Schema-System:**
+### session.js - URL State Persistenz
 
 ```javascript
-// === SCHEMA-ZUGRIFF (aus config/schema/) ===
-setSchema(schema)              // Modulares Schema setzen
-getSchema()                    // Ganzes Schema holen
-getFeldReihenfolge()           // Array der Feldnamen in definierter Reihenfolge
-sortBySchemaOrder(obj)         // Objekt nach Schema-Reihenfolge sortieren
-getFeldConfig(feldname)        // Config für einzelnes Feld
-getFeldMorphs()                // Map feldName → typ aus Schema
-getVersteckteFelder()          // Array der versteckten Felder
-getAlleFeldConfigs()           // Alle Feld-Configs
-
-// === MORPHS-CONFIG ZUGRIFF ===
-setMorphsConfig(config)        // Morphs-Config setzen (wird beim Start aufgerufen)
-getFarben(palette)             // Holt Farben: 'pilze', 'diagramme', 'standard'
-getBadgeConfig()               // Holt Badge-Variants & Colors (gedämpfte Farben)
-
-// === SEMANTISCHE SUCHE (aus schema/semantik.yaml) ===
-semanticScore(item, query)     // Berechnet Relevanz-Score für Item
-getSuchfelder()                // Array der durchsuchbaren Felder
-
-// === PERSPEKTIVEN (aus schema/perspektiven/*.yaml) ===
-getPerspektivenKeywords()      // Keywords für Auto-Aktivierung
-getPerspektivenListe()         // Alle aktiven Perspektiven als Array
-getPerspektivenMorphConfig()   // Morph-Config basierend auf Perspektiven
-getAllePerspektivenFarben()    // 4-Farben-Grid für aktive Perspektiven
+// URL State lesen/schreiben
+getUrlState()                  // → { suche, perspektiven, ansicht }
+setUrlState({ suche, ... })    // Speichert in URL (ohne Reload)
 ```
 
-### fetch.js - Datenquellen + Highlights
+### fetch.js - Datenquellen + Infinite Scroll
 
 ```javascript
 // Datenquelle erstellen
 createDataSource(config)
 
-// Highlight-System für Suchtreffer
+// JsonSource hat Infinite Scroll Support
+dataSource.loadMore(offset, limit)  // → { items, hasMore }
+dataSource.getTotalCount()          // Gesamtanzahl
 highlightMatches(element, matchedTerms)  // Markiert Suchtreffer im DOM
 clearHighlights(container)               // Entfernt alle Highlights
 ```

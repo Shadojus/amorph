@@ -1,0 +1,155 @@
+/* AMORPH v5 - Einzelansicht Styles */
+/* Vollständige Pilz-Detailseite */
+
+/* === CONTAINER === */
+.amorph-einzelansicht {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--space-lg);
+  animation: einzelansicht-enter var(--anim-duration-enter) var(--anim-ease-out);
+}
+
+@keyframes einzelansicht-enter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === HEADER === */
+.einzelansicht-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-xl);
+}
+
+.einzelansicht-titel {
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.einzelansicht-wissenschaftlich {
+  font-size: var(--font-size-md);
+  font-style: italic;
+  color: var(--color-text-muted);
+}
+
+/* === ZURÜCK-BUTTON === */
+.amorph-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: var(--transition-all);
+  width: fit-content;
+}
+
+.amorph-back-btn:hover {
+  background: var(--glass-bg-hover);
+  border-color: var(--glass-border-hover);
+  color: var(--color-text);
+}
+
+.amorph-back-btn .back-icon {
+  font-size: var(--font-size-lg);
+}
+
+/* === BILD === */
+.einzelansicht-bild {
+  margin-bottom: var(--space-xl);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--glass-bg);
+}
+
+.einzelansicht-bild img {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: cover;
+  display: block;
+}
+
+/* === BESCHREIBUNG === */
+.einzelansicht-beschreibung {
+  margin-bottom: var(--space-xl);
+  padding: var(--space-lg);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+}
+
+.einzelansicht-beschreibung p {
+  margin: 0;
+  font-size: var(--font-size-md);
+  line-height: 1.7;
+  color: var(--color-text);
+}
+
+/* === FELDER GRID === */
+.einzelansicht-felder {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-md);
+}
+
+/* === EINZELNES FELD === */
+.einzelansicht-feld {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  transition: var(--transition-glass);
+}
+
+.einzelansicht-feld:hover {
+  border-color: var(--glass-border-hover);
+}
+
+.einzelansicht-feld-label {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.einzelansicht-feld-content {
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+}
+
+/* Morph-Container in Einzelansicht */
+.einzelansicht-feld-content amorph-container {
+  padding: 0;
+  margin: 0;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 767px) {
+  .amorph-einzelansicht {
+    padding: var(--space-md);
+  }
+  
+  .einzelansicht-felder {
+    grid-template-columns: 1fr;
+  }
+  
+  .einzelansicht-bild img {
+    max-height: 250px;
+  }
+}

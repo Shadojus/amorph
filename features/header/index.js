@@ -67,6 +67,43 @@ export default function init(ctx) {
     });
   }
   
+  // Auswahl-Zeile: Clear-Button verbinden
+  const auswahlClearBtn = headerEl.querySelector('.amorph-auswahl-clear');
+  if (auswahlClearBtn) {
+    auswahlClearBtn.addEventListener('click', async () => {
+      const { clearAuswahl } = await import('../ansichten/index.js');
+      clearAuswahl();
+    });
+  }
+  
+  // Auswahl-Updates für die Auswahl-Zeile
+  document.addEventListener('amorph:auswahl-geaendert', async (e) => {
+    const { pilzIds, anzahl } = e.detail || {};
+    
+    if (headerEl.updateAuswahlListe && anzahl > 0 && pilzIds?.length > 0) {
+      // Pilz-Daten aus Auswahl holen
+      const { getAuswahlNachPilz } = await import('../ansichten/index.js');
+      const nachPilz = getAuswahlNachPilz();
+      
+      // Array für Header aufbauen
+      const pilze = [];
+      let farbIndex = 0;
+      for (const [pilzId, data] of nachPilz) {
+        pilze.push({
+          id: pilzId,
+          name: data.pilzDaten?.name || pilzId,
+          slug: data.pilzDaten?.slug || pilzId,
+          farbKlasse: `pilz-farbe-${farbIndex % 12}`
+        });
+        farbIndex++;
+      }
+      
+      headerEl.updateAuswahlListe(pilze);
+    } else if (headerEl.updateAuswahlListe) {
+      headerEl.updateAuswahlListe([]);
+    }
+  });
+  
   // Elemente finden
   const sucheForm = headerEl.querySelector('.amorph-suche');
   const input = sucheForm?.querySelector('input');
@@ -167,6 +204,16 @@ export default function init(ctx) {
         timeout = setTimeout(suchen, headerConfig.suche.debounce || 300);
       });
     }
+    
+    // Auto-Suche Event (von URL oder Initial)
+    document.addEventListener('amorph:auto-search', (e) => {
+      const query = e.detail?.query ?? '';
+      debug.header('Auto-Suche Event empfangen', { query });
+      if (input) {
+        input.value = query;
+        suchen();
+      }
+    });
   }
   
   // === SCROLL DETECTION für Header-Styling ===

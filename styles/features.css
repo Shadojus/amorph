@@ -498,6 +498,114 @@
   color: var(--color-accent, rgba(100, 220, 160, 0.75));
 }
 
+/* === AUSWAHL-ZEILE (Ausgewählte Pilze im Header) === */
+.amorph-header-auswahl {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+  margin-top: var(--space-xs);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-sm);
+  animation: auswahl-einblenden var(--anim-duration-normal) var(--anim-ease-out);
+}
+
+@keyframes auswahl-einblenden {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.amorph-auswahl-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+.amorph-auswahl-liste {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  flex: 1;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.amorph-auswahl-liste::-webkit-scrollbar {
+  display: none;
+}
+
+/* Pilz-Badges in Auswahl-Zeile */
+.amorph-auswahl-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  padding: var(--space-2xs) var(--space-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  color: var(--pilz-text, var(--color-text));
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--transition-all);
+  white-space: nowrap;
+}
+
+.amorph-auswahl-badge:hover {
+  background: var(--glass-bg-hover);
+  border-color: var(--pilz-text, var(--glass-border-hover));
+  box-shadow: 0 0 12px color-mix(in srgb, var(--pilz-text, var(--color-accent)) 30%, transparent);
+  transform: translateY(-1px);
+}
+
+.amorph-auswahl-badge .badge-icon {
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+/* Clear-Button in Auswahl-Zeile */
+.amorph-auswahl-clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  font-size: var(--font-size-sm);
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-dim);
+  cursor: pointer;
+  transition: var(--transition-all);
+  flex-shrink: 0;
+}
+
+.amorph-auswahl-clear:hover {
+  background: rgba(255, 50, 50, 0.1);
+  border-color: rgba(255, 50, 50, 0.3);
+  color: var(--color-error);
+}
+
+/* Responsive Auswahl-Zeile */
+@media (max-width: 600px) {
+  .amorph-header-auswahl {
+    padding: var(--space-2xs) var(--space-xs);
+    gap: var(--space-xs);
+  }
+  
+  .amorph-auswahl-label {
+    font-size: 0.6rem;
+  }
+  
+  .amorph-auswahl-badge {
+    padding: 2px var(--space-xs);
+    font-size: 0.68rem;
+  }
+}
+
 @keyframes btn-glow-pulse {
   0%, 100% {
     box-shadow: 0 0 8px color-mix(in srgb, var(--color-accent, rgba(100, 220, 160, 0.45)) 40%, transparent);
@@ -533,19 +641,100 @@
   display: none;
 }
 
-/* === EMPTY STATE === */
-.amorph-empty-state {
+/* === EMPTY / ERROR / NO-RESULTS STATES === */
+.amorph-empty-state,
+.amorph-error-state,
+.amorph-no-results {
   text-align: center;
-  padding: var(--space-xl) var(--space-lg);
+  padding: var(--space-3xl) var(--space-lg);
+  animation: state-fade-in var(--anim-duration-normal) var(--anim-ease-out);
 }
 
-.amorph-empty-icon {
-  font-size: 3rem;
-  margin-bottom: var(--space-md);
-  opacity: 0.4;
+.amorph-empty-icon,
+.amorph-error-icon,
+.amorph-no-results-icon {
+  font-size: 3.5rem;
+  margin-bottom: var(--space-lg);
+  opacity: 0.5;
 }
 
-.amorph-empty-text {
-  font-size: var(--font-size-base);
+.amorph-empty-text,
+.amorph-error-text,
+.amorph-no-results-text {
+  font-size: var(--font-size-lg);
   color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
 }
+
+.amorph-empty-hint,
+.amorph-error-hint,
+.amorph-no-results-hint {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-dim);
+}
+
+/* Error State - rötlicher Schimmer */
+.amorph-error-state {
+  background: linear-gradient(180deg, rgba(255, 50, 50, 0.03) 0%, transparent 100%);
+  border-radius: var(--radius-lg);
+}
+
+.amorph-error-icon {
+  color: var(--color-error);
+  opacity: 0.7;
+}
+
+.amorph-error-text {
+  color: var(--color-error);
+}
+
+/* No Results - subtiler */
+.amorph-no-results {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.01) 0%, transparent 100%);
+}
+
+.amorph-no-results-query {
+  font-weight: 600;
+  color: var(--color-highlight);
+}
+
+@keyframes state-fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === INFINITE SCROLL === */
+.amorph-infinite-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-lg) var(--space-md);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.amorph-infinite-loader .loader-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--glass-border);
+  border-top-color: var(--color-highlight);
+  border-radius: 50%;
+  animation: infinite-spin 0.8s linear infinite;
+}
+
+.amorph-infinite-loader .loader-text {
+  opacity: 0.7;
+}
+
+@keyframes infinite-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Sentinel unsichtbar aber funktional */
+.amorph-scroll-sentinel-bottom {
+  height: 1px;
+  width: 100%;
+  pointer-events: none;
+}
+

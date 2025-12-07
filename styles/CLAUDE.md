@@ -1,76 +1,41 @@
 # Styles
 
-Black Glasmorphism + Neon-Farben + Responsive Typografie + Spacing-System.
+Black Glasmorphism + Neon-Farben + Design-Tokens.
 
 ## Dateien
 
 | Datei | Zweck |
 |-------|-------|
-| `base.css` | CSS-Variablen, Typografie, Spacing, Reset |
+| `base.css` | **Design-Tokens**: Typografie, Spacing, Animation, Breakpoints |
 | `morphs.css` | Basis-Morph Styles |
 | `compare.css` | Compare-Morph Styles |
-| `pilz-farben.css` | **12 Neon-Farben** - Single Source of Truth! |
-| `features.css` | Header, Suche, Perspektiven-Buttons |
-| `layouts.css` | Grid-Layout, Glass-Cards |
-| `ansichten.css` | View-Overlays, Action-Bars |
+| `pilz-farben.css` | **12 Neon-Farben** - Single Source of Truth |
+| `features.css` | Header, Suche, States, Infinite Scroll |
+| `layouts.css` | Grid-Layout, Glass-Cards, Responsive |
+| `ansichten.css` | View-Transitions |
 | `vektorraum.css` | Sammeldiagramm-Ansicht |
-| `pinboard.css` | Pinboard/Detail-Ansicht |
+| `einzelansicht.css` | Detail-Page Styles |
 | `perspektiven.css` | Multi-Color Glow, Feld-Auswahl |
 
-## Typografie-System (base.css) - RESPONSIVE
+## Design-Tokens (base.css)
 
-Alle Schriftgrößen nutzen `clamp()` für automatische Viewport-Anpassung:
-
+**Animation:**
 ```css
-:root {
-  /* Responsive Größen-Skala */
-  --font-size-2xs: clamp(8px, 0.5rem + 0.1vw, 9px);
-  --font-size-xs: clamp(9px, 0.55rem + 0.1vw, 10px);
-  --font-size-sm: clamp(10px, 0.6rem + 0.15vw, 11px);
-  --font-size-base: clamp(11px, 0.65rem + 0.15vw, 12px);
-  --font-size-md: clamp(12px, 0.7rem + 0.15vw, 13px);
-  --font-size-lg: clamp(13px, 0.75rem + 0.2vw, 14px);
-  --font-size-xl: clamp(14px, 0.85rem + 0.25vw, 16px);
-  --font-size-2xl: clamp(18px, 1rem + 0.4vw, 20px);
-  
-  /* Semantische Aliases */
-  --font-pilz-name: var(--font-size-sm);
-  --font-section-label: var(--font-size-base);
-  --font-wert: var(--font-size-sm);
-}
+--transition-fast: 0.15s ease-out;
+--transition-base: 0.25s ease-out;
+--transition-slow: 0.4s ease-out;
+--transition-glass: background 0.25s ease, border-color 0.25s ease, box-shadow 0.3s ease;
+--ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+--ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 ```
 
-## Spacing-System (base.css)
-
-4px Basis-Einheit für konsistente Abstände:
-
+**Responsive Breakpoints:**
 ```css
-:root {
-  /* Spacing-Skala (4px Basis) */
-  --space-2xs: 2px;
-  --space-xs: 4px;
-  --space-xs-plus: 6px;
-  --space-sm: 8px;
-  --space-sm-plus: 10px;
-  --space-md: 12px;
-  --space-md-plus: 14px;
-  --space-lg: 16px;
-  --space-xl: 24px;
-  --space-2xl: 32px;
-  
-  /* Semantische Aliases */
-  --gap-tight: var(--space-xs);      /* 4px */
-  --gap-default: var(--space-sm);    /* 8px */
-  --gap-loose: var(--space-md);      /* 12px */
-  --gap-section: var(--space-lg);    /* 16px */
-  --padding-card: var(--space-md);   /* 12px */
-  --padding-section: var(--space-lg);/* 16px */
-  --margin-element: var(--space-sm); /* 8px */
-  --margin-section: var(--space-xl); /* 24px */
-}
+--bp-sm: 480px;
+--bp-md: 768px;
+--bp-lg: 1024px;
+--bp-xl: 1280px;
 ```
-
-**Regel**: Für gap, padding, margin ≥4px → CSS-Variablen nutzen! Kleinere Werte (1px, 2px, 3px) dürfen hartkodiert bleiben für Feinheiten.
 
 ## Pilz-Farben (pilz-farben.css)
 

@@ -13,7 +13,7 @@ import { transform, render, setErkennungConfig } from './core/pipeline.js';
 import { setupObservers, stopObservers } from './observer/index.js';
 import { loadFeatures, unloadFeatures } from './features/index.js';
 import { createDataSource } from './util/fetch.js';
-import { getSession } from './util/session.js';
+import { getSession, getUrlState, setUrlState } from './util/session.js';
 import { setSchema, setMorphsConfig } from './util/semantic.js';
 import { debug } from './observer/debug.js';
 import { setFarbenConfig, setErkennungConfig as setCompareErkennungConfig } from './morphs/compare/base.js';
@@ -94,21 +94,74 @@ export async function amorph(options = {}) {
     onSearch: async (query) => {
       currentQuery = query;
       debug.suche('Suche ausgeführt', { query });
-      currentData = await dataSource.query({ search: query });
-      debug.suche('Ergebnisse', { anzahl: currentData.length });
-      await render(container, currentData, config);
       
-      // Highlighting anwenden nach Render - nutze die gefundenen Match-Terme
-      if (query && query.trim()) {
-        const matchedTerms = dataSource.getMatchedTerms ? dataSource.getMatchedTerms() : new Set();
-        debug.suche('Matched Terms für Highlighter', { anzahl: matchedTerms.size, terme: [...matchedTerms].slice(0, 10) });
-        highlightMatches(container, query.trim(), matchedTerms);
+      // Alte States entfernen
+      container.querySelectorAll('.amorph-empty-state, .amorph-error-state, .amorph-no-results').forEach(el => el.remove());
+      
+      try {
+        currentData = await dataSource.query({ search: query });
+        debug.suche('Ergebnisse', { anzahl: currentData.length });
+        
+        // Keine Ergebnisse? Zeige No-Results State
+        if (query && query.trim() && currentData.length === 0) {
+          showNoResults(container, query);
+          return currentData;
+        }
+        
+        await render(container, currentData, config);
+        
+        // Highlighting anwenden nach Render
+        if (query && query.trim()) {
+          const matchedTerms = dataSource.getMatchedTerms ? dataSource.getMatchedTerms() : new Set();
+          debug.suche('Matched Terms für Highlighter', { anzahl: matchedTerms.size, terme: [...matchedTerms].slice(0, 10) });
+          highlightMatches(container, query.trim(), matchedTerms);
+        }
+        
+        return currentData;
+      } catch (error) {
+        debug.fehler('Suche fehlgeschlagen', { error: error.message });
+        showErrorState(container, error);
+        return [];
       }
-      
-      return currentData;
     }
   });
   debug.features('Geladen', features.map(f => f.name));
+  
+  // === URL STATE WIEDERHERSTELLUNG ===
+  // Prüfe ob State in URL gespeichert ist
+  const urlState = getUrlState();
+  debug.session('URL-State geladen', urlState);
+  
+  if (urlState.suche) {
+    // Auto-Suche mit URL-Parameter auslösen
+    setTimeout(() => {
+      debug.session('Triggere Auto-Suche aus URL', { suche: urlState.suche });
+      document.dispatchEvent(new CustomEvent('amorph:auto-search', {
+        detail: { query: urlState.suche }
+      }));
+    }, 100);
+  }
+  
+  // Bei Suche URL updaten
+  document.addEventListener('header:suche:ergebnisse', (e) => {
+    const query = e.detail?.query || '';
+    const current = getUrlState();
+    setUrlState({ ...current, suche: query });
+  });
+  
+  // Bei Perspektiven-Wechsel URL updaten
+  document.addEventListener('perspektiven:geaendert', (e) => {
+    const perspektiven = e.detail?.aktiv || [];
+    const current = getUrlState();
+    setUrlState({ ...current, perspektiven });
+  });
+  
+  // Bei Ansicht-Wechsel URL updaten
+  document.addEventListener('amorph:ansicht-wechsel', (e) => {
+    const ansicht = e.detail?.ansicht || 'karten';
+    const current = getUrlState();
+    setUrlState({ ...current, ansicht });
+  });
   
   // KEINE initiale Daten laden - warten auf Suche
   debug.daten('Warte auf Sucheingabe...');
@@ -117,6 +170,27 @@ export async function amorph(options = {}) {
   showEmptyState(container);
   
   debug.render('Fertig!');
+  
+  // Navigation zu Einzelansicht (von Header-Auswahl-Badges)
+  document.addEventListener('amorph:navigate-pilz', async (e) => {
+    const { slug, id } = e.detail || {};
+    if (!slug && !id) return;
+    
+    debug.amorph('Navigate zu Pilz', { slug, id });
+    
+    // URL ändern
+    const newUrl = `/${slug || id}`;
+    window.history.pushState({ route: 'einzelansicht', params: { slug: slug || id } }, '', newUrl);
+    
+    // Event für Einzelansicht-Feature dispatchen
+    window.dispatchEvent(new CustomEvent('amorph:route-change', {
+      detail: { 
+        route: 'einzelansicht', 
+        params: { slug: slug || id },
+        query: {}
+      }
+    }));
+  });
   
   // Re-Render Handler (für Suche etc.)
   container.addEventListener('amorph:request-render', async (e) => {
@@ -227,8 +301,31 @@ function showEmptyState(container) {
   emptyEl.innerHTML = `
     <div class="amorph-empty-icon">🔍</div>
     <div class="amorph-empty-text">Gib einen Suchbegriff ein, um Pilze zu finden</div>
+    <div class="amorph-empty-hint">Probiere "Steinpilz", "essbar" oder "Nadelwald"</div>
   `;
   container.appendChild(emptyEl);
+}
+
+function showErrorState(container, error) {
+  const errorEl = document.createElement('div');
+  errorEl.className = 'amorph-error-state';
+  errorEl.innerHTML = `
+    <div class="amorph-error-icon">⚠️</div>
+    <div class="amorph-error-text">Daten konnten nicht geladen werden</div>
+    <div class="amorph-error-hint">${error?.message || 'Verbindungsfehler'}</div>
+  `;
+  container.appendChild(errorEl);
+}
+
+function showNoResults(container, query) {
+  const noResultsEl = document.createElement('div');
+  noResultsEl.className = 'amorph-no-results';
+  noResultsEl.innerHTML = `
+    <div class="amorph-no-results-icon">🍄</div>
+    <div class="amorph-no-results-text">Keine Pilze gefunden für <span class="amorph-no-results-query">"${query}"</span></div>
+    <div class="amorph-no-results-hint">Versuche einen anderen Suchbegriff</div>
+  `;
+  container.appendChild(noResultsEl);
 }
 
 function highlightMatches(container, query, matchedTerms = new Set()) {

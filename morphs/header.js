@@ -7,6 +7,7 @@
  * Zeile 0: FUNGINOMI .......................... Part of Bifroest
  * Zeile 1: [🔍 Suche] [aktive Filter-Badges...] [⊞][▥]
  * Zeile 2: [Perspektiven-Grid mit bunten Glow-Effekten]
+ * Zeile 3: [Ausgewählte Pilze: 🍄 Steinpilz  🍄 Pfifferling ...] (transparent)
  */
 
 import { debug } from '../observer/debug.js';
@@ -95,6 +96,63 @@ export function header(config, morphConfig = {}) {
     
     container.appendChild(zeile2);
   }
+  
+  // === ZEILE 3: Ausgewählte Pilze (transparent, nur wenn Auswahl) ===
+  const zeile3 = document.createElement('div');
+  zeile3.className = 'amorph-header-row amorph-header-auswahl';
+  zeile3.style.display = 'none'; // Initial versteckt
+  
+  const auswahlLabel = document.createElement('span');
+  auswahlLabel.className = 'amorph-auswahl-label';
+  auswahlLabel.textContent = 'Auswahl:';
+  zeile3.appendChild(auswahlLabel);
+  
+  const auswahlListe = document.createElement('div');
+  auswahlListe.className = 'amorph-auswahl-liste';
+  zeile3.appendChild(auswahlListe);
+  
+  // Clear-Button
+  const clearBtn = document.createElement('button');
+  clearBtn.className = 'amorph-auswahl-clear';
+  clearBtn.innerHTML = '✕';
+  clearBtn.title = 'Auswahl leeren';
+  zeile3.appendChild(clearBtn);
+  
+  container.appendChild(zeile3);
+  
+  // Update-Funktion für ausgewählte Pilze
+  container.updateAuswahlListe = (pilze) => {
+    // pilze: Array von {id, name, slug, farbKlasse}
+    if (!pilze || pilze.length === 0) {
+      zeile3.style.display = 'none';
+      return;
+    }
+    
+    zeile3.style.display = 'flex';
+    auswahlListe.innerHTML = '';
+    
+    for (const pilz of pilze) {
+      const badge = document.createElement('a');
+      badge.className = `amorph-auswahl-badge ${pilz.farbKlasse || ''}`;
+      badge.href = `/${pilz.slug || pilz.id}`;
+      badge.dataset.pilzId = pilz.id;
+      badge.innerHTML = `<span class="badge-icon">🍄</span> ${pilz.name}`;
+      badge.title = `${pilz.name} öffnen`;
+      
+      // Klick navigiert zur Einzelansicht
+      badge.addEventListener('click', (e) => {
+        e.preventDefault();
+        // Event für Navigation dispatchen
+        document.dispatchEvent(new CustomEvent('amorph:navigate-pilz', {
+          detail: { slug: pilz.slug || pilz.id, id: pilz.id }
+        }));
+      });
+      
+      auswahlListe.appendChild(badge);
+    }
+    
+    debug.features('Auswahl-Liste aktualisiert', { anzahl: pilze.length });
+  };
   
   return container;
 }

@@ -1,16 +1,49 @@
 /* AMORPH v5 - Ansichten Styles */
 /* Black Glasmorphism - Feld-Auswahl & Views */
 
+/* === VIEW TRANSITIONS === */
+/* Animation beim Wechsel zwischen Ansichten */
+[data-amorph-container] {
+  /* Enable View Transitions wenn Browser supportet */
+  view-transition-name: amorph-container;
+}
+
+.amorph-item {
+  /* Items haben eigene Transition */
+  view-transition-name: amorph-item;
+  animation: item-enter var(--anim-duration-enter) var(--anim-ease-out) both;
+}
+
+@keyframes item-enter {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Staggered Animation für Items */
+.amorph-item:nth-child(1) { animation-delay: 0ms; }
+.amorph-item:nth-child(2) { animation-delay: 30ms; }
+.amorph-item:nth-child(3) { animation-delay: 60ms; }
+.amorph-item:nth-child(4) { animation-delay: 90ms; }
+.amorph-item:nth-child(5) { animation-delay: 120ms; }
+.amorph-item:nth-child(6) { animation-delay: 150ms; }
+.amorph-item:nth-child(n+7) { animation-delay: 180ms; }
+
 /* === EINZELNE FELDER - Klickbar machen === */
 /* Nur in Items, nicht im Header */
 .amorph-item amorph-container[data-field] {
   cursor: pointer;
   position: relative;
-  /* Spezifische Transitions statt 'all' - verhindert weißes Blinken */
+  /* Nutze Animation-Tokens */
   transition: 
-    background-color 0.25s ease,
-    box-shadow 0.25s ease,
-    transform 0.15s ease;
+    background-color var(--anim-duration-fast) ease,
+    box-shadow var(--anim-duration-fast) ease,
+    transform var(--anim-duration-fast) var(--anim-ease-out);
   border-radius: var(--radius-sm, 4px);
   /* Initial transparent - kein weiß */
   background-color: transparent;
@@ -18,6 +51,12 @@
 
 .amorph-item amorph-container[data-field]:hover {
   background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Klick-Feedback Ripple */
+.amorph-item amorph-container[data-field]:active {
+  transform: scale(0.98);
+  transition-duration: 50ms;
 }
 
 /* === FELD-AUSWAHL - Dezenter Glasmorphism mit Farbverlauf === */

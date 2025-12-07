@@ -3,8 +3,9 @@ aktiv:
   - header
   - grid
   - ansichten
-  # - detail      # Pinboard-View (deaktiviert - Vergleich übernimmt)
-  - vergleich   # Vektorraum-View für Vergleiche
+  - vergleich      # Vektorraum-View für Vergleiche
+  - einzelansicht  # Einzelansicht als eigene Page (/:slug)
+  - infinitescroll # Automatisches Nachladen beim Scrollen
 
 # Suche-Konfiguration
 suche:

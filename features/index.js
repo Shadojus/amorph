@@ -4,11 +4,12 @@ import perspektiven from './perspektiven/index.js';
 import grid from './grid/index.js';
 import header from './header/index.js';
 import ansichten from './ansichten/index.js';
-import detail from './detail/index.js';
 import vergleich from './vergleich/index.js';
+import einzelansicht from './einzelansicht/index.js';
+import infinitescroll from './infinitescroll/index.js';
 import { debug } from '../observer/debug.js';
 
-const eingebauteFeatures = { suche, perspektiven, grid, header, ansichten, detail, vergleich };
+const eingebauteFeatures = { suche, perspektiven, grid, header, ansichten, vergleich, einzelansicht, infinitescroll };
 
 export async function loadFeatures(container, config, dataSource, callbacks = {}) {
   const geladene = [];

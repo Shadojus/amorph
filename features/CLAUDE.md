@@ -6,15 +6,16 @@ Eigenständig. Isoliert. Optional.
 
 ```
 features/
-├── context.js     ← Feature-Context Factory
-├── index.js       ← Feature-Registry + Initialisierung
-├── header/        ← App-Header (Branding, Suche, Controls)
-├── grid/          ← Karten-Ansicht
-├── vergleich/     ← Vergleichs-Ansicht mit Compare-Morphs
-├── detail/        ← Detail-Overlay
-├── suche/         ← Suchfunktion
-├── perspektiven/  ← Perspektiven-Buttons + Multi-Color Glow
-└── ansichten/     ← Ansicht-Switch (Grid ↔ Vergleich)
+├── context.js      ← Feature-Context Factory
+├── index.js        ← Feature-Registry + Initialisierung
+├── header/         ← App-Header (Branding, Suche, Auswahl-Badges)
+├── grid/           ← Karten-Ansicht
+├── vergleich/      ← Vergleichs-Ansicht mit Compare-Morphs
+├── einzelansicht/  ← Detail-Page (/:slug)
+├── infinitescroll/ ← Automatisches Nachladen
+├── suche/          ← Suchfunktion
+├── perspektiven/   ← Perspektiven-Buttons + Multi-Color Glow
+└── ansichten/      ← Ansicht-Switch (Karten ↔ Vergleich)
 ```
 
 ## Ansichten
@@ -23,8 +24,7 @@ features/
 |---------|---------|--------------|
 | **Grid** | `grid/` | Karten-Layout, einzelne Felder anklickbar |
 | **Vergleich** | `vergleich/` | Compare-Morphs, Pilze nebeneinander |
-
-Beide nutzen **Black Glasmorphism** auf Woodfloor-Hintergrund.
+| **Einzelansicht** | `einzelansicht/` | Full-Page Pilz-Detail |
 
 ## Feature-Context API
 
@@ -47,7 +47,6 @@ export function createContext(name, config) {
 ctx.emit('pilz:ausgewaehlt', { id: 'steinpilz' });
 document.addEventListener('amorph:pilz:ausgewaehlt', handler);
 ```
-
 ## Regeln
 
 ```javascript

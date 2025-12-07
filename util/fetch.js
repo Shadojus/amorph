@@ -44,6 +44,31 @@ class PocketBaseSource {
     const data = await response.json();
     return data.items;
   }
+  
+  async getBySlug(slug) {
+    const params = new URLSearchParams();
+    params.set('filter', `slug="${slug.replace(/["\\]/g, '\\$&')}"`);
+    
+    const response = await fetch(
+      `${this.url}/api/collections/${this.sammlung}/records?${params}`
+    );
+    
+    if (!response.ok) throw new Error(`PocketBase: ${response.status}`);
+    const data = await response.json();
+    return data.items?.[0] || null;
+  }
+  
+  async getById(id) {
+    const response = await fetch(
+      `${this.url}/api/collections/${this.sammlung}/records/${id}`
+    );
+    
+    if (!response.ok) {
+      if (response.status === 404) return null;
+      throw new Error(`PocketBase: ${response.status}`);
+    }
+    return response.json();
+  }
 }
 
 class RestSource {
@@ -64,6 +89,16 @@ class RestSource {
     if (!response.ok) throw new Error(`REST: ${response.status}`);
     return response.json();
   }
+  
+  async getBySlug(slug) {
+    const items = await this.query({});
+    return items.find(item => item.slug === slug);
+  }
+  
+  async getById(id) {
+    const items = await this.query({});
+    return items.find(item => item.id === id);
+  }
 }
 
 class JsonSource {
@@ -71,24 +106,32 @@ class JsonSource {
     this.url = url;
     this.data = null;
     this.lastMatchedTerms = new Set(); // Speichert welche Terme gematcht haben
+    this.lastFilteredData = []; // Speichert gefilterte Daten für Pagination
+    this.totalCount = 0; // Gesamtanzahl der gefilterten Items
   }
   
-  async query({ search, limit = 50 } = {}) {
+  async ensureData() {
     if (!this.data) {
       debug.daten('Lade JSON-Daten...', { url: this.url });
       const response = await fetch(this.url);
+      if (!response.ok) {
+        throw new Error(`Daten konnten nicht geladen werden: ${response.status}`);
+      }
       this.data = await response.json();
       debug.daten('JSON geladen', { 
         anzahl: Array.isArray(this.data) ? this.data.length : (this.data.items?.length || 0) 
       });
     }
-    
-    let items = Array.isArray(this.data) ? this.data : this.data.items || [];
+    return Array.isArray(this.data) ? this.data : this.data.items || [];
+  }
+  
+  async query({ search, limit = 50, offset = 0 } = {}) {
+    let items = await this.ensureData();
     this.lastMatchedTerms = new Set();
     
     if (search && search.trim()) {
       const query = search.toLowerCase().trim();
-      debug.suche('JsonSource Query', { query, totalItems: items.length });
+      debug.suche('JsonSource Query', { query, totalItems: items.length, offset, limit });
       
       // Intelligente Suche: Jedes Item bewerten und Match-Terme sammeln
       const scored = items.map(item => {
@@ -110,17 +153,59 @@ class JsonSource {
         }
       }
       
-      items = filtered
+      this.lastFilteredData = filtered
         .sort((a, b) => b.score - a.score)
         .map(s => s.item);
+      
+      this.totalCount = this.lastFilteredData.length;
+      items = this.lastFilteredData;
       
       debug.suche('Suche komplett', { 
         treffer: items.length, 
         matchedTerms: [...this.lastMatchedTerms].slice(0, 10)
       });
+    } else {
+      this.lastFilteredData = items;
+      this.totalCount = items.length;
     }
     
-    return items.slice(0, limit);
+    // Pagination: offset und limit anwenden
+    const paginatedItems = items.slice(offset, offset + limit);
+    debug.daten('Pagination', { offset, limit, returned: paginatedItems.length, total: this.totalCount });
+    
+    return paginatedItems;
+  }
+  
+  /**
+   * Weitere Items laden (Infinite Scroll)
+   * @param {number} offset - Start-Index
+   * @param {number} limit - Anzahl Items
+   * @returns {Promise<{items: Array, hasMore: boolean}>}
+   */
+  async loadMore(offset, limit = 20) {
+    const items = this.lastFilteredData.slice(offset, offset + limit);
+    const hasMore = offset + limit < this.totalCount;
+    
+    debug.daten('Load More', { offset, limit, returned: items.length, hasMore, total: this.totalCount });
+    
+    return { items, hasMore };
+  }
+  
+  /**
+   * Gibt Gesamtanzahl zurück
+   */
+  getTotalCount() {
+    return this.totalCount;
+  }
+  
+  async getBySlug(slug) {
+    const items = await this.ensureData();
+    return items.find(item => item.slug === slug);
+  }
+  
+  async getById(id) {
+    const items = await this.ensureData();
+    return items.find(item => item.id === id);
   }
   
   getMatchedTerms() {
