@@ -62,8 +62,11 @@
   --space-unit: 4px;
   --space-2xs: calc(var(--space-unit) * 0.5);  /* 2px */
   --space-xs: var(--space-unit);                /* 4px */
+  --space-xs-plus: calc(var(--space-unit) * 1.5); /* 6px */
   --space-sm: calc(var(--space-unit) * 2);      /* 8px */
+  --space-sm-plus: calc(var(--space-unit) * 2.5); /* 10px */
   --space-md: calc(var(--space-unit) * 3);      /* 12px */
+  --space-md-plus: calc(var(--space-unit) * 3.5); /* 14px */
   --space-lg: calc(var(--space-unit) * 4);      /* 16px */
   --space-xl: calc(var(--space-unit) * 6);      /* 24px */
   --space-2xl: calc(var(--space-unit) * 8);     /* 32px */
@@ -94,12 +97,12 @@
   --font-size-2xl: clamp(18px, 1rem + 0.4vw, 20px);    /* Große Zahlen, Icons */
   
   /* Semantische Aliases für Compare-Elemente */
-  --font-pilz-name: var(--font-size-sm);       /* 11px - Pilz-Namen überall gleich! */
-  --font-section-label: var(--font-size-base); /* 12px - Section-Überschriften */
-  --font-wert: var(--font-size-sm);            /* 11px - Zahlenwerte */
-  --font-label: var(--font-size-xs);           /* 10px - Kleine Labels */
-  --font-scale: var(--font-size-2xs);          /* 9px - Skalen-Beschriftungen */
-  --font-big-number: var(--font-size-2xl);     /* 20px - Große Zahlen */
+  --font-pilz-name: var(--font-size-sm);       /* ~11px - Pilz-Namen überall gleich! */
+  --font-section-label: var(--font-size-base); /* ~12px - Section-Überschriften */
+  --font-wert: var(--font-size-sm);            /* ~11px - Zahlenwerte */
+  --font-label: var(--font-size-xs);           /* ~10px - Kleine Labels */
+  --font-scale: var(--font-size-2xs);          /* ~9px - Skalen-Beschriftungen */
+  --font-big-number: var(--font-size-2xl);     /* ~20px - Große Zahlen */
   
   /* Shorthand-Aliases (für schnelleres Tippen) */
   --font-2xs: var(--font-size-2xs);
@@ -110,18 +113,16 @@
   --font-xl: var(--font-size-xl);
   --font-2xl: var(--font-size-2xl);
   
-  /* Legacy-Support (wird nach und nach entfernt) */
-  --font-size-base-old: 1rem;
-  --font-size-lg-old: 1.125rem;
-  --font-size-xl-old: 1.25rem;
-  
-  /* Rundungen - Einheitlich abgestuft */
+  /* === BORDER-RADIUS === */
+  /* Einheitlich abgestuft */
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
   --radius-xl: 18px;
+  --radius-full: 9999px;
   
-  /* Schatten - Einheitlich */
+  /* === SCHATTEN === */
+  /* Einheitlich */
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
   --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.45);
   --shadow-lg: 0 8px 36px rgba(0, 0, 0, 0.55);

@@ -119,7 +119,7 @@ amorph-container[data-morph="item"]:hover {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  padding: 8px 12px;
+  padding: var(--space-sm) var(--space-md);
   background: rgba(0, 0, 0, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 50px;
@@ -141,7 +141,7 @@ amorph-container[data-morph="item"]:hover {
 .amorph-action-counter {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-xs-plus);
   padding: 0 12px;
   font-size: var(--font-size-sm);
   color: var(--color-text);
@@ -164,8 +164,8 @@ amorph-container[data-morph="item"]:hover {
 .amorph-action-btn {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
+  gap: var(--space-xs-plus);
+  padding: var(--space-sm) var(--space-lg);
   font-size: var(--font-size-sm);
   font-weight: 500;
   background: rgba(0, 0, 0, 0.4);
@@ -198,7 +198,7 @@ amorph-container[data-morph="item"]:hover {
 
 /* Auswahl löschen Button */
 .amorph-action-clear {
-  padding: 8px;
+  padding: var(--space-sm);
   background: transparent;
   color: var(--color-text-dim);
   border: none;
@@ -332,7 +332,7 @@ amorph-container[data-morph="item"]:hover {
 
 .amorph-detail-badge {
   display: inline-block;
-  padding: 6px 12px;
+  padding: var(--space-xs-plus) var(--space-md);
   font-size: var(--ui-font-md, 0.72rem);
   background: rgba(34, 197, 94, 0.12);
   color: var(--color-accent, #22c55e);
@@ -403,7 +403,7 @@ amorph-container[data-morph="item"]:hover {
 
 .amorph-vergleich-badge {
   display: inline-block;
-  padding: 6px 12px;
+  padding: var(--space-xs-plus) var(--space-md);
   font-size: var(--ui-font-md, 0.72rem);
   background: rgba(234, 179, 8, 0.12);
   color: rgba(234, 179, 8, 0.85);
@@ -441,7 +441,7 @@ amorph-container[data-morph="item"]:hover {
 
 .amorph-vergleich-card-name {
   margin: 0;
-  padding: 16px;
+  padding: var(--space-lg);
   font-size: 1.25rem;
   font-weight: 600;
   color: white;
@@ -449,14 +449,14 @@ amorph-container[data-morph="item"]:hover {
 }
 
 .amorph-vergleich-card-felder {
-  padding: 12px 16px;
+  padding: var(--space-md) var(--space-lg);
 }
 
 .amorph-vergleich-card-feld {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  padding: 8px 0;
+  padding: var(--space-sm) 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 
@@ -503,7 +503,7 @@ amorph-container[data-morph="item"]:hover {
   
   .amorph-detail-feld {
     grid-template-columns: 1fr;
-    gap: 4px;
+    gap: var(--space-xs);
   }
   
   .amorph-vergleich-grid {
@@ -523,7 +523,7 @@ amorph-container[data-morph="item"]:hover {
   }
   
   .amorph-view-overlay {
-    padding: 12px;
+    padding: var(--space-md);
     padding-top: 60px;
   }
   

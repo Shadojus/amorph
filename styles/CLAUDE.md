@@ -1,58 +1,80 @@
 # Styles
 
-Black Glasmorphism + Neon-Farben + Einheitliche Typografie.
+Black Glasmorphism + Neon-Farben + Responsive Typografie + Spacing-System.
 
 ## Dateien
 
 | Datei | Zweck |
 |-------|-------|
-| `base.css` | CSS-Variablen, Typografie-System, Reset |
+| `base.css` | CSS-Variablen, Typografie, Spacing, Reset |
 | `morphs.css` | Basis-Morph Styles |
-| `compare.css` | Compare-Morph Styles (nutzt CSS-Variablen) |
+| `compare.css` | Compare-Morph Styles |
 | `pilz-farben.css` | **12 Neon-Farben** - Single Source of Truth! |
 | `features.css` | Header, Suche, Perspektiven-Buttons |
 | `layouts.css` | Grid-Layout, Glass-Cards |
+| `ansichten.css` | View-Overlays, Action-Bars |
+| `vektorraum.css` | Sammeldiagramm-Ansicht |
+| `pinboard.css` | Pinboard/Detail-Ansicht |
 | `perspektiven.css` | Multi-Color Glow, Feld-Auswahl |
 
-## Typografie-System (base.css)
+## Typografie-System (base.css) - RESPONSIVE
+
+Alle Schriftgrößen nutzen `clamp()` für automatische Viewport-Anpassung:
 
 ```css
 :root {
-  /* Größen-Skala */
-  --font-size-2xs: 9px;    /* Skalen */
-  --font-size-xs: 10px;    /* Kleine Labels */
-  --font-size-sm: 11px;    /* Pilz-Namen, Werte */
-  --font-size-base: 12px;  /* Section-Labels */
-  --font-size-md: 13px;    /* Text-Inhalte */
-  --font-size-lg: 14px;    /* Feld-Überschriften */
-  --font-size-xl: 16px;    /* Perspektiven-Titel */
-  --font-size-2xl: 20px;   /* Icons */
+  /* Responsive Größen-Skala */
+  --font-size-2xs: clamp(8px, 0.5rem + 0.1vw, 9px);
+  --font-size-xs: clamp(9px, 0.55rem + 0.1vw, 10px);
+  --font-size-sm: clamp(10px, 0.6rem + 0.15vw, 11px);
+  --font-size-base: clamp(11px, 0.65rem + 0.15vw, 12px);
+  --font-size-md: clamp(12px, 0.7rem + 0.15vw, 13px);
+  --font-size-lg: clamp(13px, 0.75rem + 0.2vw, 14px);
+  --font-size-xl: clamp(14px, 0.85rem + 0.25vw, 16px);
+  --font-size-2xl: clamp(18px, 1rem + 0.4vw, 20px);
   
   /* Semantische Aliases */
   --font-pilz-name: var(--font-size-sm);
   --font-section-label: var(--font-size-base);
   --font-wert: var(--font-size-sm);
-  --font-label: var(--font-size-xs);
-  --font-scale: var(--font-size-2xs);
 }
 ```
 
-**Regel**: Pilz-Namen sind IMMER `var(--font-pilz-name)` = 11px.
+## Spacing-System (base.css)
+
+4px Basis-Einheit für konsistente Abstände:
+
+```css
+:root {
+  /* Spacing-Skala (4px Basis) */
+  --space-2xs: 2px;
+  --space-xs: 4px;
+  --space-xs-plus: 6px;
+  --space-sm: 8px;
+  --space-sm-plus: 10px;
+  --space-md: 12px;
+  --space-md-plus: 14px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+  
+  /* Semantische Aliases */
+  --gap-tight: var(--space-xs);      /* 4px */
+  --gap-default: var(--space-sm);    /* 8px */
+  --gap-loose: var(--space-md);      /* 12px */
+  --gap-section: var(--space-lg);    /* 16px */
+  --padding-card: var(--space-md);   /* 12px */
+  --padding-section: var(--space-lg);/* 16px */
+  --margin-element: var(--space-sm); /* 8px */
+  --margin-section: var(--space-xl); /* 24px */
+}
+```
+
+**Regel**: Für gap, padding, margin ≥4px → CSS-Variablen nutzen! Kleinere Werte (1px, 2px, 3px) dürfen hartkodiert bleiben für Feinheiten.
 
 ## Pilz-Farben (pilz-farben.css)
 
-CSS ist Single Source of Truth. 12 Neon-Farben:
-
-```css
-.pilz-farbe-0 {
-  --pilz-rgb: 0, 255, 255;
-  --pilz-text: rgb(0, 255, 255);
-  --pilz-fill: rgba(0, 255, 255, 0.24);
-  --pilz-line: rgba(0, 255, 255, 0.70);
-  --pilz-bg: rgba(0, 255, 255, 0.12);
-  --pilz-glow: rgba(0, 255, 255, 0.50);
-}
-```
+CSS ist Single Source of Truth. 12 OVER THE TOP Neon-Farben:
 
 | Index | Name | RGB |
 |-------|------|-----|

@@ -6,7 +6,7 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  padding: 12px var(--space-lg) 14px;
+  padding: var(--space-md) var(--space-lg) var(--space-md-plus);
   /* Einheitliches Black Glass */
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur-strong);
@@ -55,11 +55,11 @@
 
 /* Alte Klassen für Kompatibilität */
 .amorph-header-suche {
-  margin-bottom: 8px;
+  margin-bottom: var(--space-sm);
 }
 
 .amorph-header-nav {
-  gap: 8px;
+  gap: var(--gap-default);
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -67,10 +67,10 @@
 /* Responsive Header - KOMPAKTER */
 @media (max-width: 900px) {
   .amorph-feature-header {
-    padding: 6px 10px 8px;
+    padding: var(--space-xs-plus) var(--space-sm-plus) var(--space-sm);
   }
   .amorph-header-main {
-    gap: 6px;
+    gap: var(--space-sm);
   }
   .amorph-header-bifroest {
     font-size: 0.55rem;
@@ -79,11 +79,11 @@
 
 @media (max-width: 600px) {
   .amorph-feature-header {
-    padding: 4px 6px 6px;
+    padding: var(--space-xs) var(--space-xs-plus) var(--space-xs-plus);
   }
   .amorph-header-branding {
     padding-bottom: 3px;
-    margin-bottom: 4px;
+    margin-bottom: var(--space-xs);
   }
   .amorph-header-titel {
     font-size: 0.72rem !important;
@@ -93,12 +93,12 @@
     font-size: 0.48rem;
   }
   .amorph-header-main {
-    gap: 4px;
-    margin-bottom: 6px;
+    gap: var(--gap-tight);
+    margin-bottom: var(--space-xs-plus);
   }
   /* Suche-Wrapper passt sich an */
   .amorph-suche-wrapper {
-    padding: 2px;
+    padding: var(--space-2xs);
   }
   [data-morph="suche"] {
     min-width: 60px;   /* Noch kleiner! */
@@ -106,7 +106,7 @@
     flex: 0 0 auto;
   }
   .amorph-suche input {
-    padding: 5px 4px;
+    padding: 5px var(--space-xs);
     font-size: 0.72rem;
     width: 100%;
   }
@@ -116,17 +116,17 @@
   }
   /* Kleine pulsierende Badges auf Mobile */
   .amorph-filter-badge {
-    padding: 2px 6px;
+    padding: var(--space-2xs) var(--space-xs-plus);
     font-size: 0.62rem;
     border-radius: 8px;
   }
   /* Ansicht-Switch kompakter */
   .amorph-ansicht-switch {
-    padding: 2px;
+    padding: var(--space-2xs);
     margin-left: 4px;
   }
   .amorph-ansicht-btn {
-    padding: 5px 8px;
+    padding: 5px var(--space-sm);
     font-size: 0.9rem;
   }
   .amorph-ansicht-btn .btn-counter {
@@ -395,7 +395,7 @@
   gap: var(--space-xs);
   justify-content: center;
   align-items: center;
-  padding: 2px 0;
+  padding: var(--space-2xs) 0;
 }
 
 /* Perspektiven in eigener Zeile */
@@ -409,7 +409,7 @@
     gap: var(--space-xs);
   }
   .amorph-perspektive-btn {
-    padding: 4px 8px !important;
+    padding: var(--space-xs) var(--space-sm) !important;
     font-size: var(--ui-font-sm) !important;
   }
 }

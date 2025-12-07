@@ -29,20 +29,43 @@ DATEN (JSON) → detectType() → MORPH → DOM
 - **Pilz-Farben**: 12 OVER-THE-TOP Neonfarben in `pilz-farben.css`
 - **Perspektiven**: Jede Perspektive hat eigene Farbe mit Multi-Color Glow
 
-### Typografie-System (base.css)
+### Typografie-System (base.css) - RESPONSIVE
+
+Alle Schriftgrößen nutzen `clamp()` für automatische Viewport-Anpassung:
 
 | Variable | Größe | Verwendung |
 |----------|-------|------------|
-| `--font-size-2xs` | 9px | Skalen-Beschriftungen |
-| `--font-size-xs` | 10px | Kleine Labels |
-| `--font-size-sm` | 11px | **Pilz-Namen, Werte** |
-| `--font-size-base` | 12px | Section-Überschriften |
-| `--font-size-md` | 13px | Text-Inhalte |
-| `--font-size-lg` | 14px | Feld-Überschriften |
-| `--font-size-xl` | 16px | Perspektiven-Titel |
-| `--font-size-2xl` | 20px | Große Zahlen/Icons |
+| `--font-size-2xs` | 8-9px | Skalen-Beschriftungen |
+| `--font-size-xs` | 9-10px | Kleine Labels |
+| `--font-size-sm` | 10-11px | **Pilz-Namen, Werte** |
+| `--font-size-base` | 11-12px | Section-Überschriften |
+| `--font-size-md` | 12-13px | Text-Inhalte |
+| `--font-size-lg` | 13-14px | Feld-Überschriften |
+| `--font-size-xl` | 14-16px | Perspektiven-Titel |
+| `--font-size-2xl` | 18-20px | Große Zahlen/Icons |
 
-**Semantische Aliases:** `--font-pilz-name` (11px), `--font-section-label` (12px), `--font-wert` (11px)
+**Semantische Aliases:** `--font-pilz-name`, `--font-section-label`, `--font-wert`
+
+### Spacing-System (base.css)
+
+4px Basis-Einheit für konsistente Abstände:
+
+| Variable | Wert | Verwendung |
+|----------|------|------------|
+| `--space-2xs` | 2px | Feine Details |
+| `--space-xs` | 4px | Minimaler Abstand |
+| `--space-xs-plus` | 6px | Zwischen xs und sm |
+| `--space-sm` | 8px | Standard-Gaps |
+| `--space-sm-plus` | 10px | Zwischen sm und md |
+| `--space-md` | 12px | Zwischen Gruppen |
+| `--space-md-plus` | 14px | Zwischen md und lg |
+| `--space-lg` | 16px | Section-Padding |
+| `--space-xl` | 24px | Große Abstände |
+| `--space-2xl` | 32px | Maximaler Abstand |
+
+**Semantische Aliases:** `--gap-tight`, `--gap-default`, `--gap-loose`, `--gap-section`, `--padding-card`, `--padding-section`, `--margin-element`, `--margin-section`
+
+**Regel:** Für spacing ≥4px → CSS-Variablen. Feine Details (1-3px) dürfen hartkodiert sein.
 
 ### Pilz-Farben (pilz-farben.css)
 

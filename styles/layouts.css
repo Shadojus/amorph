@@ -41,7 +41,7 @@ amorph-container[data-morph="item"] {
 
 /* Letztes Element in Card - Extra Platz für Scroll */
 amorph-container[data-morph="item"] > amorph-container[data-field]:last-of-type {
-  margin-bottom: 24px;
+  margin-bottom: var(--space-xl);
 }
 
 /* Webkit Scrollbar - nur bei Hover sichtbar */
@@ -114,8 +114,8 @@ amorph-container[data-field="name"] {
 [data-amorph-container][data-layout="grid"] {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  padding: 8px 16px 16px;  /* Weniger Padding oben */
+  gap: var(--gap-section);
+  padding: var(--space-sm) var(--space-lg) var(--space-lg);  /* Weniger Padding oben */
   align-items: stretch;
 }
 
@@ -220,7 +220,7 @@ amorph-container[data-field="name"] {
 
 /* === FELD-CONTAINER IN KARTEN === */
 amorph-container[data-morph="item"] amorph-container[data-field] {
-  padding: 4px 8px;
+  padding: var(--space-xs) var(--space-sm);
   margin: 1px 0;
   border-radius: var(--ui-radius-md);
   /* Subtiler Hintergrund nur bei komplexen Morphs */
@@ -236,7 +236,7 @@ amorph-container[data-morph="item"] amorph-container[data-field="ernte_stats"],
 amorph-container[data-morph="item"] amorph-container[data-field="lebenszyklus"] {
   background: rgba(0, 0, 0, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.03);
-  padding: 8px;
+  padding: var(--space-sm);
   margin: 4px 0;
 }
 

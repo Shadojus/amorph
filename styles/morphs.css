@@ -32,7 +32,7 @@
   display: inline-flex;
   align-items: center;
   height: var(--ui-height-md);
-  padding: 0 8px;
+  padding: 0 var(--space-sm);
   font-size: var(--ui-font-md);
   font-weight: 500;
   background: rgba(0, 0, 0, 0.20);
@@ -90,7 +90,7 @@
   font-size: 9px;
   font-weight: 600;
   color: var(--color-text-muted);
-  margin-right: 6px;
+  margin-right: var(--space-xs-plus);
 }
 
 .amorph-range-scale {
@@ -99,7 +99,7 @@
   width: 100%;
   font-size: 7px;
   color: var(--color-text-dim);
-  margin-top: 2px;
+  margin-top: var(--space-2xs);
 }
 
 /* === LIST === */
@@ -109,7 +109,7 @@
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: var(--space-xs-plus);
 }
 
 .amorph-list li {
@@ -131,7 +131,7 @@
   background: rgba(0, 0, 0, 0.20);
   border: 1px solid var(--glass-border);
   height: var(--ui-height-md);
-  padding: 0 8px;
+  padding: 0 var(--space-sm);
   display: inline-flex;
   align-items: center;
   border-radius: var(--ui-radius-md);
@@ -212,7 +212,7 @@
 .amorph-highlight {
   background: var(--color-highlight-bg);
   color: var(--color-highlight);
-  padding: 1px 4px;
+  padding: 1px var(--space-xs);
   border-radius: 3px;
   font-weight: inherit;
   animation: highlight-pulse 2s ease-in-out infinite;
@@ -223,7 +223,7 @@
   display: block;
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
-  margin-bottom: 2px;
+  margin-bottom: var(--space-2xs);
   text-transform: uppercase;
   letter-spacing: 0.03em;
   font-weight: 500;
@@ -261,7 +261,7 @@
 .amorph-pie-container {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-md);
 }
 
 .amorph-pie-chart {
@@ -304,7 +304,7 @@
 .amorph-pie-legend {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--space-xs);
   flex: 1;
   min-width: 0;
 }
@@ -312,7 +312,7 @@
 .amorph-pie-legend-item {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-xs-plus);
   font-size: 10px;
 }
 
@@ -358,7 +358,7 @@
   letter-spacing: 0.05em;
   padding-bottom: var(--space-xs);
   border-bottom: 1px solid var(--glass-border);
-  margin-bottom: 2px;
+  margin-bottom: var(--space-2xs);
 }
 
 .amorph-bar-leer {
@@ -375,7 +375,7 @@
   color: var(--color-text-dim);
   font-variant-numeric: tabular-nums;
   border-top: 1px solid var(--glass-border);
-  margin-top: 2px;
+  margin-top: var(--space-2xs);
 }
 
 .amorph-bar-scale-mid {
@@ -441,7 +441,7 @@
   font-style: italic;
   font-size: var(--ui-font-sm);
   text-align: center;
-  padding: 12px;
+  padding: var(--space-md);
 }
 
 .amorph-radar-svg {
@@ -617,7 +617,7 @@
 
 /* === STATS === */
 .amorph-stats {
-  padding: 8px;
+  padding: var(--space-sm);
   background: rgba(0, 0, 0, 0.2);
   border-radius: var(--ui-radius-lg, 8px);
   border: 1px solid rgba(255, 255, 255, 0.04);
@@ -635,23 +635,23 @@
   color: rgba(255, 255, 255, 0.60);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding-bottom: 4px;
-  margin-bottom: 4px;
+  padding-bottom: var(--space-xs);
+  margin-bottom: var(--space-xs);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .amorph-stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-  gap: 4px;
+  gap: var(--space-xs);
 }
 
 .amorph-stats-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
-  padding: 4px;
+  gap: var(--space-2xs);
+  padding: var(--space-xs);
   background: rgba(0, 0, 0, 0.15);
   border-radius: var(--ui-radius-sm, 4px);
   border: 1px solid rgba(255, 255, 255, 0.03);
@@ -678,7 +678,7 @@
 /* === TIMELINE === */
 .amorph-timeline {
   position: relative;
-  padding: 8px 8px 8px 20px;
+  padding: var(--space-sm) var(--space-sm) var(--space-sm) calc(var(--space-lg) + var(--space-xs));
   background: rgba(0, 0, 0, 0.2);
   border-radius: var(--ui-radius-lg, 8px);
   border: 1px solid rgba(255, 255, 255, 0.04);
@@ -696,16 +696,16 @@
   color: rgba(255, 255, 255, 0.60);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding-bottom: 4px;
-  margin-bottom: 4px;
+  padding-bottom: var(--space-xs);
+  margin-bottom: var(--space-xs);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .amorph-timeline-line {
   position: absolute;
   left: 12px;
-  top: 8px;
-  bottom: 8px;
+  top: var(--space-sm);
+  bottom: var(--space-sm);
   width: 1px;
   background: rgba(0, 0, 0, 0.5);
 }
@@ -714,8 +714,8 @@
   position: relative;
   display: flex;
   align-items: flex-start;
-  gap: 6px;
-  padding-bottom: 4px;
+  gap: var(--space-xs-plus);
+  padding-bottom: var(--space-xs);
 }
 
 .amorph-timeline-item:last-child {
@@ -763,7 +763,7 @@
   align-items: center;
   gap: 3px;
   height: var(--ui-height-sm);
-  padding: 0 6px;
+  padding: 0 var(--space-xs-plus);
   font-size: var(--ui-font-sm);
   font-weight: 600;
   background: color-mix(in srgb, var(--badge-bg, #64748b) 12%, rgba(0,0,0,0.3));
