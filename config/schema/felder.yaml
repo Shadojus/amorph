@@ -1,37 +1,384 @@
 # AMORPH Schema - Felder (anpassbar)
 # Definiert alle verfügbaren Datenfelder
 # Kann pro Projekt angepasst werden
+#
+# WICHTIG: Felder sollten FLACH sein für optimale Morph-Erkennung!
+# Komplexe verschachtelte Objekte → [object Object] Problem
 
 # === FELD-REIHENFOLGE ===
-# In welcher Reihenfolge werden Felder angezeigt?
 reihenfolge:
   - bild
   - name
   - wissenschaftlich
-  - essbarkeit
+  # Kulinarisch - Sicherheit
+  - essbarkeit_status
+  - essbarkeit_rating
+  - essbarkeit_voraussetzungen
+  - essbarkeit_warnungen
+  - essbarkeit_risikogruppen
+  # Kulinarisch - Sensorik
+  - sensorik
+  - geschmack_primaer
+  - geschmack_sekundaer
+  - aroma_profil
+  - textur_roh
+  - textur_gegart
+  # Kulinarisch - Zubereitung
+  - zubereitung_methoden
+  - zubereitung_optimal
+  - zubereitung_fehler
+  - vorbereitung
+  # Kulinarisch - Pairings
+  - pairings_klassisch
+  - pairings_modern
+  - pairings_getraenke
+  - synergien
+  # Kulinarisch - Lagerung
+  - lagerung_frisch
+  - lagerung_haltbarkeit_tage
+  - lagerung_indikatoren
+  - konservierung
+  # Kulinarisch - Nährwert
+  - naehrwerte
+  - naehrwert_highlights
+  - bioaktive_substanzen
+  # Kulinarisch - Kultur
+  - traditionen_namen
+  - traditionen_gerichte
+  - saisonalitaet
+  # Medizin - Traditionell
+  - medizinisch
+  - traditionelle_medizin
+  - therapeutische_kategorien
+  - wirkungsprofil
+  - evidenz_level
+  - klinische_studien
+  # Medizin - Sicherheit
+  - sicherheit_score
+  - nebenwirkungen
+  - wechselwirkungen
+  - kontraindikationen
+  - spezielle_populationen
+  # Medizin - Dosierung
+  - dosierung
+  - zubereitungsformen
+  # Anbau - Status & Schwierigkeit
+  - cultivation_status
+  - cultivation_difficulty
+  # Anbau - Parameter
+  - cultivation_parameters
+  # Anbau - Substrate
+  - cultivation_substrates
+  # Anbau - Produktionszyklus
+  - production_timeline
+  # Anbau - Stämme
+  - cultivation_strains
+  # Anbau - Probleme
+  - cultivation_problems
+  # Sicherheit - Toxikologie
+  - toxizitaet
+  - toxine
+  - giftstoffe_details
+  - ld50_werte
+  - symptome
+  - symptom_verlauf
+  - erste_hilfe
+  - antidote
+  - verwechslungsrisiko
+  - erkennungsmerkmale_sicher
+  - verwechslungspartner
+  # Wissenschaft - Taxonomie & Morphologie
+  - taxonomie
+  - synonyme
+  - morphologie
+  - mikroskopie
+  - genetik
+  - oekologie
+  - biogeografie
+  - chemische_zusammensetzung
+  - forschung_referenzen
+  # Statistik - Aggregationen & Trends
+  - fundstatistik
+  - popularitaet_trend
+  - saisonale_verteilung
+  - regionale_haeufigkeit
+  # Chemie - Primäre Metabolite
+  - makronaehrstoffe
+  - aminosaeuren
+  - fettsaeuren
+  - kohlenhydrate
+  - vitamine
+  - mineralstoffe
+  # Chemie - Sekundäre Metabolite
+  - sekundaermetabolite
+  - verbindungsklassen
+  - bioaktive_verbindungen
+  - biosynthese_pfade
+  - chemotyp
+  # Chemie - Volatilom
+  - volatilom
+  - aromastoffe
+  - geruchsprofil
+  # Chemie - Enzyme
+  - enzyme
+  - ligninolytische_enzyme
+  - industrielle_enzyme
+  - chemische_reaktionen
+  - pigmente
+  # Sensorik - Olfaktorisch
+  - aroma
+  - aroma_intensitaet
+  - aroma_rad
+  - aroma_evolution
+  - geruchsstoffe
+  # Sensorik - Gustatorisch
+  - geschmack
+  - grundgeschmack
+  - geschmacksverbindungen
+  - umami_komponenten
+  - geschmacks_timeline
+  - nachgeschmack
+  # Sensorik - Taktil
+  - textur
+  - mechanische_eigenschaften
+  # Sensorik - Visuell & Auditiv
+  - erscheinung
+  - farbstabilitaet
+  - oberflaeche
+  - klang
+  - bruchgeraeusch
+  - schnittgeraeusch
+  # Ökologie - Grundlagen
+  - oekologische_rolle
+  - naehrstoffkreislauf
+  - waldgesundheit
+  - sukzessionsstadium
+  # Ökologie - Trophik
+  - trophische_strategie
+  - saprobiont_details
+  - mykorrhiza_details
+  - parasit_details
+  # Ökologie - Habitat
+  - habitat
+  - primaerhabitat
+  - habitatspezifitaet
+  - boden_anforderungen
+  - hoehenlage
+  # Ökologie - Interaktionen
+  - symbionten
+  - konkurrenten
+  - konsumenten
+  - facilitatoren
+  # Ökologie - Ökosystemfunktionen
+  - oekosystem_services
+  - kohlenstoff_dynamik
+  - boden_prozesse
+  - ausbreitung
+  - reproduktion
+  - metapopulation
+  # Temporal - Lebenszyklus
+  - entwicklungsstadien
+  - generationszeit
+  - stadien_dauer
+  # Temporal - Phänologie
+  - phenologie
+  - monatliche_aktivitaet
+  - peak_perioden
+  - geografische_variation
+  # Temporal - Circadian
+  - circadian
+  - sporenfreisetzung_zeit
+  - wachstumsrate_zeit
+  - metabolischer_rhythmus
+  - lichtreaktion
+  # Temporal - Geschichte
+  - entdeckung
+  - erstbeschreibung
+  - meilensteine
+  - kultivierungs_timeline
+  # Temporal - Projektionen
+  - klima_projektionen
+  - naturschutz_prognose
+  - zukunfts_szenarien
+  # Geografie - Verbreitung
+  - native_verbreitung
+  - kontinente
+  - laender
+  - biogeografische_regionen
+  - oekoregionen
+  - eingefuehrte_verbreitung
+  - invasivitaet
+  # Geografie - Funde
+  - fundorte
+  - datenquellen
+  - raeumliche_statistik
+  # Geografie - Klima
+  - klimahuelle
+  - temperatur_bereich
+  - niederschlag_bereich
+  - koeppen_zonen
+  - bioclim_variablen
+  - verbreitungskarte
+  - heatmap_funde
+  # Wirtschaft - Markt
+  - marktstatus
+  - handelsart
+  # Wirtschaft - Produktion
+  - produktion
+  - globale_produktion
+  - hauptproduzenten
+  - produktionstrend
+  # Wirtschaft - Preise
+  - preise
+  - einzelhandel
+  - grosshandel
+  - preisvolatilitaet
+  - saisonale_preise
+  # Wirtschaft - Handel
+  - handel
+  - exporte
+  - importe
+  - handelsregulierungen
+  # Wirtschaft - Wertschöpfung
+  - wertschoepfungskette
+  - stufen
+  - endprodukte
+  - wirtschaftliche_bedeutung
+  - direkter_wert
+  - indirekter_wert
+  - beschaeftigung
+  # Naturschutz - Status
+  - schutzstatus
+  - iucn_status
+  - iucn_kategorie
+  - iucn_kriterien
+  - iucn_trend
+  - nationale_status
+  - cites_status
+  # Naturschutz - Bedrohungen
+  - bedrohungen
+  - bedrohungs_kategorie
+  - bedrohungs_schwere
+  - bedrohungs_umfang
+  # Naturschutz - Maßnahmen
+  - schutzmassnahmen
+  - in_situ_schutz
+  - ex_situ_schutz
+  - forschungsbedarf
+  - empfehlungen
+  - population_trend
+  - population_groesse
+  - fragmentierung
+  # Kultur - Ethnomykologie
+  - ethnomykologie
+  - indigene_namen
+  - kulturelle_bedeutung
+  - wissenssystem
+  - spirituelle_bedeutung
+  - rituale
+  - tabus
+  - mythologie
+  # Kultur - Geschichte
+  - historische_referenzen
+  - zeitperiode
+  - artefakte
+  - texte
+  # Kultur - Kunst & Moderne
+  - kunst_referenzen
+  - literatur
+  - film
+  - musik
+  - popkultur
+  - bewegungen
+  - tourismus
+  - festivals
+  # Forschung - Aktivität
+  - forschungs_aktivitaet
+  - publikationen_anzahl
+  - publikationen_trend
+  - forschungsgruppen
+  - aktuelle_themen
+  # Forschung - Patente & Biotech
+  - patente
+  - patent_nummer
+  - erfinder
+  - anwendungen
+  - biotechnologie
+  - anwendungen_biotech
+  - gentechnik
+  - synthetische_biologie
+  # Forschung - Zukunft
+  - zukunftspotential
+  - emerging_applications
+  - forschungsluecken
+  - investitionsmoeglichkeiten
+  - schluessel_publikationen
+  # Interaktionen - Multi-Species
+  - multispecies_interaktionen
+  - netzwerk_position
+  - interaktions_stabilitaet
+  # Interaktionen - Chemische Ökologie
+  - chemische_oekologie
+  - allelopathie
+  - chemische_kommunikation
+  - abwehrstoffe
+  # Interaktionen - Mikrobiom
+  - mikrobiom
+  - assoziierte_bakterien
+  - assoziierte_pilze
+  - community_struktur
+  - wirt_interaktionen
+  - parasiten
+  # Interaktionen - Netzwerk
+  - mykorrhiza_netzwerk
+  - naehrstoff_transfer
+  - signal_transfer
+  # Visual - Galerie
+  - bildergalerie
+  - primaerbild
+  - bilder_typen
+  - entwicklungsstadien_bilder
+  - mikroskopie_bilder
+  # Visual - 360°
+  - view_360
+  - frames
+  - rotation
+  - modell_3d
+  # Visual - Farbe
+  - farbdaten
+  - munsell_farben
+  - rgb_palette
+  - chemische_reaktionen_farbe
+  # Visual - Signatur
+  - visual_signature
+  - form_vektor
+  - textur_vektor
+  - farb_vektor
+  - muster_vektor
+  - einzigartigkeit
+  - verwechslungs_arten
+  - erkennungsmerkmale
+  - unterscheidungsmerkmale
+  - bestimmungsschema
+  # Allgemein
   - bewertung
   - verfuegbarkeit
-  - geschmack
-  - saison
   - temperatur
   - beliebtheit
-  - naehrwerte
   - profil
   - wirkstoffe
   - ernte_stats
   - lebenszyklus
   - standort
-  - zubereitung
   - verwechslung
   - beschreibung
 
 # === FELDER ===
-# Jedes Feld kann optional haben:
-#   - citation: {quelle, url, datum, autor, lizenz, verifiziert}
-#   - advertisement: {sponsor, typ, url, kampagne, kennzeichnung}
-
 felder:
-  # --- Textfelder ---
+  # ═══════════════════════════════════════════════════════════════════════════
+  # BASIS-FELDER
+  # ═══════════════════════════════════════════════════════════════════════════
+  
   wissenschaftlich:
     typ: string
     label: Wissenschaftlicher Name
@@ -47,31 +394,240 @@ felder:
     label: Beschreibung
     suche:
       gewicht: 20
-  
-  zubereitung:
-    typ: string
-    label: Zubereitung
-    suche:
-      gewicht: 30
-  
+
   symptome:
     typ: string
     label: Symptome
     suche:
       gewicht: 30
 
-  # --- Tags/Kategorien ---
-  essbarkeit:
-    typ: tag
+  # ═══════════════════════════════════════════════════════════════════════════
+  # KULINARISCH - SICHERHEIT & EIGNUNG
+  # ═══════════════════════════════════════════════════════════════════════════
+  
+  essbarkeit_status:
+    typ: badge
     label: Essbarkeit
     suche:
-      gewicht: 50
+      gewicht: 80
     farben:
-      essbar: "#60c090"
-      bedingt essbar: "#d0a050"
-      nicht essbar: "#808080"
-      giftig: "#d06080"
-      tödlich: "#a04060"
+      choice: "#ffd700"           # Gold - Delikatesse
+      essbar: "#4ade80"           # Grün - Essbar
+      bedingt_essbar: "#fbbf24"   # Gelb - Bedingt essbar
+      nicht_essbar: "#9ca3af"     # Grau - Nicht essbar
+      giftig: "#f87171"           # Rot - Giftig
+      toedlich: "#dc2626"         # Dunkelrot - Tödlich
+
+  essbarkeit_rating:
+    typ: rating
+    label: Kulinarische Qualität
+    max: 10
+    # 0-3: Gerade so essbar
+    # 4-6: Akzeptabel
+    # 7-8: Gut
+    # 9-10: Exzellent/Delikatesse
+
+  essbarkeit_voraussetzungen:
+    typ: list
+    label: Voraussetzungen
+    suche:
+      gewicht: 40
+    # z.B. ["Muss gekocht werden", "24h einweichen", "Haut entfernen"]
+
+  essbarkeit_warnungen:
+    typ: list
+    label: ⚠️ Warnungen
+    suche:
+      gewicht: 50
+    # Kritische Sicherheitshinweise
+
+  essbarkeit_risikogruppen:
+    typ: list
+    label: Risikogruppen
+    # ["Schwangere", "Immungeschwächte", "Kinder unter 5"]
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # KULINARISCH - SENSORISCHES PROFIL
+  # ═══════════════════════════════════════════════════════════════════════════
+  
+  sensorik:
+    typ: radar
+    label: Sensorisches Profil
+    suche:
+      gewicht: 40
+    # [{axis: "Umami", value: 85}, {axis: "Süße", value: 20}, ...]
+    # Standard-Achsen: Umami, Süße, Säure, Bitterkeit, Salzigkeit, Schärfe
+
+  geschmack_primaer:
+    typ: list
+    label: Primäre Geschmacksnoten
+    suche:
+      gewicht: 50
+    # Die dominanten Geschmacksrichtungen
+    # ["Nussig", "Erdig", "Umami"]
+
+  geschmack_sekundaer:
+    typ: list
+    label: Sekundäre Noten
+    suche:
+      gewicht: 30
+    # Untertöne, Nachgeschmack
+    # ["Leicht bitter im Abgang", "Haselnuss-Anklänge"]
+
+  aroma_profil:
+    typ: list
+    label: Aromastoffe
+    suche:
+      gewicht: 35
+    # Spezifische Duftnoten / Aromaverbindungen
+    # ["1-Octen-3-ol (Pilzaroma)", "Benzaldehyd (Mandel)", "Geosmin (Erde)"]
+
+  textur_roh:
+    typ: list
+    label: Textur (roh)
+    suche:
+      gewicht: 30
+    # ["Fest", "Knackig", "Schwammig im Stiel"]
+
+  textur_gegart:
+    typ: list
+    label: Textur (gegart)
+    suche:
+      gewicht: 30
+    # ["Zart", "Saftig", "Bissfest", "Schmelzend"]
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # KULINARISCH - ZUBEREITUNG
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  zubereitung_methoden:
+    typ: list
+    label: Zubereitungsmethoden
+    suche:
+      gewicht: 60
+    # ["Braten", "Schmoren", "Trocknen", "Roh", "Grillen"]
+
+  zubereitung_optimal:
+    typ: bar
+    label: Optimale Zubereitung
+    # [{label: "Braten", value: 95}, {label: "Trocknen", value: 85}, ...]
+    # Bewertung wie gut jede Methode für diese Spezies ist
+
+  zubereitung_fehler:
+    typ: list
+    label: Häufige Fehler
+    # ["Zu lange garen → gummig", "Bei zu hoher Hitze → bitter"]
+
+  vorbereitung:
+    typ: list
+    label: Vorbereitung
+    # ["Stiel entfernen", "Mit Bürste reinigen", "Nicht waschen"]
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # KULINARISCH - PAIRINGS & KOMPOSITION
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  pairings_klassisch:
+    typ: bar
+    label: Klassische Pairings
+    # [{label: "Butter", value: 10}, {label: "Knoblauch", value: 9}, ...]
+
+  pairings_modern:
+    typ: list
+    label: Moderne Kombinationen
+    # ["Misopaste", "Sojasauce", "Trüffelöl"]
+
+  pairings_getraenke:
+    typ: list
+    label: Getränke-Pairings
+    # ["Burgunder", "Chardonnay (Eiche)", "Sake"]
+
+  synergien:
+    typ: list
+    label: Synergien
+    # ["Mit Parmesan: Umami-Verstärkung", "Mit Zitrone: Aromen freisetzen"]
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # KULINARISCH - LAGERUNG & KONSERVIERUNG
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  lagerung_temperatur:
+    typ: range
+    label: Lagertemperatur
+    einheit: "°C"
+    # { min: 2, max: 7, unit: "°C" }
+
+  lagerung_luftfeuchtigkeit:
+    typ: text
+    label: Luftfeuchtigkeit
+    # "hoch (85-95%)"
+
+  lagerung_behaelter:
+    typ: text
+    label: Lagerbehälter
+    # "Papiertüte oder Küchentuch"
+
+  lagerung_haltbarkeit_tage:
+    typ: number
+    label: Haltbarkeit (Tage)
+    einheit: "Tage"
+
+  lagerung_indikatoren:
+    typ: list
+    label: Frische-Indikatoren
+    # ["Festes Fleisch", "Keine Druckstellen", "Frischer Geruch"]
+
+  konservierung:
+    typ: bar
+    label: Konservierungsmethoden
+    # [{label: "Trocknen", value: 90}, {label: "Einfrieren", value: 75}, ...]
+    # Value = Qualitätserhalt in %
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # KULINARISCH - NÄHRWERT & BIOAKTIVE STOFFE
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  naehrwerte:
+    typ: pie
+    label: Makronährstoffe
+    totalLabel: "pro 100g"
+    # {Protein: 26, Kohlenhydrate: 52, Fett: 8, Ballaststoffe: 14}
+
+  naehrwert_highlights:
+    typ: bar
+    label: Nährwert-Highlights
+    # [{label: "Vitamin D", value: 35, unit: "% DV"}, ...]
+
+  bioaktive_substanzen:
+    typ: bar
+    label: Bioaktive Substanzen
+    maxBalken: 6
+    # [{label: "Ergothionein", value: 4.2, unit: "mg"}, ...]
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # KULINARISCH - KULTURELLER KONTEXT
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  traditionen_namen:
+    typ: list
+    label: Traditionelle Namen
+    # ["Porcini (IT)", "Cèpe (FR)", "Herrenpilz (DE)"]
+
+  traditionen_gerichte:
+    typ: list
+    label: Traditionelle Gerichte
+    # ["Risotto ai Porcini", "Cèpes à la Bordelaise", "Steinpilzrahmsuppe"]
+
+  saisonalitaet:
+    typ: tag
+    label: Saison
+    suche:
+      gewicht: 40
+    # "Juli-Oktober" oder "ganzjährig"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # ALLGEMEINE FELDER (bestehend)
+  # ═══════════════════════════════════════════════════════════════════════════
   
   saison:
     typ: tag
@@ -79,7 +635,6 @@ felder:
     suche:
       gewicht: 40
 
-  # --- Listen ---
   standort:
     typ: list
     label: Standort
@@ -98,20 +653,12 @@ felder:
     suche:
       gewicht: 40
 
-  # --- Bereiche (auto-erkannt: min/max → range) ---
   temperatur:
     label: Temperatur
     einheit: °C
 
-  # --- Progress (auto-erkannt: Zahl 0-100) ---
   beliebtheit:
     label: Beliebtheit
-    einheit: "%"
-    # Beispiel: Beliebtheitsdaten könnten gesponsert sein
-    advertisement:
-      sponsor: "Pilz-Community"
-      typ: sponsored
-      kennzeichnung: false
     einheit: "%"
   
   toxizitaet:
@@ -119,41 +666,1500 @@ felder:
     einheit: "%"
   
   medizinisch:
+    typ: progress
     label: Medizinischer Wert
     einheit: "%"
-  
+
+  traditionelle_medizin:
+    typ: list
+    label: Traditionelle Medizin
+    beschreibung: "Anwendungen in verschiedenen Heilsystemen"
+
+  therapeutische_kategorien:
+    typ: list
+    label: Therapeutische Kategorien
+    beschreibung: "Wirkmechanismen und Wirksamkeit"
+
+  wirkungsprofil:
+    typ: radar
+    label: Wirkungsprofil
+    beschreibung: "Radar-Chart der therapeutischen Wirkungen"
+
+  evidenz_level:
+    typ: badge
+    label: Evidenz-Level
+    farben:
+      in_vitro: "#9966cc"
+      tier: "#6699cc"
+      mensch: "#66cc99"
+      klinisch: "#33cc33"
+
+  klinische_studien:
+    typ: list
+    label: Klinische Studien
+    beschreibung: "Wissenschaftliche Studien und Ergebnisse"
+
+  sicherheit_score:
+    typ: progress
+    label: Sicherheits-Score
+    einheit: "/10"
+    max: 10
+
+  nebenwirkungen:
+    typ: list
+    label: Nebenwirkungen
+    beschreibung: "Mögliche unerwünschte Effekte"
+
+  wechselwirkungen:
+    typ: list
+    label: Wechselwirkungen
+    beschreibung: "Interaktionen mit Medikamenten"
+
+  kontraindikationen:
+    typ: list
+    label: Kontraindikationen
+    beschreibung: "Gegenanzeigen für die Anwendung"
+
+  spezielle_populationen:
+    typ: object
+    label: Spezielle Populationen
+    beschreibung: "Hinweise für Schwangere, Kinder, etc."
+
+  dosierung:
+    typ: list
+    label: Dosierung
+    beschreibung: "Empfohlene Dosierungen nach Indikation"
+
+  zubereitungsformen:
+    typ: list
+    label: Zubereitungsformen
+    beschreibung: "Tee, Tinktur, Extrakt, etc."
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # ANBAU / CULTIVATION
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  cultivation_status:
+    typ: badge
+    label: Kultivierungsstatus
+    beschreibung: "not_cultivated, experimental, commercial"
+    farben:
+      not_cultivated: "#9ca3af"
+      experimental: "#f59e0b"
+      commercial: "#22c55e"
+
+  cultivation_difficulty:
+    typ: object
+    label: Schwierigkeitsgrad
+    beschreibung: "Gesamtschwierigkeit, Faktoren, Erfolgsrate"
+
+  cultivation_parameters:
+    typ: object
+    label: Wachstumsparameter
+    beschreibung: "Temperatur, Luftfeuchtigkeit, CO2, Licht, pH"
+
+  cultivation_substrates:
+    typ: list
+    label: Substrate
+    beschreibung: "Substrattypen mit Zusammensetzung und Performance"
+
+  production_timeline:
+    typ: object
+    label: Produktionszyklus
+    beschreibung: "Phasen, Gesamtdauer, Flushes"
+
+  cultivation_strains:
+    typ: list
+    label: Stämme/Varietäten
+    beschreibung: "Verfügbare Zuchtlinien mit Eigenschaften"
+
+  cultivation_problems:
+    typ: object
+    label: Anbauprobleme
+    beschreibung: "Kontaminanten, Schädlinge, physiologische Störungen"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # SICHERHEIT - TOXIKOLOGIE
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  toxizitaet:
+    typ: badge
+    label: Toxizitätsstufe
+    beschreibung: "Klassifikation der Giftigkeit"
+    suche:
+      gewicht: 90
+    farben:
+      harmlos: "#4ade80"          # Grün
+      leicht: "#fbbf24"           # Gelb
+      mittel: "#f97316"           # Orange
+      schwer: "#ef4444"           # Rot
+      toedlich: "#dc2626"         # Dunkelrot
+
+  toxine:
+    typ: list
+    label: Toxine
+    beschreibung: "Liste der enthaltenen Giftstoffe"
+    suche:
+      gewicht: 80
+
+  giftstoffe_details:
+    typ: object
+    label: Giftstoff-Details
+    beschreibung: "Detaillierte Informationen zu jedem Toxin"
+
+  ld50_werte:
+    typ: object
+    label: LD50-Werte
+    beschreibung: "Letale Dosis 50% für verschiedene Organismen"
+
+  symptome:
+    typ: string
+    label: Symptome
+    suche:
+      gewicht: 70
+
+  symptom_verlauf:
+    typ: list
+    label: Symptomverlauf
+    beschreibung: "Zeitlicher Verlauf der Vergiftungssymptome"
+
+  erste_hilfe:
+    typ: list
+    label: Erste Hilfe
+    beschreibung: "Sofortmaßnahmen bei Vergiftung"
+
+  antidote:
+    typ: object
+    label: Antidote
+    beschreibung: "Verfügbare Gegengifte und Behandlungen"
+
+  verwechslungsrisiko:
+    typ: rating
+    label: Verwechslungsrisiko
+    max: 10
+    beschreibung: "Wie leicht mit essbaren Pilzen verwechselbar (10 = sehr hoch)"
+
+  erkennungsmerkmale_sicher:
+    typ: list
+    label: Sichere Erkennungsmerkmale
+    beschreibung: "Eindeutige Unterscheidungsmerkmale"
+
+  verwechslungspartner:
+    typ: list
+    label: Verwechslungspartner
+    beschreibung: "Liste ähnlicher Pilze mit Unterscheidungshilfen"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # WISSENSCHAFT - TAXONOMIE & FORSCHUNG
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  taxonomie:
+    typ: object
+    label: Taxonomie
+    beschreibung: "Reich, Abteilung, Klasse, Ordnung, Familie, Gattung, Art"
+    suche:
+      gewicht: 60
+
+  synonyme:
+    typ: list
+    label: Synonyme
+    beschreibung: "Frühere und alternative wissenschaftliche Namen"
+    suche:
+      gewicht: 30
+
+  morphologie:
+    typ: object
+    label: Morphologie
+    beschreibung: "Makroskopische Merkmale: Hut, Lamellen, Stiel, Fleisch, Sporen"
+
+  mikroskopie:
+    typ: object
+    label: Mikroskopie
+    beschreibung: "Sporenform, -größe, Basidien, Zystiden, Hyphen"
+
+  genetik:
+    typ: object
+    label: Genetik
+    beschreibung: "DNA-Barcoding, ITS-Sequenz, GenBank Accession"
+
+  oekologie:
+    typ: object
+    label: Ökologie
+    beschreibung: "Habitat, Substrat, Mykorrhiza, Saisonalität"
+
+  biogeografie:
+    typ: object
+    label: Biogeografie
+    beschreibung: "Verbreitungsgebiet, Vorkommen, Fundorte"
+
+  chemische_zusammensetzung:
+    typ: object
+    label: Chemische Zusammensetzung
+    beschreibung: "Detaillierte Analyse von Inhaltsstoffen"
+
+  forschung_referenzen:
+    typ: list
+    label: Wissenschaftliche Referenzen
+    beschreibung: "Publikationen, Studien, DOIs"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # STATISTIK - AGGREGATIONEN & TRENDS
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  fundstatistik:
+    typ: object
+    label: Fund-Statistik
+    beschreibung: "Anzahl Funde, Fundorte, Zeiträume"
+
+  popularitaet_trend:
+    typ: object
+    label: Popularitätstrend
+    beschreibung: "Zeitlicher Verlauf der Beliebtheit/Suchanfragen"
+
+  saisonale_verteilung:
+    typ: object
+    label: Saisonale Verteilung
+    beschreibung: "Funde pro Monat/Saison"
+
+  regionale_haeufigkeit:
+    typ: object
+    label: Regionale Häufigkeit
+    beschreibung: "Vorkommen nach Regionen/Ländern"
+
   forschung:
     label: Forschung
     einheit: "%"
 
-  # --- Rating (auto-erkannt: Zahl 0-10) ---
   bewertung:
     label: Bewertung
 
-  # --- Badge (auto-erkannt: Status-String) ---
   verfuegbarkeit:
     label: Status
 
-  # --- Pie (auto-erkannt: Objekt mit Zahlen) ---
-  naehrwerte:
-    label: Zusammensetzung
-    totalLabel: "Anteil"
-
-  # --- Radar (auto-erkannt: Array mit axis/value) ---
   profil:
     label: Profil
 
-  # --- Bar (auto-erkannt: Array mit label/value) ---
   wirkstoffe:
     label: Wirkstoffe
     maxBalken: 5
 
-  # --- Stats (auto-erkannt: Objekt mit min/max/avg) ---
   ernte_stats:
     label: Ernte-Statistik
     einheit: "g"
 
-  # --- Timeline (auto-erkannt: Array mit date/event) ---
   lebenszyklus:
     label: Lebenszyklus
     maxEvents: 6
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # CHEMIE - PRIMÄRE METABOLITE
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  makronaehrstoffe:
+    typ: object
+    label: Makronährstoffe
+    beschreibung: "Protein, Fett, Kohlenhydrate, Ballaststoffe pro 100g"
+
+  aminosaeuren:
+    typ: list
+    label: Aminosäuren
+    beschreibung: "Essentielle und nicht-essentielle Aminosäuren mit Mengen"
+
+  fettsaeuren:
+    typ: object
+    label: Fettsäuren
+    beschreibung: "Gesättigte, ungesättigte Fettsäuren, Omega-3/6"
+
+  kohlenhydrate:
+    typ: object
+    label: Kohlenhydrate
+    beschreibung: "Glucose, Trehalose, Mannit, Chitin, Beta-Glucane"
+
+  vitamine:
+    typ: object
+    label: Vitamine
+    beschreibung: "Vitamin D, B-Komplex, etc. mit Mengen"
+
+  mineralstoffe:
+    typ: object
+    label: Mineralstoffe
+    beschreibung: "Kalium, Phosphor, Selen, Kupfer, etc."
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # CHEMIE - SEKUNDÄRE METABOLITE
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  sekundaermetabolite:
+    typ: object
+    label: Sekundäre Metabolite
+    beschreibung: "Übersicht bioaktiver Verbindungen"
+
+  verbindungsklassen:
+    typ: list
+    label: Verbindungsklassen
+    beschreibung: "Terpenoide, Alkaloide, Phenole, Polyketide, etc."
+
+  bioaktive_verbindungen:
+    typ: list
+    label: Bioaktive Verbindungen
+    beschreibung: "Einzelne bioaktive Moleküle mit Strukturen"
+
+  biosynthese_pfade:
+    typ: list
+    label: Biosynthese-Pfade
+    beschreibung: "Mevalonsäure-Weg, Shikimisäure-Weg, etc."
+
+  chemotyp:
+    typ: object
+    label: Chemotyp
+    beschreibung: "Chemische Variation innerhalb der Art"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # CHEMIE - VOLATILOM & ENZYME
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  volatilom:
+    typ: object
+    label: Volatilom
+    beschreibung: "Flüchtige Verbindungen und Aromastoffe"
+
+  aromastoffe:
+    typ: list
+    label: Aromastoffe
+    beschreibung: "1-Octen-3-ol, Benzaldehyd, etc."
+
+  geruchsprofil:
+    typ: radar
+    label: Geruchsprofil
+    beschreibung: "Intensität verschiedener Geruchsnoten"
+
+  enzyme:
+    typ: object
+    label: Enzyme
+    beschreibung: "Enzymatisches Profil"
+
+  ligninolytische_enzyme:
+    typ: list
+    label: Ligninolytische Enzyme
+    beschreibung: "Laccase, Peroxidasen für Holzabbau"
+
+  industrielle_enzyme:
+    typ: list
+    label: Industrielle Enzyme
+    beschreibung: "Enzyme mit industrieller Anwendung"
+
+  chemische_reaktionen:
+    typ: object
+    label: Chemische Reaktionen
+    beschreibung: "Farbreaktion mit KOH, FeSO4, etc."
+
+  pigmente:
+    typ: list
+    label: Pigmente
+    beschreibung: "Melanine, Carotine, spezifische Pigmente"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # SENSORIK - OLFAKTORISCH
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  aroma:
+    typ: object
+    label: Aroma
+    beschreibung: "Gesamtes Aromaprofil"
+
+  aroma_intensitaet:
+    typ: number
+    label: Aroma-Intensität
+    beschreibung: "Skala 1-10"
+
+  aroma_rad:
+    typ: radar
+    label: Aroma-Rad
+    beschreibung: "Verteilung der Aromakomponenten"
+
+  aroma_evolution:
+    typ: object
+    label: Aroma-Evolution
+    beschreibung: "Veränderung des Aromas während Lagerung/Kochen"
+
+  geruchsstoffe:
+    typ: list
+    label: Geruchsstoffe
+    beschreibung: "Chemische Verbindungen für den Geruch"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # SENSORIK - GUSTATORISCH
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  geschmack:
+    typ: object
+    label: Geschmack
+    beschreibung: "Gesamtes Geschmacksprofil"
+
+  grundgeschmack:
+    typ: radar
+    label: Grundgeschmack
+    beschreibung: "Süß, Sauer, Salzig, Bitter, Umami"
+
+  geschmacksverbindungen:
+    typ: list
+    label: Geschmacksverbindungen
+    beschreibung: "Glutamat, Nukleotide, etc."
+
+  umami_komponenten:
+    typ: object
+    label: Umami-Komponenten
+    beschreibung: "Freie Aminosäuren, 5'-Nukleotide"
+
+  geschmacks_timeline:
+    typ: object
+    label: Geschmacks-Timeline
+    beschreibung: "Zeitlicher Verlauf beim Kauen"
+
+  nachgeschmack:
+    typ: object
+    label: Nachgeschmack
+    beschreibung: "Anhaltender Geschmack nach dem Schlucken"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # SENSORIK - TAKTIL & VISUELL
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  textur:
+    typ: object
+    label: Textur
+    beschreibung: "Gesamtes Texturprofil"
+
+  mechanische_eigenschaften:
+    typ: object
+    label: Mechanische Eigenschaften
+    beschreibung: "Festigkeit, Elastizität, Bruchverhalten"
+
+  erscheinung:
+    typ: object
+    label: Erscheinung
+    beschreibung: "Visuelles Erscheinungsbild"
+
+  farbstabilitaet:
+    typ: object
+    label: Farbstabilität
+    beschreibung: "Verfärbung bei Schnitt, Kochen, Lagerung"
+
+  oberflaeche:
+    typ: object
+    label: Oberfläche
+    beschreibung: "Trocken, schleimig, samtig, etc."
+
+  klang:
+    typ: object
+    label: Klang
+    beschreibung: "Akustische Eigenschaften"
+
+  bruchgeraeusch:
+    typ: text
+    label: Bruchgeräusch
+    beschreibung: "Knacken, dumpf, faserig"
+
+  schnittgeraeusch:
+    typ: text
+    label: Schnittgeräusch
+    beschreibung: "Quietschen, leise, etc."
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # ÖKOLOGIE - ROLLE & TROPHIK
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  oekologische_rolle:
+    typ: object
+    label: Ökologische Rolle
+    beschreibung: "Funktion im Ökosystem"
+
+  naehrstoffkreislauf:
+    typ: object
+    label: Nährstoffkreislauf
+    beschreibung: "Beitrag zum C-, N-, P-Kreislauf"
+
+  waldgesundheit:
+    typ: object
+    label: Waldgesundheit
+    beschreibung: "Rolle für Waldökosysteme"
+
+  sukzessionsstadium:
+    typ: badge
+    label: Sukzessionsstadium
+    beschreibung: "Pionier, Klimax, etc."
+
+  trophische_strategie:
+    typ: badge
+    label: Trophische Strategie
+    beschreibung: "Saprobiont, Mykorrhiza, Parasit"
+
+  saprobiont_details:
+    typ: object
+    label: Saprobiont-Details
+    beschreibung: "Substratspezifität, Abbautyp"
+
+  mykorrhiza_details:
+    typ: object
+    label: Mykorrhiza-Details
+    beschreibung: "Ektomykorrhiza, Endomykorrhiza, Partner"
+
+  parasit_details:
+    typ: object
+    label: Parasit-Details
+    beschreibung: "Wirte, Pathogenität"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # ÖKOLOGIE - HABITAT
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  habitat:
+    typ: object
+    label: Habitat
+    beschreibung: "Lebensraum und Standortansprüche"
+
+  primaerhabitat:
+    typ: badge
+    label: Primärhabitat
+    beschreibung: "Hauptlebensraum"
+
+  habitatspezifitaet:
+    typ: number
+    label: Habitatspezifität
+    beschreibung: "Grad der Spezialisierung 0-1"
+
+  boden_anforderungen:
+    typ: object
+    label: Boden-Anforderungen
+    beschreibung: "pH, Nährstoffe, Feuchtigkeit"
+
+  hoehenlage:
+    typ: range
+    label: Höhenlage
+    beschreibung: "Verbreitungshöhe in Metern"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # ÖKOLOGIE - INTERAKTIONEN & ÖKOSYSTEM
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  symbionten:
+    typ: list
+    label: Symbionten
+    beschreibung: "Pflanzen- und Tierpartner"
+
+  konkurrenten:
+    typ: list
+    label: Konkurrenten
+    beschreibung: "Konkurrierende Pilzarten"
+
+  konsumenten:
+    typ: list
+    label: Konsumenten
+    beschreibung: "Tiere, die diesen Pilz fressen"
+
+  facilitatoren:
+    typ: list
+    label: Facilitatoren
+    beschreibung: "Arten, die das Wachstum fördern"
+
+  oekosystem_services:
+    typ: object
+    label: Ökosystem-Services
+    beschreibung: "Bereitgestellte Ökosystemleistungen"
+
+  kohlenstoff_dynamik:
+    typ: object
+    label: Kohlenstoff-Dynamik
+    beschreibung: "CO2-Bindung, Abbauraten"
+
+  boden_prozesse:
+    typ: object
+    label: Boden-Prozesse
+    beschreibung: "Aggregatbildung, Humifizierung"
+
+  ausbreitung:
+    typ: object
+    label: Ausbreitung
+    beschreibung: "Sporenverbreitung, Vektoren"
+
+  reproduktion:
+    typ: object
+    label: Reproduktion
+    beschreibung: "Sexuell, asexuell, Sporenproduktion"
+
+  metapopulation:
+    typ: object
+    label: Metapopulation
+    beschreibung: "Populationsstruktur und -dynamik"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # TEMPORAL - LEBENSZYKLUS
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  entwicklungsstadien:
+    typ: list
+    label: Entwicklungsstadien
+    beschreibung: "Spore → Myzel → Primordia → Fruchtkörper"
+
+  generationszeit:
+    typ: number
+    label: Generationszeit
+    beschreibung: "Tage bis zur Sporenreife"
+
+  stadien_dauer:
+    typ: object
+    label: Stadien-Dauer
+    beschreibung: "Dauer jedes Entwicklungsstadiums"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # TEMPORAL - PHÄNOLOGIE
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  phenologie:
+    typ: object
+    label: Phänologie
+    beschreibung: "Saisonales Auftreten"
+
+  monatliche_aktivitaet:
+    typ: bar
+    label: Monatliche Aktivität
+    beschreibung: "Fundwahrscheinlichkeit pro Monat"
+
+  peak_perioden:
+    typ: list
+    label: Peak-Perioden
+    beschreibung: "Hauptfruchtzeiten"
+
+  geografische_variation:
+    typ: object
+    label: Geografische Variation
+    beschreibung: "Saisonale Unterschiede nach Region"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # TEMPORAL - CIRCADIAN & GESCHICHTE
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  circadian:
+    typ: object
+    label: Circadian
+    beschreibung: "Tagesrhythmus von Aktivitäten"
+
+  sporenfreisetzung_zeit:
+    typ: text
+    label: Sporenfreisetzung-Zeit
+    beschreibung: "Uhrzeit maximaler Sporenfreisetzung"
+
+  wachstumsrate_zeit:
+    typ: object
+    label: Wachstumsrate-Zeit
+    beschreibung: "Tagesgang des Wachstums"
+
+  metabolischer_rhythmus:
+    typ: object
+    label: Metabolischer Rhythmus
+    beschreibung: "Tagesabhängige Stoffwechselaktivität"
+
+  lichtreaktion:
+    typ: object
+    label: Lichtreaktion
+    beschreibung: "Phototropismus, Lichtbedarf"
+
+  entdeckung:
+    typ: object
+    label: Entdeckung
+    beschreibung: "Erstbeschreibung und Entdecker"
+
+  erstbeschreibung:
+    typ: object
+    label: Erstbeschreibung
+    beschreibung: "Jahr, Autor, Publikation"
+
+  meilensteine:
+    typ: timeline
+    label: Meilensteine
+    beschreibung: "Wichtige Ereignisse in der Geschichte"
+
+  kultivierungs_timeline:
+    typ: timeline
+    label: Kultivierungs-Timeline
+    beschreibung: "Geschichte der Zucht"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # TEMPORAL - PROJEKTIONEN
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  klima_projektionen:
+    typ: object
+    label: Klima-Projektionen
+    beschreibung: "Erwartete Veränderungen durch Klimawandel"
+
+  naturschutz_prognose:
+    typ: object
+    label: Naturschutz-Prognose
+    beschreibung: "Zukünftiger Gefährdungsstatus"
+
+  zukunfts_szenarien:
+    typ: list
+    label: Zukunfts-Szenarien
+    beschreibung: "Mögliche Entwicklungsszenarien"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # GEOGRAFIE - VERBREITUNG
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  native_verbreitung:
+    typ: object
+    label: Native Verbreitung
+    beschreibung: "Ursprüngliches Verbreitungsgebiet"
+
+  kontinente:
+    typ: list
+    label: Kontinente
+    beschreibung: "Vorkommen nach Kontinenten"
+
+  laender:
+    typ: list
+    label: Länder
+    beschreibung: "Vorkommen nach Ländern"
+
+  biogeografische_regionen:
+    typ: list
+    label: Biogeografische Regionen
+    beschreibung: "Paläarktis, Nearktis, etc."
+
+  oekoregionen:
+    typ: list
+    label: Ökoregionen
+    beschreibung: "WWF-Ökoregionen"
+
+  eingefuehrte_verbreitung:
+    typ: object
+    label: Eingeführte Verbreitung
+    beschreibung: "Gebiete mit eingeführten Populationen"
+
+  invasivitaet:
+    typ: badge
+    label: Invasivität
+    beschreibung: "Invasionspotential"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # GEOGRAFIE - FUNDE & KLIMA
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  fundorte:
+    typ: list
+    label: Fundorte
+    beschreibung: "Dokumentierte Fundorte"
+
+  datenquellen:
+    typ: list
+    label: Datenquellen
+    beschreibung: "GBIF, iNaturalist, etc."
+
+  raeumliche_statistik:
+    typ: object
+    label: Räumliche Statistik
+    beschreibung: "Clusteranalyse, Dichte"
+
+  klimahuelle:
+    typ: object
+    label: Klimahülle
+    beschreibung: "Klimatische Toleranzgrenzen"
+
+  temperatur_bereich:
+    typ: range
+    label: Temperatur-Bereich
+    beschreibung: "Min/Max Temperatur"
+
+  niederschlag_bereich:
+    typ: range
+    label: Niederschlag-Bereich
+    beschreibung: "Niederschlagstoleranzen"
+
+  koeppen_zonen:
+    typ: list
+    label: Köppen-Zonen
+    beschreibung: "Klimazonen nach Köppen"
+
+  bioclim_variablen:
+    typ: object
+    label: BioClim-Variablen
+    beschreibung: "19 bioklimatische Variablen"
+
+  verbreitungskarte:
+    typ: image
+    label: Verbreitungskarte
+    beschreibung: "Karte der Verbreitung"
+
+  heatmap_funde:
+    typ: image
+    label: Heatmap Funde
+    beschreibung: "Dichtedarstellung der Funde"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # WIRTSCHAFT - MARKT & PRODUKTION
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  marktstatus:
+    typ: badge
+    label: Marktstatus
+    beschreibung: "Wild, Kultiviert, Beides"
+
+  handelsart:
+    typ: badge
+    label: Handelsart
+    beschreibung: "Frisch, Getrocknet, Verarbeitet"
+
+  produktion:
+    typ: object
+    label: Produktion
+    beschreibung: "Produktionsdaten"
+
+  globale_produktion:
+    typ: number
+    label: Globale Produktion
+    beschreibung: "Tonnen pro Jahr"
+
+  hauptproduzenten:
+    typ: list
+    label: Hauptproduzenten
+    beschreibung: "Länder mit größter Produktion"
+
+  produktionstrend:
+    typ: object
+    label: Produktionstrend
+    beschreibung: "Entwicklung der Produktion"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # WIRTSCHAFT - PREISE & HANDEL
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  preise:
+    typ: object
+    label: Preise
+    beschreibung: "Preisinformationen"
+
+  einzelhandel:
+    typ: number
+    label: Einzelhandel
+    beschreibung: "€/kg Endverbraucherpreis"
+
+  grosshandel:
+    typ: number
+    label: Großhandel
+    beschreibung: "€/kg Großhandelspreis"
+
+  preisvolatilitaet:
+    typ: object
+    label: Preisvolatilität
+    beschreibung: "Preisschwankungen"
+
+  saisonale_preise:
+    typ: object
+    label: Saisonale Preise
+    beschreibung: "Preise nach Saison"
+
+  handel:
+    typ: object
+    label: Handel
+    beschreibung: "Handelsdaten"
+
+  exporte:
+    typ: object
+    label: Exporte
+    beschreibung: "Exportmengen und -werte"
+
+  importe:
+    typ: object
+    label: Importe
+    beschreibung: "Importmengen und -werte"
+
+  handelsregulierungen:
+    typ: list
+    label: Handelsregulierungen
+    beschreibung: "Rechtliche Bestimmungen"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # WIRTSCHAFT - WERTSCHÖPFUNG
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  wertschoepfungskette:
+    typ: object
+    label: Wertschöpfungskette
+    beschreibung: "Stufen der Wertschöpfung"
+
+  stufen:
+    typ: list
+    label: Stufen
+    beschreibung: "Produktion → Verarbeitung → Handel"
+
+  endprodukte:
+    typ: list
+    label: Endprodukte
+    beschreibung: "Verkaufsfertige Produkte"
+
+  wirtschaftliche_bedeutung:
+    typ: object
+    label: Wirtschaftliche Bedeutung
+    beschreibung: "Ökonomischer Wert"
+
+  direkter_wert:
+    typ: number
+    label: Direkter Wert
+    beschreibung: "Marktwert in €"
+
+  indirekter_wert:
+    typ: number
+    label: Indirekter Wert
+    beschreibung: "Ökosystemleistungen in €"
+
+  beschaeftigung:
+    typ: object
+    label: Beschäftigung
+    beschreibung: "Arbeitsplätze in der Branche"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # NATURSCHUTZ - STATUS
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  schutzstatus:
+    typ: object
+    label: Schutzstatus
+    beschreibung: "Gesamter Schutzstatus"
+
+  iucn_status:
+    typ: badge
+    label: IUCN-Status
+    beschreibung: "IUCN Red List Kategorie"
+    farben:
+      LC: "#4ade80"    # Least Concern - Grün
+      NT: "#fbbf24"    # Near Threatened - Gelb
+      VU: "#f97316"    # Vulnerable - Orange
+      EN: "#ef4444"    # Endangered - Rot
+      CR: "#dc2626"    # Critically Endangered - Dunkelrot
+      EW: "#9333ea"    # Extinct in Wild - Lila
+      EX: "#000000"    # Extinct - Schwarz
+      DD: "#9ca3af"    # Data Deficient - Grau
+      NE: "#d1d5db"    # Not Evaluated - Hellgrau
+
+  iucn_kategorie:
+    typ: text
+    label: IUCN-Kategorie
+    beschreibung: "Vollständiger Kategoriename"
+
+  iucn_kriterien:
+    typ: list
+    label: IUCN-Kriterien
+    beschreibung: "Angewandte Kriterien (A-E)"
+
+  iucn_trend:
+    typ: badge
+    label: IUCN-Trend
+    beschreibung: "Populationstrend"
+
+  nationale_status:
+    typ: list
+    label: Nationale Status
+    beschreibung: "Schutzstatus nach Land"
+
+  cites_status:
+    typ: badge
+    label: CITES-Status
+    beschreibung: "Anhang I, II, III oder kein"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # NATURSCHUTZ - BEDROHUNGEN & MASSNAHMEN
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  bedrohungen:
+    typ: list
+    label: Bedrohungen
+    beschreibung: "Aktuelle Gefährdungsursachen"
+
+  bedrohungs_kategorie:
+    typ: list
+    label: Bedrohungs-Kategorie
+    beschreibung: "IUCN Threat Categories"
+
+  bedrohungs_schwere:
+    typ: number
+    label: Bedrohungs-Schwere
+    beschreibung: "Gesamtschwere der Bedrohungen"
+
+  bedrohungs_umfang:
+    typ: object
+    label: Bedrohungs-Umfang
+    beschreibung: "Räumlicher Umfang"
+
+  schutzmassnahmen:
+    typ: object
+    label: Schutzmaßnahmen
+    beschreibung: "Aktuelle und empfohlene Maßnahmen"
+
+  in_situ_schutz:
+    typ: list
+    label: In-situ Schutz
+    beschreibung: "Schutzgebiete, Habitatmanagement"
+
+  ex_situ_schutz:
+    typ: list
+    label: Ex-situ Schutz
+    beschreibung: "Genbanken, Kulturen"
+
+  forschungsbedarf:
+    typ: list
+    label: Forschungsbedarf
+    beschreibung: "Wissenslücken"
+
+  empfehlungen:
+    typ: list
+    label: Empfehlungen
+    beschreibung: "Schutzempfehlungen"
+
+  population_trend:
+    typ: badge
+    label: Population-Trend
+    beschreibung: "Steigend, Stabil, Sinkend"
+
+  population_groesse:
+    typ: number
+    label: Population-Größe
+    beschreibung: "Geschätzte Populationsgröße"
+
+  fragmentierung:
+    typ: object
+    label: Fragmentierung
+    beschreibung: "Grad der Habitatfragmentierung"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # KULTUR - ETHNOMYKOLOGIE
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  ethnomykologie:
+    typ: object
+    label: Ethnomykologie
+    beschreibung: "Kulturelle Nutzung und Bedeutung"
+
+  indigene_namen:
+    typ: list
+    label: Indigene Namen
+    beschreibung: "Traditionelle Bezeichnungen"
+
+  kulturelle_bedeutung:
+    typ: object
+    label: Kulturelle Bedeutung
+    beschreibung: "Symbolik und kultureller Wert"
+
+  wissenssystem:
+    typ: object
+    label: Wissenssystem
+    beschreibung: "Traditionelles ökologisches Wissen"
+
+  spirituelle_bedeutung:
+    typ: object
+    label: Spirituelle Bedeutung
+    beschreibung: "Religiöse und spirituelle Rolle"
+
+  rituale:
+    typ: list
+    label: Rituale
+    beschreibung: "Zeremonielle Verwendung"
+
+  tabus:
+    typ: list
+    label: Tabus
+    beschreibung: "Kulturelle Verbote"
+
+  mythologie:
+    typ: list
+    label: Mythologie
+    beschreibung: "Mythen und Legenden"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # KULTUR - GESCHICHTE & KUNST
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  historische_referenzen:
+    typ: list
+    label: Historische Referenzen
+    beschreibung: "Erwähnungen in historischen Quellen"
+
+  zeitperiode:
+    typ: range
+    label: Zeitperiode
+    beschreibung: "Zeitraum der Nutzung"
+
+  artefakte:
+    typ: list
+    label: Artefakte
+    beschreibung: "Archäologische Funde"
+
+  texte:
+    typ: list
+    label: Texte
+    beschreibung: "Historische Schriften"
+
+  kunst_referenzen:
+    typ: list
+    label: Kunst-Referenzen
+    beschreibung: "Darstellungen in der Kunst"
+
+  literatur:
+    typ: list
+    label: Literatur
+    beschreibung: "Erwähnungen in Literatur"
+
+  film:
+    typ: list
+    label: Film
+    beschreibung: "Filmische Darstellungen"
+
+  musik:
+    typ: list
+    label: Musik
+    beschreibung: "Musikalische Referenzen"
+
+  popkultur:
+    typ: object
+    label: Popkultur
+    beschreibung: "Moderne kulturelle Präsenz"
+
+  bewegungen:
+    typ: list
+    label: Bewegungen
+    beschreibung: "Kulturelle Bewegungen"
+
+  tourismus:
+    typ: object
+    label: Tourismus
+    beschreibung: "Pilztourismus"
+
+  festivals:
+    typ: list
+    label: Festivals
+    beschreibung: "Pilz-Festivals und Events"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # FORSCHUNG - AKTIVITÄT
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  forschungs_aktivitaet:
+    typ: object
+    label: Forschungs-Aktivität
+    beschreibung: "Wissenschaftliche Forschung"
+
+  publikationen_anzahl:
+    typ: number
+    label: Publikationen-Anzahl
+    beschreibung: "Anzahl wissenschaftlicher Paper"
+
+  publikationen_trend:
+    typ: object
+    label: Publikationen-Trend
+    beschreibung: "Entwicklung der Forschungsaktivität"
+
+  forschungsgruppen:
+    typ: list
+    label: Forschungsgruppen
+    beschreibung: "Aktive Forschungsteams"
+
+  aktuelle_themen:
+    typ: list
+    label: Aktuelle Themen
+    beschreibung: "Laufende Forschungsschwerpunkte"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # FORSCHUNG - PATENTE & BIOTECH
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  patente:
+    typ: list
+    label: Patente
+    beschreibung: "Patentierte Anwendungen"
+
+  patent_nummer:
+    typ: list
+    label: Patent-Nummer
+    beschreibung: "Patentnummern"
+
+  erfinder:
+    typ: list
+    label: Erfinder
+    beschreibung: "Patentinhaber"
+
+  anwendungen:
+    typ: list
+    label: Anwendungen
+    beschreibung: "Patentierte Anwendungsgebiete"
+
+  biotechnologie:
+    typ: object
+    label: Biotechnologie
+    beschreibung: "Biotechnologische Nutzung"
+
+  anwendungen_biotech:
+    typ: list
+    label: Biotech-Anwendungen
+    beschreibung: "Spezifische Biotech-Nutzungen"
+
+  gentechnik:
+    typ: object
+    label: Gentechnik
+    beschreibung: "Genetische Modifikationen"
+
+  synthetische_biologie:
+    typ: object
+    label: Synthetische Biologie
+    beschreibung: "Synbio-Anwendungen"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # FORSCHUNG - ZUKUNFT
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  zukunftspotential:
+    typ: object
+    label: Zukunftspotential
+    beschreibung: "Zukünftige Nutzungsmöglichkeiten"
+
+  emerging_applications:
+    typ: list
+    label: Emerging Applications
+    beschreibung: "Aufkommende Anwendungsfelder"
+
+  forschungsluecken:
+    typ: list
+    label: Forschungslücken
+    beschreibung: "Offene Forschungsfragen"
+
+  investitionsmoeglichkeiten:
+    typ: list
+    label: Investitionsmöglichkeiten
+    beschreibung: "Wirtschaftliche Potentiale"
+
+  schluessel_publikationen:
+    typ: list
+    label: Schlüssel-Publikationen
+    beschreibung: "Wichtigste wissenschaftliche Arbeiten"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # INTERAKTIONEN - MULTI-SPECIES
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  multispecies_interaktionen:
+    typ: object
+    label: Multispecies-Interaktionen
+    beschreibung: "Artenübergreifende Beziehungen"
+
+  netzwerk_position:
+    typ: object
+    label: Netzwerk-Position
+    beschreibung: "Position im Interaktionsnetzwerk"
+
+  interaktions_stabilitaet:
+    typ: number
+    label: Interaktions-Stabilität
+    beschreibung: "Stabilität der Beziehungen"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # INTERAKTIONEN - CHEMISCHE ÖKOLOGIE
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  chemische_oekologie:
+    typ: object
+    label: Chemische Ökologie
+    beschreibung: "Chemische Interaktionen"
+
+  allelopathie:
+    typ: object
+    label: Allelopathie
+    beschreibung: "Chemische Hemmung anderer Organismen"
+
+  chemische_kommunikation:
+    typ: object
+    label: Chemische Kommunikation
+    beschreibung: "Signalstoffe"
+
+  abwehrstoffe:
+    typ: list
+    label: Abwehrstoffe
+    beschreibung: "Defensive Sekundärmetabolite"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # INTERAKTIONEN - MIKROBIOM
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  mikrobiom:
+    typ: object
+    label: Mikrobiom
+    beschreibung: "Assoziierte Mikroorganismen"
+
+  assoziierte_bakterien:
+    typ: list
+    label: Assoziierte Bakterien
+    beschreibung: "Bakterielle Partner"
+
+  assoziierte_pilze:
+    typ: list
+    label: Assoziierte Pilze
+    beschreibung: "Ko-vorkommende Pilze"
+
+  community_struktur:
+    typ: object
+    label: Community-Struktur
+    beschreibung: "Mikrobielle Gemeinschaft"
+
+  wirt_interaktionen:
+    typ: object
+    label: Wirt-Interaktionen
+    beschreibung: "Beziehungen zu Wirtsorganismen"
+
+  parasiten:
+    typ: list
+    label: Parasiten
+    beschreibung: "Parasitische Beziehungen"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # INTERAKTIONEN - NETZWERK
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  mykorrhiza_netzwerk:
+    typ: object
+    label: Mykorrhiza-Netzwerk
+    beschreibung: "Wood Wide Web Verbindungen"
+
+  naehrstoff_transfer:
+    typ: object
+    label: Nährstoff-Transfer
+    beschreibung: "Bewegung von C, N, P"
+
+  signal_transfer:
+    typ: object
+    label: Signal-Transfer
+    beschreibung: "Kommunikation über das Netzwerk"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # VISUAL - GALERIE
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  bildergalerie:
+    typ: list
+    label: Bildergalerie
+    beschreibung: "Sammlung von Bildern"
+
+  primaerbild:
+    typ: image
+    label: Primärbild
+    beschreibung: "Hauptbild"
+
+  bilder_typen:
+    typ: list
+    label: Bilder-Typen
+    beschreibung: "Makro, Mikro, Habitat, etc."
+
+  entwicklungsstadien_bilder:
+    typ: list
+    label: Entwicklungsstadien-Bilder
+    beschreibung: "Bilder verschiedener Stadien"
+
+  mikroskopie_bilder:
+    typ: list
+    label: Mikroskopie-Bilder
+    beschreibung: "Mikroskopische Aufnahmen"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # VISUAL - 360° & 3D
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  view_360:
+    typ: object
+    label: 360°-Ansicht
+    beschreibung: "Rundum-Ansicht"
+
+  frames:
+    typ: list
+    label: Frames
+    beschreibung: "Einzelbilder der 360°-Ansicht"
+
+  rotation:
+    typ: object
+    label: Rotation
+    beschreibung: "Rotationsparameter"
+
+  modell_3d:
+    typ: object
+    label: 3D-Modell
+    beschreibung: "Dreidimensionales Modell"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # VISUAL - FARBE & SIGNATUR
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  farbdaten:
+    typ: object
+    label: Farbdaten
+    beschreibung: "Detaillierte Farbinformationen"
+
+  munsell_farben:
+    typ: list
+    label: Munsell-Farben
+    beschreibung: "Farbcodes nach Munsell"
+
+  rgb_palette:
+    typ: list
+    label: RGB-Palette
+    beschreibung: "Dominante Farben in RGB"
+
+  chemische_reaktionen_farbe:
+    typ: object
+    label: Chemische Reaktionen Farbe
+    beschreibung: "Farbänderungen bei chemischen Tests"
+
+  visual_signature:
+    typ: object
+    label: Visual Signature
+    beschreibung: "Visueller Fingerabdruck"
+
+  form_vektor:
+    typ: list
+    label: Form-Vektor
+    beschreibung: "Numerische Formrepräsentation"
+
+  textur_vektor:
+    typ: list
+    label: Textur-Vektor
+    beschreibung: "Numerische Texturrepräsentation"
+
+  farb_vektor:
+    typ: list
+    label: Farb-Vektor
+    beschreibung: "Numerische Farbrepräsentation"
+
+  muster_vektor:
+    typ: list
+    label: Muster-Vektor
+    beschreibung: "Numerische Musterrepräsentation"
+
+  einzigartigkeit:
+    typ: number
+    label: Einzigartigkeit
+    beschreibung: "Wie einzigartig ist das Erscheinungsbild"
+
+  verwechslungs_arten:
+    typ: list
+    label: Verwechslungs-Arten
+    beschreibung: "Visuell ähnliche Arten"
+
+  erkennungsmerkmale:
+    typ: list
+    label: Erkennungsmerkmale
+    beschreibung: "Sichere Bestimmungsmerkmale"
+
+  unterscheidungsmerkmale:
+    typ: list
+    label: Unterscheidungsmerkmale
+    beschreibung: "Unterschiede zu ähnlichen Arten"
+
+  bestimmungsschema:
+    typ: object
+    label: Bestimmungsschema
+    beschreibung: "Dichotomer Bestimmungsschlüssel"

@@ -14,14 +14,39 @@ farben:
 
 # Welche Felder gehören zu dieser Perspektive?
 felder:
+  # Basis
   - bild
   - name
+  - wissenschaftlich
+  - beschreibung
+  
+  # Klassisch/Wildsammlung
   - standort
   - saison
+  - saisonalitaet
   - temperatur
   - verfuegbarkeit
   - lebenszyklus
   - ernte_stats
+  
+  # Cultivation - Status & Schwierigkeit
+  - cultivation_status           # String: not_cultivated, experimental, commercial
+  - cultivation_difficulty       # Object: {overall, factors[], success_rate}
+  
+  # Cultivation - Wachstumsparameter
+  - cultivation_parameters       # Object: {temperature_c, humidity_percent, co2_ppm, light, pH}
+  
+  # Cultivation - Substrate
+  - cultivation_substrates       # Array: {type, category, composition[], performance, preparation, cost}
+  
+  # Cultivation - Produktionszyklus
+  - production_timeline          # Object: {phases[], total_cycle_days, flushes}
+  
+  # Cultivation - Stämme
+  - cultivation_strains          # Array: {name, code, origin, characteristics, availability}
+  
+  # Cultivation - Probleme
+  - cultivation_problems         # Object: {contaminants[], pests[], disorders[]}
 
 # Keywords für automatische Perspektiven-Erkennung bei Suche
 keywords:
@@ -42,3 +67,15 @@ keywords:
   - boden
   - feucht
   - schattig
+  - anbau
+  - zucht
+  - kultivierung
+  - myzel
+  - spawn
+  - fruiting
+  - flush
+  - ertrag
+  - biologische effizienz
+  - kontamination
+  - sterilisation
+  - pasteurisierung

@@ -22,9 +22,25 @@ export function object(wert, config = {}, morphen) {
     
     const dd = document.createElement('dd');
     if (morphen) {
-      dd.appendChild(morphen(wert[key], key));
+      const morphed = morphen(wert[key], key);
+      if (morphed && morphed instanceof Node) {
+        dd.appendChild(morphed);
+      } else {
+        // Fallback: Objekte als JSON, primitives als String
+        const val = wert[key];
+        if (typeof val === 'object' && val !== null) {
+          dd.textContent = JSON.stringify(val);
+        } else {
+          dd.textContent = String(val ?? '');
+        }
+      }
     } else {
-      dd.textContent = String(wert[key]);
+      const val = wert[key];
+      if (typeof val === 'object' && val !== null) {
+        dd.textContent = JSON.stringify(val);
+      } else {
+        dd.textContent = String(val);
+      }
     }
     el.appendChild(dd);
   }

@@ -14,10 +14,11 @@ DATEN (JSON) → detectType() → MORPH → DOM
 
 | Ordner | Zweck |
 |--------|-------|
-| `config/` | YAML-Konfiguration, Schema, Perspektiven |
+| `config/` | YAML-Konfiguration, Schema, 17 Perspektiven |
 | `core/` | Config-Loader, Pipeline, Web Component |
 | `features/` | Isolierte Feature-Module (Header, Grid, Vergleich, Einzelansicht, Infinite Scroll) |
 | `morphs/` | Reine Transformations-Funktionen |
+| `themes/` | Theme-spezifische Compare-Morphs (pilze/) |
 | `styles/` | CSS mit Design-Tokens + Black Glasmorphism |
 | `observer/` | Debug, Rendering, Session Tracking |
 | `util/` | DOM-Helpers, Fetch, Semantic-Utils, Router, Session |
@@ -27,24 +28,29 @@ DATEN (JSON) → detectType() → MORPH → DOM
 - **Hintergrund**: Woodfloor-Textur + 88-92% schwarzes Overlay
 - **Glass-Cards**: `backdrop-filter: blur(16px)`, dezente weiße Borders
 - **Pilz-Farben**: 12 OVER-THE-TOP Neonfarben
-- **Perspektiven**: Jede Perspektive hat eigene Farbe mit Multi-Color Glow
+- **Perspektiven**: 17 Perspektiven mit eigenen Farben + Multi-Color Glow
 
-### Design-Tokens (base.css)
+### 17 Perspektiven-System
 
-**Animation-Tokens:**
-| Variable | Wert |
-|----------|------|
-| `--transition-fast` | 0.15s |
-| `--transition-base` | 0.25s |
-| `--transition-slow` | 0.4s |
-
-**Responsive Breakpoints:**
-| Variable | Wert |
-|----------|------|
-| `--bp-sm` | 480px |
-| `--bp-md` | 768px |
-| `--bp-lg` | 1024px |
-| `--bp-xl` | 1280px |
+| Perspektive | Symbol | Fokus |
+|-------------|--------|-------|
+| Kulinarisch | 🍳 | Geschmack, Zubereitung, Essbarkeit |
+| Medizin | 💊 | Wirkstoffe, Therapie, Dosierung |
+| Anbau | 🌱 | Kultivierung, Substrate, Ertrag |
+| Sicherheit | ⚠️ | Toxine, Verwechslung, Erste Hilfe |
+| Wissenschaft | 🔬 | Taxonomie, Genetik, Mikroskopie |
+| Statistik | 📊 | Fundstatistik, Trends, Verbreitung |
+| Chemie | 🧪 | Metabolite, Enzyme, Volatilome |
+| Sensorik | 👃 | Aroma, Geschmack, Textur |
+| Ökologie | 🌿 | Habitat, Symbiosen, Interaktionen |
+| Temporal | ⏰ | Lebenszyklus, Saisonalität |
+| Geografie | 🗺️ | Verbreitung, Fundorte, Klima |
+| Wirtschaft | 💰 | Markt, Preise, Handel |
+| Naturschutz | 🛡️ | IUCN-Status, Bedrohungen |
+| Kultur | 📜 | Mythologie, Geschichte, Kunst |
+| Forschung | 📚 | Publikationen, Patente |
+| Interaktionen | 🔗 | Wirte, Mikrobiom, Symbiosen |
+| Visual | 🎨 | Bilder, Farben, 360° |
 
 ### Features
 
@@ -53,7 +59,7 @@ DATEN (JSON) → detectType() → MORPH → DOM
 | `header` | Suche, Perspektiven, Ansicht-Switch, Auswahl-Badges |
 | `grid` | Karten-Layout, Felder anklickbar |
 | `ansichten` | View-Controller (Karten/Vergleich) |
-| `vergleich` | Perspektiven-Vergleich mit Compare-Morphs |
+| `vergleich` | Perspektiven-Vergleich mit Theme-Compare-Morphs |
 | `einzelansicht` | Pilz-Detail-Page `/:slug` |
 | `infinitescroll` | Automatisches Nachladen beim Scrollen |
 
@@ -61,7 +67,7 @@ DATEN (JSON) → detectType() → MORPH → DOM
 
 State wird automatisch in URL gespeichert:
 - `?suche=steinpilz` - Suchbegriff
-- `?perspektiven=naehrwert,saison` - Aktive Perspektiven
+- `?perspektiven=chemie,sensorik` - Aktive Perspektiven
 - `?ansicht=vergleich` - Aktive Ansicht
 
 ### Datengetriebene Typ-Erkennung

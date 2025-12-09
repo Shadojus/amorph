@@ -16,6 +16,18 @@ import { compareAnbau } from './anbau.js';
 import { compareWissenschaft } from './wissenschaft.js';
 import { compareMedizin } from './medizin.js';
 import { compareStatistik } from './statistik.js';
+// Neue Perspektiven
+import { compareChemie } from './chemie.js';
+import { compareSensorik } from './sensorik.js';
+import { compareOekologie } from './oekologie.js';
+import { compareTemporal } from './temporal.js';
+import { compareGeografie } from './geografie.js';
+import { compareWirtschaft } from './wirtschaft.js';
+import { compareNaturschutz } from './naturschutz.js';
+import { compareKultur } from './kultur.js';
+import { compareForschung } from './forschung.js';
+import { compareInteraktionen } from './interaktionen.js';
+import { compareVisual } from './visual.js';
 
 /**
  * Registry der Perspektiven-Compare-Morphs
@@ -26,7 +38,19 @@ export const perspektivenMorphs = {
   anbau: compareAnbau,
   wissenschaft: compareWissenschaft,
   medizin: compareMedizin,
-  statistik: compareStatistik
+  statistik: compareStatistik,
+  // Neue Perspektiven
+  chemie: compareChemie,
+  sensorik: compareSensorik,
+  oekologie: compareOekologie,
+  temporal: compareTemporal,
+  geografie: compareGeografie,
+  wirtschaft: compareWirtschaft,
+  naturschutz: compareNaturschutz,
+  kultur: compareKultur,
+  forschung: compareForschung,
+  interaktionen: compareInteraktionen,
+  visual: compareVisual
 };
 
 /**

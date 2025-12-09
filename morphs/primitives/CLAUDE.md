@@ -49,15 +49,6 @@ const morph = primitives[erkannterTyp];
 const element = morph(wert, config);
 ```
 
-## Config-Parameter
-
-Jeder Morph akzeptiert ein `config` Objekt. Gemeinsame Parameter:
-
-- `einheit` - Einheit für Zahlen (z.B. "°C", "%")
-- `max` - Maximum für Skalierung
-- `farben` - Farb-Mapping für Werte
-- `label` - Beschriftung
-
 ## Erweiterung
 
 Neue Morphs hinzufügen:

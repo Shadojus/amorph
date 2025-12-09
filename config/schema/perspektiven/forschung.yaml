@@ -1,0 +1,59 @@
+# Perspektive: Forschung - Innovations-Cyan
+# Helles Cyan wie neue Entdeckungen
+
+id: forschung
+name: Forschung
+symbol: 🔎
+
+# Innovations-Cyan Töne - forschend (0.65)
+farben:
+  - "rgba(80, 200, 220, 0.65)"    # Innovation-Cyan
+  - "rgba(65, 185, 205, 0.65)"    # Entdeckung-Türkis
+  - "rgba(50, 170, 190, 0.65)"    # Forschung-Blau
+  - "rgba(35, 155, 175, 0.65)"    # Wissenschaft-Teal
+
+# Welche Felder gehören zu dieser Perspektive?
+felder:
+  - bild
+  - name
+  - wissenschaftlich
+  # Forschungsaktivität
+  - forschungs_aktivitaet
+  - publikationen_anzahl
+  - publikationen_trend
+  - forschungsgruppen
+  - aktuelle_themen
+  # Patente
+  - patente
+  - patent_nummer
+  - erfinder
+  - anwendungen
+  # Biotechnologie
+  - biotechnologie
+  - anwendungen_biotech
+  - gentechnik
+  - synthetische_biologie
+  # Zukunftspotential
+  - zukunftspotential
+  - emerging_applications
+  - forschungsluecken
+  - investitionsmoeglichkeiten
+  # Referenzen
+  - forschung_referenzen
+  - schluessel_publikationen
+  - klinische_studien
+
+# Keywords für automatische Perspektiven-Erkennung bei Suche
+keywords:
+  - forschung
+  - studie
+  - publikation
+  - patent
+  - biotechnologie
+  - innovation
+  - entdeckung
+  - wissenschaft
+  - labor
+  - experiment
+  - clinical trial
+  - gentech

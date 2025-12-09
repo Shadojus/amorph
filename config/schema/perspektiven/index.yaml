@@ -3,12 +3,25 @@
 # Neue Perspektive hinzufügen = Datei erstellen + hier eintragen
 
 aktiv:
+  # Basis-Perspektiven
   - kulinarisch
   - sicherheit
   - anbau
   - wissenschaft
   - medizin
   - statistik
+  # Erweiterte Perspektiven
+  - chemie
+  - sensorik
+  - oekologie
+  - temporal
+  - geografie
+  - wirtschaft
+  - naturschutz
+  - kultur
+  - forschung
+  - interaktionen
+  - visual
 
 # Perspektive deaktivieren: Aus der Liste entfernen (Datei kann bleiben)
 # Neue Perspektive: 

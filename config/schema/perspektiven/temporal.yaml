@@ -1,0 +1,61 @@
+# Perspektive: Temporal - Zeit-Indigo
+# Tiefes Indigo wie Zeitfluss
+
+id: temporal
+name: Temporal
+symbol: ⏳
+
+# Zeit-Indigo Töne - temporal (0.65)
+farben:
+  - "rgba(120, 120, 200, 0.65)"   # Zeit-Indigo
+  - "rgba(105, 105, 185, 0.65)"   # Zyklus-Violett
+  - "rgba(90, 90, 170, 0.65)"     # History-Blau
+  - "rgba(75, 75, 155, 0.65)"     # Epoche-Indigo
+
+# Welche Felder gehören zu dieser Perspektive?
+felder:
+  - bild
+  - name
+  # Lebenszyklus
+  - lebenszyklus
+  - entwicklungsstadien
+  - generationszeit
+  - stadien_dauer
+  # Phenologie
+  - phenologie
+  - saisonalitaet
+  - monatliche_aktivitaet
+  - peak_perioden
+  - geografische_variation
+  # Circadian
+  - circadian
+  - sporenfreisetzung_zeit
+  - wachstumsrate_zeit
+  - metabolischer_rhythmus
+  - lichtreaktion
+  # Geschichte
+  - entdeckung
+  - erstbeschreibung
+  - meilensteine
+  - kultivierungs_timeline
+  # Projektionen
+  - klima_projektionen
+  - naturschutz_prognose
+  - zukunfts_szenarien
+
+# Keywords für automatische Perspektiven-Erkennung bei Suche
+keywords:
+  - temporal
+  - zeit
+  - zyklus
+  - lebenszyklus
+  - saison
+  - phänologie
+  - circadian
+  - geschichte
+  - entwicklung
+  - wachstum
+  - stadien
+  - timeline
+  - zukunft
+  - projektion

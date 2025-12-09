@@ -1,0 +1,230 @@
+{
+  "id": "5",
+  "slug": "knollenblaetterpilz",
+  "name": "Grüner Knollenblätterpilz",
+  "wissenschaftlich": "Amanita phalloides",
+  "essbarkeit": "tödlich",
+  "essbarkeit_status": "toedlich",
+  "beschreibung": "Der Grüne Knollenblätterpilz ist der gefährlichste Giftpilz Europas. Bereits kleine Mengen können tödlich sein. Die Vergiftung zeigt sich erst nach Stunden.",
+  "temperatur": { "min": 10, "max": 22 },
+  "standort": ["Laubwald", "unter Eichen", "unter Buchen"],
+  "verwechslung": ["Champignon", "Täubling"],
+  "bild": "images/fungi/placeholder.svg",
+  "symptome": "Leberversagen, Nierenversagen, Tod",
+  "saison": "Juli bis Oktober",
+  "saisonalitaet": "Juli-Oktober",
+  "bewertung": 0.5,
+  "toxizitaet": 100,
+  "naehrwerte": {
+    "Amatoxine": 60,
+    "Phallotoxine": 30,
+    "Andere Toxine": 10
+  },
+  "profil": [
+    { "axis": "Toxizität", "value": 100 },
+    { "axis": "Erkennbarkeit", "value": 45 },
+    { "axis": "Verwechslungsgefahr", "value": 85 },
+    { "axis": "Verbreitung", "value": 60 },
+    { "axis": "Latenzzeit", "value": 90 }
+  ],
+  "wirkstoffe": [
+    { "label": "α-Amanitin", "value": 8, "unit": "mg" },
+    { "label": "β-Amanitin", "value": 5, "unit": "mg" },
+    { "label": "Phalloidin", "value": 10, "unit": "mg" }
+  ],
+  "lebenszyklus": [
+    { "date": "Frühjahr", "event": "Myzel-Entwicklung" },
+    { "date": "Juli", "event": "Erste Fruchtkörper" },
+    { "date": "Aug-Sept", "event": "Hauptzeit", "active": true },
+    { "date": "Oktober", "event": "Abklingen" }
+  ],
+  "verfuegbarkeit": "gefährlich",
+  "essbarkeit_warnungen": [
+    "TÖDLICH GIFTIG - Niemals verzehren!",
+    "Bereits 50g können einen Erwachsenen töten",
+    "Symptome erst nach 6-24 Stunden - dann oft zu spät",
+    "Hohe Verwechslungsgefahr mit Champignons"
+  ],
+  "essbarkeit_risikogruppen": ["ALLE - Tödlich für jeden Menschen"],
+  
+  "toxine": ["Amatoxine", "Phallotoxine", "Virotoxine"],
+  
+  "giftstoffe_details": [
+    {
+      "name": "α-Amanitin",
+      "wirkung": "Hemmt RNA-Polymerase II → Stoppt Proteinsynthese → Zellzerfall",
+      "dosis": "0.1 mg/kg Körpergewicht",
+      "organ": "Leber, Niere"
+    },
+    {
+      "name": "β-Amanitin",
+      "wirkung": "Ähnlich wie α-Amanitin, verstärkt die Wirkung",
+      "dosis": "0.1 mg/kg Körpergewicht",
+      "organ": "Leber"
+    },
+    {
+      "name": "Phalloidin",
+      "wirkung": "Stabilisiert Aktin → Zellmembranschäden",
+      "dosis": "2 mg/kg Körpergewicht",
+      "organ": "Leber, Darm"
+    }
+  ],
+  
+  "ld50_werte": {
+    "mensch_oral": "0.1 mg/kg (α-Amanitin)",
+    "maus_ip": "0.3 mg/kg",
+    "bemerkung": "50g Pilz enthält ca. 5-8mg Amatoxine"
+  },
+  
+  "verwechslungsrisiko": 9,
+  
+  "erkennungsmerkmale_sicher": [
+    "Knolle mit häutiger Scheide (Volva) an der Basis",
+    "Weißer, hängender Ring am Stiel",
+    "Lamellen IMMER weiß, nie rosa",
+    "Geruch süßlich-widerlich (bei älteren Exemplaren)",
+    "Grünliche Hutfarbe (kann aber auch weißlich sein)"
+  ],
+  
+  "verwechslungspartner": [
+    {
+      "name": "Wiesenchampignon",
+      "gefahr": "essbar",
+      "unterscheidung": "Champignons haben ROSA bis BRAUNE Lamellen, KEINE Knolle mit Scheide"
+    },
+    {
+      "name": "Schafchampignon",
+      "gefahr": "essbar",
+      "unterscheidung": "Lamellen verfärben sich rosa→braun, Anisgeruch, keine Volva"
+    },
+    {
+      "name": "Grüner Täubling",
+      "gefahr": "essbar",
+      "unterscheidung": "Täublinge haben brüchige Lamellen, keinen Ring, keine Knolle"
+    },
+    {
+      "name": "Weißer Knollenblätterpilz",
+      "gefahr": "toedlich",
+      "unterscheidung": "Ebenfalls tödlich! Beide unbedingt meiden."
+    }
+  ],
+  
+  "symptom_verlauf": [
+    {
+      "zeit": "0-6 Stunden",
+      "phase": "Latenzphase",
+      "symptome": ["Keine Symptome", "Normale Verdauung"],
+      "schwere": "harmlos"
+    },
+    {
+      "zeit": "6-24 Stunden",
+      "phase": "Gastrointestinale Phase",
+      "symptome": ["Heftiges Erbrechen", "Wässriger Durchfall", "Bauchkrämpfe", "Dehydration"],
+      "schwere": "schwer"
+    },
+    {
+      "zeit": "24-48 Stunden",
+      "phase": "Trügerische Besserung",
+      "symptome": ["Scheinbare Erholung", "Symptome klingen ab"],
+      "schwere": "mittel"
+    },
+    {
+      "zeit": "3-6 Tage",
+      "phase": "Hepatorenale Phase",
+      "symptome": ["Leberversagen", "Nierenversagen", "Gelbsucht", "Blutgerinnungsstörungen", "Koma"],
+      "schwere": "toedlich"
+    }
+  ],
+  
+  "erste_hilfe": [
+    "SOFORT Notruf 112 - Pilzvergiftung melden!",
+    "Giftnotruf kontaktieren (z.B. +49 30 19240)",
+    "Erbrochenes und Pilzreste für Identifikation aufbewahren",
+    "Kein Erbrechen auslösen (bereits zu spät wenn Symptome da)",
+    "Aktivkohle nur auf ärztliche Anweisung",
+    "Patient warm halten, beruhigen",
+    "Flüssigkeitszufuhr (Wasser, Elektrolyte)"
+  ],
+  
+  "antidote": {
+    "vorhanden": true,
+    "name": "Silibinin (Legalon® SIL)",
+    "behandlung": "Hochdosis-Silibinin i.v., ggf. Lebertransplantation",
+    "zeitfenster": "Innerhalb 24-48 Stunden nach Verzehr für beste Prognose",
+    "zusaetzlich": ["Aktivkohle (früh)", "Magenspülung (früh)", "Hämodialyse", "MARS-Therapie"]
+  },
+
+  "kultur_namen_historisch": [
+    { "name": "Todeskappen-Pilz", "region": "Europa", "seit": "Mittelalter" },
+    { "name": "Death Cap", "region": "England", "seit": "19. Jh." },
+    { "name": "Amanite phalloïde", "region": "Frankreich", "seit": "18. Jh." }
+  ],
+  "kultur_mythologie": [
+    { "kultur": "Römisches Reich", "rolle": "Mordwaffe - Claudius (54 n.Chr.) und viele andere", "quelle": "Tacitus, Sueton" },
+    { "kultur": "Mittelalter", "rolle": "Giftmordwerkzeug bei Adelsfehden", "quelle": "diverse Chroniken" },
+    { "kultur": "Moderne", "rolle": "Hauptursache für tödliche Pilzvergiftungen weltweit", "quelle": "Toxikologie-Statistiken" }
+  ],
+  "kultur_kunst": [
+    { "werk": "Pilzbücher der Renaissance", "artist": "diverse Botaniker", "jahr": 1500, "medium": "Illustration" },
+    { "werk": "Gift und Gegengift", "artist": "Paracelsus", "jahr": 1538, "medium": "Traktat" }
+  ],
+  "kultur_ereignisse": [
+    { "jahr": 54, "ereignis": "Kaiser Claudius wird wahrscheinlich mit Amanita vergiftet", "bedeutung": "hoch" },
+    { "jahr": 1534, "ereignis": "Papst Clemens VII. stirbt möglicherweise an Knollenblätterpilz", "bedeutung": "mittel" },
+    { "jahr": 2006, "ereignis": "Massenintoxikation in Polen - 7 Tote", "bedeutung": "hoch" }
+  ],
+  "kultur_symbolik": {
+    "bedeutung": ["Tod", "Täuschung", "Verborgene Gefahr"],
+    "assoziationen": ["Unauffälligkeit als Waffe", "Schein und Sein"],
+    "warnzeichen": true
+  },
+
+  "naturschutz_status": "Nicht gefährdet",
+  "naturschutz_iucn": "LC",
+  "naturschutz_trend": "stabil",
+  "naturschutz_populationstrend": [
+    { "jahr": 2000, "index": 100 },
+    { "jahr": 2005, "index": 105 },
+    { "jahr": 2010, "index": 102 },
+    { "jahr": 2015, "index": 108 },
+    { "jahr": 2020, "index": 110 }
+  ],
+  "naturschutz_schutzstatus": {
+    "geschuetzt": false,
+    "sammeln_erlaubt": true,
+    "grund": "Giftig, kein Interesse an Schutz oder Sammlung"
+  },
+  "naturschutz_oekologische_rolle": "Ektomykorrhiza mit Laubbäumen (Eiche, Buche) - wichtig für Waldökosystem",
+  "naturschutz_bedrohungen": [
+    { "faktor": "Klimawandel", "auswirkung": "möglicherweise Ausbreitung", "schwere": "neutral" },
+    { "faktor": "Waldrodung", "auswirkung": "Habitatverlust", "schwere": "gering" }
+  ],
+
+  "forschung_publikationen": [
+    {
+      "titel": "Amatoxin Poisoning: Clinical Manifestations and Treatment",
+      "journal": "Clinical Toxicology",
+      "jahr": 2019,
+      "citations": 245,
+      "doi": "10.1080/xxxxx"
+    },
+    {
+      "titel": "Molecular mechanisms of α-amanitin toxicity",
+      "journal": "Toxicon",
+      "jahr": 2020,
+      "citations": 189,
+      "doi": "10.1016/xxxxx"
+    }
+  ],
+  "forschung_schwerpunkte": [
+    "Antidot-Entwicklung (Silibinin-Analoga)",
+    "Schnelltests für Notfallmedizin",
+    "Genetik der Toxin-Biosynthese",
+    "Epidemiologie von Vergiftungen"
+  ],
+  "forschung_potential": {
+    "medizin": "Hochaktive Wirkstoffe für gezielte Krebstherapie",
+    "biotechnologie": "Amatoxine als biochemische Werkzeuge",
+    "niveau": 75
+  }
+}

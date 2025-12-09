@@ -1,0 +1,67 @@
+# Perspektive: Chemie - Molekular-Violett
+# Synthetisches Violett wie Laboranalysen und Chromatographie
+
+id: chemie
+name: Chemie
+symbol: ⚗️
+
+# Molekular-Violett Töne - wissenschaftlich (0.65)
+farben:
+  - "rgba(180, 140, 255, 0.65)"   # Chromatographie-Violett
+  - "rgba(160, 120, 240, 0.65)"   # Reagenz-Lila
+  - "rgba(145, 105, 225, 0.65)"   # Labor-Magenta
+  - "rgba(130, 90, 210, 0.65)"    # Synthese-Violett
+
+# Welche Felder gehören zu dieser Perspektive?
+felder:
+  - bild
+  - name
+  - wissenschaftlich
+  # Primary Metabolites
+  - naehrwerte
+  - makronaehrstoffe
+  - aminosaeuren
+  - fettsaeuren
+  - kohlenhydrate
+  - vitamine
+  - mineralstoffe
+  # Secondary Metabolites
+  - sekundaermetabolite
+  - verbindungsklassen
+  - bioaktive_verbindungen
+  - biosynthese_pfade
+  - chemotyp
+  # Volatile
+  - volatilom
+  - aromastoffe
+  - geruchsprofil
+  # Enzymes
+  - enzyme
+  - ligninolytische_enzyme
+  - industrielle_enzyme
+  # Analysis
+  - chemische_reaktionen
+  - pigmente
+  - wirkstoffe
+
+# Keywords für automatische Perspektiven-Erkennung bei Suche
+keywords:
+  - chemie
+  - molekül
+  - verbindung
+  - metabolit
+  - aminosäure
+  - vitamin
+  - mineral
+  - enzym
+  - pigment
+  - volatil
+  - aroma
+  - synthese
+  - biosynthese
+  - terpenoid
+  - alkaloid
+  - phenol
+  - polyketid
+  - glucan
+  - chitin

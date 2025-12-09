@@ -19,5 +19,7 @@
   ],
   "author": "",
   "license": "MIT",
-  "devDependencies": {}
+  "dependencies": {
+    "js-yaml": "^4.1.1"
+  }
 }

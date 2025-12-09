@@ -1429,3 +1429,479 @@
   border-radius: 50%;
   box-shadow: 0 0 5px currentColor;
 }
+
+/* === GRUPPEN HEADER === */
+.compare-group-header {
+  grid-column: 1 / -1;
+  padding: var(--space-md) var(--space-lg);
+  margin: var(--space-lg) 0 var(--space-sm);
+  background: linear-gradient(90deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+  border-left: 3px solid var(--p-farbe, rgba(255, 200, 120, 0.5));
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.compare-group-header:first-child {
+  margin-top: 0;
+}
+
+.group-title {
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 0.02em;
+}
+
+/* === MATRIX LAYOUT für Object-Arrays === */
+.compare-object-array {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.compare-matrix {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.matrix-header {
+  display: table-row;
+}
+
+.matrix-header .matrix-cell {
+  display: table-cell;
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(0, 0, 0, 0.25);
+  font-size: var(--font-sm);
+  font-weight: 500;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.matrix-row {
+  display: table-row;
+}
+
+.matrix-row:nth-child(even) {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.matrix-cell {
+  display: table-cell;
+  padding: var(--space-xs) var(--space-sm);
+  vertical-align: middle;
+}
+
+.matrix-cell.matrix-label {
+  font-size: var(--font-sm);
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+  padding-right: var(--space-md);
+  min-width: 100px;
+  max-width: 150px;
+}
+
+.matrix-cell.matrix-value {
+  min-width: 80px;
+}
+
+.matrix-cell.matrix-value > div {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.matrix-bar {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+  overflow: hidden;
+  min-width: 40px;
+}
+
+.matrix-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.matrix-val {
+  font-size: var(--font-xs);
+  color: rgba(255, 255, 255, 0.6);
+  min-width: 20px;
+  text-align: right;
+}
+
+/* === NUTRIENT TABLE === */
+.compare-nutrients {
+  width: 100%;
+}
+
+.nutrient-table {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.nutrient-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-xs) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.nutrient-row:last-child {
+  border-bottom: none;
+}
+
+.nutrient-label {
+  flex: 0 0 100px;
+  font-size: var(--font-sm);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.nutrient-values {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.nutrient-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-xs);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.nutrient-chip b {
+  font-weight: 600;
+}
+
+.nutrient-chip.empty {
+  opacity: 0.3;
+}
+
+/* === MEDIZIN-SPEZIFISCHE STYLES === */
+
+/* Traditionelle Medizin */
+.compare-tradition-systeme {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.tradition-item {
+  padding: var(--space-sm);
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-sm);
+}
+
+.tradition-item-header {
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tradition-system {
+  margin: var(--space-xs) 0;
+  padding: var(--space-xs);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-xs);
+}
+
+.tradition-system-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-xs);
+}
+
+.system-name {
+  font-size: var(--font-sm);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.system-score {
+  font-size: var(--font-xs);
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
+}
+
+.tradition-uses {
+  font-size: var(--font-xs);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.tradition-use {
+  padding: 2px 0;
+}
+
+.tradition-use b {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Klinische Studien */
+.compare-studies {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.study-item {
+  padding: var(--space-sm);
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-sm);
+}
+
+.study-item-header {
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.study-entry {
+  margin: var(--space-xs) 0;
+  padding: var(--space-xs);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-xs);
+}
+
+.study-title {
+  font-size: var(--font-sm);
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: var(--space-xs);
+}
+
+.study-meta {
+  display: flex;
+  gap: var(--space-sm);
+  font-size: var(--font-xs);
+  margin-bottom: var(--space-xs);
+}
+
+.study-year {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.study-design {
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
+}
+
+.study-quality {
+  color: rgba(255, 200, 120, 0.7);
+}
+
+.study-result {
+  font-size: var(--font-xs);
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.4;
+}
+
+/* Nebenwirkungen */
+.compare-side-effects {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.side-effect-item {
+  padding: var(--space-sm);
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-sm);
+}
+
+.side-effect-header {
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+}
+
+.side-effect-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-xs);
+  font-size: var(--font-xs);
+  border-left: 2px solid transparent;
+  margin: 2px 0;
+}
+
+.side-effect-entry.severity-mild {
+  border-color: rgba(100, 200, 100, 0.5);
+  background: rgba(100, 200, 100, 0.05);
+}
+
+.side-effect-entry.severity-moderat,
+.side-effect-entry.severity-moderate {
+  border-color: rgba(255, 200, 100, 0.5);
+  background: rgba(255, 200, 100, 0.05);
+}
+
+.side-effect-entry.severity-schwer,
+.side-effect-entry.severity-severe {
+  border-color: rgba(255, 100, 100, 0.5);
+  background: rgba(255, 100, 100, 0.05);
+}
+
+.effect-name {
+  flex: 1;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.effect-freq {
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 var(--space-sm);
+}
+
+.effect-severity {
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: capitalize;
+}
+
+/* Wechselwirkungen */
+.compare-interactions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.interaction-item {
+  padding: var(--space-sm);
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-sm);
+}
+
+.interaction-header {
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+}
+
+.interaction-entry {
+  padding: var(--space-xs);
+  margin: 2px 0;
+  border-left: 2px solid rgba(255, 150, 100, 0.5);
+  background: rgba(255, 150, 100, 0.03);
+}
+
+.interaction-drug {
+  font-size: var(--font-sm);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.interaction-type {
+  font-size: var(--font-xs);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.interaction-management {
+  font-size: var(--font-xs);
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+}
+
+/* Spezielle Populationen */
+.compare-populations {
+  width: 100%;
+}
+
+.population-table {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.population-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-xs) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.population-label {
+  flex: 0 0 120px;
+  font-size: var(--font-sm);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.population-values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  flex: 1;
+}
+
+.population-chip {
+  font-size: var(--font-xs);
+  padding: 2px 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xs);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Dosierung */
+.compare-dosing {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.dosing-item {
+  padding: var(--space-sm);
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-sm);
+}
+
+.dosing-header {
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dosing-entry {
+  padding: var(--space-xs);
+  margin: var(--space-xs) 0;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-xs);
+}
+
+.dosing-indication {
+  font-size: var(--font-sm);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: var(--space-xs);
+}
+
+.dosing-details {
+  display: flex;
+  gap: var(--space-md);
+  font-size: var(--font-xs);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.dosing-prep {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.dosing-amount {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.dosing-route {
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
+}

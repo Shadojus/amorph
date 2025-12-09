@@ -1,0 +1,15 @@
+{
+  "beschreibung": "Index aller Pilz-Datendateien",
+  "dateien": [
+    "steinpilz.json",
+    "pfifferling.json",
+    "fliegenpilz.json",
+    "champignon.json",
+    "knollenblaetterpilz.json",
+    "birkenporling.json",
+    "shiitake.json",
+    "cordyceps.json",
+    "beauveria.json",
+    "hallimasch.json"
+  ]
+}

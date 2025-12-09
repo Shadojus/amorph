@@ -4,23 +4,156 @@
     "slug": "steinpilz",
     "name": "Steinpilz",
     "wissenschaftlich": "Boletus edulis",
-    "essbarkeit": "essbar",
-    "beschreibung": "Der Steinpilz ist einer der beliebtesten Speisepilze. Er hat einen kräftigen, nussigen Geschmack und festes Fleisch. Besonders geschätzt in der gehobenen Küche.",
-    "temperatur": { "min": 10, "max": 25 },
-    "standort": ["Nadelwald", "Mischwald", "unter Fichten", "unter Eichen"],
-    "verwechslung": ["Gallenröhrling", "Satansröhrling"],
     "bild": "images/fungi/porcini-boletus-edulis.jpg",
-    "geschmack": ["Nussig", "Würzig"],
-    "zubereitung": "braten, trocknen, einlegen",
-    "saison": "Juli bis Oktober",
-    "bewertung": 4.8,
-    "beliebtheit": 92,
+    "beschreibung": "Der Steinpilz ist einer der beliebtesten Speisepilze weltweit. Sein kräftiges, nussiges Aroma und die feste Textur machen ihn zur ersten Wahl in der gehobenen Gastronomie.",
+
+    "_comment": "═══════════════ KULINARISCH - SICHERHEIT ═══════════════",
+    
+    "essbarkeit_status": "choice",
+    "essbarkeit_rating": 9.5,
+    "essbarkeit_voraussetzungen": [],
+    "essbarkeit_warnungen": [
+      "Verwechslung mit Gallenröhrling möglich (bitter, aber ungiftig)",
+      "Ältere Exemplare auf Madenbefall prüfen"
+    ],
+    "essbarkeit_risikogruppen": [],
+
+    "_comment2": "═══════════════ KULINARISCH - SENSORIK ═══════════════",
+    
+    "sensorik": [
+      { "axis": "Umami", "value": 88 },
+      { "axis": "Süße", "value": 15 },
+      { "axis": "Bitterkeit", "value": 5 },
+      { "axis": "Schärfe", "value": 0 },
+      { "axis": "Intensität", "value": 85 }
+    ],
+    
+    "geschmack_primaer": ["Nussig", "Erdig", "Umami-reich"],
+    "geschmack_sekundaer": ["Leichte Haselnuss-Anklänge", "Mild süßlich im Abgang"],
+    "aroma_profil": ["1-Octen-3-ol (Pilzaroma)", "Benzaldehyd (Mandel)", "Geosmin (Erde)"],
+    "textur_roh": ["Fest", "Knackig", "Saftig"],
+    "textur_gegart": ["Bissfest", "Fleischig", "Samtig"],
+
+    "_comment3": "═══════════════ KULINARISCH - ZUBEREITUNG ═══════════════",
+    
+    "zubereitung_methoden": ["Braten", "Trocknen", "Roh", "Einlegen", "Grillen"],
+    
+    "zubereitung_optimal": [
+      { "label": "Braten", "value": 95 },
+      { "label": "Trocknen", "value": 90 },
+      { "label": "Roh (Carpaccio)", "value": 85 },
+      { "label": "Einlegen", "value": 75 },
+      { "label": "Grillen", "value": 80 }
+    ],
+    
+    "zubereitung_fehler": [
+      "Zu lange garen → wird gummig",
+      "Zu viele gleichzeitig in der Pfanne → dampfen statt braten",
+      "Waschen statt bürsten → saugt Wasser auf"
+    ],
+    
+    "vorbereitung": [
+      "Mit Pilzbürste reinigen, NICHT waschen",
+      "Stielende abschneiden",
+      "In 5mm Scheiben schneiden für optimales Braten"
+    ],
+
+    "_comment4": "═══════════════ KULINARISCH - PAIRINGS ═══════════════",
+    
+    "pairings_klassisch": [
+      { "label": "Butter", "value": 10 },
+      { "label": "Parmesan", "value": 10 },
+      { "label": "Knoblauch", "value": 9 },
+      { "label": "Thymian", "value": 8 },
+      { "label": "Petersilie", "value": 9 },
+      { "label": "Risotto-Reis", "value": 10 }
+    ],
+    
+    "pairings_modern": ["Misopaste", "Trüffelöl", "Aged Balsamico", "Sojasauce"],
+    
+    "pairings_getraenke": [
+      "Barolo (tanninreich, erdig)",
+      "Burgundy Pinot Noir",
+      "Chardonnay mit Holz",
+      "Craft Beer: Belgian Dubbel"
+    ],
+    
+    "synergien": [
+      "Mit Parmesan: Umami × Umami = Geschmacksexplosion",
+      "Mit Sojasauce: Glutamat-Verstärkung",
+      "Mit Zitrone: Säure hebt Aromen hervor"
+    ],
+
+    "_comment5": "═══════════════ KULINARISCH - LAGERUNG ═══════════════",
+    
+    "lagerung_temperatur": { "min": 2, "max": 7, "unit": "°C" },
+    "lagerung_luftfeuchtigkeit": "hoch (85-95%)",
+    "lagerung_behaelter": "Papiertüte oder Küchentuch",
+    "lagerung_haltbarkeit_tage": 5,
+    "lagerung_indikatoren": [
+      "Festes, nicht eindrückbares Fleisch",
+      "Keine Druckstellen oder braune Flecken",
+      "Frischer, erdiger Geruch",
+      "Röhren weiß bis gelblich (nicht grün)"
+    ],
+    
+    "konservierung": [
+      { "label": "Trocknen", "value": 90 },
+      { "label": "Einfrieren (blanchiert)", "value": 75 },
+      { "label": "In Öl einlegen", "value": 70 },
+      { "label": "Pilzpulver", "value": 95 }
+    ],
+
+    "_comment6": "═══════════════ KULINARISCH - NÄHRWERT ═══════════════",
+    
     "naehrwerte": {
       "Protein": 26,
       "Kohlenhydrate": 52,
       "Fett": 8,
       "Ballaststoffe": 14
     },
+    
+    "naehrwert_highlights": [
+      { "label": "Protein", "value": 52, "unit": "% DV" },
+      { "label": "Vitamin D", "value": 14, "unit": "% DV" },
+      { "label": "Selen", "value": 45, "unit": "% DV" },
+      { "label": "Kupfer", "value": 35, "unit": "% DV" }
+    ],
+    
+    "bioaktive_substanzen": [
+      { "label": "Ergothionein", "value": 4.2, "unit": "mg" },
+      { "label": "Beta-Glucan", "value": 12.5, "unit": "mg" },
+      { "label": "Lovastatin", "value": 0.8, "unit": "mg" }
+    ],
+
+    "_comment7": "═══════════════ KULINARISCH - KULTUR ═══════════════",
+    
+    "traditionen_namen": [
+      "Porcini (Italienisch - 'Schweinchen')",
+      "Cèpe de Bordeaux (Französisch)",
+      "Herrenpilz (Deutsch, historisch)",
+      "Penny Bun (Englisch)"
+    ],
+    
+    "traditionen_gerichte": [
+      "Risotto ai Porcini (Italien)",
+      "Cèpes à la Bordelaise (Frankreich)",
+      "Steinpilzrahmsuppe (Deutschland/Österreich)",
+      "Porcini Trifolati (Italien)"
+    ],
+    
+    "saisonalitaet": "Juli-Oktober",
+
+    "_comment8": "═══════════════ ALLGEMEIN ═══════════════",
+    
+    "bewertung": 4.8,
+    "verfuegbarkeit": "saisonal verfügbar",
+    "temperatur": { "min": 10, "max": 25 },
+    "beliebtheit": 92,
+    "standort": ["Nadelwald", "Mischwald", "unter Fichten", "unter Eichen"],
+    "verwechslung": ["Gallenröhrling (bitter)", "Satansröhrling (giftig, rot)"],
+    "saison": "Juli bis Oktober",
+    
     "profil": [
       { "axis": "Geschmack", "value": 95 },
       { "axis": "Textur", "value": 85 },
@@ -28,47 +161,185 @@
       { "axis": "Umami", "value": 80 },
       { "axis": "Seltenheit", "value": 60 }
     ],
+    
     "wirkstoffe": [
       { "label": "Ergothionein", "value": 4.2, "unit": "mg" },
       { "label": "Beta-Glucan", "value": 12.5, "unit": "mg" },
       { "label": "Vitamin D", "value": 2.1, "unit": "µg" }
     ],
+    
     "ernte_stats": {
       "min": 80,
       "max": 350,
       "avg": 180,
       "count": 156
     },
+    
     "lebenszyklus": [
       { "date": "Frühjahr", "event": "Myzel-Aktivierung" },
       { "date": "Sommer", "event": "Fruchtkörper-Bildung", "active": true },
       { "date": "Herbst", "event": "Haupternte" },
       { "date": "Winter", "event": "Ruhephase" }
-    ],
-    "verfuegbarkeit": "verfügbar"
+    ]
   },
   {
     "id": "2",
     "slug": "pfifferling",
     "name": "Pfifferling",
     "wissenschaftlich": "Cantharellus cibarius",
-    "essbarkeit": "essbar",
-    "beschreibung": "Der Pfifferling ist ein dottergelber Speisepilz mit fruchtigem Aroma. Er wächst in Symbiose mit verschiedenen Bäumen und ist nicht kultivierbar.",
-    "temperatur": { "min": 15, "max": 28 },
-    "standort": ["Laubwald", "Nadelwald", "moosige Böden"],
-    "verwechslung": ["Falscher Pfifferling"],
     "bild": "images/fungi/chanterelle-cantharellus-cibarius.jpg",
-    "geschmack": ["Pfeffrig", "Fruchtig"],
-    "zubereitung": "braten, schmoren",
-    "saison": "Juni bis November",
-    "bewertung": 4.5,
-    "beliebtheit": 88,
+    "beschreibung": "Der Pfifferling ist ein dottergelber Speisepilz mit einzigartigem fruchtig-pfeffrigem Aroma. Er wächst in Symbiose mit Bäumen und ist nicht kultivierbar - ein echtes Wildsammel-Highlight.",
+
+    "_comment": "═══════════════ KULINARISCH - SICHERHEIT ═══════════════",
+    
+    "essbarkeit_status": "choice",
+    "essbarkeit_rating": 9.0,
+    "essbarkeit_voraussetzungen": [
+      "Gründliches Putzen (Sand in Lamellen)",
+      "Erhitzen empfohlen (bessere Verdaulichkeit)"
+    ],
+    "essbarkeit_warnungen": [
+      "Verwechslung mit Falschem Pfifferling (Hygrophoropsis aurantiaca)",
+      "Nicht roh in großen Mengen (Chitin schwer verdaulich)"
+    ],
+    "essbarkeit_risikogruppen": ["Bei empfindlichem Magen: kleine Mengen testen"],
+
+    "_comment2": "═══════════════ KULINARISCH - SENSORIK ═══════════════",
+    
+    "sensorik": [
+      { "axis": "Umami", "value": 65 },
+      { "axis": "Süße", "value": 25 },
+      { "axis": "Bitterkeit", "value": 8 },
+      { "axis": "Schärfe", "value": 15 },
+      { "axis": "Intensität", "value": 80 }
+    ],
+    
+    "geschmack_primaer": ["Pfeffrig", "Fruchtig", "Leicht aprikosig"],
+    "geschmack_sekundaer": ["Blumige Untertöne", "Zarte Nuss-Anklänge"],
+    "aroma_profil": ["1-Octen-3-ol (Pilzaroma)", "Cis-3-Hexenol (Frisch geschnitten)", "Aprikosen-Ester"],
+    "textur_roh": ["Fest", "Leicht gummig", "Faserig"],
+    "textur_gegart": ["Zart", "Seidig", "Behält Biss"],
+
+    "_comment3": "═══════════════ KULINARISCH - ZUBEREITUNG ═══════════════",
+    
+    "zubereitung_methoden": ["Braten", "Schmoren", "Einlegen", "In Sahnesaucen"],
+    
+    "zubereitung_optimal": [
+      { "label": "Braten (scharf)", "value": 90 },
+      { "label": "In Sahnesauce", "value": 95 },
+      { "label": "Schmoren", "value": 85 },
+      { "label": "Einlegen", "value": 70 }
+    ],
+    
+    "zubereitung_fehler": [
+      "Zu niedrige Hitze → gibt Wasser ab, wird wässrig",
+      "Zu lange garen → wird zäh",
+      "Mit Wasser waschen → saugt sich voll",
+      "Zu früh salzen → zieht Wasser"
+    ],
+    
+    "vorbereitung": [
+      "Mit Küchenpinsel Sand aus Lamellen bürsten",
+      "Stielenden abschneiden",
+      "Große Exemplare halbieren oder vierteln",
+      "NIEMALS wässern!"
+    ],
+
+    "_comment4": "═══════════════ KULINARISCH - PAIRINGS ═══════════════",
+    
+    "pairings_klassisch": [
+      { "label": "Sahne", "value": 10 },
+      { "label": "Schalotten", "value": 9 },
+      { "label": "Eierspeisen", "value": 10 },
+      { "label": "Petersilie", "value": 8 },
+      { "label": "Weißwein", "value": 9 },
+      { "label": "Wild", "value": 9 }
+    ],
+    
+    "pairings_modern": ["Safran", "Limette", "Thai-Basilikum", "Miso"],
+    
+    "pairings_getraenke": [
+      "Weißburgunder (fruchtig, Säure)",
+      "Riesling Spätlese (Restsüße matcht Frucht)",
+      "Champagner (Eleganz)",
+      "Witbier (Zitrus-Noten)"
+    ],
+    
+    "synergien": [
+      "Mit Sahne: Fett transportiert Aromen optimal",
+      "Mit Ei: Protein-Texturen harmonieren",
+      "Mit Thymian: Erdigkeit verstärkt sich gegenseitig"
+    ],
+
+    "_comment5": "═══════════════ KULINARISCH - LAGERUNG ═══════════════",
+    
+    "lagerung_temperatur": { "min": 2, "max": 6, "unit": "°C" },
+    "lagerung_luftfeuchtigkeit": "hoch (85-95%)",
+    "lagerung_behaelter": "Papiertüte, KEIN Plastik",
+    "lagerung_haltbarkeit_tage": 3,
+    "lagerung_indikatoren": [
+      "Leuchtend dottergelbe Farbe",
+      "Keine matschigen Stellen",
+      "Frischer, fruchtiger Geruch",
+      "Feste Konsistenz"
+    ],
+    
+    "konservierung": [
+      { "label": "Einfrieren (angebraten)", "value": 75 },
+      { "label": "Einlegen (Essig-Sud)", "value": 70 },
+      { "label": "Trocknen", "value": 60 }
+    ],
+
+    "_comment6": "═══════════════ KULINARISCH - NÄHRWERT ═══════════════",
+    
     "naehrwerte": {
       "Protein": 18,
       "Kohlenhydrate": 58,
       "Fett": 5,
       "Ballaststoffe": 19
     },
+    
+    "naehrwert_highlights": [
+      { "label": "Vitamin D", "value": 53, "unit": "% DV" },
+      { "label": "Kalium", "value": 15, "unit": "% DV" },
+      { "label": "Eisen", "value": 20, "unit": "% DV" },
+      { "label": "Vitamin A", "value": 85, "unit": "% DV" }
+    ],
+    
+    "bioaktive_substanzen": [
+      { "label": "Beta-Carotin", "value": 8.3, "unit": "mg" },
+      { "label": "Canthaxanthin", "value": 3.2, "unit": "mg" },
+      { "label": "Ergosterol", "value": 15.0, "unit": "mg" }
+    ],
+
+    "_comment7": "═══════════════ KULINARISCH - KULTUR ═══════════════",
+    
+    "traditionen_namen": [
+      "Girolle (Französisch)",
+      "Chanterelle (Englisch)",
+      "Eierschwamm / Reherl (Österreich)",
+      "Kantarell (Schwedisch)"
+    ],
+    
+    "traditionen_gerichte": [
+      "Omelette aux Girolles (Frankreich)",
+      "Pfifferlings-Rahmsauce zu Knödel (Bayern/Österreich)",
+      "Kantarelltoast (Schweden)",
+      "Chanterelle Risotto (International)"
+    ],
+    
+    "saisonalitaet": "Juni-November",
+
+    "_comment8": "═══════════════ ALLGEMEIN ═══════════════",
+    
+    "bewertung": 4.5,
+    "verfuegbarkeit": "saisonal",
+    "temperatur": { "min": 15, "max": 28 },
+    "beliebtheit": 88,
+    "standort": ["Laubwald", "Nadelwald", "Moosige Böden", "Unter Buchen"],
+    "verwechslung": ["Falscher Pfifferling (essbar, minderwertig)", "Ölbaumpilz (giftig, leuchtend)"],
+    "saison": "Juni bis November",
+    
     "profil": [
       { "axis": "Geschmack", "value": 88 },
       { "axis": "Textur", "value": 75 },
@@ -76,24 +347,26 @@
       { "axis": "Umami", "value": 65 },
       { "axis": "Seltenheit", "value": 55 }
     ],
+    
     "wirkstoffe": [
       { "label": "Beta-Carotin", "value": 8.3, "unit": "mg" },
       { "label": "Vitamin D", "value": 5.3, "unit": "µg" },
       { "label": "Kalium", "value": 506, "unit": "mg" }
     ],
+    
     "ernte_stats": {
       "min": 20,
       "max": 150,
       "avg": 65,
       "count": 89
     },
+    
     "lebenszyklus": [
       { "date": "Mai", "event": "Myzel erwacht" },
       { "date": "Juni-Juli", "event": "Erste Fruchtkörper" },
       { "date": "Aug-Okt", "event": "Hauptsaison", "active": true },
       { "date": "Nov", "event": "Saisonende" }
-    ],
-    "verfuegbarkeit": "saisonal"
+    ]
   },
   {
     "id": "3",

@@ -1,14 +1,13 @@
 # Schema-Ordner
 
-Modulares Schema-System für AMORPH. Trennt unveränderliche Basis-Konfiguration von anpassbaren Projekt-spezifischen Einstellungen.
+Modulares Schema-System für AMORPH mit 17 Perspektiven.
 
 ## Übersicht
 
 Das Schema-System ist die **Single Source of Truth** für alle Daten-Definitionen:
-- Feld-Typen und Labels
+- Feld-Typen und Labels (~200 Felder)
 - Semantische Suchregeln
-- Perspektiven (Filter + Farben)
-- Citation/Advertisement Metadaten
+- 17 Perspektiven (Filter + Farben)
 
 ## Struktur
 
@@ -16,92 +15,59 @@ Das Schema-System ist die **Single Source of Truth** für alle Daten-Definitione
 schema/
 ├── index.yaml            # Index und Dokumentation
 ├── basis.yaml            # Kern-System (NICHT ÄNDERN)
-├── felder.yaml           # Feld-Definitionen (anpassbar)
-├── semantik.yaml         # Such-Mappings (anpassbar)
-└── perspektiven/         # Perspektiven (austauschbar)
+├── felder.yaml           # ~200 Feld-Definitionen
+├── semantik.yaml         # Such-Mappings
+└── perspektiven/         # 17 Perspektiven
     ├── index.yaml        # Aktive Perspektiven-Liste
     ├── kulinarisch.yaml
     ├── sicherheit.yaml
     ├── anbau.yaml
     ├── wissenschaft.yaml
     ├── medizin.yaml
-    └── statistik.yaml
+    ├── statistik.yaml
+    ├── chemie.yaml       # NEU
+    ├── sensorik.yaml     # NEU
+    ├── oekologie.yaml    # NEU
+    ├── temporal.yaml     # NEU
+    ├── geografie.yaml    # NEU
+    ├── wirtschaft.yaml   # NEU
+    ├── naturschutz.yaml  # NEU
+    ├── kultur.yaml       # NEU
+    ├── forschung.yaml    # NEU
+    ├── interaktionen.yaml # NEU
+    └── visual.yaml       # NEU
 ```
 
-## Module
+## 17 Perspektiven
 
-### basis.yaml (unveränderlich)
-- Meta-Konfiguration (nameField, idField, bildField)
-- Kern-Felder (id, slug, name, bild)
-- Optionale Attribute (citation, advertisement)
-
-### felder.yaml (anpassbar)
-- Feld-Reihenfolge
-- Feld-Definitionen mit Typ, Label, Suche
-- Feld-spezifische Farben
-
-### semantik.yaml (anpassbar)
-- Keyword-Mappings für intelligente Suche
-- Kategorien: Essbarkeit, Standort, Saison, Geschmack, Zubereitung
-
-### perspektiven/index.yaml (Steuerung)
-```yaml
-aktiv:
-  - kulinarisch
-  - sicherheit
-  - anbau
-  - wissenschaft
-  - medizin
-  - statistik
-```
-
-### perspektiven/*.yaml (austauschbar)
-Jede Perspektive als eigene Datei:
-```yaml
-id: kulinarisch
-name: Kulinarisch
-symbol: 🍳
-farben: ['#4ade80', '#22c55e', '#16a34a', '#15803d']
-felder: [essbarkeit, geschmack, zubereitung]
-keywords: [essbar, essen, kochen, rezept]
-```
-
-## Optionale Feld-Attribute
-
-Jedes Feld kann diese optionalen Metadaten haben:
-
-```yaml
-# In felder.yaml
-wissenschaftlich:
-  typ: string
-  label: Wissenschaftlicher Name
-  citation:
-    quelle: "MycoBank"
-    url: "https://www.mycobank.org"
-    datum: "2024-01"
-    autor: "Fungorum Index"
-    lizenz: "CC-BY-SA"
-  advertisement:
-    sponsor: "Fungi Labs"
-    typ: "sponsored_content"
-    url: "https://sponsor.example.com"
-    kampagne: "fungi-2024"
-    kennzeichnung: true
-```
+| ID | Name | Symbol | Farbe |
+|----|------|--------|-------|
+| kulinarisch | Kulinarisch | 🍳 | Grün |
+| sicherheit | Sicherheit | ⚠️ | Rot |
+| anbau | Anbau | 🌱 | Braun |
+| wissenschaft | Wissenschaft | 🔬 | Blau |
+| medizin | Medizin | 💊 | Türkis |
+| statistik | Statistik | 📊 | Grau |
+| chemie | Chemie | 🧪 | Violett |
+| sensorik | Sensorik | 👃 | Orange |
+| oekologie | Ökologie | 🌿 | Grün |
+| temporal | Temporal | ⏰ | Indigo |
+| geografie | Geografie | 🗺️ | Blau |
+| wirtschaft | Wirtschaft | 💰 | Gold |
+| naturschutz | Naturschutz | 🛡️ | Rot |
+| kultur | Kultur | 📜 | Braun |
+| forschung | Forschung | 📚 | Cyan |
+| interaktionen | Interaktionen | 🔗 | Magenta |
+| visual | Visual | 🎨 | Rainbow |
 
 ## Neue Perspektive hinzufügen
 
 1. Datei erstellen: `perspektiven/meine_perspektive.yaml`
-2. ID zu aktiv hinzufügen: `perspektiven/index.yaml`
+2. ID zu `index.yaml` hinzufügen
+3. Felder zu `felder.yaml` hinzufügen
+4. CSS zu `styles/perspektiven.css` hinzufügen
+5. Compare-Morph in `themes/pilze/morphs/compare/` erstellen
 
 ## Perspektive deaktivieren
 
-ID aus `perspektiven/index.yaml` entfernen.
-
-## Fallback
-
-Wenn `schema/` nicht existiert, wird `schema.yaml` verwendet (Legacy-Modus).
-
-## Prinzip
-
-**Datengetrieben**: Morph-Typen werden aus der DATENSTRUKTUR erkannt, nicht im Schema definiert.
+ID aus `perspektiven/index.yaml` entfernen (Datei kann bleiben).

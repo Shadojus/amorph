@@ -17,10 +17,19 @@ felder:
   - bild
   - name
   - wissenschaftlich
+  - taxonomie
+  - synonyme
+  - morphologie
+  - mikroskopie
+  - genetik
+  - oekologie
+  - biogeografie
   - wirkstoffe
+  - chemische_zusammensetzung
   - naehrwerte
   - profil
   - ernte_stats
+  - forschung_referenzen
 
 # Keywords für automatische Perspektiven-Erkennung bei Suche
 keywords:
@@ -37,3 +46,11 @@ keywords:
   - art
   - familie
   - latein
+  - sporen
+  - myzel
+  - basidien
+  - dna
+  - sequenz
+  - phylogenetik
+  - ökologie
+  - habitat

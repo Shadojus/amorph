@@ -1,6 +1,6 @@
 # Feature: Header
 
-Das Header-Feature kombiniert Suche + Perspektiven + Auswahl in einem Container.
+Das Header-Feature kombiniert Suche + 17 Perspektiven + Auswahl in einem Container.
 
 ## Übersicht
 
@@ -8,26 +8,29 @@ Das Header-Feature kombiniert Suche + Perspektiven + Auswahl in einem Container.
 |------------|----------|
 | Zeile 0 | Branding (App-Name + Bifroest) |
 | Zeile 1 | Suche + Badges + Ansicht-Switch |
-| Zeile 2 | Perspektiven-Grid |
+| Zeile 2 | 17 Perspektiven-Grid |
 | Zeile 3 | Ausgewählte Pilze (Badges + Links) |
 
-### Features
+## Features
 
 - **Live-Suche**: Mit konfigurierbarem Debounce
-- **Auto-Perspektiven**: Basierend auf Query und Ergebnissen
+- **17 Perspektiven**: Auto-Aktivierung basierend auf Query und Ergebnissen
 - **Auswahl-Badges**: Zeigt ausgewählte Pilze mit Link zur Einzelansicht
 - **Scroll-Detection**: Via IntersectionObserver
+- **Multi-Color Glow**: Bei mehreren aktiven Perspektiven
 
-### Events
+## Events
 
 **Emittiert:**
 - `header:suche:ergebnisse` → Query + Ergebnisse + matchedTerms
-- `perspektiven:geaendert` → aktive Perspektiven
+- `perspektiven:geaendert` → aktive Perspektiven (aus 17)
 - `amorph:ansicht-wechsel` → Ansicht-ID
 
 **Hört auf:**
 - `amorph:auswahl-geaendert` → Aktualisiert Auswahl-Zeile + Counter
 - `amorph:auto-search` → Triggert Suche aus URL-State
+
+## 17 Perspektiven-Buttons
 
 ```javascript
 // Perspektiven mit Multi-Farben-Support
@@ -40,35 +43,16 @@ function anwendenPerspektiven() {
     } else {
       // Mehrere Perspektiven - Multicolor-Gradient
       feld.setAttribute('data-perspektive-multi', 'true');
-      feld.style.setProperty('--feld-gradient', `linear-gradient(180deg, ...)`);
     }
   }
 }
 ```
 
-### Vergleich-View Modus
-
-```javascript
-// Im Vergleich-View: NUR Highlights, KEINE DB-Suche
-const imVergleichsView = aktiveAnsicht === 'vergleich';
-if (imVergleichsView) {
-  ctx.emit('suche:ergebnisse', { 
-    query, 
-    ergebnisse: [], 
-    matchedTerms: new Set(), 
-    nurHighlights: true  // ← Flag für Vergleich-View
-  });
-  return;
-}
-```
-
-### CSS-Klassen
+## CSS-Klassen
 
 - `.amorph-suche` - Suchcontainer
-- `.amorph-perspektiven` - Perspektiven-Navigation
+- `.amorph-perspektiven` - 17 Perspektiven-Navigation
 - `.amorph-perspektive-btn` - Einzelner Perspektiven-Button
 - `.amorph-perspektive-btn.aktiv` - Aktive Perspektive
-- `.amorph-perspektive-btn.hat-treffer` - Hat relevante Suchergebnisse
-- `.amorph-filter-badge` - Badge für aktive Perspektive
 - `.amorph-ansicht-switch` - Ansicht-Toggle
 - `.scrolled` - Header bei Scroll-Position > 0

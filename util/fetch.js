@@ -2,9 +2,9 @@ import { debug } from '../observer/debug.js';
 import { semanticScore as schemaSemanticScore, getSuchfelder } from './semantic.js';
 
 export function createDataSource(config) {
-  const { typ, url, headers = {}, sammlung } = config.quelle;
+  const { typ, url, headers = {}, sammlung, indexUrl, baseUrl } = config.quelle;
   
-  debug.daten('DataSource erstellen', { typ, url });
+  debug.daten('DataSource erstellen', { typ, url, indexUrl, baseUrl });
   
   switch (typ) {
     case 'pocketbase':
@@ -13,6 +13,8 @@ export function createDataSource(config) {
       return new RestSource(url, headers);
     case 'json':
       return new JsonSource(url);
+    case 'json-multi':
+      return new JsonMultiSource(indexUrl, baseUrl);
     default:
       debug.fehler(`Unbekannter Datenquellen-Typ: ${typ}`);
       throw new Error(`Unbekannter Datenquellen-Typ: ${typ}`);
@@ -210,6 +212,151 @@ class JsonSource {
   
   getMatchedTerms() {
     return this.lastMatchedTerms; // Gibt das Set direkt zurück
+  }
+}
+
+/**
+ * JSON Multi Source - Lädt Items aus einzelnen JSON-Dateien
+ * 
+ * Struktur:
+ * - data/pilze/index.json → Liste aller Dateien
+ * - data/pilze/steinpilz.json → Einzelner Pilz
+ * - data/pilze/pfifferling.json → Einzelner Pilz
+ * - ...
+ * 
+ * Vorteile:
+ * - Jeder Pilz kann unabhängig bearbeitet werden
+ * - Git-Konflikte werden minimiert
+ * - Bessere Skalierbarkeit für große Datenmengen
+ * - Lazy Loading möglich (zukünftig)
+ */
+class JsonMultiSource {
+  constructor(indexUrl, baseUrl) {
+    this.indexUrl = indexUrl;
+    this.baseUrl = baseUrl.endsWith('/') ? baseUrl : baseUrl + '/';
+    this.data = null;
+    this.lastMatchedTerms = new Set();
+    this.lastFilteredData = [];
+    this.totalCount = 0;
+  }
+  
+  async ensureData() {
+    if (!this.data) {
+      debug.daten('Lade JSON-Multi Index...', { indexUrl: this.indexUrl });
+      
+      // 1. Index laden
+      const indexResponse = await fetch(this.indexUrl);
+      if (!indexResponse.ok) {
+        throw new Error(`Index konnte nicht geladen werden: ${indexResponse.status}`);
+      }
+      const index = await indexResponse.json();
+      const dateien = index.dateien || [];
+      
+      debug.daten('Index geladen', { anzahlDateien: dateien.length });
+      
+      // 2. Alle Dateien parallel laden
+      const loadPromises = dateien.map(async (datei) => {
+        const url = this.baseUrl + datei;
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            debug.warn(`Datei nicht gefunden: ${url}`);
+            return null;
+          }
+          return response.json();
+        } catch (e) {
+          debug.warn(`Fehler beim Laden von ${url}:`, e);
+          return null;
+        }
+      });
+      
+      const results = await Promise.all(loadPromises);
+      this.data = results.filter(item => item !== null);
+      
+      debug.daten('Alle Dateien geladen', { 
+        anzahl: this.data.length,
+        items: this.data.map(i => i.name || i.slug || i.id).join(', ')
+      });
+    }
+    return this.data;
+  }
+  
+  async query({ search, limit = 50, offset = 0 } = {}) {
+    let items = await this.ensureData();
+    this.lastMatchedTerms = new Set();
+    
+    if (search && search.trim()) {
+      const query = search.toLowerCase().trim();
+      debug.suche('JsonMultiSource Query', { query, totalItems: items.length, offset, limit });
+      
+      // Intelligente Suche mit Scoring
+      const scored = items.map(item => {
+        const result = scoreItemWithMatches(item, query);
+        return {
+          item,
+          score: result.score,
+          matches: result.matches
+        };
+      });
+      
+      // Nur Treffer mit Score > 0
+      const filtered = scored.filter(s => s.score > 0);
+      
+      // Match-Terme sammeln
+      for (const s of filtered) {
+        for (const match of s.matches) {
+          this.lastMatchedTerms.add(match);
+        }
+      }
+      
+      this.lastFilteredData = filtered
+        .sort((a, b) => b.score - a.score)
+        .map(s => s.item);
+      
+      this.totalCount = this.lastFilteredData.length;
+      items = this.lastFilteredData;
+      
+      debug.suche('Suche komplett', { 
+        treffer: items.length, 
+        matchedTerms: [...this.lastMatchedTerms].slice(0, 10)
+      });
+    } else {
+      this.lastFilteredData = items;
+      this.totalCount = items.length;
+    }
+    
+    // Pagination
+    const paginatedItems = items.slice(offset, offset + limit);
+    debug.daten('Pagination', { offset, limit, returned: paginatedItems.length, total: this.totalCount });
+    
+    return paginatedItems;
+  }
+  
+  async loadMore(limit = 20) {
+    const currentCount = this.lastFilteredData.length;
+    const offset = currentCount;
+    
+    // Bei JsonMultiSource sind bereits alle Daten geladen
+    // Pagination nur auf gecachten Daten
+    return this.lastFilteredData.slice(offset, offset + limit);
+  }
+  
+  getTotalCount() {
+    return this.totalCount;
+  }
+  
+  async getBySlug(slug) {
+    const items = await this.ensureData();
+    return items.find(item => item.slug === slug);
+  }
+  
+  async getById(id) {
+    const items = await this.ensureData();
+    return items.find(item => item.id === id);
+  }
+  
+  getMatchedTerms() {
+    return this.lastMatchedTerms;
   }
 }
 

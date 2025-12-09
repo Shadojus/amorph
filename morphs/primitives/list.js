@@ -16,9 +16,23 @@ export function list(wert, config = {}, morphen) {
   for (const item of items) {
     const li = document.createElement('li');
     if (morphen) {
-      li.appendChild(morphen(item));
+      const morphed = morphen(item);
+      if (morphed && morphed instanceof Node) {
+        li.appendChild(morphed);
+      } else {
+        // Fallback: Objekte als JSON, primitives als String
+        if (typeof item === 'object' && item !== null) {
+          li.textContent = JSON.stringify(item);
+        } else {
+          li.textContent = String(item ?? '');
+        }
+      }
     } else {
-      li.textContent = String(item);
+      if (typeof item === 'object' && item !== null) {
+        li.textContent = JSON.stringify(item);
+      } else {
+        li.textContent = String(item);
+      }
     }
     el.appendChild(li);
   }

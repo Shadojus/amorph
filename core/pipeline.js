@@ -59,6 +59,12 @@ export function transform(daten, config, customMorphs = {}) {
     let morph = alleMorphs[morphName];
     let actualMorphName = morphName;
     
+    // Debug: Medizin-Felder tracken (warn statt morphs weil morphs gemutet ist)
+    const medizinFelder = ['medizinisch', 'traditionelle_medizin', 'therapeutische_kategorien', 'wirkungsprofil', 'wirkstoffe', 'sicherheit_score', 'nebenwirkungen', 'dosierung'];
+    if (feldname && medizinFelder.includes(feldname)) {
+      debug.warn('MEDIZIN-Feld gefunden', { feldname, typ, morphName, wertTyp: typeof wert, istArray: Array.isArray(wert) });
+    }
+    
     if (!morph) {
       debug.warn(`Morph nicht gefunden: ${morphName}, nutze text`);
       morph = alleMorphs.text;
@@ -68,6 +74,27 @@ export function transform(daten, config, customMorphs = {}) {
     // Config zusammenbauen: morphs.yaml + schema.yaml Feld-Config
     const morphConfig = getMorphConfig(actualMorphName, feldname, config);
     const element = morph(wert, morphConfig, morphen);
+    
+    // Morph hat nichts zurückgegeben → Fallback zu leerem span
+    if (!element) {
+      debug.warn(`Morph ${actualMorphName} hat null/undefined zurückgegeben`, { feldname, wert });
+      // Erstelle leeres Element statt null zurückzugeben
+      const fallback = document.createElement('span');
+      fallback.className = 'amorph-empty';
+      fallback.textContent = typeof wert === 'object' ? JSON.stringify(wert) : String(wert);
+      
+      const container = document.createElement('amorph-container');
+      container.setAttribute('data-morph', morphName);
+      container.setAttribute('data-fallback', 'true');
+      if (feldname) container.setAttribute('data-field', feldname);
+      container.appendChild(fallback);
+      return container;
+    }
+    
+    if (!(element instanceof Node)) {
+      debug.warn(`Morph ${actualMorphName} hat keinen Node zurückgegeben`, { feldname, typ: typeof element });
+      return null;
+    }
     
     // In Container wrappen
     const container = document.createElement('amorph-container');
@@ -98,9 +125,26 @@ export function transform(daten, config, customMorphs = {}) {
       if (typeof item === 'object' && item !== null) {
         // Felder in Schema-Reihenfolge rendern
         const sortedEntries = sortBySchemaOrder(item);
+        
+        // Debug: Prüfen ob Medizin-Felder im Item vorhanden sind
+        const medizinFelder = ['medizinisch', 'traditionelle_medizin', 'therapeutische_kategorien', 'wirkungsprofil', 'wirkstoffe'];
+        const vorhandeneMedizin = medizinFelder.filter(f => f in item);
+        if (vorhandeneMedizin.length > 0) {
+          debug.warn('Item hat Medizin-Felder', { itemName: item.name, felder: vorhandeneMedizin, alleKeys: Object.keys(item).length });
+        }
+        
         for (const [key, value] of sortedEntries) {
           const morphed = morphen(value, key);
-          if (morphed) itemContainer.appendChild(morphed);
+          if (morphed) {
+            itemContainer.appendChild(morphed);
+          } else {
+            // Debug: Warum wurde das Feld nicht gerendert?
+            const isEmptyArray = Array.isArray(value) && value.length === 0;
+            const isEmptyObj = typeof value === 'object' && value !== null && !Array.isArray(value) && Object.keys(value).length === 0;
+            if (!isEmptyArray && !isEmptyObj && value !== null && value !== undefined && value !== '') {
+              debug.warn('Feld nicht gerendert', { key, valueType: typeof value, isArray: Array.isArray(value), arrayLen: Array.isArray(value) ? value.length : 0 });
+            }
+          }
         }
       } else {
         const morphed = morphen(item);

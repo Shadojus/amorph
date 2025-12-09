@@ -1,75 +1,92 @@
-# Theme Compare Morphs - Pilze
+# Theme: Pilze - Compare Morphs
 
-## Zweck
+17 perspektiven-spezifische Vergleichs-Morphs für Pilzdaten.
 
-Perspektiven-spezifische Compare-Visualisierungen für das Pilze-Theme.
-
-## Architektur
+## Dateien
 
 ```
 themes/pilze/morphs/compare/
-├── index.js          # Registry & Export
-├── kulinarisch.js    # 🍳 Kulinarische Perspektive
-├── sicherheit.js     # ⚠️ Sicherheits-Perspektive
-├── anbau.js          # 🌱 Anbau-Perspektive
-├── wissenschaft.js   # 🔬 Wissenschafts-Perspektive
-├── medizin.js        # 💊 Medizin-Perspektive
-└── statistik.js      # 📊 Statistik-Perspektive
+├── index.js           # Export: perspektivenMorphs Map
+├── kulinarisch.js     # 🍳 Geschmack, Zubereitung, Rezepte
+├── sicherheit.js      # ⚠️ Toxine, Verwechslung, Symptome
+├── anbau.js           # 🌱 Substrate, Ertrag, Schwierigkeit
+├── wissenschaft.js    # 🔬 Taxonomie, Genetik, Phylogenie
+├── medizin.js         # 💊 Wirkstoffe, Therapie, Dosierung
+├── statistik.js       # 📊 Fundstatistik, Saisonalität
+├── chemie.js          # 🧪 Metabolite, Enzyme, Pigmente
+├── sensorik.js        # 👃 Aroma, Textur, Geschmack
+├── oekologie.js       # 🌿 Habitat, Symbiosen, Klima
+├── temporal.js        # ⏰ Lebenszyklus, Wachstum, Alter
+├── geografie.js       # 🗺️ Verbreitung, Höhenlage, Regionen
+├── wirtschaft.js      # 💰 Marktpreis, Handel, Produktion
+├── naturschutz.js     # 🛡️ IUCN-Status, Schutzmaßnahmen
+├── kultur.js          # 📜 Mythologie, Geschichte, Traditionen
+├── forschung.js       # 📚 Publikationen, Studien, Patente
+├── interaktionen.js   # 🔗 Wirte, Mikrobiom, Konkurrenz
+└── visual.js          # 🎨 Bilder, Farben, Morphologie
 ```
 
-## Interface
-
-Jeder Perspektiven-Morph hat die Signatur:
+## Verwendung
 
 ```javascript
-function comparePerspektive(items, perspektive, schema) {
-  // items: [{id, name, data, farbe}]
-  // perspektive: {id, name, symbol, farben, felder}
-  // schema: {felder, ...}
-  return HTMLElement;
+// In features/vergleich/index.js
+import { perspektivenMorphs } from '../themes/pilze/morphs/compare/index.js';
+
+// Map<perspektivId, compareFn>
+const compareFn = perspektivenMorphs.get('chemie');
+const element = compareFn(items, perspektive, schema);
+```
+
+## Compare-Morph Signatur
+
+```javascript
+/**
+ * @param {Array} items - Array von Pilz-Objekten
+ * @param {Object} perspektive - { id, name, symbol, farben, felder }
+ * @param {Object} schema - { felder, perspektiven }
+ * @returns {HTMLElement} - Container mit Vergleichs-Visualisierung
+ */
+function compareKulinarisch(items, perspektive, schema) {
+  // 1. Felder aus Perspektive extrahieren
+  // 2. Für jedes Feld: passenden Compare-Primitive wählen
+  // 3. Mit Perspektiven-Farben rendern
 }
 ```
 
-## Datengetriebenes Prinzip
+## Farben aus Perspektive
 
-1. **Felder filtern**: Nur Items mit vorhandenen Daten für das Feld anzeigen
-2. **Typ erkennen**: Datenstruktur bestimmt den Morph (NICHT der Feldname!)
-3. **Compare-Morph nutzen**: Generische Morphs aus `morphs/compare/`
+Jede Perspektive definiert 4 Farben in schema/perspektiven/*.yaml:
 
-## Beispiel
-
-```javascript
-// In kulinarisch.js
-const geschmackItems = items.filter(i => i.data.geschmack);
-if (geschmackItems.length > 0) {
-  const section = createSection('Geschmack', perspektive.farben?.[1]);
-  const mapped = geschmackItems.map(i => ({
-    id: i.id, 
-    name: i.name, 
-    wert: i.data.geschmack, 
-    farbe: i.farbe
-  }));
-  section.addContent(compareList(mapped, {}));
-  sections.appendChild(section);
-}
+```yaml
+# chemie.yaml
+id: chemie
+farben:
+  primaer: "#9C27B0"    # Violett
+  sekundaer: "#E040FB"
+  akzent: "#EA80FC"
+  hintergrund: "#1A0A1F"
 ```
 
-## Erweiterung
+Diese werden für Gradient-Glows und Highlight-Farben verwendet.
 
-Neue Perspektive hinzufügen:
+## Beispiel-Implementation
 
-1. Datei erstellen: `themes/pilze/morphs/compare/neue.js`
-2. In `index.js` registrieren:
-   ```javascript
-   import { compareNeue } from './neue.js';
-   export const perspektivenMorphs = {
-     // ...
-     neue: compareNeue
-   };
-   ```
-
-## Wichtig
-
-- Die Perspektiven kommen aus `schema.yaml`
-- Die Morphs werden NICHT im Schema definiert
-- Die Farben kommen aus `perspektive.farben`
+```javascript
+// chemie.js
+export function compareChemie(items, perspektive, schema) {
+  const container = document.createElement('div');
+  container.className = 'compare-perspektive compare-chemie';
+  
+  // Metabolite vergleichen
+  const metaboliteSection = compareBar(
+    items.map(i => ({
+      name: i.name,
+      wert: i.chemie_primaer_metabolite?.length || 0
+    })),
+    { label: 'Primäre Metabolite', einheit: 'Anzahl' }
+  );
+  
+  container.appendChild(metaboliteSection);
+  return container;
+}
+```

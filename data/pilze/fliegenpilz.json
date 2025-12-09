@@ -1,0 +1,241 @@
+{
+  "id": "3",
+  "slug": "fliegenpilz",
+  "name": "Fliegenpilz",
+  "wissenschaftlich": "Amanita muscaria",
+  "essbarkeit": "giftig",
+  "essbarkeit_status": "giftig",
+  "beschreibung": "Der Fliegenpilz ist wohl der bekannteste Giftpilz. Mit seinem roten Hut und weißen Punkten ist er leicht erkennbar. Er enthält psychoaktive Substanzen.",
+  "temperatur": { "min": 5, "max": 20 },
+  "standort": ["Birkenwald", "Fichtenwald", "Heidegebiete"],
+  "verwechslung": ["Kaiserling"],
+  "bild": "images/fungi/fly-agaric-amanita-muscaria.jpg",
+  "symptome": "Übelkeit, Halluzinationen, Kreislaufprobleme",
+  "saison": "August bis November",
+  "saisonalitaet": "August-November",
+  "bewertung": 1.2,
+  "toxizitaet": 75,
+  "naehrwerte": {
+    "Muscimol": 45,
+    "Ibotensäure": 35,
+    "Andere": 20
+  },
+  "profil": [
+    { "axis": "Toxizität", "value": 75 },
+    { "axis": "Erkennbarkeit", "value": 98 },
+    { "axis": "Verbreitung", "value": 70 },
+    { "axis": "Kulturelle Bedeutung", "value": 95 },
+    { "axis": "Forschungsinteresse", "value": 80 }
+  ],
+  "wirkstoffe": [
+    { "label": "Muscimol", "value": 15, "unit": "mg" },
+    { "label": "Ibotensäure", "value": 30, "unit": "mg" },
+    { "label": "Muscarin", "value": 0.02, "unit": "mg" }
+  ],
+  "lebenszyklus": [
+    { "date": "Frühjahr", "event": "Myzel-Wachstum" },
+    { "date": "August", "event": "Erste Pilze" },
+    { "date": "Sept-Okt", "event": "Hauptzeit", "active": true },
+    { "date": "November", "event": "Absterben" }
+  ],
+  "verfuegbarkeit": "warnung",
+  "essbarkeit_warnungen": [
+    "GIFTIG - Nicht zum Verzehr geeignet!",
+    "Enthält psychoaktive Substanzen (Muscimol, Ibotensäure)",
+    "Kann Halluzinationen, Übelkeit und Kreislaufprobleme verursachen"
+  ],
+  
+  "toxine": ["Muscimol", "Ibotensäure", "Muscarin (Spuren)"],
+  
+  "giftstoffe_details": [
+    {
+      "name": "Ibotensäure",
+      "wirkung": "Prodrug → wird zu Muscimol umgewandelt, GABA-Agonist",
+      "dosis": "30-60 mg für psychoaktive Wirkung",
+      "organ": "Zentrales Nervensystem"
+    },
+    {
+      "name": "Muscimol",
+      "wirkung": "GABA-A-Rezeptor-Agonist → Sedierung, Halluzinationen",
+      "dosis": "10-15 mg für psychoaktive Wirkung",
+      "organ": "ZNS"
+    },
+    {
+      "name": "Muscarin",
+      "wirkung": "Cholinerge Symptome (nur in Spuren vorhanden)",
+      "dosis": "Nur 0.02% - praktisch irrelevant",
+      "organ": "Parasympathisches Nervensystem"
+    }
+  ],
+  
+  "ld50_werte": {
+    "mensch_oral": "ca. 15 frische Pilze für tödliche Dosis",
+    "bemerkung": "Todesfälle selten, meist durch sekundäre Effekte (Unfall, Unterkühlung)"
+  },
+  
+  "verwechslungsrisiko": 2,
+  
+  "erkennungsmerkmale_sicher": [
+    "Leuchtend roter Hut mit weißen Flocken",
+    "Weiße, weiche Lamellen",
+    "Weißer Ring am Stiel",
+    "Knollige Basis mit Schuppengürtel",
+    "Weißes Fleisch ohne besondere Verfärbung"
+  ],
+  
+  "verwechslungspartner": [
+    {
+      "name": "Kaiserling",
+      "gefahr": "essbar",
+      "unterscheidung": "Kaiserling hat GELBE Lamellen, GELBEN Ring, essbar und geschätzt"
+    },
+    {
+      "name": "Perlpilz",
+      "gefahr": "bedingt_essbar",
+      "unterscheidung": "Perlpilz hat graubraunen Hut, rötet bei Verletzung, essbar nach Kochen"
+    },
+    {
+      "name": "Pantherpilz",
+      "gefahr": "giftig",
+      "unterscheidung": "Brauner Hut, weiße Flocken - ebenfalls giftig! Oft stärker als Fliegenpilz"
+    }
+  ],
+  
+  "symptom_verlauf": [
+    {
+      "zeit": "30-90 Minuten",
+      "phase": "Onset",
+      "symptome": ["Übelkeit", "Schwindel", "Müdigkeit", "Speichelfluss"],
+      "schwere": "leicht"
+    },
+    {
+      "zeit": "1-3 Stunden",
+      "phase": "Akute Phase",
+      "symptome": ["Euphorie/Dysphorie", "Visuelle Störungen", "Verwirrung", "Muskelzuckungen", "Ataxie"],
+      "schwere": "mittel"
+    },
+    {
+      "zeit": "3-8 Stunden",
+      "phase": "Hauptwirkung",
+      "symptome": ["Halluzinationen", "Tiefe Sedierung", "Makro-/Mikropsie", "Verzerrte Wahrnehmung"],
+      "schwere": "schwer"
+    },
+    {
+      "zeit": "8-24 Stunden",
+      "phase": "Abklingen",
+      "symptome": ["Erschöpfung", "Kopfschmerzen", "Verwirrtheit", "Amnesie"],
+      "schwere": "leicht"
+    }
+  ],
+  
+  "erste_hilfe": [
+    "Person beruhigen und vor Selbstverletzung schützen",
+    "Bei starken Symptomen: Notruf 112",
+    "Giftnotruf kontaktieren (z.B. +49 30 19240)",
+    "Pilzreste für Identifikation aufbewahren",
+    "Kein Alkohol geben (verstärkt Wirkung)",
+    "Bei Bewusstlosigkeit: Stabile Seitenlage",
+    "Vor Unterkühlung schützen"
+  ],
+  
+  "antidote": {
+    "vorhanden": false,
+    "behandlung": "Symptomatische Behandlung, Überwachung",
+    "zeitfenster": "Keine spezifische Zeitkritikalität (meist nicht lebensbedrohlich)",
+    "zusaetzlich": ["Aktivkohle bei früher Vorstellung", "Benzodiazepine bei Agitation", "Flüssigkeitszufuhr"]
+  },
+
+  "kultur_namen_historisch": [
+    { "name": "Fliegenschwamm", "region": "Deutschland", "seit": "Mittelalter" },
+    { "name": "Fly Agaric", "region": "England", "seit": "17. Jh." },
+    { "name": "Мухомор (Muchomor)", "region": "Russland", "seit": "historisch" },
+    { "name": "Amanite tue-mouches", "region": "Frankreich", "seit": "16. Jh." }
+  ],
+  "kultur_mythologie": [
+    { "kultur": "Sibirische Schamanen", "rolle": "Ritueller Gebrauch für Trancezustände", "quelle": "Ethnografische Berichte" },
+    { "kultur": "Nordisch-Germanisch", "rolle": "Möglicherweise Berserker-Rausch (umstritten)", "quelle": "Sagas, moderne Hypothesen" },
+    { "kultur": "Vedisch (Indien)", "rolle": "Soma-Theorie (kontrovers - R.G. Wasson)", "quelle": "Rig Veda / Wasson 1968" },
+    { "kultur": "Modern/Populär", "rolle": "Symbol für Glück und Märchen", "quelle": "Folklore" }
+  ],
+  "kultur_kunst": [
+    { "werk": "Alice im Wunderland", "artist": "Lewis Carroll / John Tenniel", "jahr": 1865, "medium": "Literatur/Illustration" },
+    { "werk": "Super Mario Bros", "artist": "Nintendo", "jahr": 1985, "medium": "Videospiel" },
+    { "werk": "Glücksbringer-Symbole", "artist": "Volkskunst", "jahr": 1800, "medium": "Dekoration" }
+  ],
+  "kultur_ereignisse": [
+    { "jahr": 1968, "ereignis": "R.G. Wasson publiziert 'Soma: Divine Mushroom of Immortality'", "bedeutung": "hoch" },
+    { "jahr": 1979, "ereignis": "McKenna Brüder erforschen psychoaktive Pilze", "bedeutung": "mittel" }
+  ],
+  "kultur_symbolik": {
+    "bedeutung": ["Glück", "Märchen", "Rausch", "Gefahr"],
+    "assoziationen": ["Weihnachten", "Wald", "Hexen", "Zwerge"],
+    "warnzeichen": true
+  },
+
+  "temporal_fruktifikation": {
+    "start": "August",
+    "peak": "September-Oktober",
+    "ende": "November",
+    "dauer_tage": 90
+  },
+  "temporal_myzel_aktivitaet": [
+    { "monat": "Jan", "aktivitaet": 5 },
+    { "monat": "Feb", "aktivitaet": 5 },
+    { "monat": "Mär", "aktivitaet": 10 },
+    { "monat": "Apr", "aktivitaet": 25 },
+    { "monat": "Mai", "aktivitaet": 40 },
+    { "monat": "Jun", "aktivitaet": 55 },
+    { "monat": "Jul", "aktivitaet": 70 },
+    { "monat": "Aug", "aktivitaet": 85 },
+    { "monat": "Sep", "aktivitaet": 100 },
+    { "monat": "Okt", "aktivitaet": 90 },
+    { "monat": "Nov", "aktivitaet": 50 },
+    { "monat": "Dez", "aktivitaet": 10 }
+  ],
+  "temporal_sporenreife": {
+    "start_tag": 5,
+    "optimal_tag": 8,
+    "ende_tag": 14
+  },
+  "temporal_alter_max": 2,
+  "temporal_generationszeit": "Jährlich, Myzel mehrjährig",
+
+  "visual_galerie": [
+    {
+      "url": "images/fungi/fly-agaric-amanita-muscaria.jpg",
+      "beschreibung": "Klassischer Fliegenpilz mit roten Hut und weißen Punkten",
+      "typ": "Portrait",
+      "qualitaet": "hoch"
+    },
+    {
+      "url": "images/fungi/fliegenpilz-gruppe.jpg",
+      "beschreibung": "Gruppe junger Fliegenpilze im Wald",
+      "typ": "Habitat",
+      "qualitaet": "mittel"
+    },
+    {
+      "url": "images/fungi/fliegenpilz-jung.jpg",
+      "beschreibung": "Junges Exemplar mit noch geschlossenem Hut",
+      "typ": "Entwicklung",
+      "qualitaet": "mittel"
+    }
+  ],
+  "visual_farben": {
+    "primaer": "#e53935",
+    "sekundaer": "#ffffff",
+    "akzent": "#fdd835"
+  },
+  "visual_merkmale": [
+    { "merkmal": "Hutfarbe", "wert": "leuchtend rot", "variation": "orange bis dunkelrot" },
+    { "merkmal": "Flocken", "wert": "weiß", "variation": "manchmal fehlend nach Regen" },
+    { "merkmal": "Lamellen", "wert": "weiß", "variation": "konstant" }
+  ],
+  "visual_360": false,
+
+  "oekologie_rolle": "Ektomykorrhiza",
+  "oekologie_symbiose_partner": [
+    { "name": "Birke", "wissenschaftlich": "Betula spp.", "typ": "Ektomykorrhiza", "staerke": 95 },
+    { "name": "Fichte", "wissenschaftlich": "Picea abies", "typ": "Ektomykorrhiza", "staerke": 85 },
+    { "name": "Kiefer", "wissenschaftlich": "Pinus sylvestris", "typ": "Ektomykorrhiza", "staerke": 75 }
+  ]
+}

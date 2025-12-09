@@ -8,7 +8,34 @@ Vergleichs-Visualisierungen für mehrere Items nebeneinander.
 morphs/compare/
 ├── base.js       ← Utils: erstelleFarben(), detectType()
 ├── index.js      ← Export aller Compare-Morphs
-└── primitives/   ← 16 Compare-Primitives
+├── primitives/   ← 16 generische Compare-Primitives
+└── composites/   ← Smart/Diff Compare
+```
+
+## Theme-Compare-Morphs (17 Perspektiven)
+
+Perspektiven-spezifische Morphs in `themes/pilze/morphs/compare/`:
+
+```
+themes/pilze/morphs/compare/
+├── index.js           # Export aller 17 Compare-Morphs
+├── kulinarisch.js     # Geschmack, Zubereitung
+├── sicherheit.js      # Toxine, Verwechslung
+├── anbau.js           # Substrate, Ertrag
+├── wissenschaft.js    # Taxonomie, Genetik
+├── medizin.js         # Wirkstoffe, Therapie
+├── statistik.js       # Fundstatistik
+├── chemie.js          # Metabolite, Enzyme
+├── sensorik.js        # Aroma, Textur
+├── oekologie.js       # Habitat, Symbiosen
+├── temporal.js        # Lebenszyklus
+├── geografie.js       # Verbreitung
+├── wirtschaft.js      # Markt, Preise
+├── naturschutz.js     # IUCN-Status
+├── kultur.js          # Mythologie
+├── forschung.js       # Publikationen
+├── interaktionen.js   # Wirte, Mikrobiom
+└── visual.js          # Bilder, Farben
 ```
 
 ## Farb-System (CSS Single Source of Truth!)
@@ -29,30 +56,17 @@ export function erstelleFarben(items) {
 .pilz-farbe-0 { --pilz-text: rgb(0, 255, 255); }
 ```
 
-## FALLBACK_FARBEN (nur für farbDistanz)
-
-RGB-Arrays für Distance-Calculation in `base.js`:
+## Compare-Morph Signatur
 
 ```javascript
-const FALLBACK_FARBEN = [
-  [0, 255, 255],    // Electric Cyan
-  [255, 0, 255],    // Electric Magenta
-  [0, 255, 0],      // Radioactive Green
-  [255, 0, 150],    // Hot Pink
-  [255, 255, 0],    // Laser Yellow
-  [255, 100, 0],    // Blazing Orange
-  [0, 150, 255],    // Electric Blue
-  [180, 0, 255],    // Ultraviolet
-  [255, 0, 50],     // Nuclear Red
-  [190, 255, 0],    // Toxic Lime
-  [0, 255, 180],    // Plasma Aqua
-  [255, 50, 100]    // Lava Coral
-];
+function compareMorph(items, perspektive, schema) → HTMLElement
+
+// items = Array von Pilz-Objekten
+// perspektive = { id, name, symbol, farben, felder }
+// schema = { felder: {...}, perspektiven: [...] }
 ```
 
-⚠️ **Diese RGB-Werte MÜSSEN mit `pilz-farben.css` synchron sein!**
-
-## Compare-Morphs
+## Generische Compare-Primitives
 
 | Morph | Datentyp | Visualisierung |
 |-------|----------|----------------|
@@ -61,14 +75,4 @@ const FALLBACK_FARBEN = [
 | `compareRadar` | `[{axis,value}]` | Überlagerte Radars |
 | `comparePie` | `{key:number}` | Kreisdiagramme |
 | `compareTag` | `string` | Farbige Tags |
-| `compareBoolean` | `true/false` | Ja/Nein Icons |
 | `compareText` | `string` | Text-Vergleich |
-
-## Signatur
-
-```javascript
-function compareMorph(items, config) → HTMLElement
-
-// items = [{ name, wert, _meta }]
-// config = { label, feldName, ... }
-```

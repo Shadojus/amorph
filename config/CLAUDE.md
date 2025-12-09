@@ -8,45 +8,54 @@ Eine Datei = Ein Aspekt. YAML als Single Source of Truth.
 config/
 ├── manifest.yaml   ← App-Name, Version, Titel
 ├── daten.yaml      ← Datenquelle (JSON-Pfad)
-├── schema.yaml     ← Feld-Definitionen, Perspektiven
 ├── morphs.yaml     ← Morph-Config, Typ-Erkennung
 ├── features.yaml   ← Aktive Features
-└── observer.yaml   ← Debug, Analytics
+├── observer.yaml   ← Debug, Analytics
+└── schema/         ← Modulares Schema-System
+    ├── basis.yaml      ← Kern-Konfiguration
+    ├── felder.yaml     ← ~200 Feld-Definitionen
+    ├── semantik.yaml   ← Such-Mappings
+    └── perspektiven/   ← 17 Perspektiven-Dateien
 ```
 
-## manifest.yaml
+## Schema-System (17 Perspektiven)
+
+### perspektiven/index.yaml
 
 ```yaml
-name: funginomi
-version: 1.0.0
-titel: FUNGINOMI - Pilz-Explorer
+aktiv:
+  - kulinarisch
+  - sicherheit
+  - anbau
+  - wissenschaft
+  - medizin
+  - statistik
+  - chemie
+  - sensorik
+  - oekologie
+  - temporal
+  - geografie
+  - wirtschaft
+  - naturschutz
+  - kultur
+  - forschung
+  - interaktionen
+  - visual
 ```
 
-## schema.yaml
-
-Definiert Perspektiven und Felder:
+### Perspektiven-Datei (z.B. chemie.yaml)
 
 ```yaml
-perspektiven:
-  - id: kulinarisch
-    name: Kulinarisch
-    symbol: 🍳
-    farben: ["#22c55e", "#10b981", "#059669", "#047857"]
-    felder: [geschmack, zubereitung, essbar]
-```
-
-## morphs.yaml
-
-Automatische Typ-Erkennung:
-
-```yaml
-erkennung:
-  rating:
-    min: 0
-    max: 10
-    dezimalstellen: true
-  badge:
-    keywords: [essbar, giftig, aktiv, inaktiv]
+id: chemie
+name: Chemie
+symbol: 🧪
+farben: ['#9f7aea', '#805ad5', '#6b46c1', '#553c9a']
+beschreibung: Chemische Zusammensetzung und Stoffwechsel
+felder:
+  - chemie_primaer_metabolite
+  - chemie_sekundaer_metabolite
+  - chemie_volatilome
+  - chemie_enzyme
 ```
 
 ## Datengetriebene Erkennung
@@ -60,3 +69,11 @@ Pipeline erkennt Morphs automatisch aus Datenstruktur:
 | `[{ axis, value }]` (3+) | `radar` |
 | `"essbar"` (keyword) | `badge` |
 | `4.5` (0-10, dezimal) | `rating` |
+
+## Neue Perspektive hinzufügen
+
+1. Datei erstellen: `config/schema/perspektiven/meine_perspektive.yaml`
+2. ID zu `perspektiven/index.yaml` hinzufügen
+3. Felder in `felder.yaml` definieren
+4. CSS in `styles/perspektiven.css` hinzufügen
+5. Compare-Morph in `themes/pilze/morphs/compare/` erstellen

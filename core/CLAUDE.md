@@ -6,25 +6,20 @@ Das Herz von AMORPH. Drei Dateien, eine Aufgabe: Daten transformieren.
 
 ```
 core/
-├── config.js     ← Lädt YAML-Konfiguration
+├── config.js     ← Lädt YAML-Konfiguration + 17 Perspektiven
 ├── pipeline.js   ← Transformiert Daten durch Morphs (datengetrieben!)
 └── container.js  ← Web Component als Morph-Container
 ```
 
 ## config.js
 
-Lädt alle YAML-Konfigurationsdateien und merged sie:
+Lädt alle YAML-Konfigurationsdateien inkl. modularem Schema:
 
 ```javascript
 export async function ladeConfig(basePath = './config/') {
-  const [manifest, schema, features, morphs, observer] = await Promise.all([
-    loadYAML(basePath + 'manifest.yaml'),
-    loadYAML(basePath + 'schema.yaml'),
-    loadYAML(basePath + 'features.yaml'),
-    loadYAML(basePath + 'morphs.yaml'),
-    loadYAML(basePath + 'observer.yaml')
-  ]);
-  return { manifest, schema, features, morphs, observer };
+  // Lädt manifest, daten, morphs, observer, features
+  // + Modulares Schema: basis, felder, semantik
+  // + 17 Perspektiven aus perspektiven/*.yaml
 }
 ```
 
@@ -36,8 +31,18 @@ Transformiert Daten → DOM. Datengetriebene Typ-Erkennung:
 export function transform(daten, config, morphs) {
   // 1. Typ aus Schema oder detectType(wert)
   // 2. Passenden Morph aufrufen
-  // 3. DOM-Element zurückgeben
+  // 3. DOM-Element mit data-perspektive-* Attributen
 }
+```
+
+### Perspektiven-Attribute
+
+Pipeline fügt automatisch Perspektiven-Attribute hinzu:
+
+```html
+<amorph-container 
+  data-field="chemie_primaer_metabolite"
+  data-perspektive-chemie="true">
 ```
 
 ## container.js

@@ -1,43 +1,226 @@
-# Perspektive: Kulinarisch - Trüffel-Gold
-# Warmes Gold wie Pfifferlinge und edle Speisepilze
+# ═══════════════════════════════════════════════════════════════════════════════
+# PERSPEKTIVE: KULINARISCH
+# Professionelles Interface für kulinarische Daten biologischer Spezies
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# ZIELGRUPPE:
+# - Profi-Köche & Gastronomen
+# - Lebensmittelwissenschaftler
+# - Forager & Wildsammler
+# - Ethnobotaniker & Food-Historiker
+# - Fermentation-Experten
+# - Ernährungsberater
+# - Food-Fotografen & Stylisten
+#
+# DESIGN-PHILOSOPHIE:
+# Jedes Feld muss eine klare FRAGE beantworten, die ein Profi stellen würde.
+# Die Daten müssen ACTIONABLE sein - nicht nur informativ.
+#
+# ═══════════════════════════════════════════════════════════════════════════════
 
 id: kulinarisch
 name: Kulinarisch
 symbol: 🍳
 
-# Trüffel-Gold Töne - warm leuchtend (0.65)
+# Trüffel-Gold Töne
 farben:
-  - "rgba(255, 200, 120, 0.65)"   # Pfifferling-Gold Hell
-  - "rgba(245, 185, 100, 0.65)"   # Trüffel-Gold
-  - "rgba(235, 170, 85, 0.65)"    # Steinpilz-Ocker
-  - "rgba(225, 155, 70, 0.65)"    # Waldgold
+  - "rgba(255, 200, 120, 0.65)"
+  - "rgba(245, 185, 100, 0.65)"
+  - "rgba(235, 170, 85, 0.65)"
+  - "rgba(225, 155, 70, 0.65)"
 
-# Welche Felder gehören zu dieser Perspektive?
+# ═══════════════════════════════════════════════════════════════════════════════
+# FELDER - Geordnet nach professionellem Workflow
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# Ein Koch/Sammler fragt in dieser Reihenfolge:
+# 1. Was ist das? (Identifikation)
+# 2. Kann ich das essen? (Sicherheit)
+# 3. Wie schmeckt/riecht/fühlt es sich an? (Sensorik)
+# 4. Wie bereite ich es zu? (Technik)
+# 5. Was passt dazu? (Komposition)
+# 6. Wie lagere ich es? (Logistik)
+# 7. Was ist der Nährwert? (Wissenschaft)
+# 8. Wie wird es traditionell verwendet? (Kultur)
+#
+# ═══════════════════════════════════════════════════════════════════════════════
+
 felder:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # IDENTIFIKATION
+  # ─────────────────────────────────────────────────────────────────────────────
   - bild
   - name
-  - geschmack
-  - zubereitung
-  - essbarkeit
-  - bewertung
-  - naehrwerte
-  - profil
 
-# Keywords für automatische Perspektiven-Erkennung bei Suche
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SICHERHEIT & EIGNUNG
+  # "Kann ich das essen? Was muss ich beachten?"
+  # ─────────────────────────────────────────────────────────────────────────────
+  - essbarkeit_status          # choice/essbar/bedingt/giftig
+  - essbarkeit_rating          # Kulinarische Qualität 0-10
+  - essbarkeit_voraussetzungen # Was muss erfüllt sein?
+  - essbarkeit_warnungen       # Kritische Hinweise
+  - essbarkeit_risikogruppen   # Schwangere, Allergiker, etc.
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SENSORISCHES PROFIL
+  # "Wie schmeckt/riecht/fühlt es sich an?"
+  # ─────────────────────────────────────────────────────────────────────────────
+  - sensorik                   # Radar: Geschmack, Umami, Textur, Aroma
+  - geschmack_primaer          # Hauptgeschmacksrichtungen
+  - geschmack_sekundaer        # Untertöne, Nachgeschmack
+  - aroma_profil               # Aromaverbindungen, Duftnoten
+  - textur_roh                 # Mundgefühl roh
+  - textur_gegart              # Mundgefühl nach Zubereitung
+  - optik                      # Farbe, Form, Ästhetik
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ZUBEREITUNGSTECHNIKEN
+  # "Wie bereite ich es optimal zu?"
+  # ─────────────────────────────────────────────────────────────────────────────
+  - zubereitung_methoden       # Array: Braten, Trocknen, etc.
+  - zubereitung_temperaturen   # Optimale Temperaturen pro Methode
+  - zubereitung_zeiten         # Garzeiten
+  - zubereitung_techniken      # Spezielle Techniken (Sous Vide, etc.)
+  - zubereitung_fehler         # Häufige Fehler vermeiden
+  - vorbereitung               # Putzen, Schneiden, Einweichen
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # KOMPOSITION & PAIRINGS
+  # "Was passt zusammen? Warum?"
+  # ─────────────────────────────────────────────────────────────────────────────
+  - pairings_klassisch         # Traditionelle Kombinationen
+  - pairings_modern            # Innovative Kombinationen
+  - pairings_getraenke         # Wein, Bier, Tee
+  - pairings_wissenschaft      # Geteilte Aromaverbindungen
+  - synergien                  # Umami-Verstärker, etc.
+  - kontraste                  # Texturen, Temperaturen
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # LAGERUNG & HALTBARKEIT
+  # "Wie bewahre ich Qualität?"
+  # ─────────────────────────────────────────────────────────────────────────────
+  - lagerung_temperatur        # Range: Optimale Temperatur
+  - lagerung_luftfeuchtigkeit  # Text: Prozent-Bereich
+  - lagerung_behaelter         # Text: Behälter-Empfehlung
+  - lagerung_haltbarkeit_tage  # Zahl: Tage haltbar
+  - lagerung_indikatoren       # Woran erkenne ich Frische?
+  - konservierung              # Bar: Methoden mit Qualitätserhalt
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # NÄHRWERT & WISSENSCHAFT
+  # "Was nehme ich zu mir?"
+  # ─────────────────────────────────────────────────────────────────────────────
+  - naehrwerte                 # Makros: Protein, Fett, KH
+  - naehrwert_highlights       # Besondere Nährstoffe
+  - bioaktive_substanzen       # Ergothionein, Beta-Glucan, etc.
+  - bioverfuegbarkeit          # Was wird tatsächlich aufgenommen?
+  - wechselwirkungen           # Mit Medikamenten, anderen Lebensmitteln
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # KULTURELLER KONTEXT
+  # "Wie wird es weltweit verwendet?"
+  # ─────────────────────────────────────────────────────────────────────────────
+  - traditionen                # Kulturen, Namen, Gerichte
+  - saisonalitaet              # Wann ist Saison?
+  - verfuegbarkeit             # Wild/Zucht, Regional
+  - nachhaltigkeit             # Ökologischer Fußabdruck
+  - geschichte                 # Historische Verwendung
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # BEWERTUNG
+  # ─────────────────────────────────────────────────────────────────────────────
+  - bewertung                  # Gesamtbewertung
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# KEYWORDS - Für semantische Suche
+# ═══════════════════════════════════════════════════════════════════════════════
+
 keywords:
+  # Essbarkeit
   - essbar
-  - essen
+  - giftig
+  - ungenießbar
+  - bedingt essbar
+  - roh essbar
+  - delikatesse
+  - choice
+  - edelpilz
+  
+  # Zubereitung
   - kochen
   - braten
+  - dünsten
+  - grillen
+  - schmoren
+  - trocknen
+  - einlegen
+  - fermentieren
+  - roh
+  - blanchieren
+  - sous vide
+  - räuchern
+  - einkochen
+  - kandieren
+  
+  # Geschmack
   - geschmack
-  - zubereitung
-  - rezept
-  - speise
   - würzig
   - mild
   - nussig
   - umami
+  - bitter
+  - süß
+  - sauer
+  - erdig
+  - fruchtig
+  - pfeffrig
+  - fleischig
+  - rauchig
+  - mineralisch
+  
+  # Textur
+  - textur
+  - fest
+  - zart
+  - knackig
+  - cremig
+  - faserig
+  - schwammig
+  - knusprig
+  - bissfest
+  - schmelzend
+  
+  # Aroma
   - aroma
-  - lecker
-  - köstlich
-  - delikat
+  - duft
+  - geruch
+  - aromatisch
+  - intensiv
+  - dezent
+  - pilzig
+  - waldig
+  - blumig
+  
+  # Pairings
+  - passt zu
+  - kombinieren
+  - pairing
+  - begleiter
+  - dazu
+  - harmonie
+  
+  # Lagerung
+  - lagerung
+  - haltbarkeit
+  - konservieren
+  - einfrieren
+  - aufbewahren
+  
+  # Kultur
+  - traditionell
+  - regional
+  - saisonal
+  - heimisch
+  - wildsammlung
+  - zucht

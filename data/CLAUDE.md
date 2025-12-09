@@ -4,123 +4,57 @@ Beispieldaten für AMORPH. **Datenstruktur bestimmt den Morph!**
 
 ## pilze.json - Datenstruktur
 
-Das Daten-Format unterstützt alle Morph-Typen durch automatische Erkennung:
+11 Pilze mit Daten für 17 Perspektiven:
+
+| Pilz | Besondere Perspektiven-Daten |
+|------|------------------------------|
+| Steinpilz | Ökologie, Geografie, Temporal |
+| Shiitake | Chemie, Sensorik, Wirtschaft |
+| Knollenblätterpilz | Kultur, Naturschutz, Forschung |
+| Birkenporling | Forschung, Interaktionen, Visual |
+| Fliegenpilz | Kultur, Temporal, Visual, Ökologie |
+| Cordyceps | Wirtschaft, Interaktionen, Chemie |
+| Champignon | Chemie, Sensorik, Wirtschaft, Anbau |
+
+## Datenformat
 
 ```javascript
 {
-  // Basis-Felder (typ aus schema/felder.yaml)
+  // Basis-Felder
   "id": "string",
   "slug": "string",
   "name": "string",
   "wissenschaftlich": "string",
-  "essbarkeit": "string",        // → badge (via keywords)
-  "beschreibung": "string",      // → text
-  "saison": "string",            // → tag
-  "bild": "string",              // → image
 
   // AUTO-ERKANNT aus Struktur
-  "temperatur": { "min": 10, "max": 25 },  // → range (mit Legende)
-  "standort": ["Nadelwald", "Mischwald"],  // → list
-  "verwechslung": ["Gallenröhrling"],      // → list
-  
-  // Zahlen-Erkennung
-  "bewertung": 4.8,              // 0-10 Dezimal → rating
-  "beliebtheit": 92,             // 0-100 Integer → progress
+  "temperatur": { "min": 10, "max": 25 },  // → range
+  "naehrwerte": { "Protein": 26, ... },    // → pie
+  "profil": [{ "axis": "X", "value": 95 }], // → radar
+  "bewertung": 4.8,                         // → rating
+  "beliebtheit": 92,                        // → progress
 
-  // Objekt-Erkennung
-  "naehrwerte": {                // Nur Zahlen → pie (mit Legende)
-    "Protein": 26,
-    "Kohlenhydrate": 52,
-    "Fett": 8
-  },
-  
-  // Array-Erkennung  
-  "profil": [                    // [{axis, value}] 3+ → radar (mit Achsen)
-    { "axis": "Geschmack", "value": 95 },
-    { "axis": "Textur", "value": 85 },
-    { "axis": "Aroma", "value": 90 }
-  ],
-  
-  "wirkstoffe": [                // [{label, value}] → bar (mit Legende)
-    { "label": "Ergothionein", "value": 4.2, "unit": "mg" }
-  ],
-  
-  "ernte_stats": {               // {min, max, avg} → stats (mit Legende)
-    "min": 80,
-    "max": 350,
-    "avg": 180,
-    "count": 156
-  },
-  
-  "lebenszyklus": [              // [{date, event}] → timeline (mit Legende)
-    { "date": "Frühjahr", "event": "Myzel-Aktivierung" },
-    { "date": "Herbst", "event": "Haupternte", "active": true }
-  ],
-  
-  "verfuegbarkeit": "verfügbar"  // String mit Keyword → badge (gedämpfte Farben)
+  // Perspektiven-Felder (Beispiele)
+  "chemie_primaer_metabolite": [...],
+  "chemie_sekundaer_metabolite": [...],
+  "sensorik_aroma": { "profile": [...] },
+  "oekologie_symbiose_partner": [...],
+  "wirtschaft_preise": { ... },
+  "kultur_mythologie": [...],
+  "forschung_publikationen": [...]
 }
 ```
 
 ## Datengetrieben-Prinzip
 
-**Keine expliziten Typ-Angaben nötig!** Die Pipeline erkennt:
+**Keine expliziten Typ-Angaben nötig!** Die Pipeline erkennt automatisch:
 
-| Datenstruktur | Erkannter Morph | Features |
-|---------------|-----------------|----------|
-| `{min, max}` | range | + Legende |
-| `{min, max, avg}` | stats | + Legende |
-| `{A: 30, B: 50}` (nur Zahlen) | pie | + Segment-Legende |
-| `[{axis, value}]` (3+) | radar | + Achsen-Labels |
-| `[{date, event}]` | timeline | + Zeitachse |
-| `[{label, value}]` | bar (6+) oder pie (≤6) | + Legende |
-| `4.8` (0-10 Dezimal) | rating | Sterne |
-| `92` (0-100 Integer) | progress | Prozent |
-| `"essbar"` (Badge-Keyword) | badge | Gedämpfte Farben |
-
-## Eigene Daten
-
-1. JSON-Datei in `data/` erstellen
-2. `config/daten.yaml` anpassen:
-
-```yaml
-quelle:
-  typ: json
-  url: ./data/meine-daten.json
-```
-
-## Externe Datenquellen
-
-### PocketBase
-
-```yaml
-quelle:
-  typ: pocketbase
-  url: https://api.example.com
-  sammlung: items
-```
-
-### REST API
-
-```yaml
-quelle:
-  typ: rest
-  url: https://api.example.com/items
-  headers:
-    Authorization: Bearer ${API_TOKEN}
-```
-
-## Schema
-
-Das Schema in `daten.yaml` ist optional, hilft aber bei der Validierung:
-
-```yaml
-schema:
-  id: string
-  name: string
-  preis: number
-  aktiv: boolean
-  temperatur:
-    typ: range
-    einheit: °C
-  tags: array
-```
+| Datenstruktur | Erkannter Morph |
+|---------------|-----------------|
+| `{min, max}` | range |
+| `{min, max, avg}` | stats |
+| `{A: 30, B: 50}` (nur Zahlen) | pie |
+| `[{axis, value}]` (3+) | radar |
+| `[{date, event}]` | timeline |
+| `[{label, value}]` | bar |
+| `4.8` (0-10 Dezimal) | rating |
+| `92` (0-100 Integer) | progress |

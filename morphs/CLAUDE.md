@@ -7,27 +7,12 @@ Reine Funktionen. Keine Klassen. Kein Zustand. **Keine Seiteneffekte!**
 ```
 morphs/
 ├── index.js          ← Zentrale Registry + compareMorph()
-├── compare/          ← Compare-Morphs für Vergleichs-Ansicht
-│   ├── base.js       ← Utils: erstelleFarben(), detectType(), createSection()
+├── primitives/       ← 16 Basis-Morphs (text, bar, radar, etc.)
+├── compare/          ← Generische Compare-Morphs
+│   ├── base.js       ← Utils: erstelleFarben(), detectType()
 │   ├── index.js      ← Export aller Compare-Morphs
-│   └── primitives/   ← 16 Compare-Primitives (bar, pie, radar, etc.)
-├── text.js           ← String-Darstellung
-├── number.js         ← Zahlen mit Unit/Prefix
-├── boolean.js        ← Ja/Nein Icons
-├── tag.js            ← Farbige Chips
-├── badge.js          ← Status-Labels
-├── range.js          ← Min-Max Slider
-├── list.js           ← String-Listen
-├── object.js         ← Key-Value Tabellen
-├── image.js          ← Bilder
-├── link.js           ← URLs
-├── pie.js            ← Kreisdiagramm
-├── bar.js            ← Balkendiagramm
-├── radar.js          ← Radar-Chart
-├── rating.js         ← Sterne-Bewertung
-├── progress.js       ← Fortschrittsbalken
-├── stats.js          ← Statistik-Box
-├── timeline.js       ← Zeitliche Abfolge
+│   ├── primitives/   ← 16 Compare-Primitives
+│   └── composites/   ← Smart/Diff Compare
 ├── suche.js          ← Feature: Suchfeld
 ├── perspektiven.js   ← Feature: Perspektiven-Buttons
 └── header.js         ← Feature: App-Header
@@ -48,52 +33,44 @@ document.addEventListener()  // → Nie global!
 
 **Morphs sind REINE Transformationen:** `(wert, config) → HTMLElement`
 
-## Compare-Morphs
+## Theme-Compare-Morphs
 
-Für die Vergleichs-Ansicht. Alle Items einer Perspektive nebeneinander.
+Perspektiven-spezifische Vergleiche in `themes/pilze/morphs/compare/`:
 
-### Farb-System (base.js)
+| Perspektive | Datei | Fokus |
+|-------------|-------|-------|
+| kulinarisch | kulinarisch.js | Geschmack, Zubereitung |
+| sicherheit | sicherheit.js | Toxine, Verwechslung |
+| anbau | anbau.js | Substrate, Ertrag |
+| wissenschaft | wissenschaft.js | Taxonomie, Genetik |
+| medizin | medizin.js | Wirkstoffe, Therapie |
+| statistik | statistik.js | Fundstatistik |
+| chemie | chemie.js | Metabolite, Enzyme |
+| sensorik | sensorik.js | Aroma, Textur |
+| oekologie | oekologie.js | Habitat, Symbiosen |
+| temporal | temporal.js | Lebenszyklus |
+| geografie | geografie.js | Verbreitung |
+| wirtschaft | wirtschaft.js | Markt, Preise |
+| naturschutz | naturschutz.js | IUCN-Status |
+| kultur | kultur.js | Mythologie |
+| forschung | forschung.js | Publikationen |
+| interaktionen | interaktionen.js | Wirte, Mikrobiom |
+| visual | visual.js | Bilder, Farben |
+
+## Farb-System (CSS Single Source of Truth!)
 
 ```javascript
-// erstelleFarben(items) - CSS Single Source of Truth
+// base.js - erstelleFarben()
 export function erstelleFarben(items) {
   return items.map((item, index) => ({
-    name: item._meta?.name || item.name || `Item ${index + 1}`,
-    farbIndex: index % 12,           // 0-11
-    farbKlasse: `pilz-farbe-${index % 12}`  // CSS-Klasse
+    name: item._meta?.name || item.name,
+    farbIndex: index % 12,
+    farbKlasse: `pilz-farbe-${index % 12}`
   }));
 }
 ```
 
-**Styling via CSS** (`pilz-farben.css`):
+**CSS macht das Styling** (`pilz-farben.css`):
 ```css
 .pilz-farbe-0 { --pilz-text: rgb(0, 255, 255); }
 ```
-
-### FALLBACK_FARBEN (nur für farbDistanz)
-
-In `base.js` für Distance-Calculation - RGB muss mit CSS synchron sein:
-
-```javascript
-const FALLBACK_FARBEN = [
-  [0, 255, 255],    // Electric Cyan
-  [255, 0, 255],    // Electric Magenta
-  [0, 255, 0],      // Radioactive Green
-  // ... 12 total
-];
-```
-
-## Datengetriebene Typ-Erkennung
-
-Pipeline erkennt Morphs anhand der **DATENSTRUKTUR**:
-
-```javascript
-// Automatisch erkannt:
-{ min: 0, max: 10 }           // → range
-{ avg: 5, min: 0, max: 10 }   // → stats  
-[{ axis: "x", value: 5 }]     // → radar
-"https://..."                 // → link
-true / false                  // → boolean
-```
-
-Konfiguriert in `config/morphs.yaml`.

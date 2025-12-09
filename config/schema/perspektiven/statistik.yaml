@@ -19,6 +19,9 @@ felder:
   - bewertung
   - beliebtheit
   - ernte_stats
+  - fundstatistik
+  - popularitaet_trend
+  - vergleich_aggregate
   - naehrwerte
   - wirkstoffe
   - profil
@@ -37,3 +40,6 @@ keywords:
   - ranking
   - top
   - beste
+  - trend
+  - fund
+  - saison

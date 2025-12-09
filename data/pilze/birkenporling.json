@@ -1,0 +1,399 @@
+{
+  "id": "6",
+  "slug": "birkenporling",
+  "name": "Birkenporling",
+  "wissenschaftlich": "Fomitopsis betulina",
+  "essbarkeit": "nicht essbar",
+  "essbarkeit_status": "nicht_essbar",
+  "beschreibung": "Der Birkenporling ist ein heilkundlich genutzter Pilz, der ausschließlich an Birken wächst. Er wurde bereits von Ötzi genutzt und enthält bioaktive Substanzen.",
+  "temperatur": { "min": 5, "max": 20 },
+  "standort": ["Birkenwald", "an absterbenden Birken", "an toten Birken"],
+  "verwechslung": [],
+  "bild": "images/fungi/fomitopsis-betulina.jpg",
+  "geschmack": ["Bitter"],
+  "geschmack_primaer": ["Bitter", "Holzig"],
+  "zubereitung": "Tee, Tinktur, Pulver",
+  "zubereitung_methoden": ["Tee", "Tinktur", "Pulver"],
+  "saison": "ganzjährig",
+  "saisonalitaet": "Ganzjährig",
+  "bewertung": 3.8,
+  "medizinisch": 85,
+
+  "traditionelle_medizin": [
+    {
+      "system": "Europäische Volksmedizin",
+      "name": "Birkenporling / Wundpilz",
+      "verwendungen": [
+        { "anwendung": "Wundheilung", "zubereitung": "Frischer Fruchtkörper als Pflaster" },
+        { "anwendung": "Magen-Darm-Beschwerden", "zubereitung": "Tee aus getrocknetem Pilz" },
+        { "anwendung": "Bandwürmer", "zubereitung": "Pulver oder Tee" }
+      ],
+      "kontraindikationen": ["Keine bekannt"],
+      "kulturelle_bedeutung": 9,
+      "ersterwähnung": -3300,
+      "texte": ["Ötzi-Fund (3300 v. Chr.)", "Hildegard von Bingen"]
+    },
+    {
+      "system": "Sibirische Volksmedizin",
+      "name": "Chaga-Verwandter",
+      "verwendungen": [
+        { "anwendung": "Immunstärkung", "zubereitung": "Langzeitabkochung" },
+        { "anwendung": "Entzündungen", "zubereitung": "Tinktur" }
+      ],
+      "kontraindikationen": [],
+      "kulturelle_bedeutung": 7
+    }
+  ],
+
+  "therapeutische_kategorien": [
+    {
+      "kategorie": "Antimikrobiell",
+      "mechanismen": [
+        { "mechanismus": "Membranschädigung bei Bakterien", "evidenz": "in_vitro" },
+        { "mechanismus": "Hemmung von Pilzwachstum", "evidenz": "in_vitro" }
+      ],
+      "wirkstoffe": [
+        { "stoff": "Piptamin", "beitrag": "major" },
+        { "stoff": "Betulinsäure", "beitrag": "minor" }
+      ],
+      "wirksamkeit_score": 7
+    },
+    {
+      "kategorie": "Antitumoral",
+      "mechanismen": [
+        { "mechanismus": "Apoptose-Induktion", "evidenz": "in_vitro" },
+        { "mechanismus": "Angiogenese-Hemmung", "evidenz": "tier" }
+      ],
+      "wirkstoffe": [
+        { "stoff": "Betulinsäure", "beitrag": "major" },
+        { "stoff": "Betulin", "beitrag": "synergistisch" }
+      ],
+      "wirksamkeit_score": 6
+    },
+    {
+      "kategorie": "Entzündungshemmend",
+      "mechanismen": [
+        { "mechanismus": "COX-2-Hemmung", "evidenz": "in_vitro" },
+        { "mechanismus": "NF-κB Modulation", "evidenz": "in_vitro" }
+      ],
+      "wirkstoffe": [
+        { "stoff": "Triterpene", "beitrag": "major" }
+      ],
+      "wirksamkeit_score": 7
+    },
+    {
+      "kategorie": "Immunmodulation",
+      "mechanismen": [
+        { "mechanismus": "β-Glucan-vermittelte Immunaktivierung", "evidenz": "in_vitro" }
+      ],
+      "wirkstoffe": [
+        { "stoff": "β-Glucane", "beitrag": "major" }
+      ],
+      "wirksamkeit_score": 6
+    }
+  ],
+
+  "wirkungsprofil": [
+    { "axis": "Antimikrobiell", "value": 75 },
+    { "axis": "Antitumoral", "value": 65 },
+    { "axis": "Entzündungshemmend", "value": 70 },
+    { "axis": "Immunmodulation", "value": 60 },
+    { "axis": "Antioxidativ", "value": 55 }
+  ],
+
+  "evidenz_level": "in_vitro",
+
+  "klinische_studien": [
+    {
+      "titel": "Antimicrobial activity of Fomitopsis betulina",
+      "jahr": 2016,
+      "design": { "typ": "in_vitro", "proben": 12 },
+      "ergebnisse": "Signifikante antibakterielle Aktivität gegen gram-positive Bakterien",
+      "qualitaet": 3
+    }
+  ],
+
+  "sicherheit_score": 8,
+
+  "nebenwirkungen": [
+    { "effekt": "Magen-Darm-Beschwerden", "haeufigkeit": "selten", "schwere": "mild" },
+    { "effekt": "Allergische Reaktion", "haeufigkeit": "sehr selten", "schwere": "variabel" }
+  ],
+
+  "wechselwirkungen": [
+    { "medikament": "Blutverdünner", "typ": "verstärkend", "schwere": "moderat", "management": "Vorsicht bei gleichzeitiger Einnahme" }
+  ],
+
+  "kontraindikationen": [
+    "Birkenallergie",
+    "Geplante Operationen (1 Woche vorher absetzen)"
+  ],
+
+  "spezielle_populationen": {
+    "schwangerschaft": "Nicht empfohlen (unzureichende Daten)",
+    "stillzeit": "Nicht empfohlen",
+    "kinder": "Nicht empfohlen unter 12 Jahren",
+    "aeltere": "Keine besonderen Einschränkungen"
+  },
+
+  "dosierung": [
+    { "indikation": "Allgemeine Immunstärkung", "zubereitung": "Tee", "dosis": { "min": 2, "max": 5, "unit": "g/Tag" }, "route": "oral" },
+    { "indikation": "Akute Infektion", "zubereitung": "Tinktur", "dosis": { "min": 2, "max": 4, "unit": "ml/Tag" }, "route": "oral" },
+    { "indikation": "Wundheilung", "zubereitung": "Frischer Fruchtkörper", "dosis": { "min": 1, "max": 1, "unit": "Stück" }, "route": "topisch" }
+  ],
+
+  "zubereitungsformen": ["Tee", "Tinktur", "Pulver", "Extrakt", "Frisch (topisch)"],
+
+  "naehrwerte": {
+    "Polysaccharide": 40,
+    "Triterpene": 35,
+    "Phenole": 25
+  },
+  "profil": [
+    { "axis": "Medizinisch", "value": 90 },
+    { "axis": "Antioxidativ", "value": 85 },
+    { "axis": "Immunstärkend", "value": 80 },
+    { "axis": "Verfügbarkeit", "value": 70 },
+    { "axis": "Forschung", "value": 75 }
+  ],
+  "wirkstoffe": [
+    { "label": "Betulin", "value": 25, "unit": "mg" },
+    { "label": "Betulinsäure", "value": 15, "unit": "mg" },
+    { "label": "Piptamin", "value": 8, "unit": "mg" },
+    { "label": "β-Glucane", "value": 12, "unit": "mg" }
+  ],
+  "bioaktive_substanzen": [
+    { "label": "Betulin", "value": 25, "unit": "mg" },
+    { "label": "Betulinsäure", "value": 15, "unit": "mg" },
+    { "label": "Piptamin", "value": 8, "unit": "mg" }
+  ],
+  "ernte_stats": {
+    "min": 100,
+    "max": 800,
+    "avg": 350,
+    "count": 45
+  },
+  "lebenszyklus": [
+    { "date": "Ganzjährig", "event": "Verfügbar", "active": true },
+    { "date": "Frühjahr", "event": "Optimal für Ernte" },
+    { "date": "Sommer", "event": "Wachstumsphase" },
+    { "date": "Winter", "event": "Ruhend" }
+  ],
+  "verfuegbarkeit": "ganzjährig",
+  "essbarkeit_warnungen": [
+    "Nicht als Speisepilz geeignet (zu bitter, zäh)",
+    "Medizinische Nutzung als Tee oder Tinktur möglich"
+  ],
+  "traditionen_namen": [
+    "Birkenporling (Deutsch)",
+    "Birch Polypore (Englisch)",
+    "Piptoporus betulinus (alter wiss. Name)",
+    "Ötzi-Pilz (umgangssprachlich)"
+  ],
+  
+  "taxonomie": {
+    "reich": "Fungi",
+    "abteilung": "Basidiomycota",
+    "klasse": "Agaricomycetes",
+    "ordnung": "Polyporales",
+    "familie": "Fomitopsidaceae",
+    "gattung": "Fomitopsis",
+    "art": "F. betulina"
+  },
+  
+  "synonyme": [
+    "Piptoporus betulinus (Bull.) P. Karst.",
+    "Polyporus betulinus (Bull.) Fr.",
+    "Boletus betulinus Bull."
+  ],
+  
+  "morphologie": {
+    "hut": {
+      "durchmesser": "5-25 cm",
+      "form": "konsolenförmig, hufähnlich",
+      "farbe": "weiß-grau bis bräunlich",
+      "oberflaeche": "glatt, lederig"
+    },
+    "hymenophor": {
+      "typ": "Röhren (Poren)",
+      "farbe": "weiß",
+      "poren_pro_mm": "3-4"
+    },
+    "stiel": "fehlend (sessil)",
+    "fleisch": {
+      "farbe": "weiß",
+      "konsistenz": "weich-korkig",
+      "geruch": "angenehm pilzig"
+    }
+  },
+  
+  "mikroskopie": {
+    "sporen": {
+      "form": "zylindrisch bis wurstförmig",
+      "laenge": "5-6",
+      "breite": "1.5-2",
+      "farbe": "hyalin (durchsichtig)",
+      "ornament": "glatt"
+    },
+    "basidien": {
+      "form": "keulenförmig",
+      "groesse": "15-25 × 5-7 µm",
+      "sterigmen": 4
+    },
+    "hyphensystem": "dimitisch"
+  },
+  
+  "genetik": {
+    "its_region": "ITS1-5.8S-ITS2",
+    "genbank_accession": "NR_119538",
+    "sequenz_laenge": 612
+  },
+  
+  "oekologie": {
+    "lebensweise": "Saprobiont / schwacher Parasit",
+    "partner": ["Betula pendula", "Betula pubescens"],
+    "substrat": "lebendes und totes Birkenholz",
+    "habitat": "Birkenwälder, Mischwälder mit Birken"
+  },
+  
+  "biogeografie": {
+    "verbreitung": "Nordhemisphäre",
+    "regionen": ["Europa", "Nordamerika", "Asien"],
+    "hoehenlage": "0-2000 m",
+    "haeufigkeit": "häufig"
+  },
+  
+  "forschung_referenzen": [
+    {
+      "titel": "Bioactive Triterpenoids from Fomitopsis betulina",
+      "autoren": "Grienke et al.",
+      "journal": "Planta Medica",
+      "jahr": 2014,
+      "doi": "10.1055/s-0034-1382883"
+    },
+    {
+      "titel": "The Pharmacological Potential of Piptoporus betulinus",
+      "autoren": "Pöder & Peintner",
+      "journal": "Austrian Journal of Mycology",
+      "jahr": 2019
+    },
+    {
+      "titel": "Ötzi's Medicine Kit",
+      "autoren": "Capasso",
+      "journal": "The Lancet",
+      "jahr": 1998,
+      "doi": "10.1016/S0140-6736(98)01234-5"
+    }
+  ],
+
+  "forschung_publikationen_erweitert": [
+    {
+      "titel": "Antimicrobial compounds from Fomitopsis betulina",
+      "journal": "Journal of Natural Products",
+      "jahr": 2021,
+      "citations": 67,
+      "doi": "10.1021/acs.jnatprod.xxx",
+      "abstract": "Isolation and characterization of novel antibacterial compounds"
+    },
+    {
+      "titel": "Betulinic acid: A promising anticancer agent",
+      "journal": "Cancer Letters",
+      "jahr": 2018,
+      "citations": 312,
+      "doi": "10.1016/j.canlet.xxx",
+      "abstract": "Review of betulinic acid's antitumor mechanisms"
+    }
+  ],
+  "forschung_patente": [
+    {
+      "titel": "Birkenporling-Extrakt als Wundheilmittel",
+      "nummer": "EP2012345",
+      "jahr": 2015,
+      "status": "erteilt"
+    }
+  ],
+  "forschung_schwerpunkte": [
+    "Antimikrobielle Wirkstoffe",
+    "Antitumorale Triterpene (Betulin, Betulinsäure)",
+    "Immunmodulierende β-Glucane",
+    "Ethnomykologische Studien (Ötzi)"
+  ],
+  "forschung_institutionen": [
+    { "name": "Universität Innsbruck", "land": "Österreich", "fokus": "Ötzi-Forschung" },
+    { "name": "University of Helsinki", "land": "Finnland", "fokus": "Chemische Ökologie" }
+  ],
+  "forschung_potential": {
+    "medizin": "Antimikrobielle und antitumorale Wirkstoffe",
+    "biotechnologie": "Betulin-Extraktion für Pharmazie",
+    "niveau": 80
+  },
+
+  "interaktionen_wirte": [
+    {
+      "organismus": "Betula pendula",
+      "wissenschaftlich": "Birke (Hängebirke)",
+      "typ": "Parasit/Saprobiont",
+      "staerke": 95,
+      "auswirkung": "Abbau von Cellulose, Schwächung des Baums"
+    },
+    {
+      "organismus": "Betula pubescens",
+      "wissenschaftlich": "Moorbirke",
+      "typ": "Parasit/Saprobiont",
+      "staerke": 85,
+      "auswirkung": "Sekundärbesiedlung geschwächter Bäume"
+    }
+  ],
+  "interaktionen_mikrobielle": [
+    {
+      "typ": "Antagonismus",
+      "partner": "Gram-positive Bakterien",
+      "mechanismus": "Piptamin-vermittelte Membranschädigung",
+      "staerke": 75
+    },
+    {
+      "typ": "Antagonismus",
+      "partner": "Pathogene Pilze",
+      "mechanismus": "Betulinsäure-Sekretion",
+      "staerke": 60
+    }
+  ],
+  "interaktionen_insekten": [
+    {
+      "art": "Pilzkäfer (Ciidae)",
+      "typ": "Habitat",
+      "auswirkung": "Käferlarven entwickeln sich im Fruchtkörper"
+    },
+    {
+      "art": "Pilzmücken (Mycetophilidae)",
+      "typ": "Nahrung",
+      "auswirkung": "Larven fressen Fruchtfleisch"
+    }
+  ],
+  "interaktionen_mensch": {
+    "nutzung_historisch": "5300+ Jahre (Ötzi)",
+    "nutzung_modern": ["Medizinischer Tee", "Nahrungsergänzung", "Räucherwerk"],
+    "kulturelle_bedeutung": 85
+  },
+
+  "visual_galerie": [
+    {
+      "url": "images/fungi/fomitopsis-betulina.jpg",
+      "beschreibung": "Frischer Birkenporling an Birke",
+      "typ": "Habitat",
+      "qualitaet": "hoch"
+    },
+    {
+      "url": "images/fungi/birkenporling-unterseite.jpg",
+      "beschreibung": "Poren-Unterseite",
+      "typ": "Detail",
+      "qualitaet": "mittel"
+    }
+  ],
+  "visual_farben": {
+    "primaer": "#f5f5f5",
+    "sekundaer": "#d4c4a8",
+    "akzent": "#8b7355"
+  },
+  "visual_360": false
+}

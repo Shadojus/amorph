@@ -1,44 +1,66 @@
 # Themes
 
-## Zweck
-
-Theme-spezifische Anpassungen für verschiedene Datendomänen (Pilze, Pflanzen, etc.).
+Theme-spezifische Anpassungen für verschiedene Datendomänen.
 
 ## Struktur
 
 ```
 themes/
-└── [thema]/
-    ├── config/        # Theme-spezifische Konfiguration (optional)
-    │   └── *.yaml
-    ├── data/          # Theme-spezifische Daten (optional)
-    │   └── *.json
+└── pilze/
     └── morphs/
-        └── compare/   # Perspektiven-spezifische Compare-Morphs
-            ├── index.js
-            └── [perspektive].js
+        └── compare/           # 17 Perspektiven-Compare-Morphs
+            ├── index.js       # Export aller Compare-Morphs
+            ├── kulinarisch.js
+            ├── sicherheit.js
+            ├── anbau.js
+            ├── wissenschaft.js
+            ├── medizin.js
+            ├── statistik.js
+            ├── chemie.js      # NEU
+            ├── sensorik.js    # NEU
+            ├── oekologie.js   # NEU
+            ├── temporal.js    # NEU
+            ├── geografie.js   # NEU
+            ├── wirtschaft.js  # NEU
+            ├── naturschutz.js # NEU
+            ├── kultur.js      # NEU
+            ├── forschung.js   # NEU
+            ├── interaktionen.js # NEU
+            └── visual.js      # NEU
 ```
 
-## Theme-Austauschbarkeit
+## 17 Perspektiven-Compare-Morphs
 
-Das System ist so konzipiert, dass ein Theme-Wechsel automatisch funktioniert:
+Jeder Compare-Morph hat dieselbe Signatur:
 
-1. **Gleiche Schema-Struktur**: Perspektiven mit `felder` Array
-2. **Gleiche Compare-Morph-Signatur**: `(items, perspektive, schema) → HTMLElement`
-3. **Datengetriebene Erkennung**: `detectType()` erkennt Typen aus Datenstruktur
-
-### Beispiel: Neues Theme "pflanzen"
-
+```javascript
+export function compareChemie(items, perspektive, schema) {
+  // items = Array von Pilz-Objekten
+  // perspektive = { id, name, symbol, farben, felder }
+  // schema = Komplettes Schema mit felder-Definitionen
+  return HTMLElement;
+}
 ```
-themes/
-├── pilze/           # Bestehend
-└── pflanzen/        # Neu
-    └── morphs/
-        └── compare/
-            ├── index.js
-            ├── kulinarisch.js   # Andere Felder, gleiche Signatur
-            ├── heilkunde.js     # Neue Perspektive
-            └── botanik.js       # Neue Perspektive
+
+### Struktur eines Compare-Morphs
+
+```javascript
+// Gruppen definieren
+const gruppen = {
+  'primaer': { titel: 'Primäre Metabolite', felder: [...] },
+  'sekundaer': { titel: 'Sekundäre Metabolite', felder: [...] }
+};
+
+// Sections erstellen
+function addSection(container, titel, inhalt) { ... }
+function addGroupHeader(container, symbol, titel) { ... }
+
+// Main-Funktion
+export function comparePerspektive(items, perspektive, schema) {
+  const container = document.createElement('div');
+  // Gruppen durchlaufen, Felder vergleichen
+  return container;
+}
 ```
 
 ## Integration

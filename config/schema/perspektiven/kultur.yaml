@@ -1,0 +1,60 @@
+# Perspektive: Kultur - Traditions-Braun
+# Erdiges Braun wie alte Traditionen
+
+id: kultur
+name: Kultur
+symbol: 🎭
+
+# Traditions-Braun Töne - kulturell (0.65)
+farben:
+  - "rgba(180, 140, 100, 0.65)"   # Tradition-Braun
+  - "rgba(165, 125, 85, 0.65)"    # Geschichte-Sepia
+  - "rgba(150, 110, 70, 0.65)"    # Antik-Braun
+  - "rgba(135, 95, 55, 0.65)"     # Erde-Braun
+
+# Welche Felder gehören zu dieser Perspektive?
+felder:
+  - bild
+  - name
+  - traditionen_namen
+  # Ethnomykologie
+  - ethnomykologie
+  - indigene_namen
+  - kulturelle_bedeutung
+  - verwendungen
+  - wissenssystem
+  - spirituelle_bedeutung
+  - rituale
+  - tabus
+  - mythologie
+  # Geschichte
+  - historische_referenzen
+  - zeitperiode
+  - artefakte
+  - texte
+  # Kunst & Literatur
+  - kunst_referenzen
+  - literatur
+  - film
+  - musik
+  # Moderne Kultur
+  - popkultur
+  - bewegungen
+  - tourismus
+  - festivals
+
+# Keywords für automatische Perspektiven-Erkennung bei Suche
+keywords:
+  - kultur
+  - tradition
+  - geschichte
+  - ethnomykologie
+  - ritual
+  - spirituell
+  - mythologie
+  - kunst
+  - literatur
+  - festival
+  - tourismus
+  - indigene
+  - volksmedizin

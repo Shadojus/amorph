@@ -1,0 +1,56 @@
+# Perspektive: Interaktionen - Netzwerk-Magenta
+# Lebendiges Magenta wie Beziehungsnetzwerke
+
+id: interaktionen
+name: Interaktionen
+symbol: 🔗
+
+# Netzwerk-Magenta Töne - verbindend (0.65)
+farben:
+  - "rgba(220, 120, 180, 0.65)"   # Netzwerk-Magenta
+  - "rgba(205, 105, 165, 0.65)"   # Symbiose-Pink
+  - "rgba(190, 90, 150, 0.65)"    # Interaktion-Rose
+  - "rgba(175, 75, 135, 0.65)"    # Beziehung-Fuchsia
+
+# Welche Felder gehören zu dieser Perspektive?
+felder:
+  - bild
+  - name
+  - wissenschaftlich
+  # Multi-Species
+  - multispecies_interaktionen
+  - netzwerk_position
+  - interaktions_stabilitaet
+  # Chemische Ökologie
+  - chemische_oekologie
+  - allelopathie
+  - chemische_kommunikation
+  - abwehrstoffe
+  # Mikrobiom
+  - mikrobiom
+  - assoziierte_bakterien
+  - assoziierte_pilze
+  - community_struktur
+  # Wirt-Interaktionen
+  - wirt_interaktionen
+  - symbionten
+  - parasiten
+  - konkurrenten
+  # Netzwerk
+  - mykorrhiza_netzwerk
+  - naehrstoff_transfer
+  - signal_transfer
+
+# Keywords für automatische Perspektiven-Erkennung bei Suche
+keywords:
+  - interaktion
+  - netzwerk
+  - symbiose
+  - beziehung
+  - mikrobiom
+  - allelopathie
+  - kommunikation
+  - wirt
+  - partner
+  - konkurrenz
+  - kooperation

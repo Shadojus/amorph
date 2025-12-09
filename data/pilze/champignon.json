@@ -1,0 +1,130 @@
+{
+  "id": "4",
+  "slug": "champignon",
+  "name": "Wiesenchampignon",
+  "wissenschaftlich": "Agaricus campestris",
+  "essbarkeit": "essbar",
+  "essbarkeit_status": "essbar",
+  "beschreibung": "Der Wiesenchampignon ist ein häufiger Speisepilz auf Wiesen und Weiden. Er hat weißes Fleisch, das sich bei Anschnitt leicht rosa färbt.",
+  "temperatur": { "min": 12, "max": 25 },
+  "standort": ["Wiesen", "Weiden", "Parkrasen", "Gärten"],
+  "verwechslung": ["Knollenblätterpilz", "Karbolchampignon"],
+  "bild": "images/fungi/placeholder.svg",
+  "geschmack": ["Mild", "Angenehm"],
+  "geschmack_primaer": ["Mild", "Angenehm", "Nussig"],
+  "zubereitung": "roh, braten, grillen",
+  "zubereitung_methoden": ["Roh", "Braten", "Grillen", "Schmoren"],
+  "saison": "Mai bis Oktober",
+  "saisonalitaet": "Mai-Oktober",
+  "bewertung": 4.0,
+  "beliebtheit": 95,
+  "naehrwerte": {
+    "Protein": 31,
+    "Kohlenhydrate": 44,
+    "Fett": 5,
+    "Ballaststoffe": 20
+  },
+  "profil": [
+    { "axis": "Geschmack", "value": 70 },
+    { "axis": "Textur", "value": 80 },
+    { "axis": "Aroma", "value": 65 },
+    { "axis": "Verfügbarkeit", "value": 95 },
+    { "axis": "Preis-Leistung", "value": 90 }
+  ],
+  "wirkstoffe": [
+    { "label": "Vitamin B2", "value": 0.4, "unit": "mg" },
+    { "label": "Vitamin B3", "value": 4.9, "unit": "mg" },
+    { "label": "Selen", "value": 9.3, "unit": "µg" }
+  ],
+  "ernte_stats": {
+    "min": 50,
+    "max": 500,
+    "avg": 220,
+    "count": 312
+  },
+  "lebenszyklus": [
+    { "date": "April", "event": "Saison-Start" },
+    { "date": "Mai-Juni", "event": "Frühsommer-Ernte" },
+    { "date": "Juli-Sept", "event": "Hauptsaison", "active": true },
+    { "date": "Oktober", "event": "Saison-Ende" }
+  ],
+  "verfuegbarkeit": "reichlich",
+  "essbarkeit_warnungen": [
+    "Verwechslungsgefahr mit Knollenblätterpilz!",
+    "Auf rosa verfärbendes Fleisch achten (positives Zeichen)",
+    "Karbolchampignon riecht nach Tinte/Karbol"
+  ],
+
+  "chemie_primaer_metabolite": [
+    { "name": "Proteine", "anteil_proz": 31, "funktion": "Aminosäuren, essentiell" },
+    { "name": "Kohlenhydrate", "anteil_proz": 44, "funktion": "Energie, Ballaststoffe" },
+    { "name": "Lipide", "anteil_proz": 5, "funktion": "Linolsäure, Zellmembranen" },
+    { "name": "Chitin", "anteil_proz": 8, "funktion": "Zellwand, Ballaststoff" }
+  ],
+  "chemie_sekundaer_metabolite": [
+    { "name": "Ergothionein", "klasse": "Thion", "wirkung": "Antioxidans", "konzentration_mg_g": 0.4 },
+    { "name": "Agaritin", "klasse": "Hydrazin", "wirkung": "potenziell mutagen (bei Erhitzen zerstört)", "konzentration_mg_g": 0.2 },
+    { "name": "Tyraminase", "klasse": "Enzym", "wirkung": "Aminosäure-Abbau", "konzentration_mg_g": 0.1 }
+  ],
+  "chemie_volatilome": [
+    { "verbindung": "1-Octen-3-ol", "klasse": "Alkohol", "geruch": "Pilz-Aroma", "menge": "hoch" },
+    { "verbindung": "3-Octanon", "klasse": "Keton", "geruch": "erdig", "menge": "mittel" },
+    { "verbindung": "Benzaldehyd", "klasse": "Aldehyd", "geruch": "süß, mandelartig", "menge": "gering" }
+  ],
+  "chemie_enzyme": [
+    { "name": "Tyrosinase", "funktion": "Bräunung bei Verletzung", "aktivitaet": 85 },
+    { "name": "Protease", "funktion": "Proteinabbau", "aktivitaet": 60 }
+  ],
+
+  "sensorik_aroma": {
+    "gesamt_intensitaet": 65,
+    "profile": [
+      { "note": "Pilzig", "intensitaet": 85, "typ": "basis" },
+      { "note": "Erdig", "intensitaet": 60, "typ": "basis" },
+      { "note": "Nussig", "intensitaet": 45, "typ": "nebennote" },
+      { "note": "Leicht süßlich", "intensitaet": 30, "typ": "nebennote" }
+    ]
+  },
+  "sensorik_geschmack": {
+    "radar": [
+      { "axis": "Umami", "value": 70 },
+      { "axis": "Süß", "value": 25 },
+      { "axis": "Salzig", "value": 15 },
+      { "axis": "Sauer", "value": 10 },
+      { "axis": "Bitter", "value": 5 }
+    ],
+    "beschreibung": "Mild und angenehm mit dezenter Pilznote"
+  },
+  "sensorik_textur": {
+    "festigkeit": 65,
+    "saftigkeit": 70,
+    "faserigkeit": 40,
+    "knackigkeit_roh": 75,
+    "beschreibung": "Fest aber zart, saftig bei korrekter Zubereitung"
+  },
+
+  "wirtschaft_marktstatus": "Massenmarkt",
+  "wirtschaft_produktion": {
+    "weltweit_t": 11000000,
+    "hauptlaender": ["China", "USA", "Niederlande", "Polen"],
+    "trend": "stabil wachsend"
+  },
+  "wirtschaft_preise": {
+    "frisch": { "min": 3, "max": 8, "waehrung": "EUR/kg" },
+    "bio": { "min": 6, "max": 15, "waehrung": "EUR/kg" }
+  },
+
+  "anbau_schwierigkeit": 3,
+  "anbau_substrate": [
+    { "name": "Pferdemist-Kompost", "eignung": 95, "verfuegbarkeit": "gut" },
+    { "name": "Stroh-Kompost", "eignung": 85, "verfuegbarkeit": "sehr gut" }
+  ],
+  "anbau_bedingungen": {
+    "temperatur_optimal": { "min": 16, "max": 20 },
+    "luftfeuchtigkeit_optimal": { "min": 80, "max": 90 },
+    "co2_toleranz": "mittel",
+    "licht": "nicht erforderlich"
+  },
+  "anbau_ertrag_pro_kg_substrat": { "min": 0.2, "max": 0.35 },
+  "anbau_dauer_wochen": 6
+}

@@ -1,18 +1,24 @@
 # Datenquelle - wähle eine:
 
-# Option 1: Lokale JSON-Datei (für Entwicklung)
-# Projekt-spezifisch: pilze.json für Funginomi
+# Option 1: Einzelne JSON-Dateien pro Item (empfohlen für größere Projekte)
+# Jeder Pilz hat seine eigene Datei in data/pilze/
 quelle:
-  typ: json
-  url: ./data/pilze.json
+  typ: json-multi
+  indexUrl: ./data/pilze/index.json
+  baseUrl: ./data/pilze/
 
-# Option 2: PocketBase
+# Option 2: Einzelne JSON-Datei (Legacy - alle Items in einer Datei)
+# quelle:
+#   typ: json
+#   url: ./data/pilze.json
+
+# Option 3: PocketBase
 # quelle:
 #   typ: pocketbase
 #   url: https://api.example.com
 #   sammlung: items
 
-# Option 3: REST API
+# Option 4: REST API
 # quelle:
 #   typ: rest
 #   url: https://api.example.com/items

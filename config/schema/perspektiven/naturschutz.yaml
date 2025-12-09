@@ -1,0 +1,59 @@
+# Perspektive: Naturschutz - Schutz-Rot
+# Warnendes Rot wie Gefährdungsstatus
+
+id: naturschutz
+name: Naturschutz
+symbol: 🛡️
+
+# Schutz-Rot Töne - warnend (0.65)
+farben:
+  - "rgba(220, 100, 100, 0.65)"   # Warnung-Rot
+  - "rgba(200, 85, 85, 0.65)"     # Gefahr-Rot
+  - "rgba(180, 70, 70, 0.65)"     # Kritisch-Rot
+  - "rgba(160, 55, 55, 0.65)"     # Aussterben-Rot
+
+# Welche Felder gehören zu dieser Perspektive?
+felder:
+  - bild
+  - name
+  - wissenschaftlich
+  # Status
+  - schutzstatus
+  - iucn_status
+  - iucn_kategorie
+  - iucn_kriterien
+  - iucn_trend
+  - nationale_status
+  - cites_status
+  # Bedrohungen
+  - bedrohungen
+  - bedrohungs_kategorie
+  - bedrohungs_schwere
+  - bedrohungs_umfang
+  # Schutzmaßnahmen
+  - schutzmassnahmen
+  - in_situ_schutz
+  - ex_situ_schutz
+  - forschungsbedarf
+  - empfehlungen
+  # Population
+  - population_trend
+  - population_groesse
+  - fragmentierung
+
+# Keywords für automatische Perspektiven-Erkennung bei Suche
+keywords:
+  - naturschutz
+  - schutz
+  - gefährdet
+  - bedroht
+  - aussterben
+  - iucn
+  - rote liste
+  - cites
+  - geschützt
+  - selten
+  - population
+  - habitat
+  - verlust
+  - bedrohung

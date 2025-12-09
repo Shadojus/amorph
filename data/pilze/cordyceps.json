@@ -1,0 +1,155 @@
+{
+  "id": "8",
+  "slug": "cordyceps",
+  "name": "Puppenkernkeule",
+  "wissenschaftlich": "Cordyceps militaris",
+  "essbarkeit": "essbar",
+  "essbarkeit_status": "essbar",
+  "beschreibung": "Die Puppenkernkeule ist ein parasitärer Pilz auf Insektenpuppen. Er wird in der traditionellen chinesischen Medizin geschätzt und enthält wertvolle Wirkstoffe.",
+  "temperatur": { "min": 10, "max": 22 },
+  "standort": ["Waldböden", "auf vergrabenen Insektenpuppen", "feuchte Standorte"],
+  "verwechslung": [],
+  "bild": "images/fungi/cordyceps-militaris-scarlet-caterpillar-club.jpg",
+  "geschmack": ["Mild", "Erdig"],
+  "geschmack_primaer": ["Mild", "Erdig", "Leicht süßlich"],
+  "zubereitung": "Tee, Tinktur, Suppen",
+  "zubereitung_methoden": ["Tee", "Tinktur", "Suppen", "Pulver"],
+  "saison": "August bis November",
+  "saisonalitaet": "August-November",
+  "bewertung": 4.2,
+  "medizinisch": 95,
+  "naehrwerte": {
+    "Cordycepin": 35,
+    "Adenosin": 25,
+    "Polysaccharide": 40
+  },
+  "profil": [
+    { "axis": "Energie", "value": 90 },
+    { "axis": "Immunsystem", "value": 95 },
+    { "axis": "Ausdauer", "value": 88 },
+    { "axis": "Antioxidativ", "value": 82 },
+    { "axis": "Seltenheit", "value": 75 }
+  ],
+  "wirkstoffe": [
+    { "label": "Cordycepin", "value": 8, "unit": "mg" },
+    { "label": "Adenosin", "value": 5, "unit": "mg" },
+    { "label": "D-Mannitol", "value": 30, "unit": "mg" }
+  ],
+  "bioaktive_substanzen": [
+    { "label": "Cordycepin", "value": 8, "unit": "mg" },
+    { "label": "Adenosin", "value": 5, "unit": "mg" },
+    { "label": "Beta-Glucan", "value": 15, "unit": "mg" }
+  ],
+  "ernte_stats": {
+    "min": 5,
+    "max": 50,
+    "avg": 18,
+    "count": 23
+  },
+  "lebenszyklus": [
+    { "date": "Infektion", "event": "Insekten-Befall" },
+    { "date": "Wachstum", "event": "Myzel im Wirt" },
+    { "date": "Fruchtung", "event": "Stroma-Bildung", "active": true },
+    { "date": "Sporenflug", "event": "Fortpflanzung" }
+  ],
+  "verfuegbarkeit": "selten",
+  "traditionen_namen": [
+    "Cordyceps (Latein)",
+    "Dōng Chóng Xià Cǎo (Chinesisch - 'Winterwurm-Sommergras')",
+    "Caterpillar Fungus (Englisch)"
+  ],
+  "essbarkeit_warnungen": [
+    "Nur kultivierte Exemplare verwenden (Wild: Selten, teuer)",
+    "Nicht für Schwangere und Stillende empfohlen"
+  ],
+
+  "wirtschaft_marktstatus": "Premium-Nische",
+  "wirtschaft_preise": {
+    "wildgesammelt": { "min": 20000, "max": 150000, "waehrung": "USD/kg", "bemerkung": "C. sinensis aus Tibet" },
+    "kultiviert": { "min": 50, "max": 200, "waehrung": "EUR/kg", "bemerkung": "C. militaris" },
+    "pulver": { "min": 80, "max": 250, "waehrung": "EUR/kg" },
+    "extrakt": { "min": 150, "max": 500, "waehrung": "EUR/kg" }
+  },
+  "wirtschaft_produktion": {
+    "weltweit_t": 5000,
+    "hauptlaender": ["China", "Korea", "USA"],
+    "trend": "stark steigend"
+  },
+  "wirtschaft_handel": {
+    "export_laender": ["China", "Korea", "Nepal"],
+    "import_laender": ["USA", "EU", "Japan"],
+    "hauptmaerkte": ["Nahrungsergänzung", "TCM", "Functional Food"]
+  },
+  "wirtschaft_marktvolumen": {
+    "global_mio_usd": 850,
+    "wachstum_proz": 12.5,
+    "prognose_2030": 2500
+  },
+
+  "interaktionen_wirte": [
+    {
+      "organismus": "Schmetterlingspuppen",
+      "wissenschaftlich": "Lepidoptera larvae",
+      "typ": "Parasit",
+      "staerke": 95,
+      "auswirkung": "Vollständige Übernahme, Mumifizierung"
+    },
+    {
+      "organismus": "Käferlarven",
+      "wissenschaftlich": "Coleoptera larvae",
+      "typ": "Parasit",
+      "staerke": 80,
+      "auswirkung": "Infektion und Verdrängung"
+    }
+  ],
+  "interaktionen_verhaltensmanipulation": {
+    "beschreibung": "Cordyceps manipuliert Wirtsverhalten nicht so stark wie C. unilateralis (Zombie-Ameisen-Pilz)",
+    "mechanismus": "Chemische Signale, Nährstoffentzug",
+    "staerke": 40
+  },
+  "interaktionen_mikrobielle": [
+    {
+      "typ": "Produktion",
+      "partner": "Cordycepin",
+      "mechanismus": "Antimikrobieller Sekundärmetabolit",
+      "staerke": 85
+    }
+  ],
+  "interaktionen_mensch": {
+    "nutzung_historisch": "1000+ Jahre (TCM)",
+    "nutzung_modern": ["Nahrungsergänzung", "Energie-Booster", "TCM"],
+    "kulturelle_bedeutung": 95
+  },
+
+  "chemie_primaer_metabolite": [
+    { "name": "Proteine", "anteil_proz": 25, "funktion": "Strukturproteine" },
+    { "name": "Polysaccharide", "anteil_proz": 35, "funktion": "Beta-Glucane, Immunmodulation" },
+    { "name": "Mannitol", "anteil_proz": 8, "funktion": "Zuckeralkohol, Energie" }
+  ],
+  "chemie_sekundaer_metabolite": [
+    { "name": "Cordycepin", "klasse": "Nucleosid-Analog", "wirkung": "antitumoral, antimikrobiell", "konzentration_mg_g": 3.5 },
+    { "name": "Adenosin", "klasse": "Nucleosid", "wirkung": "kardioprotektiv, sedativ", "konzentration_mg_g": 2.1 },
+    { "name": "Ergosterol", "klasse": "Sterol", "wirkung": "Vitamin D-Vorstufe", "konzentration_mg_g": 1.8 }
+  ],
+
+  "forschung_schwerpunkte": [
+    "Cordycepin als Krebsmedikament",
+    "Leistungssteigerung im Sport",
+    "Immunmodulation bei Autoimmunerkrankungen",
+    "Anti-Aging-Effekte"
+  ],
+  "forschung_potential": {
+    "medizin": "Hochwertiger Wirkstoff Cordycepin für Krebsforschung",
+    "biotechnologie": "Fermentation zur Cordycepin-Produktion",
+    "niveau": 90
+  },
+
+  "oekologie_rolle": "Entomopathogen (Insektenparasit)",
+  "oekologie_strategie": "Parasitär auf Insekten",
+  "oekologie_habitat": {
+    "typ": "Waldboden",
+    "bodentyp": "humusreich, feucht",
+    "feuchtigkeit": "hoch",
+    "licht": "Halbschatten"
+  }
+}

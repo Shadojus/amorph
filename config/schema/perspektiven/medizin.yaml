@@ -14,13 +14,38 @@ farben:
 
 # Welche Felder gehören zu dieser Perspektive?
 felder:
+  # Basis
   - bild
   - name
   - wissenschaftlich
-  - wirkstoffe
-  - medizinisch
-  - profil
   - beschreibung
+  
+  # Traditionelle Medizin
+  - traditionelle_medizin        # Array: {system, name, verwendungen, kontraindikationen, kulturelle_bedeutung}
+  
+  # Therapeutische Kategorien
+  - therapeutische_kategorien    # Array: {kategorie, mechanismen, wirkstoffe, wirksamkeit_score}
+  - wirkstoffe                   # Array: {label, value, unit} - Bioaktive Substanzen
+  - wirkungsprofil               # Radar: Immunmodulation, Neuroprotection, etc.
+  
+  # Klinische Evidenz
+  - klinische_studien            # Array: {titel, jahr, design, ergebnisse, qualitaet}
+  - evidenz_level                # Tag: in_vitro, tier, mensch
+  
+  # Sicherheit
+  - sicherheit_score             # Number: 0-10
+  - nebenwirkungen               # Array: {effekt, haeufigkeit, schwere}
+  - wechselwirkungen             # Array: {medikament, typ, schwere, management}
+  - kontraindikationen           # List: Strings
+  - spezielle_populationen       # Object: {schwangerschaft, stillzeit, kinder, aeltere}
+  
+  # Dosierung
+  - dosierung                    # Array: {indikation, zubereitung, dosis, route}
+  - zubereitungsformen           # List: Tee, Tinktur, Pulver, Extrakt, etc.
+  
+  # Legacy
+  - medizinisch                  # Number: 0-100 Gesamtwert
+  - profil                       # Radar: für alte Daten
 
 # Keywords für automatische Perspektiven-Erkennung bei Suche
 keywords:
@@ -37,3 +62,11 @@ keywords:
   - krebs
   - entzündung
   - antibakteriell
+  - tcm
+  - ayurveda
+  - adaptogen
+  - beta-glucan
+  - triterpene
+  - wirkstoff
+  - studie
+  - klinisch

@@ -1,0 +1,268 @@
+{
+  "id": "1",
+  "slug": "steinpilz",
+  "name": "Steinpilz",
+  "wissenschaftlich": "Boletus edulis",
+  "bild": "images/fungi/porcini-boletus-edulis.jpg",
+  "beschreibung": "Der Steinpilz ist einer der beliebtesten Speisepilze weltweit. Sein kräftiges, nussiges Aroma und die feste Textur machen ihn zur ersten Wahl in der gehobenen Gastronomie.",
+
+  "essbarkeit_status": "choice",
+  "essbarkeit_rating": 9.5,
+  "essbarkeit_voraussetzungen": [],
+  "essbarkeit_warnungen": [
+    "Verwechslung mit Gallenröhrling möglich (bitter, aber ungiftig)",
+    "Ältere Exemplare auf Madenbefall prüfen"
+  ],
+  "essbarkeit_risikogruppen": [],
+
+  "sensorik": [
+    { "axis": "Umami", "value": 88 },
+    { "axis": "Süße", "value": 15 },
+    { "axis": "Bitterkeit", "value": 5 },
+    { "axis": "Schärfe", "value": 0 },
+    { "axis": "Intensität", "value": 85 }
+  ],
+  
+  "geschmack_primaer": ["Nussig", "Erdig", "Umami-reich"],
+  "geschmack_sekundaer": ["Leichte Haselnuss-Anklänge", "Mild süßlich im Abgang"],
+  "aroma_profil": ["1-Octen-3-ol (Pilzaroma)", "Benzaldehyd (Mandel)", "Geosmin (Erde)"],
+  "textur_roh": ["Fest", "Knackig", "Saftig"],
+  "textur_gegart": ["Bissfest", "Fleischig", "Samtig"],
+
+  "zubereitung_methoden": ["Braten", "Trocknen", "Roh", "Einlegen", "Grillen"],
+  
+  "zubereitung_optimal": [
+    { "label": "Braten", "value": 95 },
+    { "label": "Trocknen", "value": 90 },
+    { "label": "Roh (Carpaccio)", "value": 85 },
+    { "label": "Einlegen", "value": 75 },
+    { "label": "Grillen", "value": 80 }
+  ],
+  
+  "zubereitung_fehler": [
+    "Zu lange garen → wird gummig",
+    "Zu viele gleichzeitig in der Pfanne → dampfen statt braten",
+    "Waschen statt bürsten → saugt Wasser auf"
+  ],
+  
+  "vorbereitung": [
+    "Mit Pilzbürste reinigen, NICHT waschen",
+    "Stielende abschneiden",
+    "In 5mm Scheiben schneiden für optimales Braten"
+  ],
+
+  "pairings_klassisch": [
+    { "label": "Butter", "value": 10 },
+    { "label": "Parmesan", "value": 10 },
+    { "label": "Knoblauch", "value": 9 },
+    { "label": "Thymian", "value": 8 },
+    { "label": "Petersilie", "value": 9 },
+    { "label": "Risotto-Reis", "value": 10 }
+  ],
+  
+  "pairings_modern": ["Misopaste", "Trüffelöl", "Aged Balsamico", "Sojasauce"],
+  
+  "pairings_getraenke": [
+    "Barolo (tanninreich, erdig)",
+    "Burgundy Pinot Noir",
+    "Chardonnay mit Holz",
+    "Craft Beer: Belgian Dubbel"
+  ],
+  
+  "synergien": [
+    "Mit Parmesan: Umami × Umami = Geschmacksexplosion",
+    "Mit Sojasauce: Glutamat-Verstärkung",
+    "Mit Zitrone: Säure hebt Aromen hervor"
+  ],
+
+  "lagerung_temperatur": { "min": 2, "max": 7, "unit": "°C" },
+  "lagerung_luftfeuchtigkeit": "hoch (85-95%)",
+  "lagerung_behaelter": "Papiertüte oder Küchentuch",
+  "lagerung_haltbarkeit_tage": 5,
+  "lagerung_indikatoren": [
+    "Festes, nicht eindrückbares Fleisch",
+    "Keine Druckstellen oder braune Flecken",
+    "Frischer, erdiger Geruch",
+    "Röhren weiß bis gelblich (nicht grün)"
+  ],
+  
+  "konservierung": [
+    { "label": "Trocknen", "value": 90 },
+    { "label": "Einfrieren (blanchiert)", "value": 75 },
+    { "label": "In Öl einlegen", "value": 70 },
+    { "label": "Pilzpulver", "value": 95 }
+  ],
+
+  "naehrwerte": {
+    "Protein": 26,
+    "Kohlenhydrate": 52,
+    "Fett": 8,
+    "Ballaststoffe": 14
+  },
+  
+  "naehrwert_highlights": [
+    { "label": "Protein", "value": 52, "unit": "% DV" },
+    { "label": "Vitamin D", "value": 14, "unit": "% DV" },
+    { "label": "Selen", "value": 45, "unit": "% DV" },
+    { "label": "Kupfer", "value": 35, "unit": "% DV" }
+  ],
+  
+  "bioaktive_substanzen": [
+    { "label": "Ergothionein", "value": 4.2, "unit": "mg" },
+    { "label": "Beta-Glucan", "value": 12.5, "unit": "mg" },
+    { "label": "Lovastatin", "value": 0.8, "unit": "mg" }
+  ],
+
+  "traditionen_namen": [
+    "Porcini (Italienisch - 'Schweinchen')",
+    "Cèpe de Bordeaux (Französisch)",
+    "Herrenpilz (Deutsch, historisch)",
+    "Penny Bun (Englisch)"
+  ],
+  
+  "traditionen_gerichte": [
+    "Risotto ai Porcini (Italien)",
+    "Cèpes à la Bordelaise (Frankreich)",
+    "Steinpilzrahmsuppe (Deutschland/Österreich)",
+    "Porcini Trifolati (Italien)"
+  ],
+  
+  "saisonalitaet": "Juli-Oktober",
+
+  "bewertung": 4.8,
+  "verfuegbarkeit": "saisonal verfügbar",
+  "temperatur": { "min": 10, "max": 25 },
+  "beliebtheit": 92,
+  "standort": ["Nadelwald", "Mischwald", "unter Fichten", "unter Eichen"],
+  "verwechslung": ["Gallenröhrling (bitter)", "Satansröhrling (giftig, rot)"],
+  "saison": "Juli bis Oktober",
+  
+  "profil": [
+    { "axis": "Geschmack", "value": 95 },
+    { "axis": "Textur", "value": 85 },
+    { "axis": "Aroma", "value": 90 },
+    { "axis": "Umami", "value": 80 },
+    { "axis": "Seltenheit", "value": 60 }
+  ],
+  
+  "wirkstoffe": [
+    { "label": "Ergothionein", "value": 4.2, "unit": "mg" },
+    { "label": "Beta-Glucan", "value": 12.5, "unit": "mg" },
+    { "label": "Vitamin D", "value": 2.1, "unit": "µg" }
+  ],
+  
+  "ernte_stats": {
+    "min": 80,
+    "max": 350,
+    "avg": 180,
+    "count": 156
+  },
+  
+  "lebenszyklus": [
+    { "date": "Frühjahr", "event": "Myzel-Aktivierung" },
+    { "date": "Sommer", "event": "Fruchtkörper-Bildung", "active": true },
+    { "date": "Herbst", "event": "Haupternte" },
+    { "date": "Winter", "event": "Ruhephase" }
+  ],
+  
+  "fundstatistik": {
+    "gesamt": 245000,
+    "jahr": 12500,
+    "regionen": 156,
+    "erste_meldung": "1753 (Linné)"
+  },
+  
+  "popularitaet_trend": {
+    "richtung": "steigend",
+    "prozent": 8,
+    "werte": [65, 68, 72, 75, 78, 82, 85, 88, 92, 95, 98, 100],
+    "labels": ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]
+  },
+  
+  "saisonale_verteilung": {
+    "jan": 2, "feb": 3, "mär": 5, "apr": 8, "mai": 15,
+    "jun": 35, "jul": 65, "aug": 85, "sep": 100, "okt": 75,
+    "nov": 25, "dez": 5
+  },
+  
+  "regionale_haeufigkeit": {
+    "alpen": 95,
+    "mittelgebirge": 85,
+    "norddeutschland": 60,
+    "skandinavien": 80,
+    "mittelmeer": 45
+  },
+
+  "oekologie_rolle": "Mykorrhiza-Bildner",
+  "oekologie_strategie": "Ektomykorrhiza",
+  "oekologie_habitat": {
+    "typ": "Wald",
+    "bodentyp": "leicht sauer bis neutral (pH 5.5-7.0)",
+    "feuchtigkeit": "mäßig feucht",
+    "licht": "Halbschatten unter Baumkronen",
+    "hoehe": { "min": 200, "max": 2000, "optimal": 800 }
+  },
+  "oekologie_symbiose_partner": [
+    { "name": "Fichte", "wissenschaftlich": "Picea abies", "typ": "Ektomykorrhiza", "staerke": 95 },
+    { "name": "Rotbuche", "wissenschaftlich": "Fagus sylvatica", "typ": "Ektomykorrhiza", "staerke": 85 },
+    { "name": "Eiche", "wissenschaftlich": "Quercus spp.", "typ": "Ektomykorrhiza", "staerke": 80 },
+    { "name": "Kiefer", "wissenschaftlich": "Pinus sylvestris", "typ": "Ektomykorrhiza", "staerke": 75 }
+  ],
+  "oekologie_interaktionen": [
+    { "art": "Schnecken", "typ": "Fraß", "auswirkung": "negativ" },
+    { "art": "Pilzmücken", "typ": "Larvenentwicklung", "auswirkung": "neutral" },
+    { "art": "Eichhörnchen", "typ": "Sporenverbreitung", "auswirkung": "positiv" },
+    { "art": "Wildschweine", "typ": "Fraß", "auswirkung": "negativ" }
+  ],
+  "oekologie_naehrstoff_dynamik": {
+    "stickstoff": { "aufnahme": 85, "weitergabe": 60 },
+    "phosphor": { "aufnahme": 92, "weitergabe": 78 },
+    "wasser": { "aufnahme": 88, "weitergabe": 65 }
+  },
+
+  "geografie_native": ["Europa", "Nordamerika", "Asien (gemäßigt)"],
+  "geografie_verbreitung": {
+    "typ": "FeatureCollection",
+    "regionen": [
+      { "name": "Mitteleuropa", "haeufigkeit": "sehr häufig", "status": "natürlich" },
+      { "name": "Skandinavien", "haeufigkeit": "häufig", "status": "natürlich" },
+      { "name": "Mittelmeerraum", "haeufigkeit": "mäßig", "status": "natürlich" },
+      { "name": "Nordamerika (Rockies)", "haeufigkeit": "häufig", "status": "natürlich" },
+      { "name": "Japan", "haeufigkeit": "mäßig", "status": "natürlich" }
+    ]
+  },
+  "geografie_klima": {
+    "temperatur_optimal": { "min": 12, "max": 22 },
+    "niederschlag_optimal": { "min": 600, "max": 1200 },
+    "klimazone": ["gemäßigt", "boreal", "mediterran-montan"]
+  },
+  "geografie_fundorte": [
+    { "name": "Bayerischer Wald", "koordinaten": [48.9, 13.4], "qualitaet": "exzellent" },
+    { "name": "Schwarzwald", "koordinaten": [48.0, 8.2], "qualitaet": "sehr gut" },
+    { "name": "Tiroler Alpen", "koordinaten": [47.2, 11.4], "qualitaet": "exzellent" },
+    { "name": "Vogesen", "koordinaten": [48.1, 7.0], "qualitaet": "sehr gut" }
+  ],
+
+  "temporal_fruktifikation": {
+    "start": "Juni",
+    "peak": "September",
+    "ende": "November",
+    "dauer_tage": 150
+  },
+  "temporal_myzel_aktivitaet": [
+    { "monat": "Jan", "aktivitaet": 5 },
+    { "monat": "Feb", "aktivitaet": 8 },
+    { "monat": "Mär", "aktivitaet": 15 },
+    { "monat": "Apr", "aktivitaet": 35 },
+    { "monat": "Mai", "aktivitaet": 55 },
+    { "monat": "Jun", "aktivitaet": 75 },
+    { "monat": "Jul", "aktivitaet": 90 },
+    { "monat": "Aug", "aktivitaet": 95 },
+    { "monat": "Sep", "aktivitaet": 100 },
+    { "monat": "Okt", "aktivitaet": 70 },
+    { "monat": "Nov", "aktivitaet": 30 },
+    { "monat": "Dez", "aktivitaet": 10 }
+  ],
+  "temporal_alter_max": 25,
+  "temporal_generationszeit": "2-3 Jahre bis erste Fruchtkörper"
+}

@@ -5,7 +5,7 @@ Build- und Entwicklungs-Tools.
 ## Übersicht
 
 Verfügbare Scripts:
-- `check.js` - Konfigurationsprüfung (inkl. modulares Schema)
+- `check.js` - Konfigurationsprüfung (inkl. 17 Perspektiven)
 - `build.js` - Produktions-Build
 - Development Server via `npx serve`
 
@@ -23,6 +23,7 @@ node scripts/check.js
 - Pflichtdateien: manifest.yaml, daten.yaml
 - Optionale Dateien: morphs.yaml, observer.yaml, features.yaml
 - **Modulares Schema**: schema/basis.yaml, schema/felder.yaml, schema/perspektiven/
+- **17 Perspektiven**: Alle *.yaml in perspektiven/
 - Datenquelle erreichbar
 - YAML-Syntax gültig
 
@@ -30,26 +31,13 @@ node scripts/check.js
 ```
 🔍 AMORPH Config Check
 
-Pflichtdateien:
-  ✅ manifest.yaml
-  ✅ daten.yaml
-
-Optionale Dateien:
-  ✅ morphs.yaml
-  ✅ observer.yaml
-  ✅ features.yaml
-
 Modulares Schema:
   ✅ schema/basis.yaml
-  ✅ schema/felder.yaml
+  ✅ schema/felder.yaml (~200 Felder)
   ✅ schema/semantik.yaml
   ✅ schema/perspektiven/index.yaml
-  ✅ 6 Perspektiven geladen
+  ✅ 17 Perspektiven geladen
 
-Datenquelle:
-  ✅ JSON-Datei gefunden: ./data/pilze.json
-
-========================================
 ✅ Konfiguration ist gültig!
 ```
 
@@ -59,38 +47,17 @@ Erstellt einen Produktions-Build im `dist/` Ordner.
 
 ```bash
 npm run build
-# oder
-node scripts/build.js
 ```
 
 **Was passiert:**
 1. HTML kopieren
 2. CSS zusammenführen
 3. JavaScript-Module kopieren
-4. Config kopieren (inkl. schema/)
+4. Config kopieren (inkl. schema/ mit 17 Perspektiven)
 5. Daten kopieren
 6. Umgebungsvariablen ersetzen
 
-**Ausgabe:**
-```
-🏗️  AMORPH Build
-
-📄 HTML erstellen...
-🎨 CSS bündeln...
-📦 JavaScript kopieren...
-⚙️  Config kopieren (inkl. schema/)...
-📊 Daten kopieren...
-🔐 Umgebungsvariablen ersetzen...
-
-✅ Build fertig!
-   Ausgabe: dist/
-
-Zum Testen: npx serve dist
-```
-
 ## Development Server
-
-Kein eigenes Script - nutzt `serve`:
 
 ```bash
 npm run dev

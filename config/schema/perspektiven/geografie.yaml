@@ -1,0 +1,60 @@
+# Perspektive: Geografie - Karten-Blau
+# Ozeanisches Blau wie Weltkarten
+
+id: geografie
+name: Geografie
+symbol: 🗺️
+
+# Karten-Blau Töne - geografisch (0.65)
+farben:
+  - "rgba(100, 160, 220, 0.65)"   # Ozean-Blau
+  - "rgba(85, 145, 205, 0.65)"    # Karten-Blau
+  - "rgba(70, 130, 190, 0.65)"    # Kontinent-Blau
+  - "rgba(55, 115, 175, 0.65)"    # Tiefsee-Blau
+
+# Welche Felder gehören zu dieser Perspektive?
+felder:
+  - bild
+  - name
+  - wissenschaftlich
+  # Native Range
+  - native_verbreitung
+  - kontinente
+  - laender
+  - biogeografische_regionen
+  - oekoregionen
+  # Introduced Range
+  - eingefuehrte_verbreitung
+  - invasivitaet
+  # Occurrences
+  - fundorte
+  - fundstatistik
+  - datenquellen
+  - raeumliche_statistik
+  # Climate Envelope
+  - klimahuelle
+  - temperatur_bereich
+  - niederschlag_bereich
+  - koeppen_zonen
+  - bioclim_variablen
+  # Maps
+  - verbreitungskarte
+  - heatmap_funde
+
+# Keywords für automatische Perspektiven-Erkennung bei Suche
+keywords:
+  - geografie
+  - verbreitung
+  - vorkommen
+  - fundort
+  - land
+  - kontinent
+  - region
+  - klima
+  - temperatur
+  - niederschlag
+  - karte
+  - range
+  - native
+  - invasiv
+  - eingeführt

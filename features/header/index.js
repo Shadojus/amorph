@@ -325,10 +325,23 @@ export default function init(ctx) {
     // Wenn keine Perspektive aktiv → Klasse entfernen (alle sichtbar)
     if (aktivePerspektiven.size === 0) {
       appContainer.classList.remove('perspektiven-aktiv');
+      // Alle Perspektiven-Data-Attribute entfernen
+      for (const p of liste) {
+        appContainer.removeAttribute(`data-perspektive-${p.id}`);
+      }
       debug.perspektiven('Keine aktiv - alle Felder sichtbar');
     } else {
       // Perspektiven aktiv → relevante Felder markieren
       appContainer.classList.add('perspektiven-aktiv');
+      
+      // Data-Attribute für aktive Perspektiven setzen (für CSS-Targeting)
+      for (const p of liste) {
+        if (aktivePerspektiven.has(p.id)) {
+          appContainer.setAttribute(`data-perspektive-${p.id}`, 'true');
+        } else {
+          appContainer.removeAttribute(`data-perspektive-${p.id}`);
+        }
+      }
       
       // Sammle alle Felder die sichtbar sein sollen mit ihrer Farbe
       const feldZuFarben = new Map();
@@ -352,8 +365,18 @@ export default function init(ctx) {
       }
       
       // Felder markieren mit allen zugehörigen Farben
+      debug.perspektiven('Felder zu markieren', { anzahl: feldZuFarben.size, felder: Array.from(feldZuFarben.keys()) });
+      
+      let gefunden = 0;
+      let nichtGefunden = [];
+      
       for (const [feldname, perspektivFarben] of feldZuFarben) {
         const feldElemente = appContainer.querySelectorAll(`amorph-container[data-field="${feldname}"]`);
+        if (feldElemente.length === 0) {
+          nichtGefunden.push(feldname);
+        } else {
+          gefunden += feldElemente.length;
+        }
         for (const feld of feldElemente) {
           feld.setAttribute('data-perspektive-sichtbar', 'true');
           
