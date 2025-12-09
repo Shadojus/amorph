@@ -9,13 +9,9 @@ Beispieldaten für AMORPH. **Datenstruktur bestimmt den Morph!**
 | Pilz | Besondere Perspektiven-Daten |
 |------|------------------------------|
 | Steinpilz | Ökologie, Geografie, Temporal |
-| Shiitake | Chemie, Sensorik, Wirtschaft |
-| Knollenblätterpilz | Kultur, Naturschutz, Forschung |
+Forschung |
 | Birkenporling | Forschung, Interaktionen, Visual |
 | Fliegenpilz | Kultur, Temporal, Visual, Ökologie |
-| Cordyceps | Wirtschaft, Interaktionen, Chemie |
-| Champignon | Chemie, Sensorik, Wirtschaft, Anbau |
-
 ## Datenformat
 
 ```javascript

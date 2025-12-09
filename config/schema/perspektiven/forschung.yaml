@@ -1,59 +1,413 @@
-# Perspektive: Forschung - Innovations-Cyan
-# Helles Cyan wie neue Entdeckungen
+# ============================================================================
+# FORSCHUNG (RESEARCH) PERSPECTIVE - COMPLETE FLAT SCHEMA
+# Fungi Research & Innovation Data Architecture
+# Version: 2.0.0 | Last Updated: 2025-01-15
+# ============================================================================
+# AMORPH v5 kompatibel - ALLE FELDER SIND FLACH für optimale Morph-Erkennung
+# ============================================================================
 
 id: forschung
 name: Forschung
 symbol: 🔎
+version: "2.0.0"
+description: "Innovations-Cyan - Helles Cyan wie neue Entdeckungen"
 
 # Innovations-Cyan Töne - forschend (0.65)
 farben:
-  - "rgba(80, 200, 220, 0.65)"    # Innovation-Cyan
-  - "rgba(65, 185, 205, 0.65)"    # Entdeckung-Türkis
-  - "rgba(50, 170, 190, 0.65)"    # Forschung-Blau
-  - "rgba(35, 155, 175, 0.65)"    # Wissenschaft-Teal
+  - "rgba(80, 200, 220, 0.65)"    # Innovation-Cyan (primary)
+  - "rgba(65, 185, 205, 0.65)"    # Entdeckung-Türkis (secondary)
+  - "rgba(50, 170, 190, 0.65)"    # Forschung-Blau (tertiary)
+  - "rgba(35, 155, 175, 0.65)"    # Wissenschaft-Teal (quaternary)
 
-# Welche Felder gehören zu dieser Perspektive?
+# ============================================================================
+# FELDER - ALLE FLACH FÜR OPTIMALE MORPH-ERKENNUNG
+# ============================================================================
 felder:
+  # === IDENTIFIKATION ===
   - bild
   - name
   - wissenschaftlich
-  # Forschungsaktivität
+  - synonyme
+  - taxonomie_reich
+  - taxonomie_abteilung
+  - taxonomie_klasse
+  - taxonomie_ordnung
+  - taxonomie_familie
+  - taxonomie_gattung
+  - taxonomie_art
+  
+  # === FORSCHUNGSAKTIVITÄT - Grunddaten ===
   - forschungs_aktivitaet
+  - forschungs_aktivitaet_label
+  - forschungs_aktivitaet_icon
   - publikationen_anzahl
-  - publikationen_trend
+  - publikationen_pro_jahr
+  
+  # === FORSCHUNGSAKTIVITÄT - Trend ===
+  - publikationen_trend_richtung
+  - publikationen_trend_prozent
+  - publikationen_trend_zeitraum
+  - publikationen_jahr_2020
+  - publikationen_jahr_2021
+  - publikationen_jahr_2022
+  - publikationen_jahr_2023
+  - publikationen_jahr_2024
+  
+  # === FORSCHUNGSAKTIVITÄT - Gruppen ===
   - forschungsgruppen
+  - forschungsgruppe_1_name
+  - forschungsgruppe_1_institution
+  - forschungsgruppe_1_land
+  - forschungsgruppe_1_schwerpunkt
+  - forschungsgruppe_1_kontakt
+  - forschungsgruppe_1_website
+  - forschungsgruppe_1_publikationen
+  - forschungsgruppe_1_h_index
+  - forschungsgruppe_2_name
+  - forschungsgruppe_2_institution
+  - forschungsgruppe_2_land
+  - forschungsgruppe_2_schwerpunkt
+  - forschungsgruppe_3_name
+  - forschungsgruppe_3_institution
+  - forschungsgruppe_3_land
+  
+  # === FORSCHUNGSAKTIVITÄT - Aktuelle Themen ===
   - aktuelle_themen
-  # Patente
-  - patente
-  - patent_nummer
-  - erfinder
-  - anwendungen
-  # Biotechnologie
-  - biotechnologie
-  - anwendungen_biotech
-  - gentechnik
-  - synthetische_biologie
-  # Zukunftspotential
-  - zukunftspotential
+  - thema_1_name
+  - thema_1_beschreibung
+  - thema_1_aktivitaet
+  - thema_1_relevanz_score
+  - thema_1_keywords
+  - thema_2_name
+  - thema_2_beschreibung
+  - thema_2_aktivitaet
+  - thema_2_relevanz_score
+  - thema_2_keywords
+  - thema_3_name
+  - thema_3_beschreibung
+  - thema_3_aktivitaet
+  - thema_3_relevanz_score
+  
+  # === PATENTE - Übersicht ===
+  - patente_gesamt
+  - patente_aktiv
+  - patente_angemeldet
+  - patente_abgelaufen
+  - patente_jurisdiktionen
+  
+  # === PATENTE - Details (Top 5) ===
+  - patent_1_nummer
+  - patent_1_titel
+  - patent_1_erfinder
+  - patent_1_anmelder
+  - patent_1_einreichungsdatum
+  - patent_1_erteilungsdatum
+  - patent_1_ablaufdatum
+  - patent_1_status
+  - patent_1_jurisdiktionen
+  - patent_1_anwendungen
+  - patent_1_zusammenfassung
+  - patent_1_url
+  - patent_1_zitationen
+  - patent_2_nummer
+  - patent_2_titel
+  - patent_2_erfinder
+  - patent_2_anmelder
+  - patent_2_status
+  - patent_2_anwendungen
+  - patent_2_zitationen
+  - patent_3_nummer
+  - patent_3_titel
+  - patent_3_status
+  - patent_3_anwendungen
+  - patent_4_nummer
+  - patent_4_titel
+  - patent_4_status
+  - patent_5_nummer
+  - patent_5_titel
+  - patent_5_status
+  
+  # === BIOTECHNOLOGIE - Übersicht ===
+  - biotechnologie_relevanz
+  - biotechnologie_relevanz_label
+  - biotechnologie_bereiche
+  - biotechnologie_score
+  
+  # === BIOTECHNOLOGIE - Anwendungen (Top 5) ===
+  - biotech_anwendung_1_bereich
+  - biotech_anwendung_1_name
+  - biotech_anwendung_1_beschreibung
+  - biotech_anwendung_1_reife_grad
+  - biotech_anwendung_1_unternehmen
+  - biotech_anwendung_1_marktpotential
+  - biotech_anwendung_2_bereich
+  - biotech_anwendung_2_name
+  - biotech_anwendung_2_beschreibung
+  - biotech_anwendung_2_reife_grad
+  - biotech_anwendung_2_marktpotential
+  - biotech_anwendung_3_bereich
+  - biotech_anwendung_3_name
+  - biotech_anwendung_3_reife_grad
+  - biotech_anwendung_4_bereich
+  - biotech_anwendung_4_name
+  - biotech_anwendung_5_bereich
+  - biotech_anwendung_5_name
+  
+  # === GENTECHNIK - Genom ===
+  - genom_sequenziert
+  - genom_groesse_mb
+  - genom_gen_anzahl
+  - genom_genbank_accession
+  - genom_genbank_ids
+  - genom_assembly_level
+  - genom_annotation_status
+  
+  # === GENTECHNIK - Methoden ===
+  - transformation_methoden
+  - transformation_agrobacterium
+  - transformation_peg
+  - transformation_elektroporation
+  - transformation_biolistic
+  - marker_gene
+  - selektions_marker
+  - knockout_bibliothek_vorhanden
+  - knockout_gene_anzahl
+  - crispr_etabliert
+  - crispr_erfolgsrate
+  - crispr_targets
+  - rnai_etabliert
+  
+  # === SYNTHETISCHE BIOLOGIE ===
+  - synbio_chassis_organismus
+  - synbio_chassis_eignung_score
+  - synbio_heterologe_expression
+  - synbio_expression_systeme
+  - synbio_metabolic_engineering
+  - synbio_produkt_1_name
+  - synbio_produkt_1_pathway
+  - synbio_produkt_1_effizienz
+  - synbio_produkt_1_status
+  - synbio_produkt_2_name
+  - synbio_produkt_2_pathway
+  - synbio_produkt_2_status
+  - synbio_produkt_3_name
+  - synbio_promotoren
+  - synbio_terminatoren
+  - synbio_enhancer
+  - synbio_regulatorische_toolbox
+  
+  # === ZUKUNFTSPOTENTIAL - Scores ===
+  - zukunftspotential_score
+  - zukunftspotential_innovation_index
+  - zukunftspotential_markt_attraktivitaet
+  - zukunftspotential_forschungs_momentum
+  - zukunftspotential_kommerzialisierbarkeit
+  - zukunftspotential_begruendung
+  
+  # === ZUKUNFTSPOTENTIAL - Emerging Applications ===
   - emerging_applications
+  - emerging_app_1_name
+  - emerging_app_1_beschreibung
+  - emerging_app_1_zeithorizont
+  - emerging_app_1_wahrscheinlichkeit
+  - emerging_app_1_treiber
+  - emerging_app_1_hindernisse
+  - emerging_app_1_akteure
+  - emerging_app_2_name
+  - emerging_app_2_beschreibung
+  - emerging_app_2_zeithorizont
+  - emerging_app_2_wahrscheinlichkeit
+  - emerging_app_3_name
+  - emerging_app_3_zeithorizont
+  - emerging_app_3_wahrscheinlichkeit
+  - emerging_app_4_name
+  - emerging_app_4_zeithorizont
+  - emerging_app_5_name
+  
+  # === FORSCHUNGSLÜCKEN ===
   - forschungsluecken
+  - forschungsluecke_1_bereich
+  - forschungsluecke_1_beschreibung
+  - forschungsluecke_1_prioritaet
+  - forschungsluecke_1_aufwand
+  - forschungsluecke_1_expertise
+  - forschungsluecke_1_foerderung
+  - forschungsluecke_2_bereich
+  - forschungsluecke_2_beschreibung
+  - forschungsluecke_2_prioritaet
+  - forschungsluecke_3_bereich
+  - forschungsluecke_3_prioritaet
+  
+  # === INVESTITIONSMÖGLICHKEITEN ===
   - investitionsmoeglichkeiten
-  # Referenzen
-  - forschung_referenzen
+  - invest_1_titel
+  - invest_1_beschreibung
+  - invest_1_volumen_min_eur
+  - invest_1_volumen_max_eur
+  - invest_1_roi_potential
+  - invest_1_risiko
+  - invest_1_zeithorizont
+  - invest_1_typ
+  - invest_2_titel
+  - invest_2_beschreibung
+  - invest_2_roi_potential
+  - invest_2_risiko
+  - invest_3_titel
+  - invest_3_roi_potential
+  
+  # === WISSENSCHAFTLICHE REFERENZEN - Publikationen ===
   - schluessel_publikationen
-  - klinische_studien
+  - publikation_1_titel
+  - publikation_1_autoren
+  - publikation_1_journal
+  - publikation_1_jahr
+  - publikation_1_doi
+  - publikation_1_pmid
+  - publikation_1_zusammenfassung
+  - publikation_1_zitationen
+  - publikation_1_impact_factor
+  - publikation_1_open_access
+  - publikation_1_pdf_url
+  - publikation_1_bedeutung
+  - publikation_1_themen_tags
+  - publikation_2_titel
+  - publikation_2_autoren
+  - publikation_2_journal
+  - publikation_2_jahr
+  - publikation_2_doi
+  - publikation_2_zitationen
+  - publikation_2_bedeutung
+  - publikation_3_titel
+  - publikation_3_journal
+  - publikation_3_jahr
+  - publikation_3_doi
+  - publikation_3_bedeutung
+  - publikation_4_titel
+  - publikation_4_doi
+  - publikation_5_titel
+  - publikation_5_doi
+  
+  # === KLINISCHE STUDIEN ===
+  - klinische_studien_anzahl
+  - klinische_studien_aktiv
+  - klinische_studie_1_nct
+  - klinische_studie_1_titel
+  - klinische_studie_1_status
+  - klinische_studie_1_phase
+  - klinische_studie_1_indikation
+  - klinische_studie_1_sponsor
+  - klinische_studie_1_start
+  - klinische_studie_1_ende_erwartet
+  - klinische_studie_1_teilnehmer_ziel
+  - klinische_studie_1_standorte
+  - klinische_studie_1_ergebnisse
+  - klinische_studie_2_nct
+  - klinische_studie_2_titel
+  - klinische_studie_2_status
+  - klinische_studie_2_phase
+  - klinische_studie_2_indikation
+  - klinische_studie_3_nct
+  - klinische_studie_3_titel
+  - klinische_studie_3_status
+  - klinische_studie_3_phase
+  
+  # === REVIEW ARTIKEL ===
+  - review_artikel
+  - review_1_titel
+  - review_1_autoren
+  - review_1_journal
+  - review_1_jahr
+  - review_1_doi
+  - review_1_themenbereich
+  - review_2_titel
+  - review_2_journal
+  - review_2_jahr
+  - review_2_doi
+  - review_3_titel
+  - review_3_doi
+  
+  # === DATENBANK-EINTRÄGE ===
+  - ncbi_taxonomy_id
+  - mycobank_id
+  - index_fungorum_id
+  - uniprot_proteome_id
+  - kegg_organism_code
+  - ensembl_fungi_id
+  - jgi_genome_id
+  - fungidb_id
+  
+  # === KOLLABORATION - Hauptzentren ===
+  - kollaboration_hauptzentren
+  - zentrum_1_land
+  - zentrum_1_institutionen
+  - zentrum_1_schwerpunkte
+  - zentrum_2_land
+  - zentrum_2_institutionen
+  - zentrum_2_schwerpunkte
+  - zentrum_3_land
+  - zentrum_3_institutionen
+  
+  # === KOLLABORATION - Internationale Projekte ===
+  - internationale_projekte
+  - projekt_1_name
+  - projekt_1_laender
+  - projekt_1_foerderung
+  - projekt_1_laufzeit
+  - projekt_2_name
+  - projekt_2_laender
+  - projekt_2_foerderung
+  
+  # === KOLLABORATION - Konferenzen ===
+  - relevante_konferenzen
+  - konferenz_1_name
+  - konferenz_1_haeufigkeit
+  - konferenz_1_naechste
+  - konferenz_1_website
+  - konferenz_2_name
+  - konferenz_2_website
+  - konferenz_3_name
 
-# Keywords für automatische Perspektiven-Erkennung bei Suche
+# ============================================================================
+# KEYWORDS FÜR AUTO-PERSPEKTIVEN-ERKENNUNG
+# ============================================================================
 keywords:
+  # Primär - hohe Gewichtung
   - forschung
   - studie
   - publikation
+  - paper
+  - wissenschaft
+  - research
+  - study
+  # Sekundär - mittlere Gewichtung
   - patent
-  - biotechnologie
+  - erfindung
   - innovation
   - entdeckung
-  - wissenschaft
   - labor
   - experiment
+  # Domain-spezifisch
+  - biotechnologie
+  - gentechnik
+  - genom
+  - crispr
+  - metabolic engineering
+  - synthetische biologie
+  - fermentation
+  # Klinisch
   - clinical trial
-  - gentech
+  - klinische studie
+  - phase 1
+  - phase 2
+  - phase 3
+  - nct
+  - placebo
+  # Akademisch
+  - journal
+  - peer review
+  - impact factor
+  - zitation
+  - doi
+  - pubmed
+  - genbank
+  - ncbi

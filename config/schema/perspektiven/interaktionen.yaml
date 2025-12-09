@@ -1,5 +1,8 @@
-# Perspektive: Interaktionen - Netzwerk-Magenta
+# ═══════════════════════════════════════════════════════════════════════════════
+# Perspektive: INTERAKTIONEN - Netzwerk-Magenta
+# Biological Interaction Networks | Version: 2.0.0
 # Lebendiges Magenta wie Beziehungsnetzwerke
+# ═══════════════════════════════════════════════════════════════════════════════
 
 id: interaktionen
 name: Interaktionen
@@ -7,50 +10,477 @@ symbol: 🔗
 
 # Netzwerk-Magenta Töne - verbindend (0.65)
 farben:
-  - "rgba(220, 120, 180, 0.65)"   # Netzwerk-Magenta
-  - "rgba(205, 105, 165, 0.65)"   # Symbiose-Pink
-  - "rgba(190, 90, 150, 0.65)"    # Interaktion-Rose
-  - "rgba(175, 75, 135, 0.65)"    # Beziehung-Fuchsia
+  - "rgba(220, 120, 180, 0.65)"   # Netzwerk-Magenta (Primary)
+  - "rgba(205, 105, 165, 0.65)"   # Symbiose-Pink (Secondary)
+  - "rgba(190, 90, 150, 0.65)"    # Interaktion-Rose (Tertiary)
+  - "rgba(175, 75, 135, 0.65)"    # Beziehung-Fuchsia (Quaternary)
 
-# Welche Felder gehören zu dieser Perspektive?
+# Interaktions-Typ Farbcodierung
+interaktions_farben:
+  mutualistisch: "rgba(120, 200, 120, 0.7)"     # Grün - positive
+  parasitaer: "rgba(200, 80, 80, 0.7)"          # Rot - negativ
+  kommensalistisch: "rgba(180, 180, 100, 0.7)" # Gelb - neutral
+  kompetitiv: "rgba(200, 140, 60, 0.7)"        # Orange - Konkurrenz
+  amensalistisch: "rgba(150, 100, 150, 0.7)"   # Lila - einseitig negativ
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FELDER - Alle Felder die in dieser Perspektive sichtbar sein sollen
+# ═══════════════════════════════════════════════════════════════════════════════
 felder:
+  # === Basis ===
   - bild
   - name
   - wissenschaftlich
-  # Multi-Species
-  - multispecies_interaktionen
+  - taxonomie
+  
+  # === Organismus / Netzwerk-Knoten ===
   - netzwerk_position
+  - netzwerk_degree_zentralitaet
+  - netzwerk_betweenness_zentralitaet
+  - netzwerk_closeness_zentralitaet
+  - netzwerk_eigenvector_zentralitaet
+  - netzwerk_hub_score
+  - netzwerk_clustering_koeffizient
+  - netzwerk_community_id
+  
+  # === Interaktions-Stabilität ===
   - interaktions_stabilitaet
-  # Chemische Ökologie
+  - interaktions_robustheit_score
+  - interaktions_redundanz_grad
+  - interaktions_keystone_index
+  - interaktions_temporale_persistenz
+  - interaktions_stoerungsanfaelligkeit
+  
+  # === Multi-Species Interaktionen ===
+  - multispecies_interaktionen
+  - interaktions_typ
+  - interaktions_subtyp
+  - interaktions_direktionalitaet
+  - interaktions_staerke
+  - interaktions_obligat_fakultativ
+  - interaktions_spezifitaet
+  - interaktions_raeumliche_skala
+  - interaktions_kontakt_art
+  - interaktions_temporales_muster
+  - interaktions_saisonalitaet
+  - interaktions_tageszeit
+  - interaktions_frequenz
+  - interaktions_dauer_minuten
+  - interaktions_habitat_kontext
+  - interaktions_umweltbedingungen
+  - interaktions_temperatur_optimal
+  - interaktions_feuchtigkeit_optimal
+  - interaktions_licht_bedingung
+  - interaktions_ph_bereich
+  - interaktions_fitness_effekt
+  - interaktions_fitness_organismus_a
+  - interaktions_fitness_organismus_b
+  - interaktions_evidenz
+  - interaktions_evidenz_level
+  - interaktions_konfidenz
+  - interaktions_studien_anzahl
+  
+  # === Chemische Ökologie ===
   - chemische_oekologie
+  - chem_stoff_name
+  - chem_iupac_name
+  - chem_cas_nummer
+  - chem_summenformel
+  - chem_molekulare_masse
+  - chem_smiles
+  - chem_inchi_key
+  - chem_stoffklasse
+  - chem_produktion
+  - chem_produktions_organ
+  - chem_speicher_organ
+  - chem_freisetzungs_mechanismus
+  - chem_freisetzungs_menge
+  
+  # === Allelopathie ===
   - allelopathie
+  - allelopathie_aktiv
+  - allelopathie_effekt_typ
+  - allelopathie_ziel_organismen
+  - allelopathie_effekt_staerke
+  - allelopathie_ec50
+  - allelopathie_betroffene_prozesse
+  - allelopathie_boden_persistenz_tage
+  
+  # === Chemische Kommunikation ===
   - chemische_kommunikation
+  - chem_signal_typ
+  - chem_signal_funktion
+  - chem_signal_empfaenger
+  - chem_signal_empfindlichkeit
+  - chem_signal_verhaltensantwort
+  - chem_signal_reichweite_meter
+  - chem_signal_halbwertszeit_stunden
+  
+  # === Abwehrstoffe ===
   - abwehrstoffe
-  # Mikrobiom
+  - abwehr_typ
+  - abwehr_toxizitaet
+  - abwehr_ld50
+  - abwehr_toxisch_fuer
+  - abwehr_wirkungsmechanismus
+  - abwehr_gegenspieler
+  - abwehr_resistenz_mechanismus
+  - abwehr_sequestration
+  
+  # === Mikrobiom ===
   - mikrobiom
+  - mikrobiom_kompartiment
+  - mikrobiom_community_struktur
+  - mikrobiom_diversitaet_shannon
+  - mikrobiom_diversitaet_simpson
+  - mikrobiom_richness
+  - mikrobiom_evenness
+  - mikrobiom_dominante_phyla
+  - mikrobiom_core_anteil
+  
+  # === Assoziierte Bakterien ===
   - assoziierte_bakterien
+  - bakterien_taxon_name
+  - bakterien_taxonomie_level
+  - bakterien_relative_abundanz
+  - bakterien_funktionelle_gruppe
+  - bakterien_assoziations_staerke
+  - bakterien_nachweismethode
+  
+  # === Assoziierte Pilze ===
   - assoziierte_pilze
-  - community_struktur
-  # Wirt-Interaktionen
+  - pilze_taxon_name
+  - pilze_taxonomie_level
+  - pilze_relative_abundanz
+  - pilze_funktionelle_gruppe
+  - pilze_assoziations_staerke
+  - pilze_nachweismethode
+  
+  # === Funktionelles Profil ===
+  - funktionelles_profil
+  - metabolische_pfade
+  - funktionelle_gene
+  - gesamt_metabolisches_potential
+  
+  # === Mikrobiom-Stabilität ===
+  - mikrobiom_stabilitaet
+  - mikrobiom_temporal_variabilitaet
+  - mikrobiom_resilienz
+  - mikrobiom_haupttreiber_variation
+  
+  # === Wirt-Interaktionen ===
   - wirt_interaktionen
+  - wirt_beziehungs_kategorie
+  
+  # === Symbionten-Details ===
   - symbionten
+  - symbionten_details
+  - symbiose_typ
+  - symbiose_wirt_nutzen
+  - symbiose_partner_nutzen
+  - symbiose_etablierungs_phase
+  - symbiose_erkennungs_signale
+  - symbiose_infektion_struktur
+  - symbiose_zeit_bis_funktionell
+  
+  # === Parasiten-Details ===
   - parasiten
+  - parasiten_details
+  - parasitismus_typ
+  - parasit_infektion_struktur
+  - parasit_befallene_organe
+  - parasit_symptome
+  - parasit_schweregrad
+  - parasit_uebertragungsweg
+  - parasit_wirtswechsel
+  - parasit_alternativ_wirte
+  - parasit_pathogenitaet
+  - parasit_inkubationszeit_tage
+  
+  # === Konkurrenz-Details ===
   - konkurrenten
-  # Netzwerk
+  - konkurrenz_details
+  - konkurrenz_typ
+  - konkurrenz_umkaempfte_ressourcen
+  - konkurrenz_intensitaet
+  - konkurrenz_koexistenz_mechanismen
+  - konkurrenz_asymmetrie
+  
+  # === Quantifizierung ===
+  - wirt_quantifizierung
+  - wirt_praevelenz
+  - wirt_intensitaet
+  - wirt_aggregation
+  
+  # === Mykorrhiza-Netzwerk ===
   - mykorrhiza_netzwerk
+  - mykorrhiza_netzwerk_id
+  - mykorrhiza_verbindungs_typ
+  - mykorrhiza_verbindungs_staerke
+  - mykorrhiza_hyphen_dichte
+  - mykorrhiza_alter_verbindung
+  
+  # === Nährstoff-Transfer ===
   - naehrstoff_transfer
+  - naehrstoff_typ
+  - naehrstoff_richtung
+  - naehrstoff_transfer_rate
+  - naehrstoff_anteil_bedarf_gedeckt
+  - naehrstoff_regulierende_faktoren
+  
+  # === Signal-Transfer ===
   - signal_transfer
+  - signal_typ
+  - signal_molekuel
+  - signal_richtung
+  - signal_uebertragungszeit_minuten
+  - signal_biologischer_effekt
+  - signal_effizienz
+  
+  # === Ökologische Bedeutung ===
+  - mykorrhiza_oekologische_bedeutung
+  - mykorrhiza_facilitation_effekt
+  - mykorrhiza_resilienz_beitrag
+  - mykorrhiza_carbon_sink_potential
+  
+  # === Netzwerk-Snapshot ===
+  - netzwerk_snapshot
+  - netzwerk_timestamp
+  - netzwerk_standort
+  - netzwerk_metriken
+  - netzwerk_knoten_anzahl
+  - netzwerk_kanten_anzahl
+  - netzwerk_dichte
+  - netzwerk_durchschnittlicher_pfad
+  - netzwerk_durchmesser
+  - netzwerk_clustering_global
+  - netzwerk_modularitaet
+  - netzwerk_assortativity
+  - netzwerk_connectance
+  - netzwerk_nestedness
+  
+  # === Netzwerk-Stabilität ===
+  - netzwerk_stabilitaet
+  - netzwerk_robustheit_zufaellig
+  - netzwerk_robustheit_gezielt
+  - netzwerk_kritische_konnektivitaet
+  - netzwerk_fragmentierungs_risiko
 
-# Keywords für automatische Perspektiven-Erkennung bei Suche
+# ═══════════════════════════════════════════════════════════════════════════════
+# ENUMERATIONEN
+# ═══════════════════════════════════════════════════════════════════════════════
+enumerationen:
+  interaktions_typ:
+    - mutualistisch
+    - kommensalistisch
+    - parasitaer
+    - kompetitiv
+    - amensalistisch
+    - praedation
+    - neutralistisch
+    
+  interaktions_subtyp:
+    # Mutualismus
+    - mykorrhiza_ektomykorrhiza
+    - mykorrhiza_endomykorrhiza
+    - mykorrhiza_arbuskulaer
+    - mykorrhiza_erikoid
+    - mykorrhiza_orchideen
+    - bestaeubung
+    - samenausbreitung
+    - schutz_mutualismus
+    - reinigung_mutualismus
+    - nahrungs_mutualismus
+    # Parasitismus
+    - ektoparasitismus
+    - endoparasitismus
+    - parasitoid
+    - kleptoparasitismus
+    - brutparasitismus
+    # Andere
+    - probiose
+    - syntrophie
+    - facilitation
+    
+  direktionalitaet:
+    - unidirektional
+    - bidirektional
+    - multidirektional
+    
+  spezifitaet:
+    - hoch_spezifisch
+    - moderat_spezifisch
+    - generalistisch
+    
+  raeumliche_skala:
+    - mikroskopisch
+    - lokal
+    - regional
+    - kontinental
+    - global
+    
+  kontakt_art:
+    - direkt_physisch
+    - chemisch_distanz
+    - akustisch
+    - visuell
+    - elektrisch
+    - gemischt
+    
+  temporale_persistenz:
+    - ephemer
+    - saisonal
+    - mehrjaehrig
+    - permanent
+    
+  stoerungsanfaelligkeit:
+    - sehr_gering
+    - gering
+    - mittel
+    - hoch
+    - sehr_hoch
+    
+  stoffklasse:
+    - terpen
+    - alkaloid
+    - phenol
+    - flavonoid
+    - glucosinolat
+    - peptid
+    - fettsaeure
+    - zucker
+    - organische_saeure
+    - schwefelverbindung
+    - sonstige
+    
+  signal_typ:
+    - pheromon
+    - kairomon
+    - allomon
+    - synomon
+    - apneumon
+    - volatile_organic_compound
+    
+  signal_funktion:
+    - sexualanlockung
+    - aggregation
+    - alarm
+    - spurmarkierung
+    - territorium
+    - nahrungssuche
+    - abwehr
+    - symbiont_rekrutierung
+    
+  abwehr_typ:
+    - toxin
+    - repellent
+    - antifeedant
+    - antibiose
+    - antimikrobiell
+    - antifungal
+    
+  mikrobiom_kompartiment:
+    - rhizosphaere
+    - phyllosphaere
+    - endosphaere
+    - mykosphaere
+    - fruchtkoerper
+    - sporen
+    - hyphen
+    - wurzel_innen
+    - blatt_oberflaeche
+    - stamm
+    - gesamt
+    
+  bakterien_funktionelle_gruppe:
+    - stickstofffixierer
+    - phosphat_solubilisierer
+    - phytohormon_produzent
+    - pathogen_antagonist
+    - cellulose_abbauer
+    - methanotroph
+    - nitrifizier
+    - denitrifizier
+    - schwefel_oxidierer
+    
+  pilze_funktionelle_gruppe:
+    - mykorrhiza
+    - endophyt
+    - saprophyt
+    - pathogen
+    - antagonist
+    - dsp
+    
+  beziehungs_kategorie:
+    - symbiont
+    - parasit
+    - konkurrent
+    - kommensale
+    - amensale
+    
+  symbiose_typ:
+    - mykorrhiza
+    - rhizobium
+    - actinorrhiza
+    - flechte
+    - endophyt
+    - insekten_symbiose
+    - cyanobakterien
+    
+  parasitismus_typ:
+    - biotroph
+    - nekrotroph
+    - hemibiotroph
+    
+  konkurrenz_typ:
+    - exploitation
+    - interference
+    - apparent
+    
+  verbindungs_typ:
+    - ektomykorrhiza_netzwerk
+    - arbuskulaer_netzwerk
+    - gemischt
+    
+  evidenz_level:
+    - anekdotisch
+    - beobachtet
+    - experimentell
+    - meta_analyse
+    
+  fragmentierungs_risiko:
+    - gering
+    - mittel
+    - hoch
+    - kritisch
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# KEYWORDS für automatische Perspektiven-Erkennung bei Suche
+# ═══════════════════════════════════════════════════════════════════════════════
 keywords:
-  - interaktion
-  - netzwerk
-  - symbiose
-  - beziehung
-  - mikrobiom
-  - allelopathie
-  - kommunikation
-  - wirt
-  - partner
-  - konkurrenz
-  - kooperation
+  primary:
+    - interaktion
+    - netzwerk
+    - symbiose
+    - beziehung
+    - mikrobiom
+    
+  secondary:
+    - allelopathie
+    - kommunikation
+    - wirt
+    - partner
+    - konkurrenz
+    - kooperation
+    - mykorrhiza
+    - signalstoff
+    - abwehr
+    - parasit
+    
+  compound:
+    - wood wide web
+    - common mycorrhizal network
+    - chemische ökologie
+    - multi-species
+    - host-parasite
+    - plant-microbe

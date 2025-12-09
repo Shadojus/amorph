@@ -1,5 +1,8 @@
-# Perspektive: Anbau - Myzel-Phosphor
-# Biolumineszentes Grün wie wachsendes Myzel-Netzwerk
+# ═══════════════════════════════════════════════════════════════════════════════
+# PERSPEKTIVE: ANBAU (Cultivation)
+# Myzel-Phosphor - Biolumineszentes Grün wie wachsendes Myzel-Netzwerk
+# Schema v2.0.0 - Vollständiges Kultivierungs-Datenmodell
+# ═══════════════════════════════════════════════════════════════════════════════
 
 id: anbau
 name: Anbau
@@ -12,70 +15,413 @@ farben:
   - "rgba(120, 225, 165, 0.65)"   # Sporen-Mint
   - "rgba(100, 210, 150, 0.65)"   # Substrat-Grün
 
-# Welche Felder gehören zu dieser Perspektive?
+# ═══════════════════════════════════════════════════════════════════════════════
+# FELDER - Flache Struktur für optimale Morph-Erkennung
+# ═══════════════════════════════════════════════════════════════════════════════
 felder:
-  # Basis
+  # ─────────────────────────────────────────────────────────────────────────────
+  # BASIS
+  # ─────────────────────────────────────────────────────────────────────────────
   - bild
   - name
   - wissenschaftlich
   - beschreibung
+  - synonyme
   
-  # Klassisch/Wildsammlung
+  # ─────────────────────────────────────────────────────────────────────────────
+  # NATÜRLICHES VORKOMMEN
+  # ─────────────────────────────────────────────────────────────────────────────
   - standort
+  - habitat
   - saison
   - saisonalitaet
+  - saisonalitaet_details
   - temperatur
+  - temperatur_bereich
   - verfuegbarkeit
   - lebenszyklus
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # KULTIVIERUNGSSTATUS & SCHWIERIGKEIT
+  # ─────────────────────────────────────────────────────────────────────────────
+  - cultivation_status
+  - cultivation_difficulty_overall
+  - cultivation_difficulty_factors
+  - cultivation_success_rate
+  - cultivation_time_investment
+  - cultivation_equipment_needed
+  - cultivation_skill_prerequisites
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # WACHSTUMSPARAMETER (Pro Phase)
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Spawn Run Phase
+  - param_spawn_temp_min
+  - param_spawn_temp_optimal
+  - param_spawn_temp_max
+  - param_spawn_humidity_min
+  - param_spawn_humidity_optimal
+  - param_spawn_humidity_max
+  - param_spawn_co2_ppm
+  - param_spawn_light_required
+  - param_spawn_fae_per_hour
+  - param_spawn_duration_days
+  - param_spawn_ph_optimal
+  
+  # Primordia Phase
+  - param_primordia_temp_min
+  - param_primordia_temp_optimal
+  - param_primordia_temp_max
+  - param_primordia_humidity_min
+  - param_primordia_humidity_optimal
+  - param_primordia_humidity_max
+  - param_primordia_co2_ppm
+  - param_primordia_light_lux
+  - param_primordia_light_hours
+  - param_primordia_fae_per_hour
+  - param_primordia_duration_days
+  
+  # Fruiting Phase
+  - param_fruiting_temp_min
+  - param_fruiting_temp_optimal
+  - param_fruiting_temp_max
+  - param_fruiting_humidity_min
+  - param_fruiting_humidity_optimal
+  - param_fruiting_humidity_max
+  - param_fruiting_co2_ppm
+  - param_fruiting_light_lux
+  - param_fruiting_light_hours
+  - param_fruiting_fae_per_hour
+  - param_fruiting_duration_days
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SUBSTRATE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - cultivation_substrates
+  - substrate_primary
+  - substrate_category
+  - substrate_composition
+  - substrate_sterilization_required
+  - substrate_sterilization_temp
+  - substrate_sterilization_duration
+  - substrate_pasteurization_temp
+  - substrate_pasteurization_duration
+  - substrate_moisture_percent
+  - substrate_preparation_method
+  - substrate_rating
+  - substrate_biological_efficiency
+  - substrate_colonization_days
+  - substrate_contamination_rate
+  - substrate_cost_per_kg
+  - substrate_advantages
+  - substrate_disadvantages
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # STÄMME / VARIETÄTEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - cultivation_strains
+  - strain_name
+  - strain_code
+  - strain_origin
+  - strain_growth_speed
+  - strain_yield_potential
+  - strain_contamination_resistance
+  - strain_temperature_tolerance
+  - strain_cap_size
+  - strain_stem_length
+  - strain_color
+  - strain_texture
+  - strain_shelf_life_days
+  - strain_flavor_profile
+  - strain_biological_efficiency
+  - strain_commercial_viability
+  - strain_market_demand
+  - strain_best_uses
+  - strain_suppliers
+  - strain_availability
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # PRODUKTIONSZYKLUS
+  # ─────────────────────────────────────────────────────────────────────────────
+  - production_timeline
+  - production_total_cycle_days
+  - production_total_flushes
+  - production_expected_yield_kg
+  - production_biological_efficiency
+  - production_cycle_type
+  - production_phases
+  - production_success_rate
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # PROBLEME & TROUBLESHOOTING
+  # ─────────────────────────────────────────────────────────────────────────────
+  - cultivation_problems
+  - problem_contaminants
+  - problem_pests
+  - problem_disorders
+  - problem_environmental
+  - problem_frequency
+  - problem_severity
+  - problem_symptoms
+  - problem_conditions_promoting
+  - problem_prevention
+  - problem_treatment
+  - problem_chemical_control
+  - problem_biological_control
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ERNTE
+  # ─────────────────────────────────────────────────────────────────────────────
   - ernte_stats
+  - harvest_fresh_weight_kg
+  - harvest_dry_weight_kg
+  - harvest_biological_efficiency
+  - harvest_quality_grade
+  - harvest_avg_cap_diameter
+  - harvest_avg_stem_length
+  - harvest_flush_number
+  - harvest_records
   
-  # Cultivation - Status & Schwierigkeit
-  - cultivation_status           # String: not_cultivated, experimental, commercial
-  - cultivation_difficulty       # Object: {overall, factors[], success_rate}
+  # ─────────────────────────────────────────────────────────────────────────────
+  # AUSRÜSTUNG
+  # ─────────────────────────────────────────────────────────────────────────────
+  - equipment_requirements
+  - equipment_minimum
+  - equipment_recommended
+  - equipment_optional
+  - equipment_startup_cost_hobby
+  - equipment_startup_cost_serious
+  - equipment_startup_cost_commercial
   
-  # Cultivation - Wachstumsparameter
-  - cultivation_parameters       # Object: {temperature_c, humidity_percent, co2_ppm, light, pH}
+  # ─────────────────────────────────────────────────────────────────────────────
+  # WIRTSCHAFTLICHKEIT
+  # ─────────────────────────────────────────────────────────────────────────────
+  - economics
+  - economics_market_price_min
+  - economics_market_price_max
+  - economics_market_price_avg
+  - economics_production_cost
+  - economics_profit_margin
+  - economics_break_even_kg
+  - economics_demand_level
+  - economics_competition_level
+  - economics_market_trend
+  - economics_sales_channels
+  - economics_certifications_helpful
   
-  # Cultivation - Substrate
-  - cultivation_substrates       # Array: {type, category, composition[], performance, preparation, cost}
-  
-  # Cultivation - Produktionszyklus
-  - production_timeline          # Object: {phases[], total_cycle_days, flushes}
-  
-  # Cultivation - Stämme
-  - cultivation_strains          # Array: {name, code, origin, characteristics, availability}
-  
-  # Cultivation - Probleme
-  - cultivation_problems         # Object: {contaminants[], pests[], disorders[]}
+  # ─────────────────────────────────────────────────────────────────────────────
+  # LIEFERANTEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - suppliers
+  - supplier_cultures
+  - supplier_substrates
+  - supplier_equipment
+  - supplier_rating
+  - supplier_ships_to
+  - supplier_certifications
 
-# Keywords für automatische Perspektiven-Erkennung bei Suche
+# ═══════════════════════════════════════════════════════════════════════════════
+# ENUMERATIONEN - Definierte Wertedomänen
+# ═══════════════════════════════════════════════════════════════════════════════
+enumerationen:
+  cultivation_status:
+    - not_cultivated
+    - experimental
+    - small_scale
+    - commercial
+    - industrial
+  
+  difficulty_level:
+    - beginner
+    - intermediate
+    - advanced
+    - expert
+  
+  growth_phase:
+    - spawn_run
+    - primordia_formation
+    - fruiting
+    - harvest
+    - rest
+  
+  substrate_category:
+    - grain
+    - wood
+    - straw
+    - compost
+    - manure
+    - agricultural_waste
+    - synthetic
+  
+  problem_type:
+    - contaminant
+    - pest
+    - disorder
+    - environmental
+  
+  frequency_rating:
+    - rare
+    - occasional
+    - common
+    - very_common
+  
+  severity_rating:
+    - minor
+    - moderate
+    - severe
+    - catastrophic
+  
+  speed_rating:
+    - very_slow
+    - slow
+    - moderate
+    - fast
+    - very_fast
+  
+  yield_rating:
+    - very_low
+    - low
+    - moderate
+    - high
+    - very_high
+  
+  resistance_rating:
+    - very_low
+    - low
+    - moderate
+    - high
+    - very_high
+  
+  quality_grade:
+    - premium
+    - grade_a
+    - grade_b
+    - grade_c
+    - reject
+  
+  supplier_type:
+    - culture
+    - substrate
+    - equipment
+    - supplement
+    - packaging
+    - general
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# KEYWORDS - Für semantische Suche
+# ═══════════════════════════════════════════════════════════════════════════════
 keywords:
+  # Natürliches Vorkommen
   - standort
+  - habitat
   - wald
   - wiese
-  - substrat
-  - temperatur
-  - wachsen
-  - finden
-  - sammeln
   - saison
   - herbst
   - sommer
   - frühling
+  - winter
   - holz
   - baum
   - boden
   - feucht
   - schattig
+  
+  # Kultivierung Allgemein
   - anbau
   - zucht
   - kultivierung
+  - cultivation
   - myzel
+  - mycelium
   - spawn
+  - brut
+  - impfen
+  - inoculation
+  
+  # Wachstumsphasen
+  - spawn run
+  - colonization
+  - durchwachsung
+  - pinning
+  - primordia
   - fruiting
+  - fruktifikation
   - flush
-  - ertrag
-  - biologische effizienz
+  - ernte
+  - harvest
+  
+  # Substrate
+  - substrat
+  - substrate
+  - stroh
+  - straw
+  - sägemehl
+  - sawdust
+  - holzhackschnitzel
+  - wood chips
+  - kaffeesatz
+  - coffee grounds
+  - getreide
+  - grain
+  - roggen
+  - rye
+  - weizen
+  - wheat
+  - kleie
+  - bran
+  - gips
+  - gypsum
+  
+  # Parameter
+  - temperatur
+  - temperature
+  - luftfeuchtigkeit
+  - humidity
+  - co2
+  - kohlendioxid
+  - licht
+  - light
+  - ph
+  - fae
+  - fresh air exchange
+  - frischluft
+  
+  # Probleme
   - kontamination
+  - contamination
+  - schimmel
+  - mold
+  - trichoderma
+  - green mold
+  - cobweb
+  - bacteria
+  - bakterien
+  - trauermücken
+  - fungus gnats
+  
+  # Wirtschaftlichkeit
+  - ertrag
+  - yield
+  - biologische effizienz
+  - biological efficiency
+  - be
+  - rentabilität
+  - gewinn
+  - profit
+  - kosten
+  - cost
+  
+  # Ausrüstung
+  - autoklav
+  - autoclave
   - sterilisation
   - pasteurisierung
+  - pasteurization
+  - laminar flow
+  - reinraumbank
+  - growbox
+  - fruchtungskammer
+  - fruiting chamber
+  - shotgun fruiting chamber
+  - monotub

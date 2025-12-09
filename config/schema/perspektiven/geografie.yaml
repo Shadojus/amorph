@@ -1,5 +1,8 @@
-# Perspektive: Geografie - Karten-Blau
+# =============================================================================
+# GEOGRAFIE-PERSPEKTIVE v2.0.0
 # Ozeanisches Blau wie Weltkarten
+# Vollständiges Schema für Verbreitung, Fundorte, Klima, Visualisierung
+# =============================================================================
 
 id: geografie
 name: Geografie
@@ -7,42 +10,313 @@ symbol: 🗺️
 
 # Karten-Blau Töne - geografisch (0.65)
 farben:
-  - "rgba(100, 160, 220, 0.65)"   # Ozean-Blau
-  - "rgba(85, 145, 205, 0.65)"    # Karten-Blau
-  - "rgba(70, 130, 190, 0.65)"    # Kontinent-Blau
-  - "rgba(55, 115, 175, 0.65)"    # Tiefsee-Blau
+  - "rgba(100, 160, 220, 0.65)"   # Ozean-Blau (primary)
+  - "rgba(85, 145, 205, 0.65)"    # Karten-Blau (secondary)
+  - "rgba(70, 130, 190, 0.65)"    # Kontinent-Blau (tertiary)
+  - "rgba(55, 115, 175, 0.65)"    # Tiefsee-Blau (quaternary)
 
-# Welche Felder gehören zu dieser Perspektive?
+# =============================================================================
+# FELDER - Flache Struktur für AMORPH
+# =============================================================================
 felder:
+  # --- Basis ---
   - bild
   - name
   - wissenschaftlich
-  # Native Range
-  - native_verbreitung
+  
+  # --- Native Verbreitung ---
+  - native_beschreibung
+  - native_areal_typ
+  - native_areal_groesse_km2
+  - native_verbreitungsstatus
+  - native_quellenangabe
+  
+  # --- Kontinente ---
   - kontinente
+  - kontinent_eu_status
+  - kontinent_eu_haeufigkeit
+  - kontinent_as_status
+  - kontinent_as_haeufigkeit
+  - kontinent_af_status
+  - kontinent_af_haeufigkeit
+  - kontinent_na_status
+  - kontinent_na_haeufigkeit
+  - kontinent_sa_status
+  - kontinent_sa_haeufigkeit
+  - kontinent_oc_status
+  - kontinent_oc_haeufigkeit
+  - kontinent_an_status
+  - kontinent_an_haeufigkeit
+  
+  # --- Länder ---
   - laender
+  - laender_anzahl
+  - laender_nativ
+  - laender_eingefuehrt
+  - laender_hauptvorkommen
+  
+  # --- Biogeografische Regionen ---
   - biogeografische_regionen
+  - biogeo_realm
+  - biogeo_biome
+  
+  # --- Ökoregionen ---
   - oekoregionen
-  # Introduced Range
-  - eingefuehrte_verbreitung
-  - invasivitaet
-  # Occurrences
-  - fundorte
-  - fundstatistik
+  - oeko_codes
+  - oeko_area_km2
+  
+  # --- Eingeführte Verbreitung ---
+  - eingefuehrte_regionen
+  - einfuehrungsjahr_erst
+  - einfuehrungsart
+  - einfuehrungsvektor
+  - etablierungsstatus
+  
+  # --- Invasivität ---
+  - ist_invasiv
+  - invasivitaetsstufe
+  - invasiv_auswirkungen_oeko
+  - invasiv_auswirkungen_oekonomisch
+  - invasiv_auswirkungen_gesundheit
+  - invasiv_betroffene_arten
+  - invasiv_betroffene_lebensraeume
+  - invasiv_management
+  - invasiv_regulatorisch
+  
+  # --- Fundorte ---
+  - fundorte_gesamt
+  - fundorte_validiert
+  - fundorte_laender_anzahl
+  - fund_erster_jahr
+  - fund_letzter_jahr
+  - fund_haeufigste_habitate
+  - fund_haeufigste_substrate
+  - fund_hoehenverteilung_min
+  - fund_hoehenverteilung_max
+  - fund_hoehenverteilung_median
+  
+  # --- Fundstatistik ---
+  - funde_nach_jahrzehnt
+  - funde_nach_monat
+  - funde_top_beobachter
+  
+  # --- Datenquellen ---
   - datenquellen
-  - raeumliche_statistik
-  # Climate Envelope
-  - klimahuelle
-  - temperatur_bereich
-  - niederschlag_bereich
+  - datenquellen_primaer
+  - datenquellen_anzahl
+  
+  # --- Räumliche Statistik ---
+  - centroid_lat
+  - centroid_lng
+  - areal_extent_km2
+  - fundpunkt_dichte
+  - nearest_neighbor_index
+  - latitude_range_min
+  - latitude_range_max
+  - longitude_range_min
+  - longitude_range_max
+  
+  # --- Klimahülle ---
+  - klima_berechnungsmethode
+  - klima_stichprobengroesse
+  - klima_daten_quelle
+  - klima_referenzperiode
+  - klima_beschreibung
+  
+  # --- Temperatur ---
+  - temp_jahres_mittel_min
+  - temp_jahres_mittel_max
+  - temp_jahres_mittel_optimal_min
+  - temp_jahres_mittel_optimal_max
+  - temp_waermstes_monat_min
+  - temp_waermstes_monat_max
+  - temp_kaeltestes_monat_min
+  - temp_kaeltestes_monat_max
+  - temp_saisonalitaet_min
+  - temp_saisonalitaet_max
+  
+  # --- Niederschlag ---
+  - niederschlag_jahres_min
+  - niederschlag_jahres_max
+  - niederschlag_jahres_optimal_min
+  - niederschlag_jahres_optimal_max
+  - niederschlag_feuchtester_min
+  - niederschlag_feuchtester_max
+  - niederschlag_trockenster_min
+  - niederschlag_trockenster_max
+  - niederschlag_saisonalitaet_min
+  - niederschlag_saisonalitaet_max
+  
+  # --- Köppen-Zonen ---
   - koeppen_zonen
-  - bioclim_variablen
-  # Maps
-  - verbreitungskarte
-  - heatmap_funde
+  - koeppen_primaer
+  - koeppen_hauptklassen
+  
+  # --- BioClim Variablen (BIO1-BIO19 Zusammenfassung) ---
+  - bioclim_temp_jahresmittel
+  - bioclim_temp_amplitude
+  - bioclim_niederschlag_jahr
+  - bioclim_niederschlag_saisonalitaet
+  
+  # --- Verbreitungskarte ---
+  - karte_typ
+  - karte_titel
+  - karte_beschreibung
+  - karte_center_lat
+  - karte_center_lng
+  - karte_zoom
+  - karte_url
+  - karte_geojson_url
+  
+  # --- Heatmap ---
+  - heatmap_aktiv
+  - heatmap_radius
+  - heatmap_max_zoom
 
-# Keywords für automatische Perspektiven-Erkennung bei Suche
+# =============================================================================
+# ENUMERATIONEN
+# =============================================================================
+enumerationen:
+  areal_typ:
+    - kosmopolitisch
+    - holarktisch
+    - palaearktisch
+    - nearktisch
+    - neotropisch
+    - afrotropisch
+    - indomalayisch
+    - australasisch
+    - antarktisch
+    - endemisch
+    - disjunkt
+    
+  verbreitungsstatus:
+    - gesichert
+    - wahrscheinlich
+    - fraglich
+    - historisch
+    - ausgestorben
+    
+  kontinent_status:
+    - nativ
+    - eingefuehrt
+    - unsicher
+    
+  kontinent_haeufigkeit:
+    - sehr_haeufig
+    - haeufig
+    - zerstreut
+    - selten
+    - sehr_selten
+    
+  laender_status:
+    - nativ
+    - eingefuehrt
+    - etabliert
+    - unbestaendig
+    - ausgestorben
+    - unsicher
+    
+  realm:
+    - palearctic
+    - nearctic
+    - afrotropic
+    - neotropic
+    - australasia
+    - indomalaya
+    - oceania
+    - antarctic
+    
+  biome:
+    - tropical_moist_forests
+    - tropical_dry_forests
+    - temperate_broadleaf_forests
+    - temperate_coniferous_forests
+    - boreal_forests
+    - tropical_grasslands
+    - temperate_grasslands
+    - tundra
+    - mediterranean
+    - deserts
+    
+  einfuehrungsart:
+    - absichtlich
+    - unabsichtlich
+    - natuerliche_expansion
+    - unbekannt
+    
+  einfuehrungsvektor:
+    - handel_holz
+    - handel_pflanzen
+    - handel_substrat
+    - tourismus
+    - transport_container
+    - mykorrhiza_inokulum
+    - forschung
+    - gaertnerei
+    - unbekannt
+    
+  etablierungsstatus:
+    - etabliert
+    - in_etablierung
+    - unbestaendig
+    - ausgestorben
+    - unsicher
+    
+  invasivitaetsstufe:
+    - keine
+    - potenziell
+    - beobachtungsliste
+    - invasiv
+    - hochinvasiv
+    
+  habitat_typ:
+    - laubwald
+    - nadelwald
+    - mischwald
+    - auwald
+    - moorwald
+    - trockenrasen
+    - feuchtwiese
+    - hochmoor
+    - heide
+    - alpin
+    - parkanlage
+    - garten
+    - wegrand
+    
+  substrat:
+    - boden
+    - holz_lebend
+    - holz_tot
+    - laubstreu
+    - nadelstreu
+    - mist
+    - humus
+    - moos
+    - rinde
+    
+  koeppen_hauptklasse:
+    - A  # Tropisch
+    - B  # Trocken
+    - C  # Warm-gemäßigt
+    - D  # Kontinental
+    - E  # Polar
+    
+  karten_typ:
+    - punktkarte
+    - rasterkarte
+    - choropleth_land
+    - choropleth_region
+    - nativesAreal
+    - gesamtverbreitung
+    - modelliert
+
+# =============================================================================
+# KEYWORDS FÜR SEMANTISCHE SUCHE
+# =============================================================================
 keywords:
+  # Deutsch
   - geografie
   - verbreitung
   - vorkommen
@@ -58,3 +332,22 @@ keywords:
   - native
   - invasiv
   - eingeführt
+  - habitat
+  - standort
+  - koordinaten
+  - höhenlage
+  - europa
+  - asien
+  - nordamerika
+  - südamerika
+  - afrika
+  - ozeanien
+  # Englisch
+  - geography
+  - distribution
+  - occurrence
+  - location
+  - country
+  - climate
+  - precipitation
+  - elevation

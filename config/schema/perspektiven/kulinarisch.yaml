@@ -106,15 +106,120 @@ felder:
   - lagerung_haltbarkeit_tage  # Zahl: Tage haltbar
   - lagerung_indikatoren       # Woran erkenne ich Frische?
   - konservierung              # Bar: Methoden mit Qualitätserhalt
+  - konservierung_methoden     # Array: Trocknen, Einfrieren, Einlegen, etc.
+  - konservierung_qualitaet    # Qualitätserhalt pro Methode
+  - konservierung_haltbarkeit  # Haltbarkeit pro Methode
   
   # ─────────────────────────────────────────────────────────────────────────────
-  # NÄHRWERT & WISSENSCHAFT
-  # "Was nehme ich zu mir?"
+  # NÄHRWERT - MAKRONÄHRSTOFFE
+  # "Was nehme ich zu mir? (Makros)"
   # ─────────────────────────────────────────────────────────────────────────────
-  - naehrwerte                 # Makros: Protein, Fett, KH
-  - naehrwert_highlights       # Besondere Nährstoffe
-  - bioaktive_substanzen       # Ergothionein, Beta-Glucan, etc.
+  - naehrwerte                 # Übersicht Makros
+  - energie_kcal               # Brennwert in kcal/100g
+  - energie_kj                 # Brennwert in kJ/100g
+  - protein                    # Eiweiß in g/100g
+  - protein_qualitaet          # Aminosäure-Score, biologische Wertigkeit
+  - fett                       # Gesamtfett in g/100g
+  - fett_gesaettigt            # Gesättigte Fettsäuren
+  - fett_einfach_ungesaettigt  # Einfach ungesättigte FS
+  - fett_mehrfach_ungesaettigt # Mehrfach ungesättigte FS
+  - omega_3                    # Omega-3-Fettsäuren
+  - omega_6                    # Omega-6-Fettsäuren
+  - kohlenhydrate              # Gesamtkohlenhydrate in g/100g
+  - zucker                     # Davon Zucker
+  - ballaststoffe              # Ballaststoffe in g/100g
+  - ballaststoffe_loeslich     # Lösliche Ballaststoffe
+  - ballaststoffe_unloeslich   # Unlösliche Ballaststoffe
+  - wasser                     # Wassergehalt in %
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # NÄHRWERT - VITAMINE
+  # "Welche Vitamine sind enthalten?"
+  # ─────────────────────────────────────────────────────────────────────────────
+  - vitamine                   # Übersicht alle Vitamine
+  - vitamin_a                  # Retinol-Äquivalent (µg)
+  - beta_carotin               # Provitamin A (µg)
+  - vitamin_b1                 # Thiamin (mg)
+  - vitamin_b2                 # Riboflavin (mg)
+  - vitamin_b3                 # Niacin (mg)
+  - vitamin_b5                 # Pantothensäure (mg)
+  - vitamin_b6                 # Pyridoxin (mg)
+  - vitamin_b7                 # Biotin (µg)
+  - vitamin_b9                 # Folsäure (µg)
+  - vitamin_b12                # Cobalamin (µg)
+  - vitamin_c                  # Ascorbinsäure (mg)
+  - vitamin_d                  # Calciferol (µg)
+  - vitamin_d2                 # Ergocalciferol - typisch für Pilze!
+  - vitamin_e                  # Tocopherol (mg)
+  - vitamin_k                  # Phyllochinon (µg)
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # NÄHRWERT - MINERALSTOFFE
+  # "Welche Mineralstoffe sind enthalten?"
+  # ─────────────────────────────────────────────────────────────────────────────
+  - mineralstoffe              # Übersicht alle Mineralstoffe
+  - kalium                     # K (mg)
+  - natrium                    # Na (mg)
+  - calcium                    # Ca (mg)
+  - magnesium                  # Mg (mg)
+  - phosphor                   # P (mg)
+  - eisen                      # Fe (mg)
+  - zink                       # Zn (mg)
+  - kupfer                     # Cu (mg)
+  - mangan                     # Mn (mg)
+  - selen                      # Se (µg) - wichtig bei Pilzen!
+  - jod                        # I (µg)
+  - chrom                      # Cr (µg)
+  - molybdaen                  # Mo (µg)
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # NÄHRWERT - AMINOSÄUREN
+  # "Welche Aminosäuren sind enthalten?"
+  # ─────────────────────────────────────────────────────────────────────────────
+  - aminosaeuren               # Aminosäure-Profil komplett
+  - aminosaeuren_essentiell    # Essentielle AS
+  - leucin                     # Leucin (mg)
+  - isoleucin                  # Isoleucin (mg)
+  - valin                      # Valin (mg)
+  - lysin                      # Lysin (mg)
+  - methionin                  # Methionin (mg)
+  - phenylalanin               # Phenylalanin (mg)
+  - threonin                   # Threonin (mg)
+  - tryptophan                 # Tryptophan (mg)
+  - histidin                   # Histidin (mg)
+  - aminosaeuren_semi_essentiell # Semi-essentielle AS
+  - arginin                    # Arginin (mg)
+  - cystein                    # Cystein (mg)
+  - tyrosin                    # Tyrosin (mg)
+  - glutaminsaeure             # Glutaminsäure (mg) - Umami!
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # NÄHRWERT - BIOAKTIVE SUBSTANZEN
+  # "Was macht es besonders wertvoll?"
+  # ─────────────────────────────────────────────────────────────────────────────
+  - bioaktive_substanzen       # Übersicht
+  - beta_glucane               # Immunstimulierende Polysaccharide
+  - ergothionein               # Antioxidans (typisch Pilze!)
+  - ergosterol                 # Provitamin D2
+  - chitin                     # Ballaststoff
+  - chitosan                   # Derivat
+  - polyphenole                # Antioxidantien
+  - flavonoide                 # Flavonoid-Profil
+  - carotinoide                # Carotinoide
+  - phytosterole               # Pflanzliche Sterole
+  - naehrwert_highlights       # Besonders hervorzuhebende Nährstoffe
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # NÄHRWERT - INDIZES & BEWERTUNGEN
+  # "Wie bewerte ich den Nährwert?"
+  # ─────────────────────────────────────────────────────────────────────────────
+  - glykaemischer_index        # GI (0-100)
+  - glykaemische_last          # GL pro Portion
+  - nutri_score                # A-E Bewertung
+  - naehrstoffdichte           # Nährstoffe pro kcal
+  - saettigung_index           # Sättigungspotential
   - bioverfuegbarkeit          # Was wird tatsächlich aufgenommen?
+  - antinaehrstoffe            # Oxalate, Phytate, Lektine
   - wechselwirkungen           # Mit Medikamenten, anderen Lebensmitteln
 
   # ─────────────────────────────────────────────────────────────────────────────
@@ -216,6 +321,9 @@ keywords:
   - konservieren
   - einfrieren
   - aufbewahren
+  - trocknen
+  - einlegen
+  - fermentieren
   
   # Kultur
   - traditionell
@@ -224,3 +332,65 @@ keywords:
   - heimisch
   - wildsammlung
   - zucht
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ERNÄHRUNG & NÄHRWERTE
+  # ─────────────────────────────────────────────────────────────────────────────
+  
+  # Makronährstoffe
+  - nährwert
+  - kalorien
+  - kcal
+  - energie
+  - protein
+  - eiweiß
+  - fett
+  - kohlenhydrate
+  - ballaststoffe
+  - zucker
+  
+  # Vitamine
+  - vitamin
+  - vitamin d
+  - vitamin b
+  - vitamin c
+  - folsäure
+  - b12
+  - thiamin
+  - riboflavin
+  - niacin
+  
+  # Mineralstoffe
+  - mineralstoff
+  - kalium
+  - eisen
+  - zink
+  - selen
+  - magnesium
+  - calcium
+  - phosphor
+  - kupfer
+  
+  # Aminosäuren
+  - aminosäure
+  - leucin
+  - lysin
+  - tryptophan
+  - essentiell
+  - protein qualität
+  
+  # Bioaktive
+  - beta glucan
+  - ergothionein
+  - antioxidans
+  - antioxidantien
+  - polyphenol
+  
+  # Bewertung
+  - glykämisch
+  - nutri score
+  - nährstoffdichte
+  - bioverfügbar
+  - gesund
+  - nahrhaft
+  - nährstoffreich

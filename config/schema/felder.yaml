@@ -62,19 +62,158 @@ reihenfolge:
   # Medizin - Dosierung
   - dosierung
   - zubereitungsformen
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ANBAU - CULTIVATION (Erweitert v2.0)
+  # ─────────────────────────────────────────────────────────────────────────────
   # Anbau - Status & Schwierigkeit
   - cultivation_status
   - cultivation_difficulty
-  # Anbau - Parameter
+  - cultivation_difficulty_overall
+  - cultivation_difficulty_factors
+  - cultivation_success_rate
+  - cultivation_time_investment
+  - cultivation_equipment_needed
+  - cultivation_skill_prerequisites
+  # Anbau - Spawn Run Parameter
   - cultivation_parameters
+  - param_spawn_temp_min
+  - param_spawn_temp_optimal
+  - param_spawn_temp_max
+  - param_spawn_humidity_min
+  - param_spawn_humidity_optimal
+  - param_spawn_humidity_max
+  - param_spawn_co2_ppm
+  - param_spawn_light_required
+  - param_spawn_fae_per_hour
+  - param_spawn_duration_days
+  - param_spawn_ph_optimal
+  # Anbau - Primordia Parameter
+  - param_primordia_temp_min
+  - param_primordia_temp_optimal
+  - param_primordia_temp_max
+  - param_primordia_humidity_min
+  - param_primordia_humidity_optimal
+  - param_primordia_humidity_max
+  - param_primordia_co2_ppm
+  - param_primordia_light_lux
+  - param_primordia_light_hours
+  - param_primordia_fae_per_hour
+  - param_primordia_duration_days
+  # Anbau - Fruiting Parameter
+  - param_fruiting_temp_min
+  - param_fruiting_temp_optimal
+  - param_fruiting_temp_max
+  - param_fruiting_humidity_min
+  - param_fruiting_humidity_optimal
+  - param_fruiting_humidity_max
+  - param_fruiting_co2_ppm
+  - param_fruiting_light_lux
+  - param_fruiting_light_hours
+  - param_fruiting_fae_per_hour
+  - param_fruiting_duration_days
   # Anbau - Substrate
   - cultivation_substrates
-  # Anbau - Produktionszyklus
-  - production_timeline
+  - substrate_primary
+  - substrate_category
+  - substrate_composition
+  - substrate_sterilization_required
+  - substrate_sterilization_temp
+  - substrate_sterilization_duration
+  - substrate_pasteurization_temp
+  - substrate_pasteurization_duration
+  - substrate_moisture_percent
+  - substrate_preparation_method
+  - substrate_rating
+  - substrate_biological_efficiency
+  - substrate_colonization_days
+  - substrate_contamination_rate
+  - substrate_cost_per_kg
+  - substrate_advantages
+  - substrate_disadvantages
   # Anbau - Stämme
   - cultivation_strains
+  - strain_name
+  - strain_code
+  - strain_origin
+  - strain_growth_speed
+  - strain_yield_potential
+  - strain_contamination_resistance
+  - strain_temperature_tolerance
+  - strain_cap_size
+  - strain_stem_length
+  - strain_color
+  - strain_texture
+  - strain_shelf_life_days
+  - strain_flavor_profile
+  - strain_biological_efficiency
+  - strain_commercial_viability
+  - strain_market_demand
+  - strain_best_uses
+  - strain_suppliers
+  - strain_availability
+  # Anbau - Produktionszyklus
+  - production_timeline
+  - production_total_cycle_days
+  - production_total_flushes
+  - production_expected_yield_kg
+  - production_biological_efficiency
+  - production_cycle_type
+  - production_phases
+  - production_success_rate
   # Anbau - Probleme
   - cultivation_problems
+  - problem_contaminants
+  - problem_pests
+  - problem_disorders
+  - problem_environmental
+  - problem_frequency
+  - problem_severity
+  - problem_symptoms
+  - problem_conditions_promoting
+  - problem_prevention
+  - problem_treatment
+  - problem_chemical_control
+  - problem_biological_control
+  # Anbau - Ernte
+  - ernte_stats
+  - harvest_fresh_weight_kg
+  - harvest_dry_weight_kg
+  - harvest_biological_efficiency
+  - harvest_quality_grade
+  - harvest_avg_cap_diameter
+  - harvest_avg_stem_length
+  - harvest_flush_number
+  - harvest_records
+  # Anbau - Ausrüstung
+  - equipment_requirements
+  - equipment_minimum
+  - equipment_recommended
+  - equipment_optional
+  - equipment_startup_cost_hobby
+  - equipment_startup_cost_serious
+  - equipment_startup_cost_commercial
+  # Anbau - Wirtschaftlichkeit
+  - economics
+  - economics_market_price_min
+  - economics_market_price_max
+  - economics_market_price_avg
+  - economics_production_cost
+  - economics_profit_margin
+  - economics_break_even_kg
+  - economics_demand_level
+  - economics_competition_level
+  - economics_market_trend
+  - economics_sales_channels
+  - economics_certifications_helpful
+  # Anbau - Lieferanten
+  - suppliers
+  - supplier_cultures
+  - supplier_substrates
+  - supplier_equipment
+  - supplier_rating
+  - supplier_ships_to
+  - supplier_certifications
+  - environmental_monitoring
   # Sicherheit - Toxikologie
   - toxizitaet
   - toxine
@@ -200,23 +339,146 @@ reihenfolge:
   - klima_projektionen
   - naturschutz_prognose
   - zukunfts_szenarien
-  # Geografie - Verbreitung
-  - native_verbreitung
+  # ─────────────────────────────────────────────────────────────────────────────
+  # GEOGRAFIE v2.0 - Erweiterte Verbreitungsdaten
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Geografie - Native Verbreitung
+  - native_beschreibung
+  - native_areal_typ
+  - native_areal_groesse_km2
+  - native_verbreitungsstatus
+  - native_quellenangabe
+  # Geografie - Kontinente
   - kontinente
+  - kontinent_eu_status
+  - kontinent_eu_haeufigkeit
+  - kontinent_as_status
+  - kontinent_as_haeufigkeit
+  - kontinent_af_status
+  - kontinent_af_haeufigkeit
+  - kontinent_na_status
+  - kontinent_na_haeufigkeit
+  - kontinent_sa_status
+  - kontinent_sa_haeufigkeit
+  - kontinent_oc_status
+  - kontinent_oc_haeufigkeit
+  - kontinent_an_status
+  - kontinent_an_haeufigkeit
+  # Geografie - Länder
   - laender
+  - laender_anzahl
+  - laender_nativ
+  - laender_eingefuehrt
+  - laender_hauptvorkommen
+  # Geografie - Regionen
   - biogeografische_regionen
+  - biogeo_realm
+  - biogeo_biome
   - oekoregionen
+  - oeko_codes
+  - oeko_area_km2
+  # Geografie - Eingeführte Verbreitung
+  - eingefuehrte_regionen
+  - einfuehrungsjahr_erst
+  - einfuehrungsart
+  - einfuehrungsvektor
+  - etablierungsstatus
+  # Geografie - Invasivität
+  - ist_invasiv
+  - invasivitaetsstufe
+  - invasiv_auswirkungen_oeko
+  - invasiv_auswirkungen_oekonomisch
+  - invasiv_auswirkungen_gesundheit
+  - invasiv_betroffene_arten
+  - invasiv_betroffene_lebensraeume
+  - invasiv_management
+  - invasiv_regulatorisch
+  # Geografie - Fundorte
+  - fundorte_gesamt
+  - fundorte_validiert
+  - fundorte_laender_anzahl
+  - fund_erster_jahr
+  - fund_letzter_jahr
+  - fund_haeufigste_habitate
+  - fund_haeufigste_substrate
+  - fund_hoehenverteilung_min
+  - fund_hoehenverteilung_max
+  - fund_hoehenverteilung_median
+  - funde_nach_jahrzehnt
+  - funde_nach_monat
+  - funde_top_beobachter
+  # Geografie - Datenquellen
+  - datenquellen
+  - datenquellen_primaer
+  - datenquellen_anzahl
+  # Geografie - Räumliche Statistik
+  - centroid_lat
+  - centroid_lng
+  - areal_extent_km2
+  - fundpunkt_dichte
+  - nearest_neighbor_index
+  - latitude_range_min
+  - latitude_range_max
+  - longitude_range_min
+  - longitude_range_max
+  # Geografie - Klimahülle
+  - klima_berechnungsmethode
+  - klima_stichprobengroesse
+  - klima_daten_quelle
+  - klima_referenzperiode
+  - klima_beschreibung
+  # Geografie - Temperatur
+  - temp_jahres_mittel_min
+  - temp_jahres_mittel_max
+  - temp_jahres_mittel_optimal_min
+  - temp_jahres_mittel_optimal_max
+  - temp_waermstes_monat_min
+  - temp_waermstes_monat_max
+  - temp_kaeltestes_monat_min
+  - temp_kaeltestes_monat_max
+  - temp_saisonalitaet_min
+  - temp_saisonalitaet_max
+  # Geografie - Niederschlag
+  - niederschlag_jahres_min
+  - niederschlag_jahres_max
+  - niederschlag_jahres_optimal_min
+  - niederschlag_jahres_optimal_max
+  - niederschlag_feuchtester_min
+  - niederschlag_feuchtester_max
+  - niederschlag_trockenster_min
+  - niederschlag_trockenster_max
+  - niederschlag_saisonalitaet_min
+  - niederschlag_saisonalitaet_max
+  # Geografie - Köppen & BioClim
+  - koeppen_zonen
+  - koeppen_primaer
+  - koeppen_hauptklassen
+  - bioclim_temp_jahresmittel
+  - bioclim_temp_amplitude
+  - bioclim_niederschlag_jahr
+  - bioclim_niederschlag_saisonalitaet
+  # Geografie - Karten
+  - karte_typ
+  - karte_titel
+  - karte_beschreibung
+  - karte_center_lat
+  - karte_center_lng
+  - karte_zoom
+  - karte_url
+  - karte_geojson_url
+  # Geografie - Heatmap
+  - heatmap_aktiv
+  - heatmap_radius
+  - heatmap_max_zoom
+  # Legacy Geografie-Felder
+  - native_verbreitung
   - eingefuehrte_verbreitung
   - invasivitaet
-  # Geografie - Funde
   - fundorte
-  - datenquellen
   - raeumliche_statistik
-  # Geografie - Klima
   - klimahuelle
   - temperatur_bereich
   - niederschlag_bereich
-  - koeppen_zonen
   - bioclim_variablen
   - verbreitungskarte
   - heatmap_funde
@@ -292,47 +554,444 @@ reihenfolge:
   - bewegungen
   - tourismus
   - festivals
+  # ─────────────────────────────────────────────────────────────────────────────
+  # FORSCHUNG (v2.0 - FLACH)
+  # ─────────────────────────────────────────────────────────────────────────────
   # Forschung - Aktivität
   - forschungs_aktivitaet
+  - forschungs_aktivitaet_label
+  - forschungs_aktivitaet_icon
   - publikationen_anzahl
-  - publikationen_trend
+  - publikationen_pro_jahr
+  # Forschung - Publikationstrend
+  - publikationen_trend_richtung
+  - publikationen_trend_prozent
+  - publikationen_trend_zeitraum
+  - publikationen_jahr_2020
+  - publikationen_jahr_2021
+  - publikationen_jahr_2022
+  - publikationen_jahr_2023
+  - publikationen_jahr_2024
+  # Forschung - Forschungsgruppen
   - forschungsgruppen
+  - forschungsgruppe_1_name
+  - forschungsgruppe_1_institution
+  - forschungsgruppe_1_land
+  - forschungsgruppe_1_schwerpunkt
+  - forschungsgruppe_1_kontakt
+  - forschungsgruppe_1_website
+  - forschungsgruppe_1_publikationen
+  - forschungsgruppe_1_h_index
+  - forschungsgruppe_2_name
+  - forschungsgruppe_2_institution
+  - forschungsgruppe_2_land
+  - forschungsgruppe_2_schwerpunkt
+  - forschungsgruppe_3_name
+  - forschungsgruppe_3_institution
+  - forschungsgruppe_3_land
+  # Forschung - Aktuelle Themen
   - aktuelle_themen
-  # Forschung - Patente & Biotech
-  - patente
-  - patent_nummer
-  - erfinder
-  - anwendungen
-  - biotechnologie
-  - anwendungen_biotech
-  - gentechnik
-  - synthetische_biologie
-  # Forschung - Zukunft
-  - zukunftspotential
+  - thema_1_name
+  - thema_1_beschreibung
+  - thema_1_aktivitaet
+  - thema_1_relevanz_score
+  - thema_1_keywords
+  - thema_2_name
+  - thema_2_beschreibung
+  - thema_2_aktivitaet
+  - thema_2_relevanz_score
+  - thema_2_keywords
+  - thema_3_name
+  - thema_3_beschreibung
+  - thema_3_aktivitaet
+  - thema_3_relevanz_score
+  # Forschung - Patente Übersicht
+  - patente_gesamt
+  - patente_aktiv
+  - patente_angemeldet
+  - patente_abgelaufen
+  - patente_jurisdiktionen
+  # Forschung - Patent Details
+  - patent_1_nummer
+  - patent_1_titel
+  - patent_1_erfinder
+  - patent_1_anmelder
+  - patent_1_einreichungsdatum
+  - patent_1_erteilungsdatum
+  - patent_1_ablaufdatum
+  - patent_1_status
+  - patent_1_jurisdiktionen
+  - patent_1_anwendungen
+  - patent_1_zusammenfassung
+  - patent_1_url
+  - patent_1_zitationen
+  - patent_2_nummer
+  - patent_2_titel
+  - patent_2_erfinder
+  - patent_2_anmelder
+  - patent_2_status
+  - patent_2_anwendungen
+  - patent_2_zitationen
+  - patent_3_nummer
+  - patent_3_titel
+  - patent_3_status
+  - patent_3_anwendungen
+  - patent_4_nummer
+  - patent_4_titel
+  - patent_4_status
+  - patent_5_nummer
+  - patent_5_titel
+  - patent_5_status
+  # Forschung - Biotechnologie Übersicht
+  - biotechnologie_relevanz
+  - biotechnologie_relevanz_label
+  - biotechnologie_bereiche
+  - biotechnologie_score
+  # Forschung - Biotech Anwendungen
+  - biotech_anwendung_1_bereich
+  - biotech_anwendung_1_name
+  - biotech_anwendung_1_beschreibung
+  - biotech_anwendung_1_reife_grad
+  - biotech_anwendung_1_unternehmen
+  - biotech_anwendung_1_marktpotential
+  - biotech_anwendung_2_bereich
+  - biotech_anwendung_2_name
+  - biotech_anwendung_2_beschreibung
+  - biotech_anwendung_2_reife_grad
+  - biotech_anwendung_2_marktpotential
+  - biotech_anwendung_3_bereich
+  - biotech_anwendung_3_name
+  - biotech_anwendung_3_reife_grad
+  - biotech_anwendung_4_bereich
+  - biotech_anwendung_4_name
+  - biotech_anwendung_5_bereich
+  - biotech_anwendung_5_name
+  # Forschung - Gentechnik Genom
+  - genom_sequenziert
+  - genom_groesse_mb
+  - genom_gen_anzahl
+  - genom_genbank_accession
+  - genom_genbank_ids
+  - genom_assembly_level
+  - genom_annotation_status
+  # Forschung - Gentechnik Methoden
+  - transformation_methoden
+  - transformation_agrobacterium
+  - transformation_peg
+  - transformation_elektroporation
+  - transformation_biolistic
+  - marker_gene
+  - selektions_marker
+  - knockout_bibliothek_vorhanden
+  - knockout_gene_anzahl
+  - crispr_etabliert
+  - crispr_erfolgsrate
+  - crispr_targets
+  - rnai_etabliert
+  # Forschung - Synthetische Biologie
+  - synbio_chassis_organismus
+  - synbio_chassis_eignung_score
+  - synbio_heterologe_expression
+  - synbio_expression_systeme
+  - synbio_metabolic_engineering
+  - synbio_produkt_1_name
+  - synbio_produkt_1_pathway
+  - synbio_produkt_1_effizienz
+  - synbio_produkt_1_status
+  - synbio_produkt_2_name
+  - synbio_produkt_2_pathway
+  - synbio_produkt_2_status
+  - synbio_produkt_3_name
+  - synbio_promotoren
+  - synbio_terminatoren
+  - synbio_enhancer
+  - synbio_regulatorische_toolbox
+  # Forschung - Zukunftspotential Scores
+  - zukunftspotential_score
+  - zukunftspotential_innovation_index
+  - zukunftspotential_markt_attraktivitaet
+  - zukunftspotential_forschungs_momentum
+  - zukunftspotential_kommerzialisierbarkeit
+  - zukunftspotential_begruendung
+  # Forschung - Emerging Applications
   - emerging_applications
+  - emerging_app_1_name
+  - emerging_app_1_beschreibung
+  - emerging_app_1_zeithorizont
+  - emerging_app_1_wahrscheinlichkeit
+  - emerging_app_1_treiber
+  - emerging_app_1_hindernisse
+  - emerging_app_1_akteure
+  - emerging_app_2_name
+  - emerging_app_2_beschreibung
+  - emerging_app_2_zeithorizont
+  - emerging_app_2_wahrscheinlichkeit
+  - emerging_app_3_name
+  - emerging_app_3_zeithorizont
+  - emerging_app_3_wahrscheinlichkeit
+  - emerging_app_4_name
+  - emerging_app_4_zeithorizont
+  - emerging_app_5_name
+  # Forschung - Forschungslücken
   - forschungsluecken
+  - forschungsluecke_1_bereich
+  - forschungsluecke_1_beschreibung
+  - forschungsluecke_1_prioritaet
+  - forschungsluecke_1_aufwand
+  - forschungsluecke_1_expertise
+  - forschungsluecke_1_foerderung
+  - forschungsluecke_2_bereich
+  - forschungsluecke_2_beschreibung
+  - forschungsluecke_2_prioritaet
+  - forschungsluecke_3_bereich
+  - forschungsluecke_3_prioritaet
+  # Forschung - Investitionsmöglichkeiten
   - investitionsmoeglichkeiten
+  - invest_1_titel
+  - invest_1_beschreibung
+  - invest_1_volumen_min_eur
+  - invest_1_volumen_max_eur
+  - invest_1_roi_potential
+  - invest_1_risiko
+  - invest_1_zeithorizont
+  - invest_1_typ
+  - invest_2_titel
+  - invest_2_beschreibung
+  - invest_2_roi_potential
+  - invest_2_risiko
+  - invest_3_titel
+  - invest_3_roi_potential
+  # Forschung - Schlüssel-Publikationen
   - schluessel_publikationen
+  - publikation_1_titel
+  - publikation_1_autoren
+  - publikation_1_journal
+  - publikation_1_jahr
+  - publikation_1_doi
+  - publikation_1_pmid
+  - publikation_1_zusammenfassung
+  - publikation_1_zitationen
+  - publikation_1_impact_factor
+  - publikation_1_open_access
+  - publikation_1_pdf_url
+  - publikation_1_bedeutung
+  - publikation_1_themen_tags
+  - publikation_2_titel
+  - publikation_2_autoren
+  - publikation_2_journal
+  - publikation_2_jahr
+  - publikation_2_doi
+  - publikation_2_zitationen
+  - publikation_2_bedeutung
+  - publikation_3_titel
+  - publikation_3_journal
+  - publikation_3_jahr
+  - publikation_3_doi
+  - publikation_3_bedeutung
+  - publikation_4_titel
+  - publikation_4_doi
+  - publikation_5_titel
+  - publikation_5_doi
+  # Forschung - Klinische Studien
+  - klinische_studien_anzahl
+  - klinische_studien_aktiv
+  - klinische_studie_1_nct
+  - klinische_studie_1_titel
+  - klinische_studie_1_status
+  - klinische_studie_1_phase
+  - klinische_studie_1_indikation
+  - klinische_studie_1_sponsor
+  - klinische_studie_1_start
+  - klinische_studie_1_ende_erwartet
+  - klinische_studie_1_teilnehmer_ziel
+  - klinische_studie_1_standorte
+  - klinische_studie_1_ergebnisse
+  - klinische_studie_2_nct
+  - klinische_studie_2_titel
+  - klinische_studie_2_status
+  - klinische_studie_2_phase
+  - klinische_studie_2_indikation
+  - klinische_studie_3_nct
+  - klinische_studie_3_titel
+  - klinische_studie_3_status
+  - klinische_studie_3_phase
+  # Forschung - Review Artikel
+  - review_artikel
+  - review_1_titel
+  - review_1_autoren
+  - review_1_journal
+  - review_1_jahr
+  - review_1_doi
+  - review_1_themenbereich
+  - review_2_titel
+  - review_2_journal
+  - review_2_jahr
+  - review_2_doi
+  - review_3_titel
+  - review_3_doi
+  # Forschung - Datenbank-Einträge
+  - ncbi_taxonomy_id
+  - mycobank_id
+  - index_fungorum_id
+  - uniprot_proteome_id
+  - kegg_organism_code
+  - ensembl_fungi_id
+  - jgi_genome_id
+  - fungidb_id
+  # Forschung - Kollaboration Hauptzentren
+  - kollaboration_hauptzentren
+  - zentrum_1_land
+  - zentrum_1_institutionen
+  - zentrum_1_schwerpunkte
+  - zentrum_2_land
+  - zentrum_2_institutionen
+  - zentrum_2_schwerpunkte
+  - zentrum_3_land
+  - zentrum_3_institutionen
+  # Forschung - Internationale Projekte
+  - internationale_projekte
+  - projekt_1_name
+  - projekt_1_laender
+  - projekt_1_foerderung
+  - projekt_1_laufzeit
+  - projekt_2_name
+  - projekt_2_laender
+  - projekt_2_foerderung
+  # Forschung - Konferenzen
+  - relevante_konferenzen
+  - konferenz_1_name
+  - konferenz_1_haeufigkeit
+  - konferenz_1_naechste
+  - konferenz_1_website
+  - konferenz_2_name
+  - konferenz_2_website
+  - konferenz_3_name
+  # ─────────────────────────────────────────────────────────────────────────────
+  # INTERAKTIONEN v2.0 - Biological Interaction Networks
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Interaktionen - Netzwerk-Position
+  - netzwerk_position
+  - netzwerk_degree_zentralitaet
+  - netzwerk_betweenness_zentralitaet
+  - netzwerk_closeness_zentralitaet
+  - netzwerk_eigenvector_zentralitaet
+  - netzwerk_hub_score
+  - netzwerk_clustering_koeffizient
+  - netzwerk_community_id
+  # Interaktionen - Stabilität
+  - interaktions_stabilitaet
+  - interaktions_robustheit_score
+  - interaktions_redundanz_grad
+  - interaktions_keystone_index
+  - interaktions_temporale_persistenz
+  - interaktions_stoerungsanfaelligkeit
   # Interaktionen - Multi-Species
   - multispecies_interaktionen
-  - netzwerk_position
-  - interaktions_stabilitaet
+  - interaktions_typ
+  - interaktions_subtyp
+  - interaktions_direktionalitaet
+  - interaktions_staerke
+  - interaktions_obligat_fakultativ
+  - interaktions_spezifitaet
+  - interaktions_raeumliche_skala
+  - interaktions_kontakt_art
+  - interaktions_temporales_muster
+  - interaktions_saisonalitaet
+  - interaktions_tageszeit
+  - interaktions_frequenz
+  - interaktions_dauer_minuten
+  - interaktions_habitat_kontext
+  - interaktions_umweltbedingungen
+  - interaktions_fitness_effekt
+  - interaktions_evidenz
+  - interaktions_evidenz_level
+  - interaktions_konfidenz
+  - interaktions_studien_anzahl
   # Interaktionen - Chemische Ökologie
   - chemische_oekologie
+  - chem_stoff_name
+  - chem_iupac_name
+  - chem_cas_nummer
+  - chem_summenformel
+  - chem_molekulare_masse
+  - chem_stoffklasse
+  - chem_freisetzungs_mechanismus
   - allelopathie
+  - allelopathie_aktiv
+  - allelopathie_effekt_typ
+  - allelopathie_ziel_organismen
+  - allelopathie_betroffene_prozesse
   - chemische_kommunikation
+  - chem_signal_typ
+  - chem_signal_funktion
+  - chem_signal_reichweite_meter
   - abwehrstoffe
+  - abwehr_typ
+  - abwehr_toxisch_fuer
   # Interaktionen - Mikrobiom
   - mikrobiom
+  - mikrobiom_kompartiment
+  - mikrobiom_diversitaet_shannon
+  - mikrobiom_diversitaet_simpson
+  - mikrobiom_richness
+  - mikrobiom_evenness
+  - mikrobiom_dominante_phyla
+  - mikrobiom_core_anteil
   - assoziierte_bakterien
+  - bakterien_funktionelle_gruppe
   - assoziierte_pilze
+  - pilze_funktionelle_gruppe
+  - funktionelles_profil
+  - metabolische_pfade
+  - gesamt_metabolisches_potential
+  - mikrobiom_resilienz
   - community_struktur
+  # Interaktionen - Wirt-Interaktionen
   - wirt_interaktionen
+  - wirt_beziehungs_kategorie
+  - symbionten
+  - symbiose_typ
+  - symbiose_wirt_nutzen
+  - symbiose_partner_nutzen
   - parasiten
-  # Interaktionen - Netzwerk
+  - parasitismus_typ
+  - parasit_befallene_organe
+  - parasit_symptome
+  - parasit_schweregrad
+  - parasit_pathogenitaet
+  - konkurrenten
+  - konkurrenz_typ
+  - konkurrenz_umkaempfte_ressourcen
+  - konkurrenz_intensitaet
+  - wirt_praevelenz
+  # Interaktionen - Mykorrhiza-Netzwerk
   - mykorrhiza_netzwerk
+  - mykorrhiza_netzwerk_id
+  - mykorrhiza_verbindungs_typ
+  - mykorrhiza_verbindungs_staerke
+  - mykorrhiza_hyphen_dichte
+  - mykorrhiza_alter_verbindung
   - naehrstoff_transfer
+  - naehrstoff_typ
+  - naehrstoff_richtung
+  - naehrstoff_anteil_bedarf_gedeckt
   - signal_transfer
+  - signal_typ
+  - signal_biologischer_effekt
+  - signal_effizienz
+  - mykorrhiza_facilitation_effekt
+  - mykorrhiza_resilienz_beitrag
+  - mykorrhiza_carbon_sink_potential
+  # Interaktionen - Netzwerk-Snapshot
+  - netzwerk_snapshot
+  - netzwerk_knoten_anzahl
+  - netzwerk_kanten_anzahl
+  - netzwerk_dichte
+  - netzwerk_modularitaet
+  - netzwerk_nestedness
+  - netzwerk_robustheit_zufaellig
+  - netzwerk_robustheit_gezielt
+  - netzwerk_fragmentierungs_risiko
   # Visual - Galerie
   - bildergalerie
   - primaerbild
@@ -496,6 +1155,12 @@ felder:
       gewicht: 30
     # ["Zart", "Saftig", "Bissfest", "Schmelzend"]
 
+  optik:
+    typ: list
+    label: Optik
+    beschreibung: "Farbe, Form, visuelle Ästhetik"
+    # ["Goldbraun gebraten", "Cremeweiß roh", "Dunkelbraun getrocknet"]
+
   # ═══════════════════════════════════════════════════════════════════════════
   # KULINARISCH - ZUBEREITUNG
   # ═══════════════════════════════════════════════════════════════════════════
@@ -506,6 +1171,24 @@ felder:
     suche:
       gewicht: 60
     # ["Braten", "Schmoren", "Trocknen", "Roh", "Grillen"]
+
+  zubereitung_temperaturen:
+    typ: object
+    label: Zubereitungs-Temperaturen
+    beschreibung: "Optimale Temperaturen pro Methode"
+    # { braten: "180-200°C", schmoren: "120-140°C", sous_vide: "55-65°C" }
+
+  zubereitung_zeiten:
+    typ: object
+    label: Zubereitungs-Zeiten
+    beschreibung: "Garzeiten pro Methode"
+    # { braten: "5-8 min", schmoren: "20-30 min", trocknen: "4-6h bei 50°C" }
+
+  zubereitung_techniken:
+    typ: list
+    label: Spezielle Techniken
+    beschreibung: "Fortgeschrittene Zubereitungstechniken"
+    # ["Sous Vide", "Fermentation", "Kaltextraktion", "Räuchern"]
 
   zubereitung_optimal:
     typ: bar
@@ -542,10 +1225,22 @@ felder:
     label: Getränke-Pairings
     # ["Burgunder", "Chardonnay (Eiche)", "Sake"]
 
+  pairings_wissenschaft:
+    typ: object
+    label: Wissenschaftliche Pairings
+    beschreibung: "Geteilte Aromaverbindungen, molekulare Synergien"
+    # { shared_volatiles: ["1-Octen-3-ol", "Benzaldehyd"], umami_synergy: true }
+
   synergien:
     typ: list
     label: Synergien
     # ["Mit Parmesan: Umami-Verstärkung", "Mit Zitrone: Aromen freisetzen"]
+
+  kontraste:
+    typ: list
+    label: Kontraste
+    beschreibung: "Kontrastreiche Kombinationen (Textur, Temperatur)"
+    # ["Knusprige Kruste vs. cremiges Inneres", "Warm servieren mit kalter Sauce"]
 
   # ═══════════════════════════════════════════════════════════════════════════
   # KULINARISCH - LAGERUNG & KONSERVIERUNG
@@ -618,12 +1313,42 @@ felder:
     label: Traditionelle Gerichte
     # ["Risotto ai Porcini", "Cèpes à la Bordelaise", "Steinpilzrahmsuppe"]
 
+  traditionen:
+    typ: object
+    label: Traditionen
+    beschreibung: "Kulturelle Verwendungen weltweit"
+    # { japan: "Matsutake-Gohan", china: "Buddhistische Küche", europa: "Delikatesse" }
+
   saisonalitaet:
     typ: tag
     label: Saison
     suche:
       gewicht: 40
     # "Juli-Oktober" oder "ganzjährig"
+
+  verfuegbarkeit:
+    typ: object
+    label: Verfügbarkeit
+    beschreibung: "Wild/Zucht, regionale Verbreitung"
+    # { wild: true, zucht: true, regionen: ["Europa", "Nordamerika", "Asien"] }
+
+  nachhaltigkeit:
+    typ: object
+    label: Nachhaltigkeit
+    beschreibung: "Ökologischer Fußabdruck, Sammelpraktiken"
+    # { oekobilanz: "gut", wildsammlung: "schonend", zucht: "nachhaltig" }
+
+  geschichte:
+    typ: text
+    label: Geschichte
+    beschreibung: "Historische Verwendung und kulturelle Bedeutung"
+    # "Seit dem Römischen Reich als Delikatesse geschätzt..."
+
+  bioverfuegbarkeit:
+    typ: object
+    label: Bioverfügbarkeit
+    beschreibung: "Aufnahme der Nährstoffe im Körper"
+    # { protein: "85%", eisen: "15-35%", vitamin_d: "90% bei UV-Exposition" }
 
   # ═══════════════════════════════════════════════════════════════════════════
   # ALLGEMEINE FELDER (bestehend)
@@ -742,41 +1467,863 @@ felder:
   cultivation_status:
     typ: badge
     label: Kultivierungsstatus
-    beschreibung: "not_cultivated, experimental, commercial"
+    beschreibung: "Kommerzielle Machbarkeit: not_cultivated, experimental, small_scale, commercial, industrial"
     farben:
       not_cultivated: "#9ca3af"
       experimental: "#f59e0b"
+      small_scale: "#84cc16"
       commercial: "#22c55e"
+      industrial: "#14b8a6"
 
   cultivation_difficulty:
     typ: object
     label: Schwierigkeitsgrad
     beschreibung: "Gesamtschwierigkeit, Faktoren, Erfolgsrate"
 
+  # ─────────────────────────────────────────────────────────────────────────────
+  # FLACHE SCHWIERIGKEITS-FELDER
+  # ─────────────────────────────────────────────────────────────────────────────
+  cultivation_difficulty_overall:
+    typ: badge
+    label: Schwierigkeit (Gesamt)
+    beschreibung: "beginner, intermediate, advanced, expert"
+    farben:
+      beginner: "#22c55e"
+      intermediate: "#84cc16"
+      advanced: "#f59e0b"
+      expert: "#ef4444"
+
+  cultivation_difficulty_factors:
+    typ: list
+    label: Schwierigkeitsfaktoren
+    beschreibung: "Faktoren die den Anbau erschweren oder erleichtern"
+
+  cultivation_success_rate:
+    typ: progress
+    label: Erfolgsrate
+    beschreibung: "Erwartete Erfolgsrate in Prozent"
+    einheit: "%"
+
+  cultivation_time_investment:
+    typ: badge
+    label: Zeitaufwand
+    beschreibung: "low, medium, high"
+    farben:
+      low: "#22c55e"
+      medium: "#f59e0b"
+      high: "#ef4444"
+
+  cultivation_equipment_needed:
+    typ: list
+    label: Benötigte Ausrüstung
+    beschreibung: "Grundausrüstung für erfolgreichen Anbau"
+
+  cultivation_skill_prerequisites:
+    typ: list
+    label: Voraussetzungen
+    beschreibung: "Erforderliche Vorkenntnisse"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # WACHSTUMSPARAMETER (Legacy Object)
+  # ─────────────────────────────────────────────────────────────────────────────
   cultivation_parameters:
     typ: object
     label: Wachstumsparameter
     beschreibung: "Temperatur, Luftfeuchtigkeit, CO2, Licht, pH"
 
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SPAWN RUN PHASE PARAMETER
+  # ─────────────────────────────────────────────────────────────────────────────
+  param_spawn_temp_min:
+    typ: number
+    label: Spawn Run Temp. min
+    beschreibung: "Minimale Temperatur für Myzelwachstum"
+    einheit: "°C"
+
+  param_spawn_temp_optimal:
+    typ: number
+    label: Spawn Run Temp. optimal
+    beschreibung: "Optimale Temperatur für Myzelwachstum"
+    einheit: "°C"
+
+  param_spawn_temp_max:
+    typ: number
+    label: Spawn Run Temp. max
+    beschreibung: "Maximale Temperatur für Myzelwachstum"
+    einheit: "°C"
+
+  param_spawn_humidity_min:
+    typ: number
+    label: Spawn Run Feuchte min
+    beschreibung: "Minimale Luftfeuchtigkeit"
+    einheit: "%"
+
+  param_spawn_humidity_optimal:
+    typ: number
+    label: Spawn Run Feuchte optimal
+    beschreibung: "Optimale Luftfeuchtigkeit"
+    einheit: "%"
+
+  param_spawn_humidity_max:
+    typ: number
+    label: Spawn Run Feuchte max
+    beschreibung: "Maximale Luftfeuchtigkeit"
+    einheit: "%"
+
+  param_spawn_co2_ppm:
+    typ: number
+    label: Spawn Run CO2
+    beschreibung: "Tolerierbarer CO2-Gehalt während Kolonisation"
+    einheit: "ppm"
+
+  param_spawn_light_required:
+    typ: boolean
+    label: Spawn Run Licht nötig?
+    beschreibung: "Ob Licht während Kolonisation benötigt wird"
+
+  param_spawn_fae_per_hour:
+    typ: number
+    label: Spawn Run FAE
+    beschreibung: "Fresh Air Exchanges pro Stunde"
+    einheit: "/h"
+
+  param_spawn_duration_days:
+    typ: range
+    label: Spawn Run Dauer
+    beschreibung: "Typische Kolonisationsdauer"
+    einheit: "Tage"
+
+  param_spawn_ph_optimal:
+    typ: number
+    label: Spawn Run pH
+    beschreibung: "Optimaler pH-Wert"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # PRIMORDIA PHASE PARAMETER
+  # ─────────────────────────────────────────────────────────────────────────────
+  param_primordia_temp_min:
+    typ: number
+    label: Primordia Temp. min
+    beschreibung: "Minimale Temperatur für Primordia-Bildung"
+    einheit: "°C"
+
+  param_primordia_temp_optimal:
+    typ: number
+    label: Primordia Temp. optimal
+    beschreibung: "Optimale Temperatur für Primordia-Bildung"
+    einheit: "°C"
+
+  param_primordia_temp_max:
+    typ: number
+    label: Primordia Temp. max
+    beschreibung: "Maximale Temperatur für Primordia-Bildung"
+    einheit: "°C"
+
+  param_primordia_humidity_min:
+    typ: number
+    label: Primordia Feuchte min
+    beschreibung: "Minimale Luftfeuchtigkeit"
+    einheit: "%"
+
+  param_primordia_humidity_optimal:
+    typ: number
+    label: Primordia Feuchte optimal
+    beschreibung: "Optimale Luftfeuchtigkeit"
+    einheit: "%"
+
+  param_primordia_humidity_max:
+    typ: number
+    label: Primordia Feuchte max
+    beschreibung: "Maximale Luftfeuchtigkeit"
+    einheit: "%"
+
+  param_primordia_co2_ppm:
+    typ: number
+    label: Primordia CO2
+    beschreibung: "Maximaler CO2-Gehalt"
+    einheit: "ppm"
+
+  param_primordia_light_lux:
+    typ: number
+    label: Primordia Licht
+    beschreibung: "Benötigte Lichtintensität"
+    einheit: "lux"
+
+  param_primordia_light_hours:
+    typ: number
+    label: Primordia Lichtdauer
+    beschreibung: "Tägliche Beleuchtungsdauer"
+    einheit: "h"
+
+  param_primordia_fae_per_hour:
+    typ: number
+    label: Primordia FAE
+    beschreibung: "Fresh Air Exchanges pro Stunde"
+    einheit: "/h"
+
+  param_primordia_duration_days:
+    typ: range
+    label: Primordia Dauer
+    beschreibung: "Typische Dauer bis zur Fruchtbildung"
+    einheit: "Tage"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # FRUITING PHASE PARAMETER
+  # ─────────────────────────────────────────────────────────────────────────────
+  param_fruiting_temp_min:
+    typ: number
+    label: Fruiting Temp. min
+    beschreibung: "Minimale Temperatur für Fruktifikation"
+    einheit: "°C"
+
+  param_fruiting_temp_optimal:
+    typ: number
+    label: Fruiting Temp. optimal
+    beschreibung: "Optimale Temperatur für Fruktifikation"
+    einheit: "°C"
+
+  param_fruiting_temp_max:
+    typ: number
+    label: Fruiting Temp. max
+    beschreibung: "Maximale Temperatur für Fruktifikation"
+    einheit: "°C"
+
+  param_fruiting_humidity_min:
+    typ: number
+    label: Fruiting Feuchte min
+    beschreibung: "Minimale Luftfeuchtigkeit"
+    einheit: "%"
+
+  param_fruiting_humidity_optimal:
+    typ: number
+    label: Fruiting Feuchte optimal
+    beschreibung: "Optimale Luftfeuchtigkeit"
+    einheit: "%"
+
+  param_fruiting_humidity_max:
+    typ: number
+    label: Fruiting Feuchte max
+    beschreibung: "Maximale Luftfeuchtigkeit"
+    einheit: "%"
+
+  param_fruiting_co2_ppm:
+    typ: number
+    label: Fruiting CO2
+    beschreibung: "Maximaler CO2-Gehalt"
+    einheit: "ppm"
+
+  param_fruiting_light_lux:
+    typ: number
+    label: Fruiting Licht
+    beschreibung: "Benötigte Lichtintensität"
+    einheit: "lux"
+
+  param_fruiting_light_hours:
+    typ: number
+    label: Fruiting Lichtdauer
+    beschreibung: "Tägliche Beleuchtungsdauer"
+    einheit: "h"
+
+  param_fruiting_fae_per_hour:
+    typ: number
+    label: Fruiting FAE
+    beschreibung: "Fresh Air Exchanges pro Stunde"
+    einheit: "/h"
+
+  param_fruiting_duration_days:
+    typ: range
+    label: Fruiting Dauer
+    beschreibung: "Typische Dauer der Fruktifikation"
+    einheit: "Tage"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SUBSTRATE (Legacy + Flach)
+  # ─────────────────────────────────────────────────────────────────────────────
   cultivation_substrates:
     typ: list
     label: Substrate
     beschreibung: "Substrattypen mit Zusammensetzung und Performance"
 
-  production_timeline:
-    typ: object
-    label: Produktionszyklus
-    beschreibung: "Phasen, Gesamtdauer, Flushes"
+  substrate_primary:
+    typ: text
+    label: Primärsubstrat
+    beschreibung: "Empfohlenes Hauptsubstrat"
 
+  substrate_category:
+    typ: badge
+    label: Substratkategorie
+    beschreibung: "grain, wood, straw, compost, manure, agricultural_waste, synthetic"
+    farben:
+      grain: "#fbbf24"
+      wood: "#a16207"
+      straw: "#eab308"
+      compost: "#78350f"
+      manure: "#713f12"
+      agricultural_waste: "#65a30d"
+      synthetic: "#6366f1"
+
+  substrate_composition:
+    typ: list
+    label: Substratzusammensetzung
+    beschreibung: "Bestandteile mit Prozentangaben"
+
+  substrate_sterilization_required:
+    typ: boolean
+    label: Sterilisation nötig?
+    beschreibung: "Ob Sterilisation oder Pasteurisierung ausreicht"
+
+  substrate_sterilization_temp:
+    typ: number
+    label: Sterilisationstemperatur
+    beschreibung: "Autoklav-Temperatur"
+    einheit: "°C"
+
+  substrate_sterilization_duration:
+    typ: number
+    label: Sterilisationsdauer
+    beschreibung: "Zeit im Autoklav"
+    einheit: "min"
+
+  substrate_pasteurization_temp:
+    typ: number
+    label: Pasteurisierungstemperatur
+    beschreibung: "Temperatur für Pasteurisierung"
+    einheit: "°C"
+
+  substrate_pasteurization_duration:
+    typ: number
+    label: Pasteurisierungsdauer
+    beschreibung: "Zeit für Pasteurisierung"
+    einheit: "min"
+
+  substrate_moisture_percent:
+    typ: number
+    label: Substratfeuchte
+    beschreibung: "Ziel-Feuchtigkeitsgehalt"
+    einheit: "%"
+
+  substrate_preparation_method:
+    typ: text
+    label: Substratvorbereitung
+    beschreibung: "Detaillierte Anleitung zur Vorbereitung"
+
+  substrate_rating:
+    typ: rating
+    label: Substratbewertung
+    beschreibung: "Gesamtbewertung 0-5"
+    max: 5
+
+  substrate_biological_efficiency:
+    typ: number
+    label: Biologische Effizienz
+    beschreibung: "Erwartete BE in Prozent"
+    einheit: "%"
+
+  substrate_colonization_days:
+    typ: number
+    label: Kolonisationsdauer
+    beschreibung: "Tage bis zur vollständigen Durchwachsung"
+    einheit: "Tage"
+
+  substrate_contamination_rate:
+    typ: number
+    label: Kontaminationsrate
+    beschreibung: "Erwartete Kontaminationsrate"
+    einheit: "%"
+
+  substrate_cost_per_kg:
+    typ: number
+    label: Substratkosten
+    beschreibung: "Materialkosten pro kg"
+    einheit: "€/kg"
+
+  substrate_advantages:
+    typ: list
+    label: Substrat-Vorteile
+    beschreibung: "Positive Eigenschaften"
+
+  substrate_disadvantages:
+    typ: list
+    label: Substrat-Nachteile
+    beschreibung: "Negative Eigenschaften"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # STÄMME / VARIETÄTEN (Legacy + Flach)
+  # ─────────────────────────────────────────────────────────────────────────────
   cultivation_strains:
     typ: list
     label: Stämme/Varietäten
     beschreibung: "Verfügbare Zuchtlinien mit Eigenschaften"
 
-  cultivation_problems:
+  strain_name:
+    typ: text
+    label: Stammname
+    beschreibung: "Name der Varietät"
+
+  strain_code:
+    typ: text
+    label: Stammcode
+    beschreibung: "Eindeutiger Code/Identifier"
+
+  strain_origin:
+    typ: text
+    label: Herkunft
+    beschreibung: "Geografische Herkunft"
+
+  strain_growth_speed:
+    typ: badge
+    label: Wachstumsgeschwindigkeit
+    beschreibung: "very_slow, slow, moderate, fast, very_fast"
+    farben:
+      very_slow: "#ef4444"
+      slow: "#f97316"
+      moderate: "#eab308"
+      fast: "#84cc16"
+      very_fast: "#22c55e"
+
+  strain_yield_potential:
+    typ: badge
+    label: Ertragspotential
+    beschreibung: "very_low, low, moderate, high, very_high"
+    farben:
+      very_low: "#ef4444"
+      low: "#f97316"
+      moderate: "#eab308"
+      high: "#84cc16"
+      very_high: "#22c55e"
+
+  strain_contamination_resistance:
+    typ: badge
+    label: Kontaminationsresistenz
+    beschreibung: "very_low, low, moderate, high, very_high"
+    farben:
+      very_low: "#ef4444"
+      low: "#f97316"
+      moderate: "#eab308"
+      high: "#84cc16"
+      very_high: "#22c55e"
+
+  strain_temperature_tolerance:
+    typ: text
+    label: Temperaturtoleranz
+    beschreibung: "Temperaturbereich den der Stamm toleriert"
+
+  strain_cap_size:
+    typ: range
+    label: Hutgröße
+    beschreibung: "Typische Hutgröße des Stamms"
+    einheit: "cm"
+
+  strain_stem_length:
+    typ: range
+    label: Stiellänge
+    beschreibung: "Typische Stiellänge des Stamms"
+    einheit: "cm"
+
+  strain_color:
+    typ: text
+    label: Farbe
+    beschreibung: "Farbcharakteristik"
+
+  strain_texture:
+    typ: text
+    label: Textur
+    beschreibung: "Texturcharakteristik"
+
+  strain_shelf_life_days:
+    typ: number
+    label: Haltbarkeit
+    beschreibung: "Haltbarkeit nach Ernte"
+    einheit: "Tage"
+
+  strain_flavor_profile:
+    typ: text
+    label: Geschmacksprofil
+    beschreibung: "Geschmackscharakteristik"
+
+  strain_biological_efficiency:
+    typ: number
+    label: Stamm BE
+    beschreibung: "Durchschnittliche Biologische Effizienz"
+    einheit: "%"
+
+  strain_commercial_viability:
+    typ: rating
+    label: Kommerzielle Tauglichkeit
+    beschreibung: "Bewertung 0-5"
+    max: 5
+
+  strain_market_demand:
+    typ: text
+    label: Marktnachfrage
+    beschreibung: "low, medium, high, very_high"
+
+  strain_best_uses:
+    typ: list
+    label: Beste Verwendung
+    beschreibung: "Frischmarkt, Gastronomie, Verarbeitung, etc."
+
+  strain_suppliers:
+    typ: list
+    label: Stammlieferanten
+    beschreibung: "Bekannte Bezugsquellen"
+
+  strain_availability:
+    typ: text
+    label: Stammverfügbarkeit
+    beschreibung: "Wie leicht erhältlich"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # PRODUKTIONSZYKLUS (Legacy + Flach)
+  # ─────────────────────────────────────────────────────────────────────────────
+  production_timeline:
     typ: object
+    label: Produktionszyklus
+    beschreibung: "Phasen, Gesamtdauer, Flushes"
+
+  production_total_cycle_days:
+    typ: number
+    label: Gesamtzyklusdauer
+    beschreibung: "Kompletter Produktionszyklus"
+    einheit: "Tage"
+
+  production_total_flushes:
+    typ: number
+    label: Anzahl Flushes
+    beschreibung: "Typische Anzahl Erntewellen"
+
+  production_expected_yield_kg:
+    typ: number
+    label: Erwarteter Ertrag
+    beschreibung: "Gesamtertrag pro Block/Substrateinheit"
+    einheit: "kg"
+
+  production_biological_efficiency:
+    typ: number
+    label: Erwartete BE
+    beschreibung: "Erwartete Biologische Effizienz"
+    einheit: "%"
+
+  production_cycle_type:
+    typ: text
+    label: Zyklustyp
+    beschreibung: "standard, intensive, organic, etc."
+
+  production_phases:
+    typ: list
+    label: Produktionsphasen
+    beschreibung: "Detaillierte Phasenaufschlüsselung"
+
+  production_success_rate:
+    typ: progress
+    label: Erfolgsrate
+    beschreibung: "Erwartete Erfolgsrate des Produktionszyklus"
+    einheit: "%"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # PROBLEME & TROUBLESHOOTING (Legacy + Flach)
+  # ─────────────────────────────────────────────────────────────────────────────
+  cultivation_problems:
+    typ: list
     label: Anbauprobleme
     beschreibung: "Kontaminanten, Schädlinge, physiologische Störungen"
+
+  problem_contaminants:
+    typ: list
+    label: Kontaminanten
+    beschreibung: "Häufige Schimmel, Bakterien, Konkurrenzpilze"
+
+  problem_pests:
+    typ: list
+    label: Schädlinge
+    beschreibung: "Insekten, Milben, Nematoden"
+
+  problem_disorders:
+    typ: list
+    label: Physiologische Störungen
+    beschreibung: "Nicht-infektiöse Probleme"
+
+  problem_environmental:
+    typ: list
+    label: Umweltprobleme
+    beschreibung: "Temperatur-, Feuchtigkeits-, CO2-Probleme"
+
+  problem_frequency:
+    typ: badge
+    label: Problemhäufigkeit
+    beschreibung: "rare, occasional, common, very_common"
+    farben:
+      rare: "#22c55e"
+      occasional: "#84cc16"
+      common: "#f59e0b"
+      very_common: "#ef4444"
+
+  problem_severity:
+    typ: badge
+    label: Problemschwere
+    beschreibung: "minor, moderate, severe, catastrophic"
+    farben:
+      minor: "#22c55e"
+      moderate: "#f59e0b"
+      severe: "#ef4444"
+      catastrophic: "#7f1d1d"
+
+  problem_symptoms:
+    typ: list
+    label: Problemsymptome
+    beschreibung: "Erkennbare Anzeichen"
+
+  problem_conditions_promoting:
+    typ: list
+    label: Begünstigende Bedingungen
+    beschreibung: "Was fördert das Problem"
+
+  problem_prevention:
+    typ: list
+    label: Prävention
+    beschreibung: "Vorbeugende Maßnahmen"
+
+  problem_treatment:
+    typ: list
+    label: Behandlung
+    beschreibung: "Abhilfemaßnahmen"
+
+  problem_chemical_control:
+    typ: list
+    label: Chemische Bekämpfung
+    beschreibung: "Chemische Mittel falls zugelassen"
+
+  problem_biological_control:
+    typ: list
+    label: Biologische Bekämpfung
+    beschreibung: "Biologische Bekämpfungsmethoden"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ERNTE
+  # ─────────────────────────────────────────────────────────────────────────────
+  ernte_stats:
+    typ: stats
+    label: Ernte-Statistik
+    beschreibung: "Aggregierte Erntedaten: min, max, avg"
+
+  harvest_fresh_weight_kg:
+    typ: number
+    label: Frischgewicht
+    beschreibung: "Ertrag Frischgewicht"
+    einheit: "kg"
+
+  harvest_dry_weight_kg:
+    typ: number
+    label: Trockengewicht
+    beschreibung: "Ertrag Trockengewicht"
+    einheit: "kg"
+
+  harvest_biological_efficiency:
+    typ: number
+    label: Ernte BE
+    beschreibung: "Berechnete Biologische Effizienz"
+    einheit: "%"
+
+  harvest_quality_grade:
+    typ: badge
+    label: Qualitätsstufe
+    beschreibung: "premium, grade_a, grade_b, grade_c, reject"
+    farben:
+      premium: "#fbbf24"
+      grade_a: "#22c55e"
+      grade_b: "#84cc16"
+      grade_c: "#f59e0b"
+      reject: "#ef4444"
+
+  harvest_avg_cap_diameter:
+    typ: number
+    label: Durchschn. Hutdurchmesser
+    beschreibung: "Durchschnittlicher Hutdurchmesser"
+    einheit: "cm"
+
+  harvest_avg_stem_length:
+    typ: number
+    label: Durchschn. Stiellänge
+    beschreibung: "Durchschnittliche Stiellänge"
+    einheit: "cm"
+
+  harvest_flush_number:
+    typ: number
+    label: Flush-Nummer
+    beschreibung: "Welche Erntewelle"
+
+  harvest_records:
+    typ: list
+    label: Ernteeinträge
+    beschreibung: "Historische Erntedaten mit Yield, Qualität, Umgebung"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # AUSRÜSTUNG
+  # ─────────────────────────────────────────────────────────────────────────────
+  equipment_requirements:
+    typ: object
+    label: Ausrüstungsbedarf
+    beschreibung: "Benötigte Ausrüstung: Minimum, Empfohlen, Optional"
+
+  equipment_minimum:
+    typ: list
+    label: Mindestausrüstung
+    beschreibung: "Absolut notwendige Ausrüstung"
+
+  equipment_recommended:
+    typ: list
+    label: Empfohlene Ausrüstung
+    beschreibung: "Für bessere Ergebnisse empfohlen"
+
+  equipment_optional:
+    typ: list
+    label: Optionale Ausrüstung
+    beschreibung: "Hilfreich aber nicht notwendig"
+
+  equipment_startup_cost_hobby:
+    typ: range
+    label: Startkosten Hobby
+    beschreibung: "Kosten für Hobby-Setup"
+    einheit: "€"
+
+  equipment_startup_cost_serious:
+    typ: range
+    label: Startkosten Enthusiast
+    beschreibung: "Kosten für ambitionierten Heimanbau"
+    einheit: "€"
+
+  equipment_startup_cost_commercial:
+    typ: range
+    label: Startkosten Kommerziell
+    beschreibung: "Kosten für kommerziellen Betrieb"
+    einheit: "€"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # WIRTSCHAFTLICHKEIT
+  # ─────────────────────────────────────────────────────────────────────────────
+  economics:
+    typ: object
+    label: Wirtschaftlichkeit
+    beschreibung: "Marktpreis, Produktionskosten, Gewinnmarge"
+
+  economics_market_price_min:
+    typ: number
+    label: Marktpreis min
+    beschreibung: "Minimaler Marktpreis pro kg"
+    einheit: "€/kg"
+
+  economics_market_price_max:
+    typ: number
+    label: Marktpreis max
+    beschreibung: "Maximaler Marktpreis pro kg"
+    einheit: "€/kg"
+
+  economics_market_price_avg:
+    typ: number
+    label: Marktpreis Ø
+    beschreibung: "Durchschnittlicher Marktpreis pro kg"
+    einheit: "€/kg"
+
+  economics_production_cost:
+    typ: number
+    label: Produktionskosten
+    beschreibung: "Kosten pro kg Ertrag"
+    einheit: "€/kg"
+
+  economics_profit_margin:
+    typ: number
+    label: Gewinnmarge
+    beschreibung: "Gewinnmarge in Prozent"
+    einheit: "%"
+
+  economics_break_even_kg:
+    typ: number
+    label: Break-Even
+    beschreibung: "Monatlicher Ertrag für Kostendeckung"
+    einheit: "kg/Monat"
+
+  economics_demand_level:
+    typ: badge
+    label: Nachfrageniveau
+    beschreibung: "low, medium, high, very_high"
+    farben:
+      low: "#f97316"
+      medium: "#eab308"
+      high: "#84cc16"
+      very_high: "#22c55e"
+
+  economics_competition_level:
+    typ: badge
+    label: Wettbewerbsniveau
+    beschreibung: "low, medium, high"
+    farben:
+      low: "#22c55e"
+      medium: "#eab308"
+      high: "#ef4444"
+
+  economics_market_trend:
+    typ: badge
+    label: Markttrend
+    beschreibung: "declining, stable, growing, booming"
+    farben:
+      declining: "#ef4444"
+      stable: "#6b7280"
+      growing: "#84cc16"
+      booming: "#22c55e"
+
+  economics_sales_channels:
+    typ: list
+    label: Vertriebskanäle
+    beschreibung: "Mögliche Absatzwege"
+
+  economics_certifications_helpful:
+    typ: list
+    label: Hilfreiche Zertifizierungen
+    beschreibung: "Bio, Demeter, etc."
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # LIEFERANTEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  suppliers:
+    typ: list
+    label: Lieferanten
+    beschreibung: "Bezugsquellen für Brut, Substrate, Equipment"
+
+  supplier_cultures:
+    typ: list
+    label: Brutlieferanten
+    beschreibung: "Lieferanten für Pilzbrut/Kulturen"
+
+  supplier_substrates:
+    typ: list
+    label: Substratlieferanten
+    beschreibung: "Lieferanten für Substrate"
+
+  supplier_equipment:
+    typ: list
+    label: Equipmentlieferanten
+    beschreibung: "Lieferanten für Ausrüstung"
+
+  supplier_rating:
+    typ: rating
+    label: Lieferantenbewertung
+    beschreibung: "Durchschnittliche Bewertung"
+    max: 5
+
+  supplier_ships_to:
+    typ: list
+    label: Liefert nach
+    beschreibung: "Lieferländer (ISO-Codes)"
+
+  supplier_certifications:
+    typ: list
+    label: Lieferanten-Zertifizierungen
+    beschreibung: "Zertifizierungen der Lieferanten"
+
+  environmental_monitoring:
+    typ: object
+    label: Umgebungsüberwachung
+    beschreibung: "Aktuelle Sensor-Daten: Temperatur, Luftfeuchtigkeit, CO2"
 
   # ═══════════════════════════════════════════════════════════════════════════
   # SICHERHEIT - TOXIKOLOGIE
@@ -1404,97 +2951,715 @@ felder:
     beschreibung: "Mögliche Entwicklungsszenarien"
 
   # ═══════════════════════════════════════════════════════════════════════════
-  # GEOGRAFIE - VERBREITUNG
+  # GEOGRAFIE v2.0 - NATIVE VERBREITUNG
   # ═══════════════════════════════════════════════════════════════════════════
-
-  native_verbreitung:
-    typ: object
+  
+  native_beschreibung:
+    typ: text
     label: Native Verbreitung
-    beschreibung: "Ursprüngliches Verbreitungsgebiet"
+    beschreibung: "Freitextbeschreibung der nativen Verbreitung"
+    
+  native_areal_typ:
+    typ: tag
+    label: Arealtyp
+    beschreibung: "Biogeografischer Arealtyp (holarktisch, paläarktisch, etc.)"
+    
+  native_areal_groesse_km2:
+    typ: number
+    label: Arealgröße
+    beschreibung: "Geschätzte Arealgröße"
+    einheit: "km²"
+    
+  native_verbreitungsstatus:
+    typ: tag
+    label: Verbreitungsstatus
+    beschreibung: "gesichert, wahrscheinlich, fraglich, historisch"
+    
+  native_quellenangabe:
+    typ: list
+    label: Quellen
+    beschreibung: "Literaturquellen für Verbreitungsangaben"
 
+  # ═══════════════════════════════════════════════════════════════════════════
+  # GEOGRAFIE v2.0 - KONTINENTE
+  # ═══════════════════════════════════════════════════════════════════════════
+  
   kontinente:
     typ: list
     label: Kontinente
     beschreibung: "Vorkommen nach Kontinenten"
+    
+  kontinent_eu_status:
+    typ: tag
+    label: Europa Status
+    beschreibung: "nativ, eingeführt, unsicher"
+    
+  kontinent_eu_haeufigkeit:
+    typ: tag
+    label: Europa Häufigkeit
+    beschreibung: "sehr_häufig bis sehr_selten"
+    
+  kontinent_as_status:
+    typ: tag
+    label: Asien Status
+    beschreibung: "nativ, eingeführt, unsicher"
+    
+  kontinent_as_haeufigkeit:
+    typ: tag
+    label: Asien Häufigkeit
+    beschreibung: "sehr_häufig bis sehr_selten"
+    
+  kontinent_af_status:
+    typ: tag
+    label: Afrika Status
+    beschreibung: "nativ, eingeführt, unsicher"
+    
+  kontinent_af_haeufigkeit:
+    typ: tag
+    label: Afrika Häufigkeit
+    beschreibung: "sehr_häufig bis sehr_selten"
+    
+  kontinent_na_status:
+    typ: tag
+    label: Nordamerika Status
+    beschreibung: "nativ, eingeführt, unsicher"
+    
+  kontinent_na_haeufigkeit:
+    typ: tag
+    label: Nordamerika Häufigkeit
+    beschreibung: "sehr_häufig bis sehr_selten"
+    
+  kontinent_sa_status:
+    typ: tag
+    label: Südamerika Status
+    beschreibung: "nativ, eingeführt, unsicher"
+    
+  kontinent_sa_haeufigkeit:
+    typ: tag
+    label: Südamerika Häufigkeit
+    beschreibung: "sehr_häufig bis sehr_selten"
+    
+  kontinent_oc_status:
+    typ: tag
+    label: Ozeanien Status
+    beschreibung: "nativ, eingeführt, unsicher"
+    
+  kontinent_oc_haeufigkeit:
+    typ: tag
+    label: Ozeanien Häufigkeit
+    beschreibung: "sehr_häufig bis sehr_selten"
+    
+  kontinent_an_status:
+    typ: tag
+    label: Antarktis Status
+    beschreibung: "nativ, eingeführt, unsicher"
+    
+  kontinent_an_haeufigkeit:
+    typ: tag
+    label: Antarktis Häufigkeit
+    beschreibung: "sehr_häufig bis sehr_selten"
 
+  # ═══════════════════════════════════════════════════════════════════════════
+  # GEOGRAFIE v2.0 - LÄNDER
+  # ═══════════════════════════════════════════════════════════════════════════
+  
   laender:
     typ: list
     label: Länder
-    beschreibung: "Vorkommen nach Ländern"
+    beschreibung: "Vorkommen nach Ländern (ISO 3166-1)"
+    
+  laender_anzahl:
+    typ: number
+    label: Länderanzahl
+    beschreibung: "Anzahl Länder mit Vorkommen"
+    
+  laender_nativ:
+    typ: list
+    label: Native Länder
+    beschreibung: "Länder mit nativem Vorkommen"
+    
+  laender_eingefuehrt:
+    typ: list
+    label: Eingeführt in
+    beschreibung: "Länder mit eingeführten Populationen"
+    
+  laender_hauptvorkommen:
+    typ: list
+    label: Hauptvorkommen
+    beschreibung: "Länder mit den meisten Nachweisen"
 
+  # ═══════════════════════════════════════════════════════════════════════════
+  # GEOGRAFIE v2.0 - BIOGEOGRAFISCHE REGIONEN
+  # ═══════════════════════════════════════════════════════════════════════════
+  
   biogeografische_regionen:
     typ: list
     label: Biogeografische Regionen
-    beschreibung: "Paläarktis, Nearktis, etc."
+    beschreibung: "WWF Biome und Regionen"
+    
+  biogeo_realm:
+    typ: list
+    label: Biogeografische Reiche
+    beschreibung: "Paläarktis, Nearktis, Neotropis, etc."
+    
+  biogeo_biome:
+    typ: list
+    label: Biome
+    beschreibung: "WWF-Biome (Laubwälder, Nadelwälder, etc.)"
 
+  # ═══════════════════════════════════════════════════════════════════════════
+  # GEOGRAFIE v2.0 - ÖKOREGIONEN
+  # ═══════════════════════════════════════════════════════════════════════════
+  
   oekoregionen:
     typ: list
     label: Ökoregionen
     beschreibung: "WWF-Ökoregionen"
-
-  eingefuehrte_verbreitung:
-    typ: object
-    label: Eingeführte Verbreitung
-    beschreibung: "Gebiete mit eingeführten Populationen"
-
-  invasivitaet:
-    typ: badge
-    label: Invasivität
-    beschreibung: "Invasionspotential"
-
-  # ═══════════════════════════════════════════════════════════════════════════
-  # GEOGRAFIE - FUNDE & KLIMA
-  # ═══════════════════════════════════════════════════════════════════════════
-
-  fundorte:
+    
+  oeko_codes:
     typ: list
-    label: Fundorte
-    beschreibung: "Dokumentierte Fundorte"
+    label: Ökoregion-Codes
+    beschreibung: "WWF Ökoregion-Codes"
+    
+  oeko_area_km2:
+    typ: number
+    label: Ökoregion-Fläche
+    beschreibung: "Gesamtfläche der besiedelten Ökoregionen"
+    einheit: "km²"
 
+  # ═══════════════════════════════════════════════════════════════════════════
+  # GEOGRAFIE v2.0 - EINGEFÜHRTE VERBREITUNG
+  # ═══════════════════════════════════════════════════════════════════════════
+  
+  eingefuehrte_regionen:
+    typ: list
+    label: Eingeführte Regionen
+    beschreibung: "Gebiete außerhalb des nativen Areals"
+    
+  einfuehrungsjahr_erst:
+    typ: number
+    label: Ersteinführung
+    beschreibung: "Jahr der ersten dokumentierten Einführung"
+    
+  einfuehrungsart:
+    typ: tag
+    label: Einführungsart
+    beschreibung: "absichtlich, unabsichtlich, natürliche Expansion"
+    
+  einfuehrungsvektor:
+    typ: tag
+    label: Einführungsvektor
+    beschreibung: "Holzhandel, Pflanzenhandel, Tourismus, etc."
+    
+  etablierungsstatus:
+    typ: tag
+    label: Etablierungsstatus
+    beschreibung: "etabliert, in Etablierung, unbeständig"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # GEOGRAFIE v2.0 - INVASIVITÄT
+  # ═══════════════════════════════════════════════════════════════════════════
+  
+  ist_invasiv:
+    typ: boolean
+    label: Invasiv
+    beschreibung: "Ist die Art als invasiv eingestuft?"
+    
+  invasivitaetsstufe:
+    typ: tag
+    label: Invasivitätsstufe
+    beschreibung: "keine, potenziell, Beobachtungsliste, invasiv, hochinvasiv"
+    
+  invasiv_auswirkungen_oeko:
+    typ: tag
+    label: Ökologische Auswirkungen
+    beschreibung: "keine, gering, mittel, hoch"
+    
+  invasiv_auswirkungen_oekonomisch:
+    typ: tag
+    label: Ökonomische Auswirkungen
+    beschreibung: "keine, gering, mittel, hoch"
+    
+  invasiv_auswirkungen_gesundheit:
+    typ: tag
+    label: Gesundheitsauswirkungen
+    beschreibung: "keine, gering, mittel, hoch"
+    
+  invasiv_betroffene_arten:
+    typ: list
+    label: Betroffene Arten
+    beschreibung: "Von Verdrängung betroffene native Arten"
+    
+  invasiv_betroffene_lebensraeume:
+    typ: list
+    label: Betroffene Lebensräume
+    beschreibung: "Betroffene Habitattypen"
+    
+  invasiv_management:
+    typ: text
+    label: Management-Empfehlungen
+    beschreibung: "Empfehlungen zur Bekämpfung/Kontrolle"
+    
+  invasiv_regulatorisch:
+    typ: list
+    label: Regulatorischer Status
+    beschreibung: "Status auf Invasivitätslisten (EU, national)"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # GEOGRAFIE v2.0 - FUNDORTE & STATISTIK
+  # ═══════════════════════════════════════════════════════════════════════════
+  
+  fundorte_gesamt:
+    typ: number
+    label: Gesamtfunde
+    beschreibung: "Gesamtzahl aller dokumentierten Funde"
+    
+  fundorte_validiert:
+    typ: number
+    label: Validierte Funde
+    beschreibung: "Anzahl validierter Funde"
+    
+  fundorte_laender_anzahl:
+    typ: number
+    label: Länder mit Funden
+    beschreibung: "Anzahl Länder mit dokumentierten Funden"
+    
+  fund_erster_jahr:
+    typ: number
+    label: Erster Fund
+    beschreibung: "Jahr des ersten dokumentierten Fundes"
+    
+  fund_letzter_jahr:
+    typ: number
+    label: Letzter Fund
+    beschreibung: "Jahr des letzten dokumentierten Fundes"
+    
+  fund_haeufigste_habitate:
+    typ: list
+    label: Häufigste Habitate
+    beschreibung: "Habitate mit den meisten Funden"
+    
+  fund_haeufigste_substrate:
+    typ: list
+    label: Häufigste Substrate
+    beschreibung: "Substrate mit den meisten Funden"
+    
+  fund_hoehenverteilung_min:
+    typ: number
+    label: Min. Höhe
+    beschreibung: "Minimale Höhe über Meeresspiegel"
+    einheit: "m"
+    
+  fund_hoehenverteilung_max:
+    typ: number
+    label: Max. Höhe
+    beschreibung: "Maximale Höhe über Meeresspiegel"
+    einheit: "m"
+    
+  fund_hoehenverteilung_median:
+    typ: number
+    label: Median Höhe
+    beschreibung: "Mittlere Höhe der Funde"
+    einheit: "m"
+    
+  funde_nach_jahrzehnt:
+    typ: object
+    label: Funde pro Jahrzehnt
+    beschreibung: "Verteilung nach Jahrzehnten"
+    
+  funde_nach_monat:
+    typ: object
+    label: Funde pro Monat
+    beschreibung: "Saisonale Verteilung"
+    
+  funde_top_beobachter:
+    typ: list
+    label: Top Beobachter
+    beschreibung: "Beobachter mit den meisten Funden"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # GEOGRAFIE v2.0 - DATENQUELLEN
+  # ═══════════════════════════════════════════════════════════════════════════
+  
   datenquellen:
     typ: list
     label: Datenquellen
     beschreibung: "GBIF, iNaturalist, etc."
+    
+  datenquellen_primaer:
+    typ: text
+    label: Primärquelle
+    beschreibung: "Quelle mit den meisten Datensätzen"
+    
+  datenquellen_anzahl:
+    typ: number
+    label: Quellenanzahl
+    beschreibung: "Anzahl verschiedener Datenquellen"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # GEOGRAFIE v2.0 - RÄUMLICHE STATISTIK
+  # ═══════════════════════════════════════════════════════════════════════════
+  
+  centroid_lat:
+    typ: number
+    label: Centroid Breitengrad
+    beschreibung: "Mittelpunkt aller Fundorte (Latitude)"
+    
+  centroid_lng:
+    typ: number
+    label: Centroid Längengrad
+    beschreibung: "Mittelpunkt aller Fundorte (Longitude)"
+    
+  areal_extent_km2:
+    typ: number
+    label: Areal Ausdehnung
+    beschreibung: "Geschätzte Arealgröße (konvexe Hülle)"
+    einheit: "km²"
+    
+  fundpunkt_dichte:
+    typ: number
+    label: Fundpunktdichte
+    beschreibung: "Funde pro 100 km²"
+    
+  nearest_neighbor_index:
+    typ: number
+    label: Nearest Neighbor Index
+    beschreibung: "Räumliche Clusterung (< 1 = geclustert)"
+    
+  latitude_range_min:
+    typ: number
+    label: Breitengrad Min
+    beschreibung: "Südlichster Fundort"
+    
+  latitude_range_max:
+    typ: number
+    label: Breitengrad Max
+    beschreibung: "Nördlichster Fundort"
+    
+  longitude_range_min:
+    typ: number
+    label: Längengrad Min
+    beschreibung: "Westlichster Fundort"
+    
+  longitude_range_max:
+    typ: number
+    label: Längengrad Max
+    beschreibung: "Östlichster Fundort"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # GEOGRAFIE v2.0 - KLIMAHÜLLE
+  # ═══════════════════════════════════════════════════════════════════════════
+  
+  klima_berechnungsmethode:
+    typ: tag
+    label: Berechnungsmethode
+    beschreibung: "direkte_extraktion, literatur, modelliert"
+    
+  klima_stichprobengroesse:
+    typ: number
+    label: Stichprobengröße
+    beschreibung: "Anzahl Fundpunkte für Berechnung"
+    
+  klima_daten_quelle:
+    typ: text
+    label: Klimadaten-Quelle
+    beschreibung: "WorldClim, CHELSA, etc."
+    
+  klima_referenzperiode:
+    typ: text
+    label: Referenzperiode
+    beschreibung: "Zeitraum der Klimadaten (z.B. 1970-2000)"
+    
+  klima_beschreibung:
+    typ: text
+    label: Klimanische
+    beschreibung: "Textuelle Beschreibung der Klimanische"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # GEOGRAFIE v2.0 - TEMPERATUR
+  # ═══════════════════════════════════════════════════════════════════════════
+  
+  temp_jahres_mittel_min:
+    typ: number
+    label: Jahresmittel Min
+    beschreibung: "Minimale Jahresmitteltemperatur"
+    einheit: "°C"
+    
+  temp_jahres_mittel_max:
+    typ: number
+    label: Jahresmittel Max
+    beschreibung: "Maximale Jahresmitteltemperatur"
+    einheit: "°C"
+    
+  temp_jahres_mittel_optimal_min:
+    typ: number
+    label: Optimum Min
+    beschreibung: "Untere Grenze Optimalbereich"
+    einheit: "°C"
+    
+  temp_jahres_mittel_optimal_max:
+    typ: number
+    label: Optimum Max
+    beschreibung: "Obere Grenze Optimalbereich"
+    einheit: "°C"
+    
+  temp_waermstes_monat_min:
+    typ: number
+    label: Wärmster Monat Min
+    beschreibung: "Min. Temp. des wärmsten Monats"
+    einheit: "°C"
+    
+  temp_waermstes_monat_max:
+    typ: number
+    label: Wärmster Monat Max
+    beschreibung: "Max. Temp. des wärmsten Monats"
+    einheit: "°C"
+    
+  temp_kaeltestes_monat_min:
+    typ: number
+    label: Kältester Monat Min
+    beschreibung: "Min. Temp. des kältesten Monats"
+    einheit: "°C"
+    
+  temp_kaeltestes_monat_max:
+    typ: number
+    label: Kältester Monat Max
+    beschreibung: "Max. Temp. des kältesten Monats"
+    einheit: "°C"
+    
+  temp_saisonalitaet_min:
+    typ: number
+    label: Saisonalität Min
+    beschreibung: "Minimale Temperaturschwankung"
+    
+  temp_saisonalitaet_max:
+    typ: number
+    label: Saisonalität Max
+    beschreibung: "Maximale Temperaturschwankung"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # GEOGRAFIE v2.0 - NIEDERSCHLAG
+  # ═══════════════════════════════════════════════════════════════════════════
+  
+  niederschlag_jahres_min:
+    typ: number
+    label: Jahresniederschlag Min
+    beschreibung: "Minimaler Jahresniederschlag"
+    einheit: "mm"
+    
+  niederschlag_jahres_max:
+    typ: number
+    label: Jahresniederschlag Max
+    beschreibung: "Maximaler Jahresniederschlag"
+    einheit: "mm"
+    
+  niederschlag_jahres_optimal_min:
+    typ: number
+    label: Optimum Min
+    beschreibung: "Untere Grenze Optimalbereich"
+    einheit: "mm"
+    
+  niederschlag_jahres_optimal_max:
+    typ: number
+    label: Optimum Max
+    beschreibung: "Obere Grenze Optimalbereich"
+    einheit: "mm"
+    
+  niederschlag_feuchtester_min:
+    typ: number
+    label: Feuchtester Monat Min
+    beschreibung: "Min. Niederschlag feuchtester Monat"
+    einheit: "mm"
+    
+  niederschlag_feuchtester_max:
+    typ: number
+    label: Feuchtester Monat Max
+    beschreibung: "Max. Niederschlag feuchtester Monat"
+    einheit: "mm"
+    
+  niederschlag_trockenster_min:
+    typ: number
+    label: Trockenster Monat Min
+    beschreibung: "Min. Niederschlag trockenster Monat"
+    einheit: "mm"
+    
+  niederschlag_trockenster_max:
+    typ: number
+    label: Trockenster Monat Max
+    beschreibung: "Max. Niederschlag trockenster Monat"
+    einheit: "mm"
+    
+  niederschlag_saisonalitaet_min:
+    typ: number
+    label: Niederschlag Saisonalität Min
+    beschreibung: "Minimale Niederschlagssaisonalität"
+    
+  niederschlag_saisonalitaet_max:
+    typ: number
+    label: Niederschlag Saisonalität Max
+    beschreibung: "Maximale Niederschlagssaisonalität"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # GEOGRAFIE v2.0 - KÖPPEN-ZONEN
+  # ═══════════════════════════════════════════════════════════════════════════
+  
+  koeppen_zonen:
+    typ: list
+    label: Köppen-Zonen
+    beschreibung: "Klimazonen nach Köppen-Geiger"
+    
+  koeppen_primaer:
+    typ: tag
+    label: Primäre Köppen-Zone
+    beschreibung: "Häufigste Klimazone"
+    
+  koeppen_hauptklassen:
+    typ: list
+    label: Köppen Hauptklassen
+    beschreibung: "A (Tropisch), C (Warm-gemäßigt), D (Kontinental)"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # GEOGRAFIE v2.0 - BIOCLIM
+  # ═══════════════════════════════════════════════════════════════════════════
+  
+  bioclim_temp_jahresmittel:
+    typ: range
+    label: BIO1 Jahresmitteltemp.
+    beschreibung: "BIO1: Annual Mean Temperature"
+    
+  bioclim_temp_amplitude:
+    typ: range
+    label: BIO7 Temp. Amplitude
+    beschreibung: "BIO7: Temperature Annual Range"
+    
+  bioclim_niederschlag_jahr:
+    typ: range
+    label: BIO12 Jahresniederschlag
+    beschreibung: "BIO12: Annual Precipitation"
+    
+  bioclim_niederschlag_saisonalitaet:
+    typ: range
+    label: BIO15 Niederschl. Saisonalität
+    beschreibung: "BIO15: Precipitation Seasonality"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # GEOGRAFIE v2.0 - VERBREITUNGSKARTE
+  # ═══════════════════════════════════════════════════════════════════════════
+  
+  karte_typ:
+    typ: tag
+    label: Kartentyp
+    beschreibung: "punktkarte, rasterkarte, choropleth"
+    
+  karte_titel:
+    typ: text
+    label: Kartentitel
+    beschreibung: "Titel der Verbreitungskarte"
+    
+  karte_beschreibung:
+    typ: text
+    label: Kartenbeschreibung
+    beschreibung: "Beschreibung zur Karte"
+    
+  karte_center_lat:
+    typ: number
+    label: Karte Zentrum Lat
+    beschreibung: "Kartenmittelpunkt Breitengrad"
+    
+  karte_center_lng:
+    typ: number
+    label: Karte Zentrum Lng
+    beschreibung: "Kartenmittelpunkt Längengrad"
+    
+  karte_zoom:
+    typ: number
+    label: Karte Zoom
+    beschreibung: "Zoom-Level (1-18)"
+    
+  karte_url:
+    typ: image
+    label: Statische Karte
+    beschreibung: "URL zu statischem Kartenbild"
+    
+  karte_geojson_url:
+    typ: link
+    label: GeoJSON Download
+    beschreibung: "URL zu GeoJSON-Export"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # GEOGRAFIE v2.0 - HEATMAP
+  # ═══════════════════════════════════════════════════════════════════════════
+  
+  heatmap_aktiv:
+    typ: boolean
+    label: Heatmap aktiv
+    beschreibung: "Ist Heatmap verfügbar?"
+    
+  heatmap_radius:
+    typ: number
+    label: Heatmap Radius
+    beschreibung: "Radius in Pixeln"
+    
+  heatmap_max_zoom:
+    typ: number
+    label: Heatmap Max Zoom
+    beschreibung: "Maximaler Zoom für Heatmap"
+
+  # --- Legacy-Felder für Rückwärtskompatibilität ---
+  native_verbreitung:
+    typ: object
+    label: Native Verbreitung
+    beschreibung: "(Legacy) Ursprüngliches Verbreitungsgebiet"
+
+  eingefuehrte_verbreitung:
+    typ: object
+    label: Eingeführte Verbreitung
+    beschreibung: "(Legacy) Gebiete mit eingeführten Populationen"
+
+  invasivitaet:
+    typ: badge
+    label: Invasivität
+    beschreibung: "(Legacy) Invasionspotential"
+
+  fundorte:
+    typ: list
+    label: Fundorte
+    beschreibung: "(Legacy) Dokumentierte Fundorte"
 
   raeumliche_statistik:
     typ: object
     label: Räumliche Statistik
-    beschreibung: "Clusteranalyse, Dichte"
+    beschreibung: "(Legacy) Clusteranalyse, Dichte"
 
   klimahuelle:
     typ: object
     label: Klimahülle
-    beschreibung: "Klimatische Toleranzgrenzen"
+    beschreibung: "(Legacy) Klimatische Toleranzgrenzen"
 
   temperatur_bereich:
     typ: range
     label: Temperatur-Bereich
-    beschreibung: "Min/Max Temperatur"
+    beschreibung: "(Legacy) Min/Max Temperatur"
 
   niederschlag_bereich:
     typ: range
     label: Niederschlag-Bereich
-    beschreibung: "Niederschlagstoleranzen"
-
-  koeppen_zonen:
-    typ: list
-    label: Köppen-Zonen
-    beschreibung: "Klimazonen nach Köppen"
+    beschreibung: "(Legacy) Niederschlagstoleranzen"
 
   bioclim_variablen:
     typ: object
     label: BioClim-Variablen
-    beschreibung: "19 bioklimatische Variablen"
+    beschreibung: "(Legacy) 19 bioklimatische Variablen"
 
   verbreitungskarte:
     typ: image
     label: Verbreitungskarte
-    beschreibung: "Karte der Verbreitung"
+    beschreibung: "(Legacy) Karte der Verbreitung"
 
   heatmap_funde:
     typ: image
     label: Heatmap Funde
-    beschreibung: "Dichtedarstellung der Funde"
+    beschreibung: "(Legacy) Dichtedarstellung der Funde"
 
   # ═══════════════════════════════════════════════════════════════════════════
   # WIRTSCHAFT - MARKT & PRODUKTION
@@ -1840,202 +4005,2659 @@ felder:
     beschreibung: "Pilz-Festivals und Events"
 
   # ═══════════════════════════════════════════════════════════════════════════
-  # FORSCHUNG - AKTIVITÄT
+  # FORSCHUNG - AKTIVITÄT (v2.0 - FLACH)
   # ═══════════════════════════════════════════════════════════════════════════
 
   forschungs_aktivitaet:
-    typ: object
+    typ: enum
     label: Forschungs-Aktivität
-    beschreibung: "Wissenschaftliche Forschung"
+    beschreibung: "Gesamtbewertung der Forschungsintensität"
+    werte:
+      - sehr_hoch
+      - hoch
+      - mittel
+      - niedrig
+      - sehr_niedrig
+      - unerforscht
+
+  forschungs_aktivitaet_label:
+    typ: text
+    label: Aktivitäts-Label
+    beschreibung: "Lesbares Label der Forschungsaktivität"
+
+  forschungs_aktivitaet_icon:
+    typ: text
+    label: Aktivitäts-Icon
+    beschreibung: "Icon für die Forschungsaktivität"
 
   publikationen_anzahl:
     typ: number
-    label: Publikationen-Anzahl
-    beschreibung: "Anzahl wissenschaftlicher Paper"
+    label: Publikationen Gesamt
+    beschreibung: "Gesamtzahl wissenschaftlicher Publikationen"
+    einheit: "Stück"
 
-  publikationen_trend:
-    typ: object
-    label: Publikationen-Trend
-    beschreibung: "Entwicklung der Forschungsaktivität"
+  publikationen_pro_jahr:
+    typ: number
+    label: Publikationen/Jahr
+    beschreibung: "Durchschnittliche Publikationen pro Jahr"
+    einheit: "Stück/Jahr"
 
+  # === FORSCHUNG - PUBLIKATIONSTREND ===
+  publikationen_trend_richtung:
+    typ: enum
+    label: Trend-Richtung
+    beschreibung: "Richtung des Publikationstrends"
+    werte:
+      - steigend
+      - stabil
+      - fallend
+
+  publikationen_trend_prozent:
+    typ: number
+    label: Trend-Prozent
+    beschreibung: "Jährliche Änderung in Prozent"
+    einheit: "%"
+
+  publikationen_trend_zeitraum:
+    typ: text
+    label: Trend-Zeitraum
+    beschreibung: "Betrachtungszeitraum für den Trend"
+
+  publikationen_jahr_2020:
+    typ: number
+    label: Publikationen 2020
+    beschreibung: "Anzahl Publikationen im Jahr 2020"
+
+  publikationen_jahr_2021:
+    typ: number
+    label: Publikationen 2021
+    beschreibung: "Anzahl Publikationen im Jahr 2021"
+
+  publikationen_jahr_2022:
+    typ: number
+    label: Publikationen 2022
+    beschreibung: "Anzahl Publikationen im Jahr 2022"
+
+  publikationen_jahr_2023:
+    typ: number
+    label: Publikationen 2023
+    beschreibung: "Anzahl Publikationen im Jahr 2023"
+
+  publikationen_jahr_2024:
+    typ: number
+    label: Publikationen 2024
+    beschreibung: "Anzahl Publikationen im Jahr 2024"
+
+  # === FORSCHUNG - FORSCHUNGSGRUPPEN ===
   forschungsgruppen:
     typ: list
     label: Forschungsgruppen
-    beschreibung: "Aktive Forschungsteams"
+    beschreibung: "Liste führender Forschungsgruppen"
 
+  forschungsgruppe_1_name:
+    typ: text
+    label: Gruppe 1 Name
+    beschreibung: "Name der ersten Forschungsgruppe"
+
+  forschungsgruppe_1_institution:
+    typ: text
+    label: Gruppe 1 Institution
+    beschreibung: "Institution der ersten Gruppe"
+
+  forschungsgruppe_1_land:
+    typ: text
+    label: Gruppe 1 Land
+    beschreibung: "Land der ersten Gruppe"
+
+  forschungsgruppe_1_schwerpunkt:
+    typ: text
+    label: Gruppe 1 Schwerpunkt
+    beschreibung: "Forschungsschwerpunkt der ersten Gruppe"
+
+  forschungsgruppe_1_kontakt:
+    typ: text
+    label: Gruppe 1 Kontakt
+    beschreibung: "Kontakt-Email der ersten Gruppe"
+
+  forschungsgruppe_1_website:
+    typ: link
+    label: Gruppe 1 Website
+    beschreibung: "Website der ersten Gruppe"
+
+  forschungsgruppe_1_publikationen:
+    typ: number
+    label: Gruppe 1 Publikationen
+    beschreibung: "Anzahl Publikationen der ersten Gruppe"
+
+  forschungsgruppe_1_h_index:
+    typ: number
+    label: Gruppe 1 H-Index
+    beschreibung: "H-Index des Gruppenleiters"
+
+  forschungsgruppe_2_name:
+    typ: text
+    label: Gruppe 2 Name
+    beschreibung: "Name der zweiten Forschungsgruppe"
+
+  forschungsgruppe_2_institution:
+    typ: text
+    label: Gruppe 2 Institution
+    beschreibung: "Institution der zweiten Gruppe"
+
+  forschungsgruppe_2_land:
+    typ: text
+    label: Gruppe 2 Land
+    beschreibung: "Land der zweiten Gruppe"
+
+  forschungsgruppe_2_schwerpunkt:
+    typ: text
+    label: Gruppe 2 Schwerpunkt
+    beschreibung: "Forschungsschwerpunkt der zweiten Gruppe"
+
+  forschungsgruppe_3_name:
+    typ: text
+    label: Gruppe 3 Name
+    beschreibung: "Name der dritten Forschungsgruppe"
+
+  forschungsgruppe_3_institution:
+    typ: text
+    label: Gruppe 3 Institution
+    beschreibung: "Institution der dritten Gruppe"
+
+  forschungsgruppe_3_land:
+    typ: text
+    label: Gruppe 3 Land
+    beschreibung: "Land der dritten Gruppe"
+
+  # === FORSCHUNG - AKTUELLE THEMEN ===
   aktuelle_themen:
     typ: list
     label: Aktuelle Themen
     beschreibung: "Laufende Forschungsschwerpunkte"
 
+  thema_1_name:
+    typ: text
+    label: Thema 1 Name
+    beschreibung: "Name des ersten Forschungsthemas"
+
+  thema_1_beschreibung:
+    typ: text
+    label: Thema 1 Beschreibung
+    beschreibung: "Beschreibung des ersten Themas"
+
+  thema_1_aktivitaet:
+    typ: enum
+    label: Thema 1 Aktivität
+    beschreibung: "Aktivitätsstatus des ersten Themas"
+    werte:
+      - trending
+      - etabliert
+      - aufkommend
+      - ruecklaeufig
+
+  thema_1_relevanz_score:
+    typ: number
+    label: Thema 1 Relevanz
+    beschreibung: "Relevanz-Score 0-10"
+    min: 0
+    max: 10
+
+  thema_1_keywords:
+    typ: list
+    label: Thema 1 Keywords
+    beschreibung: "Keywords des ersten Themas"
+
+  thema_2_name:
+    typ: text
+    label: Thema 2 Name
+    beschreibung: "Name des zweiten Forschungsthemas"
+
+  thema_2_beschreibung:
+    typ: text
+    label: Thema 2 Beschreibung
+    beschreibung: "Beschreibung des zweiten Themas"
+
+  thema_2_aktivitaet:
+    typ: enum
+    label: Thema 2 Aktivität
+    beschreibung: "Aktivitätsstatus des zweiten Themas"
+    werte:
+      - trending
+      - etabliert
+      - aufkommend
+      - ruecklaeufig
+
+  thema_2_relevanz_score:
+    typ: number
+    label: Thema 2 Relevanz
+    beschreibung: "Relevanz-Score 0-10"
+
+  thema_2_keywords:
+    typ: list
+    label: Thema 2 Keywords
+    beschreibung: "Keywords des zweiten Themas"
+
+  thema_3_name:
+    typ: text
+    label: Thema 3 Name
+    beschreibung: "Name des dritten Forschungsthemas"
+
+  thema_3_beschreibung:
+    typ: text
+    label: Thema 3 Beschreibung
+    beschreibung: "Beschreibung des dritten Themas"
+
+  thema_3_aktivitaet:
+    typ: enum
+    label: Thema 3 Aktivität
+    beschreibung: "Aktivitätsstatus des dritten Themas"
+
+  thema_3_relevanz_score:
+    typ: number
+    label: Thema 3 Relevanz
+    beschreibung: "Relevanz-Score 0-10"
+
   # ═══════════════════════════════════════════════════════════════════════════
-  # FORSCHUNG - PATENTE & BIOTECH
+  # FORSCHUNG - PATENTE (v2.0 - FLACH)
   # ═══════════════════════════════════════════════════════════════════════════
 
-  patente:
+  patente_gesamt:
+    typ: number
+    label: Patente Gesamt
+    beschreibung: "Gesamtzahl der Patente"
+
+  patente_aktiv:
+    typ: number
+    label: Patente Aktiv
+    beschreibung: "Anzahl aktiver/gültiger Patente"
+
+  patente_angemeldet:
+    typ: number
+    label: Patente Angemeldet
+    beschreibung: "Anzahl angemeldeter Patente"
+
+  patente_abgelaufen:
+    typ: number
+    label: Patente Abgelaufen
+    beschreibung: "Anzahl abgelaufener Patente"
+
+  patente_jurisdiktionen:
     typ: list
-    label: Patente
-    beschreibung: "Patentierte Anwendungen"
+    label: Patent-Jurisdiktionen
+    beschreibung: "Länder mit Patentschutz"
 
-  patent_nummer:
+  # === PATENT 1 (Wichtigstes) ===
+  patent_1_nummer:
+    typ: text
+    label: Patent 1 Nummer
+    beschreibung: "Offizielle Patentnummer"
+
+  patent_1_titel:
+    typ: text
+    label: Patent 1 Titel
+    beschreibung: "Titel des Patents"
+
+  patent_1_erfinder:
     typ: list
-    label: Patent-Nummer
-    beschreibung: "Patentnummern"
+    label: Patent 1 Erfinder
+    beschreibung: "Namen der Erfinder"
 
-  erfinder:
+  patent_1_anmelder:
+    typ: text
+    label: Patent 1 Anmelder
+    beschreibung: "Patentanmelder/Inhaber"
+
+  patent_1_einreichungsdatum:
+    typ: text
+    label: Patent 1 Einreichung
+    beschreibung: "Einreichungsdatum"
+
+  patent_1_erteilungsdatum:
+    typ: text
+    label: Patent 1 Erteilung
+    beschreibung: "Erteilungsdatum"
+
+  patent_1_ablaufdatum:
+    typ: text
+    label: Patent 1 Ablauf
+    beschreibung: "Ablaufdatum"
+
+  patent_1_status:
+    typ: enum
+    label: Patent 1 Status
+    beschreibung: "Status des Patents"
+    werte:
+      - angemeldet
+      - erteilt
+      - abgelaufen
+      - aufgegeben
+
+  patent_1_jurisdiktionen:
     typ: list
-    label: Erfinder
-    beschreibung: "Patentinhaber"
+    label: Patent 1 Jurisdiktionen
+    beschreibung: "Länder der Gültigkeit"
 
-  anwendungen:
+  patent_1_anwendungen:
     typ: list
-    label: Anwendungen
-    beschreibung: "Patentierte Anwendungsgebiete"
+    label: Patent 1 Anwendungen
+    beschreibung: "Anwendungsgebiete"
 
-  biotechnologie:
-    typ: object
-    label: Biotechnologie
-    beschreibung: "Biotechnologische Nutzung"
+  patent_1_zusammenfassung:
+    typ: text
+    label: Patent 1 Zusammenfassung
+    beschreibung: "Kurzzusammenfassung"
 
-  anwendungen_biotech:
+  patent_1_url:
+    typ: link
+    label: Patent 1 URL
+    beschreibung: "Link zum Patent"
+
+  patent_1_zitationen:
+    typ: number
+    label: Patent 1 Zitationen
+    beschreibung: "Anzahl Zitationen"
+
+  # === PATENT 2 ===
+  patent_2_nummer:
+    typ: text
+    label: Patent 2 Nummer
+    beschreibung: "Patentnummer"
+
+  patent_2_titel:
+    typ: text
+    label: Patent 2 Titel
+    beschreibung: "Titel des Patents"
+
+  patent_2_erfinder:
     typ: list
-    label: Biotech-Anwendungen
-    beschreibung: "Spezifische Biotech-Nutzungen"
+    label: Patent 2 Erfinder
+    beschreibung: "Namen der Erfinder"
 
-  gentechnik:
-    typ: object
-    label: Gentechnik
-    beschreibung: "Genetische Modifikationen"
+  patent_2_anmelder:
+    typ: text
+    label: Patent 2 Anmelder
+    beschreibung: "Patentanmelder"
 
-  synthetische_biologie:
-    typ: object
-    label: Synthetische Biologie
-    beschreibung: "Synbio-Anwendungen"
+  patent_2_status:
+    typ: enum
+    label: Patent 2 Status
+    beschreibung: "Status des Patents"
+    werte:
+      - angemeldet
+      - erteilt
+      - abgelaufen
+      - aufgegeben
+
+  patent_2_anwendungen:
+    typ: list
+    label: Patent 2 Anwendungen
+    beschreibung: "Anwendungsgebiete"
+
+  patent_2_zitationen:
+    typ: number
+    label: Patent 2 Zitationen
+    beschreibung: "Anzahl Zitationen"
+
+  # === PATENT 3-5 (Kurzform) ===
+  patent_3_nummer:
+    typ: text
+    label: Patent 3 Nummer
+    beschreibung: "Patentnummer"
+
+  patent_3_titel:
+    typ: text
+    label: Patent 3 Titel
+    beschreibung: "Titel des Patents"
+
+  patent_3_status:
+    typ: enum
+    label: Patent 3 Status
+    beschreibung: "Status"
+    werte:
+      - angemeldet
+      - erteilt
+      - abgelaufen
+      - aufgegeben
+
+  patent_3_anwendungen:
+    typ: list
+    label: Patent 3 Anwendungen
+    beschreibung: "Anwendungsgebiete"
+
+  patent_4_nummer:
+    typ: text
+    label: Patent 4 Nummer
+    beschreibung: "Patentnummer"
+
+  patent_4_titel:
+    typ: text
+    label: Patent 4 Titel
+    beschreibung: "Titel des Patents"
+
+  patent_4_status:
+    typ: enum
+    label: Patent 4 Status
+    beschreibung: "Status"
+
+  patent_5_nummer:
+    typ: text
+    label: Patent 5 Nummer
+    beschreibung: "Patentnummer"
+
+  patent_5_titel:
+    typ: text
+    label: Patent 5 Titel
+    beschreibung: "Titel des Patents"
+
+  patent_5_status:
+    typ: enum
+    label: Patent 5 Status
+    beschreibung: "Status"
 
   # ═══════════════════════════════════════════════════════════════════════════
-  # FORSCHUNG - ZUKUNFT
+  # FORSCHUNG - BIOTECHNOLOGIE (v2.0 - FLACH)
   # ═══════════════════════════════════════════════════════════════════════════
 
-  zukunftspotential:
-    typ: object
-    label: Zukunftspotential
-    beschreibung: "Zukünftige Nutzungsmöglichkeiten"
+  biotechnologie_relevanz:
+    typ: enum
+    label: Biotech-Relevanz
+    beschreibung: "Biotechnologische Bedeutung"
+    werte:
+      - hoch
+      - mittel
+      - niedrig
+      - potential
 
+  biotechnologie_relevanz_label:
+    typ: text
+    label: Biotech-Relevanz Label
+    beschreibung: "Lesbares Label"
+
+  biotechnologie_bereiche:
+    typ: list
+    label: Biotech-Bereiche
+    beschreibung: "Relevante Biotechnologie-Bereiche"
+
+  biotechnologie_score:
+    typ: number
+    label: Biotech-Score
+    beschreibung: "Gesamtbewertung 0-10"
+    min: 0
+    max: 10
+
+  # === BIOTECH ANWENDUNG 1 ===
+  biotech_anwendung_1_bereich:
+    typ: enum
+    label: Anwendung 1 Bereich
+    beschreibung: "Anwendungsbereich"
+    werte:
+      - pharmazeutik
+      - lebensmittel
+      - umwelt
+      - materialien
+      - kosmetik
+      - landwirtschaft
+      - energie
+      - chemie
+
+  biotech_anwendung_1_name:
+    typ: text
+    label: Anwendung 1 Name
+    beschreibung: "Name der Anwendung"
+
+  biotech_anwendung_1_beschreibung:
+    typ: text
+    label: Anwendung 1 Beschreibung
+    beschreibung: "Beschreibung der Anwendung"
+
+  biotech_anwendung_1_reife_grad:
+    typ: enum
+    label: Anwendung 1 Reifegrad
+    beschreibung: "Entwicklungsstand"
+    werte:
+      - forschung
+      - entwicklung
+      - pilot
+      - kommerziell
+
+  biotech_anwendung_1_unternehmen:
+    typ: list
+    label: Anwendung 1 Unternehmen
+    beschreibung: "Beteiligte Unternehmen"
+
+  biotech_anwendung_1_marktpotential:
+    typ: enum
+    label: Anwendung 1 Marktpotential
+    beschreibung: "Marktpotential"
+    werte:
+      - sehr_hoch
+      - hoch
+      - mittel
+      - niedrig
+
+  # === BIOTECH ANWENDUNG 2 ===
+  biotech_anwendung_2_bereich:
+    typ: enum
+    label: Anwendung 2 Bereich
+    beschreibung: "Anwendungsbereich"
+    werte:
+      - pharmazeutik
+      - lebensmittel
+      - umwelt
+      - materialien
+      - kosmetik
+      - landwirtschaft
+      - energie
+      - chemie
+
+  biotech_anwendung_2_name:
+    typ: text
+    label: Anwendung 2 Name
+    beschreibung: "Name der Anwendung"
+
+  biotech_anwendung_2_beschreibung:
+    typ: text
+    label: Anwendung 2 Beschreibung
+    beschreibung: "Beschreibung der Anwendung"
+
+  biotech_anwendung_2_reife_grad:
+    typ: enum
+    label: Anwendung 2 Reifegrad
+    beschreibung: "Entwicklungsstand"
+
+  biotech_anwendung_2_marktpotential:
+    typ: enum
+    label: Anwendung 2 Marktpotential
+    beschreibung: "Marktpotential"
+
+  # === BIOTECH ANWENDUNG 3-5 (Kurzform) ===
+  biotech_anwendung_3_bereich:
+    typ: enum
+    label: Anwendung 3 Bereich
+    beschreibung: "Anwendungsbereich"
+
+  biotech_anwendung_3_name:
+    typ: text
+    label: Anwendung 3 Name
+    beschreibung: "Name der Anwendung"
+
+  biotech_anwendung_3_reife_grad:
+    typ: enum
+    label: Anwendung 3 Reifegrad
+    beschreibung: "Entwicklungsstand"
+
+  biotech_anwendung_4_bereich:
+    typ: enum
+    label: Anwendung 4 Bereich
+    beschreibung: "Anwendungsbereich"
+
+  biotech_anwendung_4_name:
+    typ: text
+    label: Anwendung 4 Name
+    beschreibung: "Name der Anwendung"
+
+  biotech_anwendung_5_bereich:
+    typ: enum
+    label: Anwendung 5 Bereich
+    beschreibung: "Anwendungsbereich"
+
+  biotech_anwendung_5_name:
+    typ: text
+    label: Anwendung 5 Name
+    beschreibung: "Name der Anwendung"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # FORSCHUNG - GENTECHNIK (v2.0 - FLACH)
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  genom_sequenziert:
+    typ: boolean
+    label: Genom Sequenziert
+    beschreibung: "Ist das Genom vollständig sequenziert?"
+
+  genom_groesse_mb:
+    typ: number
+    label: Genom-Größe
+    beschreibung: "Genomgröße in Megabasen"
+    einheit: "Mb"
+
+  genom_gen_anzahl:
+    typ: number
+    label: Gen-Anzahl
+    beschreibung: "Anzahl der Gene"
+
+  genom_genbank_accession:
+    typ: text
+    label: GenBank Accession
+    beschreibung: "Primäre GenBank Accession Number"
+
+  genom_genbank_ids:
+    typ: list
+    label: GenBank IDs
+    beschreibung: "Alle GenBank Accession Numbers"
+
+  genom_assembly_level:
+    typ: enum
+    label: Assembly Level
+    beschreibung: "Qualität der Genom-Assembly"
+    werte:
+      - complete
+      - chromosome
+      - scaffold
+      - contig
+
+  genom_annotation_status:
+    typ: enum
+    label: Annotation Status
+    beschreibung: "Status der Genom-Annotation"
+    werte:
+      - vollstaendig
+      - teilweise
+      - automatisch
+      - keine
+
+  # === TRANSFORMATION METHODEN ===
+  transformation_methoden:
+    typ: list
+    label: Transformationsmethoden
+    beschreibung: "Etablierte Transformationsmethoden"
+
+  transformation_agrobacterium:
+    typ: boolean
+    label: Agrobacterium
+    beschreibung: "Agrobacterium-vermittelte Transformation"
+
+  transformation_peg:
+    typ: boolean
+    label: PEG
+    beschreibung: "PEG-vermittelte Transformation"
+
+  transformation_elektroporation:
+    typ: boolean
+    label: Elektroporation
+    beschreibung: "Elektroporation etabliert"
+
+  transformation_biolistic:
+    typ: boolean
+    label: Biolistic
+    beschreibung: "Biolistische Transformation"
+
+  marker_gene:
+    typ: list
+    label: Marker-Gene
+    beschreibung: "Verfügbare Marker-Gene"
+
+  selektions_marker:
+    typ: list
+    label: Selektions-Marker
+    beschreibung: "Selektionsmarker für Transformanten"
+
+  knockout_bibliothek_vorhanden:
+    typ: boolean
+    label: Knockout-Bibliothek
+    beschreibung: "Knockout-Bibliothek verfügbar"
+
+  knockout_gene_anzahl:
+    typ: number
+    label: Knockout Gene Anzahl
+    beschreibung: "Anzahl Gene in Knockout-Bibliothek"
+
+  crispr_etabliert:
+    typ: boolean
+    label: CRISPR Etabliert
+    beschreibung: "CRISPR/Cas9 System etabliert"
+
+  crispr_erfolgsrate:
+    typ: number
+    label: CRISPR Erfolgsrate
+    beschreibung: "Typische Erfolgsrate in Prozent"
+    einheit: "%"
+
+  crispr_targets:
+    typ: list
+    label: CRISPR Targets
+    beschreibung: "Erfolgreich editierte Gene"
+
+  rnai_etabliert:
+    typ: boolean
+    label: RNAi Etabliert
+    beschreibung: "RNA-Interferenz etabliert"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # FORSCHUNG - SYNTHETISCHE BIOLOGIE (v2.0 - FLACH)
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  synbio_chassis_organismus:
+    typ: boolean
+    label: Chassis-Organismus
+    beschreibung: "Als Chassis-Organismus geeignet"
+
+  synbio_chassis_eignung_score:
+    typ: number
+    label: Chassis-Eignung Score
+    beschreibung: "Eignung als Chassis 0-10"
+    min: 0
+    max: 10
+
+  synbio_heterologe_expression:
+    typ: list
+    label: Heterologe Expression
+    beschreibung: "Erfolgreich exprimierte heterologe Gene"
+
+  synbio_expression_systeme:
+    typ: list
+    label: Expression Systeme
+    beschreibung: "Verfügbare Expressionssysteme"
+
+  synbio_metabolic_engineering:
+    typ: list
+    label: Metabolic Engineering
+    beschreibung: "Metabolic Engineering Projekte"
+
+  synbio_produkt_1_name:
+    typ: text
+    label: SynBio Produkt 1
+    beschreibung: "Erstes synthetisiertes Produkt"
+
+  synbio_produkt_1_pathway:
+    typ: text
+    label: Produkt 1 Pathway
+    beschreibung: "Biosynthese-Pathway"
+
+  synbio_produkt_1_effizienz:
+    typ: text
+    label: Produkt 1 Effizienz
+    beschreibung: "Produktionseffizienz"
+
+  synbio_produkt_1_status:
+    typ: enum
+    label: Produkt 1 Status
+    beschreibung: "Entwicklungsstatus"
+    werte:
+      - forschung
+      - optimierung
+      - produktion
+
+  synbio_produkt_2_name:
+    typ: text
+    label: SynBio Produkt 2
+    beschreibung: "Zweites synthetisiertes Produkt"
+
+  synbio_produkt_2_pathway:
+    typ: text
+    label: Produkt 2 Pathway
+    beschreibung: "Biosynthese-Pathway"
+
+  synbio_produkt_2_status:
+    typ: enum
+    label: Produkt 2 Status
+    beschreibung: "Entwicklungsstatus"
+
+  synbio_produkt_3_name:
+    typ: text
+    label: SynBio Produkt 3
+    beschreibung: "Drittes synthetisiertes Produkt"
+
+  synbio_promotoren:
+    typ: list
+    label: SynBio Promotoren
+    beschreibung: "Verfügbare Promotoren"
+
+  synbio_terminatoren:
+    typ: list
+    label: SynBio Terminatoren
+    beschreibung: "Verfügbare Terminatoren"
+
+  synbio_enhancer:
+    typ: list
+    label: SynBio Enhancer
+    beschreibung: "Verfügbare Enhancer"
+
+  synbio_regulatorische_toolbox:
+    typ: boolean
+    label: Regulatorische Toolbox
+    beschreibung: "Vollständige regulatorische Toolbox verfügbar"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # FORSCHUNG - ZUKUNFTSPOTENTIAL (v2.0 - FLACH)
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  zukunftspotential_score:
+    typ: number
+    label: Zukunftspotential Score
+    beschreibung: "Gesamtbewertung 0-10"
+    min: 0
+    max: 10
+
+  zukunftspotential_innovation_index:
+    typ: number
+    label: Innovation Index
+    beschreibung: "Innovationspotential 0-10"
+    min: 0
+    max: 10
+
+  zukunftspotential_markt_attraktivitaet:
+    typ: number
+    label: Markt-Attraktivität
+    beschreibung: "Marktattraktivität 0-10"
+    min: 0
+    max: 10
+
+  zukunftspotential_forschungs_momentum:
+    typ: number
+    label: Forschungs-Momentum
+    beschreibung: "Forschungsmomentum 0-10"
+    min: 0
+    max: 10
+
+  zukunftspotential_kommerzialisierbarkeit:
+    typ: number
+    label: Kommerzialisierbarkeit
+    beschreibung: "Kommerzialisierbarkeit 0-10"
+    min: 0
+    max: 10
+
+  zukunftspotential_begruendung:
+    typ: text
+    label: Zukunftspotential Begründung
+    beschreibung: "Textuelle Begründung der Bewertung"
+
+  # === EMERGING APPLICATIONS ===
   emerging_applications:
     typ: list
     label: Emerging Applications
     beschreibung: "Aufkommende Anwendungsfelder"
 
+  emerging_app_1_name:
+    typ: text
+    label: Emerging App 1 Name
+    beschreibung: "Name der ersten aufkommenden Anwendung"
+
+  emerging_app_1_beschreibung:
+    typ: text
+    label: Emerging App 1 Beschreibung
+    beschreibung: "Beschreibung der Anwendung"
+
+  emerging_app_1_zeithorizont:
+    typ: enum
+    label: Emerging App 1 Zeithorizont
+    beschreibung: "Erwarteter Zeithorizont"
+    werte:
+      - kurzfristig_1-2j
+      - mittelfristig_3-5j
+      - langfristig_5-10j
+      - visionaer_10j+
+
+  emerging_app_1_wahrscheinlichkeit:
+    typ: enum
+    label: Emerging App 1 Wahrscheinlichkeit
+    beschreibung: "Realisierungswahrscheinlichkeit"
+    werte:
+      - sehr_hoch
+      - hoch
+      - mittel
+      - niedrig
+      - spekulativ
+
+  emerging_app_1_treiber:
+    typ: list
+    label: Emerging App 1 Treiber
+    beschreibung: "Was treibt diese Entwicklung?"
+
+  emerging_app_1_hindernisse:
+    typ: list
+    label: Emerging App 1 Hindernisse
+    beschreibung: "Mögliche Hindernisse"
+
+  emerging_app_1_akteure:
+    typ: list
+    label: Emerging App 1 Akteure
+    beschreibung: "Schlüsselakteure"
+
+  emerging_app_2_name:
+    typ: text
+    label: Emerging App 2 Name
+    beschreibung: "Name der zweiten Anwendung"
+
+  emerging_app_2_beschreibung:
+    typ: text
+    label: Emerging App 2 Beschreibung
+    beschreibung: "Beschreibung"
+
+  emerging_app_2_zeithorizont:
+    typ: enum
+    label: Emerging App 2 Zeithorizont
+    beschreibung: "Erwarteter Zeithorizont"
+
+  emerging_app_2_wahrscheinlichkeit:
+    typ: enum
+    label: Emerging App 2 Wahrscheinlichkeit
+    beschreibung: "Wahrscheinlichkeit"
+
+  emerging_app_3_name:
+    typ: text
+    label: Emerging App 3 Name
+    beschreibung: "Name der dritten Anwendung"
+
+  emerging_app_3_zeithorizont:
+    typ: enum
+    label: Emerging App 3 Zeithorizont
+    beschreibung: "Zeithorizont"
+
+  emerging_app_3_wahrscheinlichkeit:
+    typ: enum
+    label: Emerging App 3 Wahrscheinlichkeit
+    beschreibung: "Wahrscheinlichkeit"
+
+  emerging_app_4_name:
+    typ: text
+    label: Emerging App 4 Name
+    beschreibung: "Name der vierten Anwendung"
+
+  emerging_app_4_zeithorizont:
+    typ: enum
+    label: Emerging App 4 Zeithorizont
+    beschreibung: "Zeithorizont"
+
+  emerging_app_5_name:
+    typ: text
+    label: Emerging App 5 Name
+    beschreibung: "Name der fünften Anwendung"
+
+  # === FORSCHUNGSLÜCKEN ===
   forschungsluecken:
     typ: list
     label: Forschungslücken
-    beschreibung: "Offene Forschungsfragen"
+    beschreibung: "Identifizierte Forschungslücken"
 
+  forschungsluecke_1_bereich:
+    typ: text
+    label: Lücke 1 Bereich
+    beschreibung: "Bereich der ersten Forschungslücke"
+
+  forschungsluecke_1_beschreibung:
+    typ: text
+    label: Lücke 1 Beschreibung
+    beschreibung: "Beschreibung der Lücke"
+
+  forschungsluecke_1_prioritaet:
+    typ: enum
+    label: Lücke 1 Priorität
+    beschreibung: "Priorität der Schließung"
+    werte:
+      - kritisch
+      - hoch
+      - mittel
+      - niedrig
+
+  forschungsluecke_1_aufwand:
+    typ: enum
+    label: Lücke 1 Aufwand
+    beschreibung: "Geschätzter Aufwand"
+    werte:
+      - gering
+      - mittel
+      - hoch
+      - sehr_hoch
+
+  forschungsluecke_1_expertise:
+    typ: list
+    label: Lücke 1 Expertise
+    beschreibung: "Benötigte Expertise"
+
+  forschungsluecke_1_foerderung:
+    typ: list
+    label: Lücke 1 Förderung
+    beschreibung: "Potentielle Förderprogramme"
+
+  forschungsluecke_2_bereich:
+    typ: text
+    label: Lücke 2 Bereich
+    beschreibung: "Bereich der zweiten Forschungslücke"
+
+  forschungsluecke_2_beschreibung:
+    typ: text
+    label: Lücke 2 Beschreibung
+    beschreibung: "Beschreibung"
+
+  forschungsluecke_2_prioritaet:
+    typ: enum
+    label: Lücke 2 Priorität
+    beschreibung: "Priorität"
+
+  forschungsluecke_3_bereich:
+    typ: text
+    label: Lücke 3 Bereich
+    beschreibung: "Bereich der dritten Forschungslücke"
+
+  forschungsluecke_3_prioritaet:
+    typ: enum
+    label: Lücke 3 Priorität
+    beschreibung: "Priorität"
+
+  # === INVESTITIONSMÖGLICHKEITEN ===
   investitionsmoeglichkeiten:
     typ: list
     label: Investitionsmöglichkeiten
-    beschreibung: "Wirtschaftliche Potentiale"
+    beschreibung: "R&D Investitionsmöglichkeiten"
+
+  invest_1_titel:
+    typ: text
+    label: Investment 1 Titel
+    beschreibung: "Titel der Investitionsmöglichkeit"
+
+  invest_1_beschreibung:
+    typ: text
+    label: Investment 1 Beschreibung
+    beschreibung: "Beschreibung"
+
+  invest_1_volumen_min_eur:
+    typ: number
+    label: Investment 1 Min EUR
+    beschreibung: "Minimales Investitionsvolumen"
+    einheit: "EUR"
+
+  invest_1_volumen_max_eur:
+    typ: number
+    label: Investment 1 Max EUR
+    beschreibung: "Maximales Investitionsvolumen"
+    einheit: "EUR"
+
+  invest_1_roi_potential:
+    typ: enum
+    label: Investment 1 ROI
+    beschreibung: "ROI-Potential"
+    werte:
+      - sehr_hoch
+      - hoch
+      - mittel
+      - niedrig
+
+  invest_1_risiko:
+    typ: enum
+    label: Investment 1 Risiko
+    beschreibung: "Risikobewertung"
+    werte:
+      - sehr_hoch
+      - hoch
+      - mittel
+      - niedrig
+
+  invest_1_zeithorizont:
+    typ: text
+    label: Investment 1 Zeithorizont
+    beschreibung: "Zeithorizont"
+
+  invest_1_typ:
+    typ: enum
+    label: Investment 1 Typ
+    beschreibung: "Investitionstyp"
+    werte:
+      - grundlagenforschung
+      - angewandte_forschung
+      - entwicklung
+      - scale_up
+      - kommerzialisierung
+
+  invest_2_titel:
+    typ: text
+    label: Investment 2 Titel
+    beschreibung: "Titel"
+
+  invest_2_beschreibung:
+    typ: text
+    label: Investment 2 Beschreibung
+    beschreibung: "Beschreibung"
+
+  invest_2_roi_potential:
+    typ: enum
+    label: Investment 2 ROI
+    beschreibung: "ROI-Potential"
+
+  invest_2_risiko:
+    typ: enum
+    label: Investment 2 Risiko
+    beschreibung: "Risiko"
+
+  invest_3_titel:
+    typ: text
+    label: Investment 3 Titel
+    beschreibung: "Titel"
+
+  invest_3_roi_potential:
+    typ: enum
+    label: Investment 3 ROI
+    beschreibung: "ROI-Potential"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # FORSCHUNG - WISSENSCHAFTLICHE REFERENZEN (v2.0 - FLACH)
+  # ═══════════════════════════════════════════════════════════════════════════
 
   schluessel_publikationen:
     typ: list
     label: Schlüssel-Publikationen
     beschreibung: "Wichtigste wissenschaftliche Arbeiten"
 
+  # === PUBLIKATION 1 (Wichtigste) ===
+  publikation_1_titel:
+    typ: text
+    label: Publikation 1 Titel
+    beschreibung: "Titel der wichtigsten Publikation"
+
+  publikation_1_autoren:
+    typ: list
+    label: Publikation 1 Autoren
+    beschreibung: "Autoren"
+
+  publikation_1_journal:
+    typ: text
+    label: Publikation 1 Journal
+    beschreibung: "Journal"
+
+  publikation_1_jahr:
+    typ: number
+    label: Publikation 1 Jahr
+    beschreibung: "Erscheinungsjahr"
+
+  publikation_1_doi:
+    typ: text
+    label: Publikation 1 DOI
+    beschreibung: "Digital Object Identifier"
+
+  publikation_1_pmid:
+    typ: text
+    label: Publikation 1 PMID
+    beschreibung: "PubMed ID"
+
+  publikation_1_zusammenfassung:
+    typ: text
+    label: Publikation 1 Abstract
+    beschreibung: "Kurzzusammenfassung"
+
+  publikation_1_zitationen:
+    typ: number
+    label: Publikation 1 Zitationen
+    beschreibung: "Anzahl Zitationen"
+
+  publikation_1_impact_factor:
+    typ: number
+    label: Publikation 1 Impact Factor
+    beschreibung: "Journal Impact Factor"
+
+  publikation_1_open_access:
+    typ: boolean
+    label: Publikation 1 Open Access
+    beschreibung: "Open Access verfügbar"
+
+  publikation_1_pdf_url:
+    typ: link
+    label: Publikation 1 PDF
+    beschreibung: "Link zum PDF"
+
+  publikation_1_bedeutung:
+    typ: enum
+    label: Publikation 1 Bedeutung
+    beschreibung: "Wissenschaftliche Bedeutung"
+    werte:
+      - landmark
+      - wichtig
+      - relevant
+      - ergaenzend
+
+  publikation_1_themen_tags:
+    typ: list
+    label: Publikation 1 Tags
+    beschreibung: "Themen-Tags"
+
+  # === PUBLIKATION 2 ===
+  publikation_2_titel:
+    typ: text
+    label: Publikation 2 Titel
+    beschreibung: "Titel"
+
+  publikation_2_autoren:
+    typ: list
+    label: Publikation 2 Autoren
+    beschreibung: "Autoren"
+
+  publikation_2_journal:
+    typ: text
+    label: Publikation 2 Journal
+    beschreibung: "Journal"
+
+  publikation_2_jahr:
+    typ: number
+    label: Publikation 2 Jahr
+    beschreibung: "Jahr"
+
+  publikation_2_doi:
+    typ: text
+    label: Publikation 2 DOI
+    beschreibung: "DOI"
+
+  publikation_2_zitationen:
+    typ: number
+    label: Publikation 2 Zitationen
+    beschreibung: "Zitationen"
+
+  publikation_2_bedeutung:
+    typ: enum
+    label: Publikation 2 Bedeutung
+    beschreibung: "Bedeutung"
+
+  # === PUBLIKATION 3-5 (Kurzform) ===
+  publikation_3_titel:
+    typ: text
+    label: Publikation 3 Titel
+    beschreibung: "Titel"
+
+  publikation_3_journal:
+    typ: text
+    label: Publikation 3 Journal
+    beschreibung: "Journal"
+
+  publikation_3_jahr:
+    typ: number
+    label: Publikation 3 Jahr
+    beschreibung: "Jahr"
+
+  publikation_3_doi:
+    typ: text
+    label: Publikation 3 DOI
+    beschreibung: "DOI"
+
+  publikation_3_bedeutung:
+    typ: enum
+    label: Publikation 3 Bedeutung
+    beschreibung: "Bedeutung"
+
+  publikation_4_titel:
+    typ: text
+    label: Publikation 4 Titel
+    beschreibung: "Titel"
+
+  publikation_4_doi:
+    typ: text
+    label: Publikation 4 DOI
+    beschreibung: "DOI"
+
+  publikation_5_titel:
+    typ: text
+    label: Publikation 5 Titel
+    beschreibung: "Titel"
+
+  publikation_5_doi:
+    typ: text
+    label: Publikation 5 DOI
+    beschreibung: "DOI"
+
   # ═══════════════════════════════════════════════════════════════════════════
-  # INTERAKTIONEN - MULTI-SPECIES
+  # FORSCHUNG - KLINISCHE STUDIEN (v2.0 - FLACH)
   # ═══════════════════════════════════════════════════════════════════════════
 
-  multispecies_interaktionen:
-    typ: object
-    label: Multispecies-Interaktionen
-    beschreibung: "Artenübergreifende Beziehungen"
+  klinische_studien_anzahl:
+    typ: number
+    label: Klinische Studien Anzahl
+    beschreibung: "Gesamtzahl klinischer Studien"
+
+  klinische_studien_aktiv:
+    typ: number
+    label: Klinische Studien Aktiv
+    beschreibung: "Anzahl aktiver Studien"
+
+  # === KLINISCHE STUDIE 1 ===
+  klinische_studie_1_nct:
+    typ: text
+    label: Studie 1 NCT
+    beschreibung: "ClinicalTrials.gov Identifier"
+
+  klinische_studie_1_titel:
+    typ: text
+    label: Studie 1 Titel
+    beschreibung: "Studientitel"
+
+  klinische_studie_1_status:
+    typ: enum
+    label: Studie 1 Status
+    beschreibung: "Studienstatus"
+    werte:
+      - rekrutierend
+      - aktiv_nicht_rekrutierend
+      - abgeschlossen
+      - abgebrochen
+      - ausgesetzt
+      - noch_nicht_rekrutierend
+
+  klinische_studie_1_phase:
+    typ: enum
+    label: Studie 1 Phase
+    beschreibung: "Studienphase"
+    werte:
+      - phase_1
+      - phase_2
+      - phase_3
+      - phase_4
+      - nicht_zutreffend
+
+  klinische_studie_1_indikation:
+    typ: text
+    label: Studie 1 Indikation
+    beschreibung: "Untersuchte Indikation"
+
+  klinische_studie_1_sponsor:
+    typ: text
+    label: Studie 1 Sponsor
+    beschreibung: "Studiensponsor"
+
+  klinische_studie_1_start:
+    typ: text
+    label: Studie 1 Start
+    beschreibung: "Startdatum"
+
+  klinische_studie_1_ende_erwartet:
+    typ: text
+    label: Studie 1 Ende
+    beschreibung: "Erwartetes Enddatum"
+
+  klinische_studie_1_teilnehmer_ziel:
+    typ: number
+    label: Studie 1 Teilnehmer
+    beschreibung: "Geplante Teilnehmerzahl"
+
+  klinische_studie_1_standorte:
+    typ: list
+    label: Studie 1 Standorte
+    beschreibung: "Studienstandorte"
+
+  klinische_studie_1_ergebnisse:
+    typ: text
+    label: Studie 1 Ergebnisse
+    beschreibung: "Zusammenfassung der Ergebnisse"
+
+  # === KLINISCHE STUDIE 2-3 ===
+  klinische_studie_2_nct:
+    typ: text
+    label: Studie 2 NCT
+    beschreibung: "NCT-Nummer"
+
+  klinische_studie_2_titel:
+    typ: text
+    label: Studie 2 Titel
+    beschreibung: "Titel"
+
+  klinische_studie_2_status:
+    typ: enum
+    label: Studie 2 Status
+    beschreibung: "Status"
+
+  klinische_studie_2_phase:
+    typ: enum
+    label: Studie 2 Phase
+    beschreibung: "Phase"
+
+  klinische_studie_2_indikation:
+    typ: text
+    label: Studie 2 Indikation
+    beschreibung: "Indikation"
+
+  klinische_studie_3_nct:
+    typ: text
+    label: Studie 3 NCT
+    beschreibung: "NCT-Nummer"
+
+  klinische_studie_3_titel:
+    typ: text
+    label: Studie 3 Titel
+    beschreibung: "Titel"
+
+  klinische_studie_3_status:
+    typ: enum
+    label: Studie 3 Status
+    beschreibung: "Status"
+
+  klinische_studie_3_phase:
+    typ: enum
+    label: Studie 3 Phase
+    beschreibung: "Phase"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # FORSCHUNG - REVIEW ARTIKEL (v2.0 - FLACH)
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  review_artikel:
+    typ: list
+    label: Review-Artikel
+    beschreibung: "Wichtige Review-Artikel"
+
+  review_1_titel:
+    typ: text
+    label: Review 1 Titel
+    beschreibung: "Titel des ersten Reviews"
+
+  review_1_autoren:
+    typ: list
+    label: Review 1 Autoren
+    beschreibung: "Autoren"
+
+  review_1_journal:
+    typ: text
+    label: Review 1 Journal
+    beschreibung: "Journal"
+
+  review_1_jahr:
+    typ: number
+    label: Review 1 Jahr
+    beschreibung: "Jahr"
+
+  review_1_doi:
+    typ: text
+    label: Review 1 DOI
+    beschreibung: "DOI"
+
+  review_1_themenbereich:
+    typ: text
+    label: Review 1 Themenbereich
+    beschreibung: "Themenbereich"
+
+  review_2_titel:
+    typ: text
+    label: Review 2 Titel
+    beschreibung: "Titel"
+
+  review_2_journal:
+    typ: text
+    label: Review 2 Journal
+    beschreibung: "Journal"
+
+  review_2_jahr:
+    typ: number
+    label: Review 2 Jahr
+    beschreibung: "Jahr"
+
+  review_2_doi:
+    typ: text
+    label: Review 2 DOI
+    beschreibung: "DOI"
+
+  review_3_titel:
+    typ: text
+    label: Review 3 Titel
+    beschreibung: "Titel"
+
+  review_3_doi:
+    typ: text
+    label: Review 3 DOI
+    beschreibung: "DOI"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # FORSCHUNG - DATENBANK-EINTRÄGE (v2.0 - FLACH)
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  ncbi_taxonomy_id:
+    typ: text
+    label: NCBI Taxonomy ID
+    beschreibung: "NCBI Taxonomy Identifier"
+
+  mycobank_id:
+    typ: text
+    label: MycoBank ID
+    beschreibung: "MycoBank Identifier"
+
+  index_fungorum_id:
+    typ: text
+    label: Index Fungorum ID
+    beschreibung: "Index Fungorum Identifier"
+
+  uniprot_proteome_id:
+    typ: text
+    label: UniProt Proteome ID
+    beschreibung: "UniProt Proteome Identifier"
+
+  kegg_organism_code:
+    typ: text
+    label: KEGG Organism Code
+    beschreibung: "KEGG Organismus-Code"
+
+  ensembl_fungi_id:
+    typ: text
+    label: Ensembl Fungi ID
+    beschreibung: "Ensembl Fungi Identifier"
+
+  jgi_genome_id:
+    typ: text
+    label: JGI Genome ID
+    beschreibung: "JGI MycoCosm Identifier"
+
+  fungidb_id:
+    typ: text
+    label: FungiDB ID
+    beschreibung: "FungiDB Identifier"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # FORSCHUNG - KOLLABORATION (v2.0 - FLACH)
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  kollaboration_hauptzentren:
+    typ: list
+    label: Hauptzentren
+    beschreibung: "Internationale Forschungszentren"
+
+  zentrum_1_land:
+    typ: text
+    label: Zentrum 1 Land
+    beschreibung: "Land des ersten Zentrums"
+
+  zentrum_1_institutionen:
+    typ: list
+    label: Zentrum 1 Institutionen
+    beschreibung: "Institutionen"
+
+  zentrum_1_schwerpunkte:
+    typ: list
+    label: Zentrum 1 Schwerpunkte
+    beschreibung: "Forschungsschwerpunkte"
+
+  zentrum_2_land:
+    typ: text
+    label: Zentrum 2 Land
+    beschreibung: "Land"
+
+  zentrum_2_institutionen:
+    typ: list
+    label: Zentrum 2 Institutionen
+    beschreibung: "Institutionen"
+
+  zentrum_2_schwerpunkte:
+    typ: list
+    label: Zentrum 2 Schwerpunkte
+    beschreibung: "Schwerpunkte"
+
+  zentrum_3_land:
+    typ: text
+    label: Zentrum 3 Land
+    beschreibung: "Land"
+
+  zentrum_3_institutionen:
+    typ: list
+    label: Zentrum 3 Institutionen
+    beschreibung: "Institutionen"
+
+  # === INTERNATIONALE PROJEKTE ===
+  internationale_projekte:
+    typ: list
+    label: Internationale Projekte
+    beschreibung: "Internationale Forschungsprojekte"
+
+  projekt_1_name:
+    typ: text
+    label: Projekt 1 Name
+    beschreibung: "Name des ersten Projekts"
+
+  projekt_1_laender:
+    typ: list
+    label: Projekt 1 Länder
+    beschreibung: "Beteiligte Länder"
+
+  projekt_1_foerderung:
+    typ: text
+    label: Projekt 1 Förderung
+    beschreibung: "Förderorganisation"
+
+  projekt_1_laufzeit:
+    typ: text
+    label: Projekt 1 Laufzeit
+    beschreibung: "Projektlaufzeit"
+
+  projekt_2_name:
+    typ: text
+    label: Projekt 2 Name
+    beschreibung: "Name"
+
+  projekt_2_laender:
+    typ: list
+    label: Projekt 2 Länder
+    beschreibung: "Länder"
+
+  projekt_2_foerderung:
+    typ: text
+    label: Projekt 2 Förderung
+    beschreibung: "Förderung"
+
+  # === KONFERENZEN ===
+  relevante_konferenzen:
+    typ: list
+    label: Relevante Konferenzen
+    beschreibung: "Wichtige Konferenzen"
+
+  konferenz_1_name:
+    typ: text
+    label: Konferenz 1 Name
+    beschreibung: "Name der ersten Konferenz"
+
+  konferenz_1_haeufigkeit:
+    typ: text
+    label: Konferenz 1 Häufigkeit
+    beschreibung: "Häufigkeit"
+
+  konferenz_1_naechste:
+    typ: text
+    label: Konferenz 1 Nächste
+    beschreibung: "Datum der nächsten Ausgabe"
+
+  konferenz_1_website:
+    typ: link
+    label: Konferenz 1 Website
+    beschreibung: "Website"
+
+  konferenz_2_name:
+    typ: text
+    label: Konferenz 2 Name
+    beschreibung: "Name"
+
+  konferenz_2_website:
+    typ: link
+    label: Konferenz 2 Website
+    beschreibung: "Website"
+
+  konferenz_3_name:
+    typ: text
+    label: Konferenz 3 Name
+    beschreibung: "Name"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # INTERAKTIONEN v2.0 - ORGANISMUS / NETZWERK-KNOTEN
+  # ═══════════════════════════════════════════════════════════════════════════
 
   netzwerk_position:
     typ: object
     label: Netzwerk-Position
-    beschreibung: "Position im Interaktionsnetzwerk"
+    beschreibung: "Topologische Position im Interaktionsnetzwerk"
 
-  interaktions_stabilitaet:
+  netzwerk_degree_zentralitaet:
     typ: number
+    label: Degree-Zentralität
+    beschreibung: "Anzahl direkter Verbindungen (normalisiert 0-1)"
+
+  netzwerk_betweenness_zentralitaet:
+    typ: number
+    label: Betweenness-Zentralität
+    beschreibung: "Brückenfunktion zwischen Clustern (0-1)"
+
+  netzwerk_closeness_zentralitaet:
+    typ: number
+    label: Closeness-Zentralität
+    beschreibung: "Durchschnittliche Nähe zu allen anderen Knoten (0-1)"
+
+  netzwerk_eigenvector_zentralitaet:
+    typ: number
+    label: Eigenvector-Zentralität
+    beschreibung: "Verbindung zu anderen wichtigen Knoten (0-1)"
+
+  netzwerk_hub_score:
+    typ: number
+    label: Hub-Score
+    beschreibung: "Funktion als Netzwerk-Hub (0-1)"
+
+  netzwerk_clustering_koeffizient:
+    typ: number
+    label: Clustering-Koeffizient
+    beschreibung: "Lokale Vernetzungsdichte (0-1)"
+
+  netzwerk_community_id:
+    typ: text
+    label: Community-ID
+    beschreibung: "Zugehörigkeit zu Netzwerk-Community/Cluster"
+
+  # === Interaktions-Stabilität ===
+  interaktions_stabilitaet:
+    typ: object
     label: Interaktions-Stabilität
-    beschreibung: "Stabilität der Beziehungen"
+    beschreibung: "Stabilität und Robustheit der Interaktionen"
+
+  interaktions_robustheit_score:
+    typ: number
+    label: Robustheit-Score
+    beschreibung: "Widerstandsfähigkeit bei Störungen (0-10)"
+
+  interaktions_redundanz_grad:
+    typ: number
+    label: Redundanz-Grad
+    beschreibung: "Funktionelle Ersetzbarkeit durch andere Arten (0-1)"
+
+  interaktions_keystone_index:
+    typ: number
+    label: Keystone-Index
+    beschreibung: "Schlüsselart-Potenzial - Netzwerk-Impact bei Entfernung (0-1)"
+
+  interaktions_temporale_persistenz:
+    typ: tag
+    label: Temporale Persistenz
+    beschreibung: "ephemer, saisonal, mehrjaehrig, permanent"
+
+  interaktions_stoerungsanfaelligkeit:
+    typ: tag
+    label: Störungsanfälligkeit
+    beschreibung: "sehr_gering bis sehr_hoch"
 
   # ═══════════════════════════════════════════════════════════════════════════
-  # INTERAKTIONEN - CHEMISCHE ÖKOLOGIE
+  # INTERAKTIONEN v2.0 - MULTI-SPECIES INTERAKTIONEN
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  multispecies_interaktionen:
+    typ: list
+    label: Multi-Species Interaktionen
+    beschreibung: "Artenübergreifende Beziehungen"
+
+  interaktions_typ:
+    typ: tag
+    label: Interaktions-Typ
+    beschreibung: "mutualistisch, kommensalistisch, parasitaer, kompetitiv, etc."
+
+  interaktions_subtyp:
+    typ: tag
+    label: Interaktions-Subtyp
+    beschreibung: "Spezifischer Subtyp (z.B. mykorrhiza_ektomykorrhiza)"
+
+  interaktions_direktionalitaet:
+    typ: tag
+    label: Direktionalität
+    beschreibung: "unidirektional, bidirektional, multidirektional"
+
+  interaktions_staerke:
+    typ: number
+    label: Interaktions-Stärke
+    beschreibung: "Intensität der Interaktion (0=schwach, 1=stark)"
+
+  interaktions_obligat_fakultativ:
+    typ: object
+    label: Obligat/Fakultativ
+    beschreibung: "Obligat oder fakultativ für beide Organismen"
+
+  interaktions_spezifitaet:
+    typ: tag
+    label: Spezifität
+    beschreibung: "hoch_spezifisch, moderat_spezifisch, generalistisch"
+
+  interaktions_raeumliche_skala:
+    typ: tag
+    label: Räumliche Skala
+    beschreibung: "mikroskopisch, lokal, regional, kontinental, global"
+
+  interaktions_kontakt_art:
+    typ: tag
+    label: Kontakt-Art
+    beschreibung: "direkt_physisch, chemisch_distanz, akustisch, etc."
+
+  interaktions_temporales_muster:
+    typ: object
+    label: Temporales Muster
+    beschreibung: "Zeitliche Charakteristik der Interaktion"
+
+  interaktions_saisonalitaet:
+    typ: list
+    label: Saisonalität
+    beschreibung: "fruehling, sommer, herbst, winter, ganzjaehrig"
+
+  interaktions_tageszeit:
+    typ: list
+    label: Tageszeit
+    beschreibung: "morgens, mittags, abends, nachts, kontinuierlich"
+
+  interaktions_frequenz:
+    typ: tag
+    label: Frequenz
+    beschreibung: "einmalig, selten, regelmaessig, haeufig, kontinuierlich"
+
+  interaktions_dauer_minuten:
+    typ: number
+    label: Dauer (Minuten)
+    beschreibung: "Typische Dauer einer Interaktion in Minuten"
+    einheit: "min"
+
+  interaktions_habitat_kontext:
+    typ: list
+    label: Habitat-Kontext
+    beschreibung: "Habitate in denen Interaktion vorkommt"
+
+  interaktions_umweltbedingungen:
+    typ: object
+    label: Umweltbedingungen
+    beschreibung: "Optimale Umweltbedingungen für Interaktion"
+
+  interaktions_temperatur_optimal:
+    typ: number
+    label: Optimale Temperatur
+    beschreibung: "Optimale Temperatur für Interaktion"
+    einheit: "°C"
+
+  interaktions_feuchtigkeit_optimal:
+    typ: number
+    label: Optimale Feuchtigkeit
+    beschreibung: "Optimale Luftfeuchtigkeit"
+    einheit: "%"
+
+  interaktions_licht_bedingung:
+    typ: tag
+    label: Lichtbedingung
+    beschreibung: "dunkel, schattig, halbschatten, sonnig"
+
+  interaktions_ph_bereich:
+    typ: range
+    label: pH-Bereich
+    beschreibung: "Optimaler pH-Bereich für Interaktion"
+
+  interaktions_fitness_effekt:
+    typ: object
+    label: Fitness-Effekt
+    beschreibung: "Kosten-Nutzen für beide Organismen"
+
+  interaktions_fitness_organismus_a:
+    typ: object
+    label: Fitness Organismus A
+    beschreibung: "Fitness-Effekt auf Organismus A"
+
+  interaktions_fitness_organismus_b:
+    typ: object
+    label: Fitness Organismus B
+    beschreibung: "Fitness-Effekt auf Organismus B"
+
+  interaktions_evidenz:
+    typ: object
+    label: Evidenz
+    beschreibung: "Wissenschaftliche Belege"
+
+  interaktions_evidenz_level:
+    typ: tag
+    label: Evidenz-Level
+    beschreibung: "anekdotisch, beobachtet, experimentell, meta_analyse"
+
+  interaktions_konfidenz:
+    typ: number
+    label: Konfidenz
+    beschreibung: "Vertrauenswürdigkeit der Daten (0-1)"
+
+  interaktions_studien_anzahl:
+    typ: number
+    label: Studien-Anzahl
+    beschreibung: "Anzahl wissenschaftlicher Studien"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # INTERAKTIONEN v2.0 - CHEMISCHE ÖKOLOGIE
   # ═══════════════════════════════════════════════════════════════════════════
 
   chemische_oekologie:
-    typ: object
+    typ: list
     label: Chemische Ökologie
-    beschreibung: "Chemische Interaktionen"
+    beschreibung: "Chemische Signalstoffe und ihre ökologische Rolle"
 
+  chem_stoff_name:
+    typ: text
+    label: Stoffname
+    beschreibung: "Name des chemischen Stoffs"
+
+  chem_iupac_name:
+    typ: text
+    label: IUPAC-Name
+    beschreibung: "Systematischer IUPAC-Name"
+
+  chem_cas_nummer:
+    typ: text
+    label: CAS-Nummer
+    beschreibung: "Chemical Abstracts Service Registrierungsnummer"
+
+  chem_summenformel:
+    typ: text
+    label: Summenformel
+    beschreibung: "Chemische Summenformel"
+
+  chem_molekulare_masse:
+    typ: number
+    label: Molekulare Masse
+    beschreibung: "Molekulargewicht"
+    einheit: "g/mol"
+
+  chem_smiles:
+    typ: text
+    label: SMILES
+    beschreibung: "SMILES-Notation der Molekülstruktur"
+
+  chem_inchi_key:
+    typ: text
+    label: InChI-Key
+    beschreibung: "International Chemical Identifier Key"
+
+  chem_stoffklasse:
+    typ: tag
+    label: Stoffklasse
+    beschreibung: "terpen, alkaloid, phenol, flavonoid, etc."
+
+  chem_produktion:
+    typ: object
+    label: Produktion
+    beschreibung: "Produktion und Freisetzung des Stoffs"
+
+  chem_produktions_organ:
+    typ: list
+    label: Produktions-Organ
+    beschreibung: "Wo wird der Stoff produziert"
+
+  chem_speicher_organ:
+    typ: list
+    label: Speicher-Organ
+    beschreibung: "Wo wird der Stoff gespeichert"
+
+  chem_freisetzungs_mechanismus:
+    typ: tag
+    label: Freisetzungs-Mechanismus
+    beschreibung: "konstitutiv, induziert, verwundung, herbivorie, etc."
+
+  chem_freisetzungs_menge:
+    typ: object
+    label: Freisetzungs-Menge
+    beschreibung: "Menge und Bedingungen der Freisetzung"
+
+  # === Allelopathie ===
   allelopathie:
     typ: object
     label: Allelopathie
-    beschreibung: "Chemische Hemmung anderer Organismen"
+    beschreibung: "Chemische Hemmung/Stimulierung anderer Organismen"
 
+  allelopathie_aktiv:
+    typ: boolean
+    label: Allelopathie Aktiv
+    beschreibung: "Ist allelopathisch aktiv"
+
+  allelopathie_effekt_typ:
+    typ: tag
+    label: Effekt-Typ
+    beschreibung: "inhibitorisch, stimulierend, neutral"
+
+  allelopathie_ziel_organismen:
+    typ: list
+    label: Ziel-Organismen
+    beschreibung: "Betroffene Organismen"
+
+  allelopathie_effekt_staerke:
+    typ: number
+    label: Effekt-Stärke
+    beschreibung: "Stärke des allelopathischen Effekts (-1 bis +1)"
+
+  allelopathie_ec50:
+    typ: number
+    label: EC50
+    beschreibung: "Halbmaximale Effektkonzentration"
+
+  allelopathie_betroffene_prozesse:
+    typ: list
+    label: Betroffene Prozesse
+    beschreibung: "keimung, wurzelwachstum, sprosswachstum, etc."
+
+  allelopathie_boden_persistenz_tage:
+    typ: number
+    label: Boden-Persistenz
+    beschreibung: "Wie lange bleibt der Stoff im Boden aktiv"
+    einheit: "Tage"
+
+  # === Chemische Kommunikation ===
   chemische_kommunikation:
     typ: object
     label: Chemische Kommunikation
-    beschreibung: "Signalstoffe"
+    beschreibung: "Signalstoffe und chemische Kommunikation"
 
+  chem_signal_typ:
+    typ: tag
+    label: Signal-Typ
+    beschreibung: "pheromon, kairomon, allomon, synomon, etc."
+
+  chem_signal_funktion:
+    typ: list
+    label: Signal-Funktion
+    beschreibung: "sexualanlockung, aggregation, alarm, abwehr, etc."
+
+  chem_signal_empfaenger:
+    typ: list
+    label: Signal-Empfänger
+    beschreibung: "Organismen die das Signal empfangen"
+
+  chem_signal_empfindlichkeit:
+    typ: number
+    label: Empfindlichkeit
+    beschreibung: "Empfindlichkeit der Empfänger (0-1)"
+
+  chem_signal_verhaltensantwort:
+    typ: text
+    label: Verhaltensantwort
+    beschreibung: "Typische Verhaltensreaktion auf Signal"
+
+  chem_signal_reichweite_meter:
+    typ: number
+    label: Reichweite
+    beschreibung: "Reichweite des Signals"
+    einheit: "m"
+
+  chem_signal_halbwertszeit_stunden:
+    typ: number
+    label: Halbwertszeit
+    beschreibung: "Halbwertszeit des Signals"
+    einheit: "h"
+
+  # === Abwehrstoffe ===
   abwehrstoffe:
     typ: list
     label: Abwehrstoffe
     beschreibung: "Defensive Sekundärmetabolite"
 
+  abwehr_typ:
+    typ: tag
+    label: Abwehr-Typ
+    beschreibung: "toxin, repellent, antifeedant, antibiose, etc."
+
+  abwehr_toxizitaet:
+    typ: object
+    label: Toxizität
+    beschreibung: "Toxizitätsdaten"
+
+  abwehr_ld50:
+    typ: object
+    label: LD50
+    beschreibung: "Letale Dosis 50%"
+
+  abwehr_toxisch_fuer:
+    typ: list
+    label: Toxisch für
+    beschreibung: "Für welche Organismen toxisch"
+
+  abwehr_wirkungsmechanismus:
+    typ: text
+    label: Wirkungsmechanismus
+    beschreibung: "Wie wirkt der Abwehrstoff"
+
+  abwehr_gegenspieler:
+    typ: list
+    label: Gegenspieler
+    beschreibung: "Organismen mit Resistenz oder Sequestration"
+
+  abwehr_resistenz_mechanismus:
+    typ: text
+    label: Resistenz-Mechanismus
+    beschreibung: "Wie Gegenspieler Resistenz entwickeln"
+
+  abwehr_sequestration:
+    typ: boolean
+    label: Sequestration
+    beschreibung: "Wird der Stoff von Gegenspielern eingelagert"
+
   # ═══════════════════════════════════════════════════════════════════════════
-  # INTERAKTIONEN - MIKROBIOM
+  # INTERAKTIONEN v2.0 - MIKROBIOM
   # ═══════════════════════════════════════════════════════════════════════════
 
   mikrobiom:
     typ: object
     label: Mikrobiom
-    beschreibung: "Assoziierte Mikroorganismen"
+    beschreibung: "Assoziierte mikrobielle Gemeinschaft"
 
+  mikrobiom_kompartiment:
+    typ: tag
+    label: Kompartiment
+    beschreibung: "rhizosphaere, phyllosphaere, endosphaere, etc."
+
+  mikrobiom_community_struktur:
+    typ: object
+    label: Community-Struktur
+    beschreibung: "Struktur der mikrobiellen Gemeinschaft"
+
+  mikrobiom_diversitaet_shannon:
+    typ: number
+    label: Shannon-Diversität
+    beschreibung: "Shannon-Diversitätsindex"
+
+  mikrobiom_diversitaet_simpson:
+    typ: number
+    label: Simpson-Diversität
+    beschreibung: "Simpson-Diversitätsindex (0-1)"
+
+  mikrobiom_richness:
+    typ: number
+    label: Richness
+    beschreibung: "Anzahl verschiedener Taxa"
+
+  mikrobiom_evenness:
+    typ: number
+    label: Evenness
+    beschreibung: "Gleichverteilung der Abundanzen (0-1)"
+
+  mikrobiom_dominante_phyla:
+    typ: list
+    label: Dominante Phyla
+    beschreibung: "Häufigste Bakterienstämme"
+
+  mikrobiom_core_anteil:
+    typ: number
+    label: Core-Mikrobiom Anteil
+    beschreibung: "Anteil des stabilen Kern-Mikrobioms (0-1)"
+
+  # === Assoziierte Bakterien ===
   assoziierte_bakterien:
     typ: list
     label: Assoziierte Bakterien
     beschreibung: "Bakterielle Partner"
 
+  bakterien_taxon_name:
+    typ: text
+    label: Bakterien-Taxon
+    beschreibung: "Name des bakteriellen Taxons"
+
+  bakterien_taxonomie_level:
+    typ: tag
+    label: Taxonomie-Level
+    beschreibung: "phylum, class, order, family, genus, species, strain"
+
+  bakterien_relative_abundanz:
+    typ: number
+    label: Relative Abundanz
+    beschreibung: "Relativer Anteil in der Gemeinschaft (0-1)"
+
+  bakterien_funktionelle_gruppe:
+    typ: list
+    label: Funktionelle Gruppe
+    beschreibung: "stickstofffixierer, phosphat_solubilisierer, etc."
+
+  bakterien_assoziations_staerke:
+    typ: tag
+    label: Assoziations-Stärke
+    beschreibung: "obligat, fakultativ, opportunistisch"
+
+  bakterien_nachweismethode:
+    typ: tag
+    label: Nachweismethode
+    beschreibung: "16S_rRNA, metagenomik, kultur, fish, qpcr"
+
+  # === Assoziierte Pilze ===
   assoziierte_pilze:
     typ: list
     label: Assoziierte Pilze
     beschreibung: "Ko-vorkommende Pilze"
 
-  community_struktur:
+  pilze_taxon_name:
+    typ: text
+    label: Pilz-Taxon
+    beschreibung: "Name des Pilz-Taxons"
+
+  pilze_taxonomie_level:
+    typ: tag
+    label: Taxonomie-Level
+    beschreibung: "phylum, class, order, family, genus, species"
+
+  pilze_relative_abundanz:
+    typ: number
+    label: Relative Abundanz
+    beschreibung: "Relativer Anteil (0-1)"
+
+  pilze_funktionelle_gruppe:
+    typ: list
+    label: Funktionelle Gruppe
+    beschreibung: "mykorrhiza, endophyt, saprophyt, pathogen, etc."
+
+  pilze_assoziations_staerke:
+    typ: tag
+    label: Assoziations-Stärke
+    beschreibung: "obligat, fakultativ, opportunistisch"
+
+  pilze_nachweismethode:
+    typ: tag
+    label: Nachweismethode
+    beschreibung: "ITS, metagenomik, kultur, mikroskopie"
+
+  # === Funktionelles Profil ===
+  funktionelles_profil:
     typ: object
-    label: Community-Struktur
-    beschreibung: "Mikrobielle Gemeinschaft"
+    label: Funktionelles Profil
+    beschreibung: "Metabolische Kapazitäten des Mikrobioms"
+
+  metabolische_pfade:
+    typ: list
+    label: Metabolische Pfade
+    beschreibung: "Aktive Stoffwechselwege"
+
+  funktionelle_gene:
+    typ: list
+    label: Funktionelle Gene
+    beschreibung: "Wichtige funktionelle Gene"
+
+  gesamt_metabolisches_potential:
+    typ: tag
+    label: Metabolisches Potential
+    beschreibung: "gering, moderat, hoch, sehr_hoch"
+
+  # === Mikrobiom-Stabilität ===
+  mikrobiom_stabilitaet:
+    typ: object
+    label: Mikrobiom-Stabilität
+    beschreibung: "Stabilität und Dynamik des Mikrobioms"
+
+  mikrobiom_temporal_variabilitaet:
+    typ: tag
+    label: Temporale Variabilität
+    beschreibung: "stabil, moderat_variabel, hoch_variabel"
+
+  mikrobiom_resilienz:
+    typ: number
+    label: Resilienz
+    beschreibung: "Erholungsfähigkeit nach Störung (0-1)"
+
+  mikrobiom_haupttreiber_variation:
+    typ: list
+    label: Haupttreiber Variation
+    beschreibung: "saison, wirt_genotyp, boden, klima, etc."
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # INTERAKTIONEN v2.0 - WIRT-INTERAKTIONEN
+  # ═══════════════════════════════════════════════════════════════════════════
 
   wirt_interaktionen:
-    typ: object
+    typ: list
     label: Wirt-Interaktionen
-    beschreibung: "Beziehungen zu Wirtsorganismen"
+    beschreibung: "Detaillierte Wirt-Partner-Beziehungen"
 
+  wirt_beziehungs_kategorie:
+    typ: tag
+    label: Beziehungs-Kategorie
+    beschreibung: "symbiont, parasit, konkurrent, kommensale, amensale"
+
+  # === Symbionten ===
+  symbionten:
+    typ: list
+    label: Symbionten
+    beschreibung: "Symbiotische Partner"
+
+  symbionten_details:
+    typ: object
+    label: Symbionten-Details
+    beschreibung: "Detaillierte Symbionten-Informationen"
+
+  symbiose_typ:
+    typ: tag
+    label: Symbiose-Typ
+    beschreibung: "mykorrhiza, rhizobium, flechte, endophyt, etc."
+
+  symbiose_wirt_nutzen:
+    typ: list
+    label: Wirt-Nutzen
+    beschreibung: "Vorteile für den Wirt"
+
+  symbiose_partner_nutzen:
+    typ: list
+    label: Partner-Nutzen
+    beschreibung: "Vorteile für den symbiotischen Partner"
+
+  symbiose_etablierungs_phase:
+    typ: object
+    label: Etablierungs-Phase
+    beschreibung: "Wie die Symbiose etabliert wird"
+
+  symbiose_erkennungs_signale:
+    typ: list
+    label: Erkennungs-Signale
+    beschreibung: "Signale zur gegenseitigen Erkennung"
+
+  symbiose_infektion_struktur:
+    typ: text
+    label: Infektions-Struktur
+    beschreibung: "Struktur zur Etablierung der Symbiose"
+
+  symbiose_zeit_bis_funktionell:
+    typ: number
+    label: Zeit bis funktionell
+    beschreibung: "Zeit bis Symbiose funktionell ist"
+    einheit: "Tage"
+
+  # === Parasiten ===
   parasiten:
     typ: list
     label: Parasiten
     beschreibung: "Parasitische Beziehungen"
 
+  parasiten_details:
+    typ: object
+    label: Parasiten-Details
+    beschreibung: "Detaillierte Parasiten-Informationen"
+
+  parasitismus_typ:
+    typ: tag
+    label: Parasitismus-Typ
+    beschreibung: "biotroph, nekrotroph, hemibiotroph"
+
+  parasit_infektion_struktur:
+    typ: text
+    label: Infektions-Struktur
+    beschreibung: "Struktur zur Infektion"
+
+  parasit_befallene_organe:
+    typ: list
+    label: Befallene Organe
+    beschreibung: "Welche Organe werden befallen"
+
+  parasit_symptome:
+    typ: list
+    label: Symptome
+    beschreibung: "Symptome des Befalls"
+
+  parasit_schweregrad:
+    typ: tag
+    label: Schweregrad
+    beschreibung: "leicht, mittel, schwer, letal"
+
+  parasit_uebertragungsweg:
+    typ: tag
+    label: Übertragungsweg
+    beschreibung: "wind, wasser, vektor, kontakt, boden"
+
+  parasit_wirtswechsel:
+    typ: object
+    label: Wirtswechsel
+    beschreibung: "Information zu Wirtswechsel"
+
+  parasit_alternativ_wirte:
+    typ: list
+    label: Alternativ-Wirte
+    beschreibung: "Alternative Wirtsorganismen"
+
+  parasit_pathogenitaet:
+    typ: number
+    label: Pathogenität
+    beschreibung: "Krankheitsauslösendes Potential (0-1)"
+
+  parasit_inkubationszeit_tage:
+    typ: number
+    label: Inkubationszeit
+    beschreibung: "Zeit bis Symptome auftreten"
+    einheit: "Tage"
+
+  # === Konkurrenten ===
+  konkurrenten:
+    typ: list
+    label: Konkurrenten
+    beschreibung: "Konkurrierende Organismen"
+
+  konkurrenz_details:
+    typ: object
+    label: Konkurrenz-Details
+    beschreibung: "Detaillierte Konkurrenz-Informationen"
+
+  konkurrenz_typ:
+    typ: tag
+    label: Konkurrenz-Typ
+    beschreibung: "exploitation, interference, apparent"
+
+  konkurrenz_umkaempfte_ressourcen:
+    typ: list
+    label: Umkämpfte Ressourcen
+    beschreibung: "licht, wasser, naehrstoffe, raum, etc."
+
+  konkurrenz_intensitaet:
+    typ: number
+    label: Konkurrenz-Intensität
+    beschreibung: "Stärke der Konkurrenz (0-1)"
+
+  konkurrenz_koexistenz_mechanismen:
+    typ: list
+    label: Koexistenz-Mechanismen
+    beschreibung: "Wie Koexistenz ermöglicht wird"
+
+  konkurrenz_asymmetrie:
+    typ: number
+    label: Konkurrenz-Asymmetrie
+    beschreibung: "Negativ: Wirt unterlegen, Positiv: Wirt überlegen (-1 bis +1)"
+
+  # === Quantifizierung ===
+  wirt_quantifizierung:
+    typ: object
+    label: Quantifizierung
+    beschreibung: "Quantitative Aspekte der Wirt-Interaktion"
+
+  wirt_praevelenz:
+    typ: number
+    label: Prävalenz
+    beschreibung: "Anteil befallener/assoziierter Wirte (0-1)"
+
+  wirt_intensitaet:
+    typ: object
+    label: Intensität
+    beschreibung: "Befallsintensität mit min/max/avg"
+
+  wirt_aggregation:
+    typ: number
+    label: Aggregation
+    beschreibung: "Aggregationsindex (k der negativen Binomialverteilung)"
+
   # ═══════════════════════════════════════════════════════════════════════════
-  # INTERAKTIONEN - NETZWERK
+  # INTERAKTIONEN v2.0 - MYKORRHIZA-NETZWERK
   # ═══════════════════════════════════════════════════════════════════════════
 
   mykorrhiza_netzwerk:
     typ: object
     label: Mykorrhiza-Netzwerk
-    beschreibung: "Wood Wide Web Verbindungen"
+    beschreibung: "Mycorrhizal Common Network (Wood Wide Web)"
 
+  mykorrhiza_netzwerk_id:
+    typ: text
+    label: Netzwerk-ID
+    beschreibung: "ID des übergeordneten Netzwerks"
+
+  mykorrhiza_verbindungs_typ:
+    typ: tag
+    label: Verbindungs-Typ
+    beschreibung: "ektomykorrhiza_netzwerk, arbuskulaer_netzwerk, gemischt"
+
+  mykorrhiza_verbindungs_staerke:
+    typ: number
+    label: Verbindungs-Stärke
+    beschreibung: "Konnektivität der Verbindung (0-1)"
+
+  mykorrhiza_hyphen_dichte:
+    typ: object
+    label: Hyphen-Dichte
+    beschreibung: "Dichte der Hyphen"
+
+  mykorrhiza_alter_verbindung:
+    typ: number
+    label: Alter der Verbindung
+    beschreibung: "Alter der Mykorrhiza-Verbindung"
+    einheit: "Monate"
+
+  # === Nährstoff-Transfer ===
   naehrstoff_transfer:
-    typ: object
+    typ: list
     label: Nährstoff-Transfer
-    beschreibung: "Bewegung von C, N, P"
+    beschreibung: "Transfer von Nährstoffen über das Netzwerk"
 
-  signal_transfer:
+  naehrstoff_typ:
+    typ: tag
+    label: Nährstoff-Typ
+    beschreibung: "stickstoff, phosphor, kohlenstoff, wasser, etc."
+
+  naehrstoff_richtung:
+    typ: tag
+    label: Transfer-Richtung
+    beschreibung: "a_zu_b, b_zu_a, bidirektional"
+
+  naehrstoff_transfer_rate:
     typ: object
+    label: Transfer-Rate
+    beschreibung: "Rate des Nährstofftransfers"
+
+  naehrstoff_anteil_bedarf_gedeckt:
+    typ: number
+    label: Anteil Bedarf gedeckt
+    beschreibung: "Wieviel % des Nährstoffbedarfs wird gedeckt (0-1)"
+
+  naehrstoff_regulierende_faktoren:
+    typ: list
+    label: Regulierende Faktoren
+    beschreibung: "Faktoren die Transfer regulieren"
+
+  # === Signal-Transfer ===
+  signal_transfer:
+    typ: list
     label: Signal-Transfer
-    beschreibung: "Kommunikation über das Netzwerk"
+    beschreibung: "Signalübertragung über das Netzwerk"
+
+  signal_typ:
+    typ: tag
+    label: Signal-Typ
+    beschreibung: "abwehr_signal, stress_signal, hormon, elektrisch"
+
+  signal_molekuel:
+    typ: text
+    label: Signal-Molekül
+    beschreibung: "Übertragenes Molekül"
+
+  signal_richtung:
+    typ: tag
+    label: Signal-Richtung
+    beschreibung: "a_zu_b, b_zu_a, bidirektional"
+
+  signal_uebertragungszeit_minuten:
+    typ: number
+    label: Übertragungszeit
+    beschreibung: "Zeit bis Signal ankommt"
+    einheit: "min"
+
+  signal_biologischer_effekt:
+    typ: text
+    label: Biologischer Effekt
+    beschreibung: "Auswirkung des Signals"
+
+  signal_effizienz:
+    typ: number
+    label: Signal-Effizienz
+    beschreibung: "Effizienz der Signalübertragung (0-1)"
+
+  # === Ökologische Bedeutung ===
+  mykorrhiza_oekologische_bedeutung:
+    typ: object
+    label: Ökologische Bedeutung
+    beschreibung: "Ökosystem-Relevanz der Verbindung"
+
+  mykorrhiza_facilitation_effekt:
+    typ: tag
+    label: Facilitation-Effekt
+    beschreibung: "stark_positiv, moderat_positiv, neutral, negativ"
+
+  mykorrhiza_resilienz_beitrag:
+    typ: number
+    label: Resilienz-Beitrag
+    beschreibung: "Beitrag zur Ökosystem-Resilienz (0-1)"
+
+  mykorrhiza_carbon_sink_potential:
+    typ: tag
+    label: Carbon-Sink Potential
+    beschreibung: "gering, moderat, hoch"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # INTERAKTIONEN v2.0 - NETZWERK-SNAPSHOT
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  netzwerk_snapshot:
+    typ: object
+    label: Netzwerk-Snapshot
+    beschreibung: "Momentaufnahme des Interaktionsnetzwerks"
+
+  netzwerk_timestamp:
+    typ: text
+    label: Timestamp
+    beschreibung: "Zeitpunkt der Erfassung"
+
+  netzwerk_standort:
+    typ: object
+    label: Standort
+    beschreibung: "Ort der Netzwerk-Erfassung"
+
+  netzwerk_metriken:
+    typ: object
+    label: Netzwerk-Metriken
+    beschreibung: "Topologische Metriken"
+
+  netzwerk_knoten_anzahl:
+    typ: number
+    label: Knoten-Anzahl
+    beschreibung: "Anzahl der Knoten im Netzwerk"
+
+  netzwerk_kanten_anzahl:
+    typ: number
+    label: Kanten-Anzahl
+    beschreibung: "Anzahl der Verbindungen"
+
+  netzwerk_dichte:
+    typ: number
+    label: Netzwerk-Dichte
+    beschreibung: "Anteil realisierter Verbindungen (0-1)"
+
+  netzwerk_durchschnittlicher_pfad:
+    typ: number
+    label: Durchschnittlicher Pfad
+    beschreibung: "Mittlere Pfadlänge"
+
+  netzwerk_durchmesser:
+    typ: number
+    label: Netzwerk-Durchmesser
+    beschreibung: "Längster kürzester Pfad"
+
+  netzwerk_clustering_global:
+    typ: number
+    label: Globales Clustering
+    beschreibung: "Globaler Clustering-Koeffizient (0-1)"
+
+  netzwerk_modularitaet:
+    typ: number
+    label: Modularität
+    beschreibung: "Grad der Modularstruktur (-1 bis +1)"
+
+  netzwerk_assortativity:
+    typ: number
+    label: Assortativity
+    beschreibung: "Tendenz zur Verbindung ähnlicher Knoten (-1 bis +1)"
+
+  netzwerk_connectance:
+    typ: number
+    label: Connectance
+    beschreibung: "Verbindungsdichte (0-1)"
+
+  netzwerk_nestedness:
+    typ: number
+    label: Nestedness
+    beschreibung: "Verschachtelungsgrad des Netzwerks (0-100)"
+
+  # === Netzwerk-Stabilität ===
+  netzwerk_stabilitaet:
+    typ: object
+    label: Netzwerk-Stabilität
+    beschreibung: "Stabilitätsanalyse des Netzwerks"
+
+  netzwerk_robustheit_zufaellig:
+    typ: number
+    label: Robustheit (zufällig)
+    beschreibung: "Robustheit gegen zufällige Knotenentfernung (0-1)"
+
+  netzwerk_robustheit_gezielt:
+    typ: number
+    label: Robustheit (gezielt)
+    beschreibung: "Robustheit gegen gezielte Entfernung (0-1)"
+
+  netzwerk_kritische_konnektivitaet:
+    typ: number
+    label: Kritische Konnektivität
+    beschreibung: "Schwellenwert für Netzwerk-Kollaps (0-1)"
+
+  netzwerk_fragmentierungs_risiko:
+    typ: tag
+    label: Fragmentierungs-Risiko
+    beschreibung: "gering, mittel, hoch, kritisch"
+
+  community_struktur:
+    typ: object
+    label: Community-Struktur
+    beschreibung: "Mikrobielle Gemeinschaftsstruktur"
 
   # ═══════════════════════════════════════════════════════════════════════════
   # VISUAL - GALERIE
@@ -2163,3 +6785,2536 @@ felder:
     typ: object
     label: Bestimmungsschema
     beschreibung: "Dichotomer Bestimmungsschlüssel"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# BESTIMMUNG - Universelle Identifikations-Felder
+# ═══════════════════════════════════════════════════════════════════════════════
+
+  # Dokumentation
+  funddokumentation:
+    typ: object
+    label: Fund-Dokumentation
+    beschreibung: "Datum, Ort, Finder, Koordinaten"
+
+  # Makroskopie
+  habitus:
+    typ: text
+    label: Habitus
+    beschreibung: "Gesamterscheinung, Wuchsform"
+
+  groesse:
+    typ: range
+    label: Größe
+    beschreibung: "Min-Max Dimensionen"
+
+  form:
+    typ: text
+    label: Form
+    beschreibung: "Grundform, Silhouette"
+
+  oberflaeche:
+    typ: text
+    label: Oberfläche
+    beschreibung: "Textur, Struktur der Oberfläche"
+
+  farbe:
+    typ: text
+    label: Farbe
+    beschreibung: "Farbbeschreibung"
+
+  farbvarianz:
+    typ: text
+    label: Farbvarianz
+    beschreibung: "Farbvariationen, Altersveränderung"
+
+  konsistenz:
+    typ: text
+    label: Konsistenz
+    beschreibung: "Festigkeit, Elastizität"
+
+  geruch:
+    typ: text
+    label: Geruch
+    beschreibung: "Olfaktorische Merkmale"
+
+  strukturmerkmale:
+    typ: list
+    label: Strukturmerkmale
+    beschreibung: "Array aller relevanten Strukturen"
+
+  anhangorgane:
+    typ: list
+    label: Anhangorgane
+    beschreibung: "Haare, Schuppen, Borsten, etc."
+
+  sekrete:
+    typ: object
+    label: Sekrete
+    beschreibung: "Milchsaft, Harz, Schleim"
+
+  # Mikroskopie
+  mikroskopie_erforderlich:
+    typ: boolean
+    label: Mikroskopie erforderlich
+    beschreibung: "Ist Mikroskop zur Bestimmung notwendig?"
+
+  zellstruktur:
+    typ: object
+    label: Zellstruktur
+    beschreibung: "Zelltypen, Anordnung"
+
+  sporen:
+    typ: object
+    label: Sporen
+    beschreibung: "Form, Größe, Ornament"
+
+  sporen_masse:
+    typ: text
+    label: Sporenmaße
+    beschreibung: "Länge x Breite in µm"
+
+  sporen_form:
+    typ: text
+    label: Sporenform
+    beschreibung: "Quotient, Beschreibung"
+
+  sporen_ornament:
+    typ: text
+    label: Sporenornament
+    beschreibung: "Warzen, Stacheln, Grate"
+
+  sporen_farbe:
+    typ: text
+    label: Sporenfarbe
+    beschreibung: "In Masse, einzeln"
+
+  hyphen:
+    typ: object
+    label: Hyphen
+    beschreibung: "Hyphenstruktur"
+
+  hyphen_septen:
+    typ: text
+    label: Hyphensepten
+    beschreibung: "Septierung, Schnallen"
+
+  zystiden:
+    typ: object
+    label: Zystiden
+    beschreibung: "Typ, Form, Größe"
+
+  basidien:
+    typ: object
+    label: Basidien
+    beschreibung: "Sterigmen, Größe"
+
+  asci:
+    typ: object
+    label: Asci
+    beschreibung: "Typ, Jod-Reaktion"
+
+  kristalle:
+    typ: text
+    label: Kristalle
+    beschreibung: "Oxalat-Kristalle, etc."
+
+  # Chemische Reaktionen
+  chemische_reaktionen:
+    typ: object
+    label: Chemische Reaktionen
+    beschreibung: "Übersicht aller Reaktionen"
+
+  koh_reaktion:
+    typ: text
+    label: KOH-Reaktion
+    beschreibung: "Kaliumhydroxid-Reaktion"
+
+  melzer_reaktion:
+    typ: text
+    label: Melzer-Reaktion
+    beschreibung: "Amyloid/Dextrinoid"
+
+  feso4_reaktion:
+    typ: text
+    label: FeSO4-Reaktion
+    beschreibung: "Eisensulfat-Reaktion"
+
+  guajak_reaktion:
+    typ: text
+    label: Guajak-Reaktion
+    beschreibung: "Guajak-Harz-Reaktion"
+
+  phenol_reaktion:
+    typ: text
+    label: Phenol-Reaktion
+    beschreibung: "Phenol-Reaktion"
+
+  nh3_reaktion:
+    typ: text
+    label: NH3-Reaktion
+    beschreibung: "Ammoniak-Reaktion"
+
+  hno3_reaktion:
+    typ: text
+    label: HNO3-Reaktion
+    beschreibung: "Salpetersäure-Reaktion"
+
+  uv_fluoreszenz:
+    typ: text
+    label: UV-Fluoreszenz
+    beschreibung: "UV-Licht Reaktion"
+
+  spot_test_protokoll:
+    typ: object
+    label: Spot-Test-Protokoll
+    beschreibung: "Anleitung für chemische Tests"
+
+  # Molekulare Daten
+  dna_barcoding:
+    typ: object
+    label: DNA-Barcoding
+    beschreibung: "Verfügbare Sequenzen"
+
+  its_sequenz:
+    typ: text
+    label: ITS-Sequenz
+    beschreibung: "ITS-Region (Pilze)"
+
+  lsu_sequenz:
+    typ: text
+    label: LSU-Sequenz
+    beschreibung: "LSU-Region"
+
+  rpb2_sequenz:
+    typ: text
+    label: RPB2-Sequenz
+    beschreibung: "RPB2-Gen"
+
+  tef1_sequenz:
+    typ: text
+    label: TEF1-Sequenz
+    beschreibung: "TEF1-Gen"
+
+  coi_sequenz:
+    typ: text
+    label: COI-Sequenz
+    beschreibung: "COI-Barcode (Tiere)"
+
+  rbcl_sequenz:
+    typ: text
+    label: rbcL-Sequenz
+    beschreibung: "rbcL (Pflanzen)"
+
+  matk_sequenz:
+    typ: text
+    label: matK-Sequenz
+    beschreibung: "matK (Pflanzen)"
+
+  genbank_accession:
+    typ: list
+    label: GenBank-Accession
+    beschreibung: "GenBank-Nummern"
+
+  bold_bin:
+    typ: text
+    label: BOLD BIN
+    beschreibung: "BOLD BIN-Nummer"
+
+  phylogenie_position:
+    typ: text
+    label: Phylogenie-Position
+    beschreibung: "Stellung im Stammbaum"
+
+  # Ökologischer Kontext für Bestimmung
+  habitat_praeferenz:
+    typ: list
+    label: Habitat-Präferenz
+    beschreibung: "Bevorzugte Lebensräume"
+
+  substrat:
+    typ: text
+    label: Substrat
+    beschreibung: "Worauf/worin wächst es?"
+
+  substrat_spezifitaet:
+    typ: text
+    label: Substrat-Spezifität
+    beschreibung: "Obligat/fakultativ"
+
+  wirte:
+    typ: list
+    label: Wirte
+    beschreibung: "Wirtspflanzen/-tiere"
+
+  mykorrhiza_partner:
+    typ: list
+    label: Mykorrhiza-Partner
+    beschreibung: "Symbiosepartner"
+
+  begleitarten:
+    typ: list
+    label: Begleitarten
+    beschreibung: "Typische Begleitflora/-fauna"
+
+  zeigerwert:
+    typ: object
+    label: Zeigerwert
+    beschreibung: "Indikator für Standortbedingungen"
+
+  hoehenstufe:
+    typ: text
+    label: Höhenstufe
+    beschreibung: "Kollin, montan, subalpin, etc."
+
+  # Verwechslung & Abgrenzung
+  verwechslungs_gefahr:
+    typ: rating
+    label: Verwechslungsgefahr
+    beschreibung: "Rating: Wie leicht verwechselbar?"
+
+  kritische_merkmale:
+    typ: list
+    label: Kritische Merkmale
+    beschreibung: "Die entscheidenden Unterschiede"
+
+  bestimmungs_sicherheit:
+    typ: text
+    label: Bestimmungs-Sicherheit
+    beschreibung: "Wie sicher ist die Bestimmung?"
+
+  artenkomplex:
+    typ: text
+    label: Artenkomplex
+    beschreibung: "Gehört zu einem Komplex?"
+
+  kryptische_arten:
+    typ: boolean
+    label: Kryptische Arten
+    beschreibung: "Nur molekular unterscheidbar?"
+
+  # Bestimmungshilfen
+  schluessel_position:
+    typ: text
+    label: Schlüssel-Position
+    beschreibung: "Position in Bestimmungsschlüsseln"
+
+  schluessel_referenzen:
+    typ: list
+    label: Schlüssel-Referenzen
+    beschreibung: "Welche Schlüssel sind relevant?"
+
+  literatur_bestimmung:
+    typ: list
+    label: Literatur Bestimmung
+    beschreibung: "Bestimmungsliteratur"
+
+  merkmals_kombination:
+    typ: list
+    label: Merkmals-Kombination
+    beschreibung: "Eindeutige Merkmalskombination"
+
+  feldmerkmale:
+    typ: list
+    label: Feldmerkmale
+    beschreibung: "Im Feld erkennbare Merkmale"
+
+  labormerkmale:
+    typ: list
+    label: Labormerkmale
+    beschreibung: "Nur im Labor prüfbar"
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # ERWEITERTE BESTIMMUNG: SPEZIES-IDENTIFIKATION
+  # ───────────────────────────────────────────────────────────────────────────
+  
+  wissenschaftlicher_name:
+    typ: text
+    label: Wissenschaftlicher Name
+    beschreibung: "Vollständiger wissenschaftlicher Artname"
+
+  autorenzitat:
+    typ: text
+    label: Autorenzitat
+    beschreibung: "Autor und Jahr der Erstbeschreibung"
+
+  akzeptierter_name:
+    typ: text
+    label: Akzeptierter Name
+    beschreibung: "Aktuell gültiger Name falls Synonym"
+
+  basionym:
+    typ: text
+    label: Basionym
+    beschreibung: "Ursprüngliche Namenskombination"
+
+  # Taxonomie-Hierarchie
+  taxonomie_regnum:
+    typ: text
+    label: Reich
+    beschreibung: "Taxonomisches Reich"
+
+  taxonomie_phylum:
+    typ: text
+    label: Phylum
+    beschreibung: "Taxonomisches Phylum/Abteilung"
+
+  taxonomie_classis:
+    typ: text
+    label: Klasse
+    beschreibung: "Taxonomische Klasse"
+
+  taxonomie_ordo:
+    typ: text
+    label: Ordnung
+    beschreibung: "Taxonomische Ordnung"
+
+  taxonomie_familia:
+    typ: text
+    label: Familie
+    beschreibung: "Taxonomische Familie"
+
+  taxonomie_genus:
+    typ: text
+    label: Gattung
+    beschreibung: "Taxonomische Gattung"
+
+  taxonomie_species:
+    typ: text
+    label: Art
+    beschreibung: "Taxonomische Art"
+
+  taxonomie_unterart:
+    typ: text
+    label: Unterart
+    beschreibung: "Subspecies"
+
+  taxonomie_varietaet:
+    typ: text
+    label: Varietät
+    beschreibung: "Varietas"
+
+  taxonomie_forma:
+    typ: text
+    label: Forma
+    beschreibung: "Forma-Rang"
+
+  # Synonyme
+  nomenklatorische_synonyme:
+    typ: list
+    label: Nomenklatorische Synonyme
+    beschreibung: "Homonyme Synonyme (gleicher Typus)"
+
+  taxonomische_synonyme:
+    typ: list
+    label: Taxonomische Synonyme
+    beschreibung: "Heteronyme Synonyme (verschiedene Typen)"
+
+  homonyme:
+    typ: list
+    label: Homonyme
+    beschreibung: "Gleich geschriebene Namen anderer Taxa"
+
+  deutsche_namen:
+    typ: list
+    label: Deutsche Namen
+    beschreibung: "Deutsche Trivialnamen"
+
+  internationale_namen:
+    typ: object
+    label: Internationale Namen
+    beschreibung: "Namen in verschiedenen Sprachen"
+
+  # Externe Referenzen
+  mycobank_id:
+    typ: text
+    label: MycoBank ID
+    beschreibung: "MycoBank-Datenbank-ID"
+
+  index_fungorum_id:
+    typ: text
+    label: Index Fungorum ID
+    beschreibung: "Index Fungorum Nummer"
+
+  species_fungorum_id:
+    typ: text
+    label: Species Fungorum ID
+    beschreibung: "Species Fungorum Nummer"
+
+  gbif_key:
+    typ: text
+    label: GBIF Key
+    beschreibung: "Global Biodiversity Information Facility"
+
+  inaturalist_taxon_id:
+    typ: text
+    label: iNaturalist Taxon ID
+    beschreibung: "iNaturalist Taxon-Identifikator"
+
+  bold_taxon_id:
+    typ: text
+    label: BOLD Taxon ID
+    beschreibung: "Barcode of Life Taxon-ID"
+
+  ncbi_taxid:
+    typ: text
+    label: NCBI TaxID
+    beschreibung: "NCBI Taxonomy Database ID"
+
+  wikidata_id:
+    typ: text
+    label: Wikidata ID
+    beschreibung: "Wikidata Q-Nummer"
+
+  # Taxonomischer Status
+  taxonomie_status:
+    typ: text
+    label: Taxonomischer Status
+    beschreibung: "akzeptiert/synonym/unsicher/provisorisch"
+
+  unsicherheits_grad:
+    typ: text
+    label: Unsicherheitsgrad
+    beschreibung: "Grad der taxonomischen Unsicherheit"
+
+  revisionsstand:
+    typ: text
+    label: Revisionsstand
+    beschreibung: "Letzte taxonomische Revision"
+
+  typus_status:
+    typ: text
+    label: Typus-Status
+    beschreibung: "Holotypus/Isotypus/Lectotypus etc."
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # ERWEITERTE BESTIMMUNG: MAKROSKOPIE DETAILLIERT
+  # ───────────────────────────────────────────────────────────────────────────
+
+  # Habitus erweitert
+  wuchsform:
+    typ: text
+    label: Wuchsform
+    beschreibung: "Spezifische Wuchsform"
+
+  groesse_min_cm:
+    typ: number
+    label: Größe Minimum
+    beschreibung: "Minimale Größe in cm"
+    einheit: "cm"
+
+  groesse_max_cm:
+    typ: number
+    label: Größe Maximum
+    beschreibung: "Maximale Größe in cm"
+    einheit: "cm"
+
+  grundform:
+    typ: text
+    label: Grundform
+    beschreibung: "Geometrische Grundform"
+
+  silhouette:
+    typ: text
+    label: Silhouette
+    beschreibung: "Charakteristische Umrisslinie"
+
+  altersstadien:
+    typ: list
+    label: Altersstadien
+    beschreibung: "Beschreibung der Entwicklungsstadien"
+
+  # Oberfläche detailliert
+  oberflaeche_typ:
+    typ: text
+    label: Oberflächen-Typ
+    beschreibung: "Hauptkategorie der Oberfläche"
+
+  oberflaeche_detail:
+    typ: text
+    label: Oberflächen-Detail
+    beschreibung: "Detaillierte Oberflächenbeschreibung"
+
+  behaarung:
+    typ: object
+    label: Behaarung
+    beschreibung: "Art und Verteilung der Behaarung"
+
+  beschuppung:
+    typ: object
+    label: Beschuppung
+    beschreibung: "Schuppenform und -verteilung"
+
+  bereifung:
+    typ: boolean
+    label: Bereifung
+    beschreibung: "Bereifter/bepuderter Überzug"
+
+  strukturelemente:
+    typ: list
+    label: Strukturelemente
+    beschreibung: "Rippen, Furchen, Netze etc."
+
+  # Farbe erweitert
+  farbe_frisch:
+    typ: text
+    label: Farbe (frisch)
+    beschreibung: "Farbe im frischen Zustand"
+
+  farbe_alt:
+    typ: text
+    label: Farbe (alt)
+    beschreibung: "Farbe im gealterten Zustand"
+
+  farbe_feucht:
+    typ: text
+    label: Farbe (feucht)
+    beschreibung: "Farbe bei Nässe"
+
+  farbe_trocken:
+    typ: text
+    label: Farbe (trocken)
+    beschreibung: "Farbe im trockenen Zustand"
+
+  farbe_verletzung:
+    typ: text
+    label: Farbe bei Verletzung
+    beschreibung: "Verfärbung nach Verletzung"
+
+  farbzonen:
+    typ: object
+    label: Farbzonen
+    beschreibung: "Zonierung der Farben"
+
+  farbverteilung:
+    typ: text
+    label: Farbverteilung
+    beschreibung: "Muster der Farbverteilung"
+
+  farbvarianz_beschreibung:
+    typ: text
+    label: Farbvarianz-Beschreibung
+    beschreibung: "Detaillierte Variationsbeschreibung"
+
+  munsell_codes:
+    typ: list
+    label: Munsell-Codes
+    beschreibung: "Munsell-Farbnotation"
+
+  rgb_hex_werte:
+    typ: list
+    label: RGB/Hex-Werte
+    beschreibung: "Digitale Farbwerte"
+
+  ral_codes:
+    typ: list
+    label: RAL-Codes
+    beschreibung: "RAL-Farbcodes"
+
+  # Konsistenz erweitert
+  konsistenz_frisch:
+    typ: text
+    label: Konsistenz (frisch)
+    beschreibung: "Konsistenz im frischen Zustand"
+
+  konsistenz_alt:
+    typ: text
+    label: Konsistenz (alt)
+    beschreibung: "Konsistenz im gealterten Zustand"
+
+  bruch_verhalten:
+    typ: text
+    label: Bruchverhalten
+    beschreibung: "Wie bricht das Material?"
+
+  elastizitaet:
+    typ: text
+    label: Elastizität
+    beschreibung: "Elastische Eigenschaften"
+
+  zaehigkeit:
+    typ: text
+    label: Zähigkeit
+    beschreibung: "Widerstand gegen Zerreißen"
+
+  feuchtigkeitsgehalt:
+    typ: number
+    label: Feuchtigkeitsgehalt
+    beschreibung: "Wassergehalt in %"
+    einheit: "%"
+
+  # Geruch erweitert
+  geruch_frisch:
+    typ: text
+    label: Geruch (frisch)
+    beschreibung: "Geruch im frischen Zustand"
+
+  geruch_alt:
+    typ: text
+    label: Geruch (alt)
+    beschreibung: "Geruch im gealterten Zustand"
+
+  geruch_reiben:
+    typ: text
+    label: Geruch beim Reiben
+    beschreibung: "Geruch beim Zerreiben"
+
+  geruch_trocknung:
+    typ: text
+    label: Geruch bei Trocknung
+    beschreibung: "Geruch beim/nach Trocknen"
+
+  geruch_intensitaet:
+    typ: rating
+    label: Geruchsintensität
+    beschreibung: "Stärke des Geruchs 1-5"
+
+  # Geschmack erweitert
+  geschmack_warnung:
+    typ: boolean
+    label: Geschmackswarnung
+    beschreibung: "Kostprobe gefährlich!"
+
+  nachgeschmack:
+    typ: text
+    label: Nachgeschmack
+    beschreibung: "Verzögerter Geschmack"
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # PILZ-SPEZIFISCH: HUT
+  # ───────────────────────────────────────────────────────────────────────────
+
+  hut_durchmesser_min:
+    typ: number
+    label: Hut Ø min
+    beschreibung: "Minimaler Hutdurchmesser"
+    einheit: "cm"
+
+  hut_durchmesser_max:
+    typ: number
+    label: Hut Ø max
+    beschreibung: "Maximaler Hutdurchmesser"
+    einheit: "cm"
+
+  hut_form_jung:
+    typ: text
+    label: Hutform jung
+    beschreibung: "Hutform im Jungstadium"
+
+  hut_form_alt:
+    typ: text
+    label: Hutform alt
+    beschreibung: "Hutform im Alter"
+
+  hut_rand:
+    typ: text
+    label: Hutrand
+    beschreibung: "Beschaffenheit des Hutrandes"
+
+  hut_oberflaeche:
+    typ: text
+    label: Hutoberfläche
+    beschreibung: "Oberfläche des Hutes"
+
+  hut_hygrophan:
+    typ: boolean
+    label: Hygrophan
+    beschreibung: "Ändert Farbe bei Feuchtigkeit"
+
+  hut_riefung:
+    typ: text
+    label: Hutriefung
+    beschreibung: "Rillung am Hutrand"
+
+  hut_buckel:
+    typ: text
+    label: Hutbuckel
+    beschreibung: "Zentrale Erhebung"
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # PILZ-SPEZIFISCH: LAMELLEN
+  # ───────────────────────────────────────────────────────────────────────────
+
+  lamellen_vorhanden:
+    typ: boolean
+    label: Lamellen vorhanden
+    beschreibung: "Hat der Pilz Lamellen?"
+
+  lamellen_ansatz:
+    typ: text
+    label: Lamellenansatz
+    beschreibung: "frei/angeheftet/herablaufend etc."
+
+  lamellen_dichte:
+    typ: text
+    label: Lamellendichte
+    beschreibung: "gedrängt/entfernt/normal"
+
+  lamellen_breite:
+    typ: text
+    label: Lamellenbreite
+    beschreibung: "schmal/breit/bauchig"
+
+  lamellen_farbe:
+    typ: text
+    label: Lamellenfarbe
+    beschreibung: "Farbe der Lamellen"
+
+  lamellen_verfaerbung:
+    typ: text
+    label: Lamellenverfärbung
+    beschreibung: "Verfärbung bei Berührung"
+
+  lamellen_schneide:
+    typ: text
+    label: Lamellenschneide
+    beschreibung: "Beschaffenheit der Schneide"
+
+  lamelletten:
+    typ: boolean
+    label: Lamelletten
+    beschreibung: "Kürzere Zwischenlamellen"
+
+  lamellen_queradern:
+    typ: boolean
+    label: Queradern
+    beschreibung: "Querverbindungen zwischen Lamellen"
+
+  lamellen_gabelung:
+    typ: boolean
+    label: Gabelung
+    beschreibung: "Gegabelte Lamellen"
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # PILZ-SPEZIFISCH: RÖHREN
+  # ───────────────────────────────────────────────────────────────────────────
+
+  roehren_vorhanden:
+    typ: boolean
+    label: Röhren vorhanden
+    beschreibung: "Hat der Pilz Röhren?"
+
+  roehren_laenge:
+    typ: text
+    label: Röhrenlänge
+    beschreibung: "Länge der Röhren"
+
+  roehren_farbe:
+    typ: text
+    label: Röhrenfarbe
+    beschreibung: "Farbe der Röhren"
+
+  roehren_verfaerbung:
+    typ: text
+    label: Röhrenverfärbung
+    beschreibung: "Verfärbung bei Druck"
+
+  poren_form:
+    typ: text
+    label: Porenform
+    beschreibung: "rund/eckig/geschlitzt"
+
+  poren_groesse:
+    typ: text
+    label: Porengröße
+    beschreibung: "fein/mittel/grob"
+
+  poren_farbe:
+    typ: text
+    label: Porenfarbe
+    beschreibung: "Farbe der Porenöffnungen"
+
+  poren_verfaerbung_druck:
+    typ: text
+    label: Porenverfärbung
+    beschreibung: "Verfärbung bei Druck"
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # PILZ-SPEZIFISCH: STIEL
+  # ───────────────────────────────────────────────────────────────────────────
+
+  stiel_laenge_min:
+    typ: number
+    label: Stiellänge min
+    beschreibung: "Minimale Stiellänge"
+    einheit: "cm"
+
+  stiel_laenge_max:
+    typ: number
+    label: Stiellänge max
+    beschreibung: "Maximale Stiellänge"
+    einheit: "cm"
+
+  stiel_dicke_min:
+    typ: number
+    label: Stieldicke min
+    beschreibung: "Minimale Stieldicke"
+    einheit: "cm"
+
+  stiel_dicke_max:
+    typ: number
+    label: Stieldicke max
+    beschreibung: "Maximale Stieldicke"
+    einheit: "cm"
+
+  stiel_form:
+    typ: text
+    label: Stielform
+    beschreibung: "zylindrisch/keulig/wurzelnd etc."
+
+  stiel_basis:
+    typ: text
+    label: Stielbasis
+    beschreibung: "Form der Stielbasis"
+
+  stiel_oberflaeche:
+    typ: text
+    label: Stieloberfläche
+    beschreibung: "Textur der Stieloberfläche"
+
+  stiel_farbe:
+    typ: text
+    label: Stielfarbe
+    beschreibung: "Farbe des Stiels"
+
+  stiel_verfaerbung:
+    typ: text
+    label: Stielverfärbung
+    beschreibung: "Verfärbung bei Verletzung"
+
+  stiel_konsistenz:
+    typ: text
+    label: Stielkonsistenz
+    beschreibung: "fest/schwammig/faserig"
+
+  stiel_hohlheit:
+    typ: text
+    label: Stielhohlheit
+    beschreibung: "voll/hohl/wattig gefüllt"
+
+  stiel_natterung:
+    typ: boolean
+    label: Natterung
+    beschreibung: "Natteriges Stielmuster"
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # PILZ-SPEZIFISCH: HÜLLEN
+  # ───────────────────────────────────────────────────────────────────────────
+
+  velum_partiale:
+    typ: boolean
+    label: Velum partiale
+    beschreibung: "Teilhülle vorhanden?"
+
+  ring_position:
+    typ: text
+    label: Ring-Position
+    beschreibung: "oben/mittig/unten am Stiel"
+
+  ring_form:
+    typ: text
+    label: Ring-Form
+    beschreibung: "häutig/flockig/schleimig"
+
+  ring_konsistenz:
+    typ: text
+    label: Ring-Konsistenz
+    beschreibung: "dauerhaft/vergänglich"
+
+  ring_beweglichkeit:
+    typ: boolean
+    label: Ring beweglich
+    beschreibung: "Verschiebbarer Ring"
+
+  cortina:
+    typ: boolean
+    label: Cortina
+    beschreibung: "Spinnwebartiger Schleier"
+
+  velum_universale:
+    typ: boolean
+    label: Velum universale
+    beschreibung: "Gesamthülle vorhanden?"
+
+  volva_form:
+    typ: text
+    label: Volva-Form
+    beschreibung: "häutig/lappig/wulstig"
+
+  volva_farbe:
+    typ: text
+    label: Volva-Farbe
+    beschreibung: "Farbe der Scheide"
+
+  volva_konsistenz:
+    typ: text
+    label: Volva-Konsistenz
+    beschreibung: "Beschaffenheit der Scheide"
+
+  hutfetzen:
+    typ: boolean
+    label: Hutfetzen
+    beschreibung: "Velum-Reste auf Hut"
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # PILZ-SPEZIFISCH: FLEISCH
+  # ───────────────────────────────────────────────────────────────────────────
+
+  fleisch_farbe:
+    typ: text
+    label: Fleischfarbe
+    beschreibung: "Farbe des Fruchtfleisches"
+
+  fleisch_verfaerbung:
+    typ: text
+    label: Fleischverfärbung
+    beschreibung: "Verfärbung nach Anschnitt"
+
+  fleisch_konsistenz:
+    typ: text
+    label: Fleischkonsistenz
+    beschreibung: "fest/weich/schwammig"
+
+  fleisch_dicke:
+    typ: text
+    label: Fleischdicke
+    beschreibung: "Dicke des Fleisches"
+
+  fleisch_faserung:
+    typ: text
+    label: Fleischfaserung
+    beschreibung: "Faserverlauf"
+
+  fleisch_bruch:
+    typ: text
+    label: Fleischbruch
+    beschreibung: "Bruchverhalten"
+
+  milchsaft:
+    typ: boolean
+    label: Milchsaft
+    beschreibung: "Sondert Milch ab?"
+
+  milchsaft_farbe:
+    typ: text
+    label: Milchsaft-Farbe
+    beschreibung: "Farbe des Milchsaftes"
+
+  milchsaft_verfaerbung:
+    typ: text
+    label: Milchsaft-Verfärbung
+    beschreibung: "Verfärbung an der Luft"
+
+  milchsaft_geschmack:
+    typ: text
+    label: Milchsaft-Geschmack
+    beschreibung: "mild/scharf/bitter"
+
+  # Sporenpulver
+  sporenpulver_farbe:
+    typ: text
+    label: Sporenpulver-Farbe
+    beschreibung: "Farbe des Sporenpulvers"
+
+  sporenpulver_menge:
+    typ: text
+    label: Sporenpulver-Menge
+    beschreibung: "Ergiebigkeit des Abwurfs"
+
+  sporenpulver_sporenabwurf_anleitung:
+    typ: text
+    label: Sporenabwurf-Anleitung
+    beschreibung: "Wie man einen Sporenabdruck macht"
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # ERWEITERTE MIKROSKOPIE
+  # ───────────────────────────────────────────────────────────────────────────
+
+  # Sporen erweitert
+  sporen_laenge_min:
+    typ: number
+    label: Sporenlänge min
+    beschreibung: "Minimale Sporenlänge"
+    einheit: "µm"
+
+  sporen_laenge_max:
+    typ: number
+    label: Sporenlänge max
+    beschreibung: "Maximale Sporenlänge"
+    einheit: "µm"
+
+  sporen_breite_min:
+    typ: number
+    label: Sporenbreite min
+    beschreibung: "Minimale Sporenbreite"
+    einheit: "µm"
+
+  sporen_breite_max:
+    typ: number
+    label: Sporenbreite max
+    beschreibung: "Maximale Sporenbreite"
+    einheit: "µm"
+
+  sporen_quotient:
+    typ: number
+    label: Sporen-Quotient
+    beschreibung: "Länge/Breite Verhältnis"
+
+  sporen_ornament_detail:
+    typ: text
+    label: Sporenornament Detail
+    beschreibung: "Detaillierte Ornamentbeschreibung"
+
+  sporen_wandstaerke:
+    typ: text
+    label: Sporenwandstärke
+    beschreibung: "dünn-/dickwandig"
+
+  sporen_keimporus:
+    typ: object
+    label: Keimporus
+    beschreibung: "Position, Größe des Keimporus"
+
+  sporen_apikulus:
+    typ: object
+    label: Apikulus
+    beschreibung: "Anheftungsstelle"
+
+  sporen_oel_tropfen:
+    typ: boolean
+    label: Öltropfen
+    beschreibung: "Öltropfen in Sporen"
+
+  sporen_inhalt:
+    typ: text
+    label: Sporeninhalt
+    beschreibung: "Inhalt der Sporen"
+
+  sporen_3d_form:
+    typ: text
+    label: Sporen 3D-Form
+    beschreibung: "Dreidimensionale Form"
+
+  # Basidien erweitert
+  basidien_form:
+    typ: text
+    label: Basidienform
+    beschreibung: "keulig/zylindrisch etc."
+
+  basidien_laenge:
+    typ: text
+    label: Basidienlänge
+    beschreibung: "Länge in µm"
+
+  basidien_breite:
+    typ: text
+    label: Basidienbreite
+    beschreibung: "Breite in µm"
+
+  basidien_sterigmen_anzahl:
+    typ: number
+    label: Sterigmen-Anzahl
+    beschreibung: "Anzahl der Sterigmen (meist 4)"
+
+  basidien_sterigmen_laenge:
+    typ: text
+    label: Sterigmen-Länge
+    beschreibung: "Länge der Sterigmen"
+
+  basidien_basalschnalle:
+    typ: boolean
+    label: Basalschnalle
+    beschreibung: "Schnalle an Basidienbasis"
+
+  basidiolen:
+    typ: text
+    label: Basidiolen
+    beschreibung: "Unreife Basidien"
+
+  # Asci erweitert
+  asci_form:
+    typ: text
+    label: Ascusform
+    beschreibung: "zylindrisch/keulig etc."
+
+  asci_laenge:
+    typ: text
+    label: Ascuslänge
+    beschreibung: "Länge in µm"
+
+  asci_breite:
+    typ: text
+    label: Ascusbreite
+    beschreibung: "Breite in µm"
+
+  asci_sporenanzahl:
+    typ: number
+    label: Sporen pro Ascus
+    beschreibung: "Anzahl (meist 8)"
+
+  asci_spitze:
+    typ: text
+    label: Ascusspitze
+    beschreibung: "Form der Spitze"
+
+  asci_jod_reaktion:
+    typ: text
+    label: Ascus Jod-Reaktion
+    beschreibung: "amyloid/dextrinoid/inamyloid"
+
+  asci_operculum:
+    typ: boolean
+    label: Operculum
+    beschreibung: "Deckel vorhanden?"
+
+  asci_basis:
+    typ: text
+    label: Ascusbasis
+    beschreibung: "Form der Basis"
+
+  # Zystiden erweitert
+  zystiden_vorhanden:
+    typ: boolean
+    label: Zystiden vorhanden
+    beschreibung: "Sind Zystiden vorhanden?"
+
+  cheilozystiden_form:
+    typ: text
+    label: Cheilozystiden Form
+    beschreibung: "Form der Lamellenschneide-Zystiden"
+
+  cheilozystiden_groesse:
+    typ: text
+    label: Cheilozystiden Größe
+    beschreibung: "Größe in µm"
+
+  pleurozystiden_form:
+    typ: text
+    label: Pleurozystiden Form
+    beschreibung: "Form der Lamellenflächen-Zystiden"
+
+  pleurozystiden_groesse:
+    typ: text
+    label: Pleurozystiden Größe
+    beschreibung: "Größe in µm"
+
+  kaulozystiden_form:
+    typ: text
+    label: Kaulozystiden Form
+    beschreibung: "Form der Stiel-Zystiden"
+
+  chrysozystiden:
+    typ: boolean
+    label: Chrysozystiden
+    beschreibung: "Gelb-inkrustierte Zystiden"
+
+  lamprozystiden:
+    typ: boolean
+    label: Lamprozystiden
+    beschreibung: "Dickwandige Zystiden"
+
+  gloeozystiden:
+    typ: boolean
+    label: Gloeozystiden
+    beschreibung: "Ölige Zystiden"
+
+  zystiden_inkrustierung:
+    typ: text
+    label: Zystiden-Inkrustierung
+    beschreibung: "Kristallbeläge"
+
+  zystiden_inhalt:
+    typ: text
+    label: Zystiden-Inhalt
+    beschreibung: "Inhalt der Zystiden"
+
+  # Hyphen erweitert
+  hyphen_durchmesser:
+    typ: text
+    label: Hyphen-Durchmesser
+    beschreibung: "Durchmesser in µm"
+
+  hyphen_pigmentierung:
+    typ: text
+    label: Hyphen-Pigmentierung
+    beschreibung: "intrazellulär/inkrustiert"
+
+  hyphen_inkrustierung:
+    typ: text
+    label: Hyphen-Inkrustierung
+    beschreibung: "Kristallbeläge auf Hyphen"
+
+  hyphen_gelatinisierung:
+    typ: boolean
+    label: Hyphen gelatinisiert
+    beschreibung: "Gallertige Hyphen"
+
+  trama_aufbau:
+    typ: text
+    label: Trama-Aufbau
+    beschreibung: "regulär/irregulär/bilateral"
+
+  huthaut_typ:
+    typ: text
+    label: Huthaut-Typ
+    beschreibung: "Cutis/Trichoderm/Ixocutis etc."
+
+  huthaut_aufbau:
+    typ: text
+    label: Huthaut-Aufbau
+    beschreibung: "Detaillierter Aufbau"
+
+  huthaut_pigment:
+    typ: text
+    label: Huthaut-Pigment
+    beschreibung: "Pigmentierung der Huthaut"
+
+  # Kristalle & Pigmente
+  kristalle_vorhanden:
+    typ: boolean
+    label: Kristalle vorhanden
+    beschreibung: "Kristalle in Gewebe?"
+
+  kristalle_form:
+    typ: text
+    label: Kristallform
+    beschreibung: "Nadeln/Drusen/Prismen"
+
+  kristalle_lage:
+    typ: text
+    label: Kristall-Lage
+    beschreibung: "Wo befinden sich Kristalle?"
+
+  pigment_typ:
+    typ: text
+    label: Pigment-Typ
+    beschreibung: "Art des Pigments"
+
+  pigment_lage:
+    typ: text
+    label: Pigment-Lage
+    beschreibung: "intra-/extrazellulär"
+
+  pigment_loeslichkeit:
+    typ: text
+    label: Pigment-Löslichkeit
+    beschreibung: "KOH-löslich etc."
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # ERWEITERTE CHEMISCHE REAKTIONEN
+  # ───────────────────────────────────────────────────────────────────────────
+
+  koh_hut:
+    typ: text
+    label: KOH Hut
+    beschreibung: "KOH-Reaktion auf Hut"
+
+  koh_fleisch:
+    typ: text
+    label: KOH Fleisch
+    beschreibung: "KOH-Reaktion auf Fleisch"
+
+  koh_stiel:
+    typ: text
+    label: KOH Stiel
+    beschreibung: "KOH-Reaktion auf Stiel"
+
+  melzer_sporen:
+    typ: text
+    label: Melzer Sporen
+    beschreibung: "Melzer-Reaktion der Sporen"
+
+  melzer_trama:
+    typ: text
+    label: Melzer Trama
+    beschreibung: "Melzer-Reaktion des Tramas"
+
+  melzer_asci:
+    typ: text
+    label: Melzer Asci
+    beschreibung: "Jod-Reaktion der Asci"
+
+  feso4_fleisch:
+    typ: text
+    label: FeSO4 Fleisch
+    beschreibung: "Eisensulfat auf Fleisch"
+
+  feso4_stiel:
+    typ: text
+    label: FeSO4 Stiel
+    beschreibung: "Eisensulfat auf Stiel"
+
+  sulfovanillin:
+    typ: text
+    label: Sulfovanillin
+    beschreibung: "SV-Reaktion"
+
+  kresylblau:
+    typ: text
+    label: Kresylblau
+    beschreibung: "Kresylblau-Reaktion"
+
+  kongorot:
+    typ: text
+    label: Kongorot
+    beschreibung: "Kongorot-Reaktion"
+
+  phloxin:
+    typ: text
+    label: Phloxin
+    beschreibung: "Phloxin-Färbung"
+
+  baumwollblau:
+    typ: text
+    label: Baumwollblau
+    beschreibung: "Baumwollblau-Färbung"
+
+  lugol:
+    typ: text
+    label: Lugol
+    beschreibung: "Lugol-Reaktion"
+
+  # UV erweitert
+  uv_365nm:
+    typ: text
+    label: UV 365nm
+    beschreibung: "Fluoreszenz bei 365nm"
+
+  uv_254nm:
+    typ: text
+    label: UV 254nm
+    beschreibung: "Fluoreszenz bei 254nm"
+
+  uv_beschreibung:
+    typ: text
+    label: UV-Beschreibung
+    beschreibung: "Detaillierte UV-Reaktion"
+
+  uv_stellen:
+    typ: list
+    label: UV-Stellen
+    beschreibung: "Welche Teile fluoreszieren?"
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # ERWEITERTE MOLEKULARE DATEN
+  # ───────────────────────────────────────────────────────────────────────────
+
+  its_region:
+    typ: text
+    label: ITS-Region
+    beschreibung: "ITS1-5.8S-ITS2 Sequenz"
+
+  its_accession:
+    typ: text
+    label: ITS Accession
+    beschreibung: "GenBank/UNITE Accession"
+
+  its_laenge:
+    typ: number
+    label: ITS-Länge
+    beschreibung: "Sequenzlänge in bp"
+    einheit: "bp"
+
+  its_qualitaet:
+    typ: text
+    label: ITS-Qualität
+    beschreibung: "Sequenzqualität"
+
+  lsu_accession:
+    typ: text
+    label: LSU Accession
+    beschreibung: "GenBank Accession LSU"
+
+  ssu_sequenz:
+    typ: text
+    label: SSU-Sequenz
+    beschreibung: "Small Subunit rRNA"
+
+  ssu_accession:
+    typ: text
+    label: SSU Accession
+    beschreibung: "GenBank Accession SSU"
+
+  rpb1_sequenz:
+    typ: text
+    label: RPB1-Sequenz
+    beschreibung: "RPB1-Gen"
+
+  tub2_sequenz:
+    typ: text
+    label: TUB2-Sequenz
+    beschreibung: "Beta-Tubulin-Gen"
+
+  bold_uri:
+    typ: text
+    label: BOLD URI
+    beschreibung: "BOLD Systems URI"
+
+  bold_similarity:
+    typ: number
+    label: BOLD Similarity
+    beschreibung: "Sequenzähnlichkeit in %"
+    einheit: "%"
+
+  phylogenie_clade:
+    typ: text
+    label: Phylogenie-Clade
+    beschreibung: "Zugehörige Klade"
+
+  phylogenie_support:
+    typ: number
+    label: Phylogenie-Support
+    beschreibung: "Bootstrap/Posterior Support"
+    einheit: "%"
+
+  naechste_verwandte:
+    typ: list
+    label: Nächste Verwandte
+    beschreibung: "Phylogenetisch nächste Arten"
+
+  genetische_distanz:
+    typ: number
+    label: Genetische Distanz
+    beschreibung: "Distanz zu nächster Art"
+    einheit: "%"
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # ERWEITERTE ÖKOLOGIE
+  # ───────────────────────────────────────────────────────────────────────────
+
+  ernaehrungsweise:
+    typ: text
+    label: Ernährungsweise
+    beschreibung: "saprotroph/mykorrhiza/parasitisch"
+
+  ernaehrungsweise_detail:
+    typ: text
+    label: Ernährungsweise Detail
+    beschreibung: "Detaillierte Beschreibung"
+
+  trophiestufe:
+    typ: text
+    label: Trophiestufe
+    beschreibung: "Primär/Sekundär-Zersetzer etc."
+
+  habitat_typ:
+    typ: text
+    label: Habitat-Typ
+    beschreibung: "Haupthabitat"
+
+  habitat_detail:
+    typ: text
+    label: Habitat-Detail
+    beschreibung: "Detaillierte Habitatbeschreibung"
+
+  biotop:
+    typ: text
+    label: Biotop
+    beschreibung: "Biotoptyp nach Klassifikation"
+
+  pflanzengesellschaft:
+    typ: text
+    label: Pflanzengesellschaft
+    beschreibung: "Assoziierte Pflanzengesellschaft"
+
+  bodentyp:
+    typ: text
+    label: Bodentyp
+    beschreibung: "Bevorzugter Bodentyp"
+
+  bodenfeuchte:
+    typ: text
+    label: Bodenfeuchte
+    beschreibung: "Feuchtigkeitspräferenz"
+
+  lichtverhaeltnisse:
+    typ: text
+    label: Lichtverhältnisse
+    beschreibung: "schattig/halbschattig/sonnig"
+
+  substrat_kategorie:
+    typ: text
+    label: Substrat-Kategorie
+    beschreibung: "Hauptkategorie des Substrats"
+
+  substrat_arten:
+    typ: list
+    label: Substrat-Arten
+    beschreibung: "Spezifische Substrate"
+
+  substrat_zustand:
+    typ: text
+    label: Substrat-Zustand
+    beschreibung: "frisch/morsch/stark zersetzt"
+
+  holz_zersetzungsgrad:
+    typ: number
+    label: Holz-Zersetzungsgrad
+    beschreibung: "Zersetzungsgrad 1-5"
+
+  mykorrhiza_typ:
+    typ: text
+    label: Mykorrhiza-Typ
+    beschreibung: "Ekto-/Endo-/VA-Mykorrhiza"
+
+  mykorrhiza_spezifitaet:
+    typ: text
+    label: Mykorrhiza-Spezifität
+    beschreibung: "obligat/fakultativ/generalistisch"
+
+  parasit_wirt:
+    typ: list
+    label: Parasit-Wirt
+    beschreibung: "Wirtsorganismen bei Parasiten"
+
+  parasit_schadbild:
+    typ: text
+    label: Parasit-Schadbild
+    beschreibung: "Verursachte Schäden"
+
+  andere_symbiosen:
+    typ: object
+    label: Andere Symbiosen
+    beschreibung: "Weitere Symbioseformen"
+
+  typische_begleitpilze:
+    typ: list
+    label: Typische Begleitpilze
+    beschreibung: "Häufig gemeinsam auftretende Pilze"
+
+  typische_begleitpflanzen:
+    typ: list
+    label: Typische Begleitpflanzen
+    beschreibung: "Charakteristische Begleitflora"
+
+  indikator_arten:
+    typ: list
+    label: Indikator-Arten
+    beschreibung: "Arten die ähnliche Standorte anzeigen"
+
+  hoehe_min:
+    typ: number
+    label: Höhe min
+    beschreibung: "Minimale Höhe ü. NN"
+    einheit: "m"
+
+  hoehe_max:
+    typ: number
+    label: Höhe max
+    beschreibung: "Maximale Höhe ü. NN"
+    einheit: "m"
+
+  klimazone:
+    typ: text
+    label: Klimazone
+    beschreibung: "Bevorzugte Klimazone"
+
+  niederschlag:
+    typ: text
+    label: Niederschlag
+    beschreibung: "Niederschlagspräferenz"
+
+  temperatur_optimal:
+    typ: object
+    label: Optimale Temperatur
+    beschreibung: "Temperaturoptimum"
+
+  kontinentalitaet:
+    typ: text
+    label: Kontinentalität
+    beschreibung: "ozeanisch/subozeanisch/kontinental"
+
+  saison_beginn:
+    typ: text
+    label: Saison-Beginn
+    beschreibung: "Beginn der Fruktifikation"
+
+  saison_ende:
+    typ: text
+    label: Saison-Ende
+    beschreibung: "Ende der Fruktifikation"
+
+  saison_peak:
+    typ: text
+    label: Saison-Höhepunkt
+    beschreibung: "Hauptfruktifikationszeit"
+
+  fruktifikations_trigger:
+    typ: list
+    label: Fruktifikations-Trigger
+    beschreibung: "Auslöser für Fruchtkörperbildung"
+
+  mehrjaehrig:
+    typ: boolean
+    label: Mehrjährig
+    beschreibung: "Mehrjährige Fruchtkörper?"
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # ERWEITERTE VERWECHSLUNG
+  # ───────────────────────────────────────────────────────────────────────────
+
+  verwechslungs_arten:
+    typ: list
+    label: Verwechslungsarten
+    beschreibung: "Liste ähnlicher Arten"
+
+  gefaehrlichste_verwechslung:
+    typ: object
+    label: Gefährlichste Verwechslung
+    beschreibung: "Die riskanteste Verwechslungsart"
+
+  verwechslungs_konsequenz:
+    typ: text
+    label: Verwechslungs-Konsequenz
+    beschreibung: "Folgen einer Verwechslung"
+
+  unterscheidungsmerkmale_tabelle:
+    typ: object
+    label: Unterscheidungsmerkmale
+    beschreibung: "Tabellarische Abgrenzung"
+
+  sichere_merkmale:
+    typ: list
+    label: Sichere Merkmale
+    beschreibung: "100% verlässliche Merkmale"
+
+  kryptische_arten_komplex:
+    typ: object
+    label: Kryptischer Artenkomplex
+    beschreibung: "Nur molekular unterscheidbare Arten"
+
+  bestimmungs_sicherheit_level:
+    typ: text
+    label: Bestimmungs-Sicherheitslevel
+    beschreibung: "sicher/cf/aff/sp/agg"
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # ERWEITERTE BESTIMMUNGSHILFEN
+  # ───────────────────────────────────────────────────────────────────────────
+
+  primaere_erkennungsmerkmale:
+    typ: list
+    label: Primäre Erkennungsmerkmale
+    beschreibung: "Wichtigste Erkennungsmerkmale"
+
+  sekundaere_erkennungsmerkmale:
+    typ: list
+    label: Sekundäre Erkennungsmerkmale
+    beschreibung: "Unterstützende Merkmale"
+
+  merkmale_fuer_anfaenger:
+    typ: list
+    label: Merkmale für Anfänger
+    beschreibung: "Leicht erkennbare Merkmale"
+
+  experten_merkmale:
+    typ: list
+    label: Experten-Merkmale
+    beschreibung: "Nur für Fortgeschrittene"
+
+  minimale_merkmalskombination:
+    typ: list
+    label: Minimale Merkmalskombination
+    beschreibung: "Kleinste sichere Kombination"
+
+  schluessel_einstieg:
+    typ: text
+    label: Schlüssel-Einstieg
+    beschreibung: "Wo im Schlüssel beginnen?"
+
+  schluessel_pfad:
+    typ: list
+    label: Schlüssel-Pfad
+    beschreibung: "Weg durch den Schlüssel"
+
+  alternative_wege:
+    typ: list
+    label: Alternative Wege
+    beschreibung: "Alternative Bestimmungswege"
+
+  bestimmungsliteratur:
+    typ: list
+    label: Bestimmungsliteratur
+    beschreibung: "Empfohlene Literatur"
+
+  monographien:
+    typ: list
+    label: Monographien
+    beschreibung: "Wissenschaftliche Monographien"
+
+  online_schluessel:
+    typ: list
+    label: Online-Schlüssel
+    beschreibung: "Verfügbare Online-Ressourcen"
+
+  video_anleitungen:
+    typ: list
+    label: Video-Anleitungen
+    beschreibung: "Lehrvideos zur Bestimmung"
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # ERWEITERTE MEDIEN
+  # ───────────────────────────────────────────────────────────────────────────
+
+  primaerbild_beschreibung:
+    typ: text
+    label: Primärbild-Beschreibung
+    beschreibung: "Beschreibung des Hauptbildes"
+
+  primaerbild_typisch:
+    typ: boolean
+    label: Primärbild typisch
+    beschreibung: "Zeigt typisches Exemplar?"
+
+  bilder_habitus:
+    typ: list
+    label: Habitusbilder
+    beschreibung: "Übersichtsbilder"
+
+  bilder_detail:
+    typ: list
+    label: Detailbilder
+    beschreibung: "Nahaufnahmen"
+
+  bilder_schnitt:
+    typ: list
+    label: Schnittbilder
+    beschreibung: "Bilder vom Längs-/Querschnitt"
+
+  bilder_standort:
+    typ: list
+    label: Standortbilder
+    beschreibung: "Bilder im natürlichen Habitat"
+
+  bild_jung:
+    typ: image
+    label: Bild jung
+    beschreibung: "Jungstadium"
+
+  bild_mittel:
+    typ: image
+    label: Bild mittel
+    beschreibung: "Mittelstadium"
+
+  bild_alt:
+    typ: image
+    label: Bild alt
+    beschreibung: "Altersstadium"
+
+  bild_vergehend:
+    typ: image
+    label: Bild vergehend
+    beschreibung: "Vergehendes Stadium"
+
+  entwicklungs_morphing:
+    typ: object
+    label: Entwicklungs-Morphing
+    beschreibung: "Animierte Entwicklung"
+
+  bild_sporen:
+    typ: image
+    label: Sporenbild
+    beschreibung: "Mikroskopie der Sporen"
+
+  bild_basidien:
+    typ: image
+    label: Basidienbild
+    beschreibung: "Mikroskopie der Basidien"
+
+  bild_zystiden:
+    typ: image
+    label: Zystidenbild
+    beschreibung: "Mikroskopie der Zystiden"
+
+  bild_huthaut:
+    typ: image
+    label: Huthautbild
+    beschreibung: "Mikroskopie der Huthaut"
+
+  bild_trama:
+    typ: image
+    label: Tramabild
+    beschreibung: "Mikroskopie des Tramas"
+
+  mikroskopie_stack:
+    typ: object
+    label: Mikroskopie-Stack
+    beschreibung: "Z-Stack Aufnahmen"
+
+  mikroskopie_skaliert:
+    typ: boolean
+    label: Mikroskopie skaliert
+    beschreibung: "Mit Maßstab versehen?"
+
+  modell_format:
+    typ: text
+    label: 3D-Modell Format
+    beschreibung: "glTF/OBJ/STL etc."
+
+  modell_texturiert:
+    typ: boolean
+    label: 3D-Modell texturiert
+    beschreibung: "Mit Texturen?"
+
+  embedding_vektor:
+    typ: object
+    label: Embedding-Vektor
+    beschreibung: "KI-Bildvektor"
+
+  erkennungs_konfidenz:
+    typ: number
+    label: Erkennungs-Konfidenz
+    beschreibung: "KI-Erkennungssicherheit"
+    einheit: "%"
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # FUNDDATEN
+  # ───────────────────────────────────────────────────────────────────────────
+
+  bestimmung_status:
+    typ: text
+    label: Bestimmungs-Status
+    beschreibung: "bestätigt/vorläufig/fraglich"
+
+  bestimmt_durch:
+    typ: text
+    label: Bestimmt durch
+    beschreibung: "Name des Bestimmers"
+
+  bestimmungs_methode:
+    typ: text
+    label: Bestimmungs-Methode
+    beschreibung: "makroskopisch/mikroskopisch/molekular"
+
+  bestimmungs_konfidenz:
+    typ: number
+    label: Bestimmungs-Konfidenz
+    beschreibung: "Sicherheit der Bestimmung"
+    einheit: "%"
+
+  revision_historie:
+    typ: list
+    label: Revisions-Historie
+    beschreibung: "Bestimmungsänderungen"
+
+  fund_latitude:
+    typ: number
+    label: Fund Breitengrad
+    beschreibung: "GPS Latitude"
+
+  fund_longitude:
+    typ: number
+    label: Fund Längengrad
+    beschreibung: "GPS Longitude"
+
+  fund_genauigkeit:
+    typ: number
+    label: Fund-Genauigkeit
+    beschreibung: "GPS-Genauigkeit in Metern"
+    einheit: "m"
+
+  fund_elevation:
+    typ: number
+    label: Fund-Höhe
+    beschreibung: "Höhe über NN"
+    einheit: "m"
+
+  fund_land:
+    typ: text
+    label: Fund-Land
+    beschreibung: "Land des Fundorts"
+
+  fund_region:
+    typ: text
+    label: Fund-Region
+    beschreibung: "Region/Bundesland"
+
+  fund_ort:
+    typ: text
+    label: Fund-Ort
+    beschreibung: "Stadt/Gemeinde"
+
+  fund_lokalitaet:
+    typ: text
+    label: Fund-Lokalität
+    beschreibung: "Genaue Fundstelle"
+
+  fund_habitat_beschreibung:
+    typ: text
+    label: Fund-Habitat
+    beschreibung: "Habitatbeschreibung vor Ort"
+
+  fund_datum:
+    typ: text
+    label: Fund-Datum
+    beschreibung: "Datum des Fundes"
+
+  fund_zeit:
+    typ: text
+    label: Fund-Zeit
+    beschreibung: "Uhrzeit des Fundes"
+
+  fund_witterung:
+    typ: text
+    label: Fund-Witterung
+    beschreibung: "Wetterbedingungen"
+
+  fund_temperatur:
+    typ: number
+    label: Fund-Temperatur
+    beschreibung: "Temperatur beim Fund"
+    einheit: "°C"
+
+  finder:
+    typ: text
+    label: Finder
+    beschreibung: "Wer hat gefunden?"
+
+  sammler:
+    typ: text
+    label: Sammler
+    beschreibung: "Wer hat gesammelt?"
+
+  herbar_beleg:
+    typ: boolean
+    label: Herbarbeleg
+    beschreibung: "Wurde Beleg angelegt?"
+
+  herbar_nummer:
+    typ: text
+    label: Herbar-Nummer
+    beschreibung: "Belegnummer"
+
+  herbar_institution:
+    typ: text
+    label: Herbar-Institution
+    beschreibung: "Aufbewahrendes Herbar"
+
+  beleg_zustand:
+    typ: text
+    label: Beleg-Zustand
+    beschreibung: "Erhaltungszustand"
+
+  exposition:
+    typ: text
+    label: Exposition
+    beschreibung: "Himmelsrichtung des Hangs"
+
+  inklination:
+    typ: number
+    label: Inklination
+    beschreibung: "Hangneigung in Grad"
+    einheit: "°"
+
+  begleitflora:
+    typ: list
+    label: Begleitflora
+    beschreibung: "Beobachtete Begleitpflanzen"
+
+  mikroklima:
+    typ: text
+    label: Mikroklima
+    beschreibung: "Lokale Klimaverhältnisse"
+
+  stoerung:
+    typ: text
+    label: Störung
+    beschreibung: "Anthropogene Störungen"
+
+  frischzustand_dokumentiert:
+    typ: boolean
+    label: Frischzustand dokumentiert
+    beschreibung: "Dokumentation im Frischzustand"
+
+  exsikkat_vorhanden:
+    typ: boolean
+    label: Exsikkat vorhanden
+    beschreibung: "Getrockneter Beleg vorhanden"
+
+  kultur_angelegt:
+    typ: boolean
+    label: Kultur angelegt
+    beschreibung: "Wurde Kultur angelegt?"
+
+  sequenz_vorhanden:
+    typ: boolean
+    label: Sequenz vorhanden
+    beschreibung: "DNA-Sequenz verfügbar"
+
+  feldnotizen:
+    typ: text
+    label: Feldnotizen
+    beschreibung: "Originale Feldnotizen"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ERNÄHRUNG - Detaillierte Nährwert-Felder
+# ═══════════════════════════════════════════════════════════════════════════════
+
+  # Makronährstoffe
+  energie_kcal:
+    typ: number
+    label: Energie (kcal)
+    beschreibung: "Brennwert in kcal/100g"
+    einheit: "kcal"
+
+  energie_kj:
+    typ: number
+    label: Energie (kJ)
+    beschreibung: "Brennwert in kJ/100g"
+    einheit: "kJ"
+
+  protein:
+    typ: number
+    label: Protein
+    beschreibung: "Eiweiß in g/100g"
+    einheit: "g"
+
+  protein_qualitaet:
+    typ: object
+    label: Protein-Qualität
+    beschreibung: "Aminosäure-Score, biologische Wertigkeit"
+
+  fett:
+    typ: number
+    label: Fett
+    beschreibung: "Gesamtfett in g/100g"
+    einheit: "g"
+
+  fett_gesaettigt:
+    typ: number
+    label: Gesättigte Fettsäuren
+    beschreibung: "Gesättigte Fettsäuren in g/100g"
+    einheit: "g"
+
+  fett_einfach_ungesaettigt:
+    typ: number
+    label: Einfach ungesättigte FS
+    beschreibung: "Einfach ungesättigte Fettsäuren in g/100g"
+    einheit: "g"
+
+  fett_mehrfach_ungesaettigt:
+    typ: number
+    label: Mehrfach ungesättigte FS
+    beschreibung: "Mehrfach ungesättigte Fettsäuren in g/100g"
+    einheit: "g"
+
+  omega_3:
+    typ: number
+    label: Omega-3
+    beschreibung: "Omega-3-Fettsäuren in mg/100g"
+    einheit: "mg"
+
+  omega_6:
+    typ: number
+    label: Omega-6
+    beschreibung: "Omega-6-Fettsäuren in mg/100g"
+    einheit: "mg"
+
+  kohlenhydrate:
+    typ: number
+    label: Kohlenhydrate
+    beschreibung: "Gesamtkohlenhydrate in g/100g"
+    einheit: "g"
+
+  zucker:
+    typ: number
+    label: Zucker
+    beschreibung: "Davon Zucker in g/100g"
+    einheit: "g"
+
+  ballaststoffe:
+    typ: number
+    label: Ballaststoffe
+    beschreibung: "Ballaststoffe in g/100g"
+    einheit: "g"
+
+  ballaststoffe_loeslich:
+    typ: number
+    label: Lösliche Ballaststoffe
+    beschreibung: "Lösliche Ballaststoffe in g/100g"
+    einheit: "g"
+
+  ballaststoffe_unloeslich:
+    typ: number
+    label: Unlösliche Ballaststoffe
+    beschreibung: "Unlösliche Ballaststoffe in g/100g"
+    einheit: "g"
+
+  wasser:
+    typ: number
+    label: Wassergehalt
+    beschreibung: "Wassergehalt in %"
+    einheit: "%"
+
+  # Vitamine
+  vitamine:
+    typ: object
+    label: Vitamine
+    beschreibung: "Übersicht alle Vitamine"
+
+  vitamin_a:
+    typ: number
+    label: Vitamin A
+    beschreibung: "Retinol-Äquivalent in µg/100g"
+    einheit: "µg"
+
+  beta_carotin:
+    typ: number
+    label: Beta-Carotin
+    beschreibung: "Provitamin A in µg/100g"
+    einheit: "µg"
+
+  vitamin_b1:
+    typ: number
+    label: Vitamin B1 (Thiamin)
+    beschreibung: "Thiamin in mg/100g"
+    einheit: "mg"
+
+  vitamin_b2:
+    typ: number
+    label: Vitamin B2 (Riboflavin)
+    beschreibung: "Riboflavin in mg/100g"
+    einheit: "mg"
+
+  vitamin_b3:
+    typ: number
+    label: Vitamin B3 (Niacin)
+    beschreibung: "Niacin in mg/100g"
+    einheit: "mg"
+
+  vitamin_b5:
+    typ: number
+    label: Vitamin B5 (Pantothensäure)
+    beschreibung: "Pantothensäure in mg/100g"
+    einheit: "mg"
+
+  vitamin_b6:
+    typ: number
+    label: Vitamin B6 (Pyridoxin)
+    beschreibung: "Pyridoxin in mg/100g"
+    einheit: "mg"
+
+  vitamin_b7:
+    typ: number
+    label: Vitamin B7 (Biotin)
+    beschreibung: "Biotin in µg/100g"
+    einheit: "µg"
+
+  vitamin_b9:
+    typ: number
+    label: Vitamin B9 (Folsäure)
+    beschreibung: "Folsäure in µg/100g"
+    einheit: "µg"
+
+  vitamin_b12:
+    typ: number
+    label: Vitamin B12 (Cobalamin)
+    beschreibung: "Cobalamin in µg/100g"
+    einheit: "µg"
+
+  vitamin_c:
+    typ: number
+    label: Vitamin C
+    beschreibung: "Ascorbinsäure in mg/100g"
+    einheit: "mg"
+
+  vitamin_d:
+    typ: number
+    label: Vitamin D
+    beschreibung: "Calciferol in µg/100g"
+    einheit: "µg"
+
+  vitamin_d2:
+    typ: number
+    label: Vitamin D2 (Ergocalciferol)
+    beschreibung: "Typisch für Pilze! in µg/100g"
+    einheit: "µg"
+
+  vitamin_e:
+    typ: number
+    label: Vitamin E
+    beschreibung: "Tocopherol in mg/100g"
+    einheit: "mg"
+
+  vitamin_k:
+    typ: number
+    label: Vitamin K
+    beschreibung: "Phyllochinon in µg/100g"
+    einheit: "µg"
+
+  # Mineralstoffe
+  mineralstoffe:
+    typ: object
+    label: Mineralstoffe
+    beschreibung: "Übersicht alle Mineralstoffe"
+
+  kalium:
+    typ: number
+    label: Kalium
+    beschreibung: "K in mg/100g"
+    einheit: "mg"
+
+  natrium:
+    typ: number
+    label: Natrium
+    beschreibung: "Na in mg/100g"
+    einheit: "mg"
+
+  calcium:
+    typ: number
+    label: Calcium
+    beschreibung: "Ca in mg/100g"
+    einheit: "mg"
+
+  magnesium:
+    typ: number
+    label: Magnesium
+    beschreibung: "Mg in mg/100g"
+    einheit: "mg"
+
+  phosphor:
+    typ: number
+    label: Phosphor
+    beschreibung: "P in mg/100g"
+    einheit: "mg"
+
+  eisen:
+    typ: number
+    label: Eisen
+    beschreibung: "Fe in mg/100g"
+    einheit: "mg"
+
+  zink:
+    typ: number
+    label: Zink
+    beschreibung: "Zn in mg/100g"
+    einheit: "mg"
+
+  kupfer:
+    typ: number
+    label: Kupfer
+    beschreibung: "Cu in mg/100g"
+    einheit: "mg"
+
+  mangan:
+    typ: number
+    label: Mangan
+    beschreibung: "Mn in mg/100g"
+    einheit: "mg"
+
+  selen:
+    typ: number
+    label: Selen
+    beschreibung: "Se in µg/100g - wichtig bei Pilzen!"
+    einheit: "µg"
+
+  jod:
+    typ: number
+    label: Jod
+    beschreibung: "I in µg/100g"
+    einheit: "µg"
+
+  chrom:
+    typ: number
+    label: Chrom
+    beschreibung: "Cr in µg/100g"
+    einheit: "µg"
+
+  molybdaen:
+    typ: number
+    label: Molybdän
+    beschreibung: "Mo in µg/100g"
+    einheit: "µg"
+
+  # Aminosäuren
+  aminosaeuren:
+    typ: object
+    label: Aminosäuren
+    beschreibung: "Aminosäure-Profil komplett"
+
+  aminosaeuren_essentiell:
+    typ: object
+    label: Essentielle Aminosäuren
+    beschreibung: "Essentielle AS-Profil"
+
+  leucin:
+    typ: number
+    label: Leucin
+    beschreibung: "Leucin in mg/100g"
+    einheit: "mg"
+
+  isoleucin:
+    typ: number
+    label: Isoleucin
+    beschreibung: "Isoleucin in mg/100g"
+    einheit: "mg"
+
+  valin:
+    typ: number
+    label: Valin
+    beschreibung: "Valin in mg/100g"
+    einheit: "mg"
+
+  lysin:
+    typ: number
+    label: Lysin
+    beschreibung: "Lysin in mg/100g"
+    einheit: "mg"
+
+  methionin:
+    typ: number
+    label: Methionin
+    beschreibung: "Methionin in mg/100g"
+    einheit: "mg"
+
+  phenylalanin:
+    typ: number
+    label: Phenylalanin
+    beschreibung: "Phenylalanin in mg/100g"
+    einheit: "mg"
+
+  threonin:
+    typ: number
+    label: Threonin
+    beschreibung: "Threonin in mg/100g"
+    einheit: "mg"
+
+  tryptophan:
+    typ: number
+    label: Tryptophan
+    beschreibung: "Tryptophan in mg/100g"
+    einheit: "mg"
+
+  histidin:
+    typ: number
+    label: Histidin
+    beschreibung: "Histidin in mg/100g"
+    einheit: "mg"
+
+  aminosaeuren_semi_essentiell:
+    typ: object
+    label: Semi-essentielle AS
+    beschreibung: "Semi-essentielle AS-Profil"
+
+  arginin:
+    typ: number
+    label: Arginin
+    beschreibung: "Arginin in mg/100g"
+    einheit: "mg"
+
+  cystein:
+    typ: number
+    label: Cystein
+    beschreibung: "Cystein in mg/100g"
+    einheit: "mg"
+
+  tyrosin:
+    typ: number
+    label: Tyrosin
+    beschreibung: "Tyrosin in mg/100g"
+    einheit: "mg"
+
+  glutaminsaeure:
+    typ: number
+    label: Glutaminsäure
+    beschreibung: "Glutaminsäure in mg/100g - Umami!"
+    einheit: "mg"
+
+  # Bioaktive Substanzen
+  beta_glucane:
+    typ: number
+    label: Beta-Glucane
+    beschreibung: "Immunstimulierende Polysaccharide in g/100g"
+    einheit: "g"
+
+  ergothionein:
+    typ: number
+    label: Ergothionein
+    beschreibung: "Antioxidans (typisch Pilze!) in mg/100g"
+    einheit: "mg"
+
+  ergosterol:
+    typ: number
+    label: Ergosterol
+    beschreibung: "Provitamin D2 in mg/100g"
+    einheit: "mg"
+
+  chitin:
+    typ: number
+    label: Chitin
+    beschreibung: "Ballaststoff in g/100g"
+    einheit: "g"
+
+  chitosan:
+    typ: number
+    label: Chitosan
+    beschreibung: "Chitin-Derivat in g/100g"
+    einheit: "g"
+
+  polyphenole:
+    typ: number
+    label: Polyphenole
+    beschreibung: "Antioxidantien in mg/100g"
+    einheit: "mg"
+
+  flavonoide:
+    typ: object
+    label: Flavonoide
+    beschreibung: "Flavonoid-Profil"
+
+  carotinoide:
+    typ: object
+    label: Carotinoide
+    beschreibung: "Carotinoid-Profil"
+
+  phytosterole:
+    typ: number
+    label: Phytosterole
+    beschreibung: "Pflanzliche Sterole in mg/100g"
+    einheit: "mg"
+
+  # Bewertungs-Indizes
+  glykaemischer_index:
+    typ: number
+    label: Glykämischer Index
+    beschreibung: "GI (0-100)"
+
+  glykaemische_last:
+    typ: number
+    label: Glykämische Last
+    beschreibung: "GL pro Portion"
+
+  nutri_score:
+    typ: text
+    label: Nutri-Score
+    beschreibung: "A-E Bewertung"
+
+  naehrstoffdichte:
+    typ: number
+    label: Nährstoffdichte
+    beschreibung: "Nährstoffe pro kcal"
+
+  saettigung_index:
+    typ: number
+    label: Sättigungs-Index
+    beschreibung: "Sättigungspotential"
+
+  antinaehrstoffe:
+    typ: object
+    label: Antinährstoffe
+    beschreibung: "Oxalate, Phytate, Lektine"
+
+  # Konservierung erweitert
+  konservierung_methoden:
+    typ: list
+    label: Konservierungsmethoden
+    beschreibung: "Trocknen, Einfrieren, Einlegen, etc."
+
+  konservierung_qualitaet:
+    typ: object
+    label: Konservierungs-Qualität
+    beschreibung: "Qualitätserhalt pro Methode"
+
+  konservierung_haltbarkeit:
+    typ: object
+    label: Konservierungs-Haltbarkeit
+    beschreibung: "Haltbarkeit pro Methode"

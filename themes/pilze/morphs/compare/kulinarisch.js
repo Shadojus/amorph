@@ -1,18 +1,23 @@
 /**
- * KULINARISCH - Compare-Morph für kulinarische Perspektive
+ * KULINARISCH - Compare-Morph für kulinarische Perspektive v2.0
  * 
- * Übersichtlich gruppiert in 4 Hauptbereiche:
+ * Übersichtlich gruppiert in 8 Hauptbereiche:
  * 1. SICHERHEIT & BEWERTUNG
  * 2. GESCHMACK & TEXTUR  
- * 3. ZUBEREITUNG & PAIRINGS
- * 4. LAGERUNG & NÄHRWERT
+ * 3. ZUBEREITUNG & TECHNIKEN
+ * 4. PAIRINGS & KOMPOSITION
+ * 5. LAGERUNG & KONSERVIERUNG
+ * 6. MAKRONÄHRSTOFFE
+ * 7. MIKRONÄHRSTOFFE (Vitamine, Mineralstoffe, Aminosäuren)
+ * 8. BIOAKTIVE & INDIZES
+ * 9. TRADITION & KULTUR
  */
 
 import { debug } from '../../../../observer/debug.js';
 import { createSectionIfNew, createLegende } from '../../../../morphs/compare/base.js';
 import { 
   compareTag, compareList, compareBar, compareRadar, comparePie, 
-  compareRating, compareRange
+  compareRating, compareRange, compareText, compareObject
 } from '../../../../morphs/compare/primitives/index.js';
 
 /**
@@ -84,6 +89,10 @@ export function compareKulinarisch(items, perspektive, config = {}) {
   addSection(sections, items, 'geschmack_sekundaer', 'Nebennoten',
     perspektive.farben?.[1], skipFelder, compareList);
   
+  // Aroma
+  addSection(sections, items, 'aroma_profil', 'Aromastoffe',
+    perspektive.farben?.[1], skipFelder, compareList);
+  
   // Texturen
   addSection(sections, items, 'textur_roh', 'Textur (roh)',
     perspektive.farben?.[1], skipFelder, compareList);
@@ -91,15 +100,19 @@ export function compareKulinarisch(items, perspektive, config = {}) {
   addSection(sections, items, 'textur_gegart', 'Textur (gegart)',
     perspektive.farben?.[1], skipFelder, compareList);
   
+  // Optik
+  addSection(sections, items, 'optik', 'Optik/Ästhetik',
+    perspektive.farben?.[1], skipFelder, compareList);
+  
   // Legacy Profil
   addSection(sections, items, 'profil', 'Geschmacksprofil',
     perspektive.farben?.[1], skipFelder, compareRadar);
   
   // ═══════════════════════════════════════════════════════════════════════════
-  // GRUPPE 3: ZUBEREITUNG & PAIRINGS
+  // GRUPPE 3: ZUBEREITUNG & TECHNIKEN
   // ═══════════════════════════════════════════════════════════════════════════
   
-  addGroupHeader(sections, '🍳 Zubereitung & Pairings', 'cooking');
+  addGroupHeader(sections, '🍳 Zubereitung', 'cooking');
   
   // Methoden als Tags
   addSection(sections, items, 'zubereitung_methoden', 'Zubereitungsarten',
@@ -109,9 +122,30 @@ export function compareKulinarisch(items, perspektive, config = {}) {
   addObjectArraySection(sections, items, 'zubereitung_optimal', 'Beste Methoden',
     perspektive.farben?.[2], skipFelder);
   
+  // Temperaturen & Zeiten
+  addSection(sections, items, 'zubereitung_temperaturen', 'Temperaturen',
+    perspektive.farben?.[2], skipFelder, compareObject);
+  
+  addSection(sections, items, 'zubereitung_zeiten', 'Garzeiten',
+    perspektive.farben?.[2], skipFelder, compareObject);
+  
+  // Spezielle Techniken
+  addSection(sections, items, 'zubereitung_techniken', 'Spezielle Techniken',
+    perspektive.farben?.[2], skipFelder, compareList);
+  
   // Fehler vermeiden
   addSection(sections, items, 'zubereitung_fehler', 'Fehler vermeiden',
     perspektive.farben?.[2], skipFelder, compareList);
+  
+  // Vorbereitung
+  addSection(sections, items, 'vorbereitung', 'Vorbereitung',
+    perspektive.farben?.[2], skipFelder, compareList);
+  
+  // ═══════════════════════════════════════════════════════════════════════════
+  // GRUPPE 4: PAIRINGS & KOMPOSITION
+  // ═══════════════════════════════════════════════════════════════════════════
+  
+  addGroupHeader(sections, '🥘 Pairings & Komposition', 'pairings');
   
   // Pairings
   addObjectArraySection(sections, items, 'pairings_klassisch', 'Klassische Pairings',
@@ -123,22 +157,35 @@ export function compareKulinarisch(items, perspektive, config = {}) {
   addSection(sections, items, 'pairings_getraenke', 'Getränke',
     perspektive.farben?.[3], skipFelder, compareList);
   
-  // Synergien
+  // Wissenschaftliche Pairings
+  addSection(sections, items, 'pairings_wissenschaft', 'Food Pairing Science',
+    perspektive.farben?.[3], skipFelder, compareObject);
+  
+  // Synergien & Kontraste
   addSection(sections, items, 'synergien', 'Geschmacks-Synergien',
     perspektive.farben?.[3], skipFelder, compareList);
   
+  addSection(sections, items, 'kontraste', 'Kontraste',
+    perspektive.farben?.[3], skipFelder, compareList);
+  
   // ═══════════════════════════════════════════════════════════════════════════
-  // GRUPPE 4: LAGERUNG & NÄHRWERT
+  // GRUPPE 5: LAGERUNG & KONSERVIERUNG
   // ═══════════════════════════════════════════════════════════════════════════
   
-  addGroupHeader(sections, '📦 Lagerung & Nährwert', 'storage');
+  addGroupHeader(sections, '📦 Lagerung & Konservierung', 'storage');
   
   // Lagerung
   addSection(sections, items, 'lagerung_temperatur', 'Lagertemperatur',
     perspektive.farben?.[0], skipFelder, compareRange);
   
+  addSection(sections, items, 'lagerung_luftfeuchtigkeit', 'Luftfeuchtigkeit',
+    perspektive.farben?.[0], skipFelder, compareText);
+  
+  addSection(sections, items, 'lagerung_behaelter', 'Behälter',
+    perspektive.farben?.[0], skipFelder, compareText);
+  
   addSection(sections, items, 'lagerung_haltbarkeit_tage', 'Haltbarkeit (Tage)',
-    perspektive.farben?.[0], skipFelder, compareBar);
+    perspektive.farben?.[0], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'Tage' }));
   
   addSection(sections, items, 'lagerung_indikatoren', 'Frische-Check',
     perspektive.farben?.[0], skipFelder, compareList);
@@ -147,37 +194,284 @@ export function compareKulinarisch(items, perspektive, config = {}) {
   addObjectArraySection(sections, items, 'konservierung', 'Konservierung',
     perspektive.farben?.[0], skipFelder);
   
-  // Nährwerte
+  addSection(sections, items, 'konservierung_methoden', 'Konservierungsmethoden',
+    perspektive.farben?.[0], skipFelder, compareList);
+  
+  addSection(sections, items, 'konservierung_qualitaet', 'Qualitätserhalt',
+    perspektive.farben?.[0], skipFelder, compareObject);
+  
+  addSection(sections, items, 'konservierung_haltbarkeit', 'Haltbarkeit (Konserviert)',
+    perspektive.farben?.[0], skipFelder, compareObject);
+  
+  // ═══════════════════════════════════════════════════════════════════════════
+  // GRUPPE 6: MAKRONÄHRSTOFFE
+  // ═══════════════════════════════════════════════════════════════════════════
+  
+  addGroupHeader(sections, '🍽️ Makronährstoffe', 'macros');
+  
+  // Nährwerte Übersicht
   addSection(sections, items, 'naehrwerte', 'Makronährstoffe',
     perspektive.farben?.[1], skipFelder, comparePie);
   
-  // Nährwert-Highlights & Bioaktive als spezielle Tabelle
-  addNutrientHighlights(sections, items, 'naehrwert_highlights', 'Nährwert-Highlights',
-    perspektive.farben?.[1], skipFelder);
+  // Energie
+  addSection(sections, items, 'energie_kcal', 'Energie (kcal)',
+    perspektive.farben?.[1], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'kcal' }));
   
+  addSection(sections, items, 'energie_kj', 'Energie (kJ)',
+    perspektive.farben?.[1], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'kJ' }));
+  
+  // Makros
+  addSection(sections, items, 'protein', 'Protein',
+    perspektive.farben?.[1], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'g' }));
+  
+  addSection(sections, items, 'protein_qualitaet', 'Protein-Qualität',
+    perspektive.farben?.[1], skipFelder, compareObject);
+  
+  addSection(sections, items, 'fett', 'Fett gesamt',
+    perspektive.farben?.[1], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'g' }));
+  
+  addSection(sections, items, 'fett_gesaettigt', 'Gesättigte FS',
+    perspektive.farben?.[1], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'g' }));
+  
+  addSection(sections, items, 'fett_einfach_ungesaettigt', 'Einfach ungesättigt',
+    perspektive.farben?.[1], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'g' }));
+  
+  addSection(sections, items, 'fett_mehrfach_ungesaettigt', 'Mehrfach ungesättigt',
+    perspektive.farben?.[1], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'g' }));
+  
+  addSection(sections, items, 'omega_3', 'Omega-3',
+    perspektive.farben?.[1], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  addSection(sections, items, 'omega_6', 'Omega-6',
+    perspektive.farben?.[1], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  addSection(sections, items, 'kohlenhydrate', 'Kohlenhydrate',
+    perspektive.farben?.[1], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'g' }));
+  
+  addSection(sections, items, 'zucker', 'Zucker',
+    perspektive.farben?.[1], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'g' }));
+  
+  addSection(sections, items, 'ballaststoffe', 'Ballaststoffe',
+    perspektive.farben?.[1], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'g' }));
+  
+  addSection(sections, items, 'ballaststoffe_loeslich', 'Lösliche Ballaststoffe',
+    perspektive.farben?.[1], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'g' }));
+  
+  addSection(sections, items, 'ballaststoffe_unloeslich', 'Unlösliche Ballaststoffe',
+    perspektive.farben?.[1], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'g' }));
+  
+  addSection(sections, items, 'wasser', 'Wassergehalt',
+    perspektive.farben?.[1], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: '%' }));
+  
+  // ═══════════════════════════════════════════════════════════════════════════
+  // GRUPPE 7: MIKRONÄHRSTOFFE
+  // ═══════════════════════════════════════════════════════════════════════════
+  
+  addGroupHeader(sections, '💊 Vitamine & Mineralstoffe', 'micros');
+  
+  // Vitamine Übersicht
+  addSection(sections, items, 'vitamine', 'Vitamine Übersicht',
+    perspektive.farben?.[2], skipFelder, compareObject);
+  
+  // Einzelne Vitamine
+  addSection(sections, items, 'vitamin_a', 'Vitamin A',
+    perspektive.farben?.[2], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'µg' }));
+  
+  addSection(sections, items, 'beta_carotin', 'Beta-Carotin',
+    perspektive.farben?.[2], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'µg' }));
+  
+  addSection(sections, items, 'vitamin_b1', 'B1 (Thiamin)',
+    perspektive.farben?.[2], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  addSection(sections, items, 'vitamin_b2', 'B2 (Riboflavin)',
+    perspektive.farben?.[2], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  addSection(sections, items, 'vitamin_b3', 'B3 (Niacin)',
+    perspektive.farben?.[2], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  addSection(sections, items, 'vitamin_b5', 'B5 (Pantothensäure)',
+    perspektive.farben?.[2], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  addSection(sections, items, 'vitamin_b6', 'B6 (Pyridoxin)',
+    perspektive.farben?.[2], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  addSection(sections, items, 'vitamin_b7', 'B7 (Biotin)',
+    perspektive.farben?.[2], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'µg' }));
+  
+  addSection(sections, items, 'vitamin_b9', 'B9 (Folsäure)',
+    perspektive.farben?.[2], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'µg' }));
+  
+  addSection(sections, items, 'vitamin_b12', 'B12 (Cobalamin)',
+    perspektive.farben?.[2], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'µg' }));
+  
+  addSection(sections, items, 'vitamin_c', 'Vitamin C',
+    perspektive.farben?.[2], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  addSection(sections, items, 'vitamin_d', 'Vitamin D',
+    perspektive.farben?.[2], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'µg' }));
+  
+  addSection(sections, items, 'vitamin_d2', 'Vitamin D2 (Pilze!)',
+    perspektive.farben?.[2], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'µg' }));
+  
+  addSection(sections, items, 'vitamin_e', 'Vitamin E',
+    perspektive.farben?.[2], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  addSection(sections, items, 'vitamin_k', 'Vitamin K',
+    perspektive.farben?.[2], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'µg' }));
+  
+  // Mineralstoffe Übersicht
+  addSection(sections, items, 'mineralstoffe', 'Mineralstoffe Übersicht',
+    perspektive.farben?.[3], skipFelder, compareObject);
+  
+  // Einzelne Mineralstoffe
+  addSection(sections, items, 'kalium', 'Kalium',
+    perspektive.farben?.[3], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  addSection(sections, items, 'natrium', 'Natrium',
+    perspektive.farben?.[3], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  addSection(sections, items, 'calcium', 'Calcium',
+    perspektive.farben?.[3], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  addSection(sections, items, 'magnesium', 'Magnesium',
+    perspektive.farben?.[3], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  addSection(sections, items, 'phosphor', 'Phosphor',
+    perspektive.farben?.[3], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  addSection(sections, items, 'eisen', 'Eisen',
+    perspektive.farben?.[3], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  addSection(sections, items, 'zink', 'Zink',
+    perspektive.farben?.[3], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  addSection(sections, items, 'kupfer', 'Kupfer',
+    perspektive.farben?.[3], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  addSection(sections, items, 'mangan', 'Mangan',
+    perspektive.farben?.[3], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  addSection(sections, items, 'selen', 'Selen (wichtig!)',
+    perspektive.farben?.[3], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'µg' }));
+  
+  addSection(sections, items, 'jod', 'Jod',
+    perspektive.farben?.[3], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'µg' }));
+  
+  addSection(sections, items, 'chrom', 'Chrom',
+    perspektive.farben?.[3], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'µg' }));
+  
+  addSection(sections, items, 'molybdaen', 'Molybdän',
+    perspektive.farben?.[3], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'µg' }));
+  
+  // Aminosäuren
+  addGroupHeader(sections, '🧬 Aminosäuren', 'amino');
+  
+  addSection(sections, items, 'aminosaeuren', 'Aminosäuren Profil',
+    perspektive.farben?.[0], skipFelder, compareObject);
+  
+  addSection(sections, items, 'aminosaeuren_essentiell', 'Essentielle AS',
+    perspektive.farben?.[0], skipFelder, compareObject);
+  
+  // Einzelne Aminosäuren (nur die wichtigsten für Vergleich)
+  addSection(sections, items, 'leucin', 'Leucin',
+    perspektive.farben?.[0], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  addSection(sections, items, 'lysin', 'Lysin',
+    perspektive.farben?.[0], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  addSection(sections, items, 'tryptophan', 'Tryptophan',
+    perspektive.farben?.[0], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  addSection(sections, items, 'glutaminsaeure', 'Glutaminsäure (Umami!)',
+    perspektive.farben?.[0], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  // ═══════════════════════════════════════════════════════════════════════════
+  // GRUPPE 8: BIOAKTIVE & INDIZES
+  // ═══════════════════════════════════════════════════════════════════════════
+  
+  addGroupHeader(sections, '⚗️ Bioaktive Substanzen & Indizes', 'bioactive');
+  
+  // Bioaktive Highlights
   addNutrientHighlights(sections, items, 'bioaktive_substanzen', 'Bioaktive Stoffe',
     perspektive.farben?.[1], skipFelder);
   
+  addNutrientHighlights(sections, items, 'naehrwert_highlights', 'Nährwert-Highlights',
+    perspektive.farben?.[1], skipFelder);
+  
+  // Einzelne Bioaktive
+  addSection(sections, items, 'beta_glucane', 'Beta-Glucane',
+    perspektive.farben?.[1], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'g' }));
+  
+  addSection(sections, items, 'ergothionein', 'Ergothionein (Antioxidans)',
+    perspektive.farben?.[1], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  addSection(sections, items, 'ergosterol', 'Ergosterol (Provitamin D)',
+    perspektive.farben?.[1], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  addSection(sections, items, 'chitin', 'Chitin',
+    perspektive.farben?.[1], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'g' }));
+  
+  addSection(sections, items, 'polyphenole', 'Polyphenole',
+    perspektive.farben?.[1], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, einheit: 'mg' }));
+  
+  // Indizes
+  addSection(sections, items, 'glykaemischer_index', 'Glykämischer Index',
+    perspektive.farben?.[2], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg, max: 100 }));
+  
+  addSection(sections, items, 'glykaemische_last', 'Glykämische Last',
+    perspektive.farben?.[2], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg }));
+  
+  addSection(sections, items, 'nutri_score', 'Nutri-Score',
+    perspektive.farben?.[2], skipFelder, compareTag);
+  
+  addSection(sections, items, 'naehrstoffdichte', 'Nährstoffdichte',
+    perspektive.farben?.[2], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg }));
+  
+  addSection(sections, items, 'saettigung_index', 'Sättigungs-Index',
+    perspektive.farben?.[2], skipFelder, (mapped, cfg) => compareBar(mapped, { ...cfg }));
+  
+  addSection(sections, items, 'bioverfuegbarkeit', 'Bioverfügbarkeit',
+    perspektive.farben?.[2], skipFelder, compareObject);
+  
+  addSection(sections, items, 'antinaehrstoffe', 'Antinährstoffe',
+    perspektive.farben?.[2], skipFelder, compareObject);
+  
+  addSection(sections, items, 'wechselwirkungen', 'Wechselwirkungen',
+    perspektive.farben?.[2], skipFelder, compareList);
+  
   // ═══════════════════════════════════════════════════════════════════════════
-  // GRUPPE 5: TRADITION & KULTUR (optional)
+  // GRUPPE 9: TRADITION & KULTUR
   // ═══════════════════════════════════════════════════════════════════════════
   
   // Nur anzeigen wenn Daten vorhanden
   const hasTradition = items.some(i => 
-    i.data.traditionen_namen?.length || i.data.traditionen_gerichte?.length
+    i.data.traditionen_namen?.length || i.data.traditionen_gerichte?.length ||
+    i.data.traditionen || i.data.geschichte || i.data.nachhaltigkeit
   );
   
   if (hasTradition) {
     addGroupHeader(sections, '🌍 Tradition & Kultur', 'culture');
     
     addSection(sections, items, 'traditionen_namen', 'Regionale Namen',
-      perspektive.farben?.[2], skipFelder, compareList);
+      perspektive.farben?.[3], skipFelder, compareList);
     
     addSection(sections, items, 'traditionen_gerichte', 'Klassische Gerichte',
-      perspektive.farben?.[2], skipFelder, compareList);
+      perspektive.farben?.[3], skipFelder, compareList);
+    
+    addSection(sections, items, 'traditionen', 'Kulturelle Verwendung',
+      perspektive.farben?.[3], skipFelder, compareObject);
     
     addSection(sections, items, 'saisonalitaet', 'Saison',
-      perspektive.farben?.[2], skipFelder, compareTag);
+      perspektive.farben?.[3], skipFelder, compareTag);
+    
+    addSection(sections, items, 'verfuegbarkeit', 'Verfügbarkeit',
+      perspektive.farben?.[3], skipFelder, compareObject);
+    
+    addSection(sections, items, 'nachhaltigkeit', 'Nachhaltigkeit',
+      perspektive.farben?.[3], skipFelder, compareObject);
+    
+    addSection(sections, items, 'geschichte', 'Geschichte',
+      perspektive.farben?.[3], skipFelder, compareText);
   }
   
   container.appendChild(sections);

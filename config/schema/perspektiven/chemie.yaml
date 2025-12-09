@@ -1,5 +1,26 @@
-# Perspektive: Chemie - Molekular-Violett
-# Synthetisches Violett wie Laboranalysen und Chromatographie
+# ═══════════════════════════════════════════════════════════════════════════════
+# PERSPEKTIVE: CHEMIE
+# Molekular-chemische Perspektive für Pilzanalytik
+# Version: 1.0.0 | Schema basiert auf vollständigem DB-Modell
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# ZIELGRUPPE:
+# - Naturstoffchemiker & Pharmazeuten
+# - Lebensmittelchemiker & Analytiker
+# - Biotechnologen & Enzymologen
+# - Mykotoxikologen
+# - Aromachemiker
+# - Metabolomik-Forscher
+#
+# DESIGN-PHILOSOPHIE:
+# Vollständige Abdeckung aller chemischen Aspekte von Pilzen:
+# - Primärmetabolite (Nährstoffe, Makros, Vitamine, Mineralien)
+# - Sekundärmetabolite (Bioaktive Verbindungen, Toxine)
+# - Volatile Verbindungen (Aromastoffe, Geruchsprofil)
+# - Enzyme (Ligninolytisch, Industriell)
+# - Analytische Daten (MS, NMR, Chromatographie)
+#
+# ═══════════════════════════════════════════════════════════════════════════════
 
 id: chemie
 name: Chemie
@@ -12,56 +33,739 @@ farben:
   - "rgba(145, 105, 225, 0.65)"   # Labor-Magenta
   - "rgba(130, 90, 210, 0.65)"    # Synthese-Violett
 
-# Welche Felder gehören zu dieser Perspektive?
+# ═══════════════════════════════════════════════════════════════════════════════
+# FELDER - Flache Struktur nach AMORPH-Konvention
+# ═══════════════════════════════════════════════════════════════════════════════
+
 felder:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # BASIS-IDENTIFIKATION
+  # ─────────────────────────────────────────────────────────────────────────────
   - bild
   - name
-  - wissenschaftlich
-  # Primary Metabolites
-  - naehrwerte
-  - makronaehrstoffe
-  - aminosaeuren
-  - fettsaeuren
-  - kohlenhydrate
-  - vitamine
-  - mineralstoffe
-  # Secondary Metabolites
-  - sekundaermetabolite
-  - verbindungsklassen
-  - bioaktive_verbindungen
-  - biosynthese_pfade
-  - chemotyp
-  # Volatile
-  - volatilom
-  - aromastoffe
-  - geruchsprofil
-  # Enzymes
-  - enzyme
-  - ligninolytische_enzyme
-  - industrielle_enzyme
-  # Analysis
-  - chemische_reaktionen
-  - pigmente
-  - wirkstoffe
+  - wissenschaftlicher_name
+  - gattung
+  - familie
+  - ordnung
+  - klasse
 
-# Keywords für automatische Perspektiven-Erkennung bei Suche
+  # ─────────────────────────────────────────────────────────────────────────────
+  # CHEMOTYP & PROBE
+  # Chemische Varianten und Probencharakterisierung
+  # ─────────────────────────────────────────────────────────────────────────────
+  - chemotyp_name
+  - chemotyp_stamm
+  - chemotyp_herkunft
+  - chemotyp_charakteristische_verbindungen
+  - chemotyp_biosynthese_cluster
+  - chemotyp_kulturbedingungen_temp
+  - chemotyp_kulturbedingungen_ph
+  - chemotyp_kulturbedingungen_substrat
+  - chemotyp_kulturbedingungen_licht
+  
+  - probe_code
+  - probe_typ
+  - probe_entwicklungsstadium
+  - probe_gewebe
+  - probe_entnahme_datum
+  - probe_lagerung_methode
+  - probe_lagerung_temp
+  - probe_lagerung_dauer
+  - probe_trockenmasse_prozent
+  - probe_extraktionsmethode
+  - probe_qualitaetsscore
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # NÄHRWERTE - Grundlegende Zusammensetzung
+  # ─────────────────────────────────────────────────────────────────────────────
+  - naehrwerte
+  - energie_kcal
+  - energie_kj
+  - wasser_gehalt
+  - asche_gehalt
+  - ph_wert
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # MAKRONÄHRSTOFFE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - makronaehrstoffe
+  - protein_gesamt
+  - protein_verdaulich
+  - fett_gesamt
+  - kohlenhydrate_gesamt
+  - kohlenhydrate_verfuegbar
+  - ballaststoffe_gesamt
+  - ballaststoffe_loeslich
+  - ballaststoffe_unloeslich
+  - chitin_gehalt
+  - beta_glucan_gesamt
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # AMINOSÄUREN - Vollständiges Profil
+  # ─────────────────────────────────────────────────────────────────────────────
+  - aminosaeuren
+  - aminosaeuren_essentiell
+  # Essentielle AS
+  - histidin
+  - isoleucin
+  - leucin
+  - lysin
+  - methionin
+  - phenylalanin
+  - threonin
+  - tryptophan
+  - valin
+  # Nicht-essentielle AS
+  - alanin
+  - arginin
+  - asparaginsaeure
+  - cystein
+  - glutaminsaeure
+  - glycin
+  - prolin
+  - serin
+  - tyrosin
+  # Spezielle AS
+  - gaba
+  - ergothionein
+  # Qualitätsscores
+  - aminosaeure_score
+  - pdcaas
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # FETTSÄUREN - Lipidprofil
+  # ─────────────────────────────────────────────────────────────────────────────
+  - fettsaeuren
+  - sfa_gesamt
+  - palmitinsaeure_c16_0
+  - stearinsaeure_c18_0
+  - mufa_gesamt
+  - oelsaeure_c18_1
+  - pufa_gesamt
+  - linolsaeure_c18_2
+  - alpha_linolensaeure_c18_3
+  - omega6_omega3_ratio
+  - pufa_sfa_ratio
+  - ergosterol
+  - fungisterol
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # KOHLENHYDRATE - Detailliert
+  # ─────────────────────────────────────────────────────────────────────────────
+  - kohlenhydrate
+  - glucose
+  - fructose
+  - trehalose
+  - mannitol
+  - arabitol
+  - glykogen
+  - beta_glucan_1_3
+  - beta_glucan_1_6
+  - beta_glucan_1_3_1_6
+  - chitin
+  - chitosan
+  - mannane
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # VITAMINE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - vitamine
+  - thiamin_b1
+  - riboflavin_b2
+  - niacin_b3
+  - pantothensaeure_b5
+  - pyridoxin_b6
+  - biotin_b7
+  - folsaeure_b9
+  - cobalamin_b12
+  - vitamin_d2_ergocalciferol
+  - vitamin_d3_cholecalciferol
+  - vitamin_d_gesamt_iu
+  - vitamin_c
+  - vitamin_e_tocopherol
+  - vitamin_k
+  - uv_behandelt
+  - uv_dosis
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # MINERALSTOFFE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - mineralstoffe
+  # Makromineralien
+  - kalium
+  - phosphor
+  - magnesium
+  - calcium
+  - natrium
+  - schwefel
+  # Spurenelemente
+  - eisen
+  - zink
+  - kupfer
+  - mangan
+  - selen
+  - chrom
+  - molybdaen
+  - jod
+  # Potentiell toxische Elemente
+  - cadmium
+  - blei
+  - quecksilber
+  - arsen
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SEKUNDÄRMETABOLITE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - sekundaermetabolite
+  - sekundaermetabolit_name
+  - sekundaermetabolit_trivialname
+  - sekundaermetabolit_synonyme
+  - sekundaermetabolit_cas_nummer
+  - sekundaermetabolit_pubchem_cid
+  - sekundaermetabolit_chemspider_id
+  - sekundaermetabolit_kegg_id
+  - sekundaermetabolit_chebi_id
+  - sekundaermetabolit_smiles
+  - sekundaermetabolit_inchi
+  - sekundaermetabolit_inchi_key
+  - sekundaermetabolit_molekularformel
+  - sekundaermetabolit_molekulargewicht
+  - sekundaermetabolit_exakte_masse
+  - sekundaermetabolit_logp
+  - sekundaermetabolit_pka
+  - sekundaermetabolit_schmelzpunkt
+  - sekundaermetabolit_siedepunkt
+  - sekundaermetabolit_loeslichkeit
+  - sekundaermetabolit_konzentration
+  - sekundaermetabolit_konzentration_einheit
+  - sekundaermetabolit_konzentration_bereich
+  - sekundaermetabolit_nachweisgrenze
+  - sekundaermetabolit_neu_entdeckt
+  - sekundaermetabolit_erstbeschreibung_jahr
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # VERBINDUNGSKLASSEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - verbindungsklassen
+  - verbindungsklasse_name
+  - verbindungsklasse_hierarchie_ebene
+  - verbindungsklasse_pfad
+  - verbindungsklasse_biosynthese_ursprung
+  - verbindungsklasse_charakteristische_merkmale
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # BIOAKTIVE VERBINDUNGEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - bioaktive_verbindungen
+  - bioaktiv_wirkungstyp
+  - bioaktiv_molekulares_target
+  - bioaktiv_wirkmechanismus
+  - bioaktiv_ic50_wert
+  - bioaktiv_ic50_einheit
+  - bioaktiv_ic50_zelltyp
+  - bioaktiv_ic50_assay
+  - bioaktiv_ec50_wert
+  - bioaktiv_ec50_einheit
+  - bioaktiv_mic_wert
+  - bioaktiv_mic_einheit
+  - bioaktiv_mic_organismus
+  - bioaktiv_ld50_wert
+  - bioaktiv_ld50_einheit
+  - bioaktiv_ld50_tiermodell
+  - bioaktiv_ld50_applikationsweg
+  - bioaktiv_klinische_studien
+  - bioaktiv_zugelassenes_medikament
+  - bioaktiv_medikament_name
+  - bioaktiv_patente
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # BIOSYNTHESE-PFADE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - biosynthese_pfade
+  - biosynthese_pfad_name
+  - biosynthese_pfad_typ
+  - biosynthese_schluesselenzyme
+  - biosynthese_vorstufen
+  - biosynthese_intermediat_verbindungen
+  - biosynthese_gen_cluster_name
+  - biosynthese_gen_cluster_groesse_kb
+  - biosynthese_gen_cluster_gene_anzahl
+  - biosynthese_gen_cluster_mibig_id
+  - biosynthese_kegg_pathway
+  - biosynthese_regulation
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # VOLATILOM - Flüchtige Verbindungen
+  # ─────────────────────────────────────────────────────────────────────────────
+  - volatilom
+  - volatilom_analyse_methode
+  - volatilom_extraktionsmethode
+  - volatilom_spme_faser
+  - volatilom_gesamtfluechtige
+  - volatilom_verbindungen_anzahl
+  - volatilom_hauptkomponenten
+  - volatilom_geruchsschwellenwerte
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # AROMASTOFFE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - aromastoffe
+  - aromastoff_name
+  - aromastoff_cas_nummer
+  - aromastoff_verbindungsklasse
+  - aromastoff_konzentration
+  - aromastoff_konzentration_einheit
+  - aromastoff_retention_index
+  - aromastoff_geruchsschwelle
+  - aromastoff_oav
+  - aromastoff_geruchsqualitaet
+  - aromastoff_identifizierung
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # GERUCHSPROFIL - Sensorik
+  # ─────────────────────────────────────────────────────────────────────────────
+  - geruchsprofil
+  - geruch_methode
+  - geruch_panel_groesse
+  - geruch_pilzartig
+  - geruch_erdig
+  - geruch_holzig
+  - geruch_nussig
+  - geruch_fruchtig
+  - geruch_wuerzig
+  - geruch_schwefelartig
+  - geruch_blumig
+  - geruch_umami
+  - geruch_suess
+  - geruch_rauchig
+  - geruch_muffig
+  - geruch_ranzig
+  - geruch_gesamtintensitaet
+  - geruch_freitext
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ENZYME
+  # ─────────────────────────────────────────────────────────────────────────────
+  - enzyme
+  - enzym_name
+  - enzym_name_systematisch
+  - enzym_ec_nummer
+  - enzym_klasse
+  - enzym_uniprot_id
+  - enzym_gen_name
+  - enzym_molekulargewicht_kda
+  - enzym_untereinheiten
+  - enzym_kofaktoren
+  - enzym_prosthetische_gruppen
+  - enzym_km_wert
+  - enzym_km_einheit
+  - enzym_km_substrat
+  - enzym_vmax_wert
+  - enzym_vmax_einheit
+  - enzym_kcat
+  - enzym_kcat_km
+  - enzym_ph_optimum
+  - enzym_ph_stabil_min
+  - enzym_ph_stabil_max
+  - enzym_temperatur_optimum
+  - enzym_temperatur_stabil_min
+  - enzym_temperatur_stabil_max
+  - enzym_thermostabil
+  - enzym_spezifische_aktivitaet
+  - enzym_aktivitaet_einheit
+  - enzym_substrate
+  - enzym_inhibitoren
+  - enzym_industrielle_anwendungen
+  - enzym_kommerziell_verfuegbar
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # LIGNINOLYTISCHE ENZYME
+  # ─────────────────────────────────────────────────────────────────────────────
+  - ligninolytische_enzyme
+  - lignin_enzym_typ
+  - lignin_laccase_typ
+  - lignin_redox_potential
+  - lignin_kupfer_zentren_t1
+  - lignin_kupfer_zentren_t2
+  - lignin_kupfer_zentren_t3
+  - lignin_abts_aktivitaet
+  - lignin_guaiacol_aktivitaet
+  - lignin_syringaldazin_aktivitaet
+  - lignin_veratryl_alkohol_aktivitaet
+  - lignin_abbau_rate
+  - lignin_farbstoff_entfaerbung
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SPEKTROSKOPIE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - spektroskopie
+  - spektroskopie_methode
+  - spektroskopie_geraet
+  - uv_vis_lambda_max
+  - uv_vis_extinktionskoeffizient
+  - uv_vis_loesungsmittel
+  - ir_charakteristische_banden
+  - fluoreszenz_anregung
+  - fluoreszenz_emission
+  - fluoreszenz_quantenausbeute
+  - spektroskopie_rohdaten_datei
+  - spektroskopie_rohdaten_format
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # MASSENSPEKTROMETRIE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - massenspektrometrie
+  - ms_methode
+  - ms_ionisierungsmodus
+  - ms_typ
+  - ms_geraet
+  - ms_molekuelion_m_z
+  - ms_molekuelion_typ
+  - ms_molekuelion_rel_intensitaet
+  - ms_hrms_gemessen
+  - ms_hrms_berechnet
+  - ms_hrms_abweichung_ppm
+  - ms_fragmente
+  - ms_basispeak_m_z
+  - ms_kollisionsenergie
+  - ms_precursor_ion
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # NMR-DATEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - nmr_daten
+  - nmr_kern
+  - nmr_frequenz_mhz
+  - nmr_loesungsmittel
+  - nmr_referenz
+  - nmr_temperatur_k
+  - nmr_h_signale
+  - nmr_c_signale
+  - nmr_cosy_korrelationen
+  - nmr_hsqc_korrelationen
+  - nmr_hmbc_korrelationen
+  - nmr_noesy_korrelationen
+  - nmr_rohdaten_datei
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # CHROMATOGRAPHIE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - chromatographie
+  - chrom_methode
+  - chrom_geraet
+  - chrom_saeule_name
+  - chrom_saeule_typ
+  - chrom_saeule_laenge_mm
+  - chrom_saeule_innendurchmesser_mm
+  - chrom_saeule_partikelgroesse_um
+  - chrom_mobile_phase_a
+  - chrom_mobile_phase_b
+  - chrom_gradient
+  - chrom_flussrate
+  - chrom_temperatur
+  - chrom_detektor
+  - chrom_detektions_wellenlaenge
+  - chrom_laufzeit_min
+  - chrom_peaks
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # PIGMENTE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - pigmente
+  - pigment_farbe
+  - pigment_farbe_hex
+  - pigment_cielab_l
+  - pigment_cielab_a
+  - pigment_cielab_b
+  - pigment_klasse
+  - pigment_lambda_max
+  - pigment_lichtechtheit
+  - pigment_ph_abhaengigkeit
+  - pigment_industrielle_nutzung
+  - pigment_lebensmittelzulassung
+  - pigment_e_nummer
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # WIRKSTOFFE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - wirkstoffe
+  - wirkstoff_kategorie
+  - wirkstoff_hauptwirkstoffe
+  - wirkstoff_gesamtgehalt
+  - wirkstoff_gesamtgehalt_einheit
+  - wirkstoff_standardisiert_auf
+  - wirkstoff_therapeutische_dosis_min
+  - wirkstoff_therapeutische_dosis_max
+  - wirkstoff_therapeutische_dosis_einheit
+  - wirkstoff_therapeutische_dosis_form
+  - wirkstoff_wechselwirkungen
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # TOXIZITÄT
+  # ─────────────────────────────────────────────────────────────────────────────
+  - toxizitaet
+  - toxisch
+  - toxizitaets_klasse
+  - toxine
+  - toxin_symptome
+  - toxin_latenzzeit_min
+  - toxin_latenzzeit_max
+  - toxin_zielorgan
+  - toxin_antidot
+  - toxin_behandlung
+  - toxin_verwechslungsgefahr
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # DATENQUALITÄT & PROVENIENZ
+  # ─────────────────────────────────────────────────────────────────────────────
+  - datenquelle
+  - vertrauensniveau
+  - messmethode
+  - labor
+  - akkreditierung
+  - messdatum
+  - anzahl_messungen
+  - standardabweichung
+  - variationskoeffizient
+  - nachweisgrenze
+  - bestimmungsgrenze
+  - validiert
+  - validierungsmethode
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # LITERATUR-REFERENZEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - chemie_literatur
+  - literatur_doi
+  - literatur_pubmed_id
+  - literatur_titel
+  - literatur_autoren
+  - literatur_journal
+  - literatur_jahr
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ENUMERATIONEN - Für Dropdown-Felder
+# ═══════════════════════════════════════════════════════════════════════════════
+
+enumerationen:
+  probe_typ:
+    - fruchtkörper
+    - myzel
+    - sporen
+    - extrakt
+    - kulturmedium
+  
+  entwicklungsstadium:
+    - primordia
+    - jung
+    - reif
+    - überreif
+    - sporulierend
+  
+  gewebe:
+    - gesamt
+    - hut
+    - stiel
+    - lamellen
+    - ring
+    - volva
+    - rhizomorphen
+  
+  lagerung_methode:
+    - frisch
+    - getrocknet
+    - gefroren
+    - lyophilisiert
+  
+  konzentration_einheit:
+    - mg/100g
+    - µg/g
+    - mg/g
+    - "%"
+    - ppm
+    - ppb
+  
+  biosynthese_ursprung:
+    - MVA
+    - MEP
+    - PKS
+    - NRPS
+    - Hybrid
+    - Shikimat
+    - Aminosäure
+  
+  wirkungstyp:
+    - antimikrobiell
+    - antiviral
+    - antifungal
+    - antitumoral
+    - immunmodulatorisch
+    - antioxidativ
+    - entzündungshemmend
+    - neuroprotektiv
+    - hepatoprotektiv
+    - kardioprotektiv
+    - antidiabetisch
+    - cholesterinsenkend
+    - blutdrucksenkend
+    - adaptogen
+    - nootropisch
+    - psychoaktiv
+    - toxisch
+  
+  enzymklasse:
+    - Oxidoreduktasen
+    - Transferasen
+    - Hydrolasen
+    - Lyasen
+    - Isomerasen
+    - Ligasen
+    - Translokasen
+  
+  lignin_enzym_typ:
+    - Laccase
+    - Lignin_Peroxidase
+    - Mangan_Peroxidase
+    - Versatile_Peroxidase
+    - Dye_decolorizing_Peroxidase
+    - Aryl_Alkohol_Oxidase
+    - Glyoxal_Oxidase
+  
+  aromastoff_klasse:
+    - Aldehyde
+    - Alkohole
+    - Ketone
+    - Ester
+    - Terpene
+    - Säuren
+    - Schwefelverbindungen
+    - Stickstoffverbindungen
+    - Phenole
+    - Furane
+    - Pyrazine
+    - C8-Verbindungen
+    - Sonstige
+  
+  pigment_klasse:
+    - Melanin
+    - Carotinoid
+    - Azaphilon
+    - Anthrachinon
+    - Naphthochinon
+    - Xanthon
+    - Betalain
+    - Phenoxazin
+    - Indigoid
+    - Sonstige
+  
+  wirkstoff_kategorie:
+    - Antibiotikum
+    - Immunmodulator
+    - Antitumoral
+    - Psychoaktiv
+    - Toxin
+    - Adaptogen
+    - Nootropikum
+  
+  toxizitaets_klasse:
+    - essbar
+    - essbar_mit_vorsicht
+    - schwach_giftig
+    - giftig
+    - stark_giftig
+    - toedlich_giftig
+  
+  spektroskopie_methode:
+    - UV-Vis
+    - IR
+    - Raman
+    - Fluoreszenz
+    - CD
+    - ORD
+  
+  ms_methode:
+    - EI-MS
+    - ESI-MS
+    - MALDI-MS
+    - CI-MS
+    - FAB-MS
+    - APCI-MS
+  
+  chrom_methode:
+    - HPLC
+    - UHPLC
+    - GC
+    - GC-MS
+    - LC-MS
+    - LC-MS/MS
+    - TLC
+    - CE
+  
+  datenquelle_typ:
+    - Eigenmessung
+    - Literatur
+    - Datenbank
+    - Berechnet
+    - Geschaetzt
+  
+  vertrauensniveau_typ:
+    - hoch
+    - mittel
+    - niedrig
+    - unbekannt
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# KEYWORDS - Für semantische Suche
+# ═══════════════════════════════════════════════════════════════════════════════
+
 keywords:
+  # Grundbegriffe
   - chemie
   - molekül
   - verbindung
   - metabolit
+  - substanz
+  - stoff
+  # Primärmetabolite
   - aminosäure
   - vitamin
   - mineral
-  - enzym
-  - pigment
-  - volatil
-  - aroma
-  - synthese
-  - biosynthese
+  - fettsäure
+  - kohlenhydrat
+  - protein
+  - nährstoff
+  # Sekundärmetabolite
   - terpenoid
   - alkaloid
   - phenol
   - polyketid
   - glucan
   - chitin
+  - toxin
+  - wirkstoff
+  # Enzyme
+  - enzym
+  - laccase
+  - peroxidase
+  - oxidase
+  - hydrolase
+  # Aromastoffe
+  - pigment
+  - volatil
+  - aroma
+  - geruch
+  - duftstoff
+  # Analytik
+  - synthese
+  - biosynthese
+  - spektrum
+  - chromatographie
+  - massenspektrometrie
+  - nmr
+  - hplc
+  # Englische Begriffe
+  - chemistry
+  - compound
+  - metabolite
+  - biosynthesis
+  - spectrum

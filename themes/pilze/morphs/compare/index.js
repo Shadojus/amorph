@@ -27,7 +27,7 @@ import { compareNaturschutz } from './naturschutz.js';
 import { compareKultur } from './kultur.js';
 import { compareForschung } from './forschung.js';
 import { compareInteraktionen } from './interaktionen.js';
-import { compareVisual } from './visual.js';
+import { compareBestimmung } from './bestimmung.js';
 
 /**
  * Registry der Perspektiven-Compare-Morphs
@@ -50,7 +50,7 @@ export const perspektivenMorphs = {
   kultur: compareKultur,
   forschung: compareForschung,
   interaktionen: compareInteraktionen,
-  visual: compareVisual
+  bestimmung: compareBestimmung
 };
 
 /**

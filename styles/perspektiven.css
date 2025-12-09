@@ -38,21 +38,184 @@ amorph-container[data-field] {
   display: block !important;
 }
 
-/* === ANBAU-PERSPEKTIVE: Alle relevanten Felder anzeigen === */
+/* ═══════════════════════════════════════════════════════════════════════════
+   ANBAU-PERSPEKTIVE - Myzel-Phosphor Grün
+   Vollständiges Kultivierungs-Datenmodell v2.0
+═══════════════════════════════════════════════════════════════════════════ */
+
+/* --- Natürliches Vorkommen --- */
 [data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="standort"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="habitat"],
 [data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="saison"],
 [data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="saisonalitaet"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="saisonalitaet_details"],
 [data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="temperatur"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="temperatur_bereich"],
 [data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="verfuegbarkeit"],
 [data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="lebenszyklus"],
-[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="ernte_stats"],
+
+/* --- Kultivierungsstatus & Schwierigkeit --- */
 [data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="cultivation_status"],
 [data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="cultivation_difficulty"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="cultivation_difficulty_overall"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="cultivation_difficulty_factors"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="cultivation_success_rate"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="cultivation_time_investment"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="cultivation_equipment_needed"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="cultivation_skill_prerequisites"],
+
+/* --- Wachstumsparameter: Spawn Run --- */
 [data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="cultivation_parameters"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_spawn_temp_min"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_spawn_temp_optimal"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_spawn_temp_max"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_spawn_humidity_min"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_spawn_humidity_optimal"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_spawn_humidity_max"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_spawn_co2_ppm"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_spawn_light_required"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_spawn_fae_per_hour"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_spawn_duration_days"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_spawn_ph_optimal"],
+
+/* --- Wachstumsparameter: Primordia --- */
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_primordia_temp_min"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_primordia_temp_optimal"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_primordia_temp_max"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_primordia_humidity_min"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_primordia_humidity_optimal"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_primordia_humidity_max"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_primordia_co2_ppm"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_primordia_light_lux"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_primordia_light_hours"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_primordia_fae_per_hour"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_primordia_duration_days"],
+
+/* --- Wachstumsparameter: Fruiting --- */
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_fruiting_temp_min"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_fruiting_temp_optimal"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_fruiting_temp_max"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_fruiting_humidity_min"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_fruiting_humidity_optimal"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_fruiting_humidity_max"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_fruiting_co2_ppm"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_fruiting_light_lux"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_fruiting_light_hours"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_fruiting_fae_per_hour"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="param_fruiting_duration_days"],
+
+/* --- Substrate --- */
 [data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="cultivation_substrates"],
-[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="production_timeline"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="substrate_primary"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="substrate_category"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="substrate_composition"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="substrate_sterilization_required"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="substrate_sterilization_temp"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="substrate_sterilization_duration"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="substrate_pasteurization_temp"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="substrate_pasteurization_duration"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="substrate_moisture_percent"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="substrate_preparation_method"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="substrate_rating"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="substrate_biological_efficiency"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="substrate_colonization_days"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="substrate_contamination_rate"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="substrate_cost_per_kg"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="substrate_advantages"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="substrate_disadvantages"],
+
+/* --- Stämme / Varietäten --- */
 [data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="cultivation_strains"],
-[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="cultivation_problems"] {
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="strain_name"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="strain_code"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="strain_origin"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="strain_growth_speed"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="strain_yield_potential"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="strain_contamination_resistance"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="strain_temperature_tolerance"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="strain_cap_size"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="strain_stem_length"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="strain_color"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="strain_texture"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="strain_shelf_life_days"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="strain_flavor_profile"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="strain_biological_efficiency"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="strain_commercial_viability"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="strain_market_demand"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="strain_best_uses"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="strain_suppliers"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="strain_availability"],
+
+/* --- Produktionszyklus --- */
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="production_timeline"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="production_total_cycle_days"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="production_total_flushes"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="production_expected_yield_kg"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="production_biological_efficiency"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="production_cycle_type"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="production_phases"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="production_success_rate"],
+
+/* --- Probleme & Troubleshooting --- */
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="cultivation_problems"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="problem_contaminants"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="problem_pests"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="problem_disorders"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="problem_environmental"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="problem_frequency"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="problem_severity"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="problem_symptoms"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="problem_conditions_promoting"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="problem_prevention"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="problem_treatment"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="problem_chemical_control"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="problem_biological_control"],
+
+/* --- Ernte --- */
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="ernte_stats"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="harvest_fresh_weight_kg"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="harvest_dry_weight_kg"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="harvest_biological_efficiency"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="harvest_quality_grade"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="harvest_avg_cap_diameter"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="harvest_avg_stem_length"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="harvest_flush_number"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="harvest_records"],
+
+/* --- Ausrüstung --- */
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="equipment_requirements"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="equipment_minimum"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="equipment_recommended"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="equipment_optional"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="equipment_startup_cost_hobby"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="equipment_startup_cost_serious"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="equipment_startup_cost_commercial"],
+
+/* --- Wirtschaftlichkeit --- */
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="economics"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="economics_market_price_min"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="economics_market_price_max"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="economics_market_price_avg"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="economics_production_cost"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="economics_profit_margin"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="economics_break_even_kg"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="economics_demand_level"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="economics_competition_level"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="economics_market_trend"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="economics_sales_channels"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="economics_certifications_helpful"],
+
+/* --- Lieferanten --- */
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="suppliers"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="supplier_cultures"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="supplier_substrates"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="supplier_equipment"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="supplier_rating"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="supplier_ships_to"],
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="supplier_certifications"],
+
+/* --- Umgebungsüberwachung --- */
+[data-amorph-container].perspektiven-aktiv[data-perspektive-anbau] .amorph-item amorph-container[data-field="environmental_monitoring"] {
   display: block !important;
 }
 
@@ -391,31 +554,211 @@ amorph-container[data-field] {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   GEOGRAFIE-PERSPEKTIVE - Karten-Blau
+   GEOGRAFIE-PERSPEKTIVE v2.0 - Karten-Blau
    Ozeanisches Blau wie Weltkarten
+   Vollständiges Schema für Verbreitung, Fundorte, Klima, Visualisierung
 ═══════════════════════════════════════════════════════════════════════════ */
-[data-perspektive-geografie] amorph-container[data-field="native_verbreitung"],
+
+/* --- Native Verbreitung --- */
+[data-perspektive-geografie] amorph-container[data-field="native_beschreibung"],
+[data-perspektive-geografie] amorph-container[data-field="native_areal_typ"],
+[data-perspektive-geografie] amorph-container[data-field="native_areal_groesse_km2"],
+[data-perspektive-geografie] amorph-container[data-field="native_verbreitungsstatus"],
+[data-perspektive-geografie] amorph-container[data-field="native_quellenangabe"],
+[data-perspektive-geografie] amorph-container[data-field="native_verbreitung"] {
+  display: block !important;
+  --perspektive-farbe: rgba(100, 160, 220, 0.65);
+}
+
+/* --- Kontinente --- */
 [data-perspektive-geografie] amorph-container[data-field="kontinente"],
+[data-perspektive-geografie] amorph-container[data-field="kontinent_eu_status"],
+[data-perspektive-geografie] amorph-container[data-field="kontinent_eu_haeufigkeit"],
+[data-perspektive-geografie] amorph-container[data-field="kontinent_as_status"],
+[data-perspektive-geografie] amorph-container[data-field="kontinent_as_haeufigkeit"],
+[data-perspektive-geografie] amorph-container[data-field="kontinent_af_status"],
+[data-perspektive-geografie] amorph-container[data-field="kontinent_af_haeufigkeit"],
+[data-perspektive-geografie] amorph-container[data-field="kontinent_na_status"],
+[data-perspektive-geografie] amorph-container[data-field="kontinent_na_haeufigkeit"],
+[data-perspektive-geografie] amorph-container[data-field="kontinent_sa_status"],
+[data-perspektive-geografie] amorph-container[data-field="kontinent_sa_haeufigkeit"],
+[data-perspektive-geografie] amorph-container[data-field="kontinent_oc_status"],
+[data-perspektive-geografie] amorph-container[data-field="kontinent_oc_haeufigkeit"],
+[data-perspektive-geografie] amorph-container[data-field="kontinent_an_status"],
+[data-perspektive-geografie] amorph-container[data-field="kontinent_an_haeufigkeit"] {
+  display: block !important;
+  --perspektive-farbe: rgba(100, 160, 220, 0.65);
+}
+
+/* --- Länder --- */
 [data-perspektive-geografie] amorph-container[data-field="laender"],
+[data-perspektive-geografie] amorph-container[data-field="laender_anzahl"],
+[data-perspektive-geografie] amorph-container[data-field="laender_nativ"],
+[data-perspektive-geografie] amorph-container[data-field="laender_eingefuehrt"],
+[data-perspektive-geografie] amorph-container[data-field="laender_hauptvorkommen"] {
+  display: block !important;
+  --perspektive-farbe: rgba(85, 145, 205, 0.65);
+}
+
+/* --- Biogeografische Regionen & Ökoregionen --- */
 [data-perspektive-geografie] amorph-container[data-field="biogeografische_regionen"],
+[data-perspektive-geografie] amorph-container[data-field="biogeo_realm"],
+[data-perspektive-geografie] amorph-container[data-field="biogeo_biome"],
 [data-perspektive-geografie] amorph-container[data-field="oekoregionen"],
-[data-perspektive-geografie] amorph-container[data-field="eingefuehrte_verbreitung"],
-[data-perspektive-geografie] amorph-container[data-field="invasivitaet"],
+[data-perspektive-geografie] amorph-container[data-field="oeko_codes"],
+[data-perspektive-geografie] amorph-container[data-field="oeko_area_km2"],
+[data-perspektive-geografie] amorph-container[data-field="biogeografie"] {
+  display: block !important;
+  --perspektive-farbe: rgba(70, 130, 190, 0.65);
+}
+
+/* --- Eingeführte Verbreitung --- */
+[data-perspektive-geografie] amorph-container[data-field="eingefuehrte_regionen"],
+[data-perspektive-geografie] amorph-container[data-field="einfuehrungsjahr_erst"],
+[data-perspektive-geografie] amorph-container[data-field="einfuehrungsart"],
+[data-perspektive-geografie] amorph-container[data-field="einfuehrungsvektor"],
+[data-perspektive-geografie] amorph-container[data-field="etablierungsstatus"],
+[data-perspektive-geografie] amorph-container[data-field="eingefuehrte_verbreitung"] {
+  display: block !important;
+  --perspektive-farbe: rgba(85, 145, 205, 0.65);
+}
+
+/* --- Invasivität --- */
+[data-perspektive-geografie] amorph-container[data-field="ist_invasiv"],
+[data-perspektive-geografie] amorph-container[data-field="invasivitaetsstufe"],
+[data-perspektive-geografie] amorph-container[data-field="invasiv_auswirkungen_oeko"],
+[data-perspektive-geografie] amorph-container[data-field="invasiv_auswirkungen_oekonomisch"],
+[data-perspektive-geografie] amorph-container[data-field="invasiv_auswirkungen_gesundheit"],
+[data-perspektive-geografie] amorph-container[data-field="invasiv_betroffene_arten"],
+[data-perspektive-geografie] amorph-container[data-field="invasiv_betroffene_lebensraeume"],
+[data-perspektive-geografie] amorph-container[data-field="invasiv_management"],
+[data-perspektive-geografie] amorph-container[data-field="invasiv_regulatorisch"],
+[data-perspektive-geografie] amorph-container[data-field="invasivitaet"] {
+  display: block !important;
+  --perspektive-farbe: rgba(220, 100, 100, 0.65);
+}
+
+/* --- Fundorte & Statistik --- */
+[data-perspektive-geografie] amorph-container[data-field="fundorte_gesamt"],
+[data-perspektive-geografie] amorph-container[data-field="fundorte_validiert"],
+[data-perspektive-geografie] amorph-container[data-field="fundorte_laender_anzahl"],
+[data-perspektive-geografie] amorph-container[data-field="fund_erster_jahr"],
+[data-perspektive-geografie] amorph-container[data-field="fund_letzter_jahr"],
+[data-perspektive-geografie] amorph-container[data-field="fund_haeufigste_habitate"],
+[data-perspektive-geografie] amorph-container[data-field="fund_haeufigste_substrate"],
+[data-perspektive-geografie] amorph-container[data-field="fund_hoehenverteilung_min"],
+[data-perspektive-geografie] amorph-container[data-field="fund_hoehenverteilung_max"],
+[data-perspektive-geografie] amorph-container[data-field="fund_hoehenverteilung_median"],
+[data-perspektive-geografie] amorph-container[data-field="funde_nach_jahrzehnt"],
+[data-perspektive-geografie] amorph-container[data-field="funde_nach_monat"],
+[data-perspektive-geografie] amorph-container[data-field="funde_top_beobachter"],
 [data-perspektive-geografie] amorph-container[data-field="fundorte"],
 [data-perspektive-geografie] amorph-container[data-field="fundstatistik"],
-[data-perspektive-geografie] amorph-container[data-field="datenquellen"],
-[data-perspektive-geografie] amorph-container[data-field="raeumliche_statistik"],
-[data-perspektive-geografie] amorph-container[data-field="klimahuelle"],
-[data-perspektive-geografie] amorph-container[data-field="temperatur_bereich"],
-[data-perspektive-geografie] amorph-container[data-field="niederschlag_bereich"],
-[data-perspektive-geografie] amorph-container[data-field="koeppen_zonen"],
-[data-perspektive-geografie] amorph-container[data-field="bioclim_variablen"],
-[data-perspektive-geografie] amorph-container[data-field="verbreitungskarte"],
-[data-perspektive-geografie] amorph-container[data-field="heatmap_funde"],
-[data-perspektive-geografie] amorph-container[data-field="biogeografie"],
 [data-perspektive-geografie] amorph-container[data-field="regionale_haeufigkeit"] {
   display: block !important;
   --perspektive-farbe: rgba(100, 160, 220, 0.65);
+}
+
+/* --- Datenquellen --- */
+[data-perspektive-geografie] amorph-container[data-field="datenquellen"],
+[data-perspektive-geografie] amorph-container[data-field="datenquellen_primaer"],
+[data-perspektive-geografie] amorph-container[data-field="datenquellen_anzahl"] {
+  display: block !important;
+  --perspektive-farbe: rgba(85, 145, 205, 0.65);
+}
+
+/* --- Räumliche Statistik --- */
+[data-perspektive-geografie] amorph-container[data-field="centroid_lat"],
+[data-perspektive-geografie] amorph-container[data-field="centroid_lng"],
+[data-perspektive-geografie] amorph-container[data-field="areal_extent_km2"],
+[data-perspektive-geografie] amorph-container[data-field="fundpunkt_dichte"],
+[data-perspektive-geografie] amorph-container[data-field="nearest_neighbor_index"],
+[data-perspektive-geografie] amorph-container[data-field="latitude_range_min"],
+[data-perspektive-geografie] amorph-container[data-field="latitude_range_max"],
+[data-perspektive-geografie] amorph-container[data-field="longitude_range_min"],
+[data-perspektive-geografie] amorph-container[data-field="longitude_range_max"],
+[data-perspektive-geografie] amorph-container[data-field="raeumliche_statistik"] {
+  display: block !important;
+  --perspektive-farbe: rgba(70, 130, 190, 0.65);
+}
+
+/* --- Klimahülle --- */
+[data-perspektive-geografie] amorph-container[data-field="klima_berechnungsmethode"],
+[data-perspektive-geografie] amorph-container[data-field="klima_stichprobengroesse"],
+[data-perspektive-geografie] amorph-container[data-field="klima_daten_quelle"],
+[data-perspektive-geografie] amorph-container[data-field="klima_referenzperiode"],
+[data-perspektive-geografie] amorph-container[data-field="klima_beschreibung"],
+[data-perspektive-geografie] amorph-container[data-field="klimahuelle"] {
+  display: block !important;
+  --perspektive-farbe: rgba(100, 180, 160, 0.65);
+}
+
+/* --- Temperatur --- */
+[data-perspektive-geografie] amorph-container[data-field="temp_jahres_mittel_min"],
+[data-perspektive-geografie] amorph-container[data-field="temp_jahres_mittel_max"],
+[data-perspektive-geografie] amorph-container[data-field="temp_jahres_mittel_optimal_min"],
+[data-perspektive-geografie] amorph-container[data-field="temp_jahres_mittel_optimal_max"],
+[data-perspektive-geografie] amorph-container[data-field="temp_waermstes_monat_min"],
+[data-perspektive-geografie] amorph-container[data-field="temp_waermstes_monat_max"],
+[data-perspektive-geografie] amorph-container[data-field="temp_kaeltestes_monat_min"],
+[data-perspektive-geografie] amorph-container[data-field="temp_kaeltestes_monat_max"],
+[data-perspektive-geografie] amorph-container[data-field="temp_saisonalitaet_min"],
+[data-perspektive-geografie] amorph-container[data-field="temp_saisonalitaet_max"],
+[data-perspektive-geografie] amorph-container[data-field="temperatur_bereich"] {
+  display: block !important;
+  --perspektive-farbe: rgba(220, 140, 80, 0.65);
+}
+
+/* --- Niederschlag --- */
+[data-perspektive-geografie] amorph-container[data-field="niederschlag_jahres_min"],
+[data-perspektive-geografie] amorph-container[data-field="niederschlag_jahres_max"],
+[data-perspektive-geografie] amorph-container[data-field="niederschlag_jahres_optimal_min"],
+[data-perspektive-geografie] amorph-container[data-field="niederschlag_jahres_optimal_max"],
+[data-perspektive-geografie] amorph-container[data-field="niederschlag_feuchtester_min"],
+[data-perspektive-geografie] amorph-container[data-field="niederschlag_feuchtester_max"],
+[data-perspektive-geografie] amorph-container[data-field="niederschlag_trockenster_min"],
+[data-perspektive-geografie] amorph-container[data-field="niederschlag_trockenster_max"],
+[data-perspektive-geografie] amorph-container[data-field="niederschlag_saisonalitaet_min"],
+[data-perspektive-geografie] amorph-container[data-field="niederschlag_saisonalitaet_max"],
+[data-perspektive-geografie] amorph-container[data-field="niederschlag_bereich"] {
+  display: block !important;
+  --perspektive-farbe: rgba(80, 140, 200, 0.65);
+}
+
+/* --- Köppen & BioClim --- */
+[data-perspektive-geografie] amorph-container[data-field="koeppen_zonen"],
+[data-perspektive-geografie] amorph-container[data-field="koeppen_primaer"],
+[data-perspektive-geografie] amorph-container[data-field="koeppen_hauptklassen"],
+[data-perspektive-geografie] amorph-container[data-field="bioclim_temp_jahresmittel"],
+[data-perspektive-geografie] amorph-container[data-field="bioclim_temp_amplitude"],
+[data-perspektive-geografie] amorph-container[data-field="bioclim_niederschlag_jahr"],
+[data-perspektive-geografie] amorph-container[data-field="bioclim_niederschlag_saisonalitaet"],
+[data-perspektive-geografie] amorph-container[data-field="bioclim_variablen"] {
+  display: block !important;
+  --perspektive-farbe: rgba(55, 115, 175, 0.65);
+}
+
+/* --- Karten & Visualisierung --- */
+[data-perspektive-geografie] amorph-container[data-field="karte_typ"],
+[data-perspektive-geografie] amorph-container[data-field="karte_titel"],
+[data-perspektive-geografie] amorph-container[data-field="karte_beschreibung"],
+[data-perspektive-geografie] amorph-container[data-field="karte_center_lat"],
+[data-perspektive-geografie] amorph-container[data-field="karte_center_lng"],
+[data-perspektive-geografie] amorph-container[data-field="karte_zoom"],
+[data-perspektive-geografie] amorph-container[data-field="karte_url"],
+[data-perspektive-geografie] amorph-container[data-field="karte_geojson_url"],
+[data-perspektive-geografie] amorph-container[data-field="verbreitungskarte"] {
+  display: block !important;
+  --perspektive-farbe: rgba(100, 160, 220, 0.65);
+}
+
+/* --- Heatmap --- */
+[data-perspektive-geografie] amorph-container[data-field="heatmap_aktiv"],
+[data-perspektive-geografie] amorph-container[data-field="heatmap_radius"],
+[data-perspektive-geografie] amorph-container[data-field="heatmap_max_zoom"],
+[data-perspektive-geografie] amorph-container[data-field="heatmap_funde"] {
+  display: block !important;
+  --perspektive-farbe: rgba(200, 100, 80, 0.65);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -507,90 +850,1205 @@ amorph-container[data-field] {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   FORSCHUNG-PERSPEKTIVE - Innovations-Cyan
+   FORSCHUNG-PERSPEKTIVE - Innovations-Cyan (v2.0)
    Helles Cyan wie neue Entdeckungen
+   ~280 FLACHE FELDER
 ═══════════════════════════════════════════════════════════════════════════ */
+
+/* --- FORSCHUNGSAKTIVITÄT --- */
 [data-perspektive-forschung] amorph-container[data-field="forschungs_aktivitaet"],
+[data-perspektive-forschung] amorph-container[data-field="forschungs_aktivitaet_label"],
+[data-perspektive-forschung] amorph-container[data-field="forschungs_aktivitaet_icon"],
 [data-perspektive-forschung] amorph-container[data-field="publikationen_anzahl"],
-[data-perspektive-forschung] amorph-container[data-field="publikationen_trend"],
+[data-perspektive-forschung] amorph-container[data-field="publikationen_pro_jahr"],
+/* Publikationstrend */
+[data-perspektive-forschung] amorph-container[data-field="publikationen_trend_richtung"],
+[data-perspektive-forschung] amorph-container[data-field="publikationen_trend_prozent"],
+[data-perspektive-forschung] amorph-container[data-field="publikationen_trend_zeitraum"],
+[data-perspektive-forschung] amorph-container[data-field="publikationen_jahr_2020"],
+[data-perspektive-forschung] amorph-container[data-field="publikationen_jahr_2021"],
+[data-perspektive-forschung] amorph-container[data-field="publikationen_jahr_2022"],
+[data-perspektive-forschung] amorph-container[data-field="publikationen_jahr_2023"],
+[data-perspektive-forschung] amorph-container[data-field="publikationen_jahr_2024"],
+/* Forschungsgruppen */
 [data-perspektive-forschung] amorph-container[data-field="forschungsgruppen"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsgruppe_1_name"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsgruppe_1_institution"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsgruppe_1_land"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsgruppe_1_schwerpunkt"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsgruppe_1_kontakt"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsgruppe_1_website"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsgruppe_1_publikationen"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsgruppe_1_h_index"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsgruppe_2_name"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsgruppe_2_institution"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsgruppe_2_land"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsgruppe_2_schwerpunkt"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsgruppe_3_name"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsgruppe_3_institution"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsgruppe_3_land"],
+/* Aktuelle Themen */
 [data-perspektive-forschung] amorph-container[data-field="aktuelle_themen"],
-[data-perspektive-forschung] amorph-container[data-field="patente"],
-[data-perspektive-forschung] amorph-container[data-field="patent_nummer"],
-[data-perspektive-forschung] amorph-container[data-field="erfinder"],
-[data-perspektive-forschung] amorph-container[data-field="anwendungen"],
-[data-perspektive-forschung] amorph-container[data-field="biotechnologie"],
-[data-perspektive-forschung] amorph-container[data-field="anwendungen_biotech"],
-[data-perspektive-forschung] amorph-container[data-field="gentechnik"],
-[data-perspektive-forschung] amorph-container[data-field="synthetische_biologie"],
-[data-perspektive-forschung] amorph-container[data-field="zukunftspotential"],
+[data-perspektive-forschung] amorph-container[data-field="thema_1_name"],
+[data-perspektive-forschung] amorph-container[data-field="thema_1_beschreibung"],
+[data-perspektive-forschung] amorph-container[data-field="thema_1_aktivitaet"],
+[data-perspektive-forschung] amorph-container[data-field="thema_1_relevanz_score"],
+[data-perspektive-forschung] amorph-container[data-field="thema_1_keywords"],
+[data-perspektive-forschung] amorph-container[data-field="thema_2_name"],
+[data-perspektive-forschung] amorph-container[data-field="thema_2_beschreibung"],
+[data-perspektive-forschung] amorph-container[data-field="thema_2_aktivitaet"],
+[data-perspektive-forschung] amorph-container[data-field="thema_2_relevanz_score"],
+[data-perspektive-forschung] amorph-container[data-field="thema_2_keywords"],
+[data-perspektive-forschung] amorph-container[data-field="thema_3_name"],
+[data-perspektive-forschung] amorph-container[data-field="thema_3_beschreibung"],
+[data-perspektive-forschung] amorph-container[data-field="thema_3_aktivitaet"],
+[data-perspektive-forschung] amorph-container[data-field="thema_3_relevanz_score"],
+/* --- PATENTE --- */
+[data-perspektive-forschung] amorph-container[data-field="patente_gesamt"],
+[data-perspektive-forschung] amorph-container[data-field="patente_aktiv"],
+[data-perspektive-forschung] amorph-container[data-field="patente_angemeldet"],
+[data-perspektive-forschung] amorph-container[data-field="patente_abgelaufen"],
+[data-perspektive-forschung] amorph-container[data-field="patente_jurisdiktionen"],
+/* Patent 1 */
+[data-perspektive-forschung] amorph-container[data-field="patent_1_nummer"],
+[data-perspektive-forschung] amorph-container[data-field="patent_1_titel"],
+[data-perspektive-forschung] amorph-container[data-field="patent_1_erfinder"],
+[data-perspektive-forschung] amorph-container[data-field="patent_1_anmelder"],
+[data-perspektive-forschung] amorph-container[data-field="patent_1_einreichungsdatum"],
+[data-perspektive-forschung] amorph-container[data-field="patent_1_erteilungsdatum"],
+[data-perspektive-forschung] amorph-container[data-field="patent_1_ablaufdatum"],
+[data-perspektive-forschung] amorph-container[data-field="patent_1_status"],
+[data-perspektive-forschung] amorph-container[data-field="patent_1_jurisdiktionen"],
+[data-perspektive-forschung] amorph-container[data-field="patent_1_anwendungen"],
+[data-perspektive-forschung] amorph-container[data-field="patent_1_zusammenfassung"],
+[data-perspektive-forschung] amorph-container[data-field="patent_1_url"],
+[data-perspektive-forschung] amorph-container[data-field="patent_1_zitationen"],
+/* Patent 2-5 */
+[data-perspektive-forschung] amorph-container[data-field="patent_2_nummer"],
+[data-perspektive-forschung] amorph-container[data-field="patent_2_titel"],
+[data-perspektive-forschung] amorph-container[data-field="patent_2_erfinder"],
+[data-perspektive-forschung] amorph-container[data-field="patent_2_anmelder"],
+[data-perspektive-forschung] amorph-container[data-field="patent_2_status"],
+[data-perspektive-forschung] amorph-container[data-field="patent_2_anwendungen"],
+[data-perspektive-forschung] amorph-container[data-field="patent_2_zitationen"],
+[data-perspektive-forschung] amorph-container[data-field="patent_3_nummer"],
+[data-perspektive-forschung] amorph-container[data-field="patent_3_titel"],
+[data-perspektive-forschung] amorph-container[data-field="patent_3_status"],
+[data-perspektive-forschung] amorph-container[data-field="patent_3_anwendungen"],
+[data-perspektive-forschung] amorph-container[data-field="patent_4_nummer"],
+[data-perspektive-forschung] amorph-container[data-field="patent_4_titel"],
+[data-perspektive-forschung] amorph-container[data-field="patent_4_status"],
+[data-perspektive-forschung] amorph-container[data-field="patent_5_nummer"],
+[data-perspektive-forschung] amorph-container[data-field="patent_5_titel"],
+[data-perspektive-forschung] amorph-container[data-field="patent_5_status"],
+/* --- BIOTECHNOLOGIE --- */
+[data-perspektive-forschung] amorph-container[data-field="biotechnologie_relevanz"],
+[data-perspektive-forschung] amorph-container[data-field="biotechnologie_relevanz_label"],
+[data-perspektive-forschung] amorph-container[data-field="biotechnologie_bereiche"],
+[data-perspektive-forschung] amorph-container[data-field="biotechnologie_score"],
+/* Biotech Anwendungen */
+[data-perspektive-forschung] amorph-container[data-field="biotech_anwendung_1_bereich"],
+[data-perspektive-forschung] amorph-container[data-field="biotech_anwendung_1_name"],
+[data-perspektive-forschung] amorph-container[data-field="biotech_anwendung_1_beschreibung"],
+[data-perspektive-forschung] amorph-container[data-field="biotech_anwendung_1_reife_grad"],
+[data-perspektive-forschung] amorph-container[data-field="biotech_anwendung_1_unternehmen"],
+[data-perspektive-forschung] amorph-container[data-field="biotech_anwendung_1_marktpotential"],
+[data-perspektive-forschung] amorph-container[data-field="biotech_anwendung_2_bereich"],
+[data-perspektive-forschung] amorph-container[data-field="biotech_anwendung_2_name"],
+[data-perspektive-forschung] amorph-container[data-field="biotech_anwendung_2_beschreibung"],
+[data-perspektive-forschung] amorph-container[data-field="biotech_anwendung_2_reife_grad"],
+[data-perspektive-forschung] amorph-container[data-field="biotech_anwendung_2_marktpotential"],
+[data-perspektive-forschung] amorph-container[data-field="biotech_anwendung_3_bereich"],
+[data-perspektive-forschung] amorph-container[data-field="biotech_anwendung_3_name"],
+[data-perspektive-forschung] amorph-container[data-field="biotech_anwendung_3_reife_grad"],
+[data-perspektive-forschung] amorph-container[data-field="biotech_anwendung_4_bereich"],
+[data-perspektive-forschung] amorph-container[data-field="biotech_anwendung_4_name"],
+[data-perspektive-forschung] amorph-container[data-field="biotech_anwendung_5_bereich"],
+[data-perspektive-forschung] amorph-container[data-field="biotech_anwendung_5_name"],
+/* --- GENTECHNIK --- */
+[data-perspektive-forschung] amorph-container[data-field="genom_sequenziert"],
+[data-perspektive-forschung] amorph-container[data-field="genom_groesse_mb"],
+[data-perspektive-forschung] amorph-container[data-field="genom_gen_anzahl"],
+[data-perspektive-forschung] amorph-container[data-field="genom_genbank_accession"],
+[data-perspektive-forschung] amorph-container[data-field="genom_genbank_ids"],
+[data-perspektive-forschung] amorph-container[data-field="genom_assembly_level"],
+[data-perspektive-forschung] amorph-container[data-field="genom_annotation_status"],
+/* Transformation */
+[data-perspektive-forschung] amorph-container[data-field="transformation_methoden"],
+[data-perspektive-forschung] amorph-container[data-field="transformation_agrobacterium"],
+[data-perspektive-forschung] amorph-container[data-field="transformation_peg"],
+[data-perspektive-forschung] amorph-container[data-field="transformation_elektroporation"],
+[data-perspektive-forschung] amorph-container[data-field="transformation_biolistic"],
+[data-perspektive-forschung] amorph-container[data-field="marker_gene"],
+[data-perspektive-forschung] amorph-container[data-field="selektions_marker"],
+[data-perspektive-forschung] amorph-container[data-field="knockout_bibliothek_vorhanden"],
+[data-perspektive-forschung] amorph-container[data-field="knockout_gene_anzahl"],
+[data-perspektive-forschung] amorph-container[data-field="crispr_etabliert"],
+[data-perspektive-forschung] amorph-container[data-field="crispr_erfolgsrate"],
+[data-perspektive-forschung] amorph-container[data-field="crispr_targets"],
+[data-perspektive-forschung] amorph-container[data-field="rnai_etabliert"],
+/* --- SYNTHETISCHE BIOLOGIE --- */
+[data-perspektive-forschung] amorph-container[data-field="synbio_chassis_organismus"],
+[data-perspektive-forschung] amorph-container[data-field="synbio_chassis_eignung_score"],
+[data-perspektive-forschung] amorph-container[data-field="synbio_heterologe_expression"],
+[data-perspektive-forschung] amorph-container[data-field="synbio_expression_systeme"],
+[data-perspektive-forschung] amorph-container[data-field="synbio_metabolic_engineering"],
+[data-perspektive-forschung] amorph-container[data-field="synbio_produkt_1_name"],
+[data-perspektive-forschung] amorph-container[data-field="synbio_produkt_1_pathway"],
+[data-perspektive-forschung] amorph-container[data-field="synbio_produkt_1_effizienz"],
+[data-perspektive-forschung] amorph-container[data-field="synbio_produkt_1_status"],
+[data-perspektive-forschung] amorph-container[data-field="synbio_produkt_2_name"],
+[data-perspektive-forschung] amorph-container[data-field="synbio_produkt_2_pathway"],
+[data-perspektive-forschung] amorph-container[data-field="synbio_produkt_2_status"],
+[data-perspektive-forschung] amorph-container[data-field="synbio_produkt_3_name"],
+[data-perspektive-forschung] amorph-container[data-field="synbio_promotoren"],
+[data-perspektive-forschung] amorph-container[data-field="synbio_terminatoren"],
+[data-perspektive-forschung] amorph-container[data-field="synbio_enhancer"],
+[data-perspektive-forschung] amorph-container[data-field="synbio_regulatorische_toolbox"],
+/* --- ZUKUNFTSPOTENTIAL --- */
+[data-perspektive-forschung] amorph-container[data-field="zukunftspotential_score"],
+[data-perspektive-forschung] amorph-container[data-field="zukunftspotential_innovation_index"],
+[data-perspektive-forschung] amorph-container[data-field="zukunftspotential_markt_attraktivitaet"],
+[data-perspektive-forschung] amorph-container[data-field="zukunftspotential_forschungs_momentum"],
+[data-perspektive-forschung] amorph-container[data-field="zukunftspotential_kommerzialisierbarkeit"],
+[data-perspektive-forschung] amorph-container[data-field="zukunftspotential_begruendung"],
+/* Emerging Applications */
 [data-perspektive-forschung] amorph-container[data-field="emerging_applications"],
+[data-perspektive-forschung] amorph-container[data-field="emerging_app_1_name"],
+[data-perspektive-forschung] amorph-container[data-field="emerging_app_1_beschreibung"],
+[data-perspektive-forschung] amorph-container[data-field="emerging_app_1_zeithorizont"],
+[data-perspektive-forschung] amorph-container[data-field="emerging_app_1_wahrscheinlichkeit"],
+[data-perspektive-forschung] amorph-container[data-field="emerging_app_1_treiber"],
+[data-perspektive-forschung] amorph-container[data-field="emerging_app_1_hindernisse"],
+[data-perspektive-forschung] amorph-container[data-field="emerging_app_1_akteure"],
+[data-perspektive-forschung] amorph-container[data-field="emerging_app_2_name"],
+[data-perspektive-forschung] amorph-container[data-field="emerging_app_2_beschreibung"],
+[data-perspektive-forschung] amorph-container[data-field="emerging_app_2_zeithorizont"],
+[data-perspektive-forschung] amorph-container[data-field="emerging_app_2_wahrscheinlichkeit"],
+[data-perspektive-forschung] amorph-container[data-field="emerging_app_3_name"],
+[data-perspektive-forschung] amorph-container[data-field="emerging_app_3_zeithorizont"],
+[data-perspektive-forschung] amorph-container[data-field="emerging_app_3_wahrscheinlichkeit"],
+[data-perspektive-forschung] amorph-container[data-field="emerging_app_4_name"],
+[data-perspektive-forschung] amorph-container[data-field="emerging_app_4_zeithorizont"],
+[data-perspektive-forschung] amorph-container[data-field="emerging_app_5_name"],
+/* Forschungslücken */
 [data-perspektive-forschung] amorph-container[data-field="forschungsluecken"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsluecke_1_bereich"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsluecke_1_beschreibung"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsluecke_1_prioritaet"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsluecke_1_aufwand"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsluecke_1_expertise"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsluecke_1_foerderung"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsluecke_2_bereich"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsluecke_2_beschreibung"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsluecke_2_prioritaet"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsluecke_3_bereich"],
+[data-perspektive-forschung] amorph-container[data-field="forschungsluecke_3_prioritaet"],
+/* Investitionsmöglichkeiten */
 [data-perspektive-forschung] amorph-container[data-field="investitionsmoeglichkeiten"],
+[data-perspektive-forschung] amorph-container[data-field="invest_1_titel"],
+[data-perspektive-forschung] amorph-container[data-field="invest_1_beschreibung"],
+[data-perspektive-forschung] amorph-container[data-field="invest_1_volumen_min_eur"],
+[data-perspektive-forschung] amorph-container[data-field="invest_1_volumen_max_eur"],
+[data-perspektive-forschung] amorph-container[data-field="invest_1_roi_potential"],
+[data-perspektive-forschung] amorph-container[data-field="invest_1_risiko"],
+[data-perspektive-forschung] amorph-container[data-field="invest_1_zeithorizont"],
+[data-perspektive-forschung] amorph-container[data-field="invest_1_typ"],
+[data-perspektive-forschung] amorph-container[data-field="invest_2_titel"],
+[data-perspektive-forschung] amorph-container[data-field="invest_2_beschreibung"],
+[data-perspektive-forschung] amorph-container[data-field="invest_2_roi_potential"],
+[data-perspektive-forschung] amorph-container[data-field="invest_2_risiko"],
+[data-perspektive-forschung] amorph-container[data-field="invest_3_titel"],
+[data-perspektive-forschung] amorph-container[data-field="invest_3_roi_potential"],
+/* --- WISSENSCHAFTLICHE REFERENZEN --- */
 [data-perspektive-forschung] amorph-container[data-field="schluessel_publikationen"],
-[data-perspektive-forschung] amorph-container[data-field="forschung_referenzen"],
-[data-perspektive-forschung] amorph-container[data-field="klinische_studien"],
-[data-perspektive-forschung] amorph-container[data-field="forschung"] {
+/* Publikation 1 */
+[data-perspektive-forschung] amorph-container[data-field="publikation_1_titel"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_1_autoren"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_1_journal"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_1_jahr"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_1_doi"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_1_pmid"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_1_zusammenfassung"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_1_zitationen"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_1_impact_factor"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_1_open_access"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_1_pdf_url"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_1_bedeutung"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_1_themen_tags"],
+/* Publikation 2-5 */
+[data-perspektive-forschung] amorph-container[data-field="publikation_2_titel"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_2_autoren"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_2_journal"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_2_jahr"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_2_doi"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_2_zitationen"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_2_bedeutung"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_3_titel"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_3_journal"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_3_jahr"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_3_doi"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_3_bedeutung"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_4_titel"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_4_doi"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_5_titel"],
+[data-perspektive-forschung] amorph-container[data-field="publikation_5_doi"],
+/* --- KLINISCHE STUDIEN --- */
+[data-perspektive-forschung] amorph-container[data-field="klinische_studien_anzahl"],
+[data-perspektive-forschung] amorph-container[data-field="klinische_studien_aktiv"],
+/* Studie 1 */
+[data-perspektive-forschung] amorph-container[data-field="klinische_studie_1_nct"],
+[data-perspektive-forschung] amorph-container[data-field="klinische_studie_1_titel"],
+[data-perspektive-forschung] amorph-container[data-field="klinische_studie_1_status"],
+[data-perspektive-forschung] amorph-container[data-field="klinische_studie_1_phase"],
+[data-perspektive-forschung] amorph-container[data-field="klinische_studie_1_indikation"],
+[data-perspektive-forschung] amorph-container[data-field="klinische_studie_1_sponsor"],
+[data-perspektive-forschung] amorph-container[data-field="klinische_studie_1_start"],
+[data-perspektive-forschung] amorph-container[data-field="klinische_studie_1_ende_erwartet"],
+[data-perspektive-forschung] amorph-container[data-field="klinische_studie_1_teilnehmer_ziel"],
+[data-perspektive-forschung] amorph-container[data-field="klinische_studie_1_standorte"],
+[data-perspektive-forschung] amorph-container[data-field="klinische_studie_1_ergebnisse"],
+/* Studie 2-3 */
+[data-perspektive-forschung] amorph-container[data-field="klinische_studie_2_nct"],
+[data-perspektive-forschung] amorph-container[data-field="klinische_studie_2_titel"],
+[data-perspektive-forschung] amorph-container[data-field="klinische_studie_2_status"],
+[data-perspektive-forschung] amorph-container[data-field="klinische_studie_2_phase"],
+[data-perspektive-forschung] amorph-container[data-field="klinische_studie_2_indikation"],
+[data-perspektive-forschung] amorph-container[data-field="klinische_studie_3_nct"],
+[data-perspektive-forschung] amorph-container[data-field="klinische_studie_3_titel"],
+[data-perspektive-forschung] amorph-container[data-field="klinische_studie_3_status"],
+[data-perspektive-forschung] amorph-container[data-field="klinische_studie_3_phase"],
+/* --- REVIEW ARTIKEL --- */
+[data-perspektive-forschung] amorph-container[data-field="review_artikel"],
+[data-perspektive-forschung] amorph-container[data-field="review_1_titel"],
+[data-perspektive-forschung] amorph-container[data-field="review_1_autoren"],
+[data-perspektive-forschung] amorph-container[data-field="review_1_journal"],
+[data-perspektive-forschung] amorph-container[data-field="review_1_jahr"],
+[data-perspektive-forschung] amorph-container[data-field="review_1_doi"],
+[data-perspektive-forschung] amorph-container[data-field="review_1_themenbereich"],
+[data-perspektive-forschung] amorph-container[data-field="review_2_titel"],
+[data-perspektive-forschung] amorph-container[data-field="review_2_journal"],
+[data-perspektive-forschung] amorph-container[data-field="review_2_jahr"],
+[data-perspektive-forschung] amorph-container[data-field="review_2_doi"],
+[data-perspektive-forschung] amorph-container[data-field="review_3_titel"],
+[data-perspektive-forschung] amorph-container[data-field="review_3_doi"],
+/* --- DATENBANK-EINTRÄGE --- */
+[data-perspektive-forschung] amorph-container[data-field="ncbi_taxonomy_id"],
+[data-perspektive-forschung] amorph-container[data-field="mycobank_id"],
+[data-perspektive-forschung] amorph-container[data-field="index_fungorum_id"],
+[data-perspektive-forschung] amorph-container[data-field="uniprot_proteome_id"],
+[data-perspektive-forschung] amorph-container[data-field="kegg_organism_code"],
+[data-perspektive-forschung] amorph-container[data-field="ensembl_fungi_id"],
+[data-perspektive-forschung] amorph-container[data-field="jgi_genome_id"],
+[data-perspektive-forschung] amorph-container[data-field="fungidb_id"],
+/* --- KOLLABORATION --- */
+[data-perspektive-forschung] amorph-container[data-field="kollaboration_hauptzentren"],
+[data-perspektive-forschung] amorph-container[data-field="zentrum_1_land"],
+[data-perspektive-forschung] amorph-container[data-field="zentrum_1_institutionen"],
+[data-perspektive-forschung] amorph-container[data-field="zentrum_1_schwerpunkte"],
+[data-perspektive-forschung] amorph-container[data-field="zentrum_2_land"],
+[data-perspektive-forschung] amorph-container[data-field="zentrum_2_institutionen"],
+[data-perspektive-forschung] amorph-container[data-field="zentrum_2_schwerpunkte"],
+[data-perspektive-forschung] amorph-container[data-field="zentrum_3_land"],
+[data-perspektive-forschung] amorph-container[data-field="zentrum_3_institutionen"],
+/* Internationale Projekte */
+[data-perspektive-forschung] amorph-container[data-field="internationale_projekte"],
+[data-perspektive-forschung] amorph-container[data-field="projekt_1_name"],
+[data-perspektive-forschung] amorph-container[data-field="projekt_1_laender"],
+[data-perspektive-forschung] amorph-container[data-field="projekt_1_foerderung"],
+[data-perspektive-forschung] amorph-container[data-field="projekt_1_laufzeit"],
+[data-perspektive-forschung] amorph-container[data-field="projekt_2_name"],
+[data-perspektive-forschung] amorph-container[data-field="projekt_2_laender"],
+[data-perspektive-forschung] amorph-container[data-field="projekt_2_foerderung"],
+/* Konferenzen */
+[data-perspektive-forschung] amorph-container[data-field="relevante_konferenzen"],
+[data-perspektive-forschung] amorph-container[data-field="konferenz_1_name"],
+[data-perspektive-forschung] amorph-container[data-field="konferenz_1_haeufigkeit"],
+[data-perspektive-forschung] amorph-container[data-field="konferenz_1_naechste"],
+[data-perspektive-forschung] amorph-container[data-field="konferenz_1_website"],
+[data-perspektive-forschung] amorph-container[data-field="konferenz_2_name"],
+[data-perspektive-forschung] amorph-container[data-field="konferenz_2_website"],
+[data-perspektive-forschung] amorph-container[data-field="konferenz_3_name"] {
   display: block !important;
   --perspektive-farbe: rgba(80, 200, 220, 0.65);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   INTERAKTIONEN-PERSPEKTIVE - Netzwerk-Magenta
-   Lebendiges Magenta wie Beziehungsnetzwerke
+   KULINARISCH-PERSPEKTIVE v2.0 - Trüffel-Gold
+   Professionelle kulinarische Daten - Warmes Gold wie Trüffel
+   ~130 FLACHE FELDER
 ═══════════════════════════════════════════════════════════════════════════ */
-[data-perspektive-interaktionen] amorph-container[data-field="multispecies_interaktionen"],
+
+/* --- IDENTIFIKATION --- */
+[data-perspektive-kulinarisch] amorph-container[data-field="bild"],
+[data-perspektive-kulinarisch] amorph-container[data-field="name"],
+
+/* --- SICHERHEIT & EIGNUNG --- */
+[data-perspektive-kulinarisch] amorph-container[data-field="essbarkeit_status"],
+[data-perspektive-kulinarisch] amorph-container[data-field="essbarkeit_rating"],
+[data-perspektive-kulinarisch] amorph-container[data-field="essbarkeit_voraussetzungen"],
+[data-perspektive-kulinarisch] amorph-container[data-field="essbarkeit_warnungen"],
+[data-perspektive-kulinarisch] amorph-container[data-field="essbarkeit_risikogruppen"],
+
+/* --- SENSORISCHES PROFIL --- */
+[data-perspektive-kulinarisch] amorph-container[data-field="sensorik"],
+[data-perspektive-kulinarisch] amorph-container[data-field="geschmack_primaer"],
+[data-perspektive-kulinarisch] amorph-container[data-field="geschmack_sekundaer"],
+[data-perspektive-kulinarisch] amorph-container[data-field="aroma_profil"],
+[data-perspektive-kulinarisch] amorph-container[data-field="textur_roh"],
+[data-perspektive-kulinarisch] amorph-container[data-field="textur_gegart"],
+[data-perspektive-kulinarisch] amorph-container[data-field="optik"],
+
+/* --- ZUBEREITUNGSTECHNIKEN --- */
+[data-perspektive-kulinarisch] amorph-container[data-field="zubereitung_methoden"],
+[data-perspektive-kulinarisch] amorph-container[data-field="zubereitung_temperaturen"],
+[data-perspektive-kulinarisch] amorph-container[data-field="zubereitung_zeiten"],
+[data-perspektive-kulinarisch] amorph-container[data-field="zubereitung_techniken"],
+[data-perspektive-kulinarisch] amorph-container[data-field="zubereitung_optimal"],
+[data-perspektive-kulinarisch] amorph-container[data-field="zubereitung_fehler"],
+[data-perspektive-kulinarisch] amorph-container[data-field="vorbereitung"],
+
+/* --- KOMPOSITION & PAIRINGS --- */
+[data-perspektive-kulinarisch] amorph-container[data-field="pairings_klassisch"],
+[data-perspektive-kulinarisch] amorph-container[data-field="pairings_modern"],
+[data-perspektive-kulinarisch] amorph-container[data-field="pairings_getraenke"],
+[data-perspektive-kulinarisch] amorph-container[data-field="pairings_wissenschaft"],
+[data-perspektive-kulinarisch] amorph-container[data-field="synergien"],
+[data-perspektive-kulinarisch] amorph-container[data-field="kontraste"],
+
+/* --- LAGERUNG & HALTBARKEIT --- */
+[data-perspektive-kulinarisch] amorph-container[data-field="lagerung_temperatur"],
+[data-perspektive-kulinarisch] amorph-container[data-field="lagerung_luftfeuchtigkeit"],
+[data-perspektive-kulinarisch] amorph-container[data-field="lagerung_behaelter"],
+[data-perspektive-kulinarisch] amorph-container[data-field="lagerung_haltbarkeit_tage"],
+[data-perspektive-kulinarisch] amorph-container[data-field="lagerung_indikatoren"],
+[data-perspektive-kulinarisch] amorph-container[data-field="konservierung"],
+[data-perspektive-kulinarisch] amorph-container[data-field="konservierung_methoden"],
+[data-perspektive-kulinarisch] amorph-container[data-field="konservierung_qualitaet"],
+[data-perspektive-kulinarisch] amorph-container[data-field="konservierung_haltbarkeit"],
+
+/* --- NÄHRWERT - MAKRONÄHRSTOFFE --- */
+[data-perspektive-kulinarisch] amorph-container[data-field="naehrwerte"],
+[data-perspektive-kulinarisch] amorph-container[data-field="energie_kcal"],
+[data-perspektive-kulinarisch] amorph-container[data-field="energie_kj"],
+[data-perspektive-kulinarisch] amorph-container[data-field="protein"],
+[data-perspektive-kulinarisch] amorph-container[data-field="protein_qualitaet"],
+[data-perspektive-kulinarisch] amorph-container[data-field="fett"],
+[data-perspektive-kulinarisch] amorph-container[data-field="fett_gesaettigt"],
+[data-perspektive-kulinarisch] amorph-container[data-field="fett_einfach_ungesaettigt"],
+[data-perspektive-kulinarisch] amorph-container[data-field="fett_mehrfach_ungesaettigt"],
+[data-perspektive-kulinarisch] amorph-container[data-field="omega_3"],
+[data-perspektive-kulinarisch] amorph-container[data-field="omega_6"],
+[data-perspektive-kulinarisch] amorph-container[data-field="kohlenhydrate"],
+[data-perspektive-kulinarisch] amorph-container[data-field="zucker"],
+[data-perspektive-kulinarisch] amorph-container[data-field="ballaststoffe"],
+[data-perspektive-kulinarisch] amorph-container[data-field="ballaststoffe_loeslich"],
+[data-perspektive-kulinarisch] amorph-container[data-field="ballaststoffe_unloeslich"],
+[data-perspektive-kulinarisch] amorph-container[data-field="wasser"],
+
+/* --- NÄHRWERT - VITAMINE --- */
+[data-perspektive-kulinarisch] amorph-container[data-field="vitamine"],
+[data-perspektive-kulinarisch] amorph-container[data-field="vitamin_a"],
+[data-perspektive-kulinarisch] amorph-container[data-field="beta_carotin"],
+[data-perspektive-kulinarisch] amorph-container[data-field="vitamin_b1"],
+[data-perspektive-kulinarisch] amorph-container[data-field="vitamin_b2"],
+[data-perspektive-kulinarisch] amorph-container[data-field="vitamin_b3"],
+[data-perspektive-kulinarisch] amorph-container[data-field="vitamin_b5"],
+[data-perspektive-kulinarisch] amorph-container[data-field="vitamin_b6"],
+[data-perspektive-kulinarisch] amorph-container[data-field="vitamin_b7"],
+[data-perspektive-kulinarisch] amorph-container[data-field="vitamin_b9"],
+[data-perspektive-kulinarisch] amorph-container[data-field="vitamin_b12"],
+[data-perspektive-kulinarisch] amorph-container[data-field="vitamin_c"],
+[data-perspektive-kulinarisch] amorph-container[data-field="vitamin_d"],
+[data-perspektive-kulinarisch] amorph-container[data-field="vitamin_d2"],
+[data-perspektive-kulinarisch] amorph-container[data-field="vitamin_e"],
+[data-perspektive-kulinarisch] amorph-container[data-field="vitamin_k"],
+
+/* --- NÄHRWERT - MINERALSTOFFE --- */
+[data-perspektive-kulinarisch] amorph-container[data-field="mineralstoffe"],
+[data-perspektive-kulinarisch] amorph-container[data-field="kalium"],
+[data-perspektive-kulinarisch] amorph-container[data-field="natrium"],
+[data-perspektive-kulinarisch] amorph-container[data-field="calcium"],
+[data-perspektive-kulinarisch] amorph-container[data-field="magnesium"],
+[data-perspektive-kulinarisch] amorph-container[data-field="phosphor"],
+[data-perspektive-kulinarisch] amorph-container[data-field="eisen"],
+[data-perspektive-kulinarisch] amorph-container[data-field="zink"],
+[data-perspektive-kulinarisch] amorph-container[data-field="kupfer"],
+[data-perspektive-kulinarisch] amorph-container[data-field="mangan"],
+[data-perspektive-kulinarisch] amorph-container[data-field="selen"],
+[data-perspektive-kulinarisch] amorph-container[data-field="jod"],
+[data-perspektive-kulinarisch] amorph-container[data-field="chrom"],
+[data-perspektive-kulinarisch] amorph-container[data-field="molybdaen"],
+
+/* --- NÄHRWERT - AMINOSÄUREN --- */
+[data-perspektive-kulinarisch] amorph-container[data-field="aminosaeuren"],
+[data-perspektive-kulinarisch] amorph-container[data-field="aminosaeuren_essentiell"],
+[data-perspektive-kulinarisch] amorph-container[data-field="leucin"],
+[data-perspektive-kulinarisch] amorph-container[data-field="isoleucin"],
+[data-perspektive-kulinarisch] amorph-container[data-field="valin"],
+[data-perspektive-kulinarisch] amorph-container[data-field="lysin"],
+[data-perspektive-kulinarisch] amorph-container[data-field="methionin"],
+[data-perspektive-kulinarisch] amorph-container[data-field="phenylalanin"],
+[data-perspektive-kulinarisch] amorph-container[data-field="threonin"],
+[data-perspektive-kulinarisch] amorph-container[data-field="tryptophan"],
+[data-perspektive-kulinarisch] amorph-container[data-field="histidin"],
+[data-perspektive-kulinarisch] amorph-container[data-field="aminosaeuren_semi_essentiell"],
+[data-perspektive-kulinarisch] amorph-container[data-field="arginin"],
+[data-perspektive-kulinarisch] amorph-container[data-field="cystein"],
+[data-perspektive-kulinarisch] amorph-container[data-field="tyrosin"],
+[data-perspektive-kulinarisch] amorph-container[data-field="glutaminsaeure"],
+
+/* --- NÄHRWERT - BIOAKTIVE SUBSTANZEN --- */
+[data-perspektive-kulinarisch] amorph-container[data-field="bioaktive_substanzen"],
+[data-perspektive-kulinarisch] amorph-container[data-field="beta_glucane"],
+[data-perspektive-kulinarisch] amorph-container[data-field="ergothionein"],
+[data-perspektive-kulinarisch] amorph-container[data-field="ergosterol"],
+[data-perspektive-kulinarisch] amorph-container[data-field="chitin"],
+[data-perspektive-kulinarisch] amorph-container[data-field="chitosan"],
+[data-perspektive-kulinarisch] amorph-container[data-field="polyphenole"],
+[data-perspektive-kulinarisch] amorph-container[data-field="flavonoide"],
+[data-perspektive-kulinarisch] amorph-container[data-field="carotinoide"],
+[data-perspektive-kulinarisch] amorph-container[data-field="phytosterole"],
+[data-perspektive-kulinarisch] amorph-container[data-field="naehrwert_highlights"],
+
+/* --- NÄHRWERT - INDIZES & BEWERTUNGEN --- */
+[data-perspektive-kulinarisch] amorph-container[data-field="glykaemischer_index"],
+[data-perspektive-kulinarisch] amorph-container[data-field="glykaemische_last"],
+[data-perspektive-kulinarisch] amorph-container[data-field="nutri_score"],
+[data-perspektive-kulinarisch] amorph-container[data-field="naehrstoffdichte"],
+[data-perspektive-kulinarisch] amorph-container[data-field="saettigung_index"],
+[data-perspektive-kulinarisch] amorph-container[data-field="bioverfuegbarkeit"],
+[data-perspektive-kulinarisch] amorph-container[data-field="antinaehrstoffe"],
+[data-perspektive-kulinarisch] amorph-container[data-field="wechselwirkungen"],
+
+/* --- KULTURELLER KONTEXT --- */
+[data-perspektive-kulinarisch] amorph-container[data-field="traditionen_namen"],
+[data-perspektive-kulinarisch] amorph-container[data-field="traditionen_gerichte"],
+[data-perspektive-kulinarisch] amorph-container[data-field="traditionen"],
+[data-perspektive-kulinarisch] amorph-container[data-field="saisonalitaet"],
+[data-perspektive-kulinarisch] amorph-container[data-field="verfuegbarkeit"],
+[data-perspektive-kulinarisch] amorph-container[data-field="nachhaltigkeit"],
+[data-perspektive-kulinarisch] amorph-container[data-field="geschichte"],
+
+/* --- BEWERTUNG --- */
+[data-perspektive-kulinarisch] amorph-container[data-field="bewertung"] {
+  display: block !important;
+  --perspektive-farbe: rgba(255, 200, 120, 0.65);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   INTERAKTIONEN-PERSPEKTIVE v2.0 - Netzwerk-Magenta
+   Biological Interaction Networks - Lebendiges Magenta wie Beziehungsnetzwerke
+═══════════════════════════════════════════════════════════════════════════ */
+
+/* --- ORGANISMUS / NETZWERK-KNOTEN --- */
 [data-perspektive-interaktionen] amorph-container[data-field="netzwerk_position"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_degree_zentralitaet"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_betweenness_zentralitaet"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_closeness_zentralitaet"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_eigenvector_zentralitaet"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_hub_score"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_clustering_koeffizient"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_community_id"],
+
+/* --- INTERAKTIONS-STABILITÄT --- */
 [data-perspektive-interaktionen] amorph-container[data-field="interaktions_stabilitaet"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_robustheit_score"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_redundanz_grad"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_keystone_index"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_temporale_persistenz"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_stoerungsanfaelligkeit"],
+
+/* --- MULTI-SPECIES INTERAKTIONEN --- */
+[data-perspektive-interaktionen] amorph-container[data-field="multispecies_interaktionen"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_typ"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_subtyp"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_direktionalitaet"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_staerke"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_obligat_fakultativ"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_spezifitaet"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_raeumliche_skala"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_kontakt_art"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_temporales_muster"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_saisonalitaet"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_tageszeit"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_frequenz"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_dauer_minuten"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_habitat_kontext"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_umweltbedingungen"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_temperatur_optimal"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_feuchtigkeit_optimal"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_licht_bedingung"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_ph_bereich"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_fitness_effekt"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_fitness_organismus_a"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_fitness_organismus_b"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_evidenz"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_evidenz_level"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_konfidenz"],
+[data-perspektive-interaktionen] amorph-container[data-field="interaktions_studien_anzahl"],
+
+/* --- CHEMISCHE ÖKOLOGIE --- */
 [data-perspektive-interaktionen] amorph-container[data-field="chemische_oekologie"],
+[data-perspektive-interaktionen] amorph-container[data-field="chem_stoff_name"],
+[data-perspektive-interaktionen] amorph-container[data-field="chem_iupac_name"],
+[data-perspektive-interaktionen] amorph-container[data-field="chem_cas_nummer"],
+[data-perspektive-interaktionen] amorph-container[data-field="chem_summenformel"],
+[data-perspektive-interaktionen] amorph-container[data-field="chem_molekulare_masse"],
+[data-perspektive-interaktionen] amorph-container[data-field="chem_smiles"],
+[data-perspektive-interaktionen] amorph-container[data-field="chem_inchi_key"],
+[data-perspektive-interaktionen] amorph-container[data-field="chem_stoffklasse"],
+[data-perspektive-interaktionen] amorph-container[data-field="chem_produktion"],
+[data-perspektive-interaktionen] amorph-container[data-field="chem_produktions_organ"],
+[data-perspektive-interaktionen] amorph-container[data-field="chem_speicher_organ"],
+[data-perspektive-interaktionen] amorph-container[data-field="chem_freisetzungs_mechanismus"],
+[data-perspektive-interaktionen] amorph-container[data-field="chem_freisetzungs_menge"],
+
+/* --- ALLELOPATHIE --- */
 [data-perspektive-interaktionen] amorph-container[data-field="allelopathie"],
+[data-perspektive-interaktionen] amorph-container[data-field="allelopathie_aktiv"],
+[data-perspektive-interaktionen] amorph-container[data-field="allelopathie_effekt_typ"],
+[data-perspektive-interaktionen] amorph-container[data-field="allelopathie_ziel_organismen"],
+[data-perspektive-interaktionen] amorph-container[data-field="allelopathie_effekt_staerke"],
+[data-perspektive-interaktionen] amorph-container[data-field="allelopathie_ec50"],
+[data-perspektive-interaktionen] amorph-container[data-field="allelopathie_betroffene_prozesse"],
+[data-perspektive-interaktionen] amorph-container[data-field="allelopathie_boden_persistenz_tage"],
+
+/* --- CHEMISCHE KOMMUNIKATION --- */
 [data-perspektive-interaktionen] amorph-container[data-field="chemische_kommunikation"],
+[data-perspektive-interaktionen] amorph-container[data-field="chem_signal_typ"],
+[data-perspektive-interaktionen] amorph-container[data-field="chem_signal_funktion"],
+[data-perspektive-interaktionen] amorph-container[data-field="chem_signal_empfaenger"],
+[data-perspektive-interaktionen] amorph-container[data-field="chem_signal_empfindlichkeit"],
+[data-perspektive-interaktionen] amorph-container[data-field="chem_signal_verhaltensantwort"],
+[data-perspektive-interaktionen] amorph-container[data-field="chem_signal_reichweite_meter"],
+[data-perspektive-interaktionen] amorph-container[data-field="chem_signal_halbwertszeit_stunden"],
+
+/* --- ABWEHRSTOFFE --- */
 [data-perspektive-interaktionen] amorph-container[data-field="abwehrstoffe"],
+[data-perspektive-interaktionen] amorph-container[data-field="abwehr_typ"],
+[data-perspektive-interaktionen] amorph-container[data-field="abwehr_toxizitaet"],
+[data-perspektive-interaktionen] amorph-container[data-field="abwehr_ld50"],
+[data-perspektive-interaktionen] amorph-container[data-field="abwehr_toxisch_fuer"],
+[data-perspektive-interaktionen] amorph-container[data-field="abwehr_wirkungsmechanismus"],
+[data-perspektive-interaktionen] amorph-container[data-field="abwehr_gegenspieler"],
+[data-perspektive-interaktionen] amorph-container[data-field="abwehr_resistenz_mechanismus"],
+[data-perspektive-interaktionen] amorph-container[data-field="abwehr_sequestration"],
+
+/* --- MIKROBIOM --- */
 [data-perspektive-interaktionen] amorph-container[data-field="mikrobiom"],
-[data-perspektive-interaktionen] amorph-container[data-field="assoziierte_bakterien"],
-[data-perspektive-interaktionen] amorph-container[data-field="assoziierte_pilze"],
+[data-perspektive-interaktionen] amorph-container[data-field="mikrobiom_kompartiment"],
+[data-perspektive-interaktionen] amorph-container[data-field="mikrobiom_community_struktur"],
+[data-perspektive-interaktionen] amorph-container[data-field="mikrobiom_diversitaet_shannon"],
+[data-perspektive-interaktionen] amorph-container[data-field="mikrobiom_diversitaet_simpson"],
+[data-perspektive-interaktionen] amorph-container[data-field="mikrobiom_richness"],
+[data-perspektive-interaktionen] amorph-container[data-field="mikrobiom_evenness"],
+[data-perspektive-interaktionen] amorph-container[data-field="mikrobiom_dominante_phyla"],
+[data-perspektive-interaktionen] amorph-container[data-field="mikrobiom_core_anteil"],
 [data-perspektive-interaktionen] amorph-container[data-field="community_struktur"],
+
+/* --- ASSOZIIERTE BAKTERIEN --- */
+[data-perspektive-interaktionen] amorph-container[data-field="assoziierte_bakterien"],
+[data-perspektive-interaktionen] amorph-container[data-field="bakterien_taxon_name"],
+[data-perspektive-interaktionen] amorph-container[data-field="bakterien_taxonomie_level"],
+[data-perspektive-interaktionen] amorph-container[data-field="bakterien_relative_abundanz"],
+[data-perspektive-interaktionen] amorph-container[data-field="bakterien_funktionelle_gruppe"],
+[data-perspektive-interaktionen] amorph-container[data-field="bakterien_assoziations_staerke"],
+[data-perspektive-interaktionen] amorph-container[data-field="bakterien_nachweismethode"],
+
+/* --- ASSOZIIERTE PILZE --- */
+[data-perspektive-interaktionen] amorph-container[data-field="assoziierte_pilze"],
+[data-perspektive-interaktionen] amorph-container[data-field="pilze_taxon_name"],
+[data-perspektive-interaktionen] amorph-container[data-field="pilze_taxonomie_level"],
+[data-perspektive-interaktionen] amorph-container[data-field="pilze_relative_abundanz"],
+[data-perspektive-interaktionen] amorph-container[data-field="pilze_funktionelle_gruppe"],
+[data-perspektive-interaktionen] amorph-container[data-field="pilze_assoziations_staerke"],
+[data-perspektive-interaktionen] amorph-container[data-field="pilze_nachweismethode"],
+
+/* --- FUNKTIONELLES PROFIL --- */
+[data-perspektive-interaktionen] amorph-container[data-field="funktionelles_profil"],
+[data-perspektive-interaktionen] amorph-container[data-field="metabolische_pfade"],
+[data-perspektive-interaktionen] amorph-container[data-field="funktionelle_gene"],
+[data-perspektive-interaktionen] amorph-container[data-field="gesamt_metabolisches_potential"],
+
+/* --- MIKROBIOM-STABILITÄT --- */
+[data-perspektive-interaktionen] amorph-container[data-field="mikrobiom_stabilitaet"],
+[data-perspektive-interaktionen] amorph-container[data-field="mikrobiom_temporal_variabilitaet"],
+[data-perspektive-interaktionen] amorph-container[data-field="mikrobiom_resilienz"],
+[data-perspektive-interaktionen] amorph-container[data-field="mikrobiom_haupttreiber_variation"],
+
+/* --- WIRT-INTERAKTIONEN --- */
 [data-perspektive-interaktionen] amorph-container[data-field="wirt_interaktionen"],
-[data-perspektive-interaktionen] amorph-container[data-field="parasiten"],
-[data-perspektive-interaktionen] amorph-container[data-field="mykorrhiza_netzwerk"],
-[data-perspektive-interaktionen] amorph-container[data-field="naehrstoff_transfer"],
-[data-perspektive-interaktionen] amorph-container[data-field="signal_transfer"],
+[data-perspektive-interaktionen] amorph-container[data-field="wirt_beziehungs_kategorie"],
+
+/* --- SYMBIONTEN --- */
 [data-perspektive-interaktionen] amorph-container[data-field="symbionten"],
-[data-perspektive-interaktionen] amorph-container[data-field="konkurrenten"] {
+[data-perspektive-interaktionen] amorph-container[data-field="symbionten_details"],
+[data-perspektive-interaktionen] amorph-container[data-field="symbiose_typ"],
+[data-perspektive-interaktionen] amorph-container[data-field="symbiose_wirt_nutzen"],
+[data-perspektive-interaktionen] amorph-container[data-field="symbiose_partner_nutzen"],
+[data-perspektive-interaktionen] amorph-container[data-field="symbiose_etablierungs_phase"],
+[data-perspektive-interaktionen] amorph-container[data-field="symbiose_erkennungs_signale"],
+[data-perspektive-interaktionen] amorph-container[data-field="symbiose_infektion_struktur"],
+[data-perspektive-interaktionen] amorph-container[data-field="symbiose_zeit_bis_funktionell"],
+
+/* --- PARASITEN --- */
+[data-perspektive-interaktionen] amorph-container[data-field="parasiten"],
+[data-perspektive-interaktionen] amorph-container[data-field="parasiten_details"],
+[data-perspektive-interaktionen] amorph-container[data-field="parasitismus_typ"],
+[data-perspektive-interaktionen] amorph-container[data-field="parasit_infektion_struktur"],
+[data-perspektive-interaktionen] amorph-container[data-field="parasit_befallene_organe"],
+[data-perspektive-interaktionen] amorph-container[data-field="parasit_symptome"],
+[data-perspektive-interaktionen] amorph-container[data-field="parasit_schweregrad"],
+[data-perspektive-interaktionen] amorph-container[data-field="parasit_uebertragungsweg"],
+[data-perspektive-interaktionen] amorph-container[data-field="parasit_wirtswechsel"],
+[data-perspektive-interaktionen] amorph-container[data-field="parasit_alternativ_wirte"],
+[data-perspektive-interaktionen] amorph-container[data-field="parasit_pathogenitaet"],
+[data-perspektive-interaktionen] amorph-container[data-field="parasit_inkubationszeit_tage"],
+
+/* --- KONKURRENTEN --- */
+[data-perspektive-interaktionen] amorph-container[data-field="konkurrenten"],
+[data-perspektive-interaktionen] amorph-container[data-field="konkurrenz_details"],
+[data-perspektive-interaktionen] amorph-container[data-field="konkurrenz_typ"],
+[data-perspektive-interaktionen] amorph-container[data-field="konkurrenz_umkaempfte_ressourcen"],
+[data-perspektive-interaktionen] amorph-container[data-field="konkurrenz_intensitaet"],
+[data-perspektive-interaktionen] amorph-container[data-field="konkurrenz_koexistenz_mechanismen"],
+[data-perspektive-interaktionen] amorph-container[data-field="konkurrenz_asymmetrie"],
+
+/* --- QUANTIFIZIERUNG --- */
+[data-perspektive-interaktionen] amorph-container[data-field="wirt_quantifizierung"],
+[data-perspektive-interaktionen] amorph-container[data-field="wirt_praevelenz"],
+[data-perspektive-interaktionen] amorph-container[data-field="wirt_intensitaet"],
+[data-perspektive-interaktionen] amorph-container[data-field="wirt_aggregation"],
+
+/* --- MYKORRHIZA-NETZWERK --- */
+[data-perspektive-interaktionen] amorph-container[data-field="mykorrhiza_netzwerk"],
+[data-perspektive-interaktionen] amorph-container[data-field="mykorrhiza_netzwerk_id"],
+[data-perspektive-interaktionen] amorph-container[data-field="mykorrhiza_verbindungs_typ"],
+[data-perspektive-interaktionen] amorph-container[data-field="mykorrhiza_verbindungs_staerke"],
+[data-perspektive-interaktionen] amorph-container[data-field="mykorrhiza_hyphen_dichte"],
+[data-perspektive-interaktionen] amorph-container[data-field="mykorrhiza_alter_verbindung"],
+
+/* --- NÄHRSTOFF-TRANSFER --- */
+[data-perspektive-interaktionen] amorph-container[data-field="naehrstoff_transfer"],
+[data-perspektive-interaktionen] amorph-container[data-field="naehrstoff_typ"],
+[data-perspektive-interaktionen] amorph-container[data-field="naehrstoff_richtung"],
+[data-perspektive-interaktionen] amorph-container[data-field="naehrstoff_transfer_rate"],
+[data-perspektive-interaktionen] amorph-container[data-field="naehrstoff_anteil_bedarf_gedeckt"],
+[data-perspektive-interaktionen] amorph-container[data-field="naehrstoff_regulierende_faktoren"],
+
+/* --- SIGNAL-TRANSFER --- */
+[data-perspektive-interaktionen] amorph-container[data-field="signal_transfer"],
+[data-perspektive-interaktionen] amorph-container[data-field="signal_typ"],
+[data-perspektive-interaktionen] amorph-container[data-field="signal_molekuel"],
+[data-perspektive-interaktionen] amorph-container[data-field="signal_richtung"],
+[data-perspektive-interaktionen] amorph-container[data-field="signal_uebertragungszeit_minuten"],
+[data-perspektive-interaktionen] amorph-container[data-field="signal_biologischer_effekt"],
+[data-perspektive-interaktionen] amorph-container[data-field="signal_effizienz"],
+
+/* --- ÖKOLOGISCHE BEDEUTUNG --- */
+[data-perspektive-interaktionen] amorph-container[data-field="mykorrhiza_oekologische_bedeutung"],
+[data-perspektive-interaktionen] amorph-container[data-field="mykorrhiza_facilitation_effekt"],
+[data-perspektive-interaktionen] amorph-container[data-field="mykorrhiza_resilienz_beitrag"],
+[data-perspektive-interaktionen] amorph-container[data-field="mykorrhiza_carbon_sink_potential"],
+
+/* --- NETZWERK-SNAPSHOT --- */
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_snapshot"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_timestamp"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_standort"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_metriken"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_knoten_anzahl"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_kanten_anzahl"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_dichte"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_durchschnittlicher_pfad"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_durchmesser"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_clustering_global"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_modularitaet"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_assortativity"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_connectance"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_nestedness"],
+
+/* --- NETZWERK-STABILITÄT --- */
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_stabilitaet"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_robustheit_zufaellig"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_robustheit_gezielt"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_kritische_konnektivitaet"],
+[data-perspektive-interaktionen] amorph-container[data-field="netzwerk_fragmentierungs_risiko"] {
   display: block !important;
   --perspektive-farbe: rgba(220, 120, 180, 0.65);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   VISUAL-PERSPEKTIVE - Spektrum-Rainbow
-   Regenbogen für visuelle Vielfalt
+   BESTIMMUNG-PERSPEKTIVE - Analyse-Cyan
+   Wissenschaftlich, präzise - für Identifikation/Determinierung
+   VOLLSTÄNDIGES BESTIMMUNGSSYSTEM
 ═══════════════════════════════════════════════════════════════════════════ */
-[data-perspektive-visual] amorph-container[data-field="bildergalerie"],
-[data-perspektive-visual] amorph-container[data-field="primaerbild"],
-[data-perspektive-visual] amorph-container[data-field="bilder_typen"],
-[data-perspektive-visual] amorph-container[data-field="entwicklungsstadien_bilder"],
-[data-perspektive-visual] amorph-container[data-field="mikroskopie_bilder"],
-[data-perspektive-visual] amorph-container[data-field="view_360"],
-[data-perspektive-visual] amorph-container[data-field="frames"],
-[data-perspektive-visual] amorph-container[data-field="rotation"],
-[data-perspektive-visual] amorph-container[data-field="modell_3d"],
-[data-perspektive-visual] amorph-container[data-field="farbdaten"],
-[data-perspektive-visual] amorph-container[data-field="munsell_farben"],
-[data-perspektive-visual] amorph-container[data-field="rgb_palette"],
-[data-perspektive-visual] amorph-container[data-field="chemische_reaktionen_farbe"],
-[data-perspektive-visual] amorph-container[data-field="visual_signature"],
-[data-perspektive-visual] amorph-container[data-field="form_vektor"],
-[data-perspektive-visual] amorph-container[data-field="textur_vektor"],
-[data-perspektive-visual] amorph-container[data-field="farb_vektor"],
-[data-perspektive-visual] amorph-container[data-field="muster_vektor"],
-[data-perspektive-visual] amorph-container[data-field="einzigartigkeit"],
-[data-perspektive-visual] amorph-container[data-field="verwechslungs_arten"],
-[data-perspektive-visual] amorph-container[data-field="erkennungsmerkmale"],
-[data-perspektive-visual] amorph-container[data-field="unterscheidungsmerkmale"],
-[data-perspektive-visual] amorph-container[data-field="bestimmungsschema"],
-[data-perspektive-visual] amorph-container[data-field="bild"] {
+
+/* --- SPEZIES-IDENTIFIKATION --- */
+[data-perspektive-bestimmung] amorph-container[data-field="wissenschaftlicher_name"],
+[data-perspektive-bestimmung] amorph-container[data-field="autorenzitat"],
+[data-perspektive-bestimmung] amorph-container[data-field="akzeptierter_name"],
+[data-perspektive-bestimmung] amorph-container[data-field="basionym"],
+[data-perspektive-bestimmung] amorph-container[data-field="taxonomie_regnum"],
+[data-perspektive-bestimmung] amorph-container[data-field="taxonomie_phylum"],
+[data-perspektive-bestimmung] amorph-container[data-field="taxonomie_classis"],
+[data-perspektive-bestimmung] amorph-container[data-field="taxonomie_ordo"],
+[data-perspektive-bestimmung] amorph-container[data-field="taxonomie_familia"],
+[data-perspektive-bestimmung] amorph-container[data-field="taxonomie_genus"],
+[data-perspektive-bestimmung] amorph-container[data-field="taxonomie_species"],
+[data-perspektive-bestimmung] amorph-container[data-field="taxonomie_unterart"],
+[data-perspektive-bestimmung] amorph-container[data-field="taxonomie_varietaet"],
+[data-perspektive-bestimmung] amorph-container[data-field="taxonomie_forma"],
+[data-perspektive-bestimmung] amorph-container[data-field="synonyme"],
+[data-perspektive-bestimmung] amorph-container[data-field="nomenklatorische_synonyme"],
+[data-perspektive-bestimmung] amorph-container[data-field="taxonomische_synonyme"],
+[data-perspektive-bestimmung] amorph-container[data-field="homonyme"],
+[data-perspektive-bestimmung] amorph-container[data-field="deutsche_namen"],
+[data-perspektive-bestimmung] amorph-container[data-field="internationale_namen"],
+[data-perspektive-bestimmung] amorph-container[data-field="mycobank_id"],
+[data-perspektive-bestimmung] amorph-container[data-field="index_fungorum_id"],
+[data-perspektive-bestimmung] amorph-container[data-field="species_fungorum_id"],
+[data-perspektive-bestimmung] amorph-container[data-field="gbif_key"],
+[data-perspektive-bestimmung] amorph-container[data-field="inaturalist_taxon_id"],
+[data-perspektive-bestimmung] amorph-container[data-field="bold_taxon_id"],
+[data-perspektive-bestimmung] amorph-container[data-field="ncbi_taxid"],
+[data-perspektive-bestimmung] amorph-container[data-field="wikidata_id"],
+[data-perspektive-bestimmung] amorph-container[data-field="taxonomie_status"],
+[data-perspektive-bestimmung] amorph-container[data-field="unsicherheits_grad"],
+[data-perspektive-bestimmung] amorph-container[data-field="revisionsstand"],
+[data-perspektive-bestimmung] amorph-container[data-field="typus_status"],
+
+/* --- MAKROSKOPIE GRUNDLEGEND --- */
+[data-perspektive-bestimmung] amorph-container[data-field="habitus"],
+[data-perspektive-bestimmung] amorph-container[data-field="wuchsform"],
+[data-perspektive-bestimmung] amorph-container[data-field="groesse"],
+[data-perspektive-bestimmung] amorph-container[data-field="groesse_min_cm"],
+[data-perspektive-bestimmung] amorph-container[data-field="groesse_max_cm"],
+[data-perspektive-bestimmung] amorph-container[data-field="grundform"],
+[data-perspektive-bestimmung] amorph-container[data-field="silhouette"],
+[data-perspektive-bestimmung] amorph-container[data-field="altersstadien"],
+[data-perspektive-bestimmung] amorph-container[data-field="form"],
+[data-perspektive-bestimmung] amorph-container[data-field="oberflaeche"],
+[data-perspektive-bestimmung] amorph-container[data-field="oberflaeche_typ"],
+[data-perspektive-bestimmung] amorph-container[data-field="oberflaeche_detail"],
+[data-perspektive-bestimmung] amorph-container[data-field="behaarung"],
+[data-perspektive-bestimmung] amorph-container[data-field="beschuppung"],
+[data-perspektive-bestimmung] amorph-container[data-field="bereifung"],
+[data-perspektive-bestimmung] amorph-container[data-field="strukturelemente"],
+[data-perspektive-bestimmung] amorph-container[data-field="strukturmerkmale"],
+[data-perspektive-bestimmung] amorph-container[data-field="anhangorgane"],
+[data-perspektive-bestimmung] amorph-container[data-field="sekrete"],
+
+/* --- FARBE --- */
+[data-perspektive-bestimmung] amorph-container[data-field="farbe"],
+[data-perspektive-bestimmung] amorph-container[data-field="farbe_frisch"],
+[data-perspektive-bestimmung] amorph-container[data-field="farbe_alt"],
+[data-perspektive-bestimmung] amorph-container[data-field="farbe_feucht"],
+[data-perspektive-bestimmung] amorph-container[data-field="farbe_trocken"],
+[data-perspektive-bestimmung] amorph-container[data-field="farbe_verletzung"],
+[data-perspektive-bestimmung] amorph-container[data-field="farbzonen"],
+[data-perspektive-bestimmung] amorph-container[data-field="farbverteilung"],
+[data-perspektive-bestimmung] amorph-container[data-field="farbvarianz"],
+[data-perspektive-bestimmung] amorph-container[data-field="farbvarianz_beschreibung"],
+[data-perspektive-bestimmung] amorph-container[data-field="farbdaten"],
+[data-perspektive-bestimmung] amorph-container[data-field="munsell_farben"],
+[data-perspektive-bestimmung] amorph-container[data-field="munsell_codes"],
+[data-perspektive-bestimmung] amorph-container[data-field="rgb_palette"],
+[data-perspektive-bestimmung] amorph-container[data-field="rgb_hex_werte"],
+[data-perspektive-bestimmung] amorph-container[data-field="ral_codes"],
+
+/* --- KONSISTENZ --- */
+[data-perspektive-bestimmung] amorph-container[data-field="konsistenz"],
+[data-perspektive-bestimmung] amorph-container[data-field="konsistenz_frisch"],
+[data-perspektive-bestimmung] amorph-container[data-field="konsistenz_alt"],
+[data-perspektive-bestimmung] amorph-container[data-field="bruch_verhalten"],
+[data-perspektive-bestimmung] amorph-container[data-field="elastizitaet"],
+[data-perspektive-bestimmung] amorph-container[data-field="zaehigkeit"],
+[data-perspektive-bestimmung] amorph-container[data-field="feuchtigkeitsgehalt"],
+
+/* --- GERUCH & GESCHMACK --- */
+[data-perspektive-bestimmung] amorph-container[data-field="geruch"],
+[data-perspektive-bestimmung] amorph-container[data-field="geruch_frisch"],
+[data-perspektive-bestimmung] amorph-container[data-field="geruch_alt"],
+[data-perspektive-bestimmung] amorph-container[data-field="geruch_reiben"],
+[data-perspektive-bestimmung] amorph-container[data-field="geruch_trocknung"],
+[data-perspektive-bestimmung] amorph-container[data-field="geruch_intensitaet"],
+[data-perspektive-bestimmung] amorph-container[data-field="geschmack"],
+[data-perspektive-bestimmung] amorph-container[data-field="geschmack_warnung"],
+[data-perspektive-bestimmung] amorph-container[data-field="nachgeschmack"],
+
+/* --- PILZ: HUT --- */
+[data-perspektive-bestimmung] amorph-container[data-field="hut_durchmesser_min"],
+[data-perspektive-bestimmung] amorph-container[data-field="hut_durchmesser_max"],
+[data-perspektive-bestimmung] amorph-container[data-field="hut_form_jung"],
+[data-perspektive-bestimmung] amorph-container[data-field="hut_form_alt"],
+[data-perspektive-bestimmung] amorph-container[data-field="hut_rand"],
+[data-perspektive-bestimmung] amorph-container[data-field="hut_oberflaeche"],
+[data-perspektive-bestimmung] amorph-container[data-field="hut_hygrophan"],
+[data-perspektive-bestimmung] amorph-container[data-field="hut_riefung"],
+[data-perspektive-bestimmung] amorph-container[data-field="hut_buckel"],
+
+/* --- PILZ: LAMELLEN --- */
+[data-perspektive-bestimmung] amorph-container[data-field="lamellen_vorhanden"],
+[data-perspektive-bestimmung] amorph-container[data-field="lamellen_ansatz"],
+[data-perspektive-bestimmung] amorph-container[data-field="lamellen_dichte"],
+[data-perspektive-bestimmung] amorph-container[data-field="lamellen_breite"],
+[data-perspektive-bestimmung] amorph-container[data-field="lamellen_farbe"],
+[data-perspektive-bestimmung] amorph-container[data-field="lamellen_verfaerbung"],
+[data-perspektive-bestimmung] amorph-container[data-field="lamellen_schneide"],
+[data-perspektive-bestimmung] amorph-container[data-field="lamelletten"],
+[data-perspektive-bestimmung] amorph-container[data-field="lamellen_queradern"],
+[data-perspektive-bestimmung] amorph-container[data-field="lamellen_gabelung"],
+
+/* --- PILZ: RÖHREN --- */
+[data-perspektive-bestimmung] amorph-container[data-field="roehren_vorhanden"],
+[data-perspektive-bestimmung] amorph-container[data-field="roehren_laenge"],
+[data-perspektive-bestimmung] amorph-container[data-field="roehren_farbe"],
+[data-perspektive-bestimmung] amorph-container[data-field="roehren_verfaerbung"],
+[data-perspektive-bestimmung] amorph-container[data-field="poren_form"],
+[data-perspektive-bestimmung] amorph-container[data-field="poren_groesse"],
+[data-perspektive-bestimmung] amorph-container[data-field="poren_farbe"],
+[data-perspektive-bestimmung] amorph-container[data-field="poren_verfaerbung_druck"],
+
+/* --- PILZ: STIEL --- */
+[data-perspektive-bestimmung] amorph-container[data-field="stiel_laenge_min"],
+[data-perspektive-bestimmung] amorph-container[data-field="stiel_laenge_max"],
+[data-perspektive-bestimmung] amorph-container[data-field="stiel_dicke_min"],
+[data-perspektive-bestimmung] amorph-container[data-field="stiel_dicke_max"],
+[data-perspektive-bestimmung] amorph-container[data-field="stiel_form"],
+[data-perspektive-bestimmung] amorph-container[data-field="stiel_basis"],
+[data-perspektive-bestimmung] amorph-container[data-field="stiel_oberflaeche"],
+[data-perspektive-bestimmung] amorph-container[data-field="stiel_farbe"],
+[data-perspektive-bestimmung] amorph-container[data-field="stiel_verfaerbung"],
+[data-perspektive-bestimmung] amorph-container[data-field="stiel_konsistenz"],
+[data-perspektive-bestimmung] amorph-container[data-field="stiel_hohlheit"],
+[data-perspektive-bestimmung] amorph-container[data-field="stiel_natterung"],
+
+/* --- PILZ: HÜLLEN --- */
+[data-perspektive-bestimmung] amorph-container[data-field="velum_partiale"],
+[data-perspektive-bestimmung] amorph-container[data-field="ring_position"],
+[data-perspektive-bestimmung] amorph-container[data-field="ring_form"],
+[data-perspektive-bestimmung] amorph-container[data-field="ring_konsistenz"],
+[data-perspektive-bestimmung] amorph-container[data-field="ring_beweglichkeit"],
+[data-perspektive-bestimmung] amorph-container[data-field="cortina"],
+[data-perspektive-bestimmung] amorph-container[data-field="velum_universale"],
+[data-perspektive-bestimmung] amorph-container[data-field="volva_form"],
+[data-perspektive-bestimmung] amorph-container[data-field="volva_farbe"],
+[data-perspektive-bestimmung] amorph-container[data-field="volva_konsistenz"],
+[data-perspektive-bestimmung] amorph-container[data-field="hutfetzen"],
+
+/* --- PILZ: FLEISCH --- */
+[data-perspektive-bestimmung] amorph-container[data-field="fleisch_farbe"],
+[data-perspektive-bestimmung] amorph-container[data-field="fleisch_verfaerbung"],
+[data-perspektive-bestimmung] amorph-container[data-field="fleisch_konsistenz"],
+[data-perspektive-bestimmung] amorph-container[data-field="fleisch_dicke"],
+[data-perspektive-bestimmung] amorph-container[data-field="fleisch_faserung"],
+[data-perspektive-bestimmung] amorph-container[data-field="fleisch_bruch"],
+[data-perspektive-bestimmung] amorph-container[data-field="milchsaft"],
+[data-perspektive-bestimmung] amorph-container[data-field="milchsaft_farbe"],
+[data-perspektive-bestimmung] amorph-container[data-field="milchsaft_verfaerbung"],
+[data-perspektive-bestimmung] amorph-container[data-field="milchsaft_geschmack"],
+
+/* --- SPORENPULVER --- */
+[data-perspektive-bestimmung] amorph-container[data-field="sporenpulver_farbe"],
+[data-perspektive-bestimmung] amorph-container[data-field="sporenpulver_menge"],
+[data-perspektive-bestimmung] amorph-container[data-field="sporenpulver_sporenabwurf_anleitung"],
+
+/* --- MIKROSKOPIE: SPOREN --- */
+[data-perspektive-bestimmung] amorph-container[data-field="mikroskopie_bilder"],
+[data-perspektive-bestimmung] amorph-container[data-field="mikroskopie_erforderlich"],
+[data-perspektive-bestimmung] amorph-container[data-field="zellstruktur"],
+[data-perspektive-bestimmung] amorph-container[data-field="sporen"],
+[data-perspektive-bestimmung] amorph-container[data-field="sporen_masse"],
+[data-perspektive-bestimmung] amorph-container[data-field="sporen_form"],
+[data-perspektive-bestimmung] amorph-container[data-field="sporen_laenge_min"],
+[data-perspektive-bestimmung] amorph-container[data-field="sporen_laenge_max"],
+[data-perspektive-bestimmung] amorph-container[data-field="sporen_breite_min"],
+[data-perspektive-bestimmung] amorph-container[data-field="sporen_breite_max"],
+[data-perspektive-bestimmung] amorph-container[data-field="sporen_quotient"],
+[data-perspektive-bestimmung] amorph-container[data-field="sporen_ornament"],
+[data-perspektive-bestimmung] amorph-container[data-field="sporen_ornament_detail"],
+[data-perspektive-bestimmung] amorph-container[data-field="sporen_farbe"],
+[data-perspektive-bestimmung] amorph-container[data-field="sporen_wandstaerke"],
+[data-perspektive-bestimmung] amorph-container[data-field="sporen_keimporus"],
+[data-perspektive-bestimmung] amorph-container[data-field="sporen_apikulus"],
+[data-perspektive-bestimmung] amorph-container[data-field="sporen_oel_tropfen"],
+[data-perspektive-bestimmung] amorph-container[data-field="sporen_inhalt"],
+[data-perspektive-bestimmung] amorph-container[data-field="sporen_3d_form"],
+
+/* --- MIKROSKOPIE: BASIDIEN --- */
+[data-perspektive-bestimmung] amorph-container[data-field="basidien"],
+[data-perspektive-bestimmung] amorph-container[data-field="basidien_form"],
+[data-perspektive-bestimmung] amorph-container[data-field="basidien_laenge"],
+[data-perspektive-bestimmung] amorph-container[data-field="basidien_breite"],
+[data-perspektive-bestimmung] amorph-container[data-field="basidien_sterigmen_anzahl"],
+[data-perspektive-bestimmung] amorph-container[data-field="basidien_sterigmen_laenge"],
+[data-perspektive-bestimmung] amorph-container[data-field="basidien_basalschnalle"],
+[data-perspektive-bestimmung] amorph-container[data-field="basidiolen"],
+
+/* --- MIKROSKOPIE: ASCI --- */
+[data-perspektive-bestimmung] amorph-container[data-field="asci"],
+[data-perspektive-bestimmung] amorph-container[data-field="asci_form"],
+[data-perspektive-bestimmung] amorph-container[data-field="asci_laenge"],
+[data-perspektive-bestimmung] amorph-container[data-field="asci_breite"],
+[data-perspektive-bestimmung] amorph-container[data-field="asci_sporenanzahl"],
+[data-perspektive-bestimmung] amorph-container[data-field="asci_spitze"],
+[data-perspektive-bestimmung] amorph-container[data-field="asci_jod_reaktion"],
+[data-perspektive-bestimmung] amorph-container[data-field="asci_operculum"],
+[data-perspektive-bestimmung] amorph-container[data-field="asci_basis"],
+
+/* --- MIKROSKOPIE: ZYSTIDEN --- */
+[data-perspektive-bestimmung] amorph-container[data-field="zystiden"],
+[data-perspektive-bestimmung] amorph-container[data-field="zystiden_vorhanden"],
+[data-perspektive-bestimmung] amorph-container[data-field="cheilozystiden_form"],
+[data-perspektive-bestimmung] amorph-container[data-field="cheilozystiden_groesse"],
+[data-perspektive-bestimmung] amorph-container[data-field="pleurozystiden_form"],
+[data-perspektive-bestimmung] amorph-container[data-field="pleurozystiden_groesse"],
+[data-perspektive-bestimmung] amorph-container[data-field="kaulozystiden_form"],
+[data-perspektive-bestimmung] amorph-container[data-field="chrysozystiden"],
+[data-perspektive-bestimmung] amorph-container[data-field="lamprozystiden"],
+[data-perspektive-bestimmung] amorph-container[data-field="gloeozystiden"],
+[data-perspektive-bestimmung] amorph-container[data-field="zystiden_inkrustierung"],
+[data-perspektive-bestimmung] amorph-container[data-field="zystiden_inhalt"],
+
+/* --- MIKROSKOPIE: HYPHEN --- */
+[data-perspektive-bestimmung] amorph-container[data-field="hyphen"],
+[data-perspektive-bestimmung] amorph-container[data-field="hyphen_septen"],
+[data-perspektive-bestimmung] amorph-container[data-field="hyphen_durchmesser"],
+[data-perspektive-bestimmung] amorph-container[data-field="hyphen_pigmentierung"],
+[data-perspektive-bestimmung] amorph-container[data-field="hyphen_inkrustierung"],
+[data-perspektive-bestimmung] amorph-container[data-field="hyphen_gelatinisierung"],
+[data-perspektive-bestimmung] amorph-container[data-field="trama_aufbau"],
+[data-perspektive-bestimmung] amorph-container[data-field="huthaut_typ"],
+[data-perspektive-bestimmung] amorph-container[data-field="huthaut_aufbau"],
+[data-perspektive-bestimmung] amorph-container[data-field="huthaut_pigment"],
+
+/* --- MIKROSKOPIE: KRISTALLE & PIGMENTE --- */
+[data-perspektive-bestimmung] amorph-container[data-field="kristalle"],
+[data-perspektive-bestimmung] amorph-container[data-field="kristalle_vorhanden"],
+[data-perspektive-bestimmung] amorph-container[data-field="kristalle_form"],
+[data-perspektive-bestimmung] amorph-container[data-field="kristalle_lage"],
+[data-perspektive-bestimmung] amorph-container[data-field="pigmente"],
+[data-perspektive-bestimmung] amorph-container[data-field="pigment_typ"],
+[data-perspektive-bestimmung] amorph-container[data-field="pigment_lage"],
+[data-perspektive-bestimmung] amorph-container[data-field="pigment_loeslichkeit"],
+
+/* --- CHEMISCHE REAKTIONEN --- */
+[data-perspektive-bestimmung] amorph-container[data-field="chemische_reaktionen"],
+[data-perspektive-bestimmung] amorph-container[data-field="koh_reaktion"],
+[data-perspektive-bestimmung] amorph-container[data-field="koh_hut"],
+[data-perspektive-bestimmung] amorph-container[data-field="koh_fleisch"],
+[data-perspektive-bestimmung] amorph-container[data-field="koh_stiel"],
+[data-perspektive-bestimmung] amorph-container[data-field="melzer_reaktion"],
+[data-perspektive-bestimmung] amorph-container[data-field="melzer_sporen"],
+[data-perspektive-bestimmung] amorph-container[data-field="melzer_trama"],
+[data-perspektive-bestimmung] amorph-container[data-field="melzer_asci"],
+[data-perspektive-bestimmung] amorph-container[data-field="feso4_reaktion"],
+[data-perspektive-bestimmung] amorph-container[data-field="feso4_fleisch"],
+[data-perspektive-bestimmung] amorph-container[data-field="feso4_stiel"],
+[data-perspektive-bestimmung] amorph-container[data-field="guajak_reaktion"],
+[data-perspektive-bestimmung] amorph-container[data-field="phenol_reaktion"],
+[data-perspektive-bestimmung] amorph-container[data-field="nh3_reaktion"],
+[data-perspektive-bestimmung] amorph-container[data-field="hno3_reaktion"],
+[data-perspektive-bestimmung] amorph-container[data-field="sulfovanillin"],
+[data-perspektive-bestimmung] amorph-container[data-field="kresylblau"],
+[data-perspektive-bestimmung] amorph-container[data-field="kongorot"],
+[data-perspektive-bestimmung] amorph-container[data-field="phloxin"],
+[data-perspektive-bestimmung] amorph-container[data-field="baumwollblau"],
+[data-perspektive-bestimmung] amorph-container[data-field="lugol"],
+[data-perspektive-bestimmung] amorph-container[data-field="spot_test_protokoll"],
+
+/* --- UV-FLUORESZENZ --- */
+[data-perspektive-bestimmung] amorph-container[data-field="uv_fluoreszenz"],
+[data-perspektive-bestimmung] amorph-container[data-field="uv_365nm"],
+[data-perspektive-bestimmung] amorph-container[data-field="uv_254nm"],
+[data-perspektive-bestimmung] amorph-container[data-field="uv_beschreibung"],
+[data-perspektive-bestimmung] amorph-container[data-field="uv_stellen"],
+
+/* --- MOLEKULARE DATEN --- */
+[data-perspektive-bestimmung] amorph-container[data-field="dna_barcoding"],
+[data-perspektive-bestimmung] amorph-container[data-field="its_sequenz"],
+[data-perspektive-bestimmung] amorph-container[data-field="its_region"],
+[data-perspektive-bestimmung] amorph-container[data-field="its_accession"],
+[data-perspektive-bestimmung] amorph-container[data-field="its_laenge"],
+[data-perspektive-bestimmung] amorph-container[data-field="its_qualitaet"],
+[data-perspektive-bestimmung] amorph-container[data-field="lsu_sequenz"],
+[data-perspektive-bestimmung] amorph-container[data-field="lsu_accession"],
+[data-perspektive-bestimmung] amorph-container[data-field="ssu_sequenz"],
+[data-perspektive-bestimmung] amorph-container[data-field="ssu_accession"],
+[data-perspektive-bestimmung] amorph-container[data-field="rpb1_sequenz"],
+[data-perspektive-bestimmung] amorph-container[data-field="rpb2_sequenz"],
+[data-perspektive-bestimmung] amorph-container[data-field="tef1_sequenz"],
+[data-perspektive-bestimmung] amorph-container[data-field="tub2_sequenz"],
+[data-perspektive-bestimmung] amorph-container[data-field="coi_sequenz"],
+[data-perspektive-bestimmung] amorph-container[data-field="rbcl_sequenz"],
+[data-perspektive-bestimmung] amorph-container[data-field="matk_sequenz"],
+[data-perspektive-bestimmung] amorph-container[data-field="genbank_accession"],
+[data-perspektive-bestimmung] amorph-container[data-field="bold_bin"],
+[data-perspektive-bestimmung] amorph-container[data-field="bold_uri"],
+[data-perspektive-bestimmung] amorph-container[data-field="bold_similarity"],
+[data-perspektive-bestimmung] amorph-container[data-field="phylogenie_position"],
+[data-perspektive-bestimmung] amorph-container[data-field="phylogenie_clade"],
+[data-perspektive-bestimmung] amorph-container[data-field="phylogenie_support"],
+[data-perspektive-bestimmung] amorph-container[data-field="naechste_verwandte"],
+[data-perspektive-bestimmung] amorph-container[data-field="genetische_distanz"],
+
+/* --- ÖKOLOGIE --- */
+[data-perspektive-bestimmung] amorph-container[data-field="ernaehrungsweise"],
+[data-perspektive-bestimmung] amorph-container[data-field="ernaehrungsweise_detail"],
+[data-perspektive-bestimmung] amorph-container[data-field="trophiestufe"],
+[data-perspektive-bestimmung] amorph-container[data-field="habitat_praeferenz"],
+[data-perspektive-bestimmung] amorph-container[data-field="habitat_typ"],
+[data-perspektive-bestimmung] amorph-container[data-field="habitat_detail"],
+[data-perspektive-bestimmung] amorph-container[data-field="biotop"],
+[data-perspektive-bestimmung] amorph-container[data-field="pflanzengesellschaft"],
+[data-perspektive-bestimmung] amorph-container[data-field="bodentyp"],
+[data-perspektive-bestimmung] amorph-container[data-field="bodenfeuchte"],
+[data-perspektive-bestimmung] amorph-container[data-field="lichtverhaeltnisse"],
+[data-perspektive-bestimmung] amorph-container[data-field="substrat"],
+[data-perspektive-bestimmung] amorph-container[data-field="substrat_kategorie"],
+[data-perspektive-bestimmung] amorph-container[data-field="substrat_arten"],
+[data-perspektive-bestimmung] amorph-container[data-field="substrat_spezifitaet"],
+[data-perspektive-bestimmung] amorph-container[data-field="substrat_zustand"],
+[data-perspektive-bestimmung] amorph-container[data-field="holz_zersetzungsgrad"],
+[data-perspektive-bestimmung] amorph-container[data-field="wirte"],
+[data-perspektive-bestimmung] amorph-container[data-field="mykorrhiza_typ"],
+[data-perspektive-bestimmung] amorph-container[data-field="mykorrhiza_partner"],
+[data-perspektive-bestimmung] amorph-container[data-field="mykorrhiza_spezifitaet"],
+[data-perspektive-bestimmung] amorph-container[data-field="parasit_wirt"],
+[data-perspektive-bestimmung] amorph-container[data-field="parasit_schadbild"],
+[data-perspektive-bestimmung] amorph-container[data-field="andere_symbiosen"],
+[data-perspektive-bestimmung] amorph-container[data-field="begleitarten"],
+[data-perspektive-bestimmung] amorph-container[data-field="typische_begleitpilze"],
+[data-perspektive-bestimmung] amorph-container[data-field="typische_begleitpflanzen"],
+[data-perspektive-bestimmung] amorph-container[data-field="indikator_arten"],
+[data-perspektive-bestimmung] amorph-container[data-field="zeigerwert"],
+[data-perspektive-bestimmung] amorph-container[data-field="hoehenstufe"],
+[data-perspektive-bestimmung] amorph-container[data-field="hoehe_min"],
+[data-perspektive-bestimmung] amorph-container[data-field="hoehe_max"],
+[data-perspektive-bestimmung] amorph-container[data-field="klimazone"],
+[data-perspektive-bestimmung] amorph-container[data-field="niederschlag"],
+[data-perspektive-bestimmung] amorph-container[data-field="temperatur_optimal"],
+[data-perspektive-bestimmung] amorph-container[data-field="kontinentalitaet"],
+[data-perspektive-bestimmung] amorph-container[data-field="saisonalitaet"],
+[data-perspektive-bestimmung] amorph-container[data-field="saison_beginn"],
+[data-perspektive-bestimmung] amorph-container[data-field="saison_ende"],
+[data-perspektive-bestimmung] amorph-container[data-field="saison_peak"],
+[data-perspektive-bestimmung] amorph-container[data-field="fruktifikations_trigger"],
+[data-perspektive-bestimmung] amorph-container[data-field="mehrjaehrig"],
+
+/* --- VERWECHSLUNG --- */
+[data-perspektive-bestimmung] amorph-container[data-field="verwechslungs_arten"],
+[data-perspektive-bestimmung] amorph-container[data-field="gefaehrlichste_verwechslung"],
+[data-perspektive-bestimmung] amorph-container[data-field="verwechslungs_konsequenz"],
+[data-perspektive-bestimmung] amorph-container[data-field="unterscheidungsmerkmale"],
+[data-perspektive-bestimmung] amorph-container[data-field="unterscheidungsmerkmale_tabelle"],
+[data-perspektive-bestimmung] amorph-container[data-field="verwechslungs_gefahr"],
+[data-perspektive-bestimmung] amorph-container[data-field="kritische_merkmale"],
+[data-perspektive-bestimmung] amorph-container[data-field="sichere_merkmale"],
+[data-perspektive-bestimmung] amorph-container[data-field="bestimmungs_sicherheit"],
+[data-perspektive-bestimmung] amorph-container[data-field="bestimmungs_sicherheit_level"],
+[data-perspektive-bestimmung] amorph-container[data-field="artenkomplex"],
+[data-perspektive-bestimmung] amorph-container[data-field="kryptische_arten"],
+[data-perspektive-bestimmung] amorph-container[data-field="kryptische_arten_komplex"],
+
+/* --- BESTIMMUNGSHILFEN --- */
+[data-perspektive-bestimmung] amorph-container[data-field="primaere_erkennungsmerkmale"],
+[data-perspektive-bestimmung] amorph-container[data-field="sekundaere_erkennungsmerkmale"],
+[data-perspektive-bestimmung] amorph-container[data-field="erkennungsmerkmale"],
+[data-perspektive-bestimmung] amorph-container[data-field="feldmerkmale"],
+[data-perspektive-bestimmung] amorph-container[data-field="labormerkmale"],
+[data-perspektive-bestimmung] amorph-container[data-field="merkmale_fuer_anfaenger"],
+[data-perspektive-bestimmung] amorph-container[data-field="experten_merkmale"],
+[data-perspektive-bestimmung] amorph-container[data-field="merkmals_kombination"],
+[data-perspektive-bestimmung] amorph-container[data-field="minimale_merkmalskombination"],
+[data-perspektive-bestimmung] amorph-container[data-field="bestimmungsschema"],
+[data-perspektive-bestimmung] amorph-container[data-field="schluessel_einstieg"],
+[data-perspektive-bestimmung] amorph-container[data-field="schluessel_pfad"],
+[data-perspektive-bestimmung] amorph-container[data-field="schluessel_position"],
+[data-perspektive-bestimmung] amorph-container[data-field="schluessel_referenzen"],
+[data-perspektive-bestimmung] amorph-container[data-field="alternative_wege"],
+[data-perspektive-bestimmung] amorph-container[data-field="literatur_bestimmung"],
+[data-perspektive-bestimmung] amorph-container[data-field="bestimmungsliteratur"],
+[data-perspektive-bestimmung] amorph-container[data-field="monographien"],
+[data-perspektive-bestimmung] amorph-container[data-field="online_schluessel"],
+[data-perspektive-bestimmung] amorph-container[data-field="video_anleitungen"],
+
+/* --- MEDIEN & DOKUMENTATION --- */
+[data-perspektive-bestimmung] amorph-container[data-field="bild"],
+[data-perspektive-bestimmung] amorph-container[data-field="primaerbild"],
+[data-perspektive-bestimmung] amorph-container[data-field="primaerbild_beschreibung"],
+[data-perspektive-bestimmung] amorph-container[data-field="primaerbild_typisch"],
+[data-perspektive-bestimmung] amorph-container[data-field="bildergalerie"],
+[data-perspektive-bestimmung] amorph-container[data-field="bilder_habitus"],
+[data-perspektive-bestimmung] amorph-container[data-field="bilder_detail"],
+[data-perspektive-bestimmung] amorph-container[data-field="bilder_schnitt"],
+[data-perspektive-bestimmung] amorph-container[data-field="bilder_standort"],
+[data-perspektive-bestimmung] amorph-container[data-field="entwicklungsstadien_bilder"],
+[data-perspektive-bestimmung] amorph-container[data-field="bild_jung"],
+[data-perspektive-bestimmung] amorph-container[data-field="bild_mittel"],
+[data-perspektive-bestimmung] amorph-container[data-field="bild_alt"],
+[data-perspektive-bestimmung] amorph-container[data-field="bild_vergehend"],
+[data-perspektive-bestimmung] amorph-container[data-field="entwicklungs_morphing"],
+[data-perspektive-bestimmung] amorph-container[data-field="mikroskopie_bilder"],
+[data-perspektive-bestimmung] amorph-container[data-field="bild_sporen"],
+[data-perspektive-bestimmung] amorph-container[data-field="bild_basidien"],
+[data-perspektive-bestimmung] amorph-container[data-field="bild_zystiden"],
+[data-perspektive-bestimmung] amorph-container[data-field="bild_huthaut"],
+[data-perspektive-bestimmung] amorph-container[data-field="bild_trama"],
+[data-perspektive-bestimmung] amorph-container[data-field="mikroskopie_stack"],
+[data-perspektive-bestimmung] amorph-container[data-field="mikroskopie_skaliert"],
+[data-perspektive-bestimmung] amorph-container[data-field="view_360"],
+[data-perspektive-bestimmung] amorph-container[data-field="3d_modell"],
+[data-perspektive-bestimmung] amorph-container[data-field="modell_format"],
+[data-perspektive-bestimmung] amorph-container[data-field="modell_texturiert"],
+[data-perspektive-bestimmung] amorph-container[data-field="visual_signature"],
+[data-perspektive-bestimmung] amorph-container[data-field="embedding_vektor"],
+[data-perspektive-bestimmung] amorph-container[data-field="erkennungs_konfidenz"],
+[data-perspektive-bestimmung] amorph-container[data-field="form_vektor"],
+[data-perspektive-bestimmung] amorph-container[data-field="textur_vektor"],
+[data-perspektive-bestimmung] amorph-container[data-field="farb_vektor"],
+[data-perspektive-bestimmung] amorph-container[data-field="muster_vektor"],
+[data-perspektive-bestimmung] amorph-container[data-field="einzigartigkeit"],
+[data-perspektive-bestimmung] amorph-container[data-field="funddokumentation"],
+
+/* --- FUNDDATEN --- */
+[data-perspektive-bestimmung] amorph-container[data-field="bestimmung_status"],
+[data-perspektive-bestimmung] amorph-container[data-field="bestimmt_durch"],
+[data-perspektive-bestimmung] amorph-container[data-field="bestimmungs_methode"],
+[data-perspektive-bestimmung] amorph-container[data-field="bestimmungs_konfidenz"],
+[data-perspektive-bestimmung] amorph-container[data-field="revision_historie"],
+[data-perspektive-bestimmung] amorph-container[data-field="fund_latitude"],
+[data-perspektive-bestimmung] amorph-container[data-field="fund_longitude"],
+[data-perspektive-bestimmung] amorph-container[data-field="fund_genauigkeit"],
+[data-perspektive-bestimmung] amorph-container[data-field="fund_elevation"],
+[data-perspektive-bestimmung] amorph-container[data-field="fund_land"],
+[data-perspektive-bestimmung] amorph-container[data-field="fund_region"],
+[data-perspektive-bestimmung] amorph-container[data-field="fund_ort"],
+[data-perspektive-bestimmung] amorph-container[data-field="fund_lokalitaet"],
+[data-perspektive-bestimmung] amorph-container[data-field="fund_habitat_beschreibung"],
+[data-perspektive-bestimmung] amorph-container[data-field="fund_datum"],
+[data-perspektive-bestimmung] amorph-container[data-field="fund_zeit"],
+[data-perspektive-bestimmung] amorph-container[data-field="fund_witterung"],
+[data-perspektive-bestimmung] amorph-container[data-field="fund_temperatur"],
+[data-perspektive-bestimmung] amorph-container[data-field="finder"],
+[data-perspektive-bestimmung] amorph-container[data-field="sammler"],
+[data-perspektive-bestimmung] amorph-container[data-field="herbar_beleg"],
+[data-perspektive-bestimmung] amorph-container[data-field="herbar_nummer"],
+[data-perspektive-bestimmung] amorph-container[data-field="herbar_institution"],
+[data-perspektive-bestimmung] amorph-container[data-field="beleg_zustand"],
+[data-perspektive-bestimmung] amorph-container[data-field="exposition"],
+[data-perspektive-bestimmung] amorph-container[data-field="inklination"],
+[data-perspektive-bestimmung] amorph-container[data-field="begleitflora"],
+[data-perspektive-bestimmung] amorph-container[data-field="mikroklima"],
+[data-perspektive-bestimmung] amorph-container[data-field="stoerung"],
+[data-perspektive-bestimmung] amorph-container[data-field="frischzustand_dokumentiert"],
+[data-perspektive-bestimmung] amorph-container[data-field="exsikkat_vorhanden"],
+[data-perspektive-bestimmung] amorph-container[data-field="kultur_angelegt"],
+[data-perspektive-bestimmung] amorph-container[data-field="sequenz_vorhanden"],
+[data-perspektive-bestimmung] amorph-container[data-field="feldnotizen"] {
   display: block !important;
-  --perspektive-farbe: rgba(200, 150, 200, 0.65);
+  --perspektive-farbe: rgba(100, 200, 220, 0.65);
 }
 
 /* === TREFFER-BADGE wird in features.css definiert === */
