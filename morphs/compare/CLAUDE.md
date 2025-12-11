@@ -19,22 +19,22 @@ Perspektiven-spezifische Morphs in `themes/pilze/morphs/compare/`:
 ```
 themes/pilze/morphs/compare/
 ├── index.js           # Export aller 17 Compare-Morphs
-├── kulinarisch.js     # Geschmack, Zubereitung
-├── sicherheit.js      # Toxine, Verwechslung
-├── anbau.js           # Substrate, Ertrag
+├── culinary.js     # Geschmack, Zubereitung
+├── safety.js      # Toxine, Verwechslung
+├── cultivation.js           # Substrate, Ertrag
 ├── wissenschaft.js    # Taxonomie, Genetik
-├── medizin.js         # Wirkstoffe, Therapie
-├── statistik.js       # Fundstatistik
-├── chemie.js          # Metabolite, Enzyme
+├── medicine.js         # Wirkstoffe, Therapie
+├── statistics.js       # Fundstatistics
+├── chemistry.js          # Metabolite, Enzyme
 ├── sensorik.js        # Aroma, Textur
-├── oekologie.js       # Habitat, Symbiosen
+├── ecology.js       # Habitat, Symbiosen
 ├── temporal.js        # Lebenszyklus
-├── geografie.js       # Verbreitung
-├── wirtschaft.js      # Markt, Preise
-├── naturschutz.js     # IUCN-Status
-├── kultur.js          # Mythologie
-├── forschung.js       # Publikationen
-├── interaktionen.js   # Wirte, Mikrobiom
+├── geography.js       # Verbreitung
+├── economy.js      # Markt, Preise
+├── conservation.js     # IUCN-Status
+├── culture.js          # Mythologie
+├── research.js       # Publikationen
+├── interactions.js   # Wirte, Mikrobiom
 └── visual.js          # Bilder, Farben
 ```
 

@@ -24,9 +24,9 @@ suche:
     operator: equals
     values: [essbar, bedingt essbar]
     
-  - input: chemie
+  - input: chemistry
     field: perspektive
-    values: [chemie]
+    values: [chemistry]
 ```
 
 ## Kernprinzip

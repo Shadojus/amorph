@@ -26,8 +26,8 @@ Felder haben `data-perspektive-*` Attribute:
 
 ```html
 <amorph-container 
-  data-field="chemie_primaer_metabolite"
-  data-perspektive-chemie="true">
+  data-field="chemistry_primaer_metabolite"
+  data-perspektive-chemistry="true">
 ```
 
 Bei aktiver Perspektive werden nur zugehörige Felder angezeigt.

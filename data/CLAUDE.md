@@ -8,10 +8,10 @@ Beispieldaten für AMORPH. **Datenstruktur bestimmt den Morph!**
 
 | Pilz | Besondere Perspektiven-Daten |
 |------|------------------------------|
-| Steinpilz | Ökologie, Geografie, Temporal |
-Forschung |
-| Birkenporling | Forschung, Interaktionen, Visual |
-| Fliegenpilz | Kultur, Temporal, Visual, Ökologie |
+| Steinpilz | Ökologie, geography, Temporal |
+research |
+| Birkenporling | research, interactions, Visual |
+| Fliegenpilz | culture, Temporal, Visual, Ökologie |
 ## Datenformat
 
 ```javascript
@@ -30,13 +30,13 @@ Forschung |
   "beliebtheit": 92,                        // → progress
 
   // Perspektiven-Felder (Beispiele)
-  "chemie_primaer_metabolite": [...],
-  "chemie_sekundaer_metabolite": [...],
+  "chemistry_primaer_metabolite": [...],
+  "chemistry_sekundaer_metabolite": [...],
   "sensorik_aroma": { "profile": [...] },
-  "oekologie_symbiose_partner": [...],
-  "wirtschaft_preise": { ... },
-  "kultur_mythologie": [...],
-  "forschung_publikationen": [...]
+  "ecology_symbiose_partner": [...],
+  "economy_preise": { ... },
+  "culture_mythologie": [...],
+  "research_publikationen": [...]
 }
 ```
 

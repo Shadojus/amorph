@@ -235,10 +235,18 @@ export function getPerspektivenKeywords() {
   const result = {};
   for (const [id, config] of Object.entries(schemaCache.perspektiven)) {
     result[id] = config.keywords || [];
+    // Debug: Zeige wie viele Keywords pro Perspektive
+    if (result[id].length > 0) {
+      debug.perspektiven(`Keywords für ${id}`, { 
+        anzahl: result[id].length,
+        erste3: result[id].slice(0, 3)
+      });
+    }
   }
   debug.perspektiven('Keywords aus Schema geladen', { 
     anzahl: Object.keys(result).length,
-    perspektiven: Object.keys(result)
+    perspektiven: Object.keys(result),
+    mitKeywords: Object.entries(result).filter(([k, v]) => v.length > 0).map(([k]) => k)
   });
   return result;
 }
@@ -436,11 +444,79 @@ export function getVersteckteFelder() {
 
 /**
  * Gibt Feld-spezifische Config aus Schema zurück
- * z.B. Farben für Tags, Einheit für Ranges
+ * DATA-DRIVEN: If not in schema, infers METADATA (not type!) from field name
+ * Type detection is handled by pipeline.js using morphs.yaml
+ * This function provides: label, unit, colors - NOT the morph type
  */
 export function getFeldConfig(feldname) {
-  if (!schemaCache?.felder?.[feldname]) return {};
-  return schemaCache.felder[feldname];
+  // 1. Check schema cache first (from basis.yaml kern fields)
+  if (schemaCache?.felder?.[feldname]) {
+    return schemaCache.felder[feldname];
+  }
+  
+  // 2. DATA-DRIVEN: Infer metadata from field name patterns
+  // NOTE: We do NOT infer 'typ' here - that's pipeline.js's job via morphs.yaml
+  const inferred = inferFeldMetadata(feldname);
+  if (inferred) {
+    return inferred;
+  }
+  
+  // 3. Return empty config as fallback
+  return {};
+}
+
+/**
+ * DATA-DRIVEN: Infer field METADATA from field name patterns
+ * This provides labels, units, hints - but NOT the morph type!
+ * Morph type detection is centralized in pipeline.js using morphs.yaml
+ */
+function inferFeldMetadata(feldname) {
+  const name = feldname.toLowerCase();
+  const metadata = {};
+  
+  // Generate human-readable label from field name
+  metadata.label = feldname
+    .replace(/_/g, ' ')
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/\b\w/g, c => c.toUpperCase());
+  
+  // Infer units from field name patterns
+  if (name.includes('temp') || name.includes('temperatur')) {
+    metadata.einheit = '°C';
+  } else if (name.includes('_days') || name.includes('_tage') || name.includes('duration_d')) {
+    metadata.einheit = 'days';
+  } else if (name.includes('_hours') || name.includes('_stunden') || name.includes('_h')) {
+    metadata.einheit = 'h';
+  } else if (name.includes('_kg')) {
+    metadata.einheit = 'kg';
+  } else if (name.includes('_g') && !name.includes('_gr')) {
+    metadata.einheit = 'g';
+  } else if (name.includes('_mm')) {
+    metadata.einheit = 'mm';
+  } else if (name.includes('_cm')) {
+    metadata.einheit = 'cm';
+  } else if (name.includes('_m2') || name.includes('_sqm')) {
+    metadata.einheit = 'm²';
+  } else if (name.includes('_km')) {
+    metadata.einheit = 'km';
+  } else if (name.includes('percent') || name.includes('prozent') || name.includes('_pct')) {
+    metadata.einheit = '%';
+  } else if (name.includes('_ppm')) {
+    metadata.einheit = 'ppm';
+  } else if (name.includes('_lux')) {
+    metadata.einheit = 'lux';
+  } else if (name.includes('_ph')) {
+    metadata.einheit = 'pH';
+  }
+  
+  // Infer max values for rating/progress fields (hints for morphs)
+  if (name.includes('rating') || name.includes('score') || name.includes('bewertung')) {
+    metadata.max = 10;
+  } else if (name.includes('percent') || name.includes('prozent') || name.includes('efficiency')) {
+    metadata.max = 100;
+  }
+  
+  return metadata;
 }
 
 /**

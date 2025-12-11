@@ -1,6 +1,14 @@
+# ═══════════════════════════════════════════════════════════════════════════════
 # AMORPH Schema - Basis (unveränderlich)
+# Universal Biological Species Data Architecture
+# ═══════════════════════════════════════════════════════════════════════════════
 # Diese Konfiguration definiert das Kern-System
 # NICHT ÄNDERN ohne System-Update!
+#
+# DESIGN PHILOSOPHY:
+# This schema is universal for all biological species.
+# The data itself determines which taxonomic group applies.
+# ═══════════════════════════════════════════════════════════════════════════════
 
 # === META-KONFIGURATION ===
 # Welche Felder haben spezielle Bedeutung im System?
@@ -82,9 +90,9 @@ erkennung:
     bedingung: "Objekt mit min und max Eigenschaften"
     beispiel: "{min: 10, max: 25}"
   
-  # Objekt mit Statistik-Feldern → Statistik-Box
+  # Objekt mit statistics-Feldern → statistics-Box
   stats:
-    bedingung: "Objekt mit min, max, avg oder ähnlichen Statistik-Feldern"
+    bedingung: "Objekt mit min, max, avg oder ähnlichen statistics-Feldern"
     beispiel: "{min: 50, max: 200, avg: 125, count: 42}"
   
   # Array mit axis/value → Radar-Chart

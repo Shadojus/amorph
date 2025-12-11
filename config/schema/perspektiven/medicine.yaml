@@ -1,0 +1,834 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# PERSPECTIVE: MEDICINE
+# Medical applications, pharmacology, and therapeutic use
+# Version: 2.0.0 | Universal for all biological species with medicinal properties
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# TARGET AUDIENCE:
+# - Integrative medicine practitioners
+# - Pharmacologists & clinical researchers
+# - Naturopaths & herbalists
+# - Regulatory specialists
+# - Traditional medicine practitioners
+# - Pharmaceutical researchers
+#
+# DESIGN PHILOSOPHY:
+# Comprehensive coverage of medicinal aspects:
+# - Traditional medicine systems (TCM, Ayurveda, Kampo, etc.)
+# - Pharmacology & bioactive compounds
+# - Clinical evidence & studies
+# - Safety & toxicology
+# - Dosage & preparation forms
+# - Quality control & regulatory status
+#
+# ═══════════════════════════════════════════════════════════════════════════════
+
+id: medicine
+name: Medicine
+symbol: 💊
+
+# Medicinal Violet tones - mystical luminous (0.65)
+colors:
+  - "rgba(200, 160, 255, 0.65)"  
+  - "rgba(185, 145, 245, 0.65)"  
+  - "rgba(170, 130, 235, 0.65)"  
+  - "rgba(155, 115, 225, 0.65)"  
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIELDS - Ordered by medical workflow
+# ═══════════════════════════════════════════════════════════════════════════════
+
+fields:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # BASIC IDENTIFICATION
+  # ─────────────────────────────────────────────────────────────────────────────
+  - scientific
+  - synonyms
+  - pharmacopoeia_names
+  - description
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # TRADITIONAL MEDICINE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - traditional_medicine       
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # PHARMACOLOGY & BIOACTIVE SUBSTANCES
+  # ─────────────────────────────────────────────────────────────────────────────
+  - active_substances         
+  - effect_profile            
+  - pharmacokinetics_absorption  
+  - pharmacokinetics_distribution
+  - pharmacokinetics_metabolism  
+  - pharmacokinetics_elimination 
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # THERAPEUTIC CATEGORIES & INDICATIONS
+  # ─────────────────────────────────────────────────────────────────────────────
+  - therapeutic_categories    
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # CLINICAL EVIDENCE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - evidence_level            
+  - clinical_studies          
+  - meta_analyses             
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SAFETY PROFILE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - safety_score              
+  - toxicology_ld50_oral      
+  - toxicology_ld50_ip        
+  - toxicology_noael          
+  - toxicology_therapeutic_index 
+  - toxicology_genotoxicity   
+  - toxicology_carcinogenicity
+  - toxicology_teratogenicity 
+  - side_effects              
+  - interactions              
+  - contraindications         
+  - special_populations_pregnancy 
+  - special_populations_lactation 
+  - special_populations_children  
+  - special_populations_elderly   
+  - special_populations_renal_impairment 
+  - special_populations_hepatic_impairment
+  - overdose                  
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # DOSAGE & APPLICATION
+  # ─────────────────────────────────────────────────────────────────────────────
+  - dosage_notes              
+  - dosage_schemes            
+  - preparation_forms         
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # QUALITY CONTROL & STANDARDS
+  # ─────────────────────────────────────────────────────────────────────────────
+  - monographs                
+  - identity_testing          
+  - purity_testing_heavy_metals 
+  - purity_testing_pesticides   
+  - purity_testing_mycotoxins   
+  - purity_testing_microbiological
+  - purity_testing_radioactivity  
+  - content_determination        
+  - adulterants                  
+  - certifications               
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # REGULATORY STATUS
+  # ─────────────────────────────────────────────────────────────────────────────
+  - status_by_region             
+  - novel_food                   
+  - drug_approvals               
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SOURCING & SUSTAINABILITY
+  # ─────────────────────────────────────────────────────────────────────────────
+  - origin_wild_collection       
+  - origin_cultivation           
+  - quality_differences          
+  - supply_chain                 
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # PRACTICAL RESOURCES
+  # ─────────────────────────────────────────────────────────────────────────────
+  - patient_information          
+  - for_physicians               
+  - further_literature           
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # LEGACY (Backward Compatibility)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - medical_score                
+  - profile                      
+  - dosage                       
+  - special_populations          
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ENUMERATIONS - Controlled vocabularies
+# ═══════════════════════════════════════════════════════════════════════════════
+
+enumerations:
+
+
+  medical_systems:
+    - TCM
+    - Ayurveda
+    - Kampo
+    - TKM
+    - European_Folk_Medicine
+    - Indigenous_North_America
+    - Indigenous_South_America
+    - African_Tradition
+    - Tibetan_Medicine
+    - Unani
+    - Siddha
+    - Homeopathy
+    - Naturopathy
+  substance_classes:
+    - Polysaccharides
+    - Triterpenes
+    - Sterols
+    - Phenols
+    - Alkaloids
+    - Peptides
+    - Lipids
+    - Vitamins
+    - Minerals
+    - Enzymes
+    - Lectins
+    - Flavonoids
+    - Tannins
+    - Glycosides
+    - Saponins
+    - Other
+  therapeutic_fields:
+    - Immunology
+    - Oncology
+    - Neurology
+    - Cardiology
+    - Gastroenterology
+    - Hepatology
+    - Endocrinology
+    - Dermatology
+    - Pulmonology
+    - Rheumatology
+    - Psychiatry
+    - Urology
+    - Gynecology
+    - Geriatrics
+    - Sports_Medicine
+    - Palliative_Medicine
+    - Infectiology
+    - Allergology
+  evidence_level:
+    - 1a 
+    - 1b 
+    - 2a 
+    - 2b 
+    - 3a 
+    - 3b 
+    - 4  
+    - 5  
+  study_design:
+    - RCT_double_blind
+    - RCT_single_blind
+    - RCT_open
+    - Cohort_study_prospective
+    - Cohort_study_retrospective
+    - Case_Control
+    - Cross_sectional
+    - Case_series
+    - Case_report
+    - In_vivo_Animal
+    - In_vitro
+    - Systematic_Review
+    - Meta_Analysis
+  side_effect_frequency:
+    - very_common     
+    - common          
+    - occasional      
+    - rare            
+    - very_rare       
+    - unknown
+  interaction_type:
+    - pharmacokinetic_absorption
+    - pharmacokinetic_distribution
+    - pharmacokinetic_metabolism
+    - pharmacokinetic_elimination
+    - pharmacodynamic_additive
+    - pharmacodynamic_synergistic
+    - pharmacodynamic_antagonistic
+  severity:
+    - mild
+    - moderate
+    - severe
+    - contraindicated
+  fda_pregnancy:
+    - A
+    - B
+    - C
+    - D
+    - X
+    - not_classified
+  pharmacopoeia_standards:
+    - EP
+    - USP
+    - JP
+    - ChP
+    - DAB
+    - WHO
+    - AHPA
+    - EMEA
+  preparation_forms:
+    - Dried_Material
+    - Fresh_Material
+    - Hot_Water_Extract
+    - Alcohol_Extract
+    - Dual_Extract
+    - Powder
+    - Fermented
+    - Tincture
+    - Tea
+    - Capsules
+    - Tablets
+    - Essential_Oil
+    - Decoction
+    - Infusion
+  certification_types:
+    - GMP
+    - HACCP
+    - ISO_22000
+    - Bio_EU
+    - USDA_Organic
+    - Kosher
+    - Halal
+    - Non_GMO
+    - Vegan
+  regulatory_classification:
+    - Drug
+    - Food_Supplement
+    - Novel_Food
+    - Food
+    - Traditional_Drug
+    - Homeopathic
+    - Cosmetic
+    - Not_Approved
+    - Controlled_Substance
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# KEYWORDS - For semantic search (multilingual)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+keywords:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # MEDICINE (EN/DE/FR/ES/IT/JP/ZH)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - medicine
+  - therapy
+  - health
+  - medicinal
+  - immune system
+  - antioxidant
+  - effect
+  - treatment
+  - healing
+  - inflammation
+  - antibacterial
+  - antiviral
+  - antitumoral
+  - neuroprotective
+  - adaptogen
+  - cancer
+  - diabetes
+  - depression
+  - dementia
+  - alzheimer
+  - parkinson
+  - autoimmune
+  - allergy
+  - beta glucan
+  - triterpenes
+  - polysaccharides
+  - active substance
+  - ergosterol
+  - tcm
+  - ayurveda
+  - kampo
+  - folk medicine
+  - ethnobiology
+  - study
+  - clinical
+  - evidence
+  - research
+  - pubmed
+  - side effect
+  - interaction
+  - contraindication
+  - dosage
+  - toxicity
+  - extract
+  - standardized
+  - organic
+  - certified
+  - quality
+  # German
+  - medizin
+  - therapie
+  - gesundheit
+  - heilmittel
+  - immunsystem
+  - antioxidativ
+  - wirkung
+  - behandlung
+  - heilung
+  - entzündung
+  - antibakteriell
+  - antiviral
+  - antitumoral
+  - neuroprotektiv
+  - adaptogen
+  - krebs
+  - diabetes
+  - depression
+  - demenz
+  - alzheimer
+  - parkinson
+  - autoimmun
+  - allergie
+  - beta-glucan
+  - triterpene
+  - polysaccharide
+  - wirkstoff
+  - ergosterin
+  - tcm
+  - ayurveda
+  - kampo
+  - volksmedizin
+  - ethnobiologie
+  - studie
+  - klinisch
+  - evidenz
+  - forschung
+  - pubmed
+  - nebenwirkung
+  - wechselwirkung
+  - kontraindikation
+  - dosierung
+  - toxizität
+  - extrakt
+  - standardisiert
+  - bio
+  - zertifiziert
+  - qualität
+  # French
+  - médecine
+  - thérapie
+  - santé
+  - médicinal
+  - système immunitaire
+  - antioxydant
+  - effet
+  - traitement
+  - guérison
+  - inflammation
+  - antibactérien
+  - antiviral
+  - antitumoral
+  - neuroprotecteur
+  - adaptogène
+  - cancer
+  - diabète
+  - dépression
+  - démence
+  - alzheimer
+  - parkinson
+  - auto-immun
+  - allergie
+  - bêta-glucane
+  - triterpènes
+  - polysaccharides
+  - substance active
+  - ergostérol
+  - tcm
+  - ayurveda
+  - kampo
+  - médecine populaire
+  - ethnobiologie
+  - étude
+  - clinique
+  - preuve
+  - recherche
+  - pubmed
+  - effet secondaire
+  - interaction
+  - contre-indication
+  - dosage
+  - toxicité
+  - extrait
+  - standardisé
+  - biologique
+  - certifié
+  - qualité
+  # Spanish
+  - medicina
+  - terapia
+  - salud
+  - medicinal
+  - sistema inmune
+  - antioxidante
+  - efecto
+  - tratamiento
+  - curación
+  - inflamación
+  - antibacteriano
+  - antiviral
+  - antitumoral
+  - neuroprotector
+  - adaptógeno
+  - cáncer
+  - diabetes
+  - depresión
+  - demencia
+  - alzheimer
+  - parkinson
+  - autoinmune
+  - alergia
+  - beta glucano
+  - triterpenos
+  - polisacáridos
+  - sustancia activa
+  - ergosterol
+  - tcm
+  - ayurveda
+  - kampo
+  - medicina popular
+  - etnobiología
+  - estudio
+  - clínico
+  - evidencia
+  - investigación
+  - pubmed
+  - efecto secundario
+  - interacción
+  - contraindicación
+  - dosificación
+  - toxicidad
+  - extracto
+  - estandarizado
+  - orgánico
+  - certificado
+  - calidad
+  # Chinese
+  - 医学
+  - 治疗
+  - 健康
+  - 药用
+  - 免疫系统
+  - 抗氧化
+  - 效果
+  - 治疗
+  - 治愈
+  - 炎症
+  - 抗菌
+  - 抗病毒
+  - 抗肿瘤
+  - 神经保护
+  - 适应原
+  - 癌症
+  - 糖尿病
+  - 抑郁症
+  - 痴呆
+  - 阿尔茨海默
+  - 帕金森
+  - 自身免疫
+  - 过敏
+  - β-葡聚糖
+  - 三萜
+  - 多糖
+  - 活性成分
+  - 麦角甾醇
+  - 中医
+  - 阿育吠陀
+  - 汉方
+  - 民间医学
+  - 民族生物学
+  - 研究
+  - 临床
+  - 证据
+  - 科研
+  - pubmed
+  - 副作用
+  - 相互作用
+  - 禁忌症
+  - 剂量
+  - 毒性
+  - 提取物
+  - 标准化
+  - 有机
+  - 认证
+  - 质量
+  # Russian
+  - медицина
+  - терапия
+  - здоровье
+  - лекарственный
+  - иммунная система
+  - антиоксидант
+  - эффект
+  - лечение
+  - исцеление
+  - воспаление
+  - антибактериальный
+  - противовирусный
+  - противоопухолевый
+  - нейропротектор
+  - адаптоген
+  - рак
+  - диабет
+  - депрессия
+  - деменция
+  - альцгеймер
+  - паркинсон
+  - аутоиммунный
+  - аллергия
+  - бета-глюкан
+  - тритерпены
+  - полисахариды
+  - активное вещество
+  - эргостерол
+  - тсм
+  - аюрведа
+  - кампо
+  - народная медицина
+  - этнобиология
+  - исследование
+  - клинический
+  - доказательства
+  - наука
+  - pubmed
+  - побочный эффект
+  - взаимодействие
+  - противопоказание
+  - дозировка
+  - токсичность
+  - экстракт
+  - стандартизированный
+  - органический
+  - сертифицированный
+  - качество
+  # Japanese
+  - 医学
+  - 療法
+  - 健康
+  - 薬用
+  - 免疫システム
+  - 抗酸化
+  - 効果
+  - 治療
+  - 治癒
+  - 炎症
+  - 抗菌
+  - 抗ウイルス
+  - 抗腫瘍
+  - 神経保護
+  - アダプトゲン
+  - 癌
+  - 糖尿病
+  - うつ病
+  - 認知症
+  - アルツハイマー
+  - パーキンソン
+  - 自己免疫
+  - アレルギー
+  - βグルカン
+  - トリテルペン
+  - 多糖類
+  - 有効成分
+  - エルゴステロール
+  - 漢方
+  - アーユルヴェーダ
+  - 民間療法
+  - 民族生物学
+  - 研究
+  - 臨床
+  - エビデンス
+  - pubmed
+  - 副作用
+  - 相互作用
+  - 禁忌
+  - 投与量
+  - 毒性
+  - エキス
+  - 標準化
+  - 有機
+  - 認証
+  - 品質
+  # Portuguese
+  - medicina
+  - terapia
+  - saúde
+  - medicinal
+  - sistema imunológico
+  - antioxidante
+  - efeito
+  - tratamento
+  - cura
+  - inflamação
+  - antibacteriano
+  - antiviral
+  - antitumoral
+  - neuroprotetor
+  - adaptógeno
+  - câncer
+  - diabetes
+  - depressão
+  - demência
+  - alzheimer
+  - parkinson
+  - autoimune
+  - alergia
+  - beta glucano
+  - triterpenos
+  - polissacarídeos
+  - substância ativa
+  - ergosterol
+  - mtc
+  - ayurveda
+  - kampo
+  - medicina popular
+  - etnobiologia
+  - estudo
+  - clínico
+  - evidência
+  - pesquisa
+  - pubmed
+  - efeito colateral
+  - interação
+  - contraindicação
+  - dosagem
+  - toxicidade
+  - extrato
+  - padronizado
+  - orgânico
+  - certificado
+  - qualidade
+  # Korean
+  - 의학
+  - 치료
+  - 건강
+  - 약용
+  - 면역 체계
+  - 항산화
+  - 효과
+  - 치료
+  - 치유
+  - 염증
+  - 항균
+  - 항바이러스
+  - 항종양
+  - 신경보호
+  - 적응원
+  - 암
+  - 당뇨병
+  - 우울증
+  - 치매
+  - 알츠하이머
+  - 파킨슨
+  - 자가면역
+  - 알레르기
+  - 베타글루칸
+  - 트리테르펜
+  - 다당류
+  - 활성 성분
+  - 에르고스테롤
+  - 한의학
+  - 아유르베다
+  - 민간요법
+  - 민족생물학
+  - 연구
+  - 임상
+  - 증거
+  - pubmed
+  - 부작용
+  - 상호작용
+  - 금기
+  - 용량
+  - 독성
+  - 추출물
+  - 표준화
+  - 유기농
+  - 인증
+  - 품질
+  # Arabic
+  - طب
+  - علاج
+  - صحة
+  - طبي
+  - جهاز المناعة
+  - مضاد للأكسدة
+  - تأثير
+  - علاج
+  - شفاء
+  - التهاب
+  - مضاد للبكتيريا
+  - مضاد للفيروسات
+  - مضاد للأورام
+  - حماية عصبية
+  - أدابتوجين
+  - سرطان
+  - سكري
+  - اكتئاب
+  - خرف
+  - ألزهايمر
+  - باركنسون
+  - مناعة ذاتية
+  - حساسية
+  - بيتا جلوكان
+  - تربينات ثلاثية
+  - عديد السكاريد
+  - مادة فعالة
+  - إرغوستيرول
+  - الطب الصيني
+  - أيورفيدا
+  - الطب الشعبي
+  - دراسة
+  - سريري
+  - دليل
+  - بحث
+  - أثر جانبي
+  - تفاعل
+  - موانع
+  - جرعة
+  - سمية
+  - مستخلص
+  - عضوي
+  - معتمد
+  - جودة
+  # Hindi
+  - चिकित्सा
+  - उपचार
+  - स्वास्थ्य
+  - औषधीय
+  - प्रतिरक्षा प्रणाली
+  - एंटीऑक्सीडेंट
+  - प्रभाव
+  - इलाज
+  - उपचार
+  - सूजन
+  - जीवाणुरोधी
+  - एंटीवायरल
+  - एंटीट्यूमर
+  - न्यूरोप्रोटेक्टिव
+  - एडाप्टोजेन
+  - कैंसर
+  - मधुमेह
+  - अवसाद
+  - मनोभ्रंश
+  - अल्जाइमर
+  - पार्किंसन
+  - ऑटोइम्यून
+  - एलर्जी
+  - बीटा ग्लूकन
+  - ट्राइटरपीन
+  - पॉलीसेकेराइड
+  - सक्रिय पदार्थ
+  - आयुर्वेद
+  - लोक चिकित्सा
+  - अध्ययन
+  - नैदानिक
+  - साक्ष्य
+  - शोध
+  - दुष्प्रभाव
+  - परस्पर क्रिया
+  - मतभेद
+  - खुराक
+  - विषाक्तता
+  - अर्क
+  - मानकीकृत
+  - जैविक
+  - प्रमाणित
+  - गुणवत्ता

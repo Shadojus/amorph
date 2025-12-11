@@ -43,7 +43,7 @@ debug.perspektiven('17 Perspektiven geladen', { perspektiven });
 | `suche` | Grün | Suchanfragen, Ergebnisse |
 | `features` | Gold | Feature-Init, Events |
 | `perspektiven` | Cyan | 17 Perspektiven-Toggle |
-| `header` | Orange | Header-Interaktionen |
+| `header` | Orange | Header-interactions |
 | `ansichten` | Magenta | View-Wechsel |
 
 ## Was ist ein Observer?

@@ -6,8 +6,8 @@
   "bild": "images/fungi/porcini-boletus-edulis.jpg",
   "beschreibung": "Der Steinpilz ist einer der beliebtesten Speisepilze weltweit. Sein kräftiges, nussiges Aroma und die feste Textur machen ihn zur ersten Wahl in der gehobenen Gastronomie.",
 
-  "_comment_bestimmung": "═══════════════════════════════════════════════════════════════════════════════",
-  "_section_bestimmung": "PERSPEKTIVE: BESTIMMUNG",
+  "_comment_identification": "═══════════════════════════════════════════════════════════════════════════════",
+  "_section_identification": "PERSPEKTIVE: identification",
 
   "wissenschaftlicher_name": "Boletus edulis Bull.",
   "autorenzitat": "Bull. 1782",
@@ -51,7 +51,7 @@
   "wikidata_id": "Q134702",
 
   "taxonomie_status": "akzeptiert",
-  "unsicherheits_grad": "sicher",
+  "unsafetys_grad": "sicher",
   "revisionsstand": "2023",
   "typus_status": "lectotypus",
 
@@ -350,7 +350,7 @@
   "sichere_merkmale": ["Weißes Fleisch ohne Verfärbung", "Feines weißes Stielnetz", "Keine roten Farben"],
   "artenkomplex": "Boletus edulis s.l.",
   "kryptische_arten_komplex": ["Boletus edulis", "Boletus aereus", "Boletus pinophilus", "Boletus reticulatus"],
-  "bestimmungs_sicherheit_level": "feldbestimmbar",
+  "identifications_safety_level": "feldbestimmbar",
 
   "primaere_erkennungsmerkmale": ["Weißes, nicht verfärbendes Fleisch", "Feines weißes Stielnetz", "Braune Hutfarbe"],
   "sekundaere_erkennungsmerkmale": ["Nussiger Geruch", "Feste Konsistenz", "Unter Fichten/Eichen"],
@@ -365,7 +365,7 @@
   "schluessel_position": "Boletus sect. Boletus",
   "alternative_wege": ["Über Stielnetz", "Über Sporenpulverfarbe"],
 
-  "bestimmungsliteratur": ["Fungi of Temperate Europe", "Die Großpilze Baden-Württembergs"],
+  "identificationsliteratur": ["Fungi of Temperate Europe", "Die Großpilze Baden-Württembergs"],
   "monographien": ["Monographie der Gattung Boletus (Knudsen & Taylor)"],
   "online_schluessel": ["123pilze.de", "pilzforum.eu"],
   "video_anleitungen": ["YouTube: Steinpilz sicher bestimmen"],
@@ -407,10 +407,10 @@
   "embedding_vektor": null,
   "erkennungs_konfidenz": null,
 
-  "bestimmung_status": "bestätigt",
+  "identification_status": "bestätigt",
   "bestimmt_durch": "Dr. mycologicus",
-  "bestimmungs_methode": "morphologisch + ITS",
-  "bestimmungs_konfidenz": 99,
+  "identifications_methode": "morphologisch + ITS",
+  "identifications_konfidenz": 99,
   "revision_historie": [],
 
   "fund_latitude": 48.1234,
@@ -443,12 +443,12 @@
 
   "frischzustand_dokumentiert": true,
   "exsikkat_vorhanden": false,
-  "kultur_angelegt": false,
+  "culture_angelegt": false,
   "sequenz_vorhanden": true,
   "feldnotizen": "Schönes Exemplar in typischem Habitat",
 
-  "_comment_anbau": "═══════════════════════════════════════════════════════════════════════════════",
-  "_section_anbau": "PERSPEKTIVE: ANBAU",
+  "_comment_cultivation": "═══════════════════════════════════════════════════════════════════════════════",
+  "_section_cultivation": "PERSPEKTIVE: cultivation",
 
   "standort": ["Nadelwald", "Mischwald", "unter Fichten", "unter Eichen"],
   "habitat": "Ektomykorrhiza mit Nadel- und Laubbäumen",
@@ -474,7 +474,7 @@
   "cultivation_success_rate": 15,
   "cultivation_time_investment": "Jahre (Baumwachstum)",
   "cultivation_equipment_needed": ["Mykorrhiza-Impfmaterial", "Baumschule", "Geeignetes Gelände"],
-  "cultivation_skill_prerequisites": ["Forstwirtschaft", "Mykorrhiza-Kenntnisse", "Langzeitplanung"],
+  "cultivation_skill_prerequisites": ["Forsteconomy", "Mykorrhiza-Kenntnisse", "Langzeitplanung"],
 
   "param_spawn_temp_min": 15,
   "param_spawn_temp_optimal": 20,
@@ -601,7 +601,7 @@
   "equipment_startup_cost_commercial": "50000+ EUR (Trüffelplantage-ähnlich)",
 
   "economics": {
-    "hinweis": "Nur Wildsammlung wirtschaftlich"
+    "hinweis": "Nur Wildsammlung economylich"
   },
   "economics_market_price_min": 25,
   "economics_market_price_max": 80,
@@ -623,8 +623,8 @@
   "supplier_ships_to": null,
   "supplier_certifications": null,
 
-  "_comment_chemie": "═══════════════════════════════════════════════════════════════════════════════",
-  "_section_chemie": "PERSPEKTIVE: CHEMIE",
+  "_comment_chemistry": "═══════════════════════════════════════════════════════════════════════════════",
+  "_section_chemistry": "PERSPEKTIVE: chemistry",
 
   "naehrwerte": {
     "kalorien": 26,

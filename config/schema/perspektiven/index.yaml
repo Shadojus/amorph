@@ -1,29 +1,23 @@
-# Perspektiven-Index
-# Hier alle verfügbaren Perspektiven auflisten
-# Neue Perspektive hinzufügen = Datei erstellen + hier eintragen
+# AMORPH Perspectives Index
+# Defines which perspectives are active and their load order
 
+# Active perspectives (loaded in this order)
 aktiv:
-  # Basis-Perspektiven
-  - kulinarisch
-  - sicherheit
-  - anbau
-  - wissenschaft
-  - medizin
-  - statistik
-  # Erweiterte Perspektiven
-  - chemie
-  - sensorik
-  - oekologie
+  - culinary
+  - safety
+  - cultivation
+  - medicine
+  - chemistry
+  - ecology
+  - statistics
+  - geography
   - temporal
-  - geografie
-  - wirtschaft
-  - naturschutz
-  - kultur
-  - forschung
-  - interaktionen
-  - bestimmung
+  - economy
+  - conservation
+  - culture
+  - research
+  - interactions
+  - identification
 
-# Perspektive deaktivieren: Aus der Liste entfernen (Datei kann bleiben)
-# Neue Perspektive: 
-#   1. Neue .yaml Datei erstellen (z.B. oekologie.yaml)
-#   2. Hier in die Liste eintragen (z.B. - oekologie)
+# Note: To deactivate a perspective, simply remove it from the list above
+# The perspective file can remain in the folder

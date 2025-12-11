@@ -87,13 +87,13 @@ export class SessionObserver {
     const dauer = Date.now() - this.startTime;
     debug.session('Seite verlassen', { 
       dauer: `${Math.round(dauer / 1000)}s`,
-      interaktionen: this.interactions
+      interactions: this.interactions
     });
     
     this.track({
       typ: 'page_leave',
       dauer,
-      interaktionen: this.interactions,
+      interactions: this.interactions,
       scrollTiefe: this.getScrollDepth()
     });
   }
@@ -125,7 +125,7 @@ export class SessionObserver {
     debug.session('Session beendet', { 
       id: this.sessionId,
       dauer: `${Math.round(dauer / 1000)}s`,
-      interaktionen: this.interactions
+      interactions: this.interactions
     });
     
     this.flush();
@@ -134,7 +134,7 @@ export class SessionObserver {
       session: this.sessionId,
       zeitstempel: Date.now(),
       dauer,
-      interaktionen: this.interactions
+      interactions: this.interactions
     });
     
     clearInterval(this.flushInterval);
@@ -145,7 +145,7 @@ export class SessionObserver {
     return {
       sessionId: this.sessionId,
       dauer: this.startTime ? Date.now() - this.startTime : 0,
-      interaktionen: this.interactions,
+      interactions: this.interactions,
       pageViews: this.pageViews,
       pendingActions: this.aktionen.length
     };

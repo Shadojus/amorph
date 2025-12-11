@@ -2,7 +2,7 @@
  * Debug Observer - Zentrales Logging für AMORPH
  * 
  * Alle wichtigen Events werden hier geloggt, nicht verstreut im Code.
- * Überwacht das gesamte System: Init, Config, Daten, Features, Morphs, Render, User-Interaktionen
+ * Überwacht das gesamte System: Init, Config, Daten, Features, Morphs, Render, User-interactions
  * 
  * ARCHITEKTUR: KEINE console.log im Code! Nur debug.* verwenden!
  */
@@ -149,7 +149,7 @@ class DebugObserver {
     return [...this.history];
   }
   
-  // Statistiken
+  // statisticsen
   getStats() {
     const stats = {};
     for (const entry of this.history) {

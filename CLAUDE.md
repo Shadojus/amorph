@@ -34,22 +34,22 @@ DATEN (JSON) → detectType() → MORPH → DOM
 
 | Perspektive | Symbol | Fokus |
 |-------------|--------|-------|
-| Kulinarisch | 🍳 | Geschmack, Zubereitung, Essbarkeit |
-| Medizin | 💊 | Wirkstoffe, Therapie, Dosierung |
-| Anbau | 🌱 | Kultivierung, Substrate, Ertrag |
-| Sicherheit | ⚠️ | Toxine, Verwechslung, Erste Hilfe |
+| culinary | 🍳 | Geschmack, Zubereitung, Essbarkeit |
+| medicine | 💊 | Wirkstoffe, Therapie, Dosierung |
+| cultivation | 🌱 | Kultivierung, Substrate, Ertrag |
+| safety | ⚠️ | Toxine, Verwechslung, Erste Hilfe |
 | Wissenschaft | 🔬 | Taxonomie, Genetik, Mikroskopie |
-| Statistik | 📊 | Fundstatistik, Trends, Verbreitung |
-| Chemie | 🧪 | Metabolite, Enzyme, Volatilome |
+| statistics | 📊 | Fundstatistics, Trends, Verbreitung |
+| chemistry | 🧪 | Metabolite, Enzyme, Volatilome |
 | Sensorik | 👃 | Aroma, Geschmack, Textur |
-| Ökologie | 🌿 | Habitat, Symbiosen, Interaktionen |
+| Ökologie | 🌿 | Habitat, Symbiosen, interactions |
 | Temporal | ⏰ | Lebenszyklus, Saisonalität |
-| Geografie | 🗺️ | Verbreitung, Fundorte, Klima |
-| Wirtschaft | 💰 | Markt, Preise, Handel |
-| Naturschutz | 🛡️ | IUCN-Status, Bedrohungen |
-| Kultur | 📜 | Mythologie, Geschichte, Kunst |
-| Forschung | 📚 | Publikationen, Patente |
-| Interaktionen | 🔗 | Wirte, Mikrobiom, Symbiosen |
+| geography | 🗺️ | Verbreitung, Fundorte, Klima |
+| economy | 💰 | Markt, Preise, Handel |
+| conservation | 🛡️ | IUCN-Status, Bedrohungen |
+| culture | 📜 | Mythologie, Geschichte, Kunst |
+| research | 📚 | Publikationen, Patente |
+| interactions | 🔗 | Wirte, Mikrobiom, Symbiosen |
 | Visual | 🎨 | Bilder, Farben, 360° |
 
 ### Features
@@ -67,7 +67,7 @@ DATEN (JSON) → detectType() → MORPH → DOM
 
 State wird automatisch in URL gespeichert:
 - `?suche=steinpilz` - Suchbegriff
-- `?perspektiven=chemie,sensorik` - Aktive Perspektiven
+- `?perspektiven=chemistry,sensorik` - Aktive Perspektiven
 - `?ansicht=vergleich` - Aktive Ansicht
 
 ### Datengetriebene Typ-Erkennung

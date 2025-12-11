@@ -1,16 +1,16 @@
 /**
- * 📊 STATS MORPH - Statistik-Karte
+ * 📊 STATS MORPH - statistics-Karte
  * 
- * Zeigt Key-Value Paare als kompakte Statistik-Box
+ * Zeigt Key-Value Paare als kompakte statistics-Box
  * DATENGETRIEBEN - Erkennt Objekte mit wenigen numerischen Werten
  * 
  * Input: {min: 10, max: 25, avg: 17.5, count: 42}
- * Output: Kompakte Statistik-Karte mit Icons
+ * Output: Kompakte statistics-Karte mit Icons
  */
 
 import { debug } from '../../observer/debug.js';
 
-// Bekannte Statistik-Felder mit Icons
+// Bekannte statistics-Felder mit Icons
 const STAT_ICONS = {
   min: '↓',
   max: '↑',
@@ -42,7 +42,7 @@ export function stats(wert, config = {}) {
   el.className = 'amorph-stats';
   
   if (typeof wert !== 'object' || wert === null || Array.isArray(wert)) {
-    el.innerHTML = '<span class="amorph-stats-leer">Keine Statistik</span>';
+    el.innerHTML = '<span class="amorph-stats-leer">Keine statistics</span>';
     return el;
   }
   

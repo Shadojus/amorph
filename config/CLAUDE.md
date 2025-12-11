@@ -24,38 +24,38 @@ config/
 
 ```yaml
 aktiv:
-  - kulinarisch
-  - sicherheit
-  - anbau
+  - culinary
+  - safety
+  - cultivation
   - wissenschaft
-  - medizin
-  - statistik
-  - chemie
+  - medicine
+  - statistics
+  - chemistry
   - sensorik
-  - oekologie
+  - ecology
   - temporal
-  - geografie
-  - wirtschaft
-  - naturschutz
-  - kultur
-  - forschung
-  - interaktionen
+  - geography
+  - economy
+  - conservation
+  - culture
+  - research
+  - interactions
   - visual
 ```
 
-### Perspektiven-Datei (z.B. chemie.yaml)
+### Perspektiven-Datei (z.B. chemistry.yaml)
 
 ```yaml
-id: chemie
-name: Chemie
+id: chemistry
+name: chemistry
 symbol: 🧪
 farben: ['#9f7aea', '#805ad5', '#6b46c1', '#553c9a']
 beschreibung: Chemische Zusammensetzung und Stoffwechsel
 felder:
-  - chemie_primaer_metabolite
-  - chemie_sekundaer_metabolite
-  - chemie_volatilome
-  - chemie_enzyme
+  - chemistry_primaer_metabolite
+  - chemistry_sekundaer_metabolite
+  - chemistry_volatilome
+  - chemistry_enzyme
 ```
 
 ## Datengetriebene Erkennung

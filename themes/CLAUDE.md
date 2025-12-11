@@ -10,22 +10,22 @@ themes/
     └── morphs/
         └── compare/           # 17 Perspektiven-Compare-Morphs
             ├── index.js       # Export aller Compare-Morphs
-            ├── kulinarisch.js
-            ├── sicherheit.js
-            ├── anbau.js
+            ├── culinary.js
+            ├── safety.js
+            ├── cultivation.js
             ├── wissenschaft.js
-            ├── medizin.js
-            ├── statistik.js
-            ├── chemie.js      # NEU
+            ├── medicine.js
+            ├── statistics.js
+            ├── chemistry.js      # NEU
             ├── sensorik.js    # NEU
-            ├── oekologie.js   # NEU
+            ├── ecology.js   # NEU
             ├── temporal.js    # NEU
-            ├── geografie.js   # NEU
-            ├── wirtschaft.js  # NEU
-            ├── naturschutz.js # NEU
-            ├── kultur.js      # NEU
-            ├── forschung.js   # NEU
-            ├── interaktionen.js # NEU
+            ├── geography.js   # NEU
+            ├── economy.js  # NEU
+            ├── conservation.js # NEU
+            ├── culture.js      # NEU
+            ├── research.js   # NEU
+            ├── interactions.js # NEU
             └── visual.js      # NEU
 ```
 
@@ -34,7 +34,7 @@ themes/
 Jeder Compare-Morph hat dieselbe Signatur:
 
 ```javascript
-export function compareChemie(items, perspektive, schema) {
+export function comparechemistry(items, perspektive, schema) {
   // items = Array von Pilz-Objekten
   // perspektive = { id, name, symbol, farben, felder }
   // schema = Komplettes Schema mit felder-Definitionen

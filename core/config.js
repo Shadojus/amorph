@@ -2,6 +2,11 @@
  * Konfigurationsloader
  * Lädt alle YAML-Dateien aus dem Config-Ordner
  * Unterstützt modulares Schema-System aus schema/ Ordner
+ * 
+ * DATA-DRIVEN ARCHITECTURE:
+ * - Field definitions are derived from actual data + perspectives
+ * - No separate felder.yaml needed - schemas define everything
+ * - Field order comes from perspectives
  */
 
 import { debug } from '../observer/debug.js';
@@ -12,13 +17,12 @@ const CONFIG_FILES = [
   'morphs.yaml',
   'observer.yaml',
   'features.yaml'
-  // schema.yaml wird separat geladen (modular)
+  // schema is loaded separately (modular from perspectives)
 ];
 
-// Schema-Module im schema/ Ordner
+// Schema modules in schema/ folder (felder.yaml removed - data-driven)
 const SCHEMA_MODULES = [
   'basis.yaml',
-  'felder.yaml', 
   'semantik.yaml'
 ];
 
@@ -64,7 +68,8 @@ export async function loadConfig(basePath = './config/') {
 
 /**
  * Lädt Schema modular aus schema/ Ordner
- * Fallback auf schema.yaml wenn Ordner nicht existiert
+ * DATA-DRIVEN: Field definitions derived from perspectives + data
+ * No felder.yaml needed - perspectives define their fields
  */
 async function loadSchemaModular(basePath, cacheBuster) {
   const schemaPath = basePath + 'schema/';
@@ -77,10 +82,10 @@ async function loadSchemaModular(basePath, cacheBuster) {
     perspektiven: {}
   };
   
-  // Versuche modulares Schema zu laden
+  // Track if modular loading succeeded
   let modularLoaded = false;
   
-  // 1. Basis laden
+  // 1. Load basis.yaml (core definitions)
   try {
     const basisResp = await fetch(schemaPath + 'basis.yaml' + cacheBuster);
     if (basisResp.ok) {
@@ -92,40 +97,28 @@ async function loadSchemaModular(basePath, cacheBuster) {
         schema.reihenfolge = basis.standard_reihenfolge;
       }
       modularLoaded = true;
-      debug.config('Schema: basis.yaml geladen');
+      debug.config('Schema: basis.yaml loaded');
     }
   } catch (e) {
-    debug.warn('Schema: basis.yaml nicht gefunden');
+    debug.warn('Schema: basis.yaml not found');
   }
   
-  // 2. Felder laden
-  try {
-    const felderResp = await fetch(schemaPath + 'felder.yaml' + cacheBuster);
-    if (felderResp.ok) {
-      const felder = parseYAML(await felderResp.text());
-      schema.felder = { ...schema.kern, ...felder.felder };
-      if (felder.reihenfolge) {
-        schema.reihenfolge = felder.reihenfolge;
-      }
-      debug.config('Schema: felder.yaml geladen');
-    }
-  } catch (e) {
-    debug.warn('Schema: felder.yaml nicht gefunden');
-  }
-  
-  // 3. Semantik laden
+  // 2. Load semantik.yaml (search mappings)
   try {
     const semantikResp = await fetch(schemaPath + 'semantik.yaml' + cacheBuster);
     if (semantikResp.ok) {
       const semantik = parseYAML(await semantikResp.text());
       schema.semantik = semantik.semantik || {};
-      debug.config('Schema: semantik.yaml geladen');
+      debug.config('Schema: semantik.yaml loaded');
     }
   } catch (e) {
-    debug.warn('Schema: semantik.yaml nicht gefunden');
+    debug.warn('Schema: semantik.yaml not found');
   }
   
-  // 4. Perspektiven laden (aus perspektiven/index.yaml)
+  // 3. Load perspectives (from perspektiven/index.yaml)
+  // Perspectives define their own fields - this is the data-driven approach
+  const allPerspectiveFields = new Set();
+  
   try {
     const indexResp = await fetch(schemaPath + 'perspektiven/index.yaml' + cacheBuster);
     if (indexResp.ok) {
@@ -137,27 +130,53 @@ async function loadSchemaModular(basePath, cacheBuster) {
           const pResp = await fetch(schemaPath + 'perspektiven/' + pId + '.yaml' + cacheBuster);
           if (pResp.ok) {
             const perspektive = parseYAML(await pResp.text());
+            
+            // Use 'fields' or 'felder' (supporting both English and German)
+            const fields = perspektive.fields || perspektive.felder || [];
+            
+            // Use 'colors' or 'farben' (supporting both)
+            const colors = perspektive.colors || perspektive.farben || [];
+            
             schema.perspektiven[pId] = {
+              id: perspektive.id || pId,
               name: perspektive.name,
               symbol: perspektive.symbol,
-              farben: perspektive.farben || [],
-              felder: perspektive.felder || [],
-              keywords: perspektive.keywords || []
+              farben: colors,
+              felder: fields,
+              keywords: perspektive.keywords || [],
+              // Store enumerations if defined in perspective
+              enumerations: perspektive.enumerations || perspektive.enumerationen || {}
             };
-            debug.config(`Schema: Perspektive ${pId} geladen`);
+            
+            // Collect all fields from this perspective
+            fields.forEach(f => allPerspectiveFields.add(f));
+            
+            debug.config(`Schema: Perspective ${pId} loaded`, { fields: fields.length });
           }
         } catch (e) {
-          debug.warn(`Schema: Perspektive ${pId} nicht gefunden`);
+          debug.warn(`Schema: Perspective ${pId} not found`);
         }
       }
     }
   } catch (e) {
-    debug.warn('Schema: perspektiven/index.yaml nicht gefunden');
+    debug.warn('Schema: perspektiven/index.yaml not found');
   }
   
-  // Fallback: Wenn modular nicht geladen, versuche schema.yaml
+  // 4. Build field order from perspectives (data-driven)
+  // Perspective fields come first, in order they appear
+  if (allPerspectiveFields.size > 0) {
+    schema.reihenfolge = Array.from(allPerspectiveFields);
+    debug.config('Schema: Field order derived from perspectives', { 
+      count: schema.reihenfolge.length 
+    });
+  }
+  
+  // 5. Kern fields become base felder (from basis.yaml)
+  schema.felder = { ...schema.kern };
+  
+  // Fallback: If modular loading failed, try schema.yaml
   if (!modularLoaded) {
-    debug.config('Schema: Fallback auf schema.yaml');
+    debug.config('Schema: Fallback to schema.yaml');
     try {
       const schemaResp = await fetch(basePath + 'schema.yaml' + cacheBuster);
       if (schemaResp.ok) {
@@ -165,13 +184,14 @@ async function loadSchemaModular(basePath, cacheBuster) {
         return legacySchema;
       }
     } catch (e) {
-      debug.warn('Schema: Auch schema.yaml nicht gefunden');
+      debug.warn('Schema: schema.yaml also not found');
     }
   }
   
-  debug.config('Schema modular geladen', { 
+  debug.config('Schema loaded (data-driven)', { 
     felder: Object.keys(schema.felder).length,
-    perspektiven: Object.keys(schema.perspektiven).length
+    perspektiven: Object.keys(schema.perspektiven).length,
+    totalFields: allPerspectiveFields.size
   });
   
   return schema;

@@ -18,22 +18,22 @@ Das Perspektiven-Feature bietet:
 
 | ID | Name | Symbol | Farbe |
 |----|------|--------|-------|
-| kulinarisch | Kulinarisch | 🍳 | Grün |
-| sicherheit | Sicherheit | ⚠️ | Rot |
-| anbau | Anbau | 🌱 | Braun |
+| culinary | culinary | 🍳 | Grün |
+| safety | safety | ⚠️ | Rot |
+| cultivation | cultivation | 🌱 | Braun |
 | wissenschaft | Wissenschaft | 🔬 | Blau |
-| medizin | Medizin | 💊 | Türkis |
-| statistik | Statistik | 📊 | Grau |
-| chemie | Chemie | 🧪 | Violett |
+| medicine | medicine | 💊 | Türkis |
+| statistics | statistics | 📊 | Grau |
+| chemistry | chemistry | 🧪 | Violett |
 | sensorik | Sensorik | 👃 | Orange |
-| oekologie | Ökologie | 🌿 | Grün |
+| ecology | Ökologie | 🌿 | Grün |
 | temporal | Temporal | ⏰ | Indigo |
-| geografie | Geografie | 🗺️ | Blau |
-| wirtschaft | Wirtschaft | 💰 | Gold |
-| naturschutz | Naturschutz | 🛡️ | Rot |
-| kultur | Kultur | 📜 | Braun |
-| forschung | Forschung | 📚 | Cyan |
-| interaktionen | Interaktionen | 🔗 | Magenta |
+| geography | geography | 🗺️ | Blau |
+| economy | economy | 💰 | Gold |
+| conservation | conservation | 🛡️ | Rot |
+| culture | culture | 📜 | Braun |
+| research | research | 📚 | Cyan |
+| interactions | interactions | 🔗 | Magenta |
 | visual | Visual | 🎨 | Rainbow |
 
 ## Config aus schema/perspektiven/
@@ -41,22 +41,22 @@ Das Perspektiven-Feature bietet:
 ```
 config/schema/perspektiven/
 ├── index.yaml        # Liste der 17 aktiven Perspektiven
-├── kulinarisch.yaml
-├── sicherheit.yaml
-├── anbau.yaml
+├── culinary.yaml
+├── safety.yaml
+├── cultivation.yaml
 ├── wissenschaft.yaml
-├── medizin.yaml
-├── statistik.yaml
-├── chemie.yaml       # NEU
+├── medicine.yaml
+├── statistics.yaml
+├── chemistry.yaml       # NEU
 ├── sensorik.yaml     # NEU
-├── oekologie.yaml    # NEU
+├── ecology.yaml    # NEU
 ├── temporal.yaml     # NEU
-├── geografie.yaml    # NEU
-├── wirtschaft.yaml   # NEU
-├── naturschutz.yaml  # NEU
-├── kultur.yaml       # NEU
-├── forschung.yaml    # NEU
-├── interaktionen.yaml # NEU
+├── geography.yaml    # NEU
+├── economy.yaml   # NEU
+├── conservation.yaml  # NEU
+├── culture.yaml       # NEU
+├── research.yaml    # NEU
+├── interactions.yaml # NEU
 └── visual.yaml       # NEU
 ```
 

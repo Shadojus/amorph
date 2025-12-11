@@ -4,7 +4,7 @@
 
 semantik:
   # ═══════════════════════════════════════════════════════════════════════════
-  # ESSBARKEIT (Kulinarisch)
+  # ESSBARKEIT (culinary)
   # ═══════════════════════════════════════════════════════════════════════════
   essbar:
     keywords:
@@ -65,7 +65,7 @@ semantik:
     score: 50
 
   # ═══════════════════════════════════════════════════════════════════════════
-  # SENSORIK / GESCHMACK (Kulinarisch)
+  # SENSORIK / GESCHMACK (culinary)
   # ═══════════════════════════════════════════════════════════════════════════
   nussig:
     keywords:
@@ -162,7 +162,7 @@ semantik:
     score: 40
 
   # ═══════════════════════════════════════════════════════════════════════════
-  # ZUBEREITUNG (Kulinarisch)
+  # ZUBEREITUNG (culinary)
   # ═══════════════════════════════════════════════════════════════════════════
   braten:
     keywords:
@@ -256,7 +256,7 @@ semantik:
     score: 45
 
   # ═══════════════════════════════════════════════════════════════════════════
-  # LAGERUNG (Kulinarisch)
+  # LAGERUNG (culinary)
   # ═══════════════════════════════════════════════════════════════════════════
   haltbarkeit:
     keywords:
@@ -282,7 +282,7 @@ semantik:
     score: 40
 
   # ═══════════════════════════════════════════════════════════════════════════
-  # PAIRINGS (Kulinarisch)
+  # PAIRINGS (culinary)
   # ═══════════════════════════════════════════════════════════════════════════
   passt_zu:
     keywords:
@@ -357,7 +357,7 @@ semantik:
     score: 50
 
   # ═══════════════════════════════════════════════════════════════════════════
-  # TRADITIONEN (Kulinarisch)
+  # TRADITIONEN (culinary)
   # ═══════════════════════════════════════════════════════════════════════════
   italienisch:
     keywords:
@@ -366,7 +366,7 @@ semantik:
       - porcini
       - pasta
       - risotto
-    pfad: traditionen.kultur
+    pfad: traditionen.culture
     pfad_enthält:
       - italienisch
       - Italienisch
@@ -378,7 +378,7 @@ semantik:
       - frankreich
       - cèpe
       - girolle
-    pfad: traditionen.kultur
+    pfad: traditionen.culture
     pfad_enthält:
       - französisch
       - Französisch
@@ -389,7 +389,7 @@ semantik:
       - deutsch
       - deutschland
       - heimisch
-    pfad: traditionen.kultur
+    pfad: traditionen.culture
     pfad_enthält:
       - deutsch
       - Deutsch
@@ -401,7 +401,7 @@ semantik:
       - asien
       - japanisch
       - chinesisch
-    pfad: traditionen.kultur
+    pfad: traditionen.culture
     pfad_enthält:
       - japanisch
       - chinesisch
@@ -535,7 +535,7 @@ semantik:
     score: 40
 
   # ═══════════════════════════════════════════════════════════════════════════
-  # VERWECHSLUNG / SICHERHEIT
+  # VERWECHSLUNG / safety
   # ═══════════════════════════════════════════════════════════════════════════
   verwechslung:
     keywords:

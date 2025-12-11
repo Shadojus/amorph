@@ -39,22 +39,22 @@ Perspektiven-spezifische Vergleiche in `themes/pilze/morphs/compare/`:
 
 | Perspektive | Datei | Fokus |
 |-------------|-------|-------|
-| kulinarisch | kulinarisch.js | Geschmack, Zubereitung |
-| sicherheit | sicherheit.js | Toxine, Verwechslung |
-| anbau | anbau.js | Substrate, Ertrag |
+| culinary | culinary.js | Geschmack, Zubereitung |
+| safety | safety.js | Toxine, Verwechslung |
+| cultivation | cultivation.js | Substrate, Ertrag |
 | wissenschaft | wissenschaft.js | Taxonomie, Genetik |
-| medizin | medizin.js | Wirkstoffe, Therapie |
-| statistik | statistik.js | Fundstatistik |
-| chemie | chemie.js | Metabolite, Enzyme |
+| medicine | medicine.js | Wirkstoffe, Therapie |
+| statistics | statistics.js | Fundstatistics |
+| chemistry | chemistry.js | Metabolite, Enzyme |
 | sensorik | sensorik.js | Aroma, Textur |
-| oekologie | oekologie.js | Habitat, Symbiosen |
+| ecology | ecology.js | Habitat, Symbiosen |
 | temporal | temporal.js | Lebenszyklus |
-| geografie | geografie.js | Verbreitung |
-| wirtschaft | wirtschaft.js | Markt, Preise |
-| naturschutz | naturschutz.js | IUCN-Status |
-| kultur | kultur.js | Mythologie |
-| forschung | forschung.js | Publikationen |
-| interaktionen | interaktionen.js | Wirte, Mikrobiom |
+| geography | geography.js | Verbreitung |
+| economy | economy.js | Markt, Preise |
+| conservation | conservation.js | IUCN-Status |
+| culture | culture.js | Mythologie |
+| research | research.js | Publikationen |
+| interactions | interactions.js | Wirte, Mikrobiom |
 | visual | visual.js | Bilder, Farben |
 
 ## Farb-System (CSS Single Source of Truth!)

@@ -41,8 +41,8 @@ Pipeline fügt automatisch Perspektiven-Attribute hinzu:
 
 ```html
 <amorph-container 
-  data-field="chemie_primaer_metabolite"
-  data-perspektive-chemie="true">
+  data-field="chemistry_primaer_metabolite"
+  data-perspektive-chemistry="true">
 ```
 
 ## container.js

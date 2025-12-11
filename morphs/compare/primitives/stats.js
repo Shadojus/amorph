@@ -1,5 +1,5 @@
 /**
- * COMPARE STATS - Statistik-Grid-Vergleich
+ * COMPARE STATS - statistics-Grid-Vergleich
  */
 
 import { debug } from '../../../observer/debug.js';
@@ -17,7 +17,7 @@ export function compareStats(items, config = {}) {
   });
   
   if (allKeys.size === 0) {
-    el.innerHTML = '<div class="compare-leer">Keine Statistiken</div>';
+    el.innerHTML = '<div class="compare-leer">Keine statisticsen</div>';
     return el;
   }
   

@@ -22,7 +22,7 @@ Vollständige Pilz-Detailseite als eigene Page.
 Felder werden nach ihren Perspektiven gruppiert angezeigt:
 
 ```
-🧪 Chemie
+🧪 chemistry
 ├── Primäre Metabolite
 ├── Sekundäre Metabolite
 └── Enzyme

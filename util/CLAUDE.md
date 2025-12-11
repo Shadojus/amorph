@@ -20,7 +20,7 @@ getUrlState()                  // → { suche, perspektiven, ansicht }
 setUrlState({ suche, ... })    // Speichert in URL (ohne Reload)
 
 // Perspektiven in URL
-?perspektiven=chemie,sensorik,oekologie
+?perspektiven=chemistry,sensorik,ecology
 ```
 
 ## fetch.js - Datenquellen + Infinite Scroll
@@ -54,6 +54,6 @@ export function toggleClass(element, className, force) { ... }
 getFeldLabel(feldname)  // → "Primäre Metabolite"
 
 // Feldname → Perspektiven aus 17 perspektiven/*.yaml
-getFeldPerspektiven(feldname)  // → ["chemie"]
+getFeldPerspektiven(feldname)  // → ["chemistry"]
 ```
 

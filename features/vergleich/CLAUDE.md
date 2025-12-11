@@ -18,22 +18,22 @@ Das Vergleich-Feature bietet:
 
 | Perspektive | Compare-Morph | Fokus |
 |-------------|---------------|-------|
-| kulinarisch | kulinarisch.js | Geschmack, Zubereitung |
-| sicherheit | sicherheit.js | Toxine, Verwechslung |
-| anbau | anbau.js | Substrate, Ertrag |
+| culinary | culinary.js | Geschmack, Zubereitung |
+| safety | safety.js | Toxine, Verwechslung |
+| cultivation | cultivation.js | Substrate, Ertrag |
 | wissenschaft | wissenschaft.js | Taxonomie |
-| medizin | medizin.js | Wirkstoffe |
-| statistik | statistik.js | Fundstatistik |
-| chemie | chemie.js | Metabolite, Enzyme |
+| medicine | medicine.js | Wirkstoffe |
+| statistics | statistics.js | Fundstatistics |
+| chemistry | chemistry.js | Metabolite, Enzyme |
 | sensorik | sensorik.js | Aroma, Textur |
-| oekologie | oekologie.js | Habitat, Symbiosen |
+| ecology | ecology.js | Habitat, Symbiosen |
 | temporal | temporal.js | Lebenszyklus |
-| geografie | geografie.js | Verbreitung |
-| wirtschaft | wirtschaft.js | Markt, Preise |
-| naturschutz | naturschutz.js | IUCN-Status |
-| kultur | kultur.js | Mythologie |
-| forschung | forschung.js | Publikationen |
-| interaktionen | interaktionen.js | Wirte |
+| geography | geography.js | Verbreitung |
+| economy | economy.js | Markt, Preise |
+| conservation | conservation.js | IUCN-Status |
+| culture | culture.js | Mythologie |
+| research | research.js | Publikationen |
+| interactions | interactions.js | Wirte |
 | visual | visual.js | Bilder |
 
 ## Glasmorphism

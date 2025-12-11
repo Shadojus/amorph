@@ -59,10 +59,10 @@ export function transform(daten, config, customMorphs = {}) {
     let morph = alleMorphs[morphName];
     let actualMorphName = morphName;
     
-    // Debug: Medizin-Felder tracken (warn statt morphs weil morphs gemutet ist)
-    const medizinFelder = ['medizinisch', 'traditionelle_medizin', 'therapeutische_kategorien', 'wirkungsprofil', 'wirkstoffe', 'sicherheit_score', 'nebenwirkungen', 'dosierung'];
-    if (feldname && medizinFelder.includes(feldname)) {
-      debug.warn('MEDIZIN-Feld gefunden', { feldname, typ, morphName, wertTyp: typeof wert, istArray: Array.isArray(wert) });
+    // Debug: medicine-Felder tracken (warn statt morphs weil morphs gemutet ist)
+    const medicineFelder = ['medicineisch', 'traditionelle_medicine', 'therapeutische_kategorien', 'wirkungsprofil', 'wirkstoffe', 'safety_score', 'nebenwirkungen', 'dosierung'];
+    if (feldname && medicineFelder.includes(feldname)) {
+      debug.warn('medicine-Feld gefunden', { feldname, typ, morphName, wertTyp: typeof wert, istArray: Array.isArray(wert) });
     }
     
     if (!morph) {
@@ -126,11 +126,11 @@ export function transform(daten, config, customMorphs = {}) {
         // Felder in Schema-Reihenfolge rendern
         const sortedEntries = sortBySchemaOrder(item);
         
-        // Debug: Prüfen ob Medizin-Felder im Item vorhanden sind
-        const medizinFelder = ['medizinisch', 'traditionelle_medizin', 'therapeutische_kategorien', 'wirkungsprofil', 'wirkstoffe'];
-        const vorhandeneMedizin = medizinFelder.filter(f => f in item);
-        if (vorhandeneMedizin.length > 0) {
-          debug.warn('Item hat Medizin-Felder', { itemName: item.name, felder: vorhandeneMedizin, alleKeys: Object.keys(item).length });
+        // Debug: Prüfen ob medicine-Felder im Item vorhanden sind
+        const medicineFelder = ['medicineisch', 'traditionelle_medicine', 'therapeutische_kategorien', 'wirkungsprofil', 'wirkstoffe'];
+        const vorhandenemedicine = medicineFelder.filter(f => f in item);
+        if (vorhandenemedicine.length > 0) {
+          debug.warn('Item hat medicine-Felder', { itemName: item.name, felder: vorhandenemedicine, alleKeys: Object.keys(item).length });
         }
         
         for (const [key, value] of sortedEntries) {

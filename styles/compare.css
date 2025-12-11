@@ -877,7 +877,7 @@
   line-height: 1.5;
 }
 
-/* Text Simple (für kulinarisch etc.) */
+/* Text Simple (für culinary etc.) */
 .compare-text-simple {
   display: flex;
   flex-direction: column;
@@ -1586,9 +1586,9 @@
   opacity: 0.3;
 }
 
-/* === MEDIZIN-SPEZIFISCHE STYLES === */
+/* === medicine-SPEZIFISCHE STYLES === */
 
-/* Traditionelle Medizin */
+/* Traditionelle medicine */
 .compare-tradition-systeme {
   display: flex;
   flex-direction: column;

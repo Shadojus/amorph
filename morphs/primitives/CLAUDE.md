@@ -22,7 +22,7 @@ Domänenunabhängige, reine Funktionen die Datenstrukturen in DOM-Elemente trans
 | `list` | Array | `<ul>` Liste |
 | `object` | Object | `<dl>` Definition-Liste |
 | `range` | `{min, max}` | Range-Visualisierung |
-| `stats` | `{min, max, avg, ...}` | Statistik-Karte |
+| `stats` | `{min, max, avg, ...}` | statistics-Karte |
 | `bar` | `[{label, value}]` | Horizontale Balken |
 | `radar` | `[{axis, value}]` | Spider-Chart (SVG) |
 | `pie` | `{key: value}` | Donut-Diagramm |

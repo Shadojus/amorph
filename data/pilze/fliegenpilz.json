@@ -6,8 +6,8 @@
   "bild": "images/fungi/fly-agaric-amanita-muscaria.jpg",
   "beschreibung": "Der Fliegenpilz ist wohl der bekannteste Giftpilz. Mit seinem roten Hut und weißen Punkten ist er leicht erkennbar. Er enthält psychoaktive Substanzen.",
 
-  "_comment_bestimmung": "═══════════════════════════════════════════════════════════════════════════════",
-  "_section_bestimmung": "PERSPEKTIVE: BESTIMMUNG",
+  "_comment_identification": "═══════════════════════════════════════════════════════════════════════════════",
+  "_section_identification": "PERSPEKTIVE: identification",
 
   "wissenschaftlicher_name": "Amanita muscaria (L.) Lam.",
   "autorenzitat": "(L.) Lam. 1783",
@@ -51,7 +51,7 @@
   "wikidata_id": "Q138832",
 
   "taxonomie_status": "akzeptiert",
-  "unsicherheits_grad": "sicher",
+  "unsafetys_grad": "sicher",
   "revisionsstand": "2023",
   "typus_status": "lectotypus",
 
@@ -350,7 +350,7 @@
   "sichere_merkmale": ["Roter Hut mit weißen Flocken", "Weiße Lamellen", "Gegürtelte Volva"],
   "artenkomplex": "Amanita muscaria complex",
   "kryptische_arten_komplex": ["Amanita muscaria var. muscaria", "Amanita muscaria var. flavivolvata", "Amanita muscaria var. formosa"],
-  "bestimmungs_sicherheit_level": "feldbestimmbar",
+  "identifications_safety_level": "feldbestimmbar",
 
   "primaere_erkennungsmerkmale": ["Roter Hut", "Weiße Flocken", "Weißer Ring", "Gegürtelte Volva"],
   "sekundaere_erkennungsmerkmale": ["Weiße Lamellen", "Ektomykorrhiza mit Birke/Fichte"],
@@ -365,7 +365,7 @@
   "schluessel_position": "Amanita sect. Amanita",
   "alternative_wege": ["Über Hutfarbe", "Über Volvastruktur"],
 
-  "bestimmungsliteratur": ["Fungi of Temperate Europe", "Die Großpilze Baden-Württembergs", "Amanita-Monographie"],
+  "identificationsliteratur": ["Fungi of Temperate Europe", "Die Großpilze Baden-Württembergs", "Amanita-Monographie"],
   "monographien": ["The Genus Amanita (Bas)"],
   "online_schluessel": ["123pilze.de", "pilzforum.eu"],
   "video_anleitungen": ["YouTube: Fliegenpilz erkennen"],
@@ -407,10 +407,10 @@
   "embedding_vektor": null,
   "erkennungs_konfidenz": null,
 
-  "bestimmung_status": "bestätigt",
+  "identification_status": "bestätigt",
   "bestimmt_durch": "Dr. mycologicus",
-  "bestimmungs_methode": "morphologisch + ITS",
-  "bestimmungs_konfidenz": 100,
+  "identifications_methode": "morphologisch + ITS",
+  "identifications_konfidenz": 100,
   "revision_historie": [],
 
   "fund_latitude": 52.5200,
@@ -443,12 +443,12 @@
 
   "frischzustand_dokumentiert": true,
   "exsikkat_vorhanden": false,
-  "kultur_angelegt": false,
+  "culture_angelegt": false,
   "sequenz_vorhanden": true,
   "feldnotizen": "Typisches Exemplar unter Birken",
 
-  "_comment_anbau": "═══════════════════════════════════════════════════════════════════════════════",
-  "_section_anbau": "PERSPEKTIVE: ANBAU",
+  "_comment_cultivation": "═══════════════════════════════════════════════════════════════════════════════",
+  "_section_cultivation": "PERSPEKTIVE: cultivation",
 
   "standort": ["Birkenwald", "Fichtenwald", "Heidegebiete"],
   "habitat": "Ektomykorrhiza mit Birken, Fichten, Kiefern",
@@ -597,7 +597,7 @@
   "equipment_startup_cost_commercial": null,
 
   "economics": {
-    "hinweis": "Keine wirtschaftliche Nutzung - GIFTIG"
+    "hinweis": "Keine economyliche Nutzung - GIFTIG"
   },
   "economics_market_price_min": null,
   "economics_market_price_max": null,
@@ -619,8 +619,8 @@
   "supplier_ships_to": null,
   "supplier_certifications": null,
 
-  "_comment_chemie": "═══════════════════════════════════════════════════════════════════════════════",
-  "_section_chemie": "PERSPEKTIVE: CHEMIE",
+  "_comment_chemistry": "═══════════════════════════════════════════════════════════════════════════════",
+  "_section_chemistry": "PERSPEKTIVE: chemistry",
 
   "naehrwerte": {
     "kalorien": 22,

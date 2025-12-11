@@ -1,34 +1,43 @@
 # AMORPH Schema - Index
-# Definiert welche Schema-Dateien geladen werden
+# DATA-DRIVEN ARCHITECTURE
+# Field definitions are derived from data + perspectives, no separate felder.yaml needed
 
 # Schema-Version
-version: "2.0"
+version: "3.0"
 
-# === MODULARE STRUKTUR ===
-# Das Schema ist in mehrere Dateien aufgeteilt:
+# === MODULAR STRUCTURE ===
+# The schema is split into multiple files:
 
 module:
-  # Basis-System (unveränderlich)
+  # Core system (immutable)
   basis: ./basis.yaml
   
-  # Feld-Definitionen (anpassbar)
-  felder: ./felder.yaml
-  
-  # Semantische Suche (anpassbar)
+  # Semantic search mappings (customizable)
   semantik: ./semantik.yaml
   
-  # Perspektiven (dynamisch aus Ordner geladen)
+  # Perspectives (dynamically loaded from folder)
+  # Each perspective defines its own fields!
   perspektiven: ./perspektiven/
 
-# === LADE-REIHENFOLGE ===
-# 1. basis.yaml - Kern-System
-# 2. felder.yaml - Feld-Definitionen  
-# 3. semantik.yaml - Such-Mappings
-# 4. perspektiven/*.yaml - Alle Perspektiven-Dateien
+# === DATA-DRIVEN APPROACH ===
+# Instead of a separate felder.yaml, field configurations are:
+# 1. Defined in perspectives (fields they need)
+# 2. Inferred from actual data (types detected automatically)
+# 3. Core fields defined in basis.yaml
+#
+# Benefits:
+# - No redundancy between felder.yaml and perspective definitions
+# - Perspectives are self-contained and complete
+# - System adapts automatically to new fields in data
+# - Less configuration, more convention
 
-# === HINWEISE ===
-# - basis.yaml sollte nicht verändert werden
-# - felder.yaml kann projektspezifisch angepasst werden
-# - Neue Perspektiven: Einfach neue .yaml in perspektiven/ erstellen
-# - Perspektiven können aktiviert/deaktiviert werden durch
-#   Hinzufügen/Entfernen der Datei
+# === LOAD ORDER ===
+# 1. basis.yaml - Core system config
+# 2. semantik.yaml - Search mappings
+# 3. perspektiven/*.yaml - All perspective files (define their own fields)
+
+# === NOTES ===
+# - basis.yaml should not be modified
+# - New perspectives: Simply create new .yaml in perspektiven/
+# - Perspectives can be activated/deactivated via perspektiven/index.yaml
+# - Field types are auto-detected from data and field name patterns

@@ -1,73 +1,91 @@
-# Schema-Ordner
+# Schema Folder
 
-Modulares Schema-System für AMORPH mit 17 Perspektiven.
+DATA-DRIVEN modular schema system for AMORPH.
 
-## Übersicht
+## Architecture
 
-Das Schema-System ist die **Single Source of Truth** für alle Daten-Definitionen:
-- Feld-Typen und Labels (~200 Felder)
-- Semantische Suchregeln
-- 17 Perspektiven (Filter + Farben)
+**Single Source of Truth** - but without redundancy:
+- Perspectives define their own fields (no separate felder.yaml needed)
+- Field types are auto-detected from data and naming patterns
+- Core system in basis.yaml
+- Semantic search in semantik.yaml
 
-## Struktur
+## Structure
 
 ```
 schema/
-├── index.yaml            # Index und Dokumentation
-├── basis.yaml            # Kern-System (NICHT ÄNDERN)
-├── felder.yaml           # ~200 Feld-Definitionen
-├── semantik.yaml         # Such-Mappings
-└── perspektiven/         # 17 Perspektiven
-    ├── index.yaml        # Aktive Perspektiven-Liste
-    ├── kulinarisch.yaml
-    ├── sicherheit.yaml
-    ├── anbau.yaml
-    ├── wissenschaft.yaml
-    ├── medizin.yaml
-    ├── statistik.yaml
-    ├── chemie.yaml       # NEU
-    ├── sensorik.yaml     # NEU
-    ├── oekologie.yaml    # NEU
-    ├── temporal.yaml     # NEU
-    ├── geografie.yaml    # NEU
-    ├── wirtschaft.yaml   # NEU
-    ├── naturschutz.yaml  # NEU
-    ├── kultur.yaml       # NEU
-    ├── forschung.yaml    # NEU
-    ├── interaktionen.yaml # NEU
-    └── visual.yaml       # NEU
+├── index.yaml            # Index and documentation
+├── basis.yaml            # Core system (DO NOT MODIFY)
+├── semantik.yaml         # Search mappings
+└── perspektiven/         # Perspectives (self-contained)
+    ├── index.yaml        # Active perspectives list
+    ├── culinary.yaml     # Each perspective defines its own fields
+    ├── safety.yaml
+    ├── cultivation.yaml
+    ├── science.yaml
+    ├── medicine.yaml
+    ├── statistics.yaml
+    ├── chemistry.yaml
+    ├── sensory.yaml
+    ├── ecology.yaml
+    ├── temporal.yaml
+    ├── geography.yaml
+    ├── economics.yaml
+    ├── conservation.yaml
+    ├── culture.yaml
+    ├── research.yaml
+    ├── interactions.yaml
+    └── visual.yaml
 ```
 
-## 17 Perspektiven
+## Data-Driven Approach
 
-| ID | Name | Symbol | Farbe |
-|----|------|--------|-------|
-| kulinarisch | Kulinarisch | 🍳 | Grün |
-| sicherheit | Sicherheit | ⚠️ | Rot |
-| anbau | Anbau | 🌱 | Braun |
-| wissenschaft | Wissenschaft | 🔬 | Blau |
-| medizin | Medizin | 💊 | Türkis |
-| statistik | Statistik | 📊 | Grau |
-| chemie | Chemie | 🧪 | Violett |
-| sensorik | Sensorik | 👃 | Orange |
-| oekologie | Ökologie | 🌿 | Grün |
-| temporal | Temporal | ⏰ | Indigo |
-| geografie | Geografie | 🗺️ | Blau |
-| wirtschaft | Wirtschaft | 💰 | Gold |
-| naturschutz | Naturschutz | 🛡️ | Rot |
-| kultur | Kultur | 📜 | Braun |
-| forschung | Forschung | 📚 | Cyan |
-| interaktionen | Interaktionen | 🔗 | Magenta |
-| visual | Visual | 🎨 | Rainbow |
+Field configurations are derived from:
+1. **Perspective definitions** - Each perspective lists its fields
+2. **Data inspection** - Types detected from actual values
+3. **Naming conventions** - Field names imply types:
+   - `*_rating`, `*_score` → rating morph
+   - `*_percent`, `*_rate` → progress morph  
+   - `is_*`, `has_*` → boolean morph
+   - `*_min`, `*_max` → range morph
+   - `*_list`, plural names → list morph
 
-## Neue Perspektive hinzufügen
+## Adding a New Perspective
 
-1. Datei erstellen: `perspektiven/meine_perspektive.yaml`
-2. ID zu `index.yaml` hinzufügen
-3. Felder zu `felder.yaml` hinzufügen
-4. CSS zu `styles/perspektiven.css` hinzufügen
-5. Compare-Morph in `themes/pilze/morphs/compare/` erstellen
+1. Create file: `perspektiven/my_perspective.yaml`
+2. Add ID to `perspektiven/index.yaml`
+3. (Optional) Add CSS to `styles/perspektiven.css`
+4. (Optional) Create compare morph in `themes/pilze/morphs/compare/`
 
-## Perspektive deaktivieren
+**No need to edit felder.yaml** - the perspective file is complete!
 
-ID aus `perspektiven/index.yaml` entfernen (Datei kann bleiben).
+## Perspective File Format
+
+```yaml
+id: my_perspective
+name: My Perspective
+symbol: 🔮
+
+colors:  # or 'farben'
+  - "rgba(r, g, b, 0.65)"
+
+fields:  # or 'felder' - defines all fields for this perspective
+  - image
+  - name
+  - my_custom_field
+  - another_field
+
+keywords:  # for semantic search (multilingual)
+  - english keyword
+  - deutsches Stichwort
+  - mot-clé français
+
+enumerations:  # optional, for constrained values
+  my_enum:
+    - value1
+    - value2
+```
+
+## Deactivating a Perspective
+
+Remove ID from `perspektiven/index.yaml` (file can remain).

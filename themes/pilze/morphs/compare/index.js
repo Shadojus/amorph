@@ -10,47 +10,47 @@
 import { debug } from '../../../../observer/debug.js';
 
 // Import der Perspektiven-Morphs
-import { compareKulinarisch } from './kulinarisch.js';
-import { compareSicherheit } from './sicherheit.js';
-import { compareAnbau } from './anbau.js';
+import { compareculinary } from './culinary.js';
+import { comparesafety } from './safety.js';
+import { comparecultivation } from './cultivation.js';
 import { compareWissenschaft } from './wissenschaft.js';
-import { compareMedizin } from './medizin.js';
-import { compareStatistik } from './statistik.js';
+import { comparemedicine } from './medicine.js';
+import { comparestatistics } from './statistics.js';
 // Neue Perspektiven
-import { compareChemie } from './chemie.js';
+import { comparechemistry } from './chemistry.js';
 import { compareSensorik } from './sensorik.js';
-import { compareOekologie } from './oekologie.js';
+import { compareecology } from './ecology.js';
 import { compareTemporal } from './temporal.js';
-import { compareGeografie } from './geografie.js';
-import { compareWirtschaft } from './wirtschaft.js';
-import { compareNaturschutz } from './naturschutz.js';
-import { compareKultur } from './kultur.js';
-import { compareForschung } from './forschung.js';
-import { compareInteraktionen } from './interaktionen.js';
-import { compareBestimmung } from './bestimmung.js';
+import { comparegeography } from './geography.js';
+import { compareeconomy } from './economy.js';
+import { compareconservation } from './conservation.js';
+import { compareculture } from './culture.js';
+import { compareresearch } from './research.js';
+import { compareinteractions } from './interactions.js';
+import { compareidentification } from './identification.js';
 
 /**
  * Registry der Perspektiven-Compare-Morphs
  */
 export const perspektivenMorphs = {
-  kulinarisch: compareKulinarisch,
-  sicherheit: compareSicherheit,
-  anbau: compareAnbau,
+  culinary: compareculinary,
+  safety: comparesafety,
+  cultivation: comparecultivation,
   wissenschaft: compareWissenschaft,
-  medizin: compareMedizin,
-  statistik: compareStatistik,
+  medicine: comparemedicine,
+  statistics: comparestatistics,
   // Neue Perspektiven
-  chemie: compareChemie,
+  chemistry: comparechemistry,
   sensorik: compareSensorik,
-  oekologie: compareOekologie,
+  ecology: compareecology,
   temporal: compareTemporal,
-  geografie: compareGeografie,
-  wirtschaft: compareWirtschaft,
-  naturschutz: compareNaturschutz,
-  kultur: compareKultur,
-  forschung: compareForschung,
-  interaktionen: compareInteraktionen,
-  bestimmung: compareBestimmung
+  geography: comparegeography,
+  economy: compareeconomy,
+  conservation: compareconservation,
+  culture: compareculture,
+  research: compareresearch,
+  interactions: compareinteractions,
+  identification: compareidentification
 };
 
 /**

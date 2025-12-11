@@ -7,7 +7,7 @@
     "bild": "images/fungi/porcini-boletus-edulis.jpg",
     "beschreibung": "Der Steinpilz ist einer der beliebtesten Speisepilze weltweit. Sein kräftiges, nussiges Aroma und die feste Textur machen ihn zur ersten Wahl in der gehobenen Gastronomie.",
 
-    "_comment": "═══════════════ KULINARISCH - SICHERHEIT ═══════════════",
+    "_comment": "═══════════════ culinary - safety ═══════════════",
     
     "essbarkeit_status": "choice",
     "essbarkeit_rating": 9.5,
@@ -18,7 +18,7 @@
     ],
     "essbarkeit_risikogruppen": [],
 
-    "_comment2": "═══════════════ KULINARISCH - SENSORIK ═══════════════",
+    "_comment2": "═══════════════ culinary - SENSORIK ═══════════════",
     
     "sensorik": [
       { "axis": "Umami", "value": 88 },
@@ -34,7 +34,7 @@
     "textur_roh": ["Fest", "Knackig", "Saftig"],
     "textur_gegart": ["Bissfest", "Fleischig", "Samtig"],
 
-    "_comment3": "═══════════════ KULINARISCH - ZUBEREITUNG ═══════════════",
+    "_comment3": "═══════════════ culinary - ZUBEREITUNG ═══════════════",
     
     "zubereitung_methoden": ["Braten", "Trocknen", "Roh", "Einlegen", "Grillen"],
     
@@ -58,7 +58,7 @@
       "In 5mm Scheiben schneiden für optimales Braten"
     ],
 
-    "_comment4": "═══════════════ KULINARISCH - PAIRINGS ═══════════════",
+    "_comment4": "═══════════════ culinary - PAIRINGS ═══════════════",
     
     "pairings_klassisch": [
       { "label": "Butter", "value": 10 },
@@ -84,7 +84,7 @@
       "Mit Zitrone: Säure hebt Aromen hervor"
     ],
 
-    "_comment5": "═══════════════ KULINARISCH - LAGERUNG ═══════════════",
+    "_comment5": "═══════════════ culinary - LAGERUNG ═══════════════",
     
     "lagerung_temperatur": { "min": 2, "max": 7, "unit": "°C" },
     "lagerung_luftfeuchtigkeit": "hoch (85-95%)",
@@ -104,7 +104,7 @@
       { "label": "Pilzpulver", "value": 95 }
     ],
 
-    "_comment6": "═══════════════ KULINARISCH - NÄHRWERT ═══════════════",
+    "_comment6": "═══════════════ culinary - NÄHRWERT ═══════════════",
     
     "naehrwerte": {
       "Protein": 26,
@@ -126,7 +126,7 @@
       { "label": "Lovastatin", "value": 0.8, "unit": "mg" }
     ],
 
-    "_comment7": "═══════════════ KULINARISCH - KULTUR ═══════════════",
+    "_comment7": "═══════════════ culinary - culture ═══════════════",
     
     "traditionen_namen": [
       "Porcini (Italienisch - 'Schweinchen')",
@@ -190,7 +190,7 @@
     "bild": "images/fungi/chanterelle-cantharellus-cibarius.jpg",
     "beschreibung": "Der Pfifferling ist ein dottergelber Speisepilz mit einzigartigem fruchtig-pfeffrigem Aroma. Er wächst in Symbiose mit Bäumen und ist nicht kultivierbar - ein echtes Wildsammel-Highlight.",
 
-    "_comment": "═══════════════ KULINARISCH - SICHERHEIT ═══════════════",
+    "_comment": "═══════════════ culinary - safety ═══════════════",
     
     "essbarkeit_status": "choice",
     "essbarkeit_rating": 9.0,
@@ -204,7 +204,7 @@
     ],
     "essbarkeit_risikogruppen": ["Bei empfindlichem Magen: kleine Mengen testen"],
 
-    "_comment2": "═══════════════ KULINARISCH - SENSORIK ═══════════════",
+    "_comment2": "═══════════════ culinary - SENSORIK ═══════════════",
     
     "sensorik": [
       { "axis": "Umami", "value": 65 },
@@ -220,7 +220,7 @@
     "textur_roh": ["Fest", "Leicht gummig", "Faserig"],
     "textur_gegart": ["Zart", "Seidig", "Behält Biss"],
 
-    "_comment3": "═══════════════ KULINARISCH - ZUBEREITUNG ═══════════════",
+    "_comment3": "═══════════════ culinary - ZUBEREITUNG ═══════════════",
     
     "zubereitung_methoden": ["Braten", "Schmoren", "Einlegen", "In Sahnesaucen"],
     
@@ -245,7 +245,7 @@
       "NIEMALS wässern!"
     ],
 
-    "_comment4": "═══════════════ KULINARISCH - PAIRINGS ═══════════════",
+    "_comment4": "═══════════════ culinary - PAIRINGS ═══════════════",
     
     "pairings_klassisch": [
       { "label": "Sahne", "value": 10 },
@@ -271,7 +271,7 @@
       "Mit Thymian: Erdigkeit verstärkt sich gegenseitig"
     ],
 
-    "_comment5": "═══════════════ KULINARISCH - LAGERUNG ═══════════════",
+    "_comment5": "═══════════════ culinary - LAGERUNG ═══════════════",
     
     "lagerung_temperatur": { "min": 2, "max": 6, "unit": "°C" },
     "lagerung_luftfeuchtigkeit": "hoch (85-95%)",
@@ -290,7 +290,7 @@
       { "label": "Trocknen", "value": 60 }
     ],
 
-    "_comment6": "═══════════════ KULINARISCH - NÄHRWERT ═══════════════",
+    "_comment6": "═══════════════ culinary - NÄHRWERT ═══════════════",
     
     "naehrwerte": {
       "Protein": 18,
@@ -312,7 +312,7 @@
       { "label": "Ergosterol", "value": 15.0, "unit": "mg" }
     ],
 
-    "_comment7": "═══════════════ KULINARISCH - KULTUR ═══════════════",
+    "_comment7": "═══════════════ culinary - culture ═══════════════",
     
     "traditionen_namen": [
       "Girolle (Französisch)",
@@ -392,8 +392,8 @@
       { "axis": "Toxizität", "value": 75 },
       { "axis": "Erkennbarkeit", "value": 98 },
       { "axis": "Verbreitung", "value": 70 },
-      { "axis": "Kulturelle Bedeutung", "value": 95 },
-      { "axis": "Forschungsinteresse", "value": 80 }
+      { "axis": "cultureelle Bedeutung", "value": 95 },
+      { "axis": "researchsinteresse", "value": 80 }
     ],
     "wirkstoffe": [
       { "label": "Muscimol", "value": 15, "unit": "mg" },
@@ -511,18 +511,18 @@
     "zubereitung": "Tee, Tinktur, Pulver",
     "saison": "ganzjährig",
     "bewertung": 3.8,
-    "medizinisch": 85,
+    "medicineisch": 85,
     "naehrwerte": {
       "Polysaccharide": 40,
       "Triterpene": 35,
       "Phenole": 25
     },
     "profil": [
-      { "axis": "Medizinisch", "value": 90 },
+      { "axis": "medicineisch", "value": 90 },
       { "axis": "Antioxidativ", "value": 85 },
       { "axis": "Immunstärkend", "value": 80 },
       { "axis": "Verfügbarkeit", "value": 70 },
-      { "axis": "Forschung", "value": 75 }
+      { "axis": "research", "value": 75 }
     ],
     "wirkstoffe": [
       { "label": "Betulin", "value": 25, "unit": "mg" },
@@ -549,7 +549,7 @@
     "name": "Shiitake",
     "wissenschaftlich": "Lentinula edodes",
     "essbarkeit": "essbar",
-    "beschreibung": "Der Shiitake ist ein aus Asien stammender Zuchtpilz. Er hat ein intensives Umami-Aroma und wird auch für medizinische Zwecke genutzt.",
+    "beschreibung": "Der Shiitake ist ein aus Asien stammender Zuchtpilz. Er hat ein intensives Umami-Aroma und wird auch für medicineische Zwecke genutzt.",
     "temperatur": { "min": 15, "max": 25 },
     "standort": ["Zucht auf Holz", "Laubholzstämme", "Sägespäne"],
     "verwechslung": [],
@@ -568,7 +568,7 @@
     "profil": [
       { "axis": "Geschmack", "value": 92 },
       { "axis": "Umami", "value": 98 },
-      { "axis": "Medizinisch", "value": 85 },
+      { "axis": "medicineisch", "value": 85 },
       { "axis": "Verfügbarkeit", "value": 95 },
       { "axis": "Vielseitigkeit", "value": 88 }
     ],
@@ -597,7 +597,7 @@
     "name": "Puppenkernkeule",
     "wissenschaftlich": "Cordyceps militaris",
     "essbarkeit": "essbar",
-    "beschreibung": "Die Puppenkernkeule ist ein parasitärer Pilz auf Insektenpuppen. Er wird in der traditionellen chinesischen Medizin geschätzt und enthält wertvolle Wirkstoffe.",
+    "beschreibung": "Die Puppenkernkeule ist ein parasitärer Pilz auf Insektenpuppen. Er wird in der traditionellen chinesischen medicine geschätzt und enthält wertvolle Wirkstoffe.",
     "temperatur": { "min": 10, "max": 22 },
     "standort": ["Waldböden", "auf vergrabenen Insektenpuppen", "feuchte Standorte"],
     "verwechslung": [],
@@ -606,7 +606,7 @@
     "zubereitung": "Tee, Tinktur, Suppen",
     "saison": "August bis November",
     "bewertung": 4.2,
-    "medizinisch": 95,
+    "medicineisch": 95,
     "naehrwerte": {
       "Cordycepin": 35,
       "Adenosin": 25,
@@ -646,12 +646,12 @@
     "essbarkeit": "nicht essbar",
     "beschreibung": "Beauveria bassiana ist ein insektenpathogener Pilz, der in der biologischen Schädlingsbekämpfung eingesetzt wird. Er befällt verschiedene Insektenarten.",
     "temperatur": { "min": 15, "max": 30 },
-    "standort": ["auf Insekten", "Waldböden", "landwirtschaftliche Flächen"],
+    "standort": ["auf Insekten", "Waldböden", "landeconomyliche Flächen"],
     "verwechslung": [],
     "bild": "images/fungi/beauveria_bassiana.jpg",
     "saison": "ganzjährig",
     "bewertung": 3.5,
-    "forschung": 90,
+    "research": 90,
     "naehrwerte": {
       "Beauvericin": 45,
       "Bassianin": 30,
@@ -659,9 +659,9 @@
     },
     "profil": [
       { "axis": "Biocontrol", "value": 95 },
-      { "axis": "Forschung", "value": 90 },
+      { "axis": "research", "value": 90 },
       { "axis": "Anwendung", "value": 85 },
-      { "axis": "Sicherheit", "value": 80 },
+      { "axis": "safety", "value": 80 },
       { "axis": "Verfügbarkeit", "value": 70 }
     ],
     "wirkstoffe": [

@@ -137,7 +137,7 @@ export const morphs = {
   radar,    // Radar-Chart für Profile (3+ Achsen)
   rating,   // Sterne-Bewertung (0-5, 0-10, 0-100)
   progress, // Fortschrittsbalken
-  stats,    // Statistik-Karte (min/max/avg)
+  stats,    // statistics-Karte (min/max/avg)
   timeline, // Zeitliche Abfolge
   badge,    // Farbige Status-Labels
   

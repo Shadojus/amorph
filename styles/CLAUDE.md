@@ -25,8 +25,8 @@ Jede Perspektive hat:
 - Sichtbarkeits-Steuerung für Felder
 
 ```css
-/* Chemie - Violett */
-[data-perspektive-chemie] {
+/* chemistry - Violett */
+[data-perspektive-chemistry] {
   --perspektive-farbe-1: #9f7aea;
   --perspektive-farbe-2: #805ad5;
   --perspektive-farbe-3: #6b46c1;
