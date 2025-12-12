@@ -1,0 +1,18 @@
+/* Perspektiven CSS Index - Reines Styling */
+/* Definiert Farben und visuelle Effekte pro Perspektive */
+
+@import url('./chemistry.css');
+@import url('./conservation.css');
+@import url('./culinary.css');
+@import url('./cultivation.css');
+@import url('./culture.css');
+@import url('./ecology.css');
+@import url('./economy.css');
+@import url('./geography.css');
+@import url('./identification.css');
+@import url('./interactions.css');
+@import url('./medicine.css');
+@import url('./research.css');
+@import url('./safety.css');
+@import url('./statistics.css');
+@import url('./temporal.css');

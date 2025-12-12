@@ -1,7 +1,8 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 # PERSPECTIVE: INTERACTIONS
 # Ecological interactions, symbioses, and biological relationships
-# Version: 1.0.0 | Universal for all biological species
+# Version: 1.1.0 | Universal for all biological species
+# Implements GloBI (Global Biotic Interactions) & OBO Relations Ontology standards
 # ═══════════════════════════════════════════════════════════════════════════════
 #
 # TARGET AUDIENCE:
@@ -16,6 +17,7 @@
 # DESIGN PHILOSOPHY:
 # Documents all types of biological interactions including symbioses,
 # predation, parasitism, competition, and mutualism.
+# Uses GloBI standardized interaction vocabulary (OBO Relations Ontology).
 #
 # ═══════════════════════════════════════════════════════════════════════════════
 
@@ -44,8 +46,40 @@ fields:
   - interaction_network         
   - key_partners                
   - obligate_associations       
-  - facultative_associations    
+  - facultative_associations
+  
+  # GloBI Standard Fields (Global Biotic Interactions)
+  - globi_source_taxon                   # This species (NCBI taxon ID)
+  - globi_target_taxon                   # Interacting species (NCBI taxon ID)
+  - globi_interaction_type               # OBO Relations Ontology term
+  - globi_evidence_type                  # observation, literature, inference
+  - globi_body_part_source               # Body part involved (source)
+  - globi_body_part_target               # Body part involved (target)
+  - globi_life_stage_source              # Life stage (source species)
+  - globi_life_stage_target              # Life stage (target species)
+  - globi_locality                       # Geographic coordinates
+  - globi_reference_doi                  # Literature DOI
+  - globi_interaction_id                 # GloBI interaction record ID
 
+# ─────────────────────────────────────────────────────────────────────────────
+  # GloBI EXTENDED METADATA
+  # ─────────────────────────────────────────────────────────────────────────────
+  - globi_interaction_strength          # Quantitative interaction strength
+  - globi_interaction_frequency         # Obligate/Facultative/Rare
+  - globi_seasonality                   # Temporal pattern of interaction
+  - globi_study_type                    # Field observation/Experiment/Literature
+  - globi_sample_size                   # Number of observations
+  - globi_confidence_score              # Data quality score
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # CROSS-KINGDOM INTERACTION NETWORKS
+  # ─────────────────────────────────────────────────────────────────────────────
+  - network_node_degree                 # Number of interaction partners
+  - network_betweenness                 # Network centrality measure
+  - network_clustering_coefficient      # Local clustering
+  - network_module_id                   # Community/module membership
+  - keystone_interaction_score          # Importance for network stability
+  
   # ─────────────────────────────────────────────────────────────────────────────
   # MUTUALISM
   # "What beneficial relationships?"
@@ -157,6 +191,48 @@ enumerations:
     - competition
     - amensalism
     - neutralism
+
+  # GloBI/OBO Relations Ontology - Standardized interaction terms
+  # https://github.com/globalbioticinteractions/globalbioticinteractions
+  globi_interaction_type:
+    # Mutualistic interactions
+    - pollinates                          # RO:0002455
+    - pollinated_by                       # RO:0002456
+    - disperses_seeds_of                  # RO:0002445
+    - has_seeds_dispersed_by              # RO:0002446
+    - provides_nutrients_for              # RO:0002469
+    - symbiont_of                         # RO:0002440
+    # Parasitic/pathogenic interactions
+    - parasite_of                         # RO:0002444
+    - has_parasite                        # RO:0002443
+    - pathogen_of                         # RO:0002556
+    - has_pathogen                        # RO:0002557
+    - parasitoid_of                       # RO:0002208
+    - ectoparasite_of                     # RO:0002632
+    - endoparasite_of                     # RO:0002634
+    - hyperparasite_of                    # RO:0002553
+    - kleptoparasite_of                   # RO:0008503
+    - vector_of                           # RO:0002459
+    # Trophic interactions
+    - eats                                # RO:0002470
+    - eaten_by                            # RO:0002471
+    - preys_on                            # RO:0002439
+    - preyed_upon_by                      # RO:0002458
+    - host_of                             # RO:0002453
+    - has_host                            # RO:0002454
+    # Commensal interactions
+    - commensal_with                      # RO:0002441
+    - epiphyte_of                         # RO:0008501
+    - inquiline_of                        # RO:0008507
+    - phoretic_with                       # RO:0002614
+    # Competition and other
+    - competes_with                       # RO:0002554
+    - adjacent_to                         # RO:0002220
+    - co_occurs_with                      # RO:0008506
+    - visits_flowers_of                   # RO:0002622
+    - creates_habitat_for                 # RO:0008505
+    - kills                               # RO:0002626
+    - damages                             # RO:0002573
 
   mycorrhiza_type:
     - ectomycorrhiza

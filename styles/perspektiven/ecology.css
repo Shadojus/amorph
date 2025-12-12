@@ -1,0 +1,7 @@
+/* Perspektive: Ökologie - Lebensgrün */
+[data-perspektive-ecology] {
+  --perspektive-farbe: rgba(120, 200, 140, 0.65);
+  --perspektive-farbe-2: rgba(100, 180, 120, 0.65);
+  --perspektive-farbe-3: rgba(80, 160, 100, 0.65);
+  --perspektive-farbe-4: rgba(60, 140, 80, 0.65);
+}

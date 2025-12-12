@@ -1,0 +1,7 @@
+/* Perspektive: Chemie - Molekular-Violett */
+[data-perspektive-chemistry] {
+  --perspektive-farbe: rgba(180, 140, 255, 0.65);
+  --perspektive-farbe-2: rgba(160, 120, 240, 0.65);
+  --perspektive-farbe-3: rgba(140, 100, 220, 0.65);
+  --perspektive-farbe-4: rgba(120, 80, 200, 0.65);
+}

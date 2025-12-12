@@ -362,6 +362,32 @@ fields:
   - nutrients_from_partner_vitamins
   - carbon_transfer_rate
   - nutrient_transfer_efficiency
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # MICROBIOME DATA (Genomic Standards Consortium: MIGS/MIMS/MIMARKS)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - microbiome_host_associated          # true if host-associated
+  - microbiome_host_taxon_id            # NCBI taxon ID of host
+  - microbiome_sample_site              # Body site / environmental niche
+  - microbiome_16s_profile              # 16S rRNA community profile reference
+  - microbiome_18s_profile              # 18S rRNA eukaryotic profile
+  - microbiome_its_profile              # ITS fungal profile
+  - microbiome_taxonomic_composition    # Community composition summary
+  - microbiome_diversity_shannon        # Shannon diversity index
+  - microbiome_diversity_simpson        # Simpson diversity index
+  - microbiome_dominant_taxa            # Most abundant taxa
+  - microbiome_kegg_pathways            # Functional pathway annotations
+  - microbiome_metacyc_pathways         # MetaCyc pathway IDs
+  - microbiome_cog_categories           # COG functional categories
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ECOSYSTEM SERVICES QUANTIFICATION
+  # ─────────────────────────────────────────────────────────────────────────────
+  - ecosystem_service_category          # Provisioning/Regulating/Cultural/Supporting
+  - ecosystem_service_value_usd_ha_yr   # Estimated economic value
+  - ecosystem_service_measurement       # How service was quantified
+  - ecosystem_service_beneficiaries     # Human populations benefiting
+  
   
   # FUNCTIONAL BENEFITS
   - benefits_to_partner
@@ -382,6 +408,91 @@ fields:
   - ecosystem_dependency
   - host_dependency
   
+  # ─────────────────────────────────────────────────────────────────────────────
+  # KLIMAWANDEL-VULNERABILITÄT
+  # ─────────────────────────────────────────────────────────────────────────────
+  - climate_vulnerability_score          # Klimavulnerabilitäts-Score (0-100)
+  - climate_vulnerability_factors        # Beitragende Faktoren
+  - temperature_tolerance_shift          # Erwartete Temperaturtoleranz-Verschiebung
+  - range_shift_projection_2050          # Prognostizierte Arealverschiebung 2050
+  - range_shift_projection_2100          # Prognostizierte Arealverschiebung 2100
+  - phenology_shift_observed             # Beobachtete Phänologie-Verschiebung
+  - phenology_shift_days_per_decade      # Tage Verschiebung pro Dekade
+  - mismatch_risk_partners               # Mismatch-Risiko mit Partnern
+  - mismatch_species_affected            # Betroffene Partner-Arten
+  - adaptation_potential                 # Anpassungspotential
+  - genetic_diversity_for_adaptation     # Genetische Diversität für Anpassung
+  - assisted_migration_candidate         # Kandidat für assistierte Migration
+  - climate_refugia_known                # Bekannte Klimarefugien
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # INVASIVITÄTSPOTENTIAL
+  # ─────────────────────────────────────────────────────────────────────────────
+  - invasiveness_score                   # Invasivitäts-Score
+  - invasiveness_assessment_method       # Bewertungsmethode (WRA, EPPO, etc.)
+  - invasive_in_regions                  # Invasiv in Regionen
+  - native_range                         # Natürliches Verbreitungsgebiet
+  - introduction_pathways                # Einführungswege
+  - establishment_probability            # Etablierungswahrscheinlichkeit
+  - spread_rate_potential                # Potentielle Ausbreitungsrate
+  - impact_on_native_species             # Auswirkung auf einheimische Arten
+  - impact_on_ecosystems                 # Auswirkung auf Ökosysteme
+  - impact_economic                      # Wirtschaftliche Schäden
+  - control_methods_available            # Verfügbare Kontrollmethoden
+  - control_cost_per_hectare             # Kontrollkosten pro Hektar
+  - eradication_feasibility              # Ausrottbarkeit
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ÖKOSYSTEM-SCHLÜSSELFUNKTIONEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - keystone_species                     # Schlüsselart? (true/false)
+  - keystone_function                    # Schlüsselfunktion
+  - ecosystem_engineer                   # Ökosystem-Ingenieur?
+  - engineering_function                 # Ingenieur-Funktion
+  - foundation_species                   # Grundpfeiler-Art?
+  - foundation_function                  # Grundpfeiler-Funktion
+  - indicator_species                    # Indikator-Art?
+  - indicates_what                       # Was wird indiziert?
+  - umbrella_species                     # Schirm-Art?
+  - species_protected_under_umbrella     # Geschützte Arten unter dem Schirm
+  - flagship_species                     # Flaggschiff-Art?
+  - flagship_for_conservation            # Flaggschiff für Schutzprogramm
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # LEBENSRAUM-ANFORDERUNGEN (detailliert)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - habitat_specialist_score             # Habitatspezialisierung (0=generalist, 100=specialist)
+  - minimum_viable_habitat_ha            # Mindest-Lebensraum für Population
+  - corridor_dependent                   # Auf Korridore angewiesen
+  - corridor_minimum_width_m             # Mindestbreite Korridore
+  - edge_effect_sensitivity              # Empfindlichkeit gegenüber Randeffekten
+  - edge_penetration_m                   # Randeffekt-Eindringtiefe
+  - microhabitat_requirements            # Mikrohabitat-Anforderungen
+  - structural_habitat_features          # Strukturelle Habitatmerkmale
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # BIOINDIKATOREN (Zusatzfelder)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - bioindication_applications           # Bioindikations-Anwendungen
+  - pollution_types_indicated            # Angezeigte Verschmutzungstypen
+  - pollution_sensitivity_level          # Empfindlichkeitsniveau
+  - water_quality_parameters             # Angezeigte Wasserparameter
+  - soil_parameters_indicated            # Angezeigte Bodenparameter
+  - lichen_monitoring_species            # Flechten-Monitoring-Art
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ÖKOSYSTEMDIENSTLEISTUNGEN (quantifiziert)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - carbon_sequestration_kg_per_year     # CO2-Bindung kg/Jahr
+  - nitrogen_fixation_kg_ha_year         # Stickstoff-Fixierung kg/ha/Jahr
+  - pollination_service_value            # Bestäubungsdienstleistung
+  - pollination_crops_benefited          # Profitierte Kulturpflanzen
+  - pest_control_service                 # Schädlingsbekämpfungs-Dienstleistung
+  - pest_species_controlled              # Kontrollierte Schädlingsarten
+  - water_filtration_service             # Wasserfiltrations-Dienstleistung
+  - erosion_control_service              # Erosionsschutz-Dienstleistung
+  - cultural_ecosystem_services          # Kulturelle Ökosystemdienstleistungen
+
   # ─────────────────────────────────────────────────────────────────────────────
   # SPECIES INTERACTION (Non-Symbiotic)
   # ─────────────────────────────────────────────────────────────────────────────
@@ -949,6 +1060,21 @@ enumerations:
     - rare_restricted
     - naturally_rare
     - anthropogenically_rare
+  
+  climate_vulnerability:
+    - low                      # Geringe Vulnerabilität
+    - moderate                 # Moderate Vulnerabilität
+    - high                     # Hohe Vulnerabilität
+    - critical                 # Kritische Vulnerabilität
+    - unknown                  # Nicht untersucht
+    
+  invasiveness_category:
+    - non_invasive             # Nicht invasiv
+    - low_risk                 # Geringes Risiko
+    - moderate_risk            # Moderates Risiko
+    - high_risk                # Hohes Risiko
+    - established_invasive     # Etabliert invasiv
+    - transformative           # Ökosystem-transformierend
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # KEYWORDS - For semantic search (multilingual)
@@ -995,7 +1121,7 @@ keywords:
   - Nährstoffkreislauf
   - Kohlenstoffkreislauf
   - Biodiversität
-  - conservation
+  - Naturschutz
   - Rote Liste
   - gefährdet
   - endemisch

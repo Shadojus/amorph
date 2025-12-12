@@ -1,0 +1,7 @@
+/* Perspektive: Kultur - Antikes Bernstein */
+[data-perspektive-culture] {
+  --perspektive-farbe: rgba(205, 133, 63, 0.65);
+  --perspektive-farbe-2: rgba(210, 180, 140, 0.65);
+  --perspektive-farbe-3: rgba(188, 143, 143, 0.65);
+  --perspektive-farbe-4: rgba(139, 90, 43, 0.65);
+}

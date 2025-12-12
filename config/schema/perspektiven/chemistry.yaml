@@ -253,6 +253,56 @@ fields:
   - compound_class_characteristic_features
 
   # ─────────────────────────────────────────────────────────────────────────────
+  # NPCLASSIFIER - Natural Product Classification (LOTUS/GNPS standard)
+  # Deep learning based classification considering structure AND biosynthesis
+  # ─────────────────────────────────────────────────────────────────────────────
+  - npclassifier_pathway                 # 7 categories: Polyketides, Terpenoids, etc.
+  - npclassifier_superclass              # e.g., Sesquiterpenoids, Indole alkaloids
+  - npclassifier_class                   # Fine-grained classification
+  - npclassifier_confidence              # Classification confidence score
+  - classyfire_kingdom                   # Organic/Inorganic compounds
+  - classyfire_superclass                # e.g., Lipids, Organoheterocyclic
+  - classyfire_class                     # e.g., Fatty Acyls, Indoles
+  - classyfire_direct_parent             # Most specific class
+  - lotus_id                             # LOTUS database identifier
+  - lotus_structure_organism_pairs       # Count of known source organisms
+  - coconut_id                           # COlleCtion of Open NatUral TproducTs ID
+  - npatlas_id                           # Natural Products Atlas ID
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # CHEMBL BIOACTIVITY - Standardized activity data format
+  # ─────────────────────────────────────────────────────────────────────────────
+  - chembl_id                            # ChEMBL compound identifier
+  - chembl_target_id                     # Target protein/organism
+  - chembl_assay_type                    # Binding/Functional/ADMET
+  - chembl_standard_type                 # IC50, EC50, Ki, Kd, etc.
+  - chembl_standard_value                # Numeric value
+  - chembl_standard_units                # nM, µM, etc.
+  - chembl_pchembl_value                 # -log10(molar IC50/EC50/Ki)
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # CROSS-KINGDOM COMPOUND DATABASES
+  # LOTUS: 750,000+ compound-organism pairs across ALL kingdoms
+  # ─────────────────────────────────────────────────────────────────────────────
+  - lotus_organism_count                # Number of source organisms in LOTUS
+  - lotus_reference_doi                 # Primary literature DOI
+  
+  # Natural Products Atlas (microbial focus)
+  - npatlas_origin_type                 # bacterial, fungal, cyanobacterial
+  - npatlas_producing_organism          # Source organism
+  
+  # COCONUT (Collection of Open Natural Products)
+  - coconut_molecular_framework         # Murcko framework
+  - coconut_np_likeness_score           # Natural product likeness
+  
+  # Additional structural identifiers
+  - compound_isomeric_smiles            # With stereochemistry (complements secondary_metabolite_smiles)
+  
+  # Cross-kingdom occurrence
+  - compound_kingdom_occurrence         # List of kingdoms where found
+  - compound_ubiquitous                 # true if found in 4+ kingdoms
+  
+  # ─────────────────────────────────────────────────────────────────────────────
   # BIOACTIVE COMPOUNDS
   # ─────────────────────────────────────────────────────────────────────────────
   - bioactive_compounds
@@ -608,6 +658,30 @@ enumerations:
     - Shikimate
     - Amino_acid
 
+  # NPClassifier Pathway categories (LOTUS/GNPS standard)
+  npclassifier_pathway:
+    - Polyketides
+    - Terpenoids
+    - Amino_acids_Peptides
+    - Alkaloids
+    - Shikimates_Phenylpropanoids
+    - Fatty_acids
+    - Carbohydrates
+    - Unknown
+
+  # ChEMBL standard activity types
+  chembl_standard_type:
+    - IC50
+    - EC50
+    - Ki
+    - Kd
+    - MIC
+    - LD50
+    - ED50
+    - GI50
+    - Potency
+    - Activity
+
   effect_type:
     - antimicrobial
     - antiviral
@@ -776,35 +850,19 @@ keywords:
   - nmr
   - hplc
 
-  # German
-  - chemistry
+  # German (nur deutsche Begriffe, internationale Begriffe bereits oben)
   - molekül
   - verbindung
   - metabolit
   - substanz
   - nährstoff
   - aminosäure
-  - vitamin
-  - mineral
   - fettsäure
   - kohlenhydrat
-  - protein
-  - terpenoid
-  - alkaloid
-  - phenol
   - polyketid
-  - glucan
-  - chitin
-  - toxin
   - wirkstoff
   - enzym
-  - laccase
-  - peroxidase
-  - oxidase
-  - hydrolase
-  - pigment
   - volatil
-  - aroma
   - geruch
   - duftstoff
   - synthese
@@ -812,8 +870,6 @@ keywords:
   - spektrum
   - chromatographie
   - massenspektrometrie
-  - nmr
-  - hplc
 
   # French
   - chimie

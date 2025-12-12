@@ -52,7 +52,19 @@ fields:
   - indigenous_names            
   - indigenous_uses             
   - oral_traditions             
-  - folk_classifications        
+  - folk_classifications    
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # TRADITIONAL KNOWLEDGE DOCUMENTATION
+  # ─────────────────────────────────────────────────────────────────────────────
+  - tk_community_source                  # Indigenous community of origin
+  - tk_biocultural_protocol              # Community protocol reference
+  - tk_intellectual_property             # IP status/protection
+  - tk_traditional_resource_rights       # TRR designation
+  - tk_icnp_compliance                   # Nagoya Protocol TK provisions
+  - tk_oral_history_archived             # Oral history documentation
+  - tk_language_of_record                # Original language
+  - tk_ethnobotany_voucher               # Voucher specimen linking TK    
 
   # ─────────────────────────────────────────────────────────────────────────────
   # MYTHOLOGY & RELIGION
@@ -140,6 +152,84 @@ fields:
   - harvest_traditions          
   - cultural_events             
 
+# ─────────────────────────────────────────────────────────────────────────────
+  # MODERNE KULTURELLE RELEVANZ
+  # ─────────────────────────────────────────────────────────────────────────────
+  - pop_culture_references               # Pop-Kultur-Referenzen
+  - movies_featured_in                   # Filme mit Vorkommen
+  - tv_series_featured_in                # TV-Serien mit Vorkommen
+  - books_featured_in                    # Bücher mit Vorkommen
+  - video_games_featured_in              # Videospiele mit Vorkommen
+  - memes_and_internet_culture           # Memes & Internetkultur
+  - brand_mascot_usage                   # Verwendung als Maskottchen
+  - logo_appearances                     # Logo-Erscheinungen
+  - advertising_usage                    # Werbung-Verwendung
+  - emoji_representation                 # Emoji-Darstellung
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SOCIAL MEDIA & TRENDS
+  # ─────────────────────────────────────────────────────────────────────────────
+  - instagram_hashtag_popularity         # Instagram Hashtag-Beliebtheit
+  - tiktok_trend_involvement             # TikTok Trend-Beteiligung
+  - youtube_content_volume               # YouTube Content-Volumen
+  - pinterest_board_frequency            # Pinterest Board-Häufigkeit
+  - social_media_sentiment               # Social Media Stimmung
+  - viral_moments                        # Virale Momente
+  - influencer_mentions                  # Influencer-Erwähnungen
+  - trending_keywords                    # Trending Keywords
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # KUNST & DESIGN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - art_historical_depictions            # Kunsthistorische Darstellungen
+  - famous_artworks_featuring            # Berühmte Kunstwerke mit Motiv
+  - artists_known_for_depicting          # Künstler bekannt für Darstellung
+  - art_movement_associations            # Kunstbewegungs-Assoziationen
+  - decorative_arts_usage                # Verwendung in dekorativer Kunst
+  - textile_pattern_usage                # Verwendung in Textilmustern
+  - architectural_motifs                 # Architektonische Motive
+  - jewelry_design_usage                 # Verwendung in Schmuckdesign
+  - tattoo_popularity                    # Tattoo-Beliebtheit
+  - tattoo_meanings                      # Tattoo-Bedeutungen
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SPRACHE & REDEWENDUNGEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - idioms_featuring                     # Redewendungen mit Motiv
+  - metaphors_common                     # Häufige Metaphern
+  - proverbs_featuring                   # Sprichwörter mit Motiv
+  - slang_terms_derived                  # Abgeleitete Slang-Begriffe
+  - scientific_name_etymology            # Wissenschaftlicher Name Etymologie
+  - common_name_origins                  # Herkunft gebräuchlicher Namen
+  - name_variations_by_region            # Namens-Variationen nach Region
+  - humorous_names                       # Humorvolle Namen
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # FESTIVALS & EVENTS
+  # ─────────────────────────────────────────────────────────────────────────────
+  - dedicated_festivals                  # Gewidmete Festivals
+  - festival_locations                   # Festival-Orte
+  - festival_dates                       # Festival-Termine
+  - festival_activities                  # Festival-Aktivitäten
+  - competitive_events                   # Wettbewerbs-Events
+  - record_breaking_specimens            # Rekord-Exemplare
+  - world_records                        # Weltrekorde
+  - annual_celebrations                  # Jährliche Feiern
+  - awareness_days                       # Bewusstseins-Tage
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # TOURISMUS & ERLEBNIS
+  # ─────────────────────────────────────────────────────────────────────────────
+  - ecotourism_opportunities             # Ökotourismus-Möglichkeiten
+  - wildlife_watching_tours              # Wildlife-Watching-Touren
+  - educational_tours                    # Bildungstouren
+  - tourist_attractions_featuring        # Touristenattraktionen
+  - museums_featuring                    # Museen mit Ausstellungen
+  - botanical_gardens_featuring          # Botanische Gärten
+  - zoos_aquariums_featuring             # Zoos & Aquarien
+  - visitor_centers                      # Besucherzentren
+  - economic_value_tourism               # Wirtschaftlicher Tourismuswert
+  
 # ═══════════════════════════════════════════════════════════════════════════════
 # ENUMERATIONS - Controlled vocabularies
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -229,10 +319,8 @@ keywords:
   - mythologie
   - mythos
   - legende
-  - folklore
   - märchen
   - heilig
-  - ritual
   - spirituell
   - religiös
   - göttlich
@@ -240,7 +328,6 @@ keywords:
   - mythologie
   - mythe
   - légende
-  - folklore
   - conte
   - sacré
   - rituel
@@ -297,7 +384,6 @@ keywords:
   - ancient
   - historical
   # German
-  - tradition
   - traditionell
   - erbe
   - brauch
@@ -306,7 +392,6 @@ keywords:
   - historisch
   - uralt
   # French
-  - tradition
   - traditionnel
   - patrimoine
   - coutume
@@ -362,7 +447,6 @@ keywords:
   - allegory
   - iconography
   # German
-  - symbol
   - symbolismus
   - symbolisch
   - bedeutung
@@ -427,12 +511,11 @@ keywords:
   - illustration
   - fotografie
   # French
-  - art
   - littérature
   - peinture
   - poésie
   - musique
-  - film
+  - cinéma
   - sculpture
   - illustration
   - photographie
@@ -644,7 +727,6 @@ keywords:
   - season
   - seasonal
   # German
-  - festival
   - fest
   - feier
   - ernte

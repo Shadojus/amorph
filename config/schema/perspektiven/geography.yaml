@@ -36,6 +36,89 @@ colors:
 
 fields:
   # ─────────────────────────────────────────────────────────────────────────────
+  # DARWIN CORE LOCATION - TDWG/GBIF standard fields
+  # Universal occurrence and specimen data across all kingdoms
+  # ─────────────────────────────────────────────────────────────────────────────
+  - dwc_location_id                      # Unique location identifier
+  - dwc_higher_geography_id              # Higher geography identifier
+  - dwc_higher_geography                 # Full geographic hierarchy string
+  - dwc_continent                        # Darwin Core continent
+  - dwc_water_body                       # Ocean, sea, lake, river
+  - dwc_island_group                     # Island group name
+  - dwc_island                           # Island name
+  - dwc_country                          # ISO 3166-1 country
+  - dwc_country_code                     # ISO 3166-1-alpha-2 code
+  - dwc_state_province                   # First-level administrative division
+  - dwc_county                           # Second-level administrative division
+  - dwc_municipality                     # City/municipality
+  - dwc_locality                         # Specific location description
+  - dwc_verbatim_locality                # Original locality as recorded
+  - dwc_decimal_latitude                 # WGS84 latitude
+  - dwc_decimal_longitude                # WGS84 longitude
+  - dwc_geodetic_datum                   # Coordinate system (WGS84, etc.)
+  - dwc_coordinate_uncertainty_m         # Uncertainty in meters
+  - dwc_coordinate_precision             # Decimal places precision
+  - dwc_point_radius_spatial_fit         # Spatial fit of point-radius
+  - dwc_verbatim_coordinates             # Original coordinates as recorded
+  - dwc_verbatim_srs                     # Original spatial reference system
+  - dwc_footprint_wkt                    # Well-Known Text geometry
+  - dwc_footprint_srs                    # Footprint spatial reference system
+  - dwc_georeferenced_by                 # Who georeferenced
+  - dwc_georeferenced_date               # When georeferenced
+  - dwc_georeference_protocol            # Protocol used
+  - dwc_georeference_sources             # Reference sources used
+  - dwc_georeference_verification        # Verification status
+  - dwc_georeference_remarks             # Georeferencing notes
+  
+  # Darwin Core geological context (for fossil records)
+  - dwc_earliest_eon_or_lowest_eonothem
+  - dwc_latest_eon_or_highest_eonothem
+  - dwc_earliest_era_or_lowest_erathem
+  - dwc_latest_era_or_highest_erathem
+  - dwc_earliest_period_or_lowest_system
+  - dwc_latest_period_or_highest_system
+  - dwc_earliest_epoch_or_lowest_series
+  - dwc_latest_epoch_or_highest_series
+  - dwc_earliest_age_or_lowest_stage
+  - dwc_latest_age_or_highest_stage
+  - dwc_lowest_biostratigraphic_zone
+  - dwc_highest_biostratigraphic_zone
+  - dwc_lithostratigraphic_terms
+  - dwc_group
+  - dwc_formation
+  - dwc_member
+  - dwc_bed
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # GBIF OCCURRENCE STATISTICS
+  # ─────────────────────────────────────────────────────────────────────────────
+  - gbif_taxon_key                       # GBIF backbone taxonomy key
+  - gbif_occurrence_count                # Total GBIF occurrence records
+  - gbif_georeferenced_count             # Records with coordinates
+  - gbif_observation_count               # Human observations
+  - gbif_specimen_count                  # Preserved specimens
+  - gbif_countries_count                 # Number of countries with records
+  - gbif_datasets_count                  # Contributing datasets
+  - gbif_last_interpreted                # Last GBIF data refresh
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # OCCURRENCE DATA QUALITY (Darwin Core)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - dwc_basis_of_record                  # PreservedSpecimen/HumanObservation/etc
+  - dwc_institution_code                 # Holding institution
+  - dwc_collection_code                  # Collection within institution
+  - dwc_catalog_number                   # Specimen catalog number
+  - dwc_record_number                    # Collector's field number
+  - dwc_recorded_by                      # Collector name(s)
+  - dwc_event_date                       # Collection date (ISO 8601)
+  - dwc_identified_by                    # Determiner name(s)
+  - dwc_date_identified                  # Determination date
+  - dwc_identification_qualifier         # cf./aff./? qualifier
+  - dwc_occurrence_status                # present/absent
+  - dwc_establishment_means              # native/introduced/uncertain
+  - dwc_degree_of_establishment          # casual/naturalized/invasive
+
+  # ─────────────────────────────────────────────────────────────────────────────
   # GLOBAL DISTRIBUTION
   # "Where in the world does it occur?"
   # ─────────────────────────────────────────────────────────────────────────────
@@ -97,6 +180,68 @@ fields:
   - elevation_optimal           
   - altitudinal_zonation        
 
+# ─────────────────────────────────────────────────────────────────────────────
+  # HOTSPOTS & BESTE FUNDORTE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - global_hotspots                      # Globale Hotspots
+  - regional_hotspots                    # Regionale Hotspots
+  - best_observation_sites               # Beste Beobachtungsorte
+  - observation_site_accessibility       # Zugänglichkeit der Orte
+  - observation_site_public_access       # Öffentlicher Zugang?
+  - observation_site_permits_needed      # Genehmigungen nötig?
+  - guided_tour_options                  # Geführte Tour-Optionen
+  - best_time_of_day                     # Beste Tageszeit
+  - best_weather_conditions              # Beste Wetterbedingungen
+  - photography_hotspots                 # Fotografie-Hotspots
+  - rare_sighting_locations              # Seltene Sichtungs-Orte
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SAISONALE VERBREITUNG
+  # ─────────────────────────────────────────────────────────────────────────────
+  - seasonal_distribution_maps           # Saisonale Verbreitungskarten
+  - migration_routes                     # Wanderrouten
+  - migration_timing                     # Wanderzeiten
+  - breeding_range                       # Brutverbreitung
+  - non_breeding_range                   # Nicht-Brut-Verbreitung
+  - wintering_sites                      # Überwinterungsgebiete
+  - staging_areas                        # Rastplätze
+  - vagrant_records                      # Irrläufer-Nachweise
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # MIKROHABITATE & STANDORTBEDINGUNGEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - microhabitat_preferences             # Mikrohabitat-Präferenzen
+  - substrate_preferences                # Substrat-Präferenzen
+  - elevation_preference_m               # Höhenpräferenz (m)
+  - slope_aspect_preference              # Hangausrichtungs-Präferenz
+  - moisture_gradient_preference         # Feuchtigkeits-Präferenz
+  - light_exposure_preference            # Licht-Präferenz
+  - associated_vegetation                # Assoziierte Vegetation
+  - associated_species                   # Assoziierte Arten
+  - negative_associations                # Negative Assoziationen (was meiden)
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ECHTZEIT-SICHTUNGEN & COMMUNITY
+  # ─────────────────────────────────────────────────────────────────────────────
+  - inaturalist_project_link             # iNaturalist Projekt-Link
+  - ebird_species_link                   # eBird Arten-Link
+  - recent_sightings_feed_url            # Feed aktueller Sichtungen
+  - rare_bird_alert_services             # Seltenheits-Alarm-Dienste
+  - local_recording_groups               # Lokale Erfassungsgruppen
+  - community_forums                     # Community-Foren
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # PRAKTISCHE INFORMATION FÜR FELDARBEIT
+  # ─────────────────────────────────────────────────────────────────────────────
+  - field_guide_region_coverage          # Feldführer-Regionsabdeckung
+  - recommended_field_guides             # Empfohlene Feldführer
+  - map_resources                        # Karten-Ressourcen
+  - gps_waypoints_available              # GPS-Wegpunkte verfügbar
+  - nearest_research_station             # Nächste Forschungsstation
+  - accommodation_near_hotspots          # Unterkunft nahe Hotspots
+  - transport_to_sites                   # Transport zu Fundorten
+  - local_expert_contacts                # Lokale Experten-Kontakte
+  
   # ─────────────────────────────────────────────────────────────────────────────
   # HABITAT TYPES
   # "In which habitats does it occur?"

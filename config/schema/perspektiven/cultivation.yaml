@@ -317,6 +317,43 @@ fields:
   - biodiversity_impact
 
   # ─────────────────────────────────────────────────────────────────────────────
+  # FAO PRODUCTION STANDARDS - Kingdom-specific parameters
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Aquaculture (FishBase: 36,100+ fish species)
+  - aquaculture_fishbase_id              # FishBase species ID
+  - aquaculture_water_type               # Marine/Brackish/Freshwater
+  - aquaculture_trophic_level            # Position in food web (2.0-5.0)
+  - aquaculture_fcr                      # Feed Conversion Ratio
+  - aquaculture_fillet_yield             # Edible portion percentage
+  - aquaculture_stocking_density         # kg/m³ or individuals/m²
+  - aquaculture_growth_rate_day          # Grams per day
+  - aquaculture_harvest_size_kg          # Target harvest weight
+  - aquaculture_time_to_market_months    # Production cycle length
+  
+  # Insect farming (FAO standards)
+  - insect_eci                           # Efficiency of Conversion of Ingested food
+  - insect_protein_content               # Protein % dry weight
+  - insect_fat_content                   # Fat % dry weight
+  - insect_chitin_content                # Chitin % dry weight
+  - insect_cn_ratio                      # Carbon:Nitrogen ratio of feed
+  - insect_frass_quality                 # Fertilizer value of frass
+  - insect_instar_stages                 # Number of larval stages
+  - insect_pupation_conditions           # Specific pupation requirements
+  
+  # Livestock (DAD-IS: 15,000+ breeds)
+  - livestock_dadis_breed_id             # DAD-IS breed identifier
+  - livestock_fao_species_code           # FAO species classification
+  - livestock_production_system          # Intensive/Semi-intensive/Extensive
+  - livestock_feed_requirements          # Daily feed intake
+  
+  # Plant cultivation (USDA standards)
+  - plant_usda_hardiness_zone            # Cold hardiness (1a-13b)
+  - plant_heat_zone                      # AHS heat zone (1-12)
+  - plant_chill_hours                    # Hours below 7°C required
+  - plant_growing_degree_days            # GDD to maturity
+  - plant_nitrogen_fixation              # N-fixing capability (kg N/ha/yr)
+
+  # ─────────────────────────────────────────────────────────────────────────────
   # SUPPLIERS & RESOURCES
   # ─────────────────────────────────────────────────────────────────────────────
   - suppliers
@@ -329,7 +366,104 @@ fields:
   - educational_resources
   - community_resources
   - research_institutions
-
+# ─────────────────────────────────────────────────────────────────────────────
+  # WIRTSCHAFTLICHKEITSANALYSE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - startup_cost_estimate                # Geschätzte Anfangskosten
+  - startup_cost_per_ha                  # Anfangskosten pro Hektar
+  - annual_operating_cost_per_ha         # Jährliche Betriebskosten/ha
+  - labor_hours_per_ha_annual            # Arbeitsstunden pro ha/Jahr
+  - labor_intensity                      # low/medium/high/very_high
+  - break_even_years                     # Jahre bis Break-even
+  - roi_typical_percent                  # Typische Rendite %
+  - profit_margin_range                  # Gewinnspanne
+  - price_volatility                     # Preisvolatilität
+  - market_demand_trend                  # Marktnachfrage-Trend
+  - market_saturation_risk               # Marktsättigungs-Risiko
+  - niche_market_opportunities           # Nischenmarkt-Möglichkeiten
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SKALIERUNG & AUTOMATISIERUNG
+  # ─────────────────────────────────────────────────────────────────────────────
+  - minimum_viable_scale                 # Mindestgröße für Wirtschaftlichkeit
+  - optimal_scale                        # Optimale Betriebsgröße
+  - maximum_practical_scale              # Maximale praktische Größe
+  - scalability_challenges               # Skalierungs-Herausforderungen
+  - automation_potential                 # Automatisierungspotential
+  - automatable_tasks                    # Automatisierbare Aufgaben
+  - automation_technology_available      # Verfügbare Automatisierungstechnik
+  - automation_cost_benefit              # Kosten-Nutzen Automatisierung
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ANFÄNGER-GUIDE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - beginner_friendly                    # Für Anfänger geeignet (true/false)
+  - difficulty_level                     # easy/moderate/difficult/expert
+  - common_beginner_mistakes             # Häufige Anfängerfehler
+  - success_critical_factors             # Erfolgsentscheidende Faktoren
+  - learning_curve_description           # Beschreibung Lernkurve
+  - recommended_starting_scale           # Empfohlene Startgröße
+  - starter_kit_essentials               # Notwendige Grundausstattung
+  - mentorship_resources                 # Ressourcen für Beratung/Mentoring
+  - online_communities                   # Online-Communities
+  - courses_and_workshops                # Kurse und Workshops
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # RISIKOMANAGEMENT
+  # ─────────────────────────────────────────────────────────────────────────────
+  - disease_pressure_rating              # Krankheitsdruck (low/medium/high)
+  - main_diseases                        # Hauptkrankheiten
+  - disease_prevention_strategies        # Präventionsstrategien
+  - pest_pressure_rating                 # Schädlingsdruck
+  - main_pests                           # Hauptschädlinge
+  - ipm_strategies                       # Integrierte Schädlingsbekämpfung
+  - climate_risk_factors                 # Klimarisiken
+  - weather_sensitivity                  # Wetterempfindlichkeit
+  - crop_insurance_available             # Ernteversicherung verfügbar
+  - crop_insurance_cost_estimate         # Geschätzte Versicherungskosten
+  - diversification_recommendations      # Diversifikationsempfehlungen
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ZERTIFIZIERUNGEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - organic_certification_feasibility    # Machbarkeit Bio-Zertifizierung
+  - organic_certification_challenges     # Herausforderungen
+  - organic_premium_percentage           # Bio-Preisaufschlag %
+  - fair_trade_certification_available   # Fair-Trade möglich
+  - gmo_free_certification               # GMO-frei Zertifizierung
+  - sustainability_certifications        # Nachhaltigkeits-Zertifizierungen
+  - local_food_certifications            # Regionale Zertifizierungen
+  - certification_cost_estimate          # Geschätzte Zertifizierungskosten
+  - certification_time_to_achieve        # Zeit bis Zertifizierung
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ERNTE & NACHERNTEBEHANDLUNG
+  # ─────────────────────────────────────────────────────────────────────────────
+  - harvest_window_days                  # Erntefenster (Tage)
+  - harvest_method_optimal               # Optimale Erntemethode
+  - harvest_equipment_needed             # Benötigte Erntemaschinen
+  - yield_per_harvest                    # Ertrag pro Ernte
+  - harvests_per_year                    # Ernten pro Jahr
+  - post_harvest_handling                # Nacherntebehandlung
+  - cooling_requirements                 # Kühlungsanforderungen
+  - storage_optimal_temp                 # Optimale Lagertemperatur
+  - storage_optimal_humidity             # Optimale Lagerfeuchtigkeit
+  - storage_duration_optimal             # Optimale Lagerdauer
+  - quality_loss_factors                 # Qualitätsverlust-Faktoren
+  - waste_reduction_tips                 # Tipps zur Abfallreduzierung
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # NACHHALTIGKEIT & UMWELTAUSWIRKUNGEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - water_footprint_per_kg               # Wasserfußabdruck pro kg
+  - carbon_footprint_per_kg              # CO2-Fußabdruck pro kg
+  - land_use_efficiency                  # Landnutzungseffizienz
+  - biodiversity_impact                  # Biodiversitäts-Auswirkung
+  - soil_health_impact                   # Bodengesundheits-Auswirkung
+  - chemical_input_requirements          # Chemischer Input
+  - organic_input_alternatives           # Bio-Alternativen für Inputs
+  - regenerative_practices_applicable    # Anwendbare regenerative Praktiken
+  
 # ═══════════════════════════════════════════════════════════════════════════════
 # ENUMERATIONS - Defined value domains
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -519,7 +653,6 @@ keywords:
   - outdoor
 
   # German
-  - cultivation
   - Zucht
   - Vermehrung
   - Kultivierung

@@ -1,0 +1,7 @@
+/* Perspektive: Kulinarik - Trüffelgold */
+[data-perspektive-culinary] {
+  --perspektive-farbe: rgba(255, 200, 120, 0.65);
+  --perspektive-farbe-2: rgba(245, 180, 100, 0.65);
+  --perspektive-farbe-3: rgba(235, 160, 80, 0.65);
+  --perspektive-farbe-4: rgba(225, 140, 60, 0.65);
+}

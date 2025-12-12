@@ -247,6 +247,51 @@ fields:
   - handel_phytosanitaer_anforderungen
   - handel_importgenehmigung_laender
   
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ABS - Access and Benefit Sharing (Nagoya Protocol)
+  # CBD/Nagoya compliance for genetic resources since 2014
+  # ─────────────────────────────────────────────────────────────────────────────
+  - abs_applicable                       # Subject to ABS regulations
+  - abs_provider_country                 # Country of origin for genetic resources
+  - abs_pic_status                       # Prior Informed Consent obtained
+  - abs_pic_reference                    # PIC permit/certificate number
+  - abs_mat_status                       # Mutually Agreed Terms established
+  - abs_mat_reference                    # MAT agreement reference
+  - abs_ircc                             # Internationally Recognized Certificate of Compliance
+  - abs_checkpoint_registered            # Registered at national checkpoint
+  - abs_collection_date                  # Date of original collection
+  - abs_collection_location              # Geographic origin coordinates
+  - abs_intended_use                     # Research, commercial, breeding, etc.
+  - abs_benefit_sharing_type             # Monetary/non-monetary benefits
+  - abs_benefit_sharing_details          # Specific arrangements
+  
+  # Digital Sequence Information (DSI) - COP 15 multilateral framework
+  - dsi_applicable                       # Contains DSI from provider country
+  - dsi_database_deposited               # GenBank, ENA, DDBJ accession
+  - dsi_benefit_sharing_mechanism        # Contribution to multilateral fund
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # FAO COMMODITY CLASSIFICATION (~700 commodities)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - fao_commodity_code                   # FAO commodity code
+  - fao_commodity_group                  # FAO commodity group
+  - faostat_production_mt                # FAOSTAT production data (metric tons)
+  - faostat_area_harvested_ha            # FAOSTAT area harvested
+  - faostat_yield_kg_ha                  # FAOSTAT yield data
+  - faostat_import_value_usd             # FAOSTAT import value
+  - faostat_export_value_usd             # FAOSTAT export value
+  - faostat_price_usd_tonne              # FAOSTAT producer price
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # CITES TRADE DATABASE (25+ million records since 1975)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - cites_trade_term                     # live/specimens/derivatives/extract
+  - cites_trade_quantity_annual          # Annual trade volume
+  - cites_trade_unit                     # kg/number/ml/etc
+  - cites_major_exporters                # Top exporting countries
+  - cites_major_importers                # Top importing countries
+  - cites_trade_trend                    # Increasing/Stable/Decreasing
+  - cites_purpose_breakdown              # Commercial/Scientific/Personal %
   # Tariffs
   - handel_durchschnittszoll
   - handel_zoll_details
@@ -966,6 +1011,82 @@ enums:
     - growth
     - mature
     - declining
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ADDITIONAL FIELDS - Market forecasts, price analysis, supply chain, competition
+# ═══════════════════════════════════════════════════════════════════════════════
+
+additional_fields:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # MARKTPROGNOSEN & TRENDS
+  # ─────────────────────────────────────────────────────────────────────────────
+  - market_size_current_usd              # Aktuelle Marktgröße USD
+  - market_size_forecast_2030_usd        # Marktgröße Prognose 2030
+  - cagr_percent                         # Jährl. Wachstumsrate %
+  - market_drivers                       # Markt-Treiber
+  - market_restraints                    # Markt-Hemmnisse
+  - market_opportunities                 # Markt-Chancen
+  - market_segments                      # Marktsegmente
+  - market_segment_shares                # Segmentanteile
+  - emerging_markets                     # Aufstrebende Märkte
+  - market_saturation_risk               # Sättigungsrisiko
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # PREISANALYSE & VOLATILITÄT
+  # ─────────────────────────────────────────────────────────────────────────────
+  - price_current_wholesale              # Aktueller Großhandelspreis
+  - price_current_retail                 # Aktueller Einzelhandelspreis
+  - price_unit                           # Preiseinheit
+  - price_trend_direction                # Preistrend
+  - price_seasonality_pattern            # Saisonales Preismuster
+  - price_peak_months                    # Preis-Höchststand-Monate
+  - price_low_months                     # Preis-Tiefstand-Monate
+  - price_volatility_index               # Preisvolatilitäts-Index
+  - price_correlation_factors            # Preiskorrelations-Faktoren
+  - price_forecast_next_year             # Preisprognose nächstes Jahr
+  - price_historical_range               # Historische Preisspanne
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # LIEFERKETTE & RISIKEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - supply_chain_structure               # Lieferkettenstruktur
+  - major_suppliers                      # Hauptlieferanten
+  - supplier_concentration_risk          # Lieferantenkonzentrations-Risiko
+  - supply_disruption_history            # Lieferunterbrechungs-Geschichte
+  - supply_seasonality                   # Angebots-Saisonalität
+  - inventory_turnover_typical           # Typischer Lagerumschlag
+  - shelf_life_commercial                # Kommerzielle Haltbarkeit
+  - cold_chain_required                  # Kühlkette erforderlich
+  - logistics_challenges                 # Logistik-Herausforderungen
+  - trade_barriers                       # Handelsbarrieren
+  - tariff_rates                         # Zollsätze
+  - phytosanitary_requirements           # Pflanzenschutz-Anforderungen
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # WETTBEWERBSANALYSE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - market_leaders                       # Marktführer
+  - market_share_top_companies           # Marktanteil Top-Unternehmen
+  - competitive_landscape                # Wettbewerbslandschaft
+  - entry_barriers                       # Eintrittsbarrieren
+  - substitute_products                  # Substitutionsprodukte
+  - substitute_threat_level              # Substitutionsbedrohung
+  - competitive_advantages               # Wettbewerbsvorteile
+  - differentiation_opportunities        # Differenzierungsmöglichkeiten
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # REGULIERUNG & COMPLIANCE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - regulatory_status_by_region          # Regulierungsstatus nach Region
+  - novel_food_status_eu                 # Novel Food Status EU
+  - fda_status_us                        # FDA Status USA
+  - organic_certification_requirements   # Bio-Zertifizierungs-Anforderungen
+  - sustainability_certification         # Nachhaltigkeits-Zertifizierung
+  - quality_standards_applicable         # Anwendbare Qualitätsstandards
+  - labeling_requirements                # Kennzeichnungsanforderungen
+  - import_permit_required               # Import-Genehmigung nötig
+  - export_restrictions                  # Export-Beschränkungen
+  - compliance_cost_estimate             # Geschätzte Compliance-Kosten
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # KEYWORDS - For semantic search (multilingual)

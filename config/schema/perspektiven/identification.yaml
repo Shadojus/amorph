@@ -98,12 +98,114 @@ fields:
   - mammal_diversity_db_id
   - world_flora_online_id
 
+  # ─────────────────────────────────────────────────────────────────────────────
+  # DNA BARCODING - Kingdom-specific markers (BOLD/UNITE/GenBank standard)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - barcode_marker_primary              # COI/ITS/rbcL/16S depending on kingdom
+  - barcode_marker_secondary            # Additional markers
+  - barcode_sequence_length_bp          # Sequence length in base pairs
+  - barcode_bin_uri                     # BOLD BIN or UNITE SH identifier
+  - barcode_genbank_accession           # GenBank/ENA/DDBJ accession
+  - barcode_bold_process_id             # BOLD specimen process ID
+  - barcode_unite_sh                    # UNITE Species Hypothesis (Fungi)
+  - barcode_primers_forward             # Forward primer used
+  - barcode_primers_reverse             # Reverse primer used
+  - barcode_quality_score               # Sequence quality (HQ/MQ/LQ)
+  
+  # Kingdom-conditional markers
+  - barcode_coi                         # Animalia: COI (~650bp Folmer region)
+  - barcode_16s_rrna                    # Animalia/Bacteria: 16S rRNA
+  - barcode_12s_rrna                    # Animalia: 12S rRNA
+  - barcode_its                         # Fungi: ITS region
+  - barcode_its1                        # Fungi: ITS1 subregion
+  - barcode_its2                        # Fungi/Plantae: ITS2 subregion
+  - barcode_lsu                         # Fungi: Large subunit (28S)
+  - barcode_rpb1                        # Fungi: RNA polymerase B1
+  - barcode_rpb2                        # Fungi: RNA polymerase B2
+  - barcode_tef1                        # Fungi: Translation elongation factor
+  - barcode_rbcl                        # Plantae: RuBisCO large subunit
+  - barcode_matk                        # Plantae: Maturase K
+  - barcode_trnl_trnf                   # Plantae: trnL-trnF intergenic spacer
+  - barcode_18s_rrna                    # Protista: 18S rRNA (V4 region)
+  - barcode_cpn60                       # Bacteria: Chaperonin-60
+
   # Taxonomic status
   - taxonomy_status
   - uncertainty_level
   - revision_status
   - type_status
   - nomenclatural_code
+
+# ─────────────────────────────────────────────────────────────────────────────
+  # PRAKTISCHE SCHNELLBESTIMMUNG
+  # ─────────────────────────────────────────────────────────────────────────────
+  - quick_id_checklist                   # 3-5 Schlüsselmerkmale für Schnellcheck
+  - identification_difficulty            # beginner/intermediate/expert/specialist
+  - time_to_identify_minutes             # Geschätzte Zeit für sichere Bestimmung
+  - minimum_equipment_needed             # Lupe/Mikroskop/Chemikalien/keine
+  - field_identifiable                   # Im Feld bestimmbar ohne Labor (true/false)
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # VERWECHSLUNGSGEFAHREN-MATRIX
+  # ─────────────────────────────────────────────────────────────────────────────
+  - confusion_species_list               # Liste ähnlicher Arten
+  - confusion_risk_level                 # none/low/medium/high/critical
+  - confusion_consequences               # harmless/unpleasant/dangerous/lethal
+  - key_differentiating_features         # Entscheidende Unterscheidungsmerkmale
+  - confusion_comparison_table           # Strukturierter Vergleich
+  - lookalike_photo_comparison_url       # Link zu Vergleichsfotos
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SAISONALE BESTIMMUNGSMERKMALE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - appearance_by_season                 # Wie sieht es in welcher Jahreszeit aus
+  - spring_identification_notes          # Frühlings-spezifische Merkmale
+  - summer_identification_notes          # Sommer-spezifische Merkmale
+  - autumn_identification_notes          # Herbst-spezifische Merkmale
+  - winter_identification_notes          # Winter-spezifische Merkmale
+  - age_stage_variations                 # Veränderungen mit Alter/Entwicklung
+  - weather_dependent_appearance         # Wie Wetter Erscheinung beeinflusst
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # CHEMISCHE SCHNELLTESTS (Feldtests)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - chemical_spot_tests                  # KOH, FeSO4, Melzer's etc.
+  - koh_reaction                         # Reaktion auf Kaliumhydroxid
+  - feso4_reaction                       # Reaktion auf Eisensulfat
+  - ammonia_reaction                     # Reaktion auf Ammoniak
+  - bruising_color_change                # Verfärbung bei Druck/Verletzung
+  - cut_surface_color_change             # Verfärbung beim Anschneiden
+  - latex_color                          # Milchsaft-Farbe (falls vorhanden)
+  - spore_print_color                    # Sporenabdruck-Farbe
+  - fluorescence_uv                      # Fluoreszenz unter UV-Licht
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SENSORISCHE SCHNELLMERKMALE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - smell_description                    # Geruchsbeschreibung für Laien
+  - smell_comparable_to                  # "Riecht wie..." (bekannte Vergleiche)
+  - taste_safe_to_test                   # Geschmackstest sicher? (true/false)
+  - taste_description                    # Falls sicher: Geschmacksbeschreibung
+  - texture_touch_description            # Haptische Beschreibung
+  - sound_when_handled                   # Geräusch (knackig, quietschend, etc.)
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # KI/APP-UNTERSTÜTZUNG
+  # ─────────────────────────────────────────────────────────────────────────────
+  - ai_identification_reliability        # Wie gut erkennen Apps diese Art
+  - inaturalist_cv_accuracy              # iNaturalist Computer Vision Genauigkeit
+  - common_ai_misidentifications         # Häufige KI-Fehlbestimmungen
+  - photo_angle_recommendations          # Beste Fotowinkel für KI
+  - minimum_photos_for_id                # Mindestanzahl Fotos für sichere ID
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # MIKROSKOPIE-LEITFADEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - microscopy_required                  # Mikroskopie nötig für sichere ID
+  - microscopy_key_features              # Wichtigste mikroskopische Merkmale
+  - recommended_magnification            # Empfohlene Vergrößerung
+  - staining_recommendations             # Empfohlene Färbemethoden
+  - spore_measurement_diagnostic         # Diagnostische Sporenmaße
 
   # ─────────────────────────────────────────────────────────────────────────────
   # 2. MACROSCOPIC FEATURES
@@ -239,6 +341,81 @@ fields:
   - support_structure_nodes
   - support_structure_internodes
 
+# ─────────────────────────────────────────────────────────────────────────────
+  # BESTÄUBUNG (für Landwirtschaft & Naturschutz)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - pollination_syndrome                 # Bestäubungssyndrom
+  - primary_pollinators                  # Hauptbestäuber
+  - secondary_pollinators                # Sekundäre Bestäuber
+  - pollinator_specificity               # Bestäuber-Spezifität
+  - pollinator_dependence_percent        # Bestäuber-Abhängigkeit %
+  - selfing_rate                         # Selbstbestäubungsrate
+  - pollen_reward_quality                # Pollenbelohnungs-Qualität
+  - nectar_production_rate               # Nektarproduktionsrate
+  - nectar_sugar_concentration           # Nektar-Zuckerkonzentration
+  - nectar_volume_per_flower             # Nektarvolumen pro Blüte
+  - flowering_overlap_with_crops         # Blühüberlappung mit Kulturpflanzen
+  - pollinator_forage_value              # Futterwert für Bestäuber
+  - pollinator_habitat_provisioning      # Bestäuber-Habitatbereitstellung
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # BIOLOGISCHE SCHÄDLINGSBEKÄMPFUNG
+  # ─────────────────────────────────────────────────────────────────────────────
+  - biocontrol_agent_for                 # Biologischer Bekämpfungsagent für
+  - biocontrol_target_pests              # Ziel-Schädlinge
+  - biocontrol_efficacy                  # Bekämpfungs-Effizienz
+  - biocontrol_mechanism                 # Wirkmechanismus
+  - biocontrol_commercial_availability   # Kommerzielle Verfügbarkeit
+  - biocontrol_application_method        # Anwendungsmethode
+  - biocontrol_release_rate              # Ausbringungsrate
+  - biocontrol_establishment_success     # Etablierungserfolg
+  - biocontrol_non_target_effects        # Nicht-Ziel-Effekte
+  - pest_of_crops                        # Schädling von Kulturen
+  - pest_damage_type                     # Schadenstyp
+  - pest_economic_threshold              # Wirtschaftliche Schwelle
+  - natural_enemies                      # Natürliche Feinde
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # KRANKHEITSÜBERTRAGUNG & VEKTOREN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - disease_vector                       # Krankheitsüberträger
+  - diseases_transmitted                 # Übertragene Krankheiten
+  - pathogen_reservoir                   # Pathogen-Reservoir
+  - zoonotic_potential                   # Zoonotisches Potential
+  - transmission_mechanism               # Übertragungsmechanismus
+  - vector_competence                    # Vektor-Kompetenz
+  - amplifying_host                      # Amplifikations-Wirt
+  - dead_end_host                        # Sackgassen-Wirt
+  - host_specificity                     # Wirts-Spezifität
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SYMBIOSEN & MUTUALISMEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - mutualism_type                       # Mutualismus-Typ
+  - mutualism_partners                   # Mutualismus-Partner
+  - mutualism_obligate                   # Obligater Mutualismus
+  - mutualism_benefits_received          # Erhaltene Vorteile
+  - mutualism_benefits_provided          # Bereitgestellte Vorteile
+  - mutualism_breakdown_consequences     # Konsequenzen bei Zusammenbruch
+  - commensalism_partners                # Kommensalismus-Partner
+  - parasitism_hosts                     # Parasitismus-Wirte
+  - parasitism_effects                   # Parasitismus-Effekte
+  - parasitism_prevalence                # Parasitismus-Prävalenz
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # NAHRUNGSNETZE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - trophic_level                        # Trophische Ebene
+  - diet_composition                     # Nahrungszusammensetzung
+  - diet_breadth                         # Nahrungsspektrum
+  - prey_species                         # Beutearten
+  - prey_preference                      # Beutepräferenz
+  - predator_species                     # Räuberarten
+  - predation_pressure                   # Prädationsdruck
+  - anti_predator_adaptations            # Anti-Räuber-Anpassungen
+  - food_web_position                    # Position im Nahrungsnetz
+  - energy_transfer_efficiency           # Energietransfer-Effizienz
+  
   # ─────────────────────────────────────────────────────────────────────────────
   # FERTILE/REPRODUCTIVE SURFACE
   # Structures involved in reproduction
@@ -549,51 +726,75 @@ fields:
   # Universal genetic markers across all kingdoms
   # ─────────────────────────────────────────────────────────────────────────────
 
-  # Universal markers
-  - its_region
-  - its_accession
-  - its_length
-  - its_quality
-  - lsu_sequence
+  # KINGDOM-SPECIFIC PRIMARY BARCODES (BOLD/UNITE/GenBank standards)
+  # Fungi: ITS (Internal Transcribed Spacer) - UNITE database
+  - its_region                           # ITS1-5.8S-ITS2 sequence
+  - its_accession                        # GenBank/UNITE accession
+  - its_length                           # Sequence length bp
+  - its_quality                          # Sequence quality score
+  - unite_sh                             # UNITE Species Hypothesis code
+  - unite_doi                            # UNITE DOI reference
+  
+  # Fungi secondary markers
+  - lsu_sequence                         # Large Subunit (28S) D1-D2
   - lsu_accession
-  - ssu_sequence
+  - ssu_sequence                         # Small Subunit (18S)
   - ssu_accession
 
-  # Multi-kingdom markers
-  - coi_sequence
-  - coi_accession
-  - rbcl_sequence
-  - rbcl_accession
-  - matk_sequence
-  - matk_accession
-  - trnl_sequence
-  - trnl_accession
-  - cytb_sequence
+  # Animalia: COI (Cytochrome Oxidase I) - BOLD Systems
+  - coi_sequence                         # COI Folmer region (~650bp)
+  - coi_accession                        # BOLD/GenBank accession
+  - bold_bin                             # Barcode Index Number
+  - bold_uri                             # BOLD URI identifier
+  - bold_similarity                      # % match to reference
+  
+  # Animalia secondary markers
+  - cytb_sequence                        # Cytochrome b
   - cytb_accession
-  - 16s_sequence
+  - 16s_sequence                         # 16S rRNA (mitochondrial)
   - 16s_accession
-  - 18s_sequence
+  - 12s_sequence                         # 12S rRNA
+  - 12s_accession
+
+  # Plantae: rbcL + matK (chloroplast) - BOLD/GenBank
+  - rbcl_sequence                        # RuBisCO large subunit
+  - rbcl_accession
+  - matk_sequence                        # Maturase K
+  - matk_accession
+  - trnl_sequence                        # trnL-trnF intergenic
+  - trnl_accession
+  - its2_sequence                        # Plant ITS2 barcode
+  - its2_accession
+
+  # Bacteria/Archaea: 16S rRNA (~1.5kb) - RDP/SILVA
+  - 16s_rrna_sequence                    # Full 16S rRNA gene
+  - 16s_rrna_accession
+  - 16s_v_region                         # Variable region sequenced (V3-V4, etc.)
+  - rpob_sequence                        # RNA polymerase B
+  - cpn60_sequence                       # Chaperonin-60
+
+  # Protista: 18S rRNA V4 region
+  - 18s_sequence                         # 18S rRNA gene
   - 18s_accession
-  - 28s_sequence
+  - 28s_sequence                         # 28S rRNA D1-D2
   - 28s_accession
 
-  # Protein-coding markers
-  - rpb1_sequence
-  - rpb2_sequence
-  - tef1_sequence
-  - tub2_sequence
-  - act1_sequence
-  - gapdh_sequence
-  - his3_sequence
-  - cmd_sequence
+  # Protein-coding markers (Fungi-specific)
+  - rpb1_sequence                        # RNA polymerase II subunit 1
+  - rpb2_sequence                        # RNA polymerase II subunit 2
+  - tef1_sequence                        # Translation elongation factor 1-α
+  - tub2_sequence                        # β-tubulin
+  - act1_sequence                        # Actin
+  - gapdh_sequence                       # Glyceraldehyde-3-phosphate dehydrogenase
+  - his3_sequence                        # Histone H3
+  - cmd_sequence                         # Calmodulin
 
-  # Database references
-  - bold_bin
-  - bold_uri
-  - bold_similarity
-  - genbank_accession
-  - ena_accession
-  - ddbj_accession
+  # Universal database references
+  - genbank_accession                    # NCBI GenBank
+  - ena_accession                        # European Nucleotide Archive
+  - ddbj_accession                       # DNA Data Bank of Japan
+  - ncbi_bioproject                      # NCBI BioProject ID
+  - ncbi_biosample                       # NCBI BioSample ID
 
   # Phylogenetic position
   - phylogeny_clade
@@ -841,6 +1042,24 @@ fields:
 
 enumerations:
 
+  barcode_marker_type:
+    - COI                # Animalia standard
+    - 16S_rRNA           # Bacteria/Archaea standard
+    - 12S_rRNA           # Vertebrate supplement
+    - ITS                # Fungi primary
+    - ITS1               # Fungi subregion
+    - ITS2               # Fungi/Plantae
+    - LSU                # Fungi secondary
+    - RPB1               # Fungi phylogenetic
+    - RPB2               # Fungi phylogenetic
+    - TEF1               # Fungi phylogenetic
+    - rbcL               # Plantae primary
+    - matK               # Plantae primary
+    - trnL_trnF          # Plantae secondary
+    - 18S_rRNA           # Protista/Eukaryote
+    - cpn60              # Bacteria alternative
+    - multiple           # Combined approach
+
   # Taxonomic domain
   taxonomy_domain:
     - Bacteria
@@ -1030,6 +1249,30 @@ enumerations:
     - pinned
     - mounted
     - sectioned
+
+identification_difficulty:
+    - beginner                # Mit Grundwissen bestimmbar
+    - intermediate            # Erfahrung nötig
+    - advanced                # Umfangreiche Erfahrung nötig
+    - expert                  # Spezialistenkenntnis nötig
+    - specialist_only         # Nur mit Spezialliteratur/Labor
+    - molecular_required      # Nur molekular unterscheidbar
+    
+confusion_risk_level:
+    - none                    # Keine Verwechslungsgefahr
+    - low                     # Kaum Verwechslungsgefahr
+    - moderate                # Mäßige Verwechslungsgefahr
+    - high                    # Hohe Verwechslungsgefahr
+    - critical                # Kritisch - tödliche Doppelgänger
+    
+minimum_equipment:
+    - none                    # Keine Ausrüstung nötig
+    - hand_lens               # Lupe (10x) hilfreich
+    - hand_lens_required      # Lupe zwingend nötig
+    - microscope_helpful      # Mikroskop hilfreich
+    - microscope_required     # Mikroskop zwingend
+    - chemical_tests          # Chemische Tests nötig
+    - molecular_analysis      # DNA-Analyse nötig
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # KEYWORDS - For semantic search (multilingual)

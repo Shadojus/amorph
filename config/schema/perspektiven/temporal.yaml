@@ -75,6 +75,18 @@ fields:
   - genom_sequenziert
 
   # ─────────────────────────────────────────────────────────────────────────────
+  # UNIVERSAL LIFECYCLE STAGES (kingdom-agnostic)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - lifecycle_kingdom                    # Conditional field activation
+  - lifecycle_stage_count                # Number of distinct stages
+  - lifecycle_total_duration_days        # Complete cycle length
+  - lifecycle_generation_time_days       # Time to reproduction
+  - lifecycle_dormancy_capable           # Can enter dormancy
+  - lifecycle_diapause_type              # Obligate/Facultative (Animalia)
+  - lifecycle_metamorphosis_type         # Complete/Incomplete/None (Animalia)
+  - lifecycle_alternation_generations    # Yes/No (Plantae/Fungi)
+
+  # ─────────────────────────────────────────────────────────────────────────────
   # ENTWICKLUNGSSTADIEN - Development Stages
   # ─────────────────────────────────────────────────────────────────────────────
   - entwicklungsstadien
@@ -599,6 +611,63 @@ fields:
   - temporal_daten_qualitaets_score
   - temporal_daten_vollstaendigkeit
 
+# ─────────────────────────────────────────────────────────────────────────────
+  # KLIMAWANDEL-PHÄNOLOGIE-SHIFTS
+  # ─────────────────────────────────────────────────────────────────────────────
+  - phenology_shift_observed             # Beobachtete Phänologie-Verschiebung
+  - phenology_shift_days_per_decade      # Tage Verschiebung pro Dekade
+  - phenology_shift_direction            # earlier/later/variable
+  - phenology_baseline_period            # Baseline-Periode (z.B. 1970-2000)
+  - phenology_current_vs_baseline        # Aktuell vs. Baseline
+  - phenology_drivers                    # Treiber der Verschiebung
+  - mismatch_with_partners               # Mismatch mit Partnern
+  - mismatch_species_affected            # Betroffene Partnerarten
+  - mismatch_consequences                # Konsequenzen des Mismatch
+  - adaptation_capacity_phenology        # Anpassungskapazität
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SAISONALER KALENDER (für Nutzer)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - calendar_jan                         # Januar Aktivität/Erscheinung
+  - calendar_feb                         # Februar
+  - calendar_mar                         # März
+  - calendar_apr                         # April
+  - calendar_may                         # Mai
+  - calendar_jun                         # Juni
+  - calendar_jul                         # Juli
+  - calendar_aug                         # August
+  - calendar_sep                         # September
+  - calendar_oct                         # Oktober
+  - calendar_nov                         # November
+  - calendar_dec                         # Dezember
+  - peak_activity_months                 # Hauptaktivitäts-Monate
+  - dormancy_months                      # Dormanz-Monate
+  - optimal_observation_window           # Optimales Beobachtungsfenster
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # VORHERSAGBARKEIT & AUSLÖSER
+  # ─────────────────────────────────────────────────────────────────────────────
+  - phenology_predictability             # Vorhersagbarkeit (low/moderate/high)
+  - primary_phenology_cue                # Primärer Auslöser
+  - secondary_phenology_cues             # Sekundäre Auslöser
+  - temperature_threshold_celsius        # Temperatur-Schwellenwert
+  - photoperiod_critical_hours           # Kritische Tageslänge
+  - rainfall_threshold_mm                # Niederschlags-Schwellenwert
+  - degree_days_required                 # Benötigte Gradtage
+  - chilling_hours_required              # Benötigte Kältestunden
+  - phenology_prediction_model           # Vorhersagemodell
+  - phenology_forecast_accuracy          # Vorhersage-Genauigkeit
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # HISTORISCHE VERÄNDERUNGEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - historical_phenology_records         # Historische Phänologie-Aufzeichnungen
+  - earliest_recorded_date               # Frühestes aufgezeichnetes Datum
+  - latest_recorded_date                 # Spätestes aufgezeichnetes Datum
+  - historical_average_date              # Historisches Durchschnittsdatum
+  - phenology_long_term_datasets         # Langzeit-Datensätze
+  - phenology_citizen_science_data       # Citizen Science Phänologie-Daten
+  
 # ═══════════════════════════════════════════════════════════════════════════════
 # ENUMERATIONS
 # ═══════════════════════════════════════════════════════════════════════════════

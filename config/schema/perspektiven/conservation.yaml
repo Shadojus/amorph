@@ -53,11 +53,61 @@ fields:
   # ─────────────────────────────────────────────────────────────────────────────
   - legal_protection            
   - protected_status            
-  - cites_listing               
+  
+  # CITES - Convention on International Trade in Endangered Species
+  # 40,900+ species regulated, 25+ million transaction records since 1975
+  - cites_listing                        # Appendix I, II, III, or not listed
+  - cites_appendix                       # Specific appendix number
+  - cites_annotation                     # Specific trade restrictions
+  - cites_quota                          # Annual export quota if applicable
+  - cites_source_code                    # W=wild, C=captive-bred, A=artificially propagated
+  - cites_purpose_code                   # T=commercial, S=scientific, etc.
+  - cites_reservation                    # Countries with reservations
+  - cites_review_status                  # Under review, recommended for listing
+  
+  # IUCN Assessment Criteria (Version 3.1)
+  - iucn_criteria_met                    # A1, B1, C1, D, E criteria codes
+  - iucn_criterion_a_decline             # Population reduction percentage
+  - iucn_criterion_b_eoo                 # Extent of Occurrence (km²)
+  - iucn_criterion_b_aoo                 # Area of Occupancy (km²)
+  - iucn_criterion_c_population          # Estimated mature individuals
+  - iucn_criterion_d_restricted          # Very small or restricted population
+  - iucn_criterion_e_probability         # Extinction probability (PVA)
+  - iucn_generation_length_years         # Generation length for criterion A
+  - iucn_assessment_authority            # Assessor organization
+  
   - national_legislation        
   - international_agreements    
   - collection_restrictions     
-  - trade_restrictions          
+  - trade_restrictions      
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # EX-SITU CONSERVATION - Kingdom-specific repositories
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Animalia (ZIMS: 10+ million individuals)
+  - zims_accession_id                   # ZIMS Species360 ID
+  - zims_global_population              # Captive population worldwide
+  - zims_studbook_exists                # Managed studbook program
+  - zims_breeding_recommendation        # SSP/EEP recommendation
+  
+  # Plantae (GENESYS: 4+ million accessions)
+  - genesys_accession_id                # GENESYS plant genetic resource ID
+  - genesys_holding_institutions        # Genebanks holding accessions
+  - genesys_mcpd_passport               # Multi-Crop Passport Descriptor
+  - genesys_mls_status                  # Multilateral System inclusion
+  - bgci_garden_count                   # Botanic gardens holding species
+  
+  # Fungi/Bacteria (WDCM: 3+ million strains)
+  - wdcm_strain_count                   # Strains in culture collections
+  - wdcm_collection_ids                 # Holding culture collection codes
+  - wdcm_preservation_method            # Lyophilization/Cryopreservation/etc
+  - wdcm_biosafety_level                # BSL-1/2/3/4
+  - strain_type_status                  # Type strain designation
+  
+  # Cryo/DNA banking
+  - frozen_zoo_status                   # Cryopreserved genetic material
+  - dna_bank_accession                  # DNA bank specimen ID
+  - seed_bank_accession                 # Seed vault accession (Svalbard, etc.)
 
   # ─────────────────────────────────────────────────────────────────────────────
   # THREATS
@@ -145,6 +195,56 @@ enumerations:
     - DD      # Data Deficient
     - NE      # Not Evaluated
 
+  # CITES Appendix - International trade regulation
+  cites_appendix:
+    - I       # Threatened with extinction, trade prohibited
+    - II      # May become threatened, regulated trade
+    - III     # Protected in at least one country
+    - not_listed
+    - under_review
+
+  # CITES Source codes
+  cites_source:
+    - W       # Wild
+    - R       # Ranched
+    - D       # Captive-bred Appendix I
+    - A       # Artificially propagated plants
+    - C       # Captive-bred
+    - F       # F1 generation
+    - U       # Unknown
+    - I       # Confiscated/Seized
+    - O       # Pre-Convention
+
+  # CITES Purpose codes
+  cites_purpose:
+    - T       # Commercial
+    - Z       # Zoo
+    - G       # Botanical garden
+    - Q       # Circus/Exhibition
+    - S       # Scientific
+    - H       # Hunting trophy
+    - P       # Personal
+    - M       # Medical
+    - E       # Educational
+    - N       # Reintroduction
+    - B       # Breeding
+    - L       # Law enforcement
+
+  # IUCN Criteria codes
+  iucn_criteria:
+    - A1      # Population reduction observed/estimated
+    - A2      # Population reduction inferred/suspected
+    - A3      # Population reduction projected
+    - A4      # Population reduction observed/projected
+    - B1      # Extent of occurrence <threshold
+    - B2      # Area of occupancy <threshold
+    - C1      # Continuing decline
+    - C2      # Extreme fluctuations
+    - D       # Very small/restricted population
+    - D1      # Population size <threshold
+    - D2      # Restricted AOO or locations
+    - E       # Quantitative analysis (PVA)
+
   threat_type:
     - habitat_loss
     - overexploitation
@@ -153,6 +253,100 @@ enumerations:
     - invasive_species
     - disease
     - human_disturbance
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ADDITIONAL FIELDS - Conservation Details
+# ═══════════════════════════════════════════════════════════════════════════════
+
+additional_fields:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SCHUTZPRIORITÄT & DRINGLICHKEIT
+  # ─────────────────────────────────────────────────────────────────────────────
+  - conservation_priority_score          # Schutzprioritäts-Score (0-100)
+  - conservation_priority_rank           # Globaler Prioritätsrang
+  - edge_score                           # EDGE-Score (Evolutionär Distinkt, Global Gefährdet)
+  - action_urgency                       # Handlungsdringlichkeit
+  - time_to_extinction_estimate          # Geschätzte Zeit bis Aussterben
+  - conservation_attention_needed        # underprotected/adequate/flagship
+  - funding_gap_estimated                # Geschätzte Finanzierungslücke
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # BEDROHUNGSANALYSE (detailliert)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - threat_severity_scores               # Bedrohungs-Schweregrade
+  - threat_habitat_loss_score            # Habitatverlust (0-100)
+  - threat_overexploitation_score        # Übernutzung
+  - threat_invasives_score               # Invasive Arten
+  - threat_pollution_score               # Verschmutzung
+  - threat_climate_score                 # Klimawandel
+  - threat_disease_score                 # Krankheiten
+  - threat_trends                        # Bedrohungs-Trends
+  - emerging_threats                     # Neue/aufkommende Bedrohungen
+  - threat_interactions                  # Wechselwirkungen zwischen Bedrohungen
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SCHUTZGEBIETE & EFFEKTIVITÄT
+  # ─────────────────────────────────────────────────────────────────────────────
+  - protected_area_coverage_percent      # % in Schutzgebieten
+  - protected_area_adequacy              # Reichen Schutzgebiete aus?
+  - protected_areas_list                 # Liste relevanter Schutzgebiete
+  - protection_gaps_geographic           # Geografische Schutzlücken
+  - iucn_category_needed                 # Benötigte IUCN-Kategorie
+  - connectivity_between_areas           # Verbundenheit der Gebiete
+  - management_effectiveness             # Management-Effektivität (METT-Score)
+  - enforcement_quality                  # Durchsetzungsqualität
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # AKTIVE SCHUTZMASSNAHMEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - conservation_programs_active         # Aktive Schutzprogramme
+  - conservation_program_success_rate    # Erfolgsrate Programme
+  - conservation_actions_recommended     # Empfohlene Schutzmaßnahmen
+  - conservation_actions_priority        # Priorisierte Maßnahmen
+  - habitat_restoration_feasibility      # Machbarkeit Habitat-Restaurierung
+  - habitat_restoration_cost_ha          # Kosten Restaurierung pro ha
+  - reintroduction_attempts              # Wiederansiedlungsversuche
+  - reintroduction_success_rate          # Erfolgsrate Wiederansiedlung
+  - reintroduction_sites_potential       # Potentielle Wiederansiedlungsorte
+  - captive_breeding_program             # Zuchtprogramm vorhanden
+  - captive_breeding_success             # Erfolg Zuchtprogramm
+  - genetic_management_needed            # Genetisches Management nötig
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # MONITORING & ASSESSMENT
+  # ─────────────────────────────────────────────────────────────────────────────
+  - monitoring_protocol_exists           # Monitoring-Protokoll vorhanden
+  - monitoring_frequency                 # Monitoring-Frequenz
+  - population_trend_data_quality        # Datenqualität Populationstrend
+  - last_assessment_date                 # Letztes Assessment-Datum
+  - next_assessment_due                  # Nächstes Assessment fällig
+  - monitoring_gaps                      # Monitoring-Lücken
+  - research_priorities_conservation     # Forschungsprioritäten
+  - knowledge_gaps_critical              # Kritische Wissenslücken
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # CITIZEN SCIENCE & ENGAGEMENT
+  # ─────────────────────────────────────────────────────────────────────────────
+  - citizen_science_projects             # Citizen Science Projekte
+  - citizen_science_contribution_value   # Wert CS-Beitrag
+  - how_public_can_help                  # Wie Öffentlichkeit helfen kann
+  - volunteer_opportunities              # Freiwilligen-Möglichkeiten
+  - reporting_sightings_where            # Wo Sichtungen melden
+  - education_programs_available         # Verfügbare Bildungsprogramme
+  - adopt_a_species_program              # Adoptions-Programm
+  - donation_impact_description          # Wie Spenden helfen
+  - conservation_organizations_active    # Aktive Schutzorganisationen
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # RECHTLICHE ASPEKTE FÜR LANDBESITZER
+  # ─────────────────────────────────────────────────────────────────────────────
+  - landowner_obligations                # Pflichten für Landbesitzer
+  - landowner_incentives                 # Anreize für Landbesitzer
+  - conservation_easement_value          # Wert Naturschutz-Dienstbarkeit
+  - stewardship_programs_available       # Verfügbare Stewardship-Programme
+  - compensation_schemes                 # Kompensations-Programme
+  - habitat_management_guidelines        # Habitatmanagement-Richtlinien
+  - best_practices_landowners            # Best Practices für Landbesitzer
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # KEYWORDS - For semantic search (multilingual)
@@ -174,7 +368,6 @@ keywords:
   - least concern
   - data deficient
   # German
-  - conservation
   - artenschutz
   - gefährdet
   - bedroht
@@ -183,7 +376,6 @@ keywords:
   - ausgestorben
   - vom aussterben bedroht
   # French
-  - conservation
   - menacé
   - vulnérable
   - rare
@@ -218,7 +410,6 @@ keywords:
   - 濒危
   - 受威胁
   - 稀有
-  - 保护
   - 灭绝
 
   # ─────────────────────────────────────────────────────────────────────────────

@@ -53,6 +53,44 @@ fields:
   - traditional_medicine       
   
   # ─────────────────────────────────────────────────────────────────────────────
+  # TCM - Traditional Chinese Medicine (TCMSP: 29,384 ingredients, 499 herbs)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - tcm_herb_name_pinyin                # Pinyin romanization
+  - tcm_herb_name_chinese               # Chinese characters
+  - tcm_tcmsp_id                        # TCMSP database ID
+  - tcm_nature                          # Cold/Cool/Neutral/Warm/Hot
+  - tcm_flavor                          # Sour/Bitter/Sweet/Pungent/Salty
+  - tcm_meridian_tropism                # Affected meridians/organs
+  - tcm_five_element                    # Wood/Fire/Earth/Metal/Water
+  - tcm_therapeutic_actions             # TCM action categories
+  - tcm_classical_formulas              # Famous formula appearances
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # AYURVEDA (IMPPAT: 9,596 phytochemicals from Indian plants)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - ayurveda_sanskrit_name              # Sanskrit nomenclature
+  - ayurveda_imppat_id                  # IMPPAT database ID
+  - ayurveda_rasa                       # 6 tastes (Madhura/Amla/Lavana/Katu/Tikta/Kashaya)
+  - ayurveda_guna                       # 20 qualities
+  - ayurveda_virya                      # Potency (Ushna/Sheeta)
+  - ayurveda_vipaka                     # Post-digestive effect
+  - ayurveda_dosha_effect               # Vata/Pitta/Kapha balance
+  - ayurveda_prabhava                   # Special therapeutic effect
+  - ayurveda_classical_texts            # Charaka/Sushruta/Vagbhata references
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # WESTERN PHARMACOPOEIA MONOGRAPHS
+  # ─────────────────────────────────────────────────────────────────────────────
+  - who_monograph_exists                # WHO monograph available
+  - who_monograph_volume                # WHO Monographs volume number
+  - escop_monograph_exists              # ESCOP monograph available
+  - escop_therapeutic_indication        # ESCOP-approved uses
+  - german_commission_e_status          # Positive/Negative/Not evaluated
+  - german_commission_e_indication      # Approved indications
+  - usp_dietary_supplement              # USP-DS monograph exists
+  - european_pharmacopoeia_id           # Ph.Eur. monograph number
+
+  # ─────────────────────────────────────────────────────────────────────────────
   # PHARMACOLOGY & BIOACTIVE SUBSTANCES
   # ─────────────────────────────────────────────────────────────────────────────
   - active_substances         
@@ -168,6 +206,37 @@ enumerations:
     - Siddha
     - Homeopathy
     - Naturopathy
+
+  tcm_nature:
+    - cold
+    - cool
+    - neutral
+    - warm
+    - hot
+    
+  tcm_flavor:
+    - sour
+    - bitter
+    - sweet
+    - pungent
+    - salty
+    - bland
+    - astringent
+    
+  ayurveda_rasa:
+    - madhura          # Sweet
+    - amla             # Sour
+    - lavana           # Salty
+    - katu             # Pungent
+    - tikta            # Bitter
+    - kashaya          # Astringent
+    
+  ayurveda_dosha:
+    - vata
+    - pitta
+    - kapha
+    - tridosha         # Affects all three
+
   substance_classes:
     - Polysaccharides
     - Triterpenes
@@ -213,6 +282,25 @@ enumerations:
     - 3b 
     - 4  
     - 5  
+
+  evidence_grade:
+    - A                        # Starke Evidenz aus RCTs
+    - B                        # Moderate Evidenz
+    - C                        # Begrenzte Evidenz
+    - D                        # Widersprüchliche Evidenz
+    - E                        # Expertenkonsen ohne Studien
+    - insufficient             # Unzureichende Daten
+    
+  dose_timing:
+    - morning                  # Morgens
+    - evening                  # Abends
+    - bedtime                  # Vor dem Schlafengehen
+    - twice_daily              # Zweimal täglich
+    - three_times_daily        # Dreimal täglich
+    - with_meals               # Zu den Mahlzeiten
+    - between_meals            # Zwischen Mahlzeiten
+    - as_needed                # Bei Bedarf
+
   study_design:
     - RCT_double_blind
     - RCT_single_blind
@@ -298,6 +386,96 @@ enumerations:
     - Cosmetic
     - Not_Approved
     - Controlled_Substance
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ADDITIONAL FIELDS - Evidence, dosing, pharmacokinetics, side effects, quality
+# ═══════════════════════════════════════════════════════════════════════════════
+
+additional_fields:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # EVIDENZBASIERTE BEWERTUNG
+  # ─────────────────────────────────────────────────────────────────────────────
+  - evidence_grade_overall               # Gesamtbewertung Evidenzgrad
+  - cochrane_reviews_count               # Anzahl Cochrane Reviews
+  - cochrane_review_ids                  # Cochrane Review IDs
+  - meta_analyses_count                  # Anzahl Meta-Analysen
+  - rcts_count                           # Anzahl RCTs
+  - evidence_summary                     # Kurze Evidenz-Zusammenfassung
+  - research_gaps_identified             # Identifizierte Forschungslücken
+  - ongoing_clinical_trials              # Laufende klinische Studien
+  - clinicaltrials_gov_ids               # ClinicalTrials.gov IDs
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # DOSIERUNG & VERABREICHUNG
+  # ─────────────────────────────────────────────────────────────────────────────
+  - standard_dose_range                  # Standarddosierung
+  - dose_unit                            # Dosierungseinheit
+  - dose_frequency                       # Einnahmehäufigkeit
+  - dose_timing_field                    # Einnahmezeitpunkt
+  - dose_with_food                       # Mit Mahlzeit? (before/with/after/regardless)
+  - dose_adjustment_elderly              # Dosisanpassung Ältere
+  - dose_adjustment_renal                # Dosisanpassung Nierenfunktion
+  - dose_adjustment_hepatic              # Dosisanpassung Leberfunktion
+  - pediatric_dosing                     # Pädiatrische Dosierung
+  - maximum_daily_dose                   # Maximale Tagesdosis
+  - treatment_duration_typical           # Typische Behandlungsdauer
+  - onset_of_action                      # Wirkungseintritt
+  - duration_of_effect                   # Wirkungsdauer
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # BIOVERFÜGBARKEIT & PHARMAKOKINETIK
+  # ─────────────────────────────────────────────────────────────────────────────
+  - bioavailability_oral                 # Orale Bioverfügbarkeit %
+  - bioavailability_factors              # Faktoren die Bioverfügbarkeit beeinflussen
+  - absorption_enhanced_by               # Absorption verbessert durch
+  - absorption_reduced_by                # Absorption reduziert durch
+  - half_life_hours                      # Halbwertszeit
+  - time_to_peak_hours                   # Zeit bis Maximalkonzentration
+  - metabolism_pathway                   # Stoffwechselweg
+  - excretion_route                      # Ausscheidungsweg
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # KONTRAINDIKATIONEN & VORSICHTSMASSNAHMEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - contraindications_absolute           # Absolute Kontraindikationen
+  - contraindications_relative           # Relative Kontraindikationen
+  - precautions                          # Vorsichtsmaßnahmen
+  - monitoring_recommended               # Empfohlene Überwachung
+  - monitoring_parameters                # Überwachungsparameter
+  - discontinuation_protocol             # Absetzprotokoll
+  - withdrawal_effects                   # Entzugserscheinungen
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # NEBENWIRKUNGEN (strukturiert)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - side_effects_very_common             # >10% - Sehr häufig
+  - side_effects_common                  # 1-10% - Häufig
+  - side_effects_uncommon                # 0.1-1% - Gelegentlich
+  - side_effects_rare                    # 0.01-0.1% - Selten
+  - side_effects_very_rare               # <0.01% - Sehr selten
+  - side_effects_serious                 # Schwerwiegende NW
+  - side_effects_management              # NW-Management
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # QUALITÄTSSTANDARDS & BEZUGSQUELLEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - quality_markers_to_verify            # Qualitätsmarker zur Prüfung
+  - standardization_marker               # Standardisierungsmarker
+  - standardization_percentage           # Standardisierungsprozent
+  - reputable_manufacturers              # Seriöse Hersteller
+  - quality_certifications               # Qualitätszertifizierungen
+  - adulteration_common                  # Häufige Verfälschungen
+  - how_to_verify_authenticity           # Authentizitätsprüfung
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # PATIENTENBERATUNG
+  # ─────────────────────────────────────────────────────────────────────────────
+  - patient_counseling_points            # Beratungspunkte für Patienten
+  - what_to_expect                       # Was Patient erwarten kann
+  - when_to_seek_help                    # Wann Arzt aufsuchen
+  - self_care_tips                       # Selbstpflege-Tipps
+  - lifestyle_modifications              # Lebensstil-Empfehlungen
+  - dietary_considerations               # Ernährungshinweise
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # KEYWORDS - For semantic search (multilingual)

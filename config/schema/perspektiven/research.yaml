@@ -69,7 +69,31 @@ fields:
   - sequenced_markers           
   - genbank_accessions          
   - proteomics                  
-  - metabolomics                
+  - metabolomics   
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # GENOME & SEQUENCE DATA
+  # ─────────────────────────────────────────────────────────────────────────────
+  - genome_ncbi_assembly_id              # NCBI Assembly accession
+  - genome_ncbi_bioproject               # BioProject ID
+  - genome_ncbi_biosample                # BioSample ID
+  - genome_size_mb                       # Genome size in megabases
+  - genome_gc_content                    # GC percentage
+  - genome_completeness_busco            # BUSCO completeness score
+  - genome_annotation_status             # Annotated/Draft/Unannotated
+  - genome_protein_count                 # Predicted protein-coding genes
+  - transcriptome_sra_accession          # SRA RNA-seq data
+  - proteome_pride_accession             # PRIDE proteomics data
+  - metabolome_mwb_study_id              # Metabolomics Workbench ID
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # CULTURE COLLECTIONS & REPOSITORIES
+  # ─────────────────────────────────────────────────────────────────────────────
+  - culture_collection_ids               # ATCC/DSMZ/CBS/NRRL accessions
+  - type_strain_designation              # Is type strain (true/false)
+  - strain_availability                  # Publicly available strains
+  - herbarium_vouchers                   # Major herbarium accessions
+  - living_collection_accessions         # Botanic garden accessions             
 
   # ─────────────────────────────────────────────────────────────────────────────
   # RESEARCH METHODOLOGIES
@@ -162,6 +186,80 @@ enumerations:
     - not_sequenced
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# ADDITIONAL FIELDS - Research gaps, funding, collaboration, resources
+# ═══════════════════════════════════════════════════════════════════════════════
+
+additional_fields:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # FORSCHUNGSLÜCKEN & PRIORITÄTEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - research_gaps_critical               # Kritische Forschungslücken
+  - research_gaps_moderate               # Moderate Forschungslücken
+  - research_priority_score              # Forschungsprioritäts-Score
+  - research_priority_rationale          # Begründung Priorität
+  - understudied_aspects                 # Unterforschte Aspekte
+  - overdue_taxonomic_revision           # Überfällige taxonomische Revision
+  - data_deficient_areas                 # Daten-defizitäre Bereiche
+  - recommended_research_approaches      # Empfohlene Forschungsansätze
+  - potential_research_questions         # Potentielle Forschungsfragen
+  - thesis_project_ideas                 # Ideen für Abschlussarbeiten
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # FÖRDERUNG & FINANZIERUNG
+  # ─────────────────────────────────────────────────────────────────────────────
+  - funding_opportunities_current        # Aktuelle Fördermöglichkeiten
+  - funding_agencies_relevant            # Relevante Förderagenturen
+  - typical_grant_amounts                # Typische Fördersummen
+  - fellowship_opportunities             # Stipendien-Möglichkeiten
+  - industry_funding_potential           # Industrie-Finanzierungspotential
+  - crowdfunding_successful_examples     # Erfolgreiche Crowdfunding-Beispiele
+  - citizen_science_funding              # Citizen Science Finanzierung
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # KOLLABORATION & NETZWERKE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - leading_research_groups              # Führende Forschungsgruppen
+  - key_researchers_names                # Schlüssel-Forscher Namen
+  - key_researchers_institutions         # Schlüssel-Forscher Institutionen
+  - research_networks                    # Forschungsnetzwerke
+  - collaborative_projects_active        # Aktive Kollaborationsprojekte
+  - data_sharing_initiatives             # Datenteilungs-Initiativen
+  - research_consortia                   # Forschungskonsortien
+  - mentorship_opportunities             # Mentorship-Möglichkeiten
+  - conference_presentations_recent      # Aktuelle Konferenz-Präsentationen
+  - workshops_scheduled                  # Geplante Workshops
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # METHODISCHE RESSOURCEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - established_protocols                # Etablierte Protokolle
+  - protocol_repositories                # Protokoll-Repositories
+  - model_system_suitability             # Eignung als Modellsystem
+  - model_system_advantages              # Vorteile als Modellsystem
+  - model_system_limitations             # Einschränkungen als Modellsystem
+  - genome_resources_available           # Verfügbare Genom-Ressourcen
+  - transcriptome_resources              # Transkriptom-Ressourcen
+  - proteome_resources                   # Proteom-Ressourcen
+  - metabolome_resources                 # Metabolom-Ressourcen
+  - imaging_resources                    # Bildgebungs-Ressourcen
+  - field_sites_established              # Etablierte Feld-Standorte
+  - long_term_study_sites                # Langzeit-Studienstandorte
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # KOMMERZIELLES & BIOTECH-POTENTIAL
+  # ─────────────────────────────────────────────────────────────────────────────
+  - biotechnology_applications           # Biotechnologie-Anwendungen
+  - patents_filed                        # Eingereichte Patente
+  - patents_granted                      # Erteilte Patente
+  - commercial_products_derived          # Abgeleitete kommerzielle Produkte
+  - startup_companies_involved           # Beteiligte Startup-Unternehmen
+  - industry_partnerships                # Industrie-Partnerschaften
+  - bioprospecting_interest              # Bioprospecting-Interesse
+  - technology_transfer_potential        # Technologietransfer-Potential
+  - synthetic_biology_applications       # Synthetische Biologie Anwendungen
+  - drug_discovery_potential             # Medikamenten-Entdeckungs-Potential
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # KEYWORDS - For semantic search (multilingual)
 # ═══════════════════════════════════════════════════════════════════════════════
 
@@ -180,7 +278,6 @@ keywords:
   - discovery
   - publication
   # German
-  - research
   - studie
   - wissenschaft
   - wissenschaftlich
@@ -193,14 +290,10 @@ keywords:
   # French
   - recherche
   - étude
-  - science
   - scientifique
   - académique
-  - investigation
   - expérience
-  - analyse
   - découverte
-  - publication
   # Spanish
   - investigación
   - estudio

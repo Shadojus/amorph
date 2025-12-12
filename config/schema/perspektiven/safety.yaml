@@ -95,6 +95,41 @@ fields:
   - toxin_classes_secondary
   - toxin_names
   - toxin_concentrations
+  
+  # TOXIDROME CLASSIFICATION - Universal poison control framework
+  # Cross-kingdom toxidrome categories for clinical presentation
+  - toxidrome_primary                    # Primary clinical syndrome
+  - toxidrome_secondary                  # Secondary/overlapping syndromes
+  - toxidrome_mnemonic                   # Clinical memory aid (e.g., SLUDGE)
+  - toxidrome_key_findings               # Pathognomonic signs
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # CROSS-KINGDOM TOXICOLOGY DATABASES
+  # ─────────────────────────────────────────────────────────────────────────────
+  - tox_database_id                     # Tox-Prot/TPPT/T3DB identifier
+  - tox_prot_id                         # UniProt toxin ID (venoms, 5000+ proteins)
+  - tppt_id                             # Toxic Plants Phytotoxin ID (1586 phytotoxins)
+  - cmnpd_id                            # Comprehensive Marine NP Database ID
+  - t3db_id                             # Toxin Target Database ID
+  
+  # Universal toxin classification
+  - toxin_kingdom_origin                # Fungi/Plantae/Animalia/Bacteria/Protista
+  - toxin_biosynthetic_class            # Alkaloid/Terpenoid/Peptide/Polyketide
+  - toxin_protein_family                # For protein toxins (venoms)
+  - toxin_uniprot_id                    # UniProt accession for protein toxins
+  
+  # Marine biotoxins (CMNPD: 31,561 compounds)
+  - marine_biotoxin_class               # PSP/ASP/DSP/NSP/CFP/AZP
+  - marine_biotoxin_source              # Dinoflagellate/Cyanobacteria/Sponge
+  - marine_biotoxin_vector              # Shellfish/Fish/Direct contact
+  
+  # Venom-specific (Animalia)
+  - venom_delivery_method               # Bite/Sting/Spine/Secretion
+  - venom_protein_components            # Major protein families
+  - antivenom_available                 # true/false
+  - antivenom_type                      # Monovalent/Polyvalent
+
+  # Target Organs
   - toxin_target_organs_primary
   - toxin_target_organs_secondary
   - toxin_organ_damage_severity
@@ -147,6 +182,93 @@ fields:
   - toxin_detection_patient
   - toxin_detection_window_h
   
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ERSTE-HILFE-PROTOKOLL (für Laien verständlich)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - first_aid_immediate_steps            # Sofortmaßnahmen (nummeriert)
+  - first_aid_what_not_to_do             # Was NICHT tun
+  - induce_vomiting_recommended          # Erbrechen auslösen? (true/false/contraindicated)
+  - activated_charcoal_useful            # Aktivkohle sinnvoll? (true/false/timing)
+  - milk_or_water_helpful                # Milch/Wasser geben?
+  - when_to_call_emergency               # Wann Notruf (112)?
+  - information_for_emergency_call       # Was dem Notruf sagen
+  - hospital_transport_urgency           # Dringlichkeit Krankenhaus
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SYMPTOM-TIMELINE (für medizinisches Personal)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - symptom_onset_minutes                # Symptombeginn (Minuten nach Exposition)
+  - symptom_onset_range                  # Bandbreite Symptombeginn
+  - symptom_peak_hours                   # Symptom-Maximum (Stunden)
+  - symptom_duration_hours               # Symptomdauer
+  - symptom_phases                       # Phasenverlauf der Vergiftung
+  - delayed_symptoms_possible            # Verzögerte Symptome möglich
+  - delayed_symptom_onset_hours          # Verzögerung in Stunden
+  - biphasic_reaction_risk               # Biphasische Reaktion möglich
+  - symptom_resolution_timeline          # Zeitverlauf Erholung
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # DOSIS-WIRKUNGS-BEZIEHUNG
+  # ─────────────────────────────────────────────────────────────────────────────
+  - toxic_dose_threshold                 # Ab welcher Menge toxisch
+  - toxic_dose_unit                      # Einheit (mg/kg, Stück, etc.)
+  - lethal_dose_human_estimated          # Geschätzte letale Dosis Mensch
+  - one_bite_dangerous                   # Ein Biss/Stück gefährlich?
+  - cumulative_toxicity                  # Kumulative Toxizität (true/false)
+  - bioaccumulation_risk                 # Anreicherung im Körper
+  - dose_response_notes                  # Anmerkungen Dosis-Wirkung
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # VULNERABLE GRUPPEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - children_risk_modifier               # Risiko bei Kindern (higher/same/lower)
+  - children_specific_concerns           # Kinder-spezifische Bedenken
+  - elderly_risk_modifier                # Risiko bei Älteren
+  - pregnancy_risk_category              # Schwangerschaft (A/B/C/D/X)
+  - pregnancy_specific_effects           # Schwangerschafts-spezifische Effekte
+  - breastfeeding_concerns               # Stillzeit-Bedenken
+  - pets_toxicity                        # Toxisch für Haustiere
+  - pets_species_affected                # Betroffene Tierarten
+  - pets_toxic_dose                      # Toxische Dosis für Haustiere
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # MEDIKAMENTEN-INTERAKTIONEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - drug_interactions_dangerous          # Gefährliche Medikamenten-Interaktionen
+  - drug_interactions_moderate           # Moderate Interaktionen
+  - alcohol_interaction                  # Alkohol-Wechselwirkung
+  - maoi_interaction                     # MAO-Hemmer-Interaktion
+  - anticoagulant_interaction            # Blutverdünner-Interaktion
+  - immunosuppressant_interaction        # Immunsuppressiva-Interaktion
+  - cyp450_interactions                  # CYP450-Enzym-Interaktionen
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # EXPOSITIONSWEGE & DEKONTAMINATION
+  # ─────────────────────────────────────────────────────────────────────────────
+  - exposure_routes                      # Expositionswege (oral/dermal/inhalation)
+  - dermal_exposure_protocol             # Hautexposition-Protokoll
+  - eye_exposure_protocol                # Augenexposition-Protokoll
+  - inhalation_exposure_protocol         # Einatmung-Protokoll
+  - decontamination_steps                # Dekontaminationsschritte
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # LANGZEITFOLGEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - chronic_exposure_effects             # Effekte chronischer Exposition
+  - organ_damage_potential               # Organschäden-Potential
+  - recovery_prognosis                   # Erholungsprognose
+  - permanent_damage_risk                # Risiko bleibender Schäden
+  - follow_up_recommended                # Nachuntersuchung empfohlen
+  - follow_up_tests                      # Empfohlene Nachuntersuchungen
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # GIFTNOTRUF-INTEGRATION
+  # ─────────────────────────────────────────────────────────────────────────────
+  - poison_control_product_code          # Giftnotruf-Produktcode
+  - poison_control_classification        # Giftnotruf-Klassifikation
+  - toxbase_entry                        # TOXBASE-Eintrag (UK)
+  - poisindex_entry                      # POISINDEX-Eintrag (US)
+
   # ENTITY 3: Confusion Partners
   - confusion_partner
   - confusion_risk_level
@@ -473,6 +595,34 @@ enumerations:
     - alkaloid_syndrome
     - glycoside_syndrome
   
+  # TOXIDROME - Universal cross-kingdom clinical syndromes
+  # Used by poison control centers worldwide
+  toxidrome:
+    - anticholinergic        # Tachycardia, mydriasis, delirium (Datura, mushrooms)
+    - cholinergic            # SLUDGE syndrome (mushrooms, organophosphates)
+    - sympathomimetic        # Tachycardia, hypertension, hyperthermia
+    - sedative_hypnotic      # CNS depression, respiratory depression
+    - opioid                 # Miosis, respiratory depression, sedation
+    - serotonin_syndrome     # Hyperthermia, rigidity, clonus
+    - cardiac_glycoside      # Bradycardia, hyperkalemia (Digitalis, toads)
+    - neurotoxic             # Paralysis, paresthesias (marine biotoxins, venoms)
+    - hepatotoxic            # Delayed liver failure (Amanita, pyrrolizidine)
+    - nephrotoxic            # Delayed renal failure (Cortinarius)
+    - cytotoxic              # Cell death, multi-organ (amatoxins)
+    - hemolytic              # RBC destruction (some mushrooms, snake venom)
+    - gastrointestinal       # Primary GI irritation
+    - hallucinogenic         # Perceptual disturbances (psilocybin, mescaline)
+    - disulfiram_like        # Alcohol interaction (Coprine)
+  
+  marine_biotoxin_syndrome:
+    - PSP                # Paralytic Shellfish Poisoning (saxitoxin)
+    - ASP                # Amnesic Shellfish Poisoning (domoic acid)
+    - DSP                # Diarrhetic Shellfish Poisoning (okadaic acid)
+    - NSP                # Neurotoxic Shellfish Poisoning (brevetoxin)
+    - CFP                # Ciguatera Fish Poisoning (ciguatoxin)
+    - AZP                # Azaspiracid Poisoning
+    - TTX                # Tetrodotoxin poisoning
+    
   confusion_risk:
     - critical       
     - high           
@@ -521,6 +671,29 @@ enumerations:
     - icu                     
     - transplant_center       
     - poison_center_guidance  
+
+  hospital_transport_urgency:
+    - immediate_life_threat    # Sofort - lebensbedrohlich
+    - urgent_within_1h         # Dringend - innerhalb 1 Stunde
+    - soon_within_6h           # Bald - innerhalb 6 Stunden
+    - routine_monitoring       # Routine-Überwachung
+    - home_monitoring_ok       # Heimüberwachung möglich
+    
+  pregnancy_risk_category:
+    - A                        # Sichere Studien beim Menschen
+    - B                        # Tierstudien ohne Risiko
+    - C                        # Risiko nicht ausgeschlossen
+    - D                        # Nachweis fetaler Risiken
+    - X                        # Kontraindiziert
+    - unknown                  # Nicht untersucht
+    
+  exposure_route:
+    - oral                     # Verschlucken
+    - dermal                   # Hautkontakt
+    - inhalation               # Einatmen
+    - ocular                   # Augenkontakt
+    - parenteral               # Injektion
+    - bite_sting               # Biss/Stich
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # KEYWORDS - For semantic search (multilingual)

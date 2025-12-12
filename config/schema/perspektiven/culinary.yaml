@@ -80,6 +80,109 @@ fields:
   - preparation_mistakes      
   - prep_work                 
 
+# ─────────────────────────────────────────────────────────────────────────────
+  # FLAVOR PAIRING & KOMBINATIONEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - flavor_profile_primary               # Hauptgeschmacksprofil
+  - flavor_profile_secondary             # Sekundäre Geschmacksnoten
+  - aroma_compounds_key                  # Schlüssel-Aromastoffe
+  - pairs_well_with_proteins             # Gute Protein-Kombinationen
+  - pairs_well_with_vegetables           # Gute Gemüse-Kombinationen
+  - pairs_well_with_grains               # Gute Getreide-Kombinationen
+  - pairs_well_with_dairy                # Gute Milchprodukt-Kombinationen
+  - pairs_well_with_herbs                # Passende Kräuter
+  - pairs_well_with_spices               # Passende Gewürze
+  - wine_pairing                         # Weinempfehlungen
+  - beer_pairing                         # Bierempfehlungen
+  - flavor_bridges                       # Gemeinsame Aromastoffe mit anderen Zutaten
+  - avoid_combining_with                 # Schlechte Kombinationen
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SUBSTITUTIONEN & ALTERNATIVEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - substitute_for                       # Kann X ersetzen in Rezepten
+  - can_be_substituted_by                # Kann ersetzt werden durch
+  - substitution_ratio                   # Mengenverhältnis bei Ersatz
+  - substitution_notes                   # Hinweise zum Ersatz
+  - vegan_alternative_for                # Vegane Alternative für
+  - budget_alternative_for               # Günstigere Alternative für
+  - luxury_upgrade_for                   # Luxuriöse Alternative für
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # KOCHTECHNIKEN & TIMING
+  # ─────────────────────────────────────────────────────────────────────────────
+  - best_cooking_methods                 # Beste Zubereitungsarten (ranked)
+  - worst_cooking_methods                # Ungeeignete Zubereitungsarten
+  - cooking_time_raw                     # Kochzeit roh
+  - cooking_time_dried                   # Kochzeit getrocknet
+  - cooking_time_frozen                  # Kochzeit gefroren
+  - internal_temperature_target          # Ziel-Kerntemperatur
+  - texture_when_overcooked              # Textur bei Überkochen
+  - texture_when_undercooked             # Textur bei Unterkochen
+  - resting_time_recommended             # Empfohlene Ruhezeit
+  - reheating_instructions               # Aufwärm-Anleitung
+  - reheating_quality_loss               # Qualitätsverlust beim Aufwärmen
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # HALTBARKEIT NACH ZUBEREITUNGSART
+  # ─────────────────────────────────────────────────────────────────────────────
+  - shelf_life_fresh_room_temp           # Haltbarkeit frisch/Raumtemperatur
+  - shelf_life_fresh_refrigerated        # Haltbarkeit frisch/Kühlschrank
+  - shelf_life_cooked_refrigerated       # Haltbarkeit gekocht/Kühlschrank
+  - shelf_life_frozen                    # Haltbarkeit gefroren
+  - shelf_life_dried                     # Haltbarkeit getrocknet
+  - shelf_life_pickled                   # Haltbarkeit eingelegt
+  - shelf_life_canned                    # Haltbarkeit eingedost
+  - freezing_instructions                # Einfrier-Anleitung
+  - thawing_instructions                 # Auftau-Anleitung
+  - signs_of_spoilage                    # Verderbnis-Anzeichen
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # RESTAURANT & PROFI-KÜCHE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - michelin_restaurant_usage            # Verwendung in Sterne-Restaurants
+  - signature_dishes_famous              # Berühmte Gerichte mit dieser Zutat
+  - trending_preparations                # Aktuelle Trend-Zubereitungen
+  - molecular_gastronomy_applications    # Molekularküche-Anwendungen
+  - professional_prep_tips               # Profi-Zubereitungstipps
+  - plate_presentation_ideas             # Anrichtevorschläge
+  - garnish_applications                 # Verwendung als Garnitur
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # EINKAUF & VERFÜGBARKEIT
+  # ─────────────────────────────────────────────────────────────────────────────
+  - peak_season_months                   # Hauptsaison (Monate)
+  - availability_year_round              # Ganzjährig verfügbar
+  - best_sources_fresh                   # Beste Bezugsquellen frisch
+  - best_sources_dried                   # Beste Bezugsquellen getrocknet
+  - price_category                       # budget/moderate/premium/luxury
+  - price_seasonality                    # Preisschwankungen nach Saison
+  - quality_indicators_buying            # Qualitätsmerkmale beim Kauf
+  - avoid_when_buying                    # Warnzeichen beim Kauf
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ALLERGENE & UNVERTRÄGLICHKEITEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - allergen_classification              # EU-Allergen-Kategorie
+  - cross_reactivity_allergens           # Kreuzallergien
+  - histamine_level                      # Histamin-Gehalt (low/medium/high)
+  - fodmap_category                      # FODMAP-Klassifikation
+  - oxalate_level                        # Oxalat-Gehalt
+  - purine_level                         # Purin-Gehalt (für Gicht)
+  - goitrogen_content                    # Goitrogen-Gehalt (Schilddrüse)
+  - tyramine_level                       # Tyramin-Gehalt (MAO-Hemmer)
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ERNÄHRUNGSTRENDS & DIÄTEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - suitable_for_keto                    # Keto-geeignet
+  - suitable_for_paleo                   # Paleo-geeignet
+  - suitable_for_whole30                 # Whole30-geeignet
+  - suitable_for_mediterranean           # Mediterrane Diät
+  - suitable_for_dash                    # DASH-Diät
+  - suitable_for_fodmap_elimination      # FODMAP-Elimination
+  - insulin_index                        # Insulin-Index
+
   # ─────────────────────────────────────────────────────────────────────────────
   # COMPOSITION & PAIRINGS
   # "What goes together? Why?"
@@ -225,7 +328,32 @@ fields:
   - seasonality               
   - availability              
   - sustainability            
-  - history                   
+  - history    
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # CROSS-KINGDOM EDIBILITY (Entomophagy, Seaweed, Wild Plants, etc.)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - edibility_kingdom_specific           # Kingdom-specific considerations
+  - edibility_novel_food_status          # EU Novel Food regulation status
+  - edibility_fda_gras                   # FDA GRAS status
+  - edibility_codex_standard             # Codex Alimentarius reference
+  
+  # Entomophagy (Insect consumption)
+  - entomophagy_suitable                 # Suitable for human consumption
+  - entomophagy_traditional_regions      # Regions with traditional use
+  - entomophagy_preparation_essential    # Required preparation steps
+  - entomophagy_allergen_warning         # Crustacean cross-reactivity
+  
+  # Marine/Aquatic
+  - seafood_sustainability_rating        # MSC/ASC certification status
+  - seafood_mercury_level                # Low/Medium/High
+  - seafood_omega3_content               # EPA+DHA mg/100g
+  - algae_edible_species                 # Edible algae classification
+  
+  # Wild plants
+  - wild_plant_lookalike_warning         # Dangerous lookalikes exist
+  - wild_plant_harvest_season            # Optimal foraging time
+  - wild_plant_part_edible               # Which parts are edible               
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # ENUMERATIONS - Controlled vocabularies
@@ -253,6 +381,50 @@ enumerations:
     - fermented
     - smoked
     - blanched
+
+  price_category:
+    - budget                  # Günstig (<5€/kg)
+    - moderate                # Mittelpreisig (5-20€/kg)
+    - premium                 # Gehoben (20-100€/kg)
+    - luxury                  # Luxus (>100€/kg)
+    - seasonal_variable       # Stark saisonabhängig
+    
+  fodmap_category:
+    - low_fodmap              # FODMAP-arm
+    - moderate_fodmap         # Mäßig FODMAP
+    - high_fodmap             # FODMAP-reich
+    - variable_by_portion     # Portionsabhängig
+    
+  cooking_method_suitability:
+    - excellent               # Hervorragend geeignet
+    - good                    # Gut geeignet
+    - acceptable              # Akzeptabel
+    - not_recommended         # Nicht empfohlen
+    - destroys_quality        # Zerstört Qualität
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ADDITIONAL FIELDS - Fermentation & Biotransformation
+# ═══════════════════════════════════════════════════════════════════════════════
+
+additional_fields:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # FERMENTATION & BIOTRANSFORMATION
+  # ─────────────────────────────────────────────────────────────────────────────
+  - fermentation_suitable                # Fermentierbar (true/false)
+  - fermentation_traditional_methods     # Traditionelle Fermentationsmethoden
+  - fermented_products_traditional       # Traditionelle fermentierte Produkte
+  - fermented_products_modern            # Moderne fermentierte Produkte
+  - fermentation_microorganisms          # Fermentations-Mikroorganismen
+  - fermentation_time_range              # Fermentationsdauer
+  - fermentation_temperature_optimal     # Optimale Fermentationstemperatur
+  - fermentation_flavor_changes          # Geschmacksveränderungen
+  - fermentation_nutritional_changes     # Nährwertveränderungen
+  - fermentation_safety_considerations   # Sicherheitsaspekte
+  - fermentation_failure_signs           # Anzeichen misslungener Fermentation
+  - fermentation_equipment_needed        # Benötigte Ausrüstung
+  - fermentation_difficulty              # Schwierigkeitsgrad
+  - fermentation_starter_culture         # Starterkultur
+  - fermentation_recipes_famous          # Berühmte Fermentationsrezepte
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # KEYWORDS - For semantic search (multilingual)
@@ -857,15 +1029,7 @@ keywords:
   - riboflavin
   - niacin
   # German
-  - vitamin
-  - vitamin d
-  - vitamin b
-  - vitamin c
   - folsäure
-  - b12
-  - thiamin
-  - riboflavin
-  - niacin
   # French
   - vitamine
   - acide folique

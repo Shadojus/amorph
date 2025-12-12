@@ -137,8 +137,86 @@ fields:
   - sample_size                 
   - confidence_intervals        
   - data_gaps                   
-  - data_reliability            
+  - data_reliability   
 
+  # ─────────────────────────────────────────────────────────────────────────────
+  # GBIF/iNaturalist OCCURRENCE METRICS
+  # ─────────────────────────────────────────────────────────────────────────────
+  - gbif_total_occurrences               # Total GBIF records
+  - gbif_georeferenced_percent           # % with coordinates
+  - gbif_research_grade_percent          # % research grade (iNat)
+  - gbif_temporal_coverage_start         # Earliest record year
+  - gbif_temporal_coverage_end           # Most recent record year
+  - gbif_median_coordinate_uncertainty   # Median uncertainty in meters
+  - inaturalist_observation_count        # iNaturalist observations
+  - inaturalist_observer_count           # Unique observers
+  - inaturalist_identifier_count         # Unique identifiers
+  - citizen_science_contribution         # % from citizen science         
+
+# ─────────────────────────────────────────────────────────────────────────────
+  # TRENDANALYSEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - population_trend_direction           # increasing/stable/decreasing/unknown
+  - population_trend_percent_per_year    # % Veränderung pro Jahr
+  - population_trend_confidence          # Konfidenz der Trendschätzung
+  - population_trend_data_years          # Datenjahre für Trend
+  - range_trend_direction                # Areal-Trend
+  - range_change_percent                 # Areal-Veränderung %
+  - abundance_anomaly_current            # Aktuelle Abundanz-Anomalie
+  - historical_comparison_baseline       # Historische Vergleichs-Baseline
+  - trend_reversal_detected              # Trendumkehr entdeckt
+  - trend_inflection_year                # Jahr der Trendwende
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # PROGNOSEN & SZENARIEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - population_forecast_2030             # Populationsprognose 2030
+  - population_forecast_2050             # Populationsprognose 2050
+  - population_forecast_2100             # Populationsprognose 2100
+  - range_forecast_2050                  # Arealprognose 2050
+  - forecast_model_used                  # Verwendetes Prognosemodell
+  - forecast_confidence_interval         # Konfidenzintervall
+  - forecast_scenarios                   # Szenarien (best/moderate/worst)
+  - extinction_probability_2100          # Aussterbewahrscheinlichkeit bis 2100
+  - recovery_potential_scenario          # Erholungspotential-Szenario
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # DATENQUALITÄT & LÜCKEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - data_quality_overall                 # Gesamte Datenqualität
+  - data_coverage_spatial                # Räumliche Datenabdeckung
+  - data_coverage_temporal               # Zeitliche Datenabdeckung
+  - sampling_bias_known                  # Bekannte Stichproben-Verzerrung
+  - observer_effort_distribution         # Beobachteraufwand-Verteilung
+  - detection_probability                # Entdeckungswahrscheinlichkeit
+  - occupancy_vs_detection               # Besiedlung vs. Nachweis
+  - dark_diversity_estimate              # Dark Diversity Schätzung
+  - data_gaps_geographic                 # Geografische Datenlücken
+  - data_gaps_taxonomic                  # Taxonomische Datenlücken
+  - recommended_surveys                  # Empfohlene Erfassungen
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # VERGLEICHENDE STATISTIKEN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - global_rank_abundance                # Globaler Rang Häufigkeit
+  - global_rank_range_size               # Globaler Rang Arealgröße
+  - regional_rank_abundance              # Regionaler Rang Häufigkeit
+  - family_comparison_abundance          # Vergleich innerhalb Familie
+  - order_comparison_abundance           # Vergleich innerhalb Ordnung
+  - commonness_category                  # very_rare/rare/uncommon/common/very_common
+  - population_relative_to_historic      # Population relativ zu historisch
+  
+  # ─────────────────────────────────────────────────────────────────────────────
+  # VISUALISIERUNG & DASHBOARDS
+  # ─────────────────────────────────────────────────────────────────────────────
+  - interactive_dashboard_url            # Interaktives Dashboard URL
+  - trend_chart_url                      # Trend-Diagramm URL
+  - distribution_map_url                 # Verbreitungskarten URL
+  - phenology_chart_url                  # Phänologie-Diagramm URL
+  - data_download_formats                # Daten-Download-Formate
+  - api_endpoint_available               # API-Endpunkt verfügbar
+  - real_time_data_available             # Echtzeit-Daten verfügbar
+  
 # ═══════════════════════════════════════════════════════════════════════════════
 # ENUMERATIONS - Controlled vocabularies
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -177,7 +255,6 @@ keywords:
   - index
   - score
   # German
-  - statistics
   - statistisch
   - daten
   - analyse

@@ -1,0 +1,7 @@
+/* Perspektive: Sicherheit - Warn-Rosa */
+[data-perspektive-safety] {
+  --perspektive-farbe: rgba(255, 140, 160, 0.65);
+  --perspektive-farbe-2: rgba(245, 120, 145, 0.65);
+  --perspektive-farbe-3: rgba(235, 105, 135, 0.65);
+  --perspektive-farbe-4: rgba(225, 90, 125, 0.65);
+}
