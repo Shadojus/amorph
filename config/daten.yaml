@@ -1,24 +1,46 @@
 # Datenquelle - wähle eine:
 
-# Option 1: Einzelne JSON-Dateien pro Item (empfohlen für größere Projekte)
-# Jeder Pilz hat seine eigene Datei in data/pilze/
-quelle:
-  typ: json-multi
-  indexUrl: ./data/pilze/index.json
-  baseUrl: ./data/pilze/
+# Option 1: Modulare Perspektiven-Struktur (NEU - empfohlen)
+# Jede Spezies hat eigenen Ordner mit separaten Perspektiven-Dateien
+# quelle:
+#   typ: json-perspektiven
+#   indexUrl: ./data/fungi/index.json
+#   baseUrl: ./data/fungi/
 
-# Option 2: Einzelne JSON-Datei (Legacy - alle Items in einer Datei)
+# quelle:
+#   typ: json-perspektiven
+#   indexUrl: ./data/animalia/index.json
+#   baseUrl: ./data/animalia/
+
+# # quelle:
+# #   typ: json-perspektiven
+# #   indexUrl: ./data/plantae/index.json
+# #   baseUrl: ./data/plantae/
+
+# # quelle:
+# #   typ: json-perspektiven
+# #   indexUrl: ./data/bacteria/index.json
+# #   baseUrl: ./data/bacteria/
+
+# Option 2: Modulare Perspektiven-Struktur (AKTIV)
+# Jede Spezies hat eigenen Ordner mit separaten Perspektiven-Dateien
+quelle:
+  typ: json-perspektiven
+  indexUrl: ./data/fungi/index.json
+  baseUrl: ./data/fungi/
+
+# Option 3: Einzelne JSON-Datei (Legacy - alle Items in einer Datei)
 # quelle:
 #   typ: json
-#   url: ./data/pilze.json
+#   url: ./data/fungi.json
 
-# Option 3: PocketBase
+# Option 4: PocketBase
 # quelle:
 #   typ: pocketbase
 #   url: https://api.example.com
 #   sammlung: items
 
-# Option 4: REST API
+# Option 5: REST API
 # quelle:
 #   typ: rest
 #   url: https://api.example.com/items

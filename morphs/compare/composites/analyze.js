@@ -1,77 +1,90 @@
 /**
- * ANALYZE - Datenanalyse-Funktionen
+ * ANALYZE - Data analysis functions
  * 
- * Analysiert Items und extrahiert Struktur-Informationen.
- * 100% DATENGETRIEBEN - keine Annahmen über Feldnamen!
+ * Analyzes items and extracts structure information.
+ * 100% DATA-DRIVEN - no assumptions about field names!
  */
 
-import { debug } from '../../../observer/debug.js';
+import { debug } from '../../../../observer/debug.js';
 import { detectType } from '../base.js';
 import { TYPE_TO_CATEGORY } from './types.js';
 
 /**
- * Analysiert Items und gruppiert Felder nach Kategorie
+ * Analyzes items and groups fields by category
  * 
- * @param {Array} items - [{id, name, data, farbe}] - data enthält alle Felder
+ * @param {Array} items - [{id, name, data, color}] - data contains all fields
  * @returns {Object} { fields, categories }
  * 
- * DATENGETRIEBEN:
- * - Typ wird aus Datenstruktur erkannt (detectType)
- * - Kategorie wird aus Typ abgeleitet
- * - Keine hardcodierten Feldnamen
+ * DATA-DRIVEN:
+ * - Type is detected from data structure (detectType)
+ * - Category is derived from type
+ * - No hardcoded field names
  */
 export function analyzeItems(items) {
   if (!items?.length) return { fields: {}, categories: {} };
   
-  // Alle Felder aus erstem Item extrahieren (Struktur-Definition)
+  // Extract all fields from first item (structure definition)
   const firstData = items[0]?.data || {};
   const fields = {};
   const categories = {};
   
-  Object.entries(firstData).forEach(([feldName, wert]) => {
-    const typ = detectType(wert);
-    const category = TYPE_TO_CATEGORY[typ] || 'textual';
+  Object.entries(firstData).forEach(([fieldName, value]) => {
+    const type = detectType(value);
+    const category = TYPE_TO_CATEGORY[type] || 'textual';
     
-    fields[feldName] = {
-      name: feldName,
-      typ,
+    fields[fieldName] = {
+      name: fieldName,
+      type,
+      // Legacy alias
+      typ: type,
       category,
-      // Sammle alle Werte für dieses Feld
+      // Collect all values for this field
       values: items.map(item => ({
         id: item.id,
         name: item.name,
-        wert: item.data?.[feldName],
-        farbe: item.farbe
+        value: item.data?.[fieldName],
+        // Legacy alias
+        wert: item.data?.[fieldName],
+        // CSS-Klasse für Custom Properties (PRIMARY!)
+        colorClass: item.farbKlasse || item.colorClass,
+        farbKlasse: item.farbKlasse || item.colorClass,
+        // Inline-Farben (legacy/fallback)
+        color: item.farbe || item.color,
+        farbe: item.farbe || item.color,
+        textColor: item.textFarbe || item.textColor,
+        textFarbe: item.textFarbe || item.textColor,
+        bgColor: item.bgFarbe || item.bgColor,
+        bgFarbe: item.bgFarbe || item.bgColor
       }))
     };
     
-    // Nach Kategorie gruppieren
+    // Group by category
     if (!categories[category]) {
       categories[category] = [];
     }
-    categories[category].push(feldName);
+    categories[category].push(fieldName);
   });
   
-  debug.compare('Items analysiert', {
-    felder: Object.keys(fields).length,
-    kategorien: Object.keys(categories)
+  debug.compare('Items analyzed', {
+    fields: Object.keys(fields).length,
+    categories: Object.keys(categories)
   });
   
   return { fields, categories };
 }
 
 /**
- * Erkennt semantisch zusammengehörige Felder
+ * Detects semantically related fields
  * 
- * DATENGETRIEBEN:
- * - Gruppiert nach TYPE_CATEGORY, nicht nach Feldnamen
- * - "bewertung" + "beliebtheit" = beide numeric → zusammen
+ * DATA-DRIVEN:
+ * - Groups by TYPE_CATEGORY, not by field names
+ * - "rating" + "popularity" = both numeric → together
  */
 export function findRelatedFields(fields) {
   const groups = [];
   const used = new Set();
   
-  // Gruppe 1: Alle numerischen Felder zusammen
+  // Group 1: All numeric fields together
   const numericFields = Object.entries(fields)
     .filter(([_, f]) => f.category === 'numeric')
     .map(([name]) => name);
@@ -79,13 +92,13 @@ export function findRelatedFields(fields) {
   if (numericFields.length > 1) {
     groups.push({
       type: 'metrics',
-      label: 'Metriken',
+      label: 'Metrics',
       fields: numericFields
     });
     numericFields.forEach(f => used.add(f));
   }
   
-  // Gruppe 2: Ranges zusammen (Temperatur, etc.)
+  // Group 2: Ranges together (Temperature, etc.)
   const rangeFields = Object.entries(fields)
     .filter(([_, f]) => f.category === 'ranges')
     .map(([name]) => name);
@@ -93,13 +106,13 @@ export function findRelatedFields(fields) {
   if (rangeFields.length >= 1) {
     groups.push({
       type: 'ranges',
-      label: 'Bereiche',
+      label: 'Ranges',
       fields: rangeFields
     });
     rangeFields.forEach(f => used.add(f));
   }
   
-  // Gruppe 3: Multidimensionale Daten (Radar, Pie)
+  // Group 3: Multidimensional data (Radar, Pie)
   const multidimFields = Object.entries(fields)
     .filter(([_, f]) => f.category === 'multidim')
     .map(([name]) => name);
@@ -107,13 +120,13 @@ export function findRelatedFields(fields) {
   if (multidimFields.length >= 1) {
     groups.push({
       type: 'profile',
-      label: 'Profile',
+      label: 'Profiles',
       fields: multidimFields
     });
     multidimFields.forEach(f => used.add(f));
   }
   
-  // Gruppe 4: Sequentielle Daten
+  // Group 4: Sequential data
   const seqFields = Object.entries(fields)
     .filter(([_, f]) => f.category === 'sequential')
     .map(([name]) => name);
@@ -121,13 +134,13 @@ export function findRelatedFields(fields) {
   if (seqFields.length >= 1) {
     groups.push({
       type: 'timeline',
-      label: 'Zeitverläufe',
+      label: 'Timelines',
       fields: seqFields
     });
     seqFields.forEach(f => used.add(f));
   }
   
-  // Gruppe 5: Kategorische Daten
+  // Group 5: Categorical data
   const catFields = Object.entries(fields)
     .filter(([_, f]) => f.category === 'categorical')
     .map(([name]) => name);
@@ -135,13 +148,13 @@ export function findRelatedFields(fields) {
   if (catFields.length >= 1) {
     groups.push({
       type: 'categories',
-      label: 'Eigenschaften',
+      label: 'Properties',
       fields: catFields
     });
     catFields.forEach(f => used.add(f));
   }
   
-  // Rest: Einzelne Felder die nicht gruppiert wurden
+  // Rest: Single fields that weren't grouped
   Object.keys(fields).forEach(name => {
     if (!used.has(name)) {
       groups.push({
@@ -156,7 +169,7 @@ export function findRelatedFields(fields) {
 }
 
 /**
- * Berechnet Unterschiede zwischen Items
+ * Calculates differences between items
  * 
  * @returns {Object} { same, different, unique }
  */
@@ -165,13 +178,13 @@ export function calculateDiff(items) {
   
   const { fields } = analyzeItems(items);
   const diff = {
-    same: [],      // Felder mit identischen Werten
-    different: [], // Felder mit unterschiedlichen Werten
-    unique: []     // Felder die nur bei einem Item existieren
+    same: [],      // Fields with identical values
+    different: [], // Fields with different values
+    unique: []     // Fields that only exist on one item
   };
   
   Object.entries(fields).forEach(([name, field]) => {
-    const values = field.values.map(v => JSON.stringify(v.wert));
+    const values = field.values.map(v => JSON.stringify(v.value ?? v.wert));
     const uniqueValues = new Set(values);
     
     if (uniqueValues.size === 1) {

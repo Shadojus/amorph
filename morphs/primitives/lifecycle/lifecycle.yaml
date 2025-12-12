@@ -1,0 +1,32 @@
+# Lifecycle Morph Configuration
+# Circular or linear phase display
+
+id: lifecycle
+name: Lifecycle
+description: Circular or linear lifecycle phase display
+category: extended
+
+# Detection rules
+detection:
+  type: array
+  requiredKeys:
+    - phase
+    - duration
+  alternativeKeys:
+    - name
+    - label
+    - description
+    - days
+
+# Configuration
+config:
+  mode: circle  # circle | linear
+  showDuration: true
+  showLabels: true
+  animated: true
+  colors:
+    - "rgba(100, 220, 160, 0.85)"
+    - "rgba(0, 255, 255, 0.85)"
+    - "rgba(90, 160, 240, 0.85)"
+    - "rgba(128, 0, 255, 0.85)"
+    - "rgba(255, 0, 255, 0.85)"

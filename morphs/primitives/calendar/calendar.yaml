@@ -1,0 +1,41 @@
+# Calendar Morph Configuration
+# Year calendar with seasonal highlights
+
+id: calendar
+name: Calendar
+description: Annual calendar wheel or grid with activity markers
+category: extended
+
+# Detection rules
+detection:
+  type: array
+  requiredKeys:
+    - month
+    - active
+  alternativeKeys:
+    - season
+    - intensity
+
+# Configuration
+config:
+  mode: wheel  # wheel | grid
+  showLabels: true
+  showMonthNames: true
+  seasonColors:
+    spring: "rgba(100, 220, 160, 0.85)"
+    summer: "rgba(240, 190, 80, 0.85)"
+    autumn: "rgba(255, 128, 0, 0.85)"
+    winter: "rgba(90, 160, 240, 0.85)"
+  months:
+    - { id: 1, name: "Jan", season: "winter" }
+    - { id: 2, name: "Feb", season: "winter" }
+    - { id: 3, name: "Mar", season: "spring" }
+    - { id: 4, name: "Apr", season: "spring" }
+    - { id: 5, name: "May", season: "spring" }
+    - { id: 6, name: "Jun", season: "summer" }
+    - { id: 7, name: "Jul", season: "summer" }
+    - { id: 8, name: "Aug", season: "summer" }
+    - { id: 9, name: "Sep", season: "autumn" }
+    - { id: 10, name: "Oct", season: "autumn" }
+    - { id: 11, name: "Nov", season: "autumn" }
+    - { id: 12, name: "Dec", season: "winter" }

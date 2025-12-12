@@ -8,10 +8,10 @@
  * - Bild-Galerie für Bilder
  * - Radar/Pie für komplexe Daten
  * 
- * NEU: Perspektiven-basierte Compare-Views
- * - Theme-spezifische Compare-Morphs unter themes/[thema]/morphs/compare/
- * - Jede Perspektive hat einen eigenen Compare-Morph
- * - Fallback auf generische Compare-Morphs wenn kein Theme-Morph existiert
+ * DATENGETRIEBEN: Nutzt smartCompare aus morphs/compare/composites
+ * - Automatische Typ-Erkennung aus Datenstruktur
+ * - Automatische Gruppierung nach Kategorie
+ * - Perspektiven-Filter aus Schema
  * 
  * NEU: Lokale Suche mit Fuzzy-Matching
  * - Durchsucht die bereits geladenen Daten
@@ -36,37 +36,12 @@ import {
   createSection,
   setAktivePerspektivenFarben
 } from '../../morphs/index.js';
+import { smartCompare } from '../../morphs/compare/composites/index.js';
+import { createLegende } from '../../morphs/compare/base.js';
 import { highlightInContainer, clearHighlights } from '../../util/fetch.js';
 
-// Theme Compare Morphs (dynamisch geladen)
-let themeCompareMorphs = null;
-
-/**
- * Lädt die Theme-spezifischen Compare-Morphs
- * Pfad: themes/[thema]/morphs/compare/index.js
- */
-async function loadThemeCompareMorphs(thema = 'pilze') {
-  if (themeCompareMorphs) return themeCompareMorphs;
-  
-  try {
-    const module = await import(`../../themes/${thema}/morphs/compare/index.js`);
-    themeCompareMorphs = module;
-    debug.vergleich('Theme Compare-Morphs geladen', { 
-      thema, 
-      perspektiven: Object.keys(module.perspektivenMorphs || {}) 
-    });
-    return themeCompareMorphs;
-  } catch (err) {
-    debug.vergleich('Keine Theme Compare-Morphs gefunden, nutze Fallback', { thema, error: err.message });
-    return null;
-  }
-}
-
 export default async function init(ctx) {
-  debug.features('Vergleich/Sammel-Diagramm Feature Init');
-  
-  // Theme Compare-Morphs laden (async)
-  await loadThemeCompareMorphs();
+  debug.features('Compare/Collection diagram feature init');
   
   // Aktive Perspektiven tracken
   let aktivePerspektiven = [];
@@ -109,14 +84,14 @@ export default async function init(ctx) {
     const feldName = removeBtn.dataset.feldName;
     if (!feldName) return;
     
-    debug.vergleich('Feld abwählen via Button', { feldName });
+    debug.compare('Deselecting field via button', { feldName });
     
     // Alle Felder dieses Typs aus der Auswahl entfernen
     const entfernt = removeFeldAuswahl(feldName);
     
     if (entfernt > 0) {
-      // UI wird automatisch durch amorph:auswahl-geaendert Event aktualisiert
-      debug.vergleich('Felder entfernt', { feldName, entfernt });
+      // UI will be automatically updated via amorph:auswahl-geaendert event
+      debug.compare('Fields removed', { feldName, removed: entfernt });
     }
   });
   
@@ -151,9 +126,9 @@ export default async function init(ctx) {
     
     // Setze die aktiven Perspektiven-Farben für die Farbfilterung
     setAktivePerspektivenFarben(perspektivenFarben);
-    debug.vergleich('Perspektiven-Farben für Filterung gesetzt', { 
-      perspektiven: aktivePerspektiven,
-      farben: perspektivenFarben 
+    debug.compare('Perspective colors set for filtering', { 
+      perspectives: aktivePerspektiven,
+      colors: perspektivenFarben 
     });
     
     // Pilz-Farben erstellen (konsistent über alle Diagramme)
@@ -189,72 +164,92 @@ export default async function init(ctx) {
     });
     
     // =====================================================================
-    // PERSPEKTIVEN-MODUS: Theme Compare-Morphs nutzen
+    // PERSPEKTIVEN-MODUS: smartCompare mit Feld-Filterung pro Perspektive
     // =====================================================================
-    if (aktivePerspektiven.length > 0 && themeCompareMorphs?.perspektivenMorphs) {
-      debug.vergleich('Perspektiven-Modus aktiv', { 
-        perspektiven: aktivePerspektiven,
-        verfügbar: Object.keys(themeCompareMorphs.perspektivenMorphs)
+    if (aktivePerspektiven.length > 0) {
+      debug.compare('Perspectives mode active (smartCompare)', { 
+        perspectives: aktivePerspektiven
       });
-      
-      // DEDUPLIZIERUNG: Felder die bereits gerendert wurden tracken
-      const gerenderteFelder = new Set();
       
       // Pro aktiver Perspektive einen Compare-Block rendern
       for (const perspId of aktivePerspektiven) {
-        const compareFn = themeCompareMorphs.perspektivenMorphs[perspId];
-        
-        if (!compareFn) {
-          debug.vergleich('Kein Theme-Morph für Perspektive', { perspId });
-          continue;
-        }
-        
         // Perspektive aus Schema holen
         const perspektive = getPerspektive(perspId);
         if (!perspektive) {
-          debug.vergleich('Perspektive nicht im Schema', { perspId });
+          debug.compare('Perspective not in schema', { perspId });
           continue;
         }
         
         try {
-          // Theme Compare-Morph aufrufen MIT gerenderteFelder für Deduplizierung
-          const perspEl = compareFn(compareItems, perspektive, { 
-            skipFelder: gerenderteFelder 
-          });
+          // Perspektiven-Container erstellen
+          const perspContainer = document.createElement('div');
+          perspContainer.className = `compare-perspektive compare-${perspId}`;
+          perspContainer.setAttribute('data-perspektive', perspId);
           
-          if (perspEl) {
-            // Perspektiven-Container stylen
-            perspEl.classList.add('compare-perspektive-block');
-            perspEl.setAttribute('data-perspektive', perspId);
-            
-            // Perspektiven-Farben als CSS-Variablen setzen
-            if (perspektive.farben) {
-              perspektive.farben.forEach((farbe, i) => {
-                perspEl.style.setProperty(`--persp-farbe-${i}`, farbe);
-              });
+          // Header
+          const header = document.createElement('div');
+          header.className = 'compare-perspektive-header';
+          header.innerHTML = `
+            <span class="perspektive-symbol">${perspektive.symbol || '📊'}</span>
+            <span class="perspektive-name">${perspektive.name || perspId}</span>
+            <span class="perspektive-count">${compareItems.length} Items</span>
+          `;
+          perspContainer.appendChild(header);
+          
+          // Legende
+          perspContainer.appendChild(createLegende(compareItems));
+          
+          // smartCompare mit Feld-Filter aus Perspektive
+          const perspectiveFields = perspektive.felder || perspektive.fields || null;
+          const compareConfig = perspectiveFields 
+            ? { includeOnly: perspectiveFields }
+            : {};
+          
+          const compareEl = smartCompare(compareItems, compareConfig);
+          perspContainer.appendChild(compareEl);
+          
+          // Perspektiven-Farben als CSS-Variablen setzen
+          // --p-farbe ist die Hauptfarbe für die linke Leuchtlinie
+          // --p-gradient für multi-color Gradients
+          if (perspektive.farben && perspektive.farben.length > 0) {
+            // Hauptfarbe setzen (erste Farbe)
+            perspContainer.style.setProperty('--p-farbe', perspektive.farben[0]);
+            // Gradient für multi-color
+            if (perspektive.farben.length > 1) {
+              const gradientStops = perspektive.farben.map((f, i) => {
+                const percent = (i / (perspektive.farben.length - 1)) * 100;
+                return `${f} ${percent}%`;
+              }).join(', ');
+              perspContainer.style.setProperty('--p-gradient', `linear-gradient(180deg, ${gradientStops})`);
             }
-            
-            diagramme.appendChild(perspEl);
-            debug.vergleich('Theme Compare-Morph gerendert', { perspId, items: compareItems.length });
+            // Auch einzelne Farben für komplexere Effekte
+            perspektive.farben.forEach((farbe, i) => {
+              perspContainer.style.setProperty(`--p-farbe-${i}`, farbe);
+            });
           }
+          
+          diagramme.appendChild(perspContainer);
+          debug.compare('smartCompare rendered for perspective', { perspId, items: compareItems.length });
+          
         } catch (err) {
-          debug.vergleich('Fehler beim Theme Compare-Morph', { perspId, error: err.message });
+          debug.compare('Error in smartCompare', { perspId, error: err.message });
+          console.error('[COMPARE] smartCompare error:', err);
         }
       }
       
       // Legende
       renderLegende(nachPilz, pilzFarben);
-      debug.features('Perspektiven-Compare gerendert', { 
-        perspektiven: aktivePerspektiven.length, 
-        pilze: nachPilz.size 
+      debug.features('Perspectives compare rendered', { 
+        perspectives: aktivePerspektiven.length, 
+        items: nachPilz.size 
       });
       return;
     }
     
     // =====================================================================
-    // FALLBACK-MODUS: Feld-für-Feld mit generischen Compare-Morphs
+    // FALLBACK MODE: Field-by-field with generic compare-morphs
     // =====================================================================
-    debug.vergleich('Fallback-Modus (keine Perspektiven aktiv)');
+    debug.compare('Fallback mode (no perspectives active)');
     
     // Pro Feld ein Diagramm mit Compare-Morphs
     for (const [feldName, rawItems] of nachFeld) {
@@ -269,14 +264,14 @@ export default async function init(ctx) {
       const typ = cfg?.typ || detectType(firstWert) || 'text';
       
       // DEBUG
-      debug.features('Vergleich rawItems', { 
+      debug.features('Compare rawItems', { 
         feldName, 
         typ,
         items: rawItems.map(i => ({
-          pilzId: i.pilzId,
-          hatPilzDaten: !!i.pilzDaten,
-          pilzName: getItemName(i.pilzDaten),  // DATENGETRIEBEN: aus schema.meta.nameField
-          wert: typeof i.wert
+          itemId: i.pilzId,
+          hasItemData: !!i.pilzDaten,
+          itemName: getItemName(i.pilzDaten),
+          valueType: typeof i.wert
         }))
       });
       
@@ -301,12 +296,12 @@ export default async function init(ctx) {
           ? extractedName 
           : (item.pilzDaten?.name || item.pilzDaten?.titel || `Pilz ${normalizedId}`);
         
-        debug.vergleich('Item-Name Extraktion', {
-          pilzId: normalizedId,
-          hatPilzDaten: !!item.pilzDaten,
-          pilzDatenName: item.pilzDaten?.name,
-          extrahierterName: extractedName,
-          finalerName: itemName
+        debug.compare('Item name extraction', {
+          itemId: normalizedId,
+          hasItemData: !!item.pilzDaten,
+          itemDataName: item.pilzDaten?.name,
+          extractedName: extractedName,
+          finalName: itemName
         });
         
         return {
@@ -327,11 +322,11 @@ export default async function init(ctx) {
       // Perspektiven-spezifische Morph-Config holen (falls vorhanden)
       const perspMorphConfig = getPerspektivenMorphConfig(feldName, aktivePerspektiven);
       
-      debug.vergleich('Morph-Config für Feld', {
+      debug.compare('Morph config for field', {
         feldName,
-        aktivePerspektiven,
+        activePerspectives: aktivePerspektiven,
         perspMorphConfig,
-        hatOverride: !!perspMorphConfig
+        hasOverride: !!perspMorphConfig
       });
       
       // Config zusammenbauen: 
@@ -346,29 +341,29 @@ export default async function init(ctx) {
         perspektive: perspMorphConfig?.perspektive
       };
       
-      debug.vergleich('Farben-Setup', {
+      debug.compare('Colors setup', {
         feldName,
-        schemaFarben: cfg?.farben,
-        perspektiveFarben: perspMorphConfig?.farben,
+        schemaColors: cfg?.farben,
+        perspectiveColors: perspMorphConfig?.farben,
         label: morphConfig.label
       });
       
       // Typ: Perspektiven-Config kann den Morph-Typ überschreiben
       const morphTyp = perspMorphConfig?.typ || typ;
       
-      debug.vergleich('Morph-Typ Entscheidung', {
+      debug.compare('Morph type decision', {
         feldName,
-        schemaTyp: typ,
-        perspektivenTyp: perspMorphConfig?.typ,
-        finalerTyp: morphTyp,
-        perspektive: perspMorphConfig?.perspektive || 'keine'
+        schemaType: typ,
+        perspectiveType: perspMorphConfig?.typ,
+        finalType: morphTyp,
+        perspective: perspMorphConfig?.perspektive || 'none'
       });
       
-      debug.features('Morph-Auswahl', { 
+      debug.features('Morph selection', { 
         feldName, 
-        standardTyp: typ, 
-        morphTyp,
-        perspektive: perspMorphConfig?.perspektive || 'keine'
+        defaultType: typ, 
+        morphType: morphTyp,
+        perspective: perspMorphConfig?.perspektive || 'none'
       });
       
       // DEBUG: Finales items Array DIREKT vor Übergabe
@@ -409,10 +404,10 @@ export default async function init(ctx) {
             }).join(', ');
             morphEl.style.setProperty('--feld-bg-gradient', `linear-gradient(135deg, ${bgStops})`);
             
-            debug.vergleich('MULTI-Perspektiven Glow', {
+            debug.compare('MULTI perspectives glow', {
               feldName,
-              anzahl: alleFarben.perspektiven.length,
-              perspektiven: alleFarben.perspektiven.map(p => p.id)
+              count: alleFarben.perspektiven.length,
+              perspectives: alleFarben.perspektiven.map(p => p.id)
             });
           } else {
             // EINZEL-PERSPEKTIVE: Nur eine Perspektive → 4-Farben-Grid
@@ -427,10 +422,10 @@ export default async function init(ctx) {
             if (persp.farben[2]) morphEl.style.setProperty('--feld-p-farbe-2', persp.farben[2]);
             if (persp.farben[3]) morphEl.style.setProperty('--feld-p-farbe-3', persp.farben[3]);
             
-            debug.vergleich('Single-Perspektive Glow', {
+            debug.compare('Single perspective glow', {
               feldName,
-              perspektive: persp.id,
-              farben: persp.farben
+              perspective: persp.id,
+              colors: persp.farben
             });
           }
         }
@@ -440,7 +435,7 @@ export default async function init(ctx) {
     
     // Legende
     renderLegende(nachPilz, pilzFarben);
-    debug.features('Sammel-Diagramm gerendert', { felder: nachFeld.size, pilze: nachPilz.size });
+    debug.features('Collection diagram rendered', { fields: nachFeld.size, items: nachPilz.size });
   }
 
   /**
@@ -471,7 +466,7 @@ export default async function init(ctx) {
       // Leere Suche: Highlights entfernen
       clearHighlights(diagramme);
       clearHighlights(legende);
-      debug.suche('Vergleich: Highlights entfernt');
+      debug.search('Compare: Highlights removed');
       return;
     }
     
@@ -481,13 +476,13 @@ export default async function init(ctx) {
     const anzahl = highlightInContainer(diagramme, aktuelleQuery, aktuelleMatchedTerms);
     highlightInContainer(legende, aktuelleQuery, aktuelleMatchedTerms);
     
-    debug.suche('Vergleich: Highlights angewendet', { query: aktuelleQuery, anzahl });
+    debug.search('Compare: Highlights applied', { query: aktuelleQuery, count: anzahl });
   }
   
   // Auf Header-Suche Event hören
   document.addEventListener('header:suche:ergebnisse', (e) => {
     const { query, matchedTerms } = e.detail || {};
-    debug.suche('Vergleich: Suche-Event empfangen', { query, matchedTerms: matchedTerms?.size });
+    debug.search('Compare: Search event received', { query, matchedTerms: matchedTerms?.size });
     
     // Highlights anwenden wenn Vergleich sichtbar
     if (ctx.dom.offsetParent !== null) {
@@ -524,8 +519,8 @@ export default async function init(ctx) {
   // Perspektiven-Änderungen beachten
   document.addEventListener('perspektiven:geaendert', (e) => {
     aktivePerspektiven = e.detail?.aktiv || [];
-    debug.vergleich('Perspektiven Event empfangen', {
-      aktiv: aktivePerspektiven,
+    debug.compare('Perspectives event received', {
+      active: aktivePerspektiven,
       detail: e.detail
     });
     
@@ -557,5 +552,5 @@ export default async function init(ctx) {
   ctx.dom.style.display = 'none';
   ctx.mount();
   
-  debug.features('Vergleich/Sammel-Diagramm bereit');
+  debug.features('Compare/Collection diagram ready');
 }

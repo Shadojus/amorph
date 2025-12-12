@@ -1,31 +1,32 @@
 /**
- * Debug Observer - Zentrales Logging für AMORPH
+ * Debug Observer - Centralized Logging for AMORPH
  * 
- * Alle wichtigen Events werden hier geloggt, nicht verstreut im Code.
- * Überwacht das gesamte System: Init, Config, Daten, Features, Morphs, Render, User-interactions
+ * All important events are logged here, not scattered throughout the code.
+ * Monitors the entire system: Init, Config, Data, Features, Morphs, Render, User-Interactions
  * 
- * ARCHITEKTUR: KEINE console.log im Code! Nur debug.* verwenden!
+ * ARCHITECTURE: NO console.log in code! Only use debug.* methods!
  */
 
 const STYLES = {
   // System
   amorph: 'color: #f472b6; font-weight: bold; font-size: 14px',
   config: 'color: #34d399; font-weight: bold',
-  daten: 'color: #60a5fa; font-weight: bold',
+  data: 'color: #60a5fa; font-weight: bold',
+  schema: 'color: #67e8f9; font-weight: bold',
   
   // Features
   features: 'color: #a78bfa; font-weight: bold',
   header: 'color: #c084fc; font-weight: bold',
-  suche: 'color: #38bdf8; font-weight: bold',
-  perspektiven: 'color: #06b6d4; font-weight: bold',
+  search: 'color: #38bdf8; font-weight: bold',
+  perspectives: 'color: #06b6d4; font-weight: bold',
   grid: 'color: #84cc16; font-weight: bold',
-  ansichten: 'color: #22c55e; font-weight: bold',
-  vergleich: 'color: #14b8a6; font-weight: bold',
+  views: 'color: #22c55e; font-weight: bold',
+  compare: 'color: #14b8a6; font-weight: bold',
   detail: 'color: #10b981; font-weight: bold',
   
   // Morphs & Rendering
   morphs: 'color: #fb7185; font-weight: bold',
-  compare: 'color: #e86080; font-weight: bold',
+  detection: 'color: #e879f9; font-weight: bold',
   render: 'color: #fbbf24; font-weight: bold',
   mount: 'color: #facc15; font-weight: bold',
   unmount: 'color: #a3a3a3; font-weight: bold',
@@ -33,9 +34,9 @@ const STYLES = {
   // Utils
   semantic: 'color: #5aa0d8; font-weight: bold',
   
-  // User-Interaktion
+  // User-Interaction
   observer: 'color: #f87171; font-weight: bold',
-  klick: 'color: #fb923c; font-weight: bold',
+  click: 'color: #fb923c; font-weight: bold',
   hover: 'color: #fdba74; font-weight: bold',
   input: 'color: #fcd34d; font-weight: bold',
   scroll: 'color: #d4d4d4; font-weight: bold',
@@ -44,8 +45,8 @@ const STYLES = {
   session: 'color: #22d3ee; font-weight: bold',
   navigation: 'color: #2dd4bf; font-weight: bold',
   
-  // Fehler & Warnungen
-  fehler: 'color: #ef4444; font-weight: bold',
+  // Errors & Warnings
+  error: 'color: #ef4444; font-weight: bold',
   warn: 'color: #fbbf24; font-weight: bold',
   
   // Standard
@@ -57,142 +58,147 @@ class DebugObserver {
     this.enabled = enabled;
     this.history = [];
     this.maxHistory = 500;
-    this.filter = null; // Kann auf bestimmte Kategorien filtern
+    this.filter = null;
     this.startTime = Date.now();
-    // Exzessive Kategorien standardmäßig stummschalten
-    this.muted = new Set(['morphs', 'mount', 'unmount', 'scroll', 'intersection']);
-    this.verbose = false; // Wenn true: alle Kategorien loggen (muted ignorieren)
+    // Mute excessive categories by default - keep log short!
+    this.muted = new Set(['mount', 'unmount', 'scroll', 'intersection', 'hover', 'morphs', 'detection', 'render', 'semantic']);
+    this.verbose = false; // If true: log all categories (ignore muted)
   }
   
-  log(kategorie, nachricht, daten = null) {
+  log(category, message, data = null) {
     if (!this.enabled) return;
-    if (this.filter && !this.filter.includes(kategorie)) return;
-    // Stummgeschaltete Kategorien nur bei verbose=true loggen
-    if (!this.verbose && this.muted.has(kategorie)) return;
+    if (this.filter && !this.filter.includes(category)) return;
+    if (!this.verbose && this.muted.has(category)) return;
     
-    const zeit = new Date().toLocaleTimeString('de-DE');
+    const time = new Date().toLocaleTimeString('en-US', { hour12: false });
     const elapsed = Date.now() - this.startTime;
-    const style = STYLES[kategorie] || STYLES.muted;
-    const prefix = `[${kategorie.toUpperCase()}]`;
+    const style = STYLES[category] || STYLES.muted;
+    const prefix = `[${category.toUpperCase()}]`;
     
-    // In History speichern
-    const entry = { zeit, elapsed, kategorie, nachricht, daten, timestamp: Date.now() };
+    // Store in history
+    const entry = { time, elapsed, category, message, data, timestamp: Date.now() };
     this.history.push(entry);
     if (this.history.length > this.maxHistory) {
       this.history.shift();
     }
     
-    // Console ausgeben
-    if (daten !== null) {
-      console.log(`%c${prefix}%c [${zeit}] ${nachricht}`, style, STYLES.muted, daten);
+    // Output to console
+    if (data !== null) {
+      console.log(`%c${prefix}%c [${time}] ${message}`, style, STYLES.muted, data);
     } else {
-      console.log(`%c${prefix}%c [${zeit}] ${nachricht}`, style, STYLES.muted);
+      console.log(`%c${prefix}%c [${time}] ${message}`, style, STYLES.muted);
     }
     
     return entry;
   }
   
   // === SYSTEM ===
-  amorph(nachricht, daten = null) { return this.log('amorph', nachricht, daten); }
-  config(nachricht, daten = null) { return this.log('config', nachricht, daten); }
-  daten(nachricht, daten = null) { return this.log('daten', nachricht, daten); }
+  amorph(message, data = null) { return this.log('amorph', message, data); }
+  config(message, data = null) { return this.log('config', message, data); }
+  data(message, data = null) { return this.log('data', message, data); }
+  schema(message, data = null) { return this.log('schema', message, data); }
   
   // === FEATURES ===
-  features(nachricht, daten = null) { return this.log('features', nachricht, daten); }
-  header(nachricht, daten = null) { return this.log('header', nachricht, daten); }
-  suche(nachricht, daten = null) { return this.log('suche', nachricht, daten); }
-  perspektiven(nachricht, daten = null) { return this.log('perspektiven', nachricht, daten); }
-  grid(nachricht, daten = null) { return this.log('grid', nachricht, daten); }
-  ansichten(nachricht, daten = null) { return this.log('ansichten', nachricht, daten); }
-  vergleich(nachricht, daten = null) { return this.log('vergleich', nachricht, daten); }
-  detail(nachricht, daten = null) { return this.log('detail', nachricht, daten); }
+  features(message, data = null) { return this.log('features', message, data); }
+  header(message, data = null) { return this.log('header', message, data); }
+  search(message, data = null) { return this.log('search', message, data); }
+  perspectives(message, data = null) { return this.log('perspectives', message, data); }
+  grid(message, data = null) { return this.log('grid', message, data); }
+  views(message, data = null) { return this.log('views', message, data); }
+  compare(message, data = null) { return this.log('compare', message, data); }
+  detail(message, data = null) { return this.log('detail', message, data); }
   
   // === MORPHS & RENDERING ===
-  morphs(nachricht, daten = null) { return this.log('morphs', nachricht, daten); }
-  compare(nachricht, daten = null) { return this.log('compare', nachricht, daten); }
-  render(nachricht, daten = null) { return this.log('render', nachricht, daten); }
-  mount(nachricht, daten = null) { return this.log('mount', nachricht, daten); }
-  unmount(nachricht, daten = null) { return this.log('unmount', nachricht, daten); }
+  morphs(message, data = null) { return this.log('morphs', message, data); }
+  detection(message, data = null) { return this.log('detection', message, data); }
+  render(message, data = null) { return this.log('render', message, data); }
+  mount(message, data = null) { return this.log('mount', message, data); }
+  unmount(message, data = null) { return this.log('unmount', message, data); }
   
   // === UTILS ===
-  semantic(nachricht, daten = null) { return this.log('semantic', nachricht, daten); }
+  semantic(message, data = null) { return this.log('semantic', message, data); }
   
-  // === USER-INTERAKTION ===
-  observer(nachricht, daten = null) { return this.log('observer', nachricht, daten); }
-  klick(nachricht, daten = null) { return this.log('klick', nachricht, daten); }
-  hover(nachricht, daten = null) { return this.log('hover', nachricht, daten); }
-  input(nachricht, daten = null) { return this.log('input', nachricht, daten); }
-  scroll(nachricht, daten = null) { return this.log('scroll', nachricht, daten); }
+  // === USER-INTERACTION ===
+  observer(message, data = null) { return this.log('observer', message, data); }
+  click(message, data = null) { return this.log('click', message, data); }
+  hover(message, data = null) { return this.log('hover', message, data); }
+  input(message, data = null) { return this.log('input', message, data); }
+  scroll(message, data = null) { return this.log('scroll', message, data); }
   
   // === SESSION & NAVIGATION ===
-  session(nachricht, daten = null) { return this.log('session', nachricht, daten); }
-  navigation(nachricht, daten = null) { return this.log('navigation', nachricht, daten); }
+  session(message, data = null) { return this.log('session', message, data); }
+  navigation(message, data = null) { return this.log('navigation', message, data); }
   
-  // === FEHLER & WARNUNGEN ===
-  fehler(nachricht, daten = null) {
-    const entry = this.log('fehler', nachricht, daten);
-    if (daten instanceof Error) {
-      console.error(daten);
+  // === ERRORS & WARNINGS ===
+  error(message, data = null) {
+    const entry = this.log('error', message, data);
+    if (data instanceof Error) {
+      console.error(data);
     }
     return entry;
   }
   
-  warn(nachricht, daten = null) {
-    return this.log('warn', nachricht, daten);
+  warn(message, data = null) {
+    return this.log('warn', message, data);
   }
   
+  // === LEGACY ALIASES (backward compatibility) ===
+  daten(m, d) { return this.data(m, d); }
+  suche(m, d) { return this.search(m, d); }
+  perspektiven(m, d) { return this.perspectives(m, d); }
+  ansichten(m, d) { return this.views(m, d); }
+  vergleich(m, d) { return this.compare(m, d); }
+  klick(m, d) { return this.click(m, d); }
+  fehler(m, d) { return this.error(m, d); }
+  
   // === HISTORY & FILTERING ===
-  getHistory(kategorie = null) {
-    if (kategorie) {
-      return this.history.filter(e => e.kategorie === kategorie);
+  getHistory(category = null) {
+    if (category) {
+      return this.history.filter(e => e.category === category);
     }
     return [...this.history];
   }
   
-  // statisticsen
   getStats() {
     const stats = {};
     for (const entry of this.history) {
-      stats[entry.kategorie] = (stats[entry.kategorie] || 0) + 1;
+      stats[entry.category] = (stats[entry.category] || 0) + 1;
     }
     return stats;
   }
   
-  // Timeline der letzten N Einträge
   getTimeline(limit = 20) {
     return this.history.slice(-limit).map(e => ({
-      zeit: e.zeit,
+      time: e.time,
       ms: e.elapsed,
-      kategorie: e.kategorie,
-      nachricht: e.nachricht
+      category: e.category,
+      message: e.message
     }));
   }
   
-  // Filter setzen (nur bestimmte Kategorien loggen)
-  setFilter(kategorien) {
-    this.filter = Array.isArray(kategorien) ? kategorien : [kategorien];
-    console.log(`%c[DEBUG]%c Filter aktiv:`, STYLES.observer, STYLES.muted, this.filter);
+  setFilter(categories) {
+    this.filter = Array.isArray(categories) ? categories : [categories];
+    console.log(`%c[DEBUG]%c Filter active:`, STYLES.observer, STYLES.muted, this.filter);
   }
   
   clearFilter() {
     this.filter = null;
-    console.log(`%c[DEBUG]%c Filter entfernt`, STYLES.observer, STYLES.muted);
+    console.log(`%c[DEBUG]%c Filter removed`, STYLES.observer, STYLES.muted);
   }
   
-  // Kategorien stummschalten/aktivieren
-  mute(kategorie) {
-    this.muted.add(kategorie);
-    console.log(`%c[DEBUG]%c ${kategorie} stummgeschaltet`, STYLES.observer, STYLES.muted);
+  mute(category) {
+    this.muted.add(category);
+    console.log(`%c[DEBUG]%c ${category} muted`, STYLES.observer, STYLES.muted);
   }
   
-  unmute(kategorie) {
-    this.muted.delete(kategorie);
-    console.log(`%c[DEBUG]%c ${kategorie} aktiviert`, STYLES.observer, STYLES.muted);
+  unmute(category) {
+    this.muted.delete(category);
+    console.log(`%c[DEBUG]%c ${category} enabled`, STYLES.observer, STYLES.muted);
   }
   
   setVerbose(value = true) {
     this.verbose = value;
-    console.log(`%c[DEBUG]%c Verbose: ${value ? 'AN' : 'AUS'}`, STYLES.observer, STYLES.muted);
+    console.log(`%c[DEBUG]%c Verbose: ${value ? 'ON' : 'OFF'}`, STYLES.observer, STYLES.muted);
   }
   
   clear() {
@@ -203,12 +209,11 @@ class DebugObserver {
   enable() { this.enabled = true; }
   disable() { this.enabled = false; }
   
-  // Zusammenfassung ausgeben
   summary() {
     const stats = this.getStats();
-    console.log('%c[DEBUG] Zusammenfassung', STYLES.amorph);
+    console.log('%c[DEBUG] Summary', STYLES.amorph);
     console.table(stats);
-    console.log('Letzte Events:', this.getTimeline(10));
+    console.log('Recent events:', this.getTimeline(10));
   }
 }
 

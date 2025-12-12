@@ -1,0 +1,94 @@
+{
+  "economic_value": "minimal (non-commercial due to toxicity)",
+  
+  "market_sectors": [
+    { "label": "Commercial food", "value": 0 },
+    { "label": "Research/Pharma", "value": 15 },
+    { "label": "Decorative/Cultural", "value": 40 },
+    { "label": "Ethnobotanical", "value": 25 },
+    { "label": "Education", "value": 20 }
+  ],
+  
+  "market_value": {
+    "dried_specimens": {
+      "value": 25,
+      "currency": "USD",
+      "unit": "per ounce",
+      "market": "Online ethnobotanical vendors"
+    },
+    "spore_prints": {
+      "value": 15,
+      "currency": "USD",
+      "unit": "each",
+      "market": "Microscopy/Research"
+    },
+    "decorative_items": {
+      "value": 5,
+      "currency": "EUR",
+      "unit": "per item",
+      "market": "Garden ornaments"
+    }
+  },
+  
+  "trade_status": {
+    "commercial_harvest": false,
+    "regulated": "Varies by country",
+    "legal_status": "Legal in most countries, banned in some"
+  },
+  
+  "legal_status_by_country": {
+    "USA": "Generally legal (except Louisiana)",
+    "UK": "Legal (fresh), unclear (prepared)",
+    "Netherlands": "Banned since 2008",
+    "Australia": "Controlled substance",
+    "Russia": "Legal"
+  },
+  
+  "economic_impact": {
+    "direct": "Negligible commercial value",
+    "indirect": "Tourism (iconic mushroom of forests)"
+  },
+  
+  "tourism_value": true,
+  
+  "research_investment": {
+    "pharmaceutical": {
+      "value": 500000,
+      "currency": "USD",
+      "period": "annual estimate"
+    }
+  },
+  
+  "patent_interest": [
+    { "area": "Muscimol derivatives", "status": "Active research" },
+    { "area": "Ibotenic acid applications", "status": "Exploratory" }
+  ],
+  
+  "comparison_to_edible_mushrooms": {
+    "porcini_value": {
+      "value": 50,
+      "currency": "EUR",
+      "unit": "per kg dried"
+    },
+    "fly_agaric_value": {
+      "value": 0,
+      "currency": "EUR",
+      "unit": "per kg (not sold as food)"
+    }
+  },
+  
+  "market_trends": [
+    { "year": 2020, "trend": "Increased online ethnobotanical interest" },
+    { "year": 2022, "trend": "Microdosing community attention" },
+    { "year": 2023, "trend": "Regulatory discussions in some regions" }
+  ],
+  
+  "ecosystem_services": {
+    "forest_health": "High value - mycorrhizal partnership",
+    "carbon_sequestration": "Contributes as part of forest ecosystem",
+    "economic_value": "Not quantified but significant"
+  },
+  
+  "commercial_cultivation": false,
+  "commercial_viability": 1
+}

@@ -16,10 +16,10 @@ let morphsConfigCache = null;
  */
 export function setSchema(schema) {
   schemaCache = schema;
-  debug.suche('Schema geladen', { 
-    felder: Object.keys(schema?.felder || {}),
-    semantik: Object.keys(schema?.semantik || {}),
-    perspektiven: Object.keys(schema?.perspektiven || {}),
+  debug.search('Schema loaded', { 
+    fields: Object.keys(schema?.felder || {}),
+    semantics: Object.keys(schema?.semantik || {}),
+    perspectives: Object.keys(schema?.perspektiven || {}),
     meta: schema?.meta
   });
 }
@@ -109,7 +109,7 @@ export function sortBySchemaOrder(obj) {
  */
 export function semanticScore(item, query) {
   if (!schemaCache?.semantik) {
-    debug.warn('Semantik: Kein Schema geladen!');
+    debug.warn('Semantics: No schema loaded!');
     return { score: 0, matches: [] };
   }
   
@@ -117,10 +117,10 @@ export function semanticScore(item, query) {
   const matchedTerms = new Set();
   const q = query.toLowerCase();
   
-  debug.suche('Semantik-Analyse startet', { 
+  debug.search('Semantic analysis starting', { 
     item: item.name || item.id, 
     query: q,
-    regeln: Object.keys(schemaCache.semantik).length
+    rules: Object.keys(schemaCache.semantik).length
   });
   
   // Durch alle semantischen Regeln iterieren
@@ -203,7 +203,7 @@ export function semanticScore(item, query) {
     // Score addieren wenn gematcht
     if (matched) {
       score += regel.score || 30;
-      debug.suche(`Semantik-Match: ${regelName}`, { 
+      debug.search(`Semantic match: ${regelName}`, { 
         feld, 
         score: regel.score || 30,
         matches: [...matchedTerms].slice(-3)
@@ -213,7 +213,7 @@ export function semanticScore(item, query) {
   
   // Ergebnis loggen
   if (score > 0) {
-    debug.suche('Semantik-Ergebnis', { 
+    debug.search('Semantic result', { 
       item: item.name || item.id, 
       totalScore: score, 
       matchCount: matchedTerms.size 
@@ -228,25 +228,25 @@ export function semanticScore(item, query) {
  */
 export function getPerspektivenKeywords() {
   if (!schemaCache?.perspektiven) {
-    debug.warn('Perspektiven: Kein Schema geladen!');
+    debug.warn('Perspectives: No schema loaded!');
     return {};
   }
   
   const result = {};
   for (const [id, config] of Object.entries(schemaCache.perspektiven)) {
     result[id] = config.keywords || [];
-    // Debug: Zeige wie viele Keywords pro Perspektive
+    // Debug: Show keywords per perspective
     if (result[id].length > 0) {
-      debug.perspektiven(`Keywords für ${id}`, { 
-        anzahl: result[id].length,
-        erste3: result[id].slice(0, 3)
+      debug.perspectives(`Keywords for ${id}`, { 
+        count: result[id].length,
+        first3: result[id].slice(0, 3)
       });
     }
   }
-  debug.perspektiven('Keywords aus Schema geladen', { 
-    anzahl: Object.keys(result).length,
-    perspektiven: Object.keys(result),
-    mitKeywords: Object.entries(result).filter(([k, v]) => v.length > 0).map(([k]) => k)
+  debug.perspectives('Keywords from schema loaded', { 
+    count: Object.keys(result).length,
+    perspectives: Object.keys(result),
+    withKeywords: Object.entries(result).filter(([k, v]) => v.length > 0).map(([k]) => k)
   });
   return result;
 }
@@ -256,25 +256,25 @@ export function getPerspektivenKeywords() {
  */
 export function getPerspektivenListe() {
   if (!schemaCache?.perspektiven) {
-    debug.warn('Perspektiven-Liste: Kein Schema geladen!');
+    debug.warn('Perspective list: No schema loaded!');
     return [];
   }
   
   const liste = Object.entries(schemaCache.perspektiven).map(([id, config]) => {
-    // Unterstütze sowohl `farben` (Array) als auch `farbe` (String) für Kompatibilität
-    const farben = config.farben || (config.farbe ? [config.farbe] : null);
+    // Unterstütze englisch (colors/color) und deutsch (farben/farbe)
+    const farben = config.colors || config.farben || (config.color ? [config.color] : null) || (config.farbe ? [config.farbe] : null);
     return {
       id,
       name: config.name || id,
       symbol: config.symbol || '',
       farbe: farben ? farben[0] : null, // Hauptfarbe für Kompatibilität
       farben: farben, // Vollständiges Farb-Grid
-      felder: config.felder || [],
+      felder: config.fields || config.felder || [],
       morphs: config.morphs || {} // Perspektiven-spezifische Morph-Configs
     };
   });
   
-  debug.perspektiven('Liste aus Schema', { anzahl: liste.length });
+  debug.perspectives('List from schema', { count: liste.length });
   return liste;
 }
 
@@ -302,18 +302,18 @@ export function getPerspektivenMorphConfig(feldName, aktivePerspektiven = []) {
   });
   
   if (!schemaCache?.perspektiven || !aktivePerspektiven.length) {
-    debug.semantic('Keine Perspektiven oder kein Schema');
+    debug.semantic('No perspectives or no schema');
     return null;
   }
   
   // Priorisiere erste aktive Perspektive die eine Config für dieses Feld hat
   for (const perspId of aktivePerspektiven) {
     const persp = schemaCache.perspektiven[perspId];
-    debug.semantic('Prüfe Perspektive', {
+    debug.semantic('Checking perspective', {
       perspId,
-      hatPerspektive: !!persp,
-      hatMorphs: !!persp?.morphs,
-      morphsFürFeld: persp?.morphs?.[feldName]
+      hasPerspective: !!persp,
+      hasMorphs: !!persp?.morphs,
+      morphsForField: persp?.morphs?.[feldName]
     });
     
     if (persp?.morphs?.[feldName]) {
@@ -322,13 +322,13 @@ export function getPerspektivenMorphConfig(feldName, aktivePerspektiven = []) {
         perspektive: perspId,
         farben: persp.farben
       };
-      debug.semantic('Morph-Config gefunden', result);
-      debug.perspektiven('Morph-Config gefunden', { feldName, perspektive: perspId, config: persp.morphs[feldName] });
+      debug.semantic('Morph config found', result);
+      debug.perspectives('Morph config found', { fieldName: feldName, perspective: perspId, config: persp.morphs[feldName] });
       return result;
     }
   }
   
-  debug.semantic('Keine Morph-Config für Feld', { feldName });
+  debug.semantic('No morph config for field', { fieldName: feldName });
   return null;
 }
 
@@ -369,11 +369,11 @@ export function getAllePerspektivenFarben(feldName, aktivePerspektiven = []) {
   
   result.isMulti = result.perspektiven.length > 1;
   
-  debug.semantic('Alle Perspektiven-Farben', { 
-    feldName, 
-    anzahl: result.perspektiven.length, 
+  debug.semantic('All perspective colors', { 
+    fieldName: feldName, 
+    count: result.perspektiven.length, 
     isMulti: result.isMulti, 
-    perspektiven: result.perspektiven.map(p => p.id) 
+    perspectives: result.perspektiven.map(p => p.id) 
   });
   
   return result;
@@ -384,7 +384,7 @@ export function getAllePerspektivenFarben(feldName, aktivePerspektiven = []) {
  */
 export function getSuchfelder() {
   if (!schemaCache?.felder) {
-    debug.warn('Suchfelder: Kein Schema geladen!');
+    debug.warn('Search fields: No schema loaded!');
     return {};
   }
   
@@ -397,9 +397,9 @@ export function getSuchfelder() {
       };
     }
   }
-  debug.suche('Suchfelder aus Schema', { 
-    anzahl: Object.keys(result).length,
-    felder: Object.keys(result)
+  debug.search('Search fields from schema', { 
+    count: Object.keys(result).length,
+    fields: Object.keys(result)
   });
   return result;
 }
@@ -410,7 +410,7 @@ export function getSuchfelder() {
  */
 export function getFeldMorphs() {
   if (!schemaCache?.felder) {
-    debug.warn('Feld-Morphs: Kein Schema geladen!');
+    debug.warn('Field morphs: No schema loaded!');
     return {};
   }
   
@@ -420,9 +420,9 @@ export function getFeldMorphs() {
       result[name] = config.typ;
     }
   }
-  debug.morphs('Feld-Morphs aus Schema', { 
-    anzahl: Object.keys(result).length,
-    felder: Object.keys(result)
+  debug.morphs('Field morphs from schema', { 
+    count: Object.keys(result).length,
+    fields: Object.keys(result)
   });
   return result;
 }
@@ -535,25 +535,25 @@ export function getAlleFeldConfigs() {
  */
 export function setMorphsConfig(config) {
   morphsConfigCache = config;
-  debug.morphs('Morphs-Config geladen', { 
-    hatFarben: !!config?.farben,
-    hatErkennung: !!config?.erkennung
+  debug.morphs('Morphs config loaded', { 
+    hasColors: !!config?.farben,
+    hasDetection: !!config?.erkennung
   });
 }
 
 /**
  * Gibt Farb-Palette aus morphs.yaml zurück
- * @param {string} palette - Name der Palette ('pilze', 'diagramme', 'standard')
+ * @param {string} palette - Name der Palette ('fungi', 'diagramme', 'standard')
  * @returns {string[]|string|null} Farb-Array oder einzelne Farbe
  */
-export function getFarben(palette = 'pilze') {
+export function getFarben(palette = 'fungi') {
   if (!morphsConfigCache?.farben) {
-    debug.warn('getFarben: Keine Morphs-Config geladen!');
+    debug.warn('getFarben: No morphs config loaded!');
     return null;
   }
   
   const farben = morphsConfigCache.farben[palette];
-  debug.morphs('Farben geladen', { palette, anzahl: Array.isArray(farben) ? farben.length : 1 });
+  debug.morphs('Colors loaded', { palette, count: Array.isArray(farben) ? farben.length : 1 });
   return farben;
 }
 
@@ -564,18 +564,18 @@ export function getFarben(palette = 'pilze') {
  */
 export function getBadgeConfig() {
   if (!morphsConfigCache) {
-    debug.warn('getBadgeConfig: Keine Morphs-Config geladen!');
+    debug.warn('getBadgeConfig: No morphs config loaded!');
     return null;
   }
   
   // Badge-Config liegt direkt unter morphsConfigCache.badge
   const badgeCfg = morphsConfigCache.badge;
   if (!badgeCfg) {
-    debug.morphs('Badge-Config nicht in morphs.yaml gefunden, nutze Fallbacks');
+    debug.morphs('Badge config not found in morphs.yaml, using fallbacks');
     return null;
   }
   
-  debug.morphs('Badge-Config geladen', { 
+  debug.morphs('Badge config loaded', { 
     variants: Object.keys(badgeCfg.variants || {}),
     colors: Object.keys(badgeCfg.colors || {})
   });

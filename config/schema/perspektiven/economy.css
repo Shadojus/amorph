@@ -1,0 +1,7 @@
+/* Perspektive: Wirtschaft - Sandiges Glass */
+[data-perspektive-economy] {
+  --perspektive-farbe: rgba(190, 185, 175, 0.25);
+  --perspektive-farbe-2: rgba(185, 180, 170, 0.22);
+  --perspektive-farbe-3: rgba(180, 175, 165, 0.20);
+  --perspektive-farbe-4: rgba(175, 170, 160, 0.18);
+}

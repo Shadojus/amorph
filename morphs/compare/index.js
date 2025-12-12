@@ -1,27 +1,35 @@
 /**
- * COMPARE - Generische Vergleichs-Morphs
+ * COMPARE - Generic comparison morphs
  * 
- * Exportiert:
- * - Base-Utilities (erstelleFarben, detectType, etc.)
- * - Generische Compare-Morphs (compareBar, compareRadar, etc.)
- * - Smart Composites (smartCompare, diffCompare)
- * - compareMorph() Dispatcher
+ * Exports:
+ * - Base utilities (createColors, detectType, etc.)
+ * - Generic compare morphs (compareBar, compareRadar, etc.)
+ * - Smart composites (smartCompare, diffCompare)
+ * - compareMorph() dispatcher
  * 
- * DATENGETRIEBEN: detectType nutzt config/morphs.yaml!
+ * DATA-DRIVEN: detectType uses config/morphs.yaml!
  */
 
-import { debug } from '../../observer/debug.js';
+import { debug } from '../../../observer/debug.js';
 
-// Base-Utilities
+// Base utilities (new English API + legacy German aliases)
 export { 
+  // New English API
+  setColorsConfig,
+  setDetectionConfig,
+  getColors, 
+  createColors,
+  createLegend,
+  createSection, 
+  createSectionIfNew,
+  createHeader,
+  detectType,
+  // Legacy aliases
   setFarbenConfig,
   setErkennungConfig,
   getFarben, 
   erstelleFarben, 
-  createSection, 
-  createHeader, 
-  createLegende,
-  detectType 
+  createLegende
 } from './base.js';
 
 // Compare-Morphs (aus refactored primitives/)
@@ -76,48 +84,53 @@ import {
 
 import { smartCompare, diffCompare } from './composites.js';
 
-// HINWEIS: compareByType in morphs.js ist die SINGLE SOURCE OF TRUTH
-// für Typ → Compare-Morph Mapping (inkl. intelligenter BarGroup-Erkennung)
+// NOTE: compareByType in morphs.js is the SINGLE SOURCE OF TRUTH
+// for type → compare morph mapping (incl. intelligent BarGroup detection)
 
 /**
- * HAUPT-DISPATCHER: Wählt automatisch den richtigen Compare-Morph
+ * MAIN DISPATCHER: Automatically selects the right compare morph
  * 
- * DATENGETRIEBEN: Typ wird erkannt, nicht übergeben!
+ * DATA-DRIVEN: Type is detected, not passed!
  * 
- * Delegiert an compareByType() für konsistentes Mapping.
+ * Delegates to compareByType() for consistent mapping.
  * 
- * @param {string} feldName - Name des Feldes
- * @param {string} typ - Erkannter oder übergebener Typ
- * @param {Array} items - [{id, name, wert, farbe}]
- * @param {Object} config - Feld-Config
+ * @param {string} fieldName - Name of the field
+ * @param {string} type - Detected or passed type
+ * @param {Array} items - [{id, name, value, color}]
+ * @param {Object} config - Field config
  */
-export function compareMorph(feldName, typ, items, config = {}) {
-  debug.morphs('compareMorph', { feldName, typ, items: items?.length });
+export function compareMorph(fieldName, type, items, config = {}) {
+  debug.morphs('compareMorph', { fieldName, type, items: items?.length });
   
-  // DEBUG: Items beim Empfang
-  console.log(`[compareMorph] ${feldName}:`, JSON.stringify(items?.map(i => ({ id: i.id, name: i.name, nameType: typeof i.name }))));
+  // DEBUG: Items on receipt
+  console.log(`[compareMorph] ${fieldName}:`, JSON.stringify(items?.map(i => ({ id: i.id, name: i.name, nameType: typeof i.name }))));
   
-  // Delegiere an compareByType - SINGLE SOURCE OF TRUTH
-  return compareByType(typ, items, config);
+  // Delegate to compareByType - SINGLE SOURCE OF TRUTH
+  return compareByType(type, items, config);
 }
 
+// Legacy alias
+export const compareMorphLegacy = compareMorph;
+
 /**
- * Erstellt Compare-Morph basierend auf DATEN-Erkennung
+ * Creates compare morph based on DATA detection
  * 
- * @param {string} feldName - Feldname
- * @param {Array} items - Items mit Werten
+ * @param {string} fieldName - Field name
+ * @param {Array} items - Items with values
  * @param {Object} config - Config
  */
-export function compareByData(feldName, items, config = {}) {
-  if (!items?.length || items[0]?.wert === undefined) {
+export function compareByData(fieldName, items, config = {}) {
+  // Support both value and wert
+  if (!items?.length || (items[0]?.value === undefined && items[0]?.wert === undefined)) {
     return compareText(items, config);
   }
   
-  // Typ aus erstem Wert erkennen
-  const erkannterTyp = detectType(items[0].wert);
-  debug.morphs('compareByData', { feldName, erkannterTyp });
+  // Detect type from first value
+  const firstValue = items[0]?.value ?? items[0]?.wert;
+  const detectedType = detectType(firstValue);
+  debug.morphs('compareByData', { fieldName, detectedType });
   
-  return compareMorph(feldName, erkannterTyp, items, config);
+  return compareMorph(fieldName, detectedType, items, config);
 }
 
 export default {

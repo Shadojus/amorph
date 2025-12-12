@@ -1,0 +1,46 @@
+# Severity Morph Configuration
+# Color-coded severity/warning level indicator
+
+id: severity
+name: Severity
+description: Severity level indicator with color coding
+category: extended
+
+# Detection rules
+detection:
+  type: object
+  requiredKeys:
+    - level
+    - label
+  alternativeKeys:
+    - severity
+    - grade
+    - tier
+    - description
+
+# Configuration
+config:
+  showIcon: true
+  showBar: true
+  showLabel: true
+  levels:
+    - id: trivial
+      color: "rgba(100, 220, 160, 0.85)"
+      icon: "✓"
+      order: 1
+    - id: minor
+      color: "rgba(200, 255, 0, 0.85)"
+      icon: "●"
+      order: 2
+    - id: moderate
+      color: "rgba(240, 190, 80, 0.85)"
+      icon: "⚠"
+      order: 3
+    - id: severe
+      color: "rgba(255, 128, 0, 0.85)"
+      icon: "⚡"
+      order: 4
+    - id: critical
+      color: "rgba(240, 110, 110, 0.85)"
+      icon: "☠"
+      order: 5

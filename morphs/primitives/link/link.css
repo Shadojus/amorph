@@ -1,0 +1,16 @@
+/* LINK MORPH */
+.amorph-link {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.amorph-link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+.amorph-link[data-invalid] {
+  color: var(--color-text-dim);
+  cursor: not-allowed;
+}

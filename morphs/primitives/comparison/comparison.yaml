@@ -1,0 +1,32 @@
+# Comparison Morph Configuration
+# Before/after value comparison with trend
+
+id: comparison
+name: Comparison
+description: Before/after comparison with trend indicator
+category: extended
+
+# Detection rules
+detection:
+  type: object
+  requiredKeys:
+    - before
+    - after
+  alternativeKeys:
+    - old
+    - new
+    - trend
+    - unit
+
+# Configuration
+config:
+  showTrend: true
+  showPercentage: true
+  trendColors:
+    up: "rgba(100, 220, 160, 0.85)"
+    down: "rgba(240, 110, 110, 0.85)"
+    neutral: "rgba(140, 160, 180, 0.68)"
+  trendIcons:
+    up: "▲"
+    down: "▼"
+    neutral: "●"

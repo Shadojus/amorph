@@ -1,8 +1,8 @@
 /**
- * COMPARE TAG - Chip-Vergleich für kategorische Daten
+ * COMPARE TAG - Chip comparison for categorical data
  */
 
-import { debug } from '../../../observer/debug.js';
+import { debug } from '../../../../observer/debug.js';
 
 export function compareTag(items, config = {}) {
   const el = document.createElement('div');
@@ -18,30 +18,31 @@ export function compareTag(items, config = {}) {
   const chips = document.createElement('div');
   chips.className = 'compare-chips';
   
-  // Gruppiere nach Wert
-  const nachWert = new Map();
+  // Group by value
+  const byValue = new Map();
   items.forEach(item => {
-    const key = String(item.wert || '').toLowerCase();
-    if (!nachWert.has(key)) {
-      nachWert.set(key, { wert: item.wert, items: [] });
+    const val = item.value ?? item.wert;
+    const key = String(val || '').toLowerCase();
+    if (!byValue.has(key)) {
+      byValue.set(key, { value: val, items: [] });
     }
-    nachWert.get(key).items.push(item);
+    byValue.get(key).items.push(item);
   });
   
-  nachWert.forEach(({ wert, items: gruppeItems }) => {
+  byValue.forEach(({ value, items: groupItems }) => {
     const chip = document.createElement('div');
-    const ersteFarbKlasse = gruppeItems[0]?.farbKlasse || '';
-    chip.className = `compare-chip ${ersteFarbKlasse}`;
+    const firstColorClass = groupItems[0]?.colorClass || groupItems[0]?.farbKlasse || '';
+    chip.className = `compare-chip ${firstColorClass}`;
     
-    // Inline-Styles für jeden Namen (CSS greift nicht zuverlässig)
-    const itemSpans = gruppeItems.map(p => {
-      const textColor = p.textFarbe || p.farbe || 'white';
+    // Inline styles for each name (CSS doesn't work reliably)
+    const itemSpans = groupItems.map(p => {
+      const textColor = p.textColor || p.textFarbe || p.color || p.farbe || 'white';
       const pName = p.name || p.id || '–';
-      return `<span class="${p.farbKlasse || ''}" style="color:${textColor}">${pName}</span>`;
+      return `<span class="${p.colorClass || p.farbKlasse || ''}" style="color:${textColor}">${pName}</span>`;
     }).join(', ');
     
     chip.innerHTML = `
-      <span class="chip-wert">${wert || '–'}</span>
+      <span class="chip-value">${value || '–'}</span>
       <span class="chip-items">${itemSpans}</span>
     `;
     

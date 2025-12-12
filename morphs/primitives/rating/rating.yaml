@@ -1,0 +1,29 @@
+# Rating Morph Configuration
+# Star rating display
+
+id: rating
+name: Rating
+description: Star or point rating visualization
+category: primitives
+
+# Detection rules
+detection:
+  # Number detection: decimals in range 0-10
+  number:
+    min: 0
+    max: 10
+    decimalsRequired: true
+  
+  # Object detection
+  object:
+    requiredKeys:
+      - rating
+    alternativeKeys:
+      - score
+      - stars
+
+# Configuration
+config:
+  maxStars: 5
+  showValue: true
+  halfStars: true

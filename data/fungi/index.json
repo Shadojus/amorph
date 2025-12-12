@@ -1,0 +1,15 @@
+{
+  "collection": "fungi",
+  "description": "Fungi Kingdom - Mycological Data",
+  "type": "json-perspectives",
+  "species": [
+    {
+      "slug": "porcini",
+      "folder": "porcini"
+    },
+    {
+      "slug": "fly-agaric",
+      "folder": "fly-agaric"
+    }
+  ]
+}

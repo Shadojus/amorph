@@ -18,14 +18,14 @@ export function setupObservers(container, config, session = null) {
   const observers = [];
   
   debug.observer('Setup', {
-    hatConfig: !!config?.observer,
-    interaktion: !!config?.observer?.interaktion,
+    hasConfig: !!config?.observer,
+    interaction: !!config?.observer?.interaktion,
     rendering: !!config?.observer?.rendering,
     session: !!config?.observer?.session
   });
   
   if (!config?.observer) {
-    debug.warn('Keine Observer-Konfiguration gefunden');
+    debug.warn('No observer configuration found');
     return observers;
   }
   
@@ -63,16 +63,16 @@ export function setupObservers(container, config, session = null) {
     window.amorphObserverStats = getObserverStats;
   }
   
-  debug.observer('Alle Observer aktiv', { 
-    anzahl: observers.length,
-    typen: Object.keys(activeObservers).filter(k => activeObservers[k])
+  debug.observer('All observers active', { 
+    count: observers.length,
+    types: Object.keys(activeObservers).filter(k => activeObservers[k])
   });
   
   return observers;
 }
 
 export function stopObservers(observers) {
-  debug.observer('Stoppe alle Observer');
+  debug.observer('Stopping all observers');
   
   for (const obs of observers) {
     if (obs.stop) obs.stop();

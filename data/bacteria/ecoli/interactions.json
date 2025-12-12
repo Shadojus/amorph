@@ -1,0 +1,47 @@
+{
+  "perspektive": "interactions",
+  "wirt_interaktion": {
+    "kommensalismus": {
+      "intensitaet": 95,
+      "beschreibung": "Normale Darmflora, nutzt Nährstoffe"
+    },
+    "mutualismus": {
+      "intensitaet": 70,
+      "beschreibung": "Vitamin K + B12 Produktion, Kolonisationsresistenz"
+    },
+    "pathogenese": {
+      "intensitaet": 30,
+      "beschreibung": "Nur bestimmte Stämme, kontextabhängig"
+    }
+  },
+  "konkurrenz": [
+    {
+      "partner": "Andere Enterobacteriaceae",
+      "typ": "Ressourcenkonkurrenz",
+      "intensitaet": 60
+    },
+    {
+      "partner": "Probiotische Bakterien",
+      "typ": "Verdrängung",
+      "intensitaet": 40
+    }
+  ],
+  "phagen": [
+    {
+      "name": "T4-Phage",
+      "typ": "Lytisch",
+      "forschungsbedeutung": 95
+    },
+    {
+      "name": "Lambda-Phage",
+      "typ": "Lysogen",
+      "forschungsbedeutung": 90
+    }
+  ],
+  "horizontaler_gentransfer": {
+    "konjugation": true,
+    "transformation": true,
+    "transduktion": true,
+    "bedeutung": "Verbreitung von Antibiotikaresistenzen"
+  }
+}

@@ -67,7 +67,7 @@ amorph/
 │   └── features.yaml
 │
 ├── data/               ← Beispieldaten
-│   └── pilze.json
+│   └── fungi.json
 │
 ├── styles/             ← CSS
 │   ├── base.css

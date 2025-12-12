@@ -1,0 +1,37 @@
+{
+  "native_range": "Northern Hemisphere",
+  "distribution": "Circumboreal, introduced worldwide",
+  
+  "continents": [
+    { "label": "Europe", "value": 30 },
+    { "label": "Asia", "value": 30 },
+    { "label": "North America", "value": 25 },
+    { "label": "Oceania (introduced)", "value": 10 },
+    { "label": "South America (introduced)", "value": 5 }
+  ],
+  
+  "coordinates_type_locality": {
+    "lat": 59.33,
+    "lng": 18.07,
+    "location": "Sweden (Linnaeus description)"
+  },
+  
+  "population_hotspots": [
+    { "lat": 60.0, "lng": 25.0, "location": "Finland/Russia", "density": "very high" },
+    { "lat": 55.0, "lng": -120.0, "location": "Pacific Northwest", "density": "high" },
+    { "lat": -37.8, "lng": 145.0, "location": "Australia (introduced)", "density": "moderate" }
+  ],
+  
+  "altitude_range_m": { "min": 0, "max": 2500 },
+  
+  "regional_abundance": [
+    { "axis": "Scandinavia", "value": 95 },
+    { "axis": "Siberia", "value": 95 },
+    { "axis": "Central Europe", "value": 80 },
+    { "axis": "North America", "value": 75 },
+    { "axis": "Australia/NZ", "value": 50 }
+  ],
+  
+  "invasive_status": "invasive in Southern Hemisphere",
+  "introduction_history": "Introduced to Australia/NZ with pine plantations"
+}

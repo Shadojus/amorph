@@ -1,0 +1,37 @@
+/* INFINITE SCROLL FEATURE STYLES */
+/* Loader und Sentinel */
+
+/* === INFINITE SCROLL === */
+.amorph-infinite-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-lg) var(--space-md);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.amorph-infinite-loader .loader-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--glass-border);
+  border-top-color: var(--color-highlight);
+  border-radius: 50%;
+  animation: infinite-spin 0.8s linear infinite;
+}
+
+.amorph-infinite-loader .loader-text {
+  opacity: 0.7;
+}
+
+@keyframes infinite-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Sentinel unsichtbar aber funktional */
+.amorph-scroll-sentinel-bottom {
+  height: 1px;
+  width: 100%;
+  pointer-events: none;
+}

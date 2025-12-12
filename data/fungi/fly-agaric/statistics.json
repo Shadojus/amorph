@@ -1,0 +1,51 @@
+{
+  "average_weight_g": { "min": 30, "max": 300, "avg": 100 },
+  "cap_diameter_cm": { "min": 5, "max": 20, "avg": 12 },
+  
+  "size_distribution": [
+    { "label": "Small (<50g)", "value": 25 },
+    { "label": "Medium (50-150g)", "value": 50 },
+    { "label": "Large (150-300g)", "value": 20 },
+    { "label": "Giant (>300g)", "value": 5 }
+  ],
+  
+  "population_statistics": {
+    "average_per_hectare": 25,
+    "peak_season_per_hectare": 100,
+    "annual_variation_percent": 50
+  },
+  
+  "global_observations_inaturalist": 285000,
+  "observations_per_year": [
+    { "axis": "2019", "value": 45000 },
+    { "axis": "2020", "value": 52000 },
+    { "axis": "2021", "value": 58000 },
+    { "axis": "2022", "value": 62000 },
+    { "axis": "2023", "value": 68000 }
+  ],
+  
+  "poisoning_statistics": {
+    "annual_cases_estimated": 500,
+    "fatality_rate_percent": 1,
+    "most_common_victims": "Foragers, children"
+  },
+  
+  "comparison_metrics": [
+    { "axis": "Recognition factor", "value": 100 },
+    { "axis": "Research interest", "value": 90 },
+    { "axis": "Cultural significance", "value": 95 },
+    { "axis": "Ecological importance", "value": 70 },
+    { "axis": "Conservation concern", "value": 30 }
+  ],
+  
+  "spore_statistics": {
+    "spore_size_um": { "min": 9, "max": 13 },
+    "spore_width_um": { "min": 6.5, "max": 9 }
+  },
+  
+  "records": {
+    "largest_cap_cm": 35,
+    "highest_altitude_m": 2800,
+    "northernmost_record": "Arctic Circle"
+  }
+}

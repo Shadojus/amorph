@@ -1,0 +1,98 @@
+/* VERGLEICH FEATURE STYLES */
+/* Vergleichs-View und Auswahl-Cards */
+
+/* === VERGLEICHS VIEW === */
+.amorph-vergleich-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-md, 16px);
+}
+
+/* Vergleich Info Badge */
+.amorph-vergleich-info {
+  text-align: center;
+  margin-bottom: var(--space-lg, 24px);
+}
+
+.amorph-vergleich-badge {
+  display: inline-block;
+  padding: var(--space-xs-plus) var(--space-md);
+  font-size: var(--ui-font-md, 0.72rem);
+  background: rgba(234, 179, 8, 0.12);
+  color: rgba(234, 179, 8, 0.85);
+  border: 1px solid rgba(234, 179, 8, 0.25);
+  border-radius: var(--ui-radius-md, 6px);
+}
+
+/* Grid für Vergleichs-Cards */
+.amorph-vergleich-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-lg, 24px);
+}
+
+/* Einzelne Vergleichs-Card */
+.amorph-vergleich-card {
+  background: rgba(20, 20, 25, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.amorph-vergleich-card-bild {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.amorph-vergleich-card-bild img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.amorph-vergleich-card-name {
+  margin: 0;
+  padding: var(--space-lg);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.amorph-vergleich-card-felder {
+  padding: var(--space-md) var(--space-lg);
+}
+
+.amorph-vergleich-card-feld {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.amorph-vergleich-card-feld:last-child {
+  border-bottom: none;
+}
+
+.amorph-vergleich-card-label {
+  font-size: var(--ui-font-sm, 0.65rem);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.amorph-vergleich-card-wert {
+  font-size: var(--ui-font-md, 0.72rem);
+  color: rgba(255, 255, 255, 0.9);
+  text-align: right;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .amorph-vergleich-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "chemical_composition": {
+    "water_percent": 87,
+    "protein_percent": 4,
+    "carbohydrate_percent": 5,
+    "fat_percent": 0.5,
+    "fiber_percent": 2.5,
+    "ash_percent": 1
+  },
+  
+  "composition_chart": [
+    { "label": "Water", "value": 87 },
+    { "label": "Protein", "value": 4 },
+    { "label": "Carbohydrates", "value": 5 },
+    { "label": "Fiber", "value": 2.5 },
+    { "label": "Fat", "value": 0.5 },
+    { "label": "Ash", "value": 1 }
+  ],
+  
+  "amino_acids": [
+    { "axis": "Glutamic acid", "value": 95 },
+    { "axis": "Aspartic acid", "value": 80 },
+    { "axis": "Leucine", "value": 75 },
+    { "axis": "Lysine", "value": 70 },
+    { "axis": "Valine", "value": 65 }
+  ],
+  
+  "bioactive_compounds": {
+    "beta_glucans_percent": 3.5,
+    "ergothioneine_mg_per_100g": 2.1,
+    "ergosterol_mg_per_100g": 85,
+    "chitin_percent": 4.2
+  },
+  
+  "pigments": [
+    { "name": "Melanins", "function": "UV protection", "location": "cap" },
+    { "name": "Variegatic acid", "function": "Antioxidant", "location": "pores" }
+  ],
+  
+  "volatile_compounds": {
+    "1_octen_3_ol": { "amount": 45, "unit": "ppm", "aroma": "mushroomy" },
+    "benzaldehyde": { "amount": 12, "unit": "ppm", "aroma": "almond" },
+    "2_octenal": { "amount": 8, "unit": "ppm", "aroma": "green" }
+  },
+  
+  "aroma_profile": [
+    { "axis": "Mushroomy", "value": 95 },
+    { "axis": "Earthy", "value": 80 },
+    { "axis": "Nutty", "value": 75 },
+    { "axis": "Sweet", "value": 40 },
+    { "axis": "Green", "value": 25 }
+  ],
+  
+  "enzyme_content": {
+    "tyrosinase": "present",
+    "laccase": "trace",
+    "protease": "moderate"
+  },
+  
+  "mineral_content_mg_per_100g": {
+    "potassium": 318,
+    "phosphorus": 120,
+    "magnesium": 15,
+    "calcium": 5,
+    "iron": 1.0,
+    "zinc": 1.5,
+    "selenium_ug": 9
+  },
+  
+  "mineral_profile": [
+    { "label": "Potassium", "value": 318 },
+    { "label": "Phosphorus", "value": 120 },
+    { "label": "Magnesium", "value": 15 },
+    { "label": "Calcium", "value": 5 },
+    { "label": "Iron", "value": 1 }
+  ],
+  
+  "vitamin_content": {
+    "B1_mg": 0.1,
+    "B2_mg": 0.25,
+    "B3_mg": 4.5,
+    "B5_mg": 2.6,
+    "D_ug": 0.2
+  },
+  
+  "ph_value": { "min": 5.5, "max": 6.5 },
+  "moisture_fresh_percent": { "min": 85, "max": 92 },
+  "moisture_dried_percent": { "min": 8, "max": 12 },
+  
+  "caloric_value_kcal_per_100g": 26,
+  "glycemic_index": "low",
+  
+  "heavy_metal_accumulation": {
+    "cadmium": "low",
+    "mercury": "very low",
+    "lead": "very low",
+    "arsenic": "trace"
+  },
+  
+  "radioactive_accumulation": {
+    "cesium_137": "moderate",
+    "notes": "Can accumulate in contaminated areas"
+  },
+  
+  "analytical_methods": ["HPLC", "GC-MS", "ICP-MS", "Spectrophotometry"],
+  
+  "reference_citation": {
+    "authors": "Kalač, P.",
+    "year": 2016,
+    "title": "Edible Mushrooms: Chemical Composition and Nutritional Value",
+    "journal": "Academic Press",
+    "doi": "10.1016/C2014-0-02611-0"
+  }
+}

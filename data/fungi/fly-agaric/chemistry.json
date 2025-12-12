@@ -1,0 +1,64 @@
+{
+  "chemical_composition": {
+    "water_percent": 90,
+    "protein_percent": 3,
+    "carbohydrate_percent": 4,
+    "fat_percent": 0.3,
+    "fiber_percent": 1.5,
+    "ash_percent": 1.2
+  },
+  
+  "composition_chart": [
+    { "label": "Water", "value": 90 },
+    { "label": "Protein", "value": 3 },
+    { "label": "Carbohydrates", "value": 4 },
+    { "label": "Fiber", "value": 1.5 },
+    { "label": "Other", "value": 1.5 }
+  ],
+  
+  "toxic_compounds": [
+    { "name": "Ibotenic acid", "amount_mg_per_g": 3.0, "class": "Isoxazole" },
+    { "name": "Muscimol", "amount_mg_per_g": 0.5, "class": "Isoxazole" },
+    { "name": "Muscarine", "amount_mg_per_g": 0.003, "class": "Alkaloid" }
+  ],
+  
+  "toxin_profile": [
+    { "axis": "Ibotenic acid", "value": 85 },
+    { "axis": "Muscimol", "value": 70 },
+    { "axis": "Muscazone", "value": 20 },
+    { "axis": "Muscarine", "value": 5 }
+  ],
+  
+  "pigments": [
+    { "name": "Muscaflavin", "function": "Yellow pigment", "location": "cap" },
+    { "name": "Betalains", "function": "Red pigment", "location": "cap surface" }
+  ],
+  
+  "bioactive_compounds": {
+    "vanadium_accumulation": true,
+    "vanadium_mg_per_kg_dry": 100
+  },
+  
+  "ph_value": { "min": 5.0, "max": 6.5 },
+  
+  "toxin_variation": {
+    "cap_vs_stem": "Cap contains more toxins",
+    "seasonal": "Higher in dry conditions",
+    "geographic": "Varies by population"
+  },
+  
+  "decarboxylation": {
+    "process": "Ibotenic acid converts to muscimol on drying",
+    "effect": "Changes toxicity profile"
+  },
+  
+  "analytical_methods": ["HPLC", "GC-MS", "LC-MS/MS"],
+  
+  "reference_citation": {
+    "authors": "Michelot, D. & Melendez-Howell, L.M.",
+    "year": 2003,
+    "title": "Amanita muscaria: chemistry, biology, toxicology, and ethnomycology",
+    "journal": "Mycological Research",
+    "doi": "10.1017/S0953756203007305"
+  }
+}

@@ -24,7 +24,7 @@ export function getState() {
 
 export function setAktiveAnsicht(ansicht) {
   state.aktiveAnsicht = ansicht;
-  debug.ansichten('Ansicht gewechselt', { ansicht });
+  debug.views('View changed', { view: ansicht });
 }
 
 /**
@@ -39,7 +39,7 @@ export function toggleFeldAuswahl(pilzId, feldName, wert, pilzDaten) {
   
   if (state.auswahl.has(key)) {
     state.auswahl.delete(key);
-    debug.ansichten('Feld-Auswahl entfernt', { key, anzahl: state.auswahl.size });
+    debug.views('Field selection removed', { key, count: state.auswahl.size });
   } else {
     state.auswahl.set(key, {
       pilzId,
@@ -47,7 +47,7 @@ export function toggleFeldAuswahl(pilzId, feldName, wert, pilzDaten) {
       wert,
       pilzDaten
     });
-    debug.ansichten('Feld-Auswahl hinzugefügt', { key, anzahl: state.auswahl.size });
+    debug.views('Field selection added', { key, count: state.auswahl.size });
   }
   
   // Event für UI-Updates
@@ -73,12 +73,27 @@ export function toggleAuswahl(id, daten = null) {
   
   if (hatBereitsFelder) {
     // Alle Felder dieses Pilzes entfernen
+    const entfernteFelder = [];
     for (const [key, data] of state.auswahl) {
       if (data.pilzId === String(id)) {
+        entfernteFelder.push(data.feldName);
         state.auswahl.delete(key);
       }
     }
-    debug.ansichten('Alle Felder entfernt', { id, anzahl: state.auswahl.size });
+    debug.views('All fields removed', { id, count: state.auswahl.size, fields: entfernteFelder });
+    
+    // Event mit entferntem Pilz dispatchen
+    document.dispatchEvent(new CustomEvent('amorph:auswahl-geaendert', {
+      detail: { 
+        auswahl: [...state.auswahl.keys()], 
+        anzahl: state.auswahl.size,
+        pilzIds: getAuswahlPilzIds(),
+        entfernterPilz: String(id),
+        entfernteFelder
+      }
+    }));
+    
+    return state.auswahl.size;
   } else {
     // Alle sichtbaren Felder hinzufügen
     for (const [feldName, wert] of Object.entries(daten)) {
@@ -93,7 +108,7 @@ export function toggleAuswahl(id, daten = null) {
         pilzDaten: daten
       });
     }
-    debug.ansichten('Alle Felder hinzugefügt', { id, anzahl: state.auswahl.size });
+    debug.views('All fields added', { id, count: state.auswahl.size });
   }
   
   document.dispatchEvent(new CustomEvent('amorph:auswahl-geaendert', {
@@ -124,7 +139,7 @@ export function removeFeldAuswahl(feldName) {
   }
   
   if (entfernt > 0) {
-    debug.ansichten('Feld-Typ abgewählt', { feldName, entfernt, verbleibend: state.auswahl.size });
+    debug.views('Field type deselected', { fieldName: feldName, removed: entfernt, remaining: state.auswahl.size });
     
     document.dispatchEvent(new CustomEvent('amorph:auswahl-geaendert', {
       detail: { 
@@ -142,7 +157,7 @@ export function removeFeldAuswahl(feldName) {
 export function clearAuswahl() {
   state.auswahl.clear();
   state.detailPilzId = null;
-  debug.ansichten('Auswahl geleert');
+  debug.views('Selection cleared');
   
   document.dispatchEvent(new CustomEvent('amorph:auswahl-geaendert', {
     detail: { auswahl: [], anzahl: 0, pilzIds: [] }

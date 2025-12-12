@@ -1,11 +1,11 @@
 /**
- * COMPARE PRIMITIVES - Zentrale Exports
- * Alle Compare-Primitive für den Vergleich von Items
+ * COMPARE PRIMITIVES - Central exports
+ * All compare primitives for item comparison
  */
 
-import { debug } from '../../../observer/debug.js';
+import { debug } from '../../../../observer/debug.js';
 
-// Import alle Primitives
+// Import all primitives
 export { compareBar } from './bar.js';
 export { compareBarGroup } from './barGroup.js';
 export { compareRating } from './rating.js';
@@ -22,7 +22,10 @@ export { compareBoolean } from './boolean.js';
 export { compareObject } from './object.js';
 export { compareRange } from './range.js';
 
-// Für compareByType brauchen wir die Funktionen direkt
+// Alias: compareNumber uses compareText for simple number display
+export { compareText as compareNumber } from './text.js';
+
+// For compareByType we need the functions directly
 import { compareBar } from './bar.js';
 import { compareBarGroup } from './barGroup.js';
 import { compareRating } from './rating.js';
@@ -40,22 +43,23 @@ import { compareObject } from './object.js';
 import { compareRange } from './range.js';
 
 /**
- * Wählt die richtige Compare-Funktion basierend auf dem Typ
- * @param {string} typ - Der erkannte Datentyp
- * @param {Array} items - Die zu vergleichenden Items [{name, wert, farbe}, ...]
- * @param {Object} config - Optionale Konfiguration
- * @returns {HTMLElement} Das DOM-Element für den Vergleich
+ * Selects the right compare function based on type
+ * @param {string} type - The detected data type
+ * @param {Array} items - Items to compare [{name, value, color}, ...]
+ * @param {Object} config - Optional configuration
+ * @returns {HTMLElement} The DOM element for comparison
  */
-export function compareByType(typ, items, config = {}) {
-  debug.morphs('compareByType', { typ, itemCount: items?.length, config });
+export function compareByType(type, items, config = {}) {
+  debug.morphs('compareByType', { type, itemCount: items?.length, config });
   
-  // Intelligente Bar-Erkennung: Wenn wert ein Array von Objekten ist → BarGroup
-  if ((typ === 'bar' || typ === 'number') && items?.length && Array.isArray(items[0]?.wert)) {
-    debug.morphs('compareByType: Bar mit Array-Wert → BarGroup');
+  // Intelligent bar detection: If value is an array of objects → BarGroup
+  const firstValue = items?.[0]?.value ?? items?.[0]?.wert;
+  if ((type === 'bar' || type === 'number') && items?.length && Array.isArray(firstValue)) {
+    debug.morphs('compareByType: Bar with array value → BarGroup');
     return compareBarGroup(items, config);
   }
   
-  switch (typ) {
+  switch (type) {
     case 'bar':
     case 'number':
       return compareBar(items, config);

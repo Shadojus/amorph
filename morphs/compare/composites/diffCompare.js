@@ -1,27 +1,27 @@
 /**
- * DIFF COMPARE - Differenz-Vergleichs-Composite
+ * DIFF COMPARE - Difference comparison composite
  * 
- * Zeigt Unterschiede und Gemeinsamkeiten zwischen Items.
+ * Shows differences and similarities between items.
  * 
- * DATENGETRIEBEN:
- * - Vergleicht Werte ohne Annahmen über Struktur
- * - Gruppiert in: same, different, unique
+ * DATA-DRIVEN:
+ * - Compares values without assumptions about structure
+ * - Groups into: same, different, unique
  */
 
-import { debug } from '../../../observer/debug.js';
-import { createLegende } from '../base.js';
+import { debug } from '../../../../observer/debug.js';
+import { createLegend, createLegende } from '../base.js';
 import { analyzeItems, calculateDiff } from './analyze.js';
 import { renderFieldMorph } from './render.js';
 
 /**
- * DIFF COMPARE - Zeigt nur Unterschiede oder Gemeinsamkeiten
+ * DIFF COMPARE - Shows only differences or similarities
  * 
- * @param {Array} items - [{id, name, data, farbe}]
+ * @param {Array} items - [{id, name, data, color}]
  * @param {Object} config - {labels, units, defaultMode}
  * 
- * DATENGETRIEBEN:
- * - Vergleicht JSON-serialisierte Werte
- * - Erkennt automatisch identische vs. unterschiedliche Felder
+ * DATA-DRIVEN:
+ * - Compares JSON-serialized values
+ * - Automatically detects identical vs. different fields
  */
 export function diffCompare(items, config = {}) {
   const el = document.createElement('div');
@@ -29,7 +29,7 @@ export function diffCompare(items, config = {}) {
   
   const diff = calculateDiff(items);
   if (!diff) {
-    el.innerHTML = '<div class="compare-leer">Mindestens 2 Items für Diff benötigt</div>';
+    el.innerHTML = '<div class="compare-empty">At least 2 items required for diff</div>';
     return el;
   }
   
@@ -41,25 +41,25 @@ export function diffCompare(items, config = {}) {
     unique: diff.unique.length
   });
   
-  // Legende
-  el.appendChild(createLegende(items));
+  // Legend
+  el.appendChild(createLegend(items));
   
-  // Mode-Buttons
+  // Mode buttons
   const modes = document.createElement('div');
   modes.className = 'diff-modes';
   modes.innerHTML = `
-    <button class="diff-mode active" data-mode="different">Unterschiede (${diff.different.length})</button>
-    <button class="diff-mode" data-mode="same">Gemeinsamkeiten (${diff.same.length})</button>
-    <button class="diff-mode" data-mode="all">Alle (${Object.keys(fields).length})</button>
+    <button class="diff-mode active" data-mode="different">Differences (${diff.different.length})</button>
+    <button class="diff-mode" data-mode="same">Similarities (${diff.same.length})</button>
+    <button class="diff-mode" data-mode="all">All (${Object.keys(fields).length})</button>
   `;
   el.appendChild(modes);
   
-  // Content Container
+  // Content container
   const content = document.createElement('div');
   content.className = 'diff-content';
   el.appendChild(content);
   
-  // Render-Funktion für Mode
+  // Render function for mode
   const renderMode = (mode) => {
     content.innerHTML = '';
     
@@ -84,11 +84,11 @@ export function diffCompare(items, config = {}) {
     });
     
     if (fieldsToShow.length === 0) {
-      content.innerHTML = '<div class="compare-leer">Keine Felder in dieser Kategorie</div>';
+      content.innerHTML = '<div class="compare-empty">No fields in this category</div>';
     }
   };
   
-  // Event Handler
+  // Event handler
   modes.addEventListener('click', (e) => {
     const btn = e.target.closest('.diff-mode');
     if (!btn) return;
@@ -98,7 +98,7 @@ export function diffCompare(items, config = {}) {
     renderMode(btn.dataset.mode);
   });
   
-  // Initial: Default-Mode oder 'different'
+  // Initial: default mode or 'different'
   renderMode(config.defaultMode || 'different');
   
   return el;

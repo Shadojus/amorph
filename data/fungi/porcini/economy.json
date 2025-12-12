@@ -1,0 +1,99 @@
+{
+  "economic_importance": "high",
+  "global_market_value": { "amount": 2500000000, "currency": "USD" },
+  
+  "market_distribution": [
+    { "label": "Fresh retail", "value": 35 },
+    { "label": "Dried retail", "value": 25 },
+    { "label": "Restaurant/HoReCa", "value": 30 },
+    { "label": "Processing/Industry", "value": 10 }
+  ],
+  
+  "price_per_kg": {
+    "fresh_premium": { "amount": 80, "currency": "EUR" },
+    "fresh_standard": { "amount": 35, "currency": "EUR" },
+    "dried": { "amount": 150, "currency": "EUR" },
+    "powder": { "amount": 100, "currency": "EUR" }
+  },
+  
+  "price_comparison": {
+    "before": 25,
+    "after": 45,
+    "trend": "up",
+    "unit": "EUR/kg",
+    "period": "2019-2024"
+  },
+  
+  "trade_volume_tonnes_annual": {
+    "fresh": 45000,
+    "dried": 8000,
+    "total_value_eur": 750000000
+  },
+  
+  "major_exporters": [
+    { "label": "Italy", "value": 12000 },
+    { "label": "Poland", "value": 8000 },
+    { "label": "China", "value": 15000 },
+    { "label": "Serbia", "value": 4000 },
+    { "label": "Other", "value": 6000 }
+  ],
+  
+  "major_importers": [
+    { "label": "Germany", "value": 10000 },
+    { "label": "USA", "value": 8000 },
+    { "label": "France", "value": 6000 },
+    { "label": "Japan", "value": 4000 },
+    { "label": "UK", "value": 3000 }
+  ],
+  
+  "supply_chain": [
+    { "step": 1, "label": "Wild harvest by foragers" },
+    { "step": 2, "label": "Collection points/buyers" },
+    { "step": 3, "label": "Sorting and grading" },
+    { "step": 4, "label": "Processing (fresh/dried)" },
+    { "step": 5, "label": "Distribution to markets" },
+    { "step": 6, "label": "Retail/restaurant sale" }
+  ],
+  
+  "employment": {
+    "seasonal_harvesters": 50000,
+    "processing_workers": 5000,
+    "trade_distribution": 3000
+  },
+  
+  "economic_impact_rural": {
+    "importance": "significant",
+    "income_percent_for_foragers": { "min": 10, "max": 50 },
+    "seasonal_dependency": "high"
+  },
+  
+  "tourism_value": {
+    "mushroom_tourism_revenue_eur": 150000000,
+    "guided_tours_per_year": 25000,
+    "culinary_tourism_impact": "substantial"
+  },
+  
+  "challenges": [
+    "Supply volatility due to weather",
+    "Competition from Asian imports",
+    "Sustainability concerns",
+    "Quality standardization"
+  ],
+  
+  "opportunities": [
+    "Growing gourmet market",
+    "Organic/sustainable premium",
+    "Value-added products",
+    "Eco-tourism integration"
+  ],
+  
+  "market_trends": [
+    { "date": "2020", "event": "COVID-19 boost in home cooking" },
+    { "date": "2022", "event": "Energy costs increase drying prices" },
+    { "date": "2023", "event": "Record prices due to poor harvest" }
+  ],
+  
+  "certification_standards": ["Organic", "PDO/PGI in Italy", "Quality grades"],
+  
+  "future_outlook": "Growing demand, price increases expected"
+}

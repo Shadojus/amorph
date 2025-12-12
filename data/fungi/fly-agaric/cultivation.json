@@ -1,0 +1,89 @@
+{
+  "cultivability": "extremely difficult",
+  "cultivation_feasibility": 1,
+  
+  "cultivation_overview": {
+    "status": "Not commercially cultivated",
+    "reason": "Obligate ectomycorrhizal - requires living tree partner",
+    "success_rate": "Very low even in research settings"
+  },
+  
+  "requirements": {
+    "host_tree": "Required - birch, pine, spruce, fir",
+    "soil": "Acidic forest soil with organic matter",
+    "climate": "Cool temperate to boreal",
+    "humidity": "High - forest floor conditions"
+  },
+  
+  "cultivation_difficulty_factors": [
+    { "label": "Host tree requirement", "value": 100, "impact": "Impossible without tree" },
+    { "label": "Soil microbiome", "value": 85, "impact": "Complex symbiosis" },
+    { "label": "Environmental control", "value": 75, "impact": "Natural conditions hard to replicate" },
+    { "label": "Time to fruiting", "value": 70, "impact": "Years, not months" },
+    { "label": "Unpredictability", "value": 90, "impact": "Cannot guarantee results" }
+  ],
+  
+  "lifecycle_for_cultivation": [
+    { "stage": "Spore germination", "duration": "Variable", "difficulty": "High" },
+    { "stage": "Mycelium establishment", "duration": "Months", "difficulty": "Moderate" },
+    { "stage": "Host tree inoculation", "duration": "Months-years", "difficulty": "Very high" },
+    { "stage": "Mycorrhizal formation", "duration": "1-3 years", "difficulty": "Critical" },
+    { "stage": "First fruiting", "duration": "3-10+ years", "difficulty": "Unpredictable" }
+  ],
+  
+  "attempted_methods": {
+    "tree_inoculation": {
+      "method": "Spore slurry on seedling roots",
+      "success_rate": "Low",
+      "time_to_fruit": "5-15 years if successful"
+    },
+    "transplanting": {
+      "method": "Moving infected soil/trees",
+      "success_rate": "Variable",
+      "time_to_fruit": "Already established if lucky"
+    }
+  },
+  
+  "research_cultivation": {
+    "institutions": "Some mycological research centers",
+    "purpose": "Study, not production",
+    "methods": "Controlled outdoor plots with host trees"
+  },
+  
+  "comparison_to_other_mushrooms": {
+    "button_mushroom": { "difficulty": "Easy", "time": "Weeks", "indoor": true },
+    "shiitake": { "difficulty": "Moderate", "time": "Months", "indoor": true },
+    "porcini": { "difficulty": "Very hard", "time": "Years", "indoor": false },
+    "fly_agaric": { "difficulty": "Extremely hard", "time": "Years-decades", "indoor": false }
+  },
+  
+  "indoor_cultivation": false,
+  "outdoor_cultivation": "Only method",
+  "commercial_viability": false,
+  
+  "why_not_cultivated": [
+    "Toxic - no food market",
+    "Requires living trees",
+    "Takes years to fruit",
+    "Unpredictable yields",
+    "Wild specimens abundant"
+  ],
+  
+  "wild_harvesting": {
+    "recommended_alternative": true,
+    "timing": "Late summer to autumn",
+    "habitat": "Under birch, pine, spruce"
+  },
+  
+  "home_cultivation_steps": [
+    { "step": 1, "action": "Plant host tree seedling (birch/pine)", "note": "Multi-year commitment" },
+    { "step": 2, "action": "Obtain spore material", "note": "Fresh spore print" },
+    { "step": 3, "action": "Create spore slurry", "note": "Water + spores" },
+    { "step": 4, "action": "Inoculate tree roots", "note": "Early in tree life" },
+    { "step": 5, "action": "Maintain conditions", "note": "Acidic soil, moisture" },
+    { "step": 6, "action": "Wait years", "note": "May never fruit" },
+    { "step": 7, "action": "Hope for fruiting", "note": "No guarantee" }
+  ],
+  
+  "expert_consensus": "Not worth attempting for casual cultivators. Wild observation is recommended instead."
+}

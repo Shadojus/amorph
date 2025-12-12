@@ -9,31 +9,31 @@ export function getSession() {
   
   if (cookie) {
     const id = cookie.split('=')[1];
-    debug.session('Session gefunden (Cookie)', { id });
+    debug.session('Session found (Cookie)', { id });
     return { id, source: 'cookie' };
   }
   
   try {
     const stored = sessionStorage.getItem('amorph_session');
     if (stored) {
-      debug.session('Session gefunden (Storage)', { id: stored });
+      debug.session('Session found (Storage)', { id: stored });
       return { id: stored, source: 'storage' };
     }
   } catch {}
   
-  debug.session('Keine Session gefunden');
+  debug.session('No session found');
   return null;
 }
 
 export function createSession() {
   const id = crypto.randomUUID();
-  debug.session('Neue Session erstellt', { id });
+  debug.session('New session created', { id });
   document.cookie = `amorph_session=${id}; path=/; SameSite=Strict; max-age=86400`;
   return { id, source: 'cookie' };
 }
 
 export function clearSession() {
-  debug.session('Session gelöscht');
+  debug.session('Session deleted');
   document.cookie = 'amorph_session=; path=/; max-age=0';
   try {
     sessionStorage.removeItem('amorph_session');
@@ -91,28 +91,28 @@ export function setUrlState(state) {
     : window.location.pathname;
   
   window.history.replaceState(null, '', newUrl);
-  debug.session('URL-State aktualisiert', state);
+  debug.session('URL state updated', state);
 }
 
-// === LOCALSTORAGE PERSISTENZ ===
+// === LOCALSTORAGE PERSISTENCE ===
 
 /**
- * Speichert letzte Suche in LocalStorage
- * @param {string} query - Suchbegriff
+ * Saves last search to LocalStorage
+ * @param {string} query - Search term
  */
 export function saveLastSearch(query) {
   if (!query?.trim()) return;
   
   try {
     const history = getSearchHistory();
-    // Duplikate entfernen und vorne einfügen
+    // Remove duplicates and insert at front
     const filtered = history.filter(q => q !== query);
     filtered.unshift(query);
-    // Max 10 Einträge
+    // Max 10 entries
     localStorage.setItem('amorph_search_history', JSON.stringify(filtered.slice(0, 10)));
-    debug.session('Suche gespeichert', { query });
+    debug.session('Search saved', { query });
   } catch (e) {
-    debug.fehler('LocalStorage Fehler', e);
+    debug.error('LocalStorage error', e);
   }
 }
 
@@ -138,15 +138,15 @@ export function getLastSearch() {
 }
 
 /**
- * Speichert aktive Perspektiven
- * @param {string[]} perspektiven - Array von Perspektiven-IDs
+ * Saves active perspectives
+ * @param {string[]} perspektiven - Array of perspective IDs
  */
 export function savePerspektiven(perspektiven) {
   try {
     localStorage.setItem('amorph_perspektiven', JSON.stringify(perspektiven || []));
-    debug.session('Perspektiven gespeichert', { perspektiven });
+    debug.session('Perspectives saved', { perspektiven });
   } catch (e) {
-    debug.fehler('LocalStorage Fehler', e);
+    debug.error('LocalStorage error', e);
   }
 }
 
@@ -163,8 +163,8 @@ export function getSavedPerspektiven() {
 }
 
 /**
- * Speichert Auswahl (für Session-Restore)
- * @param {Map} auswahl - Auswahl-Map aus ansichten
+ * Saves selection (for session restore)
+ * @param {Map} auswahl - Selection map from views
  */
 export function saveAuswahl(auswahl) {
   try {
@@ -174,9 +174,9 @@ export function saveAuswahl(auswahl) {
       feldName: value.feldName
     }));
     sessionStorage.setItem('amorph_auswahl', JSON.stringify(data));
-    debug.session('Auswahl gespeichert', { anzahl: data.length });
+    debug.session('Selection saved', { count: data.length });
   } catch (e) {
-    debug.fehler('SessionStorage Fehler', e);
+    debug.error('SessionStorage error', e);
   }
 }
 

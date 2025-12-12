@@ -45,11 +45,11 @@ export async function amorph(options = {}) {
   
   container.setAttribute('data-amorph-container', '');
   
-  debug.amorph('🍄 Initialisiere...');
+  debug.amorph('🍄 Initializing...');
   
-  // Konfiguration laden
+  // Load configuration
   const config = await loadConfig(configPath);
-  debug.config('Geladen', Object.keys(config));
+  debug.config('Loaded', Object.keys(config));
   
   // Schema für semantische Suche setzen
   if (config.schema) {
@@ -59,25 +59,25 @@ export async function amorph(options = {}) {
   // Erkennungs-Config für Pipeline setzen (aus morphs.yaml)
   if (config.morphs?.erkennung) {
     setErkennungConfig(config.morphs);
-    setCompareErkennungConfig(config.morphs);  // Auch für Compare-Morphs!
-    debug.config('Erkennung-Config geladen', Object.keys(config.morphs.erkennung));
+    setCompareErkennungConfig(config.morphs);  // Also for Compare-Morphs!
+    debug.config('Detection config loaded', Object.keys(config.morphs.erkennung));
   }
   
   // Morphs-Config für Farben und Badge-Keywords setzen (aus morphs.yaml)
   if (config.morphs) {
     setMorphsConfig(config.morphs);
-    debug.config('Morphs-Config geladen', Object.keys(config.morphs));
+    debug.config('Morphs config loaded', Object.keys(config.morphs));
   }
   
   // Farben-Config für Compare setzen (aus morphs.yaml)
   if (config.morphs?.farben) {
     setFarbenConfig(config.morphs);
-    debug.config('Farben-Config geladen', Object.keys(config.morphs.farben));
+    debug.config('Colors config loaded', Object.keys(config.morphs.farben));
   }
   
-  // Datenquelle erstellen
+  // Create data source
   const dataSource = createDataSource(config.daten);
-  debug.daten('Quelle', config.daten.quelle);
+  debug.data('Source', config.daten.quelle);
   
   // Session prüfen (für Observer)
   const session = getSession();
@@ -93,14 +93,14 @@ export async function amorph(options = {}) {
   const features = await loadFeatures(container, config, dataSource, {
     onSearch: async (query) => {
       currentQuery = query;
-      debug.suche('Suche ausgeführt', { query });
+      debug.search('Search executed', { query });
       
       // Alte States entfernen
       container.querySelectorAll('.amorph-empty-state, .amorph-error-state, .amorph-no-results').forEach(el => el.remove());
       
       try {
         currentData = await dataSource.query({ search: query });
-        debug.suche('Ergebnisse', { anzahl: currentData.length });
+        debug.search('Results', { count: currentData.length });
         
         // Keine Ergebnisse? Zeige No-Results State
         if (query && query.trim() && currentData.length === 0) {
@@ -113,29 +113,29 @@ export async function amorph(options = {}) {
         // Highlighting anwenden nach Render
         if (query && query.trim()) {
           const matchedTerms = dataSource.getMatchedTerms ? dataSource.getMatchedTerms() : new Set();
-          debug.suche('Matched Terms für Highlighter', { anzahl: matchedTerms.size, terme: [...matchedTerms].slice(0, 10) });
+          debug.search('Matched terms for highlighter', { count: matchedTerms.size, terms: [...matchedTerms].slice(0, 10) });
           highlightMatches(container, query.trim(), matchedTerms);
         }
         
         return currentData;
       } catch (error) {
-        debug.fehler('Suche fehlgeschlagen', { error: error.message });
+        debug.error('Search failed', { error: error.message });
         showErrorState(container, error);
         return [];
       }
     }
   });
-  debug.features('Geladen', features.map(f => f.name));
+  debug.features('Loaded', features.map(f => f.name));
   
   // === URL STATE WIEDERHERSTELLUNG ===
   // Prüfe ob State in URL gespeichert ist
   const urlState = getUrlState();
-  debug.session('URL-State geladen', urlState);
+  debug.session('URL state loaded', urlState);
   
   if (urlState.suche) {
     // Auto-Suche mit URL-Parameter auslösen
     setTimeout(() => {
-      debug.session('Triggere Auto-Suche aus URL', { suche: urlState.suche });
+      debug.session('Triggering auto-search from URL', { search: urlState.suche });
       document.dispatchEvent(new CustomEvent('amorph:auto-search', {
         detail: { query: urlState.suche }
       }));
@@ -163,20 +163,20 @@ export async function amorph(options = {}) {
     setUrlState({ ...current, ansicht });
   });
   
-  // KEINE initiale Daten laden - warten auf Suche
-  debug.daten('Warte auf Sucheingabe...');
+  // NO initial data load - wait for search
+  debug.data('Waiting for search input...');
   
-  // Leere Nachricht anzeigen
+  // Show empty message
   showEmptyState(container);
   
-  debug.render('Fertig!');
+  debug.render('Done!');
   
   // Navigation zu Einzelansicht (von Header-Auswahl-Badges)
   document.addEventListener('amorph:navigate-pilz', async (e) => {
     const { slug, id } = e.detail || {};
     if (!slug && !id) return;
     
-    debug.amorph('Navigate zu Pilz', { slug, id });
+    debug.amorph('Navigate to item', { slug, id });
     
     // URL ändern
     const newUrl = `/${slug || id}`;
@@ -221,7 +221,7 @@ export async function amorph(options = {}) {
     const feldName = feldContainer.dataset.field;
     
     if (!itemId || !feldName) {
-      debug.amorph('Keine itemId oder feldName gefunden', { itemId, feldName });
+      debug.amorph('No itemId or fieldName found', { itemId, feldName });
       return;
     }
     
@@ -237,17 +237,30 @@ export async function amorph(options = {}) {
     const isSelected = istFeldAusgewaehlt(itemId, feldName);
     feldContainer.classList.toggle('feld-ausgewaehlt', isSelected);
     
-    debug.amorph('Feld-Auswahl Toggle', { itemId, feldName, selected: isSelected });
+    debug.amorph('Field selection toggle', { itemId, fieldName: feldName, selected: isSelected });
   });
   
-  // Auf Auswahl-Änderungen von außen reagieren (z.B. vom Compare-View)
+  // Auf Auswahl-Änderungen von außen reagieren (z.B. vom Compare-View oder Header)
   document.addEventListener('amorph:auswahl-geaendert', async (e) => {
-    const { entferntesFeld } = e.detail || {};
+    const { entferntesFeld, entfernterPilz, entfernteFelder } = e.detail || {};
+    const { istFeldAusgewaehlt } = await import('./features/ansichten/index.js');
+    
+    // Wenn ein ganzer Pilz entfernt wurde, alle seine Felder im Grid deselektieren
+    if (entfernterPilz) {
+      const pilzCard = container.querySelector(`amorph-container[data-item-id="${entfernterPilz}"]`);
+      if (pilzCard) {
+        // Alle Felder dieses Pilzes deselektieren
+        const alleFelder = pilzCard.querySelectorAll('amorph-container[data-field].feld-ausgewaehlt');
+        alleFelder.forEach(feldContainer => {
+          feldContainer.classList.remove('feld-ausgewaehlt');
+        });
+        debug.amorph('Pilz fields deselected', { pilzId: entfernterPilz, fieldCount: alleFelder.length });
+      }
+      return;
+    }
     
     // Wenn ein spezifisches Feld entfernt wurde, aktualisiere nur diese
     if (entferntesFeld) {
-      const { istFeldAusgewaehlt } = await import('./features/ansichten/index.js');
-      
       // Finde alle Felder mit diesem Namen im Container
       const felder = container.querySelectorAll(`amorph-container[data-field="${entferntesFeld}"]`);
       felder.forEach(feldContainer => {
@@ -259,7 +272,7 @@ export async function amorph(options = {}) {
         feldContainer.classList.toggle('feld-ausgewaehlt', isSelected);
       });
       
-      debug.amorph('Feld-Klassen aktualisiert (von außen)', { entferntesFeld, anzahlFelder: felder.length });
+      debug.amorph('Field classes updated (externally)', { removedField: entferntesFeld, fieldCount: felder.length });
     }
   });
   
@@ -278,7 +291,7 @@ export async function amorph(options = {}) {
       if (currentQuery) {
         currentData = await dataSource.query({ search: currentQuery });
         await render(container, currentData, config);
-        debug.amorph('Reload komplett', { anzahl: currentData.length });
+        debug.amorph('Reload complete', { count: currentData.length });
       }
     },
     

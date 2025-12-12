@@ -1,0 +1,53 @@
+{
+  "native_range": "Europe, North America, Asia",
+  "distribution": "Circumboreal",
+  
+  "continents": [
+    { "label": "Europe", "value": 45 },
+    { "label": "North America", "value": 25 },
+    { "label": "Asia", "value": 20 },
+    { "label": "Other", "value": 10 }
+  ],
+  
+  "countries_present": [
+    "Germany", "France", "Italy", "Poland", "Sweden", "Finland",
+    "USA", "Canada", "Russia", "China", "Japan"
+  ],
+  
+  "coordinates_type_locality": {
+    "lat": 48.8566,
+    "lng": 2.3522,
+    "location": "Paris, France"
+  },
+  
+  "population_hotspots": [
+    { "lat": 46.0, "lng": 11.0, "location": "Italian Alps", "density": "high" },
+    { "lat": 51.5, "lng": 10.5, "location": "German Mittelgebirge", "density": "high" },
+    { "lat": 59.3, "lng": 18.0, "location": "Swedish forests", "density": "medium" }
+  ],
+  
+  "altitude_range_m": { "min": 0, "max": 2000 },
+  "optimal_altitude_m": { "min": 400, "max": 1200 },
+  
+  "climate_zones": ["Temperate", "Boreal", "Mediterranean mountains"],
+  
+  "range_expansion": {
+    "trend": "stable",
+    "notes": "Some introduction to Southern Hemisphere via forestry"
+  },
+  
+  "biogeographic_realm": "Palearctic, Nearctic",
+  
+  "distribution_map_url": "https://www.gbif.org/species/2519208",
+  
+  "regional_abundance": [
+    { "axis": "Western Europe", "value": 90 },
+    { "axis": "Eastern Europe", "value": 85 },
+    { "axis": "Scandinavia", "value": 75 },
+    { "axis": "North America", "value": 60 },
+    { "axis": "East Asia", "value": 50 }
+  ],
+  
+  "invasive_status": "native",
+  "introduction_history": "Naturally circumpolar distribution"
+}

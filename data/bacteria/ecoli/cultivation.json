@@ -1,0 +1,54 @@
+{
+  "perspektive": "cultivation",
+  "schwierigkeit": {
+    "level": 20,
+    "beschreibung": "Sehr einfach - Standardmethoden"
+  },
+  "laborstandard": true,
+  "kulturbedingungen": {
+    "temperatur": {
+      "min": 20,
+      "max": 45,
+      "optimal": 37,
+      "einheit": "°C"
+    },
+    "ph": {
+      "min": 6,
+      "max": 8,
+      "optimal": 7
+    },
+    "sauerstoff": "Aerob oder anaerob"
+  },
+  "standardmedien": [
+    {
+      "name": "LB (Luria-Bertani)",
+      "zusammensetzung": "Trypton, Hefeextrakt, NaCl",
+      "verwendung": "Routinekultur"
+    },
+    {
+      "name": "Minimal Medium M9",
+      "zusammensetzung": "Salze + Glukose",
+      "verwendung": "Definierte Bedingungen"
+    },
+    {
+      "name": "SOC",
+      "zusammensetzung": "Reiches Medium",
+      "verwendung": "Nach Transformation"
+    }
+  ],
+  "wachstumszeit": {
+    "uebernachtkultur_h": 16,
+    "log_phase_start_h": 2,
+    "sichtbare_kolonien_h": 12
+  },
+  "lagerung": {
+    "glycerolstock_prozent": 15,
+    "temperatur": -80,
+    "haltbarkeit_jahre": 10
+  },
+  "sicherheitsausruestung": [
+    "Laborkittel",
+    "Handschuhe",
+    "Bunsenbrenner/Sterilbank"
+  ]
+}

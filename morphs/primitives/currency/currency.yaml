@@ -1,0 +1,31 @@
+# Currency Morph Configuration
+# Currency amount display with formatting
+
+id: currency
+name: Currency
+description: Currency display with locale formatting
+category: extended
+
+# Detection rules
+detection:
+  type: object
+  requiredKeys:
+    - amount
+    - currency
+  alternativeKeys:
+    - value
+    - symbol
+    - price
+
+# Configuration
+config:
+  defaultCurrency: EUR
+  showSymbol: true
+  compactLargeNumbers: true
+  locale: "en-US"
+  symbols:
+    EUR: "€"
+    USD: "$"
+    GBP: "£"
+    JPY: "¥"
+    CHF: "CHF"

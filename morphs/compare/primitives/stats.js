@@ -1,23 +1,24 @@
 /**
- * COMPARE STATS - statistics-Grid-Vergleich
+ * COMPARE STATS - Statistics grid comparison
  */
 
-import { debug } from '../../../observer/debug.js';
+import { debug } from '../../../../observer/debug.js';
 
 export function compareStats(items, config = {}) {
   const el = document.createElement('div');
   el.className = 'amorph-compare amorph-compare-stats';
   
-  // Alle Stats-Keys sammeln
+  // Collect all stats keys
   const allKeys = new Set();
   items.forEach(item => {
-    if (typeof item.wert === 'object' && !Array.isArray(item.wert)) {
-      Object.keys(item.wert).forEach(k => allKeys.add(k));
+    const val = item.value ?? item.wert;
+    if (typeof val === 'object' && !Array.isArray(val)) {
+      Object.keys(val).forEach(k => allKeys.add(k));
     }
   });
   
   if (allKeys.size === 0) {
-    el.innerHTML = '<div class="compare-leer">Keine statisticsen</div>';
+    el.innerHTML = '<div class="compare-empty">No statistics</div>';
     return el;
   }
   
@@ -27,7 +28,7 @@ export function compareStats(items, config = {}) {
   header.innerHTML = '<div class="stats-label">Stat</div>';
   items.forEach(item => {
     const itemName = item.name || item.id || '–';
-    header.innerHTML += `<div class="stats-name" style="color:${item.textFarbe || item.farbe || '#fff'}">${itemName}</div>`;
+    header.innerHTML += `<div class="stats-name" style="color:${item.textColor || item.textFarbe || item.color || item.farbe || '#fff'}">${itemName}</div>`;
   });
   el.appendChild(header);
   
@@ -37,26 +38,28 @@ export function compareStats(items, config = {}) {
     row.className = 'stats-row';
     row.innerHTML = `<div class="stats-label">${key}</div>`;
     
-    // Werte für diese Zeile
-    const werte = items.map(item => {
-      const val = item.wert?.[key];
+    // Values for this row
+    const values = items.map(item => {
+      const itemVal = item.value ?? item.wert;
+      const val = itemVal?.[key];
       return typeof val === 'number' ? val : 0;
     });
-    const maxWert = Math.max(...werte);
+    const maxValue = Math.max(...values);
     
     items.forEach((item, idx) => {
-      const wert = item.wert?.[key];
-      const numWert = typeof wert === 'number' ? wert : 0;
-      const prozent = maxWert > 0 ? (numWert / maxWert) * 100 : 0;
-      const isMax = numWert === maxWert && maxWert > 0;
+      const itemVal = item.value ?? item.wert;
+      const val = itemVal?.[key];
+      const numValue = typeof val === 'number' ? val : 0;
+      const percent = maxValue > 0 ? (numValue / maxValue) * 100 : 0;
+      const isMax = numValue === maxValue && maxValue > 0;
       
       const cell = document.createElement('div');
       cell.className = 'stats-cell' + (isMax ? ' stats-max' : '');
       cell.innerHTML = `
         <div class="stats-bar-bg">
-          <div class="stats-bar" style="width:${prozent}%;background-color:${item.farbe || '#888'}"></div>
+          <div class="stats-bar" style="width:${percent}%;background-color:${item.color || item.farbe || '#888'}"></div>
         </div>
-        <span class="stats-wert" style="color:${item.textFarbe || item.farbe || '#fff'}">${wert ?? '–'}</span>
+        <span class="stats-value" style="color:${item.textColor || item.textFarbe || item.color || item.farbe || '#fff'}">${val ?? '–'}</span>
       `;
       row.appendChild(cell);
     });

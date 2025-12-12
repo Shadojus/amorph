@@ -1,8 +1,8 @@
 /**
- * COMPARE IMAGE - Bildergalerie
+ * COMPARE IMAGE - Image gallery comparison
  */
 
-import { debug } from '../../../observer/debug.js';
+import { debug } from '../../../../observer/debug.js';
 
 export function compareImage(items, config = {}) {
   const el = document.createElement('div');
@@ -12,17 +12,18 @@ export function compareImage(items, config = {}) {
   gallery.className = 'compare-gallery';
   
   items.forEach(item => {
-    if (!item.wert) return;
+    const val = item.value ?? item.wert;
+    if (!val) return;
     
     const imgWrap = document.createElement('div');
-    imgWrap.className = `compare-img-wrap ${item.farbKlasse || ''}`;
+    imgWrap.className = `compare-img-wrap ${item.colorClass || item.farbKlasse || ''}`;
     
-    // Inline-Styles für zuverlässige Darstellung
-    const bgColor = item.farbe || 'rgba(100,100,100,0.5)';
-    const textColor = item.textFarbe || 'white';
+    // Inline styles for reliable rendering
+    const bgColor = item.color || item.farbe || 'rgba(100,100,100,0.5)';
+    const textColor = item.textColor || item.textFarbe || 'white';
     const itemName = item.name || item.id || '–';
     imgWrap.innerHTML = `
-      <img src="${item.wert}" alt="${itemName}" loading="lazy">
+      <img src="${val}" alt="${itemName}" loading="lazy">
       <span class="img-label" style="background-color:${bgColor};color:${textColor}">${itemName}</span>
     `;
     

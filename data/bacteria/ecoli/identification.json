@@ -1,0 +1,45 @@
+{
+  "perspektive": "identification",
+  "taxonomie": {
+    "regnum": "Bacteria",
+    "phylum": "Pseudomonadota",
+    "classis": "Gammaproteobacteria",
+    "ordo": "Enterobacterales",
+    "familia": "Enterobacteriaceae",
+    "genus": "Escherichia",
+    "species": "Escherichia coli"
+  },
+  "synonyme": [
+    "Bacterium coli commune",
+    "Bacillus coli"
+  ],
+  "erstbeschreibung": {
+    "autor": "Theodor Escherich",
+    "jahr": 1885,
+    "publikation": "Die Darmbakterien des Säuglings"
+  },
+  "morphologie": {
+    "form": "Stäbchen",
+    "laenge_um": {
+      "min": 1.0,
+      "max": 3.0
+    },
+    "breite_um": {
+      "min": 0.5,
+      "max": 1.0
+    },
+    "begeisselung": "Peritrich",
+    "beweglichkeit": true
+  },
+  "faerbung": {
+    "gram": "negativ",
+    "farbe": "Rosa (Gegenfärbung)"
+  },
+  "biochemie": {
+    "katalase": true,
+    "oxidase": false,
+    "laktosefermentation": true,
+    "indol": true
+  },
+  "serogruppen_anzahl": 186
+}

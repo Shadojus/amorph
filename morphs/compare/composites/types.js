@@ -1,57 +1,62 @@
 /**
- * TYPE CATEGORIES - Datentyp-Kategorisierung
+ * TYPE CATEGORIES - Data type categorization
  * 
- * Definiert welche Datentypen semantisch zusammengehören.
- * Dies ist das Herzstück der datengetriebenen Entscheidungsfindung.
+ * Defines which data types semantically belong together.
+ * This is the heart of data-driven decision making.
  * 
- * DATENGETRIEBEN: Kategorien basieren auf Datenstruktur, nicht auf Feldnamen!
+ * DATA-DRIVEN: Categories based on data structure, not field names!
  */
 
 // =============================================================================
-// TYP-KATEGORIEN - Welche Typen passen zusammen?
+// TYPE CATEGORIES - Which types fit together?
 // =============================================================================
 
 export const TYPE_CATEGORIES = {
-  // Numerische Vergleiche - können auf gemeinsamer Skala verglichen werden
+  // Numeric comparisons - can be compared on a common scale
   numeric: ['number', 'rating', 'progress', 'bar'],
   
-  // Ranges - haben min/max, können überlagert werden
+  // Ranges - have min/max, can be overlaid
   ranges: ['range', 'stats'],
   
-  // Multidimensional - haben mehrere Achsen/Dimensionen
+  // Multidimensional - have multiple axes/dimensions
   multidim: ['radar', 'pie'],
   
-  // Sequentiell - haben zeitliche oder geordnete Abfolge
+  // Sequential - have temporal or ordered sequence
   sequential: ['timeline'],
   
-  // Kategorisch - diskrete Werte
+  // Categorical - discrete values
   categorical: ['tag', 'badge', 'boolean', 'list'],
   
-  // Text/Komplex
+  // Text/Complex
   textual: ['text', 'string', 'object'],
   
   // Media
   media: ['image', 'link']
 };
 
-// Umkehr-Mapping: Typ → Kategorie
+// Reverse mapping: type → category
 export const TYPE_TO_CATEGORY = {};
 Object.entries(TYPE_CATEGORIES).forEach(([cat, types]) => {
   types.forEach(t => TYPE_TO_CATEGORY[t] = cat);
 });
 
 /**
- * Gibt die Kategorie für einen Typ zurück
+ * Returns the category for a type
+ * @param {string} type - The type to categorize
+ * @returns {string} The category name
  */
-export function getCategory(typ) {
-  return TYPE_TO_CATEGORY[typ] || 'textual';
+export function getCategory(type) {
+  return TYPE_TO_CATEGORY[type] || 'textual';
 }
 
 /**
- * Prüft ob zwei Typen in der gleichen Kategorie sind
+ * Checks if two types are in the same category
+ * @param {string} type1 - First type
+ * @param {string} type2 - Second type
+ * @returns {boolean} True if same category
  */
-export function sameCategory(typ1, typ2) {
-  return getCategory(typ1) === getCategory(typ2);
+export function sameCategory(type1, type2) {
+  return getCategory(type1) === getCategory(type2);
 }
 
 export default {

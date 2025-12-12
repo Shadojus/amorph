@@ -1,0 +1,288 @@
+/* EINZELANSICHT FEATURE STYLES */
+/* Vollständige Pilz-Detailseite */
+
+/* === CONTAINER === */
+.amorph-einzelansicht {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--space-lg);
+  animation: einzelansicht-enter var(--anim-duration-enter) var(--anim-ease-out);
+}
+
+@keyframes einzelansicht-enter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === HEADER === */
+.einzelansicht-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-xl);
+}
+
+.einzelansicht-titel {
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.einzelansicht-wissenschaftlich {
+  font-size: var(--font-size-md);
+  font-style: italic;
+  color: var(--color-text-muted);
+}
+
+/* === ZURÜCK-BUTTON === */
+.amorph-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: var(--transition-all);
+  width: fit-content;
+}
+
+.amorph-back-btn:hover {
+  background: var(--glass-bg-hover);
+  border-color: var(--glass-border-hover);
+  color: var(--color-text);
+}
+
+.amorph-back-btn .back-icon {
+  font-size: var(--font-size-lg);
+}
+
+/* === BILD === */
+.einzelansicht-bild {
+  margin-bottom: var(--space-xl);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--glass-bg);
+}
+
+.einzelansicht-bild img {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: cover;
+  display: block;
+}
+
+/* === BESCHREIBUNG === */
+.einzelansicht-beschreibung {
+  margin-bottom: var(--space-xl);
+  padding: var(--space-lg);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+}
+
+.einzelansicht-beschreibung p {
+  margin: 0;
+  font-size: var(--font-size-md);
+  line-height: 1.7;
+  color: var(--color-text);
+}
+
+/* === FELDER GRID === */
+.einzelansicht-felder {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-md);
+}
+
+/* === EINZELNES FELD === */
+.einzelansicht-feld {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  transition: var(--transition-glass);
+}
+
+.einzelansicht-feld:hover {
+  border-color: var(--glass-border-hover);
+}
+
+.einzelansicht-feld-label {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.einzelansicht-feld-content {
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+}
+
+/* Morph-Container in Einzelansicht */
+.einzelansicht-feld-content amorph-container {
+  padding: 0;
+  margin: 0;
+}
+
+/* === DETAIL VIEW (Overlay) === */
+.amorph-detail-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 var(--space-md, 16px);
+}
+
+.amorph-detail-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-lg, 24px);
+  margin-bottom: var(--space-lg, 24px);
+}
+
+.amorph-detail-nav-btn {
+  width: 44px;
+  height: 44px;
+  font-size: 20px;
+  background: rgba(0, 0, 0, 0.4);
+  color: var(--color-text, white);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.amorph-detail-nav-btn:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.55);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.amorph-detail-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.amorph-detail-counter {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.amorph-detail-card {
+  background: rgba(20, 20, 25, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.amorph-detail-bild {
+  width: 100%;
+  height: 250px;
+  max-height: 250px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.amorph-detail-bild img {
+  width: 100%;
+  height: 250px;
+  max-height: 250px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.amorph-detail-info {
+  text-align: center;
+  margin-bottom: var(--space-md, 16px);
+}
+
+.amorph-detail-badge {
+  display: inline-block;
+  padding: var(--space-xs-plus) var(--space-md);
+  font-size: var(--ui-font-md, 0.72rem);
+  background: rgba(34, 197, 94, 0.12);
+  color: var(--color-accent, #22c55e);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  border-radius: var(--ui-radius-md, 6px);
+}
+
+.amorph-detail-header {
+  padding: var(--space-lg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.amorph-detail-titel {
+  margin: 0 0 var(--space-xs) 0;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.amorph-detail-subtitel {
+  margin: 0;
+  font-size: var(--font-size-base);
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.amorph-detail-felder {
+  padding: var(--space-lg);
+  display: grid;
+  gap: var(--space-md);
+}
+
+.amorph-detail-feld {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: var(--space-md);
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.amorph-detail-feld:last-child {
+  border-bottom: none;
+}
+
+.amorph-detail-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.amorph-detail-wert {
+  color: var(--color-text);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 767px) {
+  .amorph-einzelansicht {
+    padding: var(--space-md);
+  }
+  
+  .einzelansicht-felder {
+    grid-template-columns: 1fr;
+  }
+  
+  .einzelansicht-bild img {
+    max-height: 250px;
+  }
+  
+  .amorph-detail-feld {
+    grid-template-columns: 1fr;
+    gap: var(--space-xs);
+  }
+}

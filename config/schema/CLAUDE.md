@@ -55,7 +55,8 @@ Field configurations are derived from:
 1. Create file: `perspektiven/my_perspective.yaml`
 2. Add ID to `perspektiven/index.yaml`
 3. (Optional) Add CSS to `styles/perspektiven.css`
-4. (Optional) Create compare morph in `themes/pilze/morphs/compare/`
+
+**No theme code needed!** smartCompare auto-detects types.
 
 **No need to edit felder.yaml** - the perspective file is complete!
 

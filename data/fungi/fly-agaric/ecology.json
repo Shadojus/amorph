@@ -1,0 +1,47 @@
+{
+  "trophic_level": "symbiont",
+  "nutrition_type": "ectomycorrhizal",
+  
+  "host_associations": [
+    { "name": "Betula spp.", "type": "symbiosis", "strength": 0.95 },
+    { "name": "Picea abies", "type": "symbiosis", "strength": 0.90 },
+    { "name": "Pinus spp.", "type": "symbiosis", "strength": 0.85 }
+  ],
+  
+  "ecosystem_role": "Ectomycorrhizal symbiont",
+  
+  "habitat_preference": [
+    { "label": "Birch forest", "value": 45 },
+    { "label": "Coniferous forest", "value": 35 },
+    { "label": "Mixed forest", "value": 20 }
+  ],
+  
+  "ecological_profile": [
+    { "axis": "Host specificity", "value": 30 },
+    { "axis": "Climate tolerance", "value": 85 },
+    { "axis": "Soil pH range", "value": 70 },
+    { "axis": "Altitude range", "value": 90 },
+    { "axis": "Moisture needs", "value": 60 }
+  ],
+  
+  "altitude_range_m": { "min": 0, "max": 2500 },
+  
+  "soil_requirements": {
+    "ph_range": { "min": 4.0, "max": 7.0 },
+    "moisture": "variable",
+    "organic_content": "moderate to high"
+  },
+  
+  "climate_preferences": {
+    "temperature_optimal_c": { "min": 10, "max": 25 },
+    "rainfall_mm_annual": { "min": 400, "max": 1500 }
+  },
+  
+  "associated_species": [
+    "Boletus edulis",
+    "Lactarius torminosus",
+    "Russula emetica"
+  ],
+  
+  "indicator_species_for": ["Birch-associated ecosystems", "Boreal forests"]
+}

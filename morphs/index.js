@@ -1,30 +1,31 @@
 // ============================================================================
 // PRIMITIVES - Domänenunabhängige Basis-Morphs
 // ============================================================================
-import { text } from './primitives/text.js';
-import { number } from './primitives/number.js';
-import { boolean } from './primitives/boolean.js';
-import { tag } from './primitives/tag.js';
-import { range } from './primitives/range.js';
-import { list } from './primitives/list.js';
-import { object } from './primitives/object.js';
-import { image } from './primitives/image.js';
-import { link } from './primitives/link.js';
-import { pie } from './primitives/pie.js';
-import { bar } from './primitives/bar.js';
-import { radar } from './primitives/radar.js';
-import { rating } from './primitives/rating.js';
-import { progress } from './primitives/progress.js';
-import { stats } from './primitives/stats.js';
-import { timeline } from './primitives/timeline.js';
-import { badge } from './primitives/badge.js';
+import { text } from './primitives/text/text.js';
+import { number } from './primitives/number/number.js';
+import { boolean } from './primitives/boolean/boolean.js';
+import { tag } from './primitives/tag/tag.js';
+import { range } from './primitives/range/range.js';
+import { list } from './primitives/list/list.js';
+import { object } from './primitives/object/object.js';
+import { image } from './primitives/image/image.js';
+import { link } from './primitives/link/link.js';
+import { pie } from './primitives/pie/pie.js';
+import { bar } from './primitives/bar/bar.js';
+import { radar } from './primitives/radar/radar.js';
+import { rating } from './primitives/rating/rating.js';
+import { progress } from './primitives/progress/progress.js';
+import { stats } from './primitives/stats/stats.js';
+import { timeline } from './primitives/timeline/timeline.js';
+import { badge } from './primitives/badge/badge.js';
+import { lifecycle } from './primitives/lifecycle/lifecycle.js';
 
 // ============================================================================
 // FEATURE-MORPHS - Systemweite Features
 // ============================================================================
-import { suche } from './suche.js';
-import { perspektiven } from './perspektiven.js';
-import { header } from './header.js';
+import { suche } from '../config/suche.js';
+import { perspektiven } from '../config/perspektiven.js';
+import { header } from '../config/header.js';
 
 // ============================================================================
 // COMPARE - Generische Compare-Wrapper (aus primitives/)
@@ -140,6 +141,7 @@ export const morphs = {
   stats,    // statistics-Karte (min/max/avg)
   timeline, // Zeitliche Abfolge
   badge,    // Farbige Status-Labels
+  lifecycle, // Lebenszyklen / Phasen
   
   // Compare-Morphs (Vergleich) - Alle Typen
   compareMorph,
@@ -174,7 +176,7 @@ export const morphs = {
 
 // Log registrierte Morphs
 debug.morphs('registry', { 
-  primitives: ['text', 'number', 'boolean', 'tag', 'range', 'list', 'object', 'image', 'link', 'pie', 'bar', 'radar', 'rating', 'progress', 'stats', 'timeline', 'badge'],
+  primitives: ['text', 'number', 'boolean', 'tag', 'range', 'list', 'object', 'image', 'link', 'pie', 'bar', 'radar', 'rating', 'progress', 'stats', 'timeline', 'badge', 'lifecycle'],
   features: ['suche', 'perspektiven', 'header'],
   compare: ['compareMorph', 'compareBar', 'compareRating', 'compareTag', 'compareList', 'compareImage', 'compareRadar', 'comparePie', 'compareText', 'compareTimeline', 'compareRange', 'compareProgress', 'compareBoolean', 'compareStats', 'compareObject'],
   composites: ['smartCompare', 'diffCompare']
@@ -186,7 +188,7 @@ debug.morphs('registry', {
 export { 
   // Primitives
   text, number, boolean, tag, range, list, object, image, link, 
-  pie, bar, radar, rating, progress, stats, timeline, badge,
+  pie, bar, radar, rating, progress, stats, timeline, badge, lifecycle,
   
   // Features
   suche, perspektiven, header,

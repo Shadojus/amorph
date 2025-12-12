@@ -1,0 +1,323 @@
+/* PERSPEKTIVEN FEATURE STYLES */
+/* Black Glasmorphism - Perspektiven-Grid, Buttons und Filter-Logik */
+
+/* === PERSPEKTIVEN CONTAINER === */
+.amorph-perspektiven {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  justify-content: flex-start;
+  align-items: center;
+  padding: var(--space-2xs) 0;
+  /* Horizontal scroll on mobile */
+  min-width: max-content;
+}
+
+/* Perspektiven in eigener Zeile */
+.amorph-header-perspektiven [data-morph="perspektiven"] {
+  display: contents;
+}
+
+/* === PERSPEKTIVEN BUTTONS === */
+.amorph-perspektive-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  height: 26px;
+  padding: 0 10px;
+  font-size: 0.68rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  white-space: nowrap;
+  /* Deep Glass Effect */
+  background: linear-gradient(
+    135deg,
+    rgba(20, 20, 28, 0.85) 0%,
+    rgba(15, 15, 22, 0.9) 100%
+  );
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  /* Perspektiven mit Treffern werden via JS nach vorne sortiert */
+  order: 100; /* Default - hinten */
+}
+
+/* Perspektiven mit Treffern bekommen order basierend auf Treffer-Anzahl */
+.amorph-perspektive-btn.hat-treffer {
+  order: 0; /* Vorne */
+  color: rgba(255, 255, 255, 0.7);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Emoji-Symbole */
+.amorph-perspektive-btn .btn-symbol {
+  font-size: 0.75em;
+  line-height: 1;
+  opacity: 0.7;
+}
+
+.amorph-perspektive-btn .btn-name {
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.amorph-perspektive-btn:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(30, 30, 40, 0.9) 0%,
+    rgba(25, 25, 35, 0.95) 100%
+  );
+  border-color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.85);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.amorph-perspektive-btn:hover .btn-symbol {
+  opacity: 1;
+}
+
+/* AKTIV - verstecken! Aktive Perspektiven werden nur als Badge in Suchleiste gezeigt */
+.amorph-perspektive-btn.aktiv,
+.amorph-perspektive-btn[aria-pressed="true"] {
+  display: none;
+}
+
+/* Treffer-Badge - Glow Zahl */
+.amorph-perspektive-btn.hat-treffer::after {
+  content: attr(data-treffer-anzahl);
+  position: absolute;
+  top: -5px;
+  right: -3px;
+  font-size: 0.55rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 2px 4px;
+  min-width: 14px;
+  text-align: center;
+  /* Glowing number */
+  background: rgba(0, 0, 0, 0.6);
+  color: var(--p-farbe, rgba(255, 255, 255, 0.9));
+  text-shadow: 0 0 6px var(--p-farbe, rgba(255, 255, 255, 0.5));
+  border: 1px solid color-mix(in srgb, var(--p-farbe, white) 30%, transparent);
+  border-radius: 7px;
+  z-index: 10;
+}
+
+/* Aktive Perspektive Badge noch intensiver */
+.amorph-perspektive-btn.aktiv.hat-treffer::after,
+.amorph-perspektive-btn[aria-pressed="true"].hat-treffer::after {
+  background: color-mix(in srgb, var(--p-farbe) 15%, rgba(0, 0, 0, 0.7));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--p-farbe) 40%, transparent);
+}
+
+@keyframes badge-glow-pop {
+  0% { transform: scale(0); opacity: 0; }
+  70% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* === PERSPEKTIVEN-FILTER auf Feldern === */
+amorph-container[data-field] {
+  transition: var(--transition-all);
+}
+
+/* Wenn Perspektiven aktiv: Felder die NICHT markiert sind, verstecken */
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field] {
+  display: none !important;
+}
+
+/* Immer sichtbare Basisfelder */
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field="name"],
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field="bild"],
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field="wissenschaftlich"],
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field="beschreibung"] {
+  display: block !important;
+}
+
+/* === SICHTBARE FELDER - Leuchtender Glow === */
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-perspektive-sichtbar] {
+  display: block !important;
+  position: relative;
+  padding-left: var(--space-sm);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent)) 8%, transparent) 0%,
+    color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 5%, transparent) 50%,
+    color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe)) 3%, transparent) 100%
+  );
+  border-radius: var(--radius-sm);
+}
+
+/* Leuchtender vertikaler Glow-Streifen */
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-perspektive-sichtbar]::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  border-radius: 2px;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent)) 70%, transparent) 0%,
+    color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 60%, transparent) 33%,
+    color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe)) 50%, transparent) 66%,
+    color-mix(in srgb, var(--feld-p-farbe-3, var(--feld-perspektive-farbe)) 40%, transparent) 100%
+  );
+  box-shadow:
+    0 0 4px color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent)) 50%, transparent),
+    0 0 8px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 30%, transparent);
+  animation: feld-glow-pulse 4s ease-in-out infinite;
+}
+
+/* === PULSIER-ANIMATIONEN === */
+@keyframes feld-glow-pulse {
+  0%, 100% {
+    opacity: 0.85;
+    box-shadow:
+      0 0 6px color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent)) 50%, transparent),
+      0 0 12px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 30%, transparent),
+      0 0 18px color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe)) 20%, transparent);
+  }
+  50% {
+    opacity: 1;
+    box-shadow:
+      0 0 10px color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent)) 70%, transparent),
+      0 0 20px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 50%, transparent),
+      0 0 30px color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe)) 30%, transparent);
+  }
+}
+
+/* === MULTI-PERSPEKTIVEN - Mehrfarbiger Glow === */
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-perspektive-multi] {
+  padding-left: var(--space-md);
+  background: var(--feld-bg-gradient, 
+    linear-gradient(135deg, 
+      color-mix(in srgb, var(--p-farbe-0, var(--color-accent)) 12%, transparent),
+      color-mix(in srgb, var(--p-farbe-1, var(--color-accent)) 12%, transparent)
+    )
+  );
+}
+
+/* Multi-Perspektiven: Animierter Gradient-Streifen */
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-perspektive-multi]::before {
+  width: 4px;
+  background: var(--feld-gradient, var(--color-accent));
+  background-size: 100% 200%;
+  box-shadow:
+    0 0 8px var(--p-farbe-0, var(--color-accent)),
+    0 0 8px var(--p-farbe-1, var(--color-accent)),
+    0 0 16px color-mix(in srgb, var(--p-farbe-0, var(--color-accent)) 70%, transparent),
+    0 0 16px color-mix(in srgb, var(--p-farbe-1, var(--color-accent)) 70%, transparent),
+    0 0 28px color-mix(in srgb, var(--p-farbe-0, var(--color-accent)) 40%, transparent),
+    0 0 28px color-mix(in srgb, var(--p-farbe-1, var(--color-accent)) 40%, transparent);
+  animation: multi-color-flow 3s ease-in-out infinite;
+}
+
+@keyframes multi-color-flow {
+  0%, 100% {
+    background-position: 0% 0%;
+    opacity: 0.85;
+  }
+  50% {
+    background-position: 0% 100%;
+    opacity: 1;
+    filter: brightness(1.1);
+  }
+}
+
+/* === AUSGEWÄHLTE FELDER - Intensiverer Glow === */
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-perspektive-sichtbar].feld-ausgewaehlt::before {
+  width: 4px !important;
+  box-shadow: 
+    0 0 8px var(--feld-perspektive-farbe, var(--color-accent)),
+    0 0 16px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 40%, transparent) !important;
+  animation: feld-auswahl-sanft 3s ease-in-out infinite !important;
+}
+
+@keyframes feld-auswahl-sanft {
+  0%, 100% {
+    opacity: 0.9;
+    box-shadow:
+      0 0 8px var(--feld-perspektive-farbe, var(--color-accent)),
+      0 0 16px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 40%, transparent);
+  }
+  50% {
+    opacity: 1;
+    box-shadow:
+      0 0 12px var(--feld-perspektive-farbe, var(--color-accent)),
+      0 0 24px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 50%, transparent);
+  }
+}
+
+
+/* === MULTI-AUSWAHL Glow === */
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-perspektive-multi].feld-ausgewaehlt::before {
+  /* Fallback neutral - echte Farben kommen via --feld-gradient/--p-farbe-X */
+  background: var(--feld-gradient, linear-gradient(180deg, rgba(180, 185, 190, 0.65), rgba(170, 180, 190, 0.65))) !important;
+  box-shadow:
+    0 0 4px color-mix(in srgb, var(--p-farbe-0, rgba(180, 185, 190, 0.65)) 60%, transparent),
+    0 0 4px color-mix(in srgb, var(--p-farbe-1, rgba(170, 180, 190, 0.65)) 60%, transparent),
+    0 0 8px color-mix(in srgb, var(--p-farbe-0, rgba(180, 185, 190, 0.65)) 30%, transparent),
+    0 0 8px color-mix(in srgb, var(--p-farbe-1, rgba(170, 180, 190, 0.65)) 30%, transparent) !important;
+  animation: multi-auswahl-glow 4s ease-in-out infinite !important;
+}
+
+@keyframes multi-auswahl-glow {
+  0%, 100% {
+    opacity: 0.8;
+    filter: brightness(0.95);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.1);
+  }
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 900px) {
+  .amorph-perspektiven {
+    gap: 5px;
+  }
+  .amorph-perspektive-btn {
+    height: 24px;
+    padding: 0 8px;
+    font-size: 0.62rem;
+    border-radius: 12px;
+  }
+  .amorph-perspektive-btn .btn-symbol {
+    font-size: 0.7em;
+  }
+}
+
+@media (max-width: 600px) {
+  .amorph-perspektiven {
+    gap: 4px;
+  }
+  .amorph-perspektive-btn {
+    height: 22px;
+    padding: 0 6px;
+    font-size: 0.55rem;
+    border-radius: 11px;
+  }
+  .amorph-perspektive-btn .btn-symbol {
+    font-size: 0.7em;
+  }
+  .amorph-perspektive-btn .btn-name {
+    /* Name bleibt immer sichtbar - Icons allein sind nicht universell verständlich */
+    font-size: 0.52rem;
+  }
+  .amorph-perspektive-btn.hat-treffer::after {
+    top: -4px;
+    right: -2px;
+    font-size: 0.5rem;
+    min-width: 12px;
+    padding: 1px 3px;
+  }
+}

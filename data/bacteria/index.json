@@ -1,0 +1,11 @@
+{
+  "sammlung": "bacteria",
+  "beschreibung": "Bakterien - Bacteria (Perspektiven-Format)",
+  "typ": "json-perspektiven",
+  "spezies": [
+    {
+      "slug": "ecoli",
+      "ordner": "ecoli"
+    }
+  ]
+}

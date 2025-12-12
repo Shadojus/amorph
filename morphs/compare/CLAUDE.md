@@ -1,78 +1,114 @@
 # Compare Morphs
 
-Vergleichs-Visualisierungen für mehrere Items nebeneinander.
+100% DATA-DRIVEN comparison system. No hardcoded perspectives!
 
-## Dateien
+## Structure
 
 ```
 morphs/compare/
-├── base.js       ← Utils: erstelleFarben(), detectType()
-├── index.js      ← Export aller Compare-Morphs
-├── primitives/   ← 16 generische Compare-Primitives
-└── composites/   ← Smart/Diff Compare
+├── base.js           ← Utils: createColors(), detectType(), createLegend()
+├── index.js          ← Export of all compare morphs
+├── composites.js     ← Re-export from composites/
+├── primitives/       ← 16 generic compare primitives
+│   ├── bar.js        ← Horizontal bar comparison
+│   ├── barGroup.js   ← Grouped bars
+│   ├── boolean.js    ← Yes/No comparison
+│   ├── image.js      ← Image gallery
+│   ├── list.js       ← List comparison
+│   ├── object.js     ← Object comparison
+│   ├── pie.js        ← Pie chart overlay
+│   ├── progress.js   ← Progress bars
+│   ├── radar.js      ← Overlaid radar charts
+│   ├── range.js      ← Range visualization
+│   ├── rating.js     ← Star ratings
+│   ├── stats.js      ← Statistics comparison
+│   ├── tag.js        ← Tag comparison
+│   ├── text.js       ← Text comparison
+│   ├── timeline.js   ← Timeline comparison
+│   └── index.js      ← Export all + compareByType()
+└── composites/       ← Intelligent comparison
+    ├── analyze.js    ← analyzeItems(), findRelatedFields()
+    ├── render.js     ← renderFieldMorph(), render*Composite()
+    ├── smartCompare.js ← Main data-driven compare function
+    ├── diffCompare.js  ← Difference highlighting
+    ├── types.js      ← TYPE_CATEGORIES, TYPE_TO_CATEGORY
+    └── index.js      ← Export all composites
 ```
 
-## Theme-Compare-Morphs (17 Perspektiven)
+## Data-Driven Architecture
 
-Perspektiven-spezifische Morphs in `themes/pilze/morphs/compare/`:
-
-```
-themes/pilze/morphs/compare/
-├── index.js           # Export aller 17 Compare-Morphs
-├── culinary.js     # Geschmack, Zubereitung
-├── safety.js      # Toxine, Verwechslung
-├── cultivation.js           # Substrate, Ertrag
-├── wissenschaft.js    # Taxonomie, Genetik
-├── medicine.js         # Wirkstoffe, Therapie
-├── statistics.js       # Fundstatistics
-├── chemistry.js          # Metabolite, Enzyme
-├── sensorik.js        # Aroma, Textur
-├── ecology.js       # Habitat, Symbiosen
-├── temporal.js        # Lebenszyklus
-├── geography.js       # Verbreitung
-├── economy.js      # Markt, Preise
-├── conservation.js     # IUCN-Status
-├── culture.js          # Mythologie
-├── research.js       # Publikationen
-├── interactions.js   # Wirte, Mikrobiom
-└── visual.js          # Bilder, Farben
-```
-
-## Farb-System (CSS Single Source of Truth!)
+**NO themes/ folder!** Everything is automatic:
 
 ```javascript
-// base.js - erstelleFarben()
-export function erstelleFarben(items) {
-  return items.map((item, index) => ({
-    name: item._meta?.name || item.name || `Item ${index + 1}`,
-    farbIndex: index % 12,
-    farbKlasse: `pilz-farbe-${index % 12}`
-  }));
+import { smartCompare } from './composites/index.js';
+
+// Automatic type detection + grouping
+const el = smartCompare(items, {
+  includeOnly: ['field1', 'field2']  // Optional filter
+});
+```
+
+### How it works:
+
+1. `analyzeItems(items)` → Extracts fields from `items[0].data`
+2. `detectType(value)` → Determines type (bar, radar, tag, etc.)
+3. `TYPE_TO_CATEGORY[type]` → Groups into categories (numeric, ranges, multidim, etc.)
+4. `findRelatedFields(fields)` → Creates semantic groups
+5. `render*Composite()` → Renders each group with appropriate morphs
+
+### Type Categories:
+
+| Category | Types | Visualization |
+|----------|-------|---------------|
+| `numeric` | number, rating, progress, bar | Horizontal bars |
+| `ranges` | range, stats | Overlapping ranges |
+| `multidim` | radar, pie | Spider charts, pie charts |
+| `sequential` | timeline | Timeline overlay |
+| `categorical` | tag, badge, boolean, list | Tags, chips |
+| `textual` | text, string, object | Text comparison |
+| `media` | image, link | Gallery |
+
+## Color System (CSS Single Source of Truth!)
+
+```javascript
+// base.js - createColors()
+export function createColors(itemIds) {
+  // Returns Map: id → {colorIndex, colorClass, fill, text, line, bg, glow}
+}
+
+// Perspective color filtering
+export function setActivePerspectiveColors(colors) {
+  // Filters item colors that are too similar to perspective colors
 }
 ```
 
-**CSS macht das Styling** (`pilz-farben.css`):
+**CSS does the styling** (`pilz-farben.css`):
 ```css
 .pilz-farbe-0 { --pilz-text: rgb(0, 255, 255); }
 ```
 
-## Compare-Morph Signatur
+## Compare Primitive Signature
 
 ```javascript
-function compareMorph(items, perspektive, schema) → HTMLElement
+function compareXxx(items, config) → HTMLElement
 
-// items = Array von Pilz-Objekten
-// perspektive = { id, name, symbol, farben, felder }
-// schema = { felder: {...}, perspektiven: [...] }
+// items = [{id, name, value, color}]
+// config = {label, unit, ...}
 ```
 
-## Generische Compare-Primitives
+## Usage in vergleich/index.js
 
-| Morph | Datentyp | Visualisierung |
-|-------|----------|----------------|
-| `compareBar` | `number` | Horizontale Balken |
-| `compareRating` | `0-5, 0-10` | Sterne ★★★☆☆ |
-| `compareRadar` | `[{axis,value}]` | Überlagerte Radars |
-| `comparePie` | `{key:number}` | Kreisdiagramme |
-| `compareTag` | `string` | Farbige Tags |
-| `compareText` | `string` | Text-Vergleich |
+```javascript
+import { smartCompare } from '../../morphs/compare/composites/index.js';
+import { createLegende } from '../../morphs/compare/base.js';
+
+// For each perspective, filter fields and use smartCompare
+for (const perspId of aktivePerspektiven) {
+  const perspektive = getPerspektive(perspId);
+  const perspectiveFields = perspektive.fields.map(f => f.id || f);
+  
+  const compareEl = smartCompare(compareItems, {
+    includeOnly: perspectiveFields
+  });
+}
+```

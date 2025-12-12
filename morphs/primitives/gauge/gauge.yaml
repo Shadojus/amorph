@@ -1,0 +1,37 @@
+# Gauge Morph Configuration
+# Semicircle tachometer gauge
+
+id: gauge
+name: Gauge
+description: Semicircle tachometer-style gauge
+category: extended
+
+# Detection rules
+detection:
+  type: object
+  requiredKeys:
+    - value
+    - min
+    - max
+  alternativeKeys:
+    - current
+    - zones
+    - label
+    - unit
+
+# Configuration
+config:
+  showValue: true
+  showLabel: true
+  showUnit: true
+  animated: true
+  defaultZones:
+    - max: 33
+      color: "rgba(240, 110, 110, 0.85)"
+      label: "Low"
+    - max: 66
+      color: "rgba(240, 190, 80, 0.85)"
+      label: "Medium"
+    - max: 100
+      color: "rgba(100, 220, 160, 0.85)"
+      label: "High"

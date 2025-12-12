@@ -1,0 +1,178 @@
+/* SUCHE FEATURE STYLES */
+/* Black Glasmorphism - Suchleiste mit aktiven Filtern */
+
+/* === SUCHE WRAPPER === */
+.amorph-suche-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  min-width: 0;
+  height: 32px;
+  /* Deep Glass */
+  background: linear-gradient(
+    135deg,
+    rgba(18, 18, 25, 0.9) 0%,
+    rgba(12, 12, 18, 0.95) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 0 12px;
+  transition: all 0.2s ease;
+}
+
+.amorph-suche-wrapper:focus-within {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: linear-gradient(
+    135deg,
+    rgba(25, 25, 35, 0.92) 0%,
+    rgba(18, 18, 25, 0.96) 100%
+  );
+  box-shadow: 
+    0 4px 24px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+/* Suche-Container innerhalb Wrapper */
+[data-morph="suche"] {
+  flex: 1 1 auto;
+  min-width: 100px;
+  max-width: none;
+}
+
+.amorph-suche {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  background: transparent;
+  border: none;
+}
+
+/* Lupe Icon vor Input */
+.amorph-suche::before {
+  content: '🔍';
+  font-size: 0.7rem;
+  opacity: 0.4;
+  margin: 0 6px 0 0;
+  flex-shrink: 0;
+}
+
+.amorph-suche input {
+  flex: 1;
+  min-width: 40px;
+  padding: 0;
+  font-size: 0.75rem;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.9);
+  border: none;
+}
+
+.amorph-suche input:focus {
+  outline: none;
+}
+
+.amorph-suche input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.72rem;
+}
+
+.amorph-suche button {
+  display: none;
+}
+
+.amorph-suche.ladend input {
+  opacity: 0.5;
+}
+
+/* === AKTIVE FILTER BADGES === */
+.amorph-aktive-filter {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  gap: 4px;
+  flex: 1;
+  padding: 0 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.amorph-aktive-filter::-webkit-scrollbar {
+  display: none;
+}
+
+.amorph-aktive-filter:empty {
+  display: none;
+}
+
+/* Aktive Perspektiven-Badges - Pill Style */
+.amorph-filter-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  padding: 0 8px;
+  font-size: 0.62rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+  /* Glowing Badge */
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--badge-farbe, #888) 18%, rgba(10, 10, 15, 0.9)) 0%,
+    color-mix(in srgb, var(--badge-farbe, #888) 12%, rgba(5, 5, 10, 0.95)) 100%
+  );
+  color: var(--badge-farbe, #888);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--badge-farbe, #888) 50%, transparent);
+  border: 1px solid color-mix(in srgb, var(--badge-farbe, #888) 25%, transparent);
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  box-shadow: 
+    0 0 12px color-mix(in srgb, var(--badge-farbe, #888) 15%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.amorph-filter-badge .badge-icon {
+  display: none;
+}
+
+.amorph-filter-badge:hover {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--badge-farbe, #888) 25%, rgba(15, 15, 20, 0.9)) 0%,
+    color-mix(in srgb, var(--badge-farbe, #888) 18%, rgba(10, 10, 15, 0.95)) 100%
+  );
+  border-color: color-mix(in srgb, var(--badge-farbe, #888) 40%, transparent);
+  box-shadow: 
+    0 0 20px color-mix(in srgb, var(--badge-farbe, #888) 25%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transform: scale(1.02);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 600px) {
+  .amorph-suche-wrapper {
+    height: 28px;
+    padding: 0 8px;
+  }
+  [data-morph="suche"] {
+    min-width: 80px;
+    max-width: none;
+    flex: 1 1 auto;
+  }
+  .amorph-suche input {
+    font-size: 0.68rem;
+  }
+  .amorph-suche::before {
+    margin: 0 4px 0 0;
+    font-size: 0.6rem;
+  }
+  .amorph-filter-badge {
+    height: 18px;
+    padding: 0 6px;
+    font-size: 0.58rem;
+    border-radius: 9px;
+  }
+}

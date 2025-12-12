@@ -1,0 +1,39 @@
+{
+  "perspektive": "safety",
+  "toxizitaet": {
+    "blaetter": "gering",
+    "samen_roh": "mittel",
+    "samen_gekocht": "gering",
+    "samenhulle": "hoch (Kontaktallergie)"
+  },
+  "warnhinweise": [
+    {
+      "bereich": "Samenhulle",
+      "risiko": "Hautreizung",
+      "schwere": 70,
+      "beschreibung": "Ginkgolsäure verursacht Kontaktdermatitis"
+    },
+    {
+      "bereich": "Rohe Samen",
+      "risiko": "Vergiftung",
+      "schwere": 60,
+      "beschreibung": "Ginkgotoxin kann Krämpfe auslösen, besonders bei Kindern"
+    },
+    {
+      "bereich": "Medikamentöse Anwendung",
+      "risiko": "Wechselwirkungen",
+      "schwere": 50,
+      "beschreibung": "Verstärkt Blutverdünner, nicht vor OPs einnehmen"
+    }
+  ],
+  "verzehrmenge_samen_max": {
+    "erwachsene_pro_tag": 10,
+    "kinder": "nicht empfohlen"
+  },
+  "erste_hilfe": {
+    "hautkontakt": "Sofort mit Seife waschen, Handschuhe bei Ernte tragen",
+    "vergiftung": "Arzt aufsuchen, keine Selbstbehandlung"
+  },
+  "allergene": true,
+  "kreuzreaktionen": ["Giftsumach", "Cashew", "Mango (Schale)"]
+}

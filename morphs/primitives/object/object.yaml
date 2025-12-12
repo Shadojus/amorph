@@ -1,0 +1,18 @@
+# Object Morph Configuration
+# Key-value object display
+
+id: object
+name: Object
+description: Key-value pair display for objects
+category: primitives
+
+# Detection rules
+detection:
+  type: object
+  fallback: true  # Default for unmatched objects
+
+# Configuration
+config:
+  maxKeys: 20
+  showMore: true
+  nested: true

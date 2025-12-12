@@ -1,0 +1,12 @@
+/* BOOLEAN MORPH */
+.amorph-boolean {
+  font-weight: 500;
+}
+
+.amorph-boolean[data-value="true"] {
+  color: var(--color-success);
+}
+
+.amorph-boolean[data-value="false"] {
+  color: var(--color-error);
+}

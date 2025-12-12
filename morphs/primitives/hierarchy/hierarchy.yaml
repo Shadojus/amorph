@@ -1,0 +1,26 @@
+# Hierarchy Morph Configuration
+# Tree view for taxonomic/hierarchical data
+
+id: hierarchy
+name: Hierarchy
+description: Tree or breadcrumb view for hierarchical data
+category: extended
+
+# Detection rules
+detection:
+  type: array
+  requiredKeys:
+    - level
+    - name
+  alternativeKeys:
+    - rank
+    - taxonomy
+    - tier
+
+# Configuration
+config:
+  defaultMode: tree  # tree | breadcrumb
+  maxDepth: 10
+  showLevels: true
+  collapsible: true
+  indentSize: 20

@@ -1,0 +1,33 @@
+{
+  "perspektive": "identification",
+  "taxonomie": {
+    "regnum": "Plantae",
+    "divisio": "Ginkgophyta",
+    "classis": "Ginkgoopsida",
+    "ordo": "Ginkgoales",
+    "familia": "Ginkgoaceae",
+    "genus": "Ginkgo",
+    "species": "Ginkgo biloba"
+  },
+  "synonyme": [
+    "Salisburia adiantifolia",
+    "Pterophyllus salisburiensis",
+    "Ginkgo macrophylla"
+  ],
+  "deutscher_name": "Ginkgo, Fächerblattbaum, Mädchenhaarbaum",
+  "englischer_name": "Ginkgo, Maidenhair Tree",
+  "erstbeschreibung": {
+    "autor": "Carl von Linné",
+    "jahr": 1771,
+    "publikation": "Mantissa Plantarum Altera"
+  },
+  "merkmale": {
+    "blattform": "fächerförmig mit Mitteleinschnitt",
+    "blattrand": "wellig, oft gelappt",
+    "rinde": "graubraun, längsrissig",
+    "wuchshoehe": "bis 40m",
+    "kronenform": "kegelförmig bis breit ausladend"
+  },
+  "geschlechtsdimorphismus": true,
+  "dioezie_info": "Zweihäusig - männliche und weibliche Bäume getrennt"
+}

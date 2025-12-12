@@ -69,11 +69,12 @@
   padding-left: var(--space-md, 12px);
   margin-left: 4px;
   /* Dezenter Glasmorphism Hintergrund mit 4-Farben-Grid */
+  /* Fallback: neutrales Silber (gelb = Culinary-spezifisch) */
   background: linear-gradient(
     135deg,
-    color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 8%, rgba(0,0,0,0.3)) 0%,
-    color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe, rgba(245, 185, 100, 0.65))) 5%, rgba(0,0,0,0.3)) 50%,
-    color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe, rgba(235, 170, 85, 0.65))) 3%, rgba(0,0,0,0.3)) 100%
+    color-mix(in srgb, var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.65)) 8%, rgba(0,0,0,0.3)) 0%,
+    color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe, rgba(170, 175, 180, 0.65))) 5%, rgba(0,0,0,0.3)) 50%,
+    color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe, rgba(160, 165, 170, 0.65))) 3%, rgba(0,0,0,0.3)) 100%
   );
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
@@ -89,18 +90,18 @@
   top: 8px;
   bottom: 8px;
   width: 2px;
-  /* 4-Farben Gradient aus der Perspektive */
+  /* 4-Farben Gradient aus der Perspektive - Fallback neutral */
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 70%, transparent) 0%,
-    color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe, rgba(245, 185, 100, 0.65))) 60%, transparent) 33%,
-    color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe, rgba(235, 170, 85, 0.65))) 50%, transparent) 66%,
-    color-mix(in srgb, var(--feld-p-farbe-3, var(--feld-perspektive-farbe, rgba(225, 155, 70, 0.65))) 40%, transparent) 100%
+    color-mix(in srgb, var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.65)) 70%, transparent) 0%,
+    color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe, rgba(170, 175, 180, 0.65))) 60%, transparent) 33%,
+    color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe, rgba(160, 165, 170, 0.65))) 50%, transparent) 66%,
+    color-mix(in srgb, var(--feld-p-farbe-3, var(--feld-perspektive-farbe, rgba(150, 155, 160, 0.65))) 40%, transparent) 100%
   );
   border-radius: 2px;
   /* Dezenter Glow-Effekt */
   box-shadow: 
-    0 0 4px color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 50%, transparent),
+    0 0 4px color-mix(in srgb, var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.65)) 50%, transparent),
     0 0 8px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 30%, transparent);
   animation: compare-glow-single 4s ease-in-out infinite;
 }
@@ -108,15 +109,15 @@
 /* Label mit Perspektiven-Farbe - gleiche Optik wie der vertikale Balken */
 .amorph-compare.perspektive-aktiv .compare-label,
 .amorph-compare.perspektive-aktiv .compare-section-header {
-  color: var(--feld-perspektive-farbe, rgba(255, 200, 120, 1));
+  color: var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.95));
   font-weight: 500;
   letter-spacing: 0.08em;
-  border-bottom-color: color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 50%, transparent);
+  border-bottom-color: color-mix(in srgb, var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.65)) 50%, transparent);
   /* Glow-Effekt wie der Balken */
   text-shadow: 
-    0 0 4px var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)),
-    0 0 8px var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.5)),
-    0 0 16px var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.3));
+    0 0 4px var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.65)),
+    0 0 8px var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.5)),
+    0 0 16px var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.3));
   /* Pulsieren wie der Balken */
   animation: compare-label-pulse 4s ease-in-out infinite;
 }
@@ -126,29 +127,29 @@
    ============================================ */
 .amorph-compare.perspektive-aktiv[data-perspektive-multi="true"] {
   /* Multi-Gradient Hintergrund (wie Grid-View: --feld-bg-gradient) */
-  background: var(--feld-bg-gradient, linear-gradient(135deg, rgba(255, 200, 120, 0.06), rgba(255, 140, 160, 0.06)));
+  background: var(--feld-bg-gradient, linear-gradient(135deg, rgba(180, 185, 190, 0.06), rgba(170, 180, 190, 0.06)));
 }
 
 /* Multi-Perspektiven: Animierter Gradient Glow-Streifen */
 .amorph-compare.perspektive-aktiv[data-perspektive-multi="true"]::before {
   width: 3px;
   /* Animierter vertikaler Gradient aus allen Perspektiven (wie Grid-View: --feld-gradient) */
-  background: var(--feld-gradient, linear-gradient(180deg, rgba(255, 200, 120, 0.65), rgba(180, 255, 200, 0.65)));
+  background: var(--feld-gradient, linear-gradient(180deg, rgba(180, 185, 190, 0.65), rgba(170, 180, 190, 0.65)));
   background-size: 100% 200%;
   /* Kombinierter leuchtender Glow aus allen Farben */
   box-shadow: 
-    0 0 6px var(--p-farbe-0, rgba(255, 200, 120, 0.65)),
-    0 0 6px var(--p-farbe-1, rgba(180, 255, 200, 0.65)),
-    0 0 12px color-mix(in srgb, var(--p-farbe-0, rgba(255, 200, 120, 0.65)) 60%, transparent),
-    0 0 12px color-mix(in srgb, var(--p-farbe-1, rgba(180, 255, 200, 0.65)) 60%, transparent),
-    0 0 20px color-mix(in srgb, var(--p-farbe-2, rgba(140, 200, 255, 0.65)) 40%, transparent),
-    0 0 20px color-mix(in srgb, var(--p-farbe-3, rgba(200, 160, 255, 0.65)) 40%, transparent);
+    0 0 6px var(--p-farbe-0, rgba(180, 185, 190, 0.65)),
+    0 0 6px var(--p-farbe-1, rgba(170, 180, 190, 0.65)),
+    0 0 12px color-mix(in srgb, var(--p-farbe-0, rgba(180, 185, 190, 0.65)) 60%, transparent),
+    0 0 12px color-mix(in srgb, var(--p-farbe-1, rgba(170, 180, 190, 0.65)) 60%, transparent),
+    0 0 20px color-mix(in srgb, var(--p-farbe-2, rgba(160, 175, 190, 0.65)) 40%, transparent),
+    0 0 20px color-mix(in srgb, var(--p-farbe-3, rgba(150, 170, 190, 0.65)) 40%, transparent);
   animation: compare-multi-flow 3s ease-in-out infinite;
 }
 
 /* Multi-Perspektiven Label mit Gradient-Text */
 .amorph-compare.perspektive-aktiv[data-perspektive-multi="true"] .compare-label {
-  background: var(--feld-gradient, linear-gradient(90deg, rgba(255, 200, 120, 0.9), rgba(180, 255, 200, 0.9)));
+  background: var(--feld-gradient, linear-gradient(90deg, rgba(180, 185, 190, 0.9), rgba(170, 180, 190, 0.9)));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -162,13 +163,13 @@
   0%, 100% { 
     opacity: 0.85;
     box-shadow: 
-      0 0 4px color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 50%, transparent),
+      0 0 4px color-mix(in srgb, var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.65)) 50%, transparent),
       0 0 8px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 30%, transparent);
   }
   50% { 
     opacity: 1;
     box-shadow: 
-      0 0 8px color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 70%, transparent),
+      0 0 8px color-mix(in srgb, var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.65)) 70%, transparent),
       0 0 16px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 50%, transparent),
       0 0 24px color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe)) 30%, transparent);
   }
@@ -238,10 +239,10 @@
 
 /* Timeline Event - Single */
 .amorph-compare.perspektive-aktiv:not([data-perspektive-multi]) .timeline-event {
-  border-left: 3px solid var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65));
+  border-left: 3px solid var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.65));
   background: linear-gradient(
     90deg,
-    color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 10%, transparent) 0%,
+    color-mix(in srgb, var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.65)) 10%, transparent) 0%,
     color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 5%, rgba(255,255,255,0.04)) 100%
   );
 }
@@ -255,8 +256,8 @@
 
 /* Wirkstoffe Bar - Single */
 .amorph-compare.perspektive-aktiv:not([data-perspektive-multi]) .wirkstoffe-bar .bar-fill {
-  background: linear-gradient(90deg, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)), var(--feld-p-farbe-1, var(--feld-perspektive-farbe))) !important;
-  box-shadow: 0 0 4px color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 30%, transparent);
+  background: linear-gradient(90deg, var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.65)), var(--feld-p-farbe-1, var(--feld-perspektive-farbe))) !important;
+  box-shadow: 0 0 4px color-mix(in srgb, var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.65)) 30%, transparent);
 }
 
 /* Wirkstoffe Bar - Multi */
@@ -266,21 +267,21 @@
 }
 
 /* Pie Slices - Single (4-Farben-Grid) */
-.amorph-compare.perspektive-aktiv:not([data-perspektive-multi]) .mini-pie-svg .pie-slice:nth-child(1) { fill: var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)); }
+.amorph-compare.perspektive-aktiv:not([data-perspektive-multi]) .mini-pie-svg .pie-slice:nth-child(1) { fill: var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.65)); }
 .amorph-compare.perspektive-aktiv:not([data-perspektive-multi]) .mini-pie-svg .pie-slice:nth-child(2) { fill: var(--feld-p-farbe-1, var(--feld-perspektive-farbe)); }
 .amorph-compare.perspektive-aktiv:not([data-perspektive-multi]) .mini-pie-svg .pie-slice:nth-child(3) { fill: var(--feld-p-farbe-2, var(--feld-perspektive-farbe)); }
 .amorph-compare.perspektive-aktiv:not([data-perspektive-multi]) .mini-pie-svg .pie-slice:nth-child(4) { fill: var(--feld-p-farbe-3, var(--feld-perspektive-farbe)); }
 
 /* Pie Slices - Multi (Farben der verschiedenen Perspektiven) */
-.amorph-compare.perspektive-aktiv[data-perspektive-multi] .mini-pie-svg .pie-slice:nth-child(1) { fill: var(--p-farbe-0, rgba(255, 200, 120, 0.65)); }
-.amorph-compare.perspektive-aktiv[data-perspektive-multi] .mini-pie-svg .pie-slice:nth-child(2) { fill: var(--p-farbe-1, rgba(180, 255, 200, 0.65)); }
-.amorph-compare.perspektive-aktiv[data-perspektive-multi] .mini-pie-svg .pie-slice:nth-child(3) { fill: var(--p-farbe-2, rgba(140, 200, 255, 0.65)); }
-.amorph-compare.perspektive-aktiv[data-perspektive-multi] .mini-pie-svg .pie-slice:nth-child(4) { fill: var(--p-farbe-3, rgba(200, 160, 255, 0.65)); }
+.amorph-compare.perspektive-aktiv[data-perspektive-multi] .mini-pie-svg .pie-slice:nth-child(1) { fill: var(--p-farbe-0, rgba(180, 185, 190, 0.65)); }
+.amorph-compare.perspektive-aktiv[data-perspektive-multi] .mini-pie-svg .pie-slice:nth-child(2) { fill: var(--p-farbe-1, rgba(170, 180, 190, 0.65)); }
+.amorph-compare.perspektive-aktiv[data-perspektive-multi] .mini-pie-svg .pie-slice:nth-child(3) { fill: var(--p-farbe-2, rgba(160, 175, 190, 0.65)); }
+.amorph-compare.perspektive-aktiv[data-perspektive-multi] .mini-pie-svg .pie-slice:nth-child(4) { fill: var(--p-farbe-3, rgba(150, 170, 190, 0.65)); }
 
 /* List Item gemeinsam - Single */
 .amorph-compare.perspektive-aktiv:not([data-perspektive-multi]) .compare-list-item.gemeinsam {
-  background: color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 12%, transparent);
-  border: 1px solid color-mix(in srgb, var(--feld-perspektive-farbe, rgba(255, 200, 120, 0.65)) 30%, transparent);
+  background: color-mix(in srgb, var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.65)) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.65)) 30%, transparent);
 }
 
 /* List Item gemeinsam - Multi */

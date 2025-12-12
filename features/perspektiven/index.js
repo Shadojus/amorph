@@ -5,7 +5,7 @@
  * Wird nur geladen wenn 'perspektiven' in features.aktiv steht (ohne header)
  */
 import { debug } from '../../observer/debug.js';
-import { perspektiven as perspektivenMorph } from '../../morphs/perspektiven.js';
+import { perspektiven as perspektivenMorph } from '../../config/perspektiven.js';
 
 export default function init(ctx) {
   debug.perspektiven('Standalone Feature Init (deprecated)', ctx.config);

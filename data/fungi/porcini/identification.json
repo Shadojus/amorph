@@ -1,0 +1,121 @@
+{
+  "scientific_name": "Boletus edulis",
+  "author_citation": "Bull. 1782",
+  "accepted_name": "Boletus edulis",
+  "basionym": "Boletus edulis Bull.",
+  "protonym": "Boletus edulis",
+  
+  "taxonomy_domain": "Eukaryota",
+  "taxonomy_kingdom": "Fungi",
+  "taxonomy_phylum": "Basidiomycota",
+  "taxonomy_class": "Agaricomycetes",
+  "taxonomy_order": "Boletales",
+  "taxonomy_family": "Boletaceae",
+  "taxonomy_genus": "Boletus",
+  "taxonomy_species": "edulis",
+  "taxonomy_subspecies": null,
+  "taxonomy_variety": null,
+  "taxonomy_form": null,
+  
+  "synonyms": ["Boletus bulbosus", "Boletus solidus", "Leccinum edule"],
+  "common_names": ["Porcini", "Penny Bun", "Cep", "King Bolete"],
+  "international_names": {
+    "de": "Steinpilz",
+    "fr": "Cèpe de Bordeaux",
+    "it": "Porcino",
+    "es": "Boleto",
+    "pl": "Borowik szlachetny"
+  },
+  
+  "gbif_key": 2519208,
+  "inaturalist_taxon_id": 48701,
+  "mycobank_id": 456,
+  "index_fungorum_id": 456,
+  "wikidata_id": "Q156579",
+  
+  "barcode_marker_primary": "ITS",
+  "barcode_its": "ITS1-5.8S-ITS2 (~650bp)",
+  "barcode_sequence_length_bp": 650,
+  "barcode_quality_score": "HQ",
+  "barcode_genbank_accession": "KY321456",
+  
+  "taxonomy_status": "accepted",
+  "uncertainty_level": "confirmed",
+  "nomenclatural_code": "ICN",
+  
+  "quick_id_checklist": [
+    "Brown convex cap 8-25cm",
+    "White pores turning yellow-green",
+    "Thick bulbous white stem with fine reticulation",
+    "Firm white flesh, no color change",
+    "Pleasant mushroomy smell"
+  ],
+  
+  "identification_difficulty": "beginner",
+  "time_to_identify_minutes": { "min": 2, "max": 5 },
+  "minimum_equipment_needed": "none",
+  "field_identifiable": true,
+  
+  "confusion_species_list": [
+    { "name": "Boletus pinophilus", "type": "similar", "risk": "low" },
+    { "name": "Tylopilus felleus", "type": "lookalike", "risk": "medium" }
+  ],
+  "confusion_risk_level": { "level": "moderate", "label": "Medium Risk" },
+  "confusion_consequences": "unpleasant",
+  
+  "key_differentiating_features": [
+    { "feature": "Taste", "this_species": "Pleasant, nutty", "confusion_species": "Bitter (Tylopilus)" },
+    { "feature": "Pore color", "this_species": "White to yellow-green", "confusion_species": "Pink (Tylopilus)" }
+  ],
+  
+  "chemical_spot_tests": {
+    "koh": { "result": "negative", "color": "no change" },
+    "feso4": { "result": "negative", "color": "no change" },
+    "ammonia": { "result": "negative", "color": "no change" }
+  },
+  
+  "spore_print_color": "olive-brown",
+  "fluorescence_uv": false,
+  
+  "smell_description": "Pleasant, earthy, mushroomy",
+  "smell_comparable_to": "Fresh forest floor, hazelnuts",
+  "taste_safe_to_test": true,
+  "taste_description": "Mild, nutty, sweet",
+  
+  "ai_identification_reliability": { "value": 85, "max": 100 },
+  "inaturalist_cv_accuracy": 8.7,
+  "common_ai_misidentifications": ["Boletus pinophilus", "Boletus reticulatus"],
+  
+  "microscopy_required": false,
+  "microscopy_key_features": "Spores fusiform, 14-17 × 4.5-5.5 μm",
+  "recommended_magnification": "400x",
+  
+  "habit": "solitary to scattered",
+  "growth_form": "agaricoid with tubes",
+  "body_plan": "cap and stem",
+  "symmetry": "radial",
+  
+  "size_range_cm": { "min": 8, "max": 25 },
+  "size_typical_cm": 15,
+  
+  "cap_diameter_cm": { "min": 8, "max": 30 },
+  "stem_height_cm": { "min": 8, "max": 25 },
+  "stem_width_cm": { "min": 3, "max": 10 },
+  
+  "color_primary": "brown",
+  "color_secondary": "white",
+  "color_pattern": "solid with lighter margin",
+  "color_fresh": "chestnut brown",
+  "color_mature": "dark brown",
+  "color_dry": "tan",
+  
+  "consistency_fresh": "firm",
+  "consistency_mature": "soft",
+  "break_behavior": "clean break",
+  "elasticity": "low",
+  
+  "smell_fresh": "pleasant, mushroomy",
+  "smell_intensity": "moderate",
+  "taste": "mild, nutty",
+  "taste_warning": "none"
+}

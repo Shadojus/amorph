@@ -10,7 +10,7 @@ features/
 ├── index.js        ← Feature-Registry + Initialisierung
 ├── header/         ← App-Header (Branding, Suche, 17 Perspektiven)
 ├── grid/           ← Karten-Ansicht
-├── vergleich/      ← Vergleichs-Ansicht mit Theme-Compare-Morphs
+├── vergleich/      ← Vergleichs-Ansicht mit smartCompare (DATA-DRIVEN)
 ├── einzelansicht/  ← Detail-Page (/:slug)
 ├── infinitescroll/ ← Automatisches Nachladen
 ├── suche/          ← Suchfunktion
@@ -23,7 +23,7 @@ features/
 | Ansicht | Feature | Beschreibung |
 |---------|---------|--------------|
 | **Grid** | `grid/` | Karten-Layout, Felder anklickbar |
-| **Vergleich** | `vergleich/` | Theme-Compare-Morphs, Pilze nebeneinander |
+| **Vergleich** | `vergleich/` | smartCompare, Items nebeneinander |
 | **Einzelansicht** | `einzelansicht/` | Full-Page Pilz-Detail |
 
 ## Feature-Context API

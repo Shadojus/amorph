@@ -1,8 +1,8 @@
 /**
- * COMPARE BOOLEAN - Boolean-Vergleich (Ja/Nein)
+ * COMPARE BOOLEAN - Boolean comparison (Yes/No)
  */
 
-import { debug } from '../../../observer/debug.js';
+import { debug } from '../../../../observer/debug.js';
 
 export function compareBoolean(items, config = {}) {
   const el = document.createElement('div');
@@ -12,18 +12,18 @@ export function compareBoolean(items, config = {}) {
   container.className = 'compare-boolean-container';
   
   items.forEach(item => {
-    const isTrue = item.wert === true || item.wert === 'ja' || item.wert === 'yes' || item.wert === 1;
-    const isFalse = item.wert === false || item.wert === 'nein' || item.wert === 'no' || item.wert === 0;
+    const val = item.value ?? item.wert;
+    const isTrue = val === true || val === 'ja' || val === 'yes' || val === 1;
+    const isFalse = val === false || val === 'nein' || val === 'no' || val === 0;
     
     const boolWrap = document.createElement('div');
-    boolWrap.className = `compare-boolean-wrap ${item.farbKlasse || ''}`;
+    boolWrap.className = `compare-boolean-wrap ${item.colorClass || item.farbKlasse || ''}`;
     
-    // Inline-Styles für zuverlässige Darstellung
-    const textColor = item.textFarbe || 'rgba(255,255,255,0.85)';
     const itemName = item.name || item.id || '–';
+    // NO inline styles! CSS handles colors via pilz-farbe-X class
     boolWrap.innerHTML = `
-      <div class="boolean-name" style="color:${textColor}">${itemName}</div>
-      <div class="boolean-wert ${isTrue ? 'boolean-ja' : ''} ${isFalse ? 'boolean-nein' : ''}">
+      <div class="boolean-name">${itemName}</div>
+      <div class="boolean-value ${isTrue ? 'boolean-yes' : ''} ${isFalse ? 'boolean-no' : ''}">
         ${isTrue ? '✓' : isFalse ? '✗' : '–'}
       </div>
     `;

@@ -1,0 +1,18 @@
+# List Morph Configuration
+# Simple array list display
+
+id: list
+name: List
+description: Simple list display for arrays
+category: primitives
+
+# Detection rules
+detection:
+  type: array
+  fallback: true  # Default for unmatched arrays
+
+# Configuration
+config:
+  maxItems: 10
+  showMore: true
+  style: bullet  # bullet | numbered | plain

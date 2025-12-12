@@ -13,7 +13,7 @@ export class SessionObserver {
   
   start(sessionId) {
     if (!sessionId) {
-      debug.session('Keine Session ID, Observer nicht aktiv');
+      debug.session('No session ID, observer not active');
       return;
     }
     
@@ -21,7 +21,7 @@ export class SessionObserver {
     this.startTime = Date.now();
     this.pageViews = 1;
     
-    debug.session('Session gestartet', { 
+    debug.session('Session started', { 
       id: sessionId,
       url: window.location.href,
       referrer: document.referrer
@@ -39,10 +39,10 @@ export class SessionObserver {
     // Visibility Change (Tab-Wechsel)
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
-        debug.session('Tab verlassen');
+        debug.session('Tab hidden');
         this.track({ typ: 'tab_hidden' });
       } else {
-        debug.session('Tab zurück');
+        debug.session('Tab visible');
         this.track({ typ: 'tab_visible' });
       }
     });
@@ -84,15 +84,15 @@ export class SessionObserver {
   }
   
   trackPageLeave() {
-    const dauer = Date.now() - this.startTime;
-    debug.session('Seite verlassen', { 
-      dauer: `${Math.round(dauer / 1000)}s`,
+    const duration = Date.now() - this.startTime;
+    debug.session('Page leave', { 
+      duration: `${Math.round(duration / 1000)}s`,
       interactions: this.interactions
     });
     
     this.track({
       typ: 'page_leave',
-      dauer,
+      dauer: duration,
       interactions: this.interactions,
       scrollTiefe: this.getScrollDepth()
     });
@@ -107,7 +107,7 @@ export class SessionObserver {
   flush() {
     if (this.aktionen.length === 0) return;
     
-    debug.session('Flush', { anzahl: this.aktionen.length });
+    debug.session('Flush', { count: this.aktionen.length });
     this.target?.send({
       typ: 'session_aktionen',
       session: this.sessionId,
@@ -121,10 +121,10 @@ export class SessionObserver {
   stop() {
     if (!this.sessionId) return;
     
-    const dauer = Date.now() - this.startTime;
-    debug.session('Session beendet', { 
+    const duration = Date.now() - this.startTime;
+    debug.session('Session ended', { 
       id: this.sessionId,
-      dauer: `${Math.round(dauer / 1000)}s`,
+      duration: `${Math.round(duration / 1000)}s`,
       interactions: this.interactions
     });
     

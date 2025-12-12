@@ -1,0 +1,11 @@
+{
+  "sammlung": "plantae",
+  "beschreibung": "Pflanzenreich - Plantae (Perspektiven-Format)",
+  "typ": "json-perspektiven",
+  "spezies": [
+    {
+      "slug": "ginkgo",
+      "ordner": "ginkgo"
+    }
+  ]
+}

@@ -62,7 +62,7 @@ class HttpTarget {
         body: JSON.stringify(nachrichten)
       });
     } catch (e) {
-      debug.fehler('observer-http', e);
+      debug.error('observer-http', e);
     }
   }
 }

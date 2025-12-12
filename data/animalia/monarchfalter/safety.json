@@ -1,0 +1,37 @@
+{
+  "perspektive": "safety",
+
+  "toxizitaet_fuer_mensch": "Nicht gefährlich",
+  "toxizitaet_fuer_tiere": "giftig",
+  
+  "toxine": [
+    {"name": "Cardenolide", "klasse": "Herzglykoside", "wirkung": "Übelkeit, Erbrechen bei Prädatoren", "herkunft": "Sequestriert aus Seidenpflanzen", "letale_dosis": "Variabel je nach Prädator"}
+  ],
+
+  "warnfaerbung": {
+    "typ": "Aposematismus",
+    "farben": ["Orange", "Schwarz", "Weiß"],
+    "signal": "Warnung vor Giftigkeit",
+    "effektivitaet": 85
+  },
+
+  "gefahr_fuer_menschen": "Keine",
+  
+  "allergene": {
+    "vorhanden": true,
+    "beschreibung": "Flügelschuppen können bei empfindlichen Personen Reaktionen auslösen",
+    "schwere": "Mild"
+  },
+
+  "sicherheitshinweise": [
+    "Nicht zum Verzehr geeignet",
+    "Bei Allergieneigung: Direkten Kontakt mit Schuppen vermeiden",
+    "Hände waschen nach Kontakt mit Raupen (Reizhaare möglich)"
+  ],
+
+  "safety_score": {
+    "fuer_menschen": 95,
+    "fuer_haustiere": 70,
+    "fuer_wildlife": 40
+  }
+}

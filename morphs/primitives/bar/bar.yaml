@@ -1,0 +1,25 @@
+# Bar Morph Configuration
+# Bar chart visualization
+
+id: bar
+name: Bar Chart
+description: Horizontal or vertical bar chart
+category: charts
+
+# Detection rules
+detection:
+  type: array
+  requiredKeys:
+    - label
+    - value
+  alternativeKeys:
+    - name
+    - amount
+    - score
+
+# Configuration
+config:
+  orientation: horizontal  # horizontal | vertical
+  showValues: true
+  animated: true
+  maxBars: 10

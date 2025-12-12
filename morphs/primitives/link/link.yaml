@@ -1,0 +1,24 @@
+# Link Morph Configuration
+# Clickable URL links
+
+id: link
+name: Link
+description: Clickable hyperlink with URL detection
+category: primitives
+
+# Detection rules
+detection:
+  type: string
+  patterns:
+    - "^https?://"
+    - "^www\\."
+    - "\\.com$"
+    - "\\.org$"
+    - "\\.net$"
+
+# Configuration
+config:
+  openInNewTab: true
+  showIcon: true
+  truncateUrl: true
+  maxLength: 50

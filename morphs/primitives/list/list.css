@@ -1,0 +1,39 @@
+/* LIST MORPH */
+.amorph-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs-plus);
+}
+
+.amorph-list li {
+  display: inline;
+  color: var(--color-text);
+}
+
+.amorph-list li::after {
+  content: ', ';
+  color: var(--color-text-dim);
+}
+
+.amorph-list li:last-child::after {
+  content: '';
+}
+
+/* List als Tags */
+.amorph-list[data-style="tags"] li {
+  background: rgba(0, 0, 0, 0.20);
+  border: 1px solid var(--glass-border);
+  height: var(--ui-height-md);
+  padding: 0 var(--space-sm);
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--ui-radius-md);
+  font-size: var(--ui-font-md);
+}
+
+.amorph-list[data-style="tags"] li::after {
+  content: '';
+}

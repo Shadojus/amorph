@@ -1,0 +1,47 @@
+{
+  "perspektive": "medicine",
+  "pathogenese": {
+    "harnwegsinfekt": {
+      "haeufigkeit": "80% aller HWI",
+      "behandlung": "Antibiotika (wenn keine Resistenz)",
+      "staemme": "UPEC"
+    },
+    "gastroenteritis": {
+      "haeufigkeit": "Häufig in Entwicklungsländern",
+      "behandlung": "Meist symptomatisch",
+      "staemme": "ETEC, EPEC, EIEC, EAEC"
+    },
+    "hus_nierenversagen": {
+      "haeufigkeit": "5-10% der EHEC-Infektionen",
+      "behandlung": "Intensivmedizin, keine Antibiotika!",
+      "staemme": "EHEC/STEC"
+    }
+  },
+  "therapeutische_nutzung": {
+    "insulin_produktion": true,
+    "impfstoff_komponenten": true,
+    "probiotikum_ecoli_nissle": {
+      "verwendung": "Darmerkrankungen",
+      "evidenz": 60
+    }
+  },
+  "diagnostik": {
+    "kultur": "Standardmethode",
+    "pcr": "Schnellnachweis von Virulenzgenen",
+    "maldi_tof": "Schnelle Identifikation"
+  },
+  "antibiotikaempfindlichkeit": {
+    "ampicillin": {
+      "sensibilitaet": 40,
+      "trend": "Abnehmend"
+    },
+    "ciprofloxacin": {
+      "sensibilitaet": 70,
+      "trend": "Abnehmend"
+    },
+    "ceftriaxon": {
+      "sensibilitaet": 85,
+      "trend": "Stabil mit ESBL-Risiko"
+    }
+  }
+}

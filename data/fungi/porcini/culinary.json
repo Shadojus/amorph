@@ -1,0 +1,103 @@
+{
+  "edibility": "edible",
+  "edibility_status": "excellent",
+  "culinary_rating": 9.5,
+  
+  "flavor_profile": [
+    { "axis": "Umami", "value": 95 },
+    { "axis": "Nutty", "value": 85 },
+    { "axis": "Earthy", "value": 80 },
+    { "axis": "Sweet", "value": 40 },
+    { "axis": "Bitter", "value": 5 }
+  ],
+  
+  "texture": "firm, meaty",
+  "aroma": "intense mushroomy, nutty",
+  
+  "culinary_uses": [
+    "Risotto",
+    "Pasta dishes",
+    "Soups",
+    "Grilled/sautéed",
+    "Dried for seasoning"
+  ],
+  
+  "best_cooking_methods": [
+    { "method": "Sautéing", "suitability": 95 },
+    { "method": "Grilling", "suitability": 85 },
+    { "method": "Drying", "suitability": 90 },
+    { "method": "Raw (young)", "suitability": 70 },
+    { "method": "Pickling", "suitability": 60 }
+  ],
+  
+  "preparation_notes": "Remove tubes if spongy; slice thinly for even cooking",
+  "cooking_time_minutes": { "min": 8, "max": 15 },
+  "optimal_temperature_c": { "min": 160, "max": 180 },
+  
+  "pairs_well_with": [
+    "Garlic", "Thyme", "Parsley", "Parmesan", "Cream",
+    "Beef", "Pasta", "Rice", "Truffle oil"
+  ],
+  
+  "nutritional_value_per_100g": {
+    "calories": 26,
+    "protein_g": 3.7,
+    "carbohydrates_g": 2.7,
+    "fat_g": 0.3,
+    "fiber_g": 2.5
+  },
+  
+  "nutritional_profile": [
+    { "label": "Protein", "value": 37 },
+    { "label": "Carbs", "value": 27 },
+    { "label": "Fiber", "value": 25 },
+    { "label": "Fat", "value": 3 },
+    { "label": "Water", "value": 8 }
+  ],
+  
+  "vitamins": {
+    "B2": { "amount": 0.25, "unit": "mg", "rda_percent": 19 },
+    "B3": { "amount": 4.5, "unit": "mg", "rda_percent": 28 },
+    "D": { "amount": 0.2, "unit": "μg", "rda_percent": 4 }
+  },
+  
+  "minerals": {
+    "Potassium": { "amount": 318, "unit": "mg" },
+    "Phosphorus": { "amount": 120, "unit": "mg" },
+    "Selenium": { "amount": 9, "unit": "μg" }
+  },
+  
+  "storage_fresh_days": { "min": 3, "max": 7 },
+  "storage_dried_months": { "min": 12, "max": 24 },
+  "freezable": true,
+  
+  "drying_method": "Slice thin, dry at 40-50°C",
+  "rehydration_time_minutes": { "min": 20, "max": 30 },
+  
+  "commercial_grades": [
+    { "grade": "Extra", "cap_max_cm": 6, "price_factor": 3.0 },
+    { "grade": "First", "cap_max_cm": 10, "price_factor": 2.0 },
+    { "grade": "Second", "cap_max_cm": 15, "price_factor": 1.0 }
+  ],
+  
+  "harvest_season_months": [
+    { "month": 1, "active": false },
+    { "month": 2, "active": false },
+    { "month": 3, "active": false },
+    { "month": 4, "active": false },
+    { "month": 5, "active": true, "intensity": 20 },
+    { "month": 6, "active": true, "intensity": 50 },
+    { "month": 7, "active": true, "intensity": 80 },
+    { "month": 8, "active": true, "intensity": 100 },
+    { "month": 9, "active": true, "intensity": 100 },
+    { "month": 10, "active": true, "intensity": 70 },
+    { "month": 11, "active": true, "intensity": 30 },
+    { "month": 12, "active": false }
+  ],
+  
+  "famous_dishes": [
+    { "name": "Risotto ai Porcini", "origin": "Italy" },
+    { "name": "Porcini Cream Soup", "origin": "Germany" },
+    { "name": "Tagliatelle ai Funghi", "origin": "Italy" }
+  ]
+}

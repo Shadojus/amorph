@@ -1,8 +1,8 @@
 /**
- * COMPARE PIE - Nebeneinander Pie-Charts
+ * COMPARE PIE - Side-by-side pie charts
  */
 
-import { debug } from '../../../observer/debug.js';
+import { debug } from '../../../../observer/debug.js';
 
 export function comparePie(items, config = {}) {
   const el = document.createElement('div');
@@ -13,21 +13,22 @@ export function comparePie(items, config = {}) {
   
   items.forEach(item => {
     const pieWrap = document.createElement('div');
-    pieWrap.className = `compare-pie-wrap ${item.farbKlasse || ''}`;
+    pieWrap.className = `compare-pie-wrap ${item.colorClass || item.farbKlasse || ''}`;
     
-    // Inline-Styles für zuverlässige Darstellung
-    const textColor = item.textFarbe || 'rgba(255,255,255,0.85)';
+    // Inline styles for reliable rendering
+    const textColor = item.textColor || item.textFarbe || 'rgba(255,255,255,0.85)';
     const itemName = item.name || item.id || '–';
     pieWrap.innerHTML = `<div class="pie-name" style="color:${textColor}">${itemName}</div>`;
     
-    const pieData = typeof item.wert === 'object' && !Array.isArray(item.wert) 
-      ? Object.entries(item.wert).map(([k, v]) => ({ label: k, value: v }))
-      : item.wert;
+    const val = item.value ?? item.wert;
+    const pieData = typeof val === 'object' && !Array.isArray(val) 
+      ? Object.entries(val).map(([k, v]) => ({ label: k, value: v }))
+      : val;
     
     if (!pieData || (Array.isArray(pieData) && pieData.length === 0)) {
-      pieWrap.innerHTML += '<div class="pie-leer">–</div>';
+      pieWrap.innerHTML += '<div class="pie-empty">–</div>';
     } else {
-      pieWrap.appendChild(erstelleMiniPie(pieData));
+      pieWrap.appendChild(createMiniPie(pieData));
     }
     
     container.appendChild(pieWrap);
@@ -35,18 +36,18 @@ export function comparePie(items, config = {}) {
   
   el.appendChild(container);
   
-  // Gemeinsame Legende für alle Pie-Charts (falls Daten vorhanden)
-  const erstePieData = items[0]?.wert;
-  if (erstePieData) {
-    const pieData = typeof erstePieData === 'object' && !Array.isArray(erstePieData)
-      ? Object.entries(erstePieData).map(([k, v]) => ({ label: k, value: v }))
-      : erstePieData;
+  // Shared legend for all pie charts (if data available)
+  const firstVal = items[0]?.value ?? items[0]?.wert;
+  if (firstVal) {
+    const pieData = typeof firstVal === 'object' && !Array.isArray(firstVal)
+      ? Object.entries(firstVal).map(([k, v]) => ({ label: k, value: v }))
+      : firstVal;
     
     if (Array.isArray(pieData) && pieData.length > 0) {
-      const legende = document.createElement('div');
-      legende.className = 'compare-pie-legende';
+      const legend = document.createElement('div');
+      legend.className = 'compare-pie-legend';
       
-      // Echte Glasfarben - durchscheinend, leuchtend
+      // Glass colors - translucent, glowing
       const pieColors = [
         'rgba(100, 220, 160, 0.45)',
         'rgba(90, 160, 240, 0.45)',
@@ -57,22 +58,22 @@ export function comparePie(items, config = {}) {
       ];
       pieData.forEach((d, i) => {
         const item = document.createElement('span');
-        item.className = 'pie-legende-item';
+        item.className = 'pie-legend-item';
         item.innerHTML = `
-          <span class="pie-legende-dot" style="background:${pieColors[i % pieColors.length]}"></span>
-          <span class="pie-legende-label">${d.label || d.name || 'Unbekannt'}</span>
+          <span class="pie-legend-dot" style="background:${pieColors[i % pieColors.length]}"></span>
+          <span class="pie-legend-label">${d.label || d.name || 'Unknown'}</span>
         `;
-        legende.appendChild(item);
+        legend.appendChild(item);
       });
       
-      el.appendChild(legende);
+      el.appendChild(legend);
     }
   }
   
   return el;
 }
 
-function erstelleMiniPie(data) {
+function createMiniPie(data) {
   const size = 60;
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('viewBox', `0 0 ${size} ${size}`);
@@ -83,14 +84,14 @@ function erstelleMiniPie(data) {
   const r = size / 2 - 2;
   
   const total = data.reduce((sum, d) => sum + (d.value || d.count || 0), 0);
-  // Echte Glasfarben - durchscheinend, leuchtend
+  // Glass colors - translucent, glowing
   const pieColors = [
-    'rgba(100, 220, 160, 0.45)',   // Glas-Smaragd
-    'rgba(90, 160, 240, 0.45)',    // Glas-Saphir
-    'rgba(240, 190, 80, 0.45)',    // Glas-Bernstein
-    'rgba(240, 110, 110, 0.45)',   // Glas-Rubin
-    'rgba(170, 130, 220, 0.45)',   // Glas-Amethyst
-    'rgba(80, 210, 210, 0.45)'     // Glas-Aquamarin
+    'rgba(100, 220, 160, 0.45)',   // Glass Emerald
+    'rgba(90, 160, 240, 0.45)',    // Glass Sapphire
+    'rgba(240, 190, 80, 0.45)',    // Glass Amber
+    'rgba(240, 110, 110, 0.45)',   // Glass Ruby
+    'rgba(170, 130, 220, 0.45)',   // Glass Amethyst
+    'rgba(80, 210, 210, 0.45)'     // Glass Aquamarine
   ];
   
   let currentAngle = -Math.PI / 2;

@@ -17,7 +17,7 @@ export async function loadFeatures(container, config, dataSource, callbacks = {}
   debug.features('Config', config?.features);
   
   if (!config?.features?.aktiv) {
-    debug.warn('Keine aktiven Features gefunden');
+    debug.warn('No active features found');
     return geladene;
   }
   
@@ -26,7 +26,7 @@ export async function loadFeatures(container, config, dataSource, callbacks = {}
     ? config.features.aktiv 
     : Object.keys(config.features.aktiv || {});
   
-  debug.features('Aktiv', aktivListe);
+  debug.features('Active', aktivListe);
   
   for (const name of aktivListe) {
     try {
@@ -38,7 +38,7 @@ export async function loadFeatures(container, config, dataSource, callbacks = {}
       }
       
       if (!feature) {
-        debug.warn(`Feature nicht gefunden: ${name}`);
+        debug.warn(`Feature not found: ${name}`);
         continue;
       }
       
@@ -47,7 +47,7 @@ export async function loadFeatures(container, config, dataSource, callbacks = {}
       geladene.push({ name, ctx });
       
     } catch (e) {
-      debug.fehler(`Fehler beim Laden von Feature ${name}`, e);
+      debug.error(`Error loading feature ${name}`, e);
     }
   }
   

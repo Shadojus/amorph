@@ -1,0 +1,103 @@
+# Badge Morph Configuration
+# Short status indicators with semantic coloring
+
+id: badge
+name: Badge
+description: Status badge with semantic color variants
+category: primitives
+
+# Detection rules
+detection:
+  type: string
+  keywords:
+    - active
+    - inactive
+    - yes
+    - "no"
+    - edible
+    - toxic
+    - deadly
+    - online
+    - offline
+    - open
+    - closed
+    - available
+    - sold out
+    - seasonal
+    - abundant
+    - rare
+    - lab
+    - massive
+    - year-round
+    - warning
+  maxLength: 25
+  
+  # Object detection
+  object:
+    requiredKeys:
+      - status
+    alternativeKeys:
+      - variant
+
+# Variant mappings
+variants:
+  success:
+    - active
+    - yes
+    - "true"
+    - edible
+    - done
+    - ok
+    - good
+  danger:
+    - inactive
+    - "no"
+    - "false"
+    - toxic
+    - deadly
+    - error
+  warning:
+    - warning
+    - conditional
+    - caution
+    - pending
+    - moderate
+  info:
+    - info
+    - note
+    - tip
+    - new
+    - beta
+  neutral:
+    - unknown
+    - n/a
+    - "-"
+    - none
+
+# Colors per variant - Glass style, translucent glowing
+colors:
+  success:
+    bg: "rgba(100, 220, 160, 0.10)"
+    border: "rgba(100, 220, 160, 0.28)"
+    text: "rgba(100, 220, 160, 0.82)"
+    icon: "✓"
+  danger:
+    bg: "rgba(240, 110, 110, 0.10)"
+    border: "rgba(240, 110, 110, 0.28)"
+    text: "rgba(240, 110, 110, 0.82)"
+    icon: "✕"
+  warning:
+    bg: "rgba(240, 190, 80, 0.10)"
+    border: "rgba(240, 190, 80, 0.28)"
+    text: "rgba(240, 190, 80, 0.82)"
+    icon: "⚠"
+  info:
+    bg: "rgba(90, 160, 240, 0.10)"
+    border: "rgba(90, 160, 240, 0.28)"
+    text: "rgba(90, 160, 240, 0.82)"
+    icon: "ℹ"
+  neutral:
+    bg: "rgba(140, 160, 180, 0.08)"
+    border: "rgba(140, 160, 180, 0.20)"
+    text: "rgba(140, 160, 180, 0.68)"
+    icon: "•"

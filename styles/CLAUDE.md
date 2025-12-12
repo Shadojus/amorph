@@ -69,4 +69,4 @@ Jede Perspektive hat:
 }
 ```
 
-Hintergrund: Woodfloor-Textur aus `images/woodfloor/`
+Hintergrund: Woodfloor-Textur aus `styles/woodfloor/`

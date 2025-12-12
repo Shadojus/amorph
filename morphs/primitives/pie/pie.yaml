@@ -1,0 +1,33 @@
+# Pie Morph Configuration
+# Pie/donut chart visualization
+
+id: pie
+name: Pie Chart
+description: Pie or donut chart for proportions
+category: charts
+
+# Detection rules
+detection:
+  # Array detection
+  array:
+    requiredKeys:
+      - label
+      - value
+    alternativeKeys:
+      - name
+      - count
+      - amount
+      - category
+  
+  # Object detection (numeric values only)
+  object:
+    numericOnly: true
+    minKeys: 2
+    maxKeys: 8
+
+# Configuration
+config:
+  donut: false
+  showLabels: true
+  showPercentage: true
+  animated: true

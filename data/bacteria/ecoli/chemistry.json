@@ -1,0 +1,42 @@
+{
+  "perspektive": "chemistry",
+  "genom": {
+    "groesse_mb": 4.6,
+    "gc_gehalt_prozent": 50.8,
+    "gene_anzahl": 4300,
+    "plasmide_moeglich": true
+  },
+  "zellwand": {
+    "typ": "Gram-negativ",
+    "bestandteile": ["Lipopolysaccharid (LPS)", "Peptidoglykan", "Äußere Membran"]
+  },
+  "stoffwechsel": {
+    "typ": "Fakultativ anaerob",
+    "fermentation": ["Gemischte Säuregärung"],
+    "substrate": ["Glukose", "Laktose", "Diverse Zucker und Aminosäuren"]
+  },
+  "produzierte_verbindungen": [
+    {
+      "name": "Vitamin K",
+      "funktion": "Blutgerinnung",
+      "menge": "Signifikant für Wirt"
+    },
+    {
+      "name": "Vitamin B12",
+      "funktion": "Nervenfunktion",
+      "menge": "Geringe Mengen"
+    }
+  ],
+  "toxine_pathogene_staemme": [
+    {
+      "name": "Shiga-Toxin",
+      "stamm": "EHEC/STEC",
+      "wirkung": "Hemmt Proteinsynthese, HUS"
+    },
+    {
+      "name": "Enterotoxin (LT/ST)",
+      "stamm": "ETEC",
+      "wirkung": "Reisediarrhö"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "perspektive": "temporal",
+  "lebenszyklus": [
+    {
+      "phase": "Lag-Phase",
+      "dauer": "30-60 min",
+      "beschreibung": "Adaptation an neue Umgebung"
+    },
+    {
+      "phase": "Log-Phase (exponentiell)",
+      "dauer": "4-6 h",
+      "beschreibung": "Schnelle Zellteilung alle 20 min"
+    },
+    {
+      "phase": "Stationäre Phase",
+      "dauer": "Stunden bis Tage",
+      "beschreibung": "Nährstofflimitierung"
+    },
+    {
+      "phase": "Absterbephase",
+      "dauer": "Variabel",
+      "beschreibung": "Zelllyse"
+    }
+  ],
+  "generationszeit": {
+    "optimal_min": 20,
+    "durchschnitt_min": 30,
+    "langsam_min": 60,
+    "einheit": "Minuten"
+  },
+  "verdopplungszeit_temperaturabhaengig": [
+    {
+      "temperatur": 20,
+      "verdopplungszeit_min": 100
+    },
+    {
+      "temperatur": 30,
+      "verdopplungszeit_min": 35
+    },
+    {
+      "temperatur": 37,
+      "verdopplungszeit_min": 20
+    },
+    {
+      "temperatur": 42,
+      "verdopplungszeit_min": 25
+    }
+  ],
+  "evolutionsrate": "Hoch - schnelle Anpassung und Mutation"
+}

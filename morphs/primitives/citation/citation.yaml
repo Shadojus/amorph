@@ -1,0 +1,29 @@
+# Citation Morph Configuration
+# Scientific reference formatting
+
+id: citation
+name: Citation
+description: Academic citation with DOI and links
+category: extended
+
+# Detection rules
+detection:
+  type: object
+  requiredKeys:
+    - authors
+    - year
+    - title
+  alternativeKeys:
+    - journal
+    - doi
+    - url
+    - volume
+    - pages
+
+# Configuration
+config:
+  format: apa  # apa | mla | chicago
+  showDoi: true
+  showUrl: true
+  linkDoi: true
+  italicTitle: true

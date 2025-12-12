@@ -27,34 +27,40 @@ const SCHEMA_MODULES = [
 ];
 
 export async function loadConfig(basePath = './config/') {
-  debug.config('Lade Konfiguration', { basePath });
+  debug.config('Loading configuration', { basePath });
   const config = {};
   
-  // Cache-Busting: Timestamp anhängen um Browser-Cache zu umgehen
+  // Cache-Busting: Append timestamp to bypass browser cache
   const cacheBuster = `?t=${Date.now()}`;
   
   // Standard Config-Dateien laden
   for (const file of CONFIG_FILES) {
     const name = file.replace('.yaml', '');
     try {
-      debug.config(`Lade ${file}...`);
+      debug.config(`Loading ${file}...`);
       const response = await fetch(basePath + file + cacheBuster);
       if (!response.ok) {
         if (name === 'manifest' || name === 'daten') {
-          throw new Error(`Pflichtdatei fehlt: ${file}`);
+          throw new Error(`Required file missing: ${file}`);
         }
-        debug.warn(`Optional: ${file} nicht gefunden`);
+        debug.warn(`Optional: ${file} not found`);
         continue;
       }
       const text = await response.text();
       config[name] = parseYAML(text);
-      debug.config(`${file} geladen`, { keys: Object.keys(config[name]) });
+      debug.config(`${file} loaded`, { keys: Object.keys(config[name]) });
     } catch (e) {
       if (name === 'manifest' || name === 'daten') {
-        debug.fehler(`Fehler beim Laden von ${file}`, e);
+        debug.error(`Error loading ${file}`, e);
         throw e;
       }
     }
+  }
+  
+  // Check if morphs.yaml uses modular system (has 'source' property)
+  if (config.morphs?.source) {
+    debug.config('Loading modular morphs config...');
+    config.morphs = await loadMorphsModular(basePath, cacheBuster);
   }
   
   // Schema modular laden
@@ -62,7 +68,7 @@ export async function loadConfig(basePath = './config/') {
   
   validateConfig(config);
   replaceEnvVars(config);
-  debug.config('Alle Configs geladen', { dateien: Object.keys(config) });
+  debug.config('All configs loaded', { files: Object.keys(config) });
   return config;
 }
 
@@ -195,6 +201,161 @@ async function loadSchemaModular(basePath, cacheBuster) {
   });
   
   return schema;
+}
+
+/**
+ * Loads modular morphs configuration from morphs/ directory
+ * Combines index.yaml settings with individual morph configs from primitives/
+ */
+async function loadMorphsModular(basePath, cacheBuster) {
+  // Morphs sind jetzt auf root-level, nicht in config/
+  const morphsPath = './morphs/';
+  
+  // Result structure matching what pipeline.js expects
+  const morphs = {
+    erkennung: {
+      badge: { keywords: [], maxLength: 25 },
+      rating: { min: 0, max: 10, decimalsRequired: true },
+      progress: { min: 0, max: 100, integersOnly: true },
+      objekt: {},
+      array: {}
+    },
+    config: {},
+    regeln: [],
+    felder: {},
+    badge: { variants: {}, colors: {} },
+    farben: { palette: [], default: 'rgba(0, 255, 255, 0.15)' }
+  };
+  
+  // 1. Load main index.yaml (global settings, colors, fallbacks)
+  try {
+    const indexResp = await fetch(morphsPath + 'index.yaml' + cacheBuster);
+    if (indexResp.ok) {
+      const index = parseYAML(await indexResp.text());
+      
+      // Copy fallback rules
+      if (index.fallback) {
+        morphs.regeln = index.fallback.map(r => ({
+          typ: r.type,
+          maxLaenge: r.maxLength,
+          morph: r.morph
+        }));
+      }
+      
+      // Copy color palette
+      if (index.colors) {
+        morphs.farben = {
+          palette: index.colors.palette || [],
+          similarityThreshold: index.colors.similarityThreshold || 100,
+          default: index.colors.default || 'rgba(0, 255, 255, 0.15)'
+        };
+      }
+      
+      debug.config('Morphs: index.yaml loaded');
+    }
+  } catch (e) {
+    debug.warn('Morphs: index.yaml not found');
+  }
+  
+  // 2. Load primitives/index.yaml (morph list and detection order)
+  let morphList = [];
+  try {
+    const primIndexResp = await fetch(morphsPath + 'primitives/index.yaml' + cacheBuster);
+    if (primIndexResp.ok) {
+      const primIndex = parseYAML(await primIndexResp.text());
+      morphList = primIndex.morphs || [];
+      debug.config('Morphs: primitives/index.yaml loaded', { count: morphList.length });
+    }
+  } catch (e) {
+    debug.warn('Morphs: primitives/index.yaml not found');
+  }
+  
+  // 3. Load each individual morph config
+  for (const morphId of morphList) {
+    try {
+      const morphResp = await fetch(morphsPath + 'primitives/' + morphId + '/' + morphId + '.yaml' + cacheBuster);
+      if (morphResp.ok) {
+        const morphConfig = parseYAML(await morphResp.text());
+        
+        // Debug: Log what was parsed
+        debug.config(`Morphs: ${morphId}.yaml parsed`, { 
+          hasDetection: !!morphConfig.detection,
+          hasConfig: !!morphConfig.config,
+          detectionKeys: morphConfig.detection ? Object.keys(morphConfig.detection) : []
+        });
+        
+        // Store morph-specific config
+        morphs.config[morphId] = morphConfig.config || {};
+        
+        // Process detection rules
+        const detection = morphConfig.detection || {};
+        
+        // Object detection rules
+        if (detection.requiredKeys || detection.object?.requiredKeys) {
+          const objDetect = detection.object || detection;
+          morphs.erkennung.objekt[morphId] = {
+            benoetigtKeys: objDetect.requiredKeys || [],
+            alternativeKeys: objDetect.alternativeKeys || [],
+            maxKeys: objDetect.maxKeys,
+            nurNumerisch: objDetect.numericOnly
+          };
+        }
+        
+        // Array detection rules
+        if (detection.type === 'array' && detection.requiredKeys) {
+          morphs.erkennung.array[morphId] = {
+            benoetigtKeys: detection.requiredKeys || [],
+            alternativeKeys: detection.alternativeKeys || [],
+            minItems: detection.minItems
+          };
+        }
+        
+        // Badge-specific: keywords and variants
+        if (morphId === 'badge') {
+          debug.config('Badge detection raw', { 
+            keywords: detection.keywords,
+            keywordsType: typeof detection.keywords,
+            isArray: Array.isArray(detection.keywords)
+          });
+          morphs.erkennung.badge.keywords = detection.keywords || [];
+          morphs.erkennung.badge.maxLaenge = detection.maxLength || 25;
+          morphs.badge.variants = morphConfig.variants || {};
+          morphs.badge.colors = morphConfig.colors || {};
+        }
+        
+        // Rating detection
+        if (morphId === 'rating' && detection.number) {
+          morphs.erkennung.rating = {
+            min: detection.number.min || 0,
+            max: detection.number.max || 10,
+            dezimalstellen: detection.number.decimalsRequired
+          };
+        }
+        
+        // Progress detection
+        if (morphId === 'progress' && detection.number) {
+          morphs.erkennung.progress = {
+            min: detection.number.min || 0,
+            max: detection.number.max || 100,
+            ganzzahl: detection.number.integersOnly
+          };
+        }
+      }
+    } catch (e) {
+      // Individual morph config not found - not critical
+      debug.warn(`Morphs: ${morphId}.yaml error`, e.message);
+    }
+  }
+  
+  debug.config('Morphs loaded (modular)', {
+    morphCount: morphList.length,
+    objectDetection: Object.keys(morphs.erkennung.objekt),
+    arrayDetection: Object.keys(morphs.erkennung.array),
+    badgeKeywords: morphs.erkennung.badge.keywords?.length || 0,
+    configKeys: Object.keys(morphs.config)
+  });
+  
+  return morphs;
 }
 
 function parseYAML(text) {
@@ -356,16 +517,16 @@ function parseValue(value) {
 }
 
 function validateConfig(config) {
-  debug.config('Validiere Config...');
+  debug.config('Validating config...');
   if (!config.manifest?.name) {
-    debug.fehler('Validierung fehlgeschlagen: manifest.name fehlt');
-    throw new Error('manifest.yaml: name fehlt');
+    debug.error('Validation failed: manifest.name missing');
+    throw new Error('manifest.yaml: name missing');
   }
   if (!config.daten?.quelle) {
-    debug.fehler('Validierung fehlgeschlagen: daten.quelle fehlt');
-    throw new Error('daten.yaml: quelle fehlt');
+    debug.error('Validation failed: daten.quelle missing');
+    throw new Error('daten.yaml: quelle missing');
   }
-  debug.config('Validierung OK');
+  debug.config('Validation OK');
 }
 
 function replaceEnvVars(obj) {

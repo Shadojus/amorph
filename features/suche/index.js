@@ -5,7 +5,7 @@
  * Wird nur geladen wenn 'suche' in features.aktiv steht (ohne header)
  */
 import { debug } from '../../observer/debug.js';
-import { suche as sucheMorph } from '../../morphs/suche.js';
+import { suche as sucheMorph } from '../../config/suche.js';
 
 export default function init(ctx) {
   debug.suche('Standalone Feature Init (deprecated)', ctx.config);

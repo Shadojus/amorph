@@ -26,7 +26,7 @@ export default function init(ctx) {
   }
   
   function setLayout(layout) {
-    debug.grid('Layout gewechselt', layout);
+    debug.grid('Layout changed', layout);
     current = layout;
     
     for (const btn of toolbar.querySelectorAll('button')) {
@@ -38,7 +38,7 @@ export default function init(ctx) {
     const container = document.querySelector('[data-amorph-container]');
     if (container) container.dataset.layout = layout;
     
-    ctx.emit('geaendert', { layout });
+    ctx.emit('changed', { layout });
   }
   
   // Ansicht-Wechsel: Grid-Items verstecken wenn Detail/Vergleich aktiv

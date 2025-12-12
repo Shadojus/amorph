@@ -1,0 +1,21 @@
+# Range Morph Configuration
+# Min-max range display with visualization
+
+id: range
+name: Range
+description: Numeric range display with min/max values
+category: primitives
+
+# Detection rules
+detection:
+  type: object
+  requiredKeys:
+    - min
+    - max
+  maxKeys: 3
+
+# Configuration
+config:
+  visualization: true
+  showBar: true
+  unit: null

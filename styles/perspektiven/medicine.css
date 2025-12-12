@@ -1,7 +1,0 @@
-/* Perspektive: Medizin - Medizinal-Violett */
-[data-perspektive-medicine] {
-  --perspektive-farbe: rgba(200, 160, 255, 0.65);
-  --perspektive-farbe-2: rgba(185, 145, 245, 0.65);
-  --perspektive-farbe-3: rgba(170, 130, 235, 0.65);
-  --perspektive-farbe-4: rgba(155, 115, 225, 0.65);
-}

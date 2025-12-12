@@ -1,0 +1,18 @@
+# Tag Morph Configuration
+# Short label tags for categorization
+
+id: tag
+name: Tag
+description: Short label tag for categorization
+category: primitives
+
+# Detection rules
+detection:
+  type: string
+  maxLength: 20
+  excludeKeywords: true  # Don't match badge keywords
+
+# Configuration
+config:
+  clickable: false
+  removable: false

@@ -1,33 +1,33 @@
 /**
- * COMPARE COMPOSITES - Re-Export aus composites/ Ordner
+ * COMPARE COMPOSITES - Re-export from composites/ folder
  * 
- * REFACTORED: Alle Composite-Morphs sind jetzt in eigenen Dateien:
- * - composites/types.js      - Typ-Kategorien (TYPE_CATEGORIES, TYPE_TO_CATEGORY)
- * - composites/analyze.js    - Analyse-Funktionen (analyzeItems, findRelatedFields, calculateDiff)
- * - composites/render.js     - Rendering-Helpers (renderFieldMorph, renderXxxComposite)
- * - composites/smartCompare.js - Smart Compare Composite
- * - composites/diffCompare.js  - Diff Compare Composite
+ * REFACTORED: All composite morphs are now in their own files:
+ * - composites/types.js        - Type categories (TYPE_CATEGORIES, TYPE_TO_CATEGORY)
+ * - composites/analyze.js      - Analysis functions (analyzeItems, findRelatedFields, calculateDiff)
+ * - composites/render.js       - Rendering helpers (renderFieldMorph, renderXxxComposite)
+ * - composites/smartCompare.js - Smart Compare composite
+ * - composites/diffCompare.js  - Diff Compare composite
  * 
- * DATENGETRIEBEN:
- * - Alle Morphs erkennen Typen aus Datenstruktur
- * - Keine hardcodierten Feldnamen
- * - Automatische Gruppierung nach Typ-Kategorie
+ * DATA-DRIVEN:
+ * - All morphs detect types from data structure
+ * - No hardcoded field names
+ * - Automatic grouping by type category
  */
 
-// Re-export alles aus dem composites/ Ordner
+// Re-export everything from composites/ folder
 export {
-  // Typ-Kategorien
+  // Type categories
   TYPE_CATEGORIES,
   TYPE_TO_CATEGORY,
   getCategory,
   sameCategory,
   
-  // Analyse
+  // Analysis
   analyzeItems,
   findRelatedFields,
   calculateDiff,
   
-  // Render-Helpers
+  // Render helpers
   renderFieldMorph,
   renderMetricsComposite,
   renderRangesComposite,
@@ -35,10 +35,10 @@ export {
   renderTimelineComposite,
   renderCategoriesComposite,
   
-  // Composite-Morphs
+  // Composite morphs
   smartCompare,
   diffCompare
 } from './composites/index.js';
 
-// Default-Export für Abwärtskompatibilität
+// Default export for backwards compatibility
 export { default } from './composites/index.js';

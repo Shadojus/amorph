@@ -2,7 +2,7 @@
 
 Beispieldaten für AMORPH. **Datenstruktur bestimmt den Morph!**
 
-## pilze.json - Datenstruktur
+## fungi.json - Datenstruktur
 
 11 Pilze mit Daten für 17 Perspektiven:
 

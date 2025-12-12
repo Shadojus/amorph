@@ -1,0 +1,6 @@
+/* NUMBER MORPH */
+.amorph-number {
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  color: var(--color-text);
+}

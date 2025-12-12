@@ -51,7 +51,7 @@ Web Component `<amorph-container>`:
 
 ```html
 <amorph-container 
-  data-quelle="./data/pilze.json"
+  data-quelle="./data/fungi.json"
   data-config="./config/">
 </amorph-container>
 ```

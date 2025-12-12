@@ -1,7 +1,7 @@
 import { debug } from '../observer/debug.js';
 
 export function createFeatureContext(name, container, config, dataSource, callbacks = {}) {
-  debug.features(`Context erstellen: ${name}`);
+  debug.features(`Creating context: ${name}`);
   
   const bereich = document.createElement('div');
   bereich.className = `amorph-feature amorph-feature-${name}`;
@@ -20,7 +20,7 @@ export function createFeatureContext(name, container, config, dataSource, callba
       }
     : (config.features?.[name] || {});
   
-  debug.features(`Config für ${name}`, featureConfig);
+  debug.features(`Config for ${name}`, featureConfig);
   
   return {
     dom: bereich,
@@ -29,12 +29,12 @@ export function createFeatureContext(name, container, config, dataSource, callba
     dataSource, // Zugriff auf DataSource (für matchedTerms etc.)
     
     on: (event, handler) => {
-      debug.features(`Event registriert: ${name}:${event}`);
+      debug.features(`Event registered: ${name}:${event}`);
       eventTarget.addEventListener(event, handler);
     },
     
     emit: (event, detail) => {
-      debug.features(`Event emittiert: ${name}:${event}`, detail);
+      debug.features(`Event emitted: ${name}:${event}`, detail);
       // Lokal auf Feature-EventTarget
       eventTarget.dispatchEvent(new CustomEvent(event, { detail }));
       // Global auf document (mit Feature-Prefix für Cross-Feature-Kommunikation)

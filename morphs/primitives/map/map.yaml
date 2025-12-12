@@ -1,0 +1,28 @@
+# Map Morph Configuration
+# Geographic coordinate display with Leaflet
+
+id: map
+name: Map
+description: Geographic map with coordinate markers
+category: extended
+
+# Detection rules
+detection:
+  type: object
+  requiredKeys:
+    - lat
+    - lng
+  alternativeKeys:
+    - latitude
+    - longitude
+    - coordinates
+    - region
+    - distribution
+
+# Configuration
+config:
+  defaultZoom: 5
+  tileProvider: openstreetmap
+  staticFallback: true
+  showMarker: true
+  showCoordinates: true

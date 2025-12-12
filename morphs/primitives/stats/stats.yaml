@@ -1,0 +1,26 @@
+# Stats Morph Configuration
+# Statistical summary display
+
+id: stats
+name: Stats
+description: Statistical summary with min/max/avg
+category: primitives
+
+# Detection rules
+detection:
+  type: object
+  requiredKeys:
+    - min
+    - max
+    - avg
+  optionalKeys:
+    - count
+    - total
+    - sum
+    - median
+    - mean
+
+# Configuration
+config:
+  showChart: true
+  decimals: 2

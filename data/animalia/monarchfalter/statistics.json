@@ -1,0 +1,39 @@
+{
+  "perspektive": "statistics",
+
+  "koerpermasse": {
+    "spannweite_cm": {"min": 8.9, "max": 10.2, "avg": 9.5},
+    "koerperlaenge_cm": {"min": 2.5, "max": 3.5, "avg": 3.0},
+    "gewicht_mg": {"min": 270, "max": 750, "avg": 500}
+  },
+
+  "flug_statistik": {
+    "geschwindigkeit_kmh": {"min": 9, "max": 40, "avg": 18},
+    "max_flughoehe_m": 3000,
+    "tages_distanz_km": {"min": 50, "max": 150, "avg": 80},
+    "migrations_distanz_km": {"min": 3000, "max": 4800}
+  },
+
+  "lebensdauer": {
+    "sommer_generation_tage": {"min": 14, "max": 42, "avg": 28},
+    "winter_generation_tage": {"min": 180, "max": 270, "avg": 225}
+  },
+
+  "reproduktion": {
+    "eier_pro_weibchen": {"min": 300, "max": 1100, "avg": 700},
+    "schlupfrate_prozent": 90,
+    "ueberlebensrate_bis_adult_prozent": 10
+  },
+
+  "population_zahlen": [
+    {"label": "1996 (Höchststand)", "value": 1000},
+    {"label": "2013 (Tiefststand)", "value": 33},
+    {"label": "2023 (Aktuell)", "value": 220}
+  ],
+
+  "rekorde": {
+    "laengster_flug_km": 4800,
+    "hoechste_flughoehe_m": 3500,
+    "aeltester_falter_tage": 300
+  }
+}

@@ -1,6 +1,11 @@
 /* AMORPH v5 - Morph Styles */
 /* Black Glasmorphism - Weiß als Grundfarbe, dezente Akzente */
 
+/* === PRIMITIVE MORPHS === */
+@import url('../morphs/primitives/index.css');
+
+/* === LEGACY / GEMEINSAME STYLES === */
+
 /* === TEXT === */
 .amorph-text {
   display: inline;

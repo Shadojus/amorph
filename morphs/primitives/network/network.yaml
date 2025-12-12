@@ -1,0 +1,39 @@
+# Network Morph Configuration
+# Interaction/relationship network diagram
+
+id: network
+name: Network
+description: Relationship network with typed connections
+category: extended
+
+# Detection rules
+detection:
+  type: array
+  requiredKeys:
+    - name
+    - type
+  alternativeKeys:
+    - partner
+    - organism
+    - relationship
+    - strength
+    - details
+
+# Configuration
+config:
+  showStrength: true
+  centerNode: true
+  animated: true
+  typeColors:
+    symbiosis: "rgba(100, 220, 160, 0.85)"
+    parasitism: "rgba(240, 110, 110, 0.85)"
+    predation: "rgba(255, 128, 0, 0.85)"
+    commensalism: "rgba(90, 160, 240, 0.85)"
+    competition: "rgba(255, 0, 255, 0.85)"
+    neutral: "rgba(140, 160, 180, 0.68)"
+  typeIcons:
+    symbiosis: "🤝"
+    parasitism: "🦠"
+    predation: "🍽️"
+    commensalism: "🏠"
+    competition: "⚔️"

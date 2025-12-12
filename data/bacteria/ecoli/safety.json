@@ -1,0 +1,51 @@
+{
+  "perspektive": "safety",
+  "risikobewertung": {
+    "labor": {
+      "stufe": "BSL-1 (K-12)",
+      "beschreibung": "Laborstämme sicher"
+    },
+    "pathogene": {
+      "stufe": "BSL-2 (EHEC/EPEC)",
+      "beschreibung": "Erhöhte Sicherheitsmaßnahmen"
+    }
+  },
+  "pathogene_typen": [
+    {
+      "name": "EHEC (Enterohämorrhagisch)",
+      "gefaehrlichkeit": 90,
+      "symptome": ["Blutige Diarrhö", "HUS", "Nierenversagen"],
+      "hauptserovare": ["O157:H7", "O104:H4"]
+    },
+    {
+      "name": "ETEC (Enterotoxisch)",
+      "gefaehrlichkeit": 50,
+      "symptome": ["Wässrige Diarrhö", "Reisedurchfall"],
+      "hauptserovare": ["Diverse"]
+    },
+    {
+      "name": "EPEC (Enteropathogen)",
+      "gefaehrlichkeit": 60,
+      "symptome": ["Kinderdurchfall", "Wässrige Diarrhö"],
+      "hauptserovare": ["O127:H6"]
+    },
+    {
+      "name": "UPEC (Uropathogen)",
+      "gefaehrlichkeit": 40,
+      "symptome": ["Harnwegsinfektion", "Pyelonephritis"],
+      "hauptserovare": ["Diverse"]
+    }
+  ],
+  "praevention": [
+    "Fleisch durchgaren (>70°C)",
+    "Rohmilch pasteurisieren",
+    "Händewaschen",
+    "Küchenhygiene",
+    "Lebensmittel trennen"
+  ],
+  "antibiotikaresistenz": {
+    "esbl_produzenten": true,
+    "carbapenem_resistenz": "zunehmend",
+    "problem_schwere": 80
+  }
+}

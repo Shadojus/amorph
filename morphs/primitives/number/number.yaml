@@ -1,0 +1,18 @@
+# Number Morph Configuration
+# Simple numeric display
+
+id: number
+name: Number
+description: Numeric value display with optional formatting
+category: primitives
+
+# Detection rules
+detection:
+  type: number
+  fallback: true  # Default for unmatched numbers
+
+# Configuration
+config:
+  locale: "en-US"
+  decimals: auto
+  compact: false

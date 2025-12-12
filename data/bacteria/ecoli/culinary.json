@@ -1,0 +1,45 @@
+{
+  "perspektive": "culinary",
+  "essbar": false,
+  "lebensmittelsicherheit": {
+    "indikator": true,
+    "grenzwerte": {
+      "trinkwasser_pro_100ml": 0,
+      "hackfleisch_pro_g": 100,
+      "rohmilch_pro_ml": 100
+    }
+  },
+  "kontaminationsquellen": [
+    {
+      "lebensmittel": "Rohes Hackfleisch",
+      "risiko": 85,
+      "praevention": "Durchgaren >70°C"
+    },
+    {
+      "lebensmittel": "Rohmilch",
+      "risiko": 70,
+      "praevention": "Pasteurisierung"
+    },
+    {
+      "lebensmittel": "Sprossen",
+      "risiko": 65,
+      "praevention": "Kochen oder meiden"
+    },
+    {
+      "lebensmittel": "Blattgemüse",
+      "risiko": 50,
+      "praevention": "Gründlich waschen"
+    }
+  ],
+  "sichere_zubereitung": {
+    "kerntemperatur_min": 70,
+    "einheit": "°C",
+    "dauer_min": 2
+  },
+  "risikogruppen": [
+    "Kinder unter 5 Jahren",
+    "Ältere Menschen",
+    "Immungeschwächte",
+    "Schwangere"
+  ]
+}

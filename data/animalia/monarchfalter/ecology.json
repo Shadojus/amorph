@@ -1,0 +1,35 @@
+{
+  "perspektive": "ecology",
+
+  "trophische_ebene": "Primärkonsument",
+  "ernaehrungstyp": "Herbivor (Larve), Nektarivor (Adult)",
+  
+  "nahrungsspektrum": [
+    "Seidenpflanzen (Asclepias) - Larven",
+    "Nektar verschiedener Blütenpflanzen - Adulte"
+  ],
+  
+  "oekosystem_rolle": "Bestäuber, Nahrungsquelle, Samenverbreiter",
+  
+  "interaktionen": [
+    {"typ": "Symbiose", "partner": "Asclepias (Seidenpflanzen)", "beschreibung": "Obligate Wirtspflanze für Larven"},
+    {"typ": "Prädation", "partner": "Vögel, Mäuse", "beschreibung": "Trotz Toxizität vereinzelt gefressen"},
+    {"typ": "Parasitismus", "partner": "Ophryocystis elektroscirrha", "beschreibung": "Protozoen-Parasit"}
+  ],
+
+  "lebensraum_praeferenz": ["Offene Wiesen", "Waldränder", "Gärten", "Agrarflächen"],
+  
+  "habitat_requirements": {
+    "vegetation": "Seidenpflanzen für Eiablage, Nektarpflanzen für Adulte",
+    "klima": "Gemäßigt bis subtropisch",
+    "temperatur_optimal_c": {"min": 10, "max": 35}
+  },
+
+  "oekologisches_profil": [
+    {"axis": "Mobilität", "value": 95},
+    {"axis": "Spezialisierung", "value": 70},
+    {"axis": "Anpassungsfähigkeit", "value": 60},
+    {"axis": "Reproduktion", "value": 80},
+    {"axis": "Überlebensrate", "value": 40}
+  ]
+}

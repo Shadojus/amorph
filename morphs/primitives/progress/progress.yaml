@@ -1,0 +1,30 @@
+# Progress Morph Configuration
+# Progress bar display
+
+id: progress
+name: Progress
+description: Progress bar visualization for percentages
+category: primitives
+
+# Detection rules
+detection:
+  # Number detection: integers 0-100
+  number:
+    min: 0
+    max: 100
+    integersOnly: true
+  
+  # Object detection
+  object:
+    requiredKeys:
+      - value
+      - max
+    alternativeKeys:
+      - current
+      - total
+
+# Configuration
+config:
+  showPercentage: true
+  animated: true
+  color: "rgba(0, 255, 255, 0.85)"

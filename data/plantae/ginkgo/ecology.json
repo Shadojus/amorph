@@ -1,0 +1,42 @@
+{
+  "perspektive": "ecology",
+  "lebensraum": {
+    "primaer": "Gemäßigte Wälder",
+    "sekundaer": "Städtische Pflanzungen",
+    "hoehenlage": {
+      "min": 0,
+      "max": 1500
+    }
+  },
+  "standortansprueche": {
+    "licht": {
+      "min": 60,
+      "max": 100
+    },
+    "boden_ph": {
+      "min": 5.5,
+      "max": 7.5
+    },
+    "feuchtigkeit": {
+      "min": 30,
+      "max": 70
+    }
+  },
+  "klimatoleranz": {
+    "winterhaerte": "Zone 4-9",
+    "frostresistenz": true,
+    "hitzetoleranz": true,
+    "stadtklima_tolerant": true
+  },
+  "oekologische_funktion": [
+    "Insektennahrung (Pollen)",
+    "Vogelnahrung (Samen)",
+    "Kohlenstoffspeicher",
+    "Luftfilterung"
+  ],
+  "pollution_toleranz": {
+    "luftverschmutzung": 85,
+    "salztoleranz": 60,
+    "ozon_resistenz": 70
+  }
+}

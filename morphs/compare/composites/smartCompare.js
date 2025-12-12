@@ -1,16 +1,16 @@
 /**
- * SMART COMPARE - Intelligenter Vergleichs-Composite
+ * SMART COMPARE - Intelligent comparison composite
  * 
- * Analysiert Daten und baut automatisch den optimalen Vergleich.
+ * Analyzes data and builds the optimal comparison automatically.
  * 
- * DATENGETRIEBEN:
- * - Erkennt Typen aus Datenstruktur
- * - Gruppiert semantisch zusammengehörige Felder
- * - Wählt beste Visualisierung pro Gruppe
+ * DATA-DRIVEN:
+ * - Detects types from data structure
+ * - Groups semantically related fields
+ * - Chooses best visualization per group
  */
 
-import { debug } from '../../../observer/debug.js';
-import { createLegende } from '../base.js';
+import { debug } from '../../../../observer/debug.js';
+import { createLegend, createLegende } from '../base.js';
 import { analyzeItems, findRelatedFields } from './analyze.js';
 import {
   renderFieldMorph,
@@ -22,26 +22,26 @@ import {
 } from './render.js';
 
 /**
- * SMART COMPARE - Analysiert Daten und baut optimalen Vergleich
+ * SMART COMPARE - Analyzes data and builds optimal comparison
  * 
- * @param {Array} items - [{id, name, data, farbe}]
+ * @param {Array} items - [{id, name, data, color}]
  * @param {Object} config - {excludeFields, includeOnly, layout, labels, units}
  * 
- * DATENGETRIEBEN:
- * - Keine Annahmen über Feldnamen
- * - Typ-Erkennung aus Datenstruktur
- * - Automatische Gruppierung nach Typ-Kategorie
+ * DATA-DRIVEN:
+ * - No assumptions about field names
+ * - Type detection from data structure
+ * - Automatic grouping by type category
  */
 export function smartCompare(items, config = {}) {
   const el = document.createElement('div');
   el.className = 'amorph-smart-compare';
   
   if (!items?.length) {
-    el.innerHTML = '<div class="compare-leer">Keine Daten zum Vergleichen</div>';
+    el.innerHTML = '<div class="compare-empty">No data to compare</div>';
     return el;
   }
   
-  // Analyse - DATENGETRIEBEN
+  // Analysis - DATA-DRIVEN
   const { fields, categories } = analyzeItems(items);
   const groups = findRelatedFields(fields);
   
@@ -51,7 +51,7 @@ export function smartCompare(items, config = {}) {
     groups: groups.length 
   });
   
-  // Filter anwenden (optional)
+  // Apply filters (optional)
   const filteredGroups = groups.filter(g => {
     if (config.excludeFields) {
       g.fields = g.fields.filter(f => !config.excludeFields.includes(f));
@@ -62,10 +62,10 @@ export function smartCompare(items, config = {}) {
     return g.fields.length > 0;
   });
   
-  // Legende oben
-  el.appendChild(createLegende(items));
+  // Legend at top
+  el.appendChild(createLegend(items));
   
-  // Jede Gruppe rendern
+  // Render each group
   filteredGroups.forEach(group => {
     const groupEl = renderGroup(group, fields, items, config);
     if (groupEl) {
@@ -77,17 +77,17 @@ export function smartCompare(items, config = {}) {
 }
 
 /**
- * Rendert eine Feld-Gruppe
+ * Renders a field group
  * 
- * DATENGETRIEBEN:
- * - group.type kommt aus Typ-Kategorie-Analyse
- * - Rendering basiert auf erkanntem Typ
+ * DATA-DRIVEN:
+ * - group.type comes from type category analysis
+ * - Rendering based on detected type
  */
 function renderGroup(group, fields, items, config) {
   const section = document.createElement('div');
   section.className = `compare-group compare-group-${group.type}`;
   
-  // Header (außer bei Einzelfeldern)
+  // Header (except for single fields)
   if (group.fields.length > 1 || group.type !== 'single') {
     const header = document.createElement('h3');
     header.className = 'compare-group-header';
@@ -98,8 +98,8 @@ function renderGroup(group, fields, items, config) {
   const content = document.createElement('div');
   content.className = 'compare-group-content';
   
-  // Je nach Gruppen-Typ unterschiedlich rendern
-  // DATENGETRIEBEN: Typ wurde durch Analyse bestimmt
+  // Render differently based on group type
+  // DATA-DRIVEN: Type was determined by analysis
   switch (group.type) {
     case 'metrics':
       content.appendChild(renderMetricsComposite(group.fields, fields, items, config));
@@ -122,9 +122,9 @@ function renderGroup(group, fields, items, config) {
       break;
       
     default:
-      // Einzelne Felder
-      group.fields.forEach(feldName => {
-        const field = fields[feldName];
+      // Single fields
+      group.fields.forEach(fieldName => {
+        const field = fields[fieldName];
         if (field) {
           const morphEl = renderFieldMorph(field, config);
           if (morphEl) content.appendChild(morphEl);

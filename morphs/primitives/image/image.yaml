@@ -1,0 +1,23 @@
+# Image Morph Configuration
+# Image display with lazy loading
+
+id: image
+name: Image
+description: Image display with lazy loading support
+category: primitives
+
+# Detection rules
+detection:
+  type: string
+  patterns:
+    - "\\.(jpg|jpeg|png|gif|webp|svg)$"
+    - "^data:image/"
+
+# Configuration
+config:
+  lazyLoad: true
+  fallbackImage: null
+  maxWidth: "100%"
+  aspectRatio: auto
+  allowedDomains:
+    - localhost

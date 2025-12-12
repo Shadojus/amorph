@@ -76,4 +76,111 @@ Pipeline erkennt Morphs automatisch aus Datenstruktur:
 2. ID zu `perspektiven/index.yaml` hinzufügen
 3. Felder in `felder.yaml` definieren
 4. CSS in `styles/perspektiven.css` hinzufügen
-5. Compare-Morph in `themes/pilze/morphs/compare/` erstellen
+
+**Kein Theme-Code nötig!** smartCompare erkennt Typen automatisch.
+
+# Morphs
+
+Reine Funktionen. Keine Klassen. Kein Zustand. **Keine Seiteneffekte!**
+
+## Struktur
+
+```
+morphs/
+├── index.js          ← Zentrale Registry + compareMorph()
+├── primitives/       ← 28 Basis-Morphs (text, bar, radar, gauge, etc.)
+├── compare/          ← Compare-Morphs (DATA-DRIVEN!)
+│   ├── base.js       ← Utils: createColors(), detectType()
+│   ├── index.js      ← Export aller Compare-Morphs
+│   ├── primitives/   ← 16 Compare-Primitives
+│   └── composites/   ← smartCompare, diffCompare
+├── suche.js          ← Feature: Suchfeld
+├── perspektiven.js   ← Feature: Perspektiven-Buttons
+└── header.js         ← Feature: App-Header
+```
+
+## MORPH-PURITY REGEL
+
+```javascript
+// ✅ ERLAUBT in Morphs:
+document.createElement()     // DOM erstellen
+element.appendChild()        // DOM aufbauen
+element.addEventListener()   // Lokale Events auf eigenem Element
+
+// ❌ VERBOTEN in Morphs:
+document.dispatchEvent()     // → Nur Features dürfen Events dispatchen!
+document.addEventListener()  // → Nie global!
+```
+
+**Morphs sind REINE Transformationen:** `(wert, config) → HTMLElement`
+
+## Data-Driven Compare System
+
+Das Compare-System ist **100% datengetrieben** (KEIN themes/ Ordner mehr!):
+
+```javascript
+import { smartCompare } from './compare/composites/index.js';
+
+// Automatische Typ-Erkennung + Gruppierung
+const compareEl = smartCompare(items, {
+  includeOnly: perspectiveFields  // Optional: Filter nach Perspektive
+});
+```
+
+**Architektur:**
+- `smartCompare()` → Analysiert Daten, gruppiert nach Kategorie
+- `analyzeItems()` → Extrahiert Feldstruktur aus items[0].data
+- `detectType()` → Bestimmt besten Morph für jeden Wert
+- `TYPE_TO_CATEGORY` → Mappt Typen zu Kategorien (numeric, ranges, multidim, etc.)
+
+## 28 Basis-Primitives
+
+| Morph | Input | Output |
+|-------|-------|--------|
+| `text` | String | `<span>` |
+| `number` | Number | `<span>` formatiert |
+| `boolean` | Boolean | Ja/Nein |
+| `tag` | String | Farbiger Chip |
+| `badge` | String/Object | Status-Badge |
+| `list` | Array | `<ul>` Liste |
+| `object` | Object | `<dl>` Definition-Liste |
+| `range` | `{min, max}` | Range-Visualisierung |
+| `stats` | `{min, max, avg}` | Statistik-Karte |
+| `bar` | `[{label, value}]` | Horizontale Balken |
+| `radar` | `[{axis, value}]` | Spider-Chart |
+| `pie` | `{key: value}` | Donut-Diagramm |
+| `rating` | Number 0-10 | Sterne ★★★☆☆ |
+| `progress` | Number 0-100 | Fortschrittsbalken |
+| `timeline` | `[{date, event}]` | Vertikale Timeline |
+| `image` | URL/Object | `<figure>` |
+| `link` | URL/Object | `<a>` |
+| `gauge` | Number/Object | Halbkreis-Tachometer |
+| `calendar` | Events | Jahreskalender |
+| `hierarchy` | Nested | Breadcrumb/Tree |
+| `network` | Nodes/Edges | Beziehungs-Graph |
+| `map` | Coordinates | Weltkarte |
+| `lifecycle` | Phases | Zirkulärer Zyklus |
+| `steps` | Steps | Schrittfolge |
+| `severity` | Level | Farbcodierte Warnung |
+| `currency` | Amount | Währungsanzeige |
+| `dosage` | Dose | Dosierung |
+| `citation` | Reference | Zitation |
+| `comparison` | Before/After | Trend-Vergleich |
+
+## Farb-System (CSS Single Source of Truth!)
+
+```javascript
+// base.js - createColors()
+export function createColors(items) {
+  return items.map((item, index) => ({
+    name: item.name,
+    colorIndex: index % 12,
+    colorClass: `pilz-farbe-${index % 12}`
+  }));
+}
+```
+
+**CSS macht das Styling** (`pilz-farben.css`):
+```css
+.pilz-farbe-0 { --pilz-text: rgb(0, 255, 255); }
+```

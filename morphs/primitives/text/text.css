@@ -1,0 +1,5 @@
+/* TEXT MORPH */
+.amorph-text {
+  display: inline;
+  color: var(--color-text);
+}

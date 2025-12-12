@@ -1,0 +1,27 @@
+# Steps Morph Configuration
+# Numbered process steps visualization
+
+id: steps
+name: Steps
+description: Numbered process steps with status
+category: extended
+
+# Detection rules
+detection:
+  type: array
+  requiredKeys:
+    - step
+    - label
+  alternativeKeys:
+    - title
+    - name
+    - phase
+    - number
+    - icon
+
+# Configuration
+config:
+  showNumbers: true
+  showConnectors: true
+  highlightCurrent: true
+  orientation: horizontal  # horizontal | vertical

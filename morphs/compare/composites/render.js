@@ -1,8 +1,8 @@
 /**
- * RENDER HELPERS - Rendering-Funktionen für Composite-Morphs
+ * RENDER HELPERS - Rendering functions for composite morphs
  * 
- * Gemeinsame Rendering-Logik für alle Composite-Morphs.
- * DATENGETRIEBEN: Wählt Morph basierend auf erkanntem Typ.
+ * Shared rendering logic for all composite morphs.
+ * DATA-DRIVEN: Selects morph based on detected type.
  */
 
 import {
@@ -23,20 +23,25 @@ import {
 } from '../primitives/index.js';
 
 /**
- * Rendert ein einzelnes Feld mit passendem Morph
+ * Renders a single field with appropriate morph
  * 
- * DATENGETRIEBEN:
- * - Typ kommt aus field.typ (wurde von detectType erkannt)
- * - Switch ist vollständig für alle erkannten Typen
+ * DATA-DRIVEN:
+ * - Type comes from field.type (detected by detectType)
+ * - Switch is complete for all recognized types
  */
 export function renderFieldMorph(field, config = {}) {
   const fieldConfig = {
     label: config.labels?.[field.name] || field.name,
+    unit: config.units?.[field.name],
+    // Legacy support
     einheit: config.units?.[field.name],
     ...config[field.name]
   };
   
-  switch (field.typ) {
+  // Support both field.type and field.typ
+  const fieldType = field.type || field.typ;
+  
+  switch (fieldType) {
     case 'bar':
     case 'number':
       return compareBar(field.values, fieldConfig);
@@ -71,21 +76,21 @@ export function renderFieldMorph(field, config = {}) {
 }
 
 /**
- * METRICS COMPOSITE - Kombiniert numerische Werte
- * Zeigt Rating + Progress + Number als vergleichende Balken
+ * METRICS COMPOSITE - Combines numeric values
+ * Shows rating + progress + number as comparative bars
  */
 export function renderMetricsComposite(fieldNames, fields, items, config) {
   const el = document.createElement('div');
   el.className = 'composite-metrics';
   
-  // Alle numerischen Felder als Multi-Bar-Chart
+  // All numeric fields as multi-bar chart
   const metricsData = fieldNames.map(name => ({
     name,
     label: config.labels?.[name] || name,
     items: fields[name].values
   }));
   
-  // Als gestapelte Bars darstellen
+  // Display as stacked bars
   metricsData.forEach(metric => {
     const fieldSection = document.createElement('div');
     fieldSection.className = 'metric-field';
@@ -95,16 +100,17 @@ export function renderMetricsComposite(fieldNames, fields, items, config) {
     label.textContent = metric.label;
     fieldSection.appendChild(label);
     
-    // Typ erkennen und passenden Morph wählen
+    // Detect type and choose appropriate morph
     const field = fields[metric.name];
+    const fieldType = field.type || field.typ;
     let morph;
     
-    switch (field.typ) {
+    switch (fieldType) {
       case 'rating':
         morph = compareRating(metric.items, { max: 5 });
         break;
       case 'progress':
-        morph = compareProgress(metric.items, { einheit: '%' });
+        morph = compareProgress(metric.items, { unit: '%', einheit: '%' });
         break;
       default:
         morph = compareBar(metric.items, {});
@@ -118,8 +124,8 @@ export function renderMetricsComposite(fieldNames, fields, items, config) {
 }
 
 /**
- * RANGES COMPOSITE - Überlappende Range-Darstellung
- * Zeigt alle Ranges auf einer gemeinsamen Skala
+ * RANGES COMPOSITE - Overlapping range display
+ * Shows all ranges on a common scale
  */
 export function renderRangesComposite(fieldNames, fields, items, config) {
   const el = document.createElement('div');
@@ -135,10 +141,12 @@ export function renderRangesComposite(fieldNames, fields, items, config) {
     label.textContent = config.labels?.[name] || name;
     fieldEl.appendChild(label);
     
-    // Range oder Stats - DATENGETRIEBEN
-    const morph = field.typ === 'stats' 
-      ? compareStats(field.values, { einheit: config.units?.[name] })
-      : compareRange(field.values, { einheit: config.units?.[name] });
+    // Range or stats - DATA-DRIVEN
+    const fieldType = field.type || field.typ;
+    const unitConfig = { unit: config.units?.[name], einheit: config.units?.[name] };
+    const morph = fieldType === 'stats' 
+      ? compareStats(field.values, unitConfig)
+      : compareRange(field.values, unitConfig);
     
     fieldEl.appendChild(morph);
     el.appendChild(fieldEl);
@@ -148,14 +156,17 @@ export function renderRangesComposite(fieldNames, fields, items, config) {
 }
 
 /**
- * PROFILE COMPOSITE - Radar + Pie überlagert/nebeneinander
+ * PROFILE COMPOSITE - Radar + Pie overlaid/side by side
  */
 export function renderProfileComposite(fieldNames, fields, items, config) {
   const el = document.createElement('div');
   el.className = 'composite-profile';
   
-  // Radar-Felder: Alle überlagert in einem Chart
-  const radarFields = fieldNames.filter(n => fields[n].typ === 'radar');
+  // Radar fields: All overlaid in one chart
+  const radarFields = fieldNames.filter(n => {
+    const t = fields[n].type || fields[n].typ;
+    return t === 'radar';
+  });
   if (radarFields.length > 0) {
     const radarContainer = document.createElement('div');
     radarContainer.className = 'profile-radar';
@@ -170,8 +181,11 @@ export function renderProfileComposite(fieldNames, fields, items, config) {
     el.appendChild(radarContainer);
   }
   
-  // Pie-Felder: Nebeneinander
-  const pieFields = fieldNames.filter(n => fields[n].typ === 'pie');
+  // Pie fields: Side by side
+  const pieFields = fieldNames.filter(n => {
+    const t = fields[n].type || fields[n].typ;
+    return t === 'pie';
+  });
   if (pieFields.length > 0) {
     const pieContainer = document.createElement('div');
     pieContainer.className = 'profile-pies';
@@ -197,7 +211,7 @@ export function renderProfileComposite(fieldNames, fields, items, config) {
 }
 
 /**
- * TIMELINE COMPOSITE - Zeitlinien überlagert
+ * TIMELINE COMPOSITE - Overlaid timelines
  */
 export function renderTimelineComposite(fieldNames, fields, items, config) {
   const el = document.createElement('div');
@@ -214,7 +228,7 @@ export function renderTimelineComposite(fieldNames, fields, items, config) {
 }
 
 /**
- * CATEGORIES COMPOSITE - Tags, Lists, Booleans gruppiert
+ * CATEGORIES COMPOSITE - Tags, lists, booleans grouped
  */
 export function renderCategoriesComposite(fieldNames, fields, items, config) {
   const el = document.createElement('div');
@@ -225,8 +239,9 @@ export function renderCategoriesComposite(fieldNames, fields, items, config) {
     const fieldEl = document.createElement('div');
     fieldEl.className = 'category-field';
     
+    const fieldType = field.type || field.typ;
     let morph;
-    switch (field.typ) {
+    switch (fieldType) {
       case 'boolean':
         morph = compareBoolean(field.values, { label: config.labels?.[name] || name });
         break;

@@ -1,0 +1,96 @@
+{
+  "research_importance": "high",
+  "model_organism_status": false,
+  
+  "research_areas": [
+    { "label": "Mycorrhizal ecology", "value": 90 },
+    { "label": "Taxonomy", "value": 75 },
+    { "label": "Chemistry", "value": 70 },
+    { "label": "Cultivation", "value": 85 },
+    { "label": "Conservation", "value": 50 }
+  ],
+  
+  "total_publications": 2847,
+  "publications_last_5_years": 523,
+  
+  "publication_trend": [
+    { "axis": "2019", "value": 95 },
+    { "axis": "2020", "value": 88 },
+    { "axis": "2021", "value": 105 },
+    { "axis": "2022", "value": 112 },
+    { "axis": "2023", "value": 123 }
+  ],
+  
+  "key_research_milestones": [
+    { "date": "1782", "event": "First scientific description (Bulliard)" },
+    { "date": "1885", "event": "Mycorrhizal association discovered" },
+    { "date": "1990", "event": "Molecular phylogeny studies begin" },
+    { "date": "2010", "event": "Genome draft published" },
+    { "date": "2020", "event": "Complete genome assembly" }
+  ],
+  
+  "genome_information": {
+    "genome_size_mb": 46,
+    "chromosomes": "unknown",
+    "genes_estimated": 15000,
+    "status": "Complete assembly available"
+  },
+  
+  "current_research_topics": [
+    "Mycorrhizal signaling pathways",
+    "Cultivation attempts",
+    "Climate change impacts",
+    "Population genetics",
+    "Bioactive compound isolation"
+  ],
+  
+  "research_challenges": [
+    "Cannot be cultivated in lab",
+    "Long-term experiments required",
+    "Complex symbiotic interactions"
+  ],
+  
+  "key_research_institutions": [
+    { "name": "INRA France", "focus": "Ecology, cultivation" },
+    { "name": "University of Torino", "focus": "Taxonomy, chemistry" },
+    { "name": "Swedish University of Agricultural Sciences", "focus": "Forest ecology" }
+  ],
+  
+  "key_publications": [
+    {
+      "authors": "Martin, F. et al.",
+      "year": 2010,
+      "title": "The genome of Laccaria bicolor provides insights into mycorrhizal symbiosis",
+      "journal": "Nature",
+      "doi": "10.1038/nature06556"
+    },
+    {
+      "authors": "Mello, A. et al.",
+      "year": 2006,
+      "title": "Truffle ecology and evolution",
+      "journal": "Molecular Ecology",
+      "doi": "10.1111/j.1365-294X.2006.03023.x"
+    }
+  ],
+  
+  "citizen_science_opportunities": [
+    "iNaturalist observations",
+    "Mushroom Observer records",
+    "Local mycological society surveys"
+  ],
+  
+  "data_availability": {
+    "genbank_sequences": 5420,
+    "bold_records": 892,
+    "gbif_occurrences": 485000
+  },
+  
+  "future_research_priorities": [
+    "Develop cultivation methods",
+    "Understand climate adaptation",
+    "Map genetic diversity",
+    "Discover new bioactive compounds"
+  ],
+  
+  "funding_sources": ["EU Horizon", "National science foundations", "Forestry agencies"]
+}

@@ -1,0 +1,39 @@
+/* RATING MORPH */
+.amorph-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  height: var(--ui-height-md);
+  padding: 0 var(--space-sm);
+  background: var(--glass-bg);
+  border-radius: var(--ui-radius-md);
+  border: 1px solid var(--glass-border);
+}
+
+.amorph-rating-stars {
+  display: inline-flex;
+  gap: 1px;
+}
+
+.amorph-rating-star {
+  font-size: 10px;
+}
+
+.amorph-rating-full {
+  color: rgba(240, 190, 80, 0.62);
+}
+
+.amorph-rating-half {
+  color: rgba(240, 190, 80, 0.30);
+}
+
+.amorph-rating-empty {
+  color: var(--glass-border);
+}
+
+.amorph-rating-value {
+  font-size: var(--ui-font-sm);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,35 @@
+{
+  "perspektive": "temporal",
+
+  "lebenszyklus": [
+    {"date": "Tag 1-4", "event": "Ei", "label": "Auf Unterseite von Seidenpflanzenblättern"},
+    {"date": "Tag 5-18", "event": "Raupe", "label": "5 Larvenstadien, frisst nur Seidenpflanzen"},
+    {"date": "Tag 19-32", "event": "Puppe", "label": "Grüne Chrysalis mit Goldpunkten"},
+    {"date": "Tag 33+", "event": "Falter", "label": "Adult - 2-6 Wochen (Sommer) oder 8-9 Monate (Überwinterung)"}
+  ],
+
+  "phasen_dauer": {
+    "ei_tage": {"min": 3, "max": 5},
+    "larve_tage": {"min": 10, "max": 14},
+    "puppe_tage": {"min": 10, "max": 14},
+    "adult_tage": {"min": 14, "max": 270}
+  },
+
+  "generationen_pro_jahr": {"min": 2, "max": 5},
+  "ueberwinterung": "Als Adult in Diapause (Mexiko, Kalifornien)",
+
+  "aktivitaetszeiten": {
+    "tagaktiv": true,
+    "peak_aktivitaet": "Vormittag bei Sonnenschein",
+    "temperatur_schwelle_c": 13
+  },
+
+  "saisonale_phaenologie": [
+    {"date": "März", "event": "Frühjahrs-Migration", "label": "Nordwärts aus Mexiko"},
+    {"date": "April-Mai", "event": "1. Brutgeneration", "label": "Texas, Oklahoma"},
+    {"date": "Juni-Juli", "event": "2.-3. Generation", "label": "Nördliche USA, Kanada"},
+    {"date": "August", "event": "Supergeneration", "label": "Langlebige Migrationsgeneration schlüpft", "aktuell": false},
+    {"date": "September-Oktober", "event": "Herbst-Migration", "label": "Südwärts nach Mexiko"},
+    {"date": "November-Februar", "event": "Überwinterung", "label": "Oyamel-Wälder in Mexiko", "aktuell": true}
+  ]
+}

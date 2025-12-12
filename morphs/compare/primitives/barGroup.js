@@ -1,17 +1,17 @@
 /**
- * COMPARE BAR GROUP - Für Arrays von Bar-Objekten (z.B. Wirkstoffe)
- * Jedes Item hat einen Array von {label, value, unit}
- * Zeigt gruppierte Balken pro Label, vergleicht Items side-by-side
+ * COMPARE BAR GROUP - For arrays of bar objects (e.g. compounds)
+ * Each item has an array of {label, value, unit}
+ * Shows grouped bars per label, compares items side-by-side
  */
 
-import { debug } from '../../../observer/debug.js';
+import { debug } from '../../../../observer/debug.js';
 
 export function compareBarGroup(items, config = {}) {
   const el = document.createElement('div');
   el.className = 'amorph-compare amorph-compare-bar-group';
   
   if (!items?.length) {
-    el.innerHTML = '<div class="compare-leer">Keine Daten</div>';
+    el.innerHTML = '<div class="compare-empty">No data</div>';
     return el;
   }
   
@@ -22,19 +22,19 @@ export function compareBarGroup(items, config = {}) {
     el.appendChild(label);
   }
   
-  // Alle Labels sammeln (z.B. alle Wirkstoffe)
-  const alleLabels = new Map(); // label -> [{item, value, unit}]
+  // Collect all labels (e.g. all compounds)
+  const allLabels = new Map(); // label -> [{item, value, unit}]
   
   items.forEach(item => {
-    const arr = item.wert;
+    const arr = item.value ?? item.wert;
     if (!Array.isArray(arr)) return;
     
     arr.forEach(entry => {
-      const lbl = entry.label || entry.name || 'Unbekannt';
-      if (!alleLabels.has(lbl)) {
-        alleLabels.set(lbl, []);
+      const lbl = entry.label || entry.name || 'Unknown';
+      if (!allLabels.has(lbl)) {
+        allLabels.set(lbl, []);
       }
-      alleLabels.get(lbl).push({
+      allLabels.get(lbl).push({
         item,
         value: entry.value,
         unit: entry.unit || ''
@@ -42,31 +42,31 @@ export function compareBarGroup(items, config = {}) {
     });
   });
   
-  // Globales Maximum pro Label ermitteln
+  // Determine global maximum per label
   const container = document.createElement('div');
   container.className = 'bar-group-container';
   
-  alleLabels.forEach((entries, lbl) => {
+  allLabels.forEach((entries, lbl) => {
     const group = document.createElement('div');
     group.className = 'bar-group';
     
     const maxVal = Math.max(...entries.map(e => e.value || 0), 1);
     const unit = entries[0]?.unit || '';
     
-    // Label-Header
+    // Label header
     const header = document.createElement('div');
     header.className = 'bar-group-label';
     header.textContent = lbl;
     group.appendChild(header);
     
-    // Bars für jeden Item
+    // Bars for each item
     const barsWrap = document.createElement('div');
     barsWrap.className = 'bar-group-bars';
     
     entries.forEach(entry => {
       const pct = Math.min(100, (entry.value / maxVal) * 100);
-      const textColor = entry.item.textFarbe || entry.item.farbe || '#fff';
-      const fillColor = entry.item.farbe || 'rgba(100,100,100,0.5)';
+      const textColor = entry.item.textColor || entry.item.textFarbe || entry.item.color || entry.item.farbe || '#fff';
+      const fillColor = entry.item.color || entry.item.farbe || 'rgba(100,100,100,0.5)';
       const itemName = entry.item.name || entry.item.id || '–';
       
       const bar = document.createElement('div');
@@ -76,7 +76,7 @@ export function compareBarGroup(items, config = {}) {
         <div class="bar-track">
           <div class="bar-fill" style="width:${pct}%;background-color:${fillColor}"></div>
         </div>
-        <span class="bar-wert">${entry.value}${unit}</span>
+        <span class="bar-value">${entry.value}${unit}</span>
       `;
       barsWrap.appendChild(bar);
     });
@@ -87,20 +87,20 @@ export function compareBarGroup(items, config = {}) {
   
   el.appendChild(container);
   
-  // Legende für Items
-  const legende = document.createElement('div');
-  legende.className = 'bar-group-legende';
+  // Legend for items
+  const legend = document.createElement('div');
+  legend.className = 'bar-group-legend';
   items.forEach(item => {
-    const bgColor = item.farbe || 'rgba(100,100,100,0.5)';
+    const bgColor = item.color || item.farbe || 'rgba(100,100,100,0.5)';
     const itemName = item.name || item.id || '–';
-    legende.innerHTML += `
-      <span class="legende-item">
-        <span class="legende-dot" style="background-color:${bgColor}"></span>
+    legend.innerHTML += `
+      <span class="legend-item">
+        <span class="legend-dot" style="background-color:${bgColor}"></span>
         ${itemName}
       </span>
     `;
   });
-  el.appendChild(legende);
+  el.appendChild(legend);
   
   return el;
 }

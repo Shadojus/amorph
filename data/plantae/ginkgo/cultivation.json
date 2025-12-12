@@ -1,0 +1,55 @@
+{
+  "perspektive": "cultivation",
+  "schwierigkeit": {
+    "level": 30,
+    "beschreibung": "Einfach, sehr robust"
+  },
+  "anbauanforderungen": {
+    "boden": {
+      "typ": "Tiefgründig, durchlässig",
+      "ph_optimal": {
+        "min": 5.5,
+        "max": 7.0
+      }
+    },
+    "wasser": {
+      "bedarf": "Mäßig",
+      "trockenheitstoleranz": 80
+    },
+    "licht": {
+      "min": 60,
+      "max": 100,
+      "einheit": "%"
+    }
+  },
+  "vermehrung": [
+    {
+      "methode": "Samen",
+      "erfolgsrate": 70,
+      "dauer_monate": 2,
+      "besonderheit": "Stratifikation empfohlen"
+    },
+    {
+      "methode": "Stecklinge",
+      "erfolgsrate": 50,
+      "dauer_monate": 4
+    },
+    {
+      "methode": "Veredelung",
+      "erfolgsrate": 85,
+      "dauer_monate": 1,
+      "besonderheit": "Für Sorten und Geschlechtswahl"
+    }
+  ],
+  "pflanzabstand_m": 8,
+  "erste_ernte_jahre": {
+    "samen": 20,
+    "blaetter": 3
+  },
+  "tipps": [
+    "Männliche Bäume für Alleen (keine stinkenden Früchte)",
+    "Weibliche Bäume für Samenernte",
+    "Jung vor Frost schützen",
+    "Kaum Schnitt nötig"
+  ]
+}

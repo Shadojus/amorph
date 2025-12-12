@@ -1,0 +1,37 @@
+{
+  "interaction_network": [
+    { "name": "Betula pendula", "type": "symbiosis", "strength": 0.95, "details": "Primary ectomycorrhizal host" },
+    { "name": "Picea abies", "type": "symbiosis", "strength": 0.90, "details": "Conifer host" },
+    { "name": "Fly larvae", "type": "predation", "strength": 0.7, "details": "Larvae feed on fruiting body" },
+    { "name": "Slugs", "type": "predation", "strength": 0.5, "details": "Consume despite toxins" },
+    { "name": "Reindeer", "type": "predation", "strength": 0.6, "details": "Known to consume intentionally" }
+  ],
+  
+  "symbiotic_partners": [
+    { "label": "Birch species", "value": 50 },
+    { "label": "Pine species", "value": 25 },
+    { "label": "Spruce", "value": 20 },
+    { "label": "Other", "value": 5 }
+  ],
+  
+  "predators": [
+    { "name": "Fungus gnats", "type": "predation", "impact": "high" },
+    { "name": "Slugs", "type": "predation", "impact": "moderate" },
+    { "name": "Reindeer", "type": "predation", "impact": "low" }
+  ],
+  
+  "historical_use_as_insecticide": {
+    "target": "House flies",
+    "method": "Mushroom pieces in milk",
+    "effectiveness": "Moderate - traditional use"
+  },
+  
+  "co_occurrence_patterns": [
+    { "axis": "Boletus edulis", "value": 75 },
+    { "axis": "Lactarius spp.", "value": 70 },
+    { "axis": "Russula spp.", "value": 65 },
+    { "axis": "Cortinarius spp.", "value": 50 }
+  ],
+  
+  "ecological_guild": "ectomycorrhizal"
+}

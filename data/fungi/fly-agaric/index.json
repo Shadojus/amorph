@@ -1,0 +1,25 @@
+{
+  "id": "fungi-002",
+  "slug": "fly-agaric",
+  "name": "Fly Agaric",
+  "scientific_name": "Amanita muscaria",
+  "image": "images/fungi/fly-agaric.jpg",
+  "description": "The iconic red and white spotted mushroom of fairy tales. Toxic but historically used in shamanic practices. A quintessential symbol of mushrooms worldwide.",
+  "perspectives": [
+    "identification",
+    "ecology",
+    "geography",
+    "conservation",
+    "chemistry",
+    "temporal",
+    "statistics",
+    "interactions",
+    "safety",
+    "research",
+    "culture",
+    "economy",
+    "medicine",
+    "culinary",
+    "cultivation"
+  ]
+}

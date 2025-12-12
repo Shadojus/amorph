@@ -1,0 +1,26 @@
+# Radar Morph Configuration
+# Radar/spider chart visualization
+
+id: radar
+name: Radar Chart
+description: Multi-axis radar/spider chart
+category: charts
+
+# Detection rules
+detection:
+  type: array
+  requiredKeys:
+    - axis
+    - value
+  alternativeKeys:
+    - dimension
+    - factor
+    - score
+  minItems: 3
+
+# Configuration
+config:
+  showLabels: true
+  showValues: true
+  fillArea: true
+  animated: true

@@ -1,0 +1,33 @@
+{
+  "perspektive": "research",
+
+  "forschungsrelevanz": "Sehr hoch",
+  "modellorganismus_fuer": ["Migration", "Navigation", "Ökologie", "Klimawandel"],
+  
+  "aktuelle_forschungsthemen": [
+    {"thema": "Magnetfeld-Navigation", "beschreibung": "Nutzung des Erdmagnetfelds für Migration", "status": "aktiv"},
+    {"thema": "Sonnenkompass", "beschreibung": "Zeit-kompensierter Sonnenkompass im Gehirn", "status": "aktiv"},
+    {"thema": "Klimawandel-Anpassung", "beschreibung": "Änderung von Migrationsmustern", "status": "aktiv"},
+    {"thema": "Populationsgenetik", "beschreibung": "Genetische Diversität Ost vs. West", "status": "aktiv"},
+    {"thema": "Cardenolid-Sequestrierung", "beschreibung": "Mechanismen der Giftaufnahme", "status": "abgeschlossen"}
+  ],
+
+  "citizen_science": [
+    {"projekt": "Monarch Watch", "typ": "Markierung", "url": "https://monarchwatch.org", "teilnehmer": 100000},
+    {"projekt": "Journey North", "typ": "Sichtungsmeldungen", "url": "https://journeynorth.org", "teilnehmer": 50000},
+    {"projekt": "iNaturalist", "typ": "Foto-Dokumentation", "url": "https://inaturalist.org", "teilnehmer": 500000}
+  ],
+
+  "schluessel_publikationen": [
+    {"titel": "The Ecology and Behavior of the Monarch Butterfly", "jahr": 1997, "autoren": "Oberhauser & Solensky", "zitationen": 850},
+    {"titel": "Navigational mechanisms of migrating monarch butterflies", "jahr": 2021, "journal": "PNAS", "zitationen": 120}
+  ],
+
+  "forschungs_profil": [
+    {"axis": "Ökologie", "value": 95},
+    {"axis": "Verhaltensbiologie", "value": 90},
+    {"axis": "Genetik", "value": 75},
+    {"axis": "Physiologie", "value": 80},
+    {"axis": "Naturschutz", "value": 95}
+  ]
+}

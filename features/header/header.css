@@ -1,0 +1,218 @@
+/* HEADER FEATURE STYLES */
+/* Black Glasmorphism - Sticky Header */
+
+/* === HEADER WRAPPER === */
+.amorph-feature-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: var(--space-sm) var(--space-md);
+  /* True Black Glass - mehr Transparenz */
+  background: linear-gradient(
+    180deg,
+    rgba(12, 12, 18, 0.75) 0%,
+    rgba(8, 8, 14, 0.7) 100%
+  );
+  backdrop-filter: blur(20px) saturate(1.3);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  /* Glass edges */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+/* Header-Schatten wenn gescrollt */
+.amorph-feature-header.scrolled {
+  background: linear-gradient(
+    180deg,
+    rgba(5, 5, 8, 0.96) 0%,
+    rgba(8, 8, 12, 0.94) 100%
+  );
+  box-shadow: 
+    0 8px 48px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+/* === HEADER ROWS === */
+.amorph-header-row {
+  display: flex;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Zeile 0: Branding - jetzt definiert in BRANDING Sektion unten */
+
+/* Zeile 1: Hauptzeile - Suche + Badges + Ansicht-Switch */
+.amorph-header-main {
+  gap: var(--space-sm);
+  flex-wrap: nowrap;
+  margin-bottom: var(--space-xs);
+}
+
+/* Zeile 2: Perspektiven - horizontal scrollbar */
+.amorph-header-perspektiven {
+  justify-content: flex-start;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  margin: 0 calc(-1 * var(--space-md));
+  padding: var(--space-2xs) var(--space-md);
+}
+
+.amorph-header-perspektiven::-webkit-scrollbar {
+  display: none;
+}
+
+/* Alte Klassen für Kompatibilität */
+.amorph-header-suche {
+  margin-bottom: var(--space-sm);
+}
+
+.amorph-header-nav {
+  gap: var(--gap-default);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* === BRANDING === */
+/* App-Titel links - Black Glass Pill mit Bifroest rechts daneben */
+.amorph-header-branding {
+  justify-content: flex-start;
+  align-items: center;
+  gap: var(--space-sm);
+  padding-bottom: var(--space-xs);
+  margin-bottom: var(--space-xs);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.amorph-header-titel {
+  font-weight: 700;
+  font-size: var(--font-lg);
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  white-space: nowrap;
+  /* Glass Pill Container */
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 14px;
+  background: linear-gradient(
+    135deg,
+    rgba(20, 20, 28, 0.6) 0%,
+    rgba(15, 15, 22, 0.5) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.amorph-header-titel:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(25, 25, 35, 0.7) 0%,
+    rgba(20, 20, 28, 0.6) 100%
+  );
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.amorph-header-titel .titel-text {
+  /* Dezenter Weiss-Silber Gradient */
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(200, 210, 220, 0.9) 50%,
+    rgba(255, 255, 255, 0.95) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* Subtiler Glow */
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.15));
+  transition: filter 0.3s ease;
+}
+
+.amorph-header-titel:hover .titel-text {
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.25))
+          drop-shadow(0 0 20px rgba(200, 210, 220, 0.15));
+}
+
+/* Bifroest Link - direkt neben Logo */
+.amorph-header-bifroest {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.35);
+  white-space: nowrap;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  /* Kein flex-grow, bleibt neben Logo */
+}
+
+.amorph-header-bifroest:hover {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.amorph-header-bifroest .bifroest-name {
+  color: #9b59b6;
+  transition: all 0.2s ease;
+}
+
+.amorph-header-bifroest:hover .bifroest-name {
+  color: #b389c7;
+  text-shadow: 0 0 12px rgba(155, 89, 182, 0.5);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 900px) {
+  .amorph-feature-header {
+    padding: var(--space-xs) var(--space-sm);
+  }
+  .amorph-header-main {
+    gap: var(--space-xs);
+  }
+  .amorph-header-bifroest {
+    display: none;
+  }
+  .amorph-header-perspektiven {
+    margin: 0 calc(-1 * var(--space-sm));
+    padding: var(--space-2xs) var(--space-sm);
+  }
+}
+
+@media (max-width: 600px) {
+  .amorph-feature-header {
+    padding: var(--space-2xs) var(--space-xs);
+  }
+  .amorph-header-branding {
+    padding-bottom: 2px;
+    margin-bottom: var(--space-2xs);
+  }
+  .amorph-header-titel {
+    font-size: var(--font-md);
+  }
+  .amorph-header-main {
+    gap: var(--space-2xs);
+    margin-bottom: var(--space-2xs);
+  }
+  .amorph-header-perspektiven {
+    margin: 0 calc(-1 * var(--space-xs));
+    padding: var(--space-2xs) var(--space-xs);
+  }
+}
+
+  .amorph-header-titel {
+    font-size: 0.72rem !important;
+  }
+  .amorph-header-bifroest {
+    font-size: 0.48rem;
+  }
+  .amorph-header-main {
+    gap: var(--gap-tight);
+    margin-bottom: var(--space-xs-plus);
+  }
+}

@@ -1,74 +1,72 @@
 /**
- * COMPARE RANGE - Bereichs-Vergleich (min/max)
+ * COMPARE RANGE - Range comparison (min/max)
  */
 
-import { debug } from '../../../observer/debug.js';
+import { debug } from '../../../../observer/debug.js';
 
 export function compareRange(items, config = {}) {
   const el = document.createElement('div');
   el.className = 'amorph-compare amorph-compare-range';
   
-  // Globalen Min/Max finden
+  // Find global min/max
   let globalMin = Infinity;
   let globalMax = -Infinity;
   
   items.forEach(item => {
-    const wert = item.wert;
-    if (typeof wert === 'object' && wert !== null) {
-      const min = wert.min ?? wert.von ?? wert.from ?? 0;
-      const max = wert.max ?? wert.bis ?? wert.to ?? min;
+    const val = item.value ?? item.wert;
+    if (typeof val === 'object' && val !== null) {
+      const min = val.min ?? val.von ?? val.from ?? 0;
+      const max = val.max ?? val.bis ?? val.to ?? min;
       if (min < globalMin) globalMin = min;
       if (max > globalMax) globalMax = max;
-    } else if (typeof wert === 'number') {
-      if (wert < globalMin) globalMin = wert;
-      if (wert > globalMax) globalMax = wert;
+    } else if (typeof val === 'number') {
+      if (val < globalMin) globalMin = val;
+      if (val > globalMax) globalMax = val;
     }
   });
   
   const range = globalMax - globalMin || 1;
   
   items.forEach(item => {
-    const wert = item.wert;
+    const val = item.value ?? item.wert;
     let min, max;
     
-    if (typeof wert === 'object' && wert !== null) {
-      min = wert.min ?? wert.von ?? wert.from ?? 0;
-      max = wert.max ?? wert.bis ?? wert.to ?? min;
-    } else if (typeof wert === 'number') {
-      min = max = wert;
+    if (typeof val === 'object' && val !== null) {
+      min = val.min ?? val.von ?? val.from ?? 0;
+      max = val.max ?? val.bis ?? val.to ?? min;
+    } else if (typeof val === 'number') {
+      min = max = val;
     } else {
       min = max = 0;
     }
     
-    const leftProzent = ((min - globalMin) / range) * 100;
-    const widthProzent = ((max - min) / range) * 100 || 2; // mindestens 2% für Punkte
+    const leftPercent = ((min - globalMin) / range) * 100;
+    const widthPercent = ((max - min) / range) * 100 || 2; // at least 2% for points
     
     const row = document.createElement('div');
-    row.className = `range-row ${item.farbKlasse || ''}`;
+    row.className = `range-row ${item.colorClass || item.farbKlasse || ''}`;
     
-    // Inline-Styles für Name und Bar (CSS greift nicht zuverlässig)
-    const textColor = item.textFarbe || item.farbe || 'white';
-    const barColor = item.farbe || 'rgba(100,100,100,0.5)';
     const itemName = item.name || item.id || '–';
     
+    // NO inline styles for colors! CSS classes handle this via pilz-farbe-X
     row.innerHTML = `
-      <div class="range-name" style="color:${textColor}">${itemName}</div>
+      <div class="range-name">${itemName}</div>
       <div class="range-track">
-        <div class="range-bar" style="left:${leftProzent}%;width:${widthProzent}%;background-color:${barColor}"></div>
+        <div class="range-bar" style="left:${leftPercent}%;width:${widthPercent}%"></div>
       </div>
-      <div class="range-werte">${min}${min !== max ? ` – ${max}` : ''}</div>
+      <div class="range-values">${min}${min !== max ? ` – ${max}` : ''}</div>
     `;
     el.appendChild(row);
   });
   
-  // Skala
-  const skala = document.createElement('div');
-  skala.className = 'range-skala';
-  skala.innerHTML = `
+  // Scale
+  const scale = document.createElement('div');
+  scale.className = 'range-scale';
+  scale.innerHTML = `
     <span>${globalMin}</span>
     <span>${globalMax}</span>
   `;
-  el.appendChild(skala);
+  el.appendChild(scale);
   
   return el;
 }

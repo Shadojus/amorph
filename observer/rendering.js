@@ -11,27 +11,27 @@ export class RenderingObserver {
   }
   
   start() {
-    debug.observer('RenderingObserver gestartet');
+    debug.observer('RenderingObserver started');
     
     // === MOUNT EVENTS ===
     const mountHandler = (e) => {
       this.mountCount++;
       const data = { 
         morph: e.detail?.morph, 
-        feld: e.detail?.field,
-        nummer: this.mountCount
+        field: e.detail?.field,
+        number: this.mountCount
       };
       debug.mount('Mount', data);
-      this.target?.send({ typ: 'mount', ...data, zeitstempel: Date.now() });
+      this.target?.send({ typ: 'mount', ...data, timestamp: Date.now() });
     };
     this.container.addEventListener('amorph:mounted', mountHandler);
     this.handlers.push(['amorph:mounted', mountHandler]);
     
     // === UNMOUNT EVENTS ===
     const unmountHandler = (e) => {
-      const data = { morph: e.detail?.morph, feld: e.detail?.field };
+      const data = { morph: e.detail?.morph, field: e.detail?.field };
       debug.unmount('Unmount', data);
-      this.target?.send({ typ: 'unmount', ...data, zeitstempel: Date.now() });
+      this.target?.send({ typ: 'unmount', ...data, timestamp: Date.now() });
     };
     this.container.addEventListener('amorph:unmounted', unmountHandler);
     this.handlers.push(['amorph:unmounted', unmountHandler]);
@@ -40,19 +40,19 @@ export class RenderingObserver {
     const renderHandler = (e) => {
       this.renderCount++;
       const data = { 
-        anzahl: e.detail?.anzahl,
-        renderNr: this.renderCount,
+        count: e.detail?.count || e.detail?.anzahl,
+        renderNumber: this.renderCount,
         totalMounts: this.mountCount
       };
-      debug.render('Render komplett', data);
-      this.target?.send({ typ: 'render', ...data, zeitstempel: Date.now() });
+      debug.render('Render complete', data);
+      this.target?.send({ typ: 'render', ...data, timestamp: Date.now() });
     };
     this.container.addEventListener('amorph:rendered', renderHandler);
     this.handlers.push(['amorph:rendered', renderHandler]);
     
     // === REQUEST RENDER ===
     const requestHandler = (e) => {
-      debug.render('Render angefordert', { source: e.detail?.source });
+      debug.render('Render requested', { source: e.detail?.source });
     };
     this.container.addEventListener('amorph:request-render', requestHandler);
     this.handlers.push(['amorph:request-render', requestHandler]);
@@ -81,7 +81,7 @@ export class RenderingObserver {
   }
   
   stop() {
-    debug.observer('RenderingObserver gestoppt', { 
+    debug.observer('RenderingObserver stopped', { 
       totalRenders: this.renderCount, 
       totalMounts: this.mountCount 
     });

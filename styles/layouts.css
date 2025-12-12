@@ -11,7 +11,7 @@ amorph-container[data-morph="item"] {
       rgba(0, 0, 0, 0.95) 50%,
       rgba(0, 0, 0, 0.90) 100%
     ),
-    url('../images/woodfloor/Moss_Woodsf_Laub.png');
+    url('../styles/woodfloor/Moss_Woodsf_Laub.png');
   background-size: cover, cover;
   background-position: center, center;
   /* Einheitliches Black Glasmorphism */

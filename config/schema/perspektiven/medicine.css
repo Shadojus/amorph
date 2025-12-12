@@ -1,0 +1,7 @@
+/* Perspektive: Medizin - Sandiges Glass */
+[data-perspektive-medicine] {
+  --perspektive-farbe: rgba(180, 175, 180, 0.25);
+  --perspektive-farbe-2: rgba(175, 170, 175, 0.22);
+  --perspektive-farbe-3: rgba(170, 165, 170, 0.20);
+  --perspektive-farbe-4: rgba(165, 160, 165, 0.18);
+}

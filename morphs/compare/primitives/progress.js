@@ -1,33 +1,35 @@
 /**
- * COMPARE PROGRESS - Fortschrittsbalken-Vergleich
+ * COMPARE PROGRESS - Progress bar comparison
  */
 
-import { debug } from '../../../observer/debug.js';
+import { debug } from '../../../../observer/debug.js';
 
 export function compareProgress(items, config = {}) {
   const el = document.createElement('div');
   el.className = 'amorph-compare amorph-compare-progress';
   
-  const maxWert = Math.max(...items.map(i => typeof i.wert === 'number' ? i.wert : 0));
+  const maxValue = Math.max(...items.map(i => {
+    const val = i.value ?? i.wert;
+    return typeof val === 'number' ? val : 0;
+  }));
   
   items.forEach(item => {
-    const wert = typeof item.wert === 'number' ? item.wert : 0;
-    const prozent = maxWert > 0 ? (wert / maxWert) * 100 : 0;
+    const val = item.value ?? item.wert;
+    const numValue = typeof val === 'number' ? val : 0;
+    const percent = maxValue > 0 ? (numValue / maxValue) * 100 : 0;
     
     const row = document.createElement('div');
-    row.className = `progress-row ${item.farbKlasse || ''}`;
+    row.className = `progress-row ${item.colorClass || item.farbKlasse || ''}`;
     
-    // Immer Inline-Styles für zuverlässige Darstellung
-    const textColor = item.textFarbe || 'rgba(255,255,255,0.85)';
-    const fillColor = item.farbe || 'rgba(100,100,100,0.5)';
     const itemName = item.name || item.id || '–';
     
+    // NO inline styles! CSS handles colors via pilz-farbe-X class
     row.innerHTML = `
-      <div class="progress-name" style="color:${textColor}">${itemName}</div>
+      <div class="progress-name">${itemName}</div>
       <div class="progress-bar-container">
-        <div class="progress-bar" style="width:${prozent}%;background-color:${fillColor}"></div>
+        <div class="progress-bar" style="width:${percent}%"></div>
       </div>
-      <div class="progress-wert">${wert}%</div>
+      <div class="progress-value">${numValue}%</div>
     `;
     el.appendChild(row);
   });

@@ -1,0 +1,53 @@
+{
+  "perspektive": "research",
+  "forschungsschwerpunkte": [
+    {
+      "thema": "Neuroprotektive Wirkung",
+      "intensitaet": 95,
+      "stand": "Klinische Studien Phase III"
+    },
+    {
+      "thema": "Antioxidative Mechanismen",
+      "intensitaet": 85,
+      "stand": "Gut erforscht"
+    },
+    {
+      "thema": "Genetik und Evolution",
+      "intensitaet": 80,
+      "stand": "Genom 2019 sequenziert"
+    },
+    {
+      "thema": "Resistenzmechanismen",
+      "intensitaet": 70,
+      "stand": "Aktive Forschung"
+    },
+    {
+      "thema": "Klimawandel-Adaptation",
+      "intensitaet": 60,
+      "stand": "Emerging"
+    }
+  ],
+  "publikationen_pro_jahr": 1200,
+  "wichtige_studien": [
+    {
+      "titel": "Ginkgo biloba extract for dementia",
+      "autor": "Birks & Grimley Evans",
+      "jahr": 2009,
+      "typ": "Cochrane Review",
+      "ergebnis": "Inkonsistente Evidenz"
+    },
+    {
+      "titel": "The Ginkgo genome reveals 600 million years of evolution",
+      "autor": "Zhao et al.",
+      "jahr": 2019,
+      "typ": "Genomstudie",
+      "ergebnis": "10.6 Gb Genom, hochrepetitiv"
+    }
+  ],
+  "offene_fragen": [
+    "Optimale Dosierung für kognitive Wirkung?",
+    "Langzeit-Sicherheitsprofil?",
+    "Wildpopulationen wirklich natürlich?",
+    "Mechanismen der extremen Langlebigkeit?"
+  ]
+}

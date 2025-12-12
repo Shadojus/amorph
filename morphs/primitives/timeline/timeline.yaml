@@ -1,0 +1,24 @@
+# Timeline Morph Configuration
+# Temporal event timeline
+
+id: timeline
+name: Timeline
+description: Chronological event timeline
+category: charts
+
+# Detection rules
+detection:
+  type: array
+  requiredKeys:
+    - date
+    - event
+  alternativeKeys:
+    - time
+    - period
+    - label
+
+# Configuration
+config:
+  orientation: vertical  # vertical | horizontal
+  showDates: true
+  animated: true

@@ -1,0 +1,50 @@
+{
+  "perspektive": "economy",
+  "marktpreise": {
+    "extrakt_kg": {
+      "min": 50,
+      "max": 200,
+      "waehrung": "EUR"
+    },
+    "blaetter_kg": {
+      "min": 5,
+      "max": 20,
+      "waehrung": "EUR"
+    },
+    "samen_kg": {
+      "min": 10,
+      "max": 40,
+      "waehrung": "EUR"
+    }
+  },
+  "marktvolumen_global_mrd_eur": 1.2,
+  "anbauflaeche_ha": {
+    "china": 150000,
+    "usa": 500,
+    "europa": 200
+  },
+  "hauptanbaugebiete": [
+    "Jiangsu, China",
+    "Shandong, China",
+    "South Carolina, USA"
+  ],
+  "verwendung_kommerziell": [
+    {
+      "bereich": "Nahrungsergänzungsmittel",
+      "anteil_prozent": 70
+    },
+    {
+      "bereich": "Pharmazeutika",
+      "anteil_prozent": 20
+    },
+    {
+      "bereich": "Kosmetik",
+      "anteil_prozent": 5
+    },
+    {
+      "bereich": "Nahrungsmittel (Samen)",
+      "anteil_prozent": 5
+    }
+  ],
+  "handelswert_rating": 85
+}

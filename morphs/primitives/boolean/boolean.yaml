@@ -1,0 +1,18 @@
+# Boolean Morph Configuration
+# True/false display with icons
+
+id: boolean
+name: Boolean
+description: True/false value with visual indicator
+category: primitives
+
+# Detection rules
+detection:
+  type: boolean
+
+# Configuration
+config:
+  trueIcon: "✓"
+  falseIcon: "✕"
+  trueColor: "rgba(100, 220, 160, 0.85)"
+  falseColor: "rgba(240, 110, 110, 0.85)"

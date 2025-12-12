@@ -1,0 +1,82 @@
+{
+  "cultural_significance": "high",
+  
+  "cultural_importance_by_region": [
+    { "label": "Italy", "value": 95 },
+    { "label": "France", "value": 85 },
+    { "label": "Germany", "value": 80 },
+    { "label": "Poland", "value": 90 },
+    { "label": "Scandinavia", "value": 75 }
+  ],
+  
+  "symbolism": [
+    "Autumn abundance",
+    "Forest treasures",
+    "Culinary excellence",
+    "Connection to nature"
+  ],
+  
+  "mythology_folklore": {
+    "Europe": "Associated with forest spirits, good luck",
+    "Slavic": "Gift from the forest gods",
+    "Germanic": "Steinpilz = stone mushroom, symbol of permanence"
+  },
+  
+  "in_literature": [
+    { "title": "The Mushroom Hunters", "author": "Langdon Cook", "year": 2013 },
+    { "title": "Mycelium Running", "author": "Paul Stamets", "year": 2005 }
+  ],
+  
+  "in_art": [
+    { "type": "Painting", "example": "Dutch still life paintings (17th century)" },
+    { "type": "Illustration", "example": "Scientific botanical illustrations" },
+    { "type": "Photography", "example": "Nature photography subjects" }
+  ],
+  
+  "festivals_events": [
+    { "name": "Sagra del Fungo Porcino", "type": "event", "location": "Italy", "month": 9 },
+    { "name": "Pilzwanderung", "type": "event", "location": "Germany", "month": 10 },
+    { "name": "Mushroom Fair Vilnius", "type": "event", "location": "Lithuania", "month": 9 }
+  ],
+  
+  "culinary_traditions": {
+    "Italian": "Central to risotto, pasta, dried seasoning",
+    "French": "Cèpes in haute cuisine",
+    "Polish": "Traditional dried mushroom dishes",
+    "German": "Steinpilz in cream sauces"
+  },
+  
+  "foraging_culture": {
+    "tradition_strength": "Strong in Europe",
+    "knowledge_transmission": "Family tradition, local guides",
+    "social_aspect": "Community activity, friendly competition"
+  },
+  
+  "economic_cultural_impact": {
+    "rural_income": "Significant seasonal income source",
+    "culinary_tourism": "Attracts food tourists",
+    "identity": "Part of regional food identity"
+  },
+  
+  "in_media": [
+    { "type": "Documentary", "title": "The Kingdom of Fungi" },
+    { "type": "Cookbook", "title": "The Mushroom Cookbook" },
+    { "type": "TV Show", "title": "Foraging With..." }
+  ],
+  
+  "names_etymology": {
+    "porcini": "Italian - little pigs (shape of young specimens)",
+    "cep": "French from Gascon, meaning trunk/stump",
+    "steinpilz": "German - stone mushroom (firm texture)",
+    "penny_bun": "English - cap resembles a bread bun"
+  },
+  
+  "cultural_timeline": [
+    { "date": "Ancient Rome", "event": "Boleti consumed by nobility" },
+    { "date": "Medieval", "event": "Preserved and traded across Europe" },
+    { "date": "1782", "event": "Scientific naming establishes identity" },
+    { "date": "20th century", "event": "Becomes global gourmet ingredient" }
+  ],
+  
+  "contemporary_relevance": "Symbol of sustainable foraging and local food movements"
+}

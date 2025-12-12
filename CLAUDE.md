@@ -17,8 +17,7 @@ DATEN (JSON) → detectType() → MORPH → DOM
 | `config/` | YAML-Konfiguration, Schema, 17 Perspektiven |
 | `core/` | Config-Loader, Pipeline, Web Component |
 | `features/` | Isolierte Feature-Module (Header, Grid, Vergleich, Einzelansicht, Infinite Scroll) |
-| `morphs/` | Reine Transformations-Funktionen |
-| `themes/` | Theme-spezifische Compare-Morphs (pilze/) |
+| `morphs/` | Reine Transformations-Funktionen + Compare-Morphs |
 | `styles/` | CSS mit Design-Tokens + Black Glasmorphism |
 | `observer/` | Debug, Rendering, Session Tracking |
 | `util/` | DOM-Helpers, Fetch, Semantic-Utils, Router, Session |
@@ -59,7 +58,7 @@ DATEN (JSON) → detectType() → MORPH → DOM
 | `header` | Suche, Perspektiven, Ansicht-Switch, Auswahl-Badges |
 | `grid` | Karten-Layout, Felder anklickbar |
 | `ansichten` | View-Controller (Karten/Vergleich) |
-| `vergleich` | Perspektiven-Vergleich mit Theme-Compare-Morphs |
+| `vergleich` | Perspektiven-Vergleich mit smartCompare (datengetrieben) |
 | `einzelansicht` | Pilz-Detail-Page `/:slug` |
 | `infinitescroll` | Automatisches Nachladen beim Scrollen |
 

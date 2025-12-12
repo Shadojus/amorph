@@ -284,6 +284,11 @@ svg .radar-shape.pilz-farbe-2,
 .compare-range-row[class*="pilz-farbe-"] .range-name,
 .compare-progress-row[class*="pilz-farbe-"] .progress-name,
 .compare-boolean-row[class*="pilz-farbe-"] .boolean-name,
+/* Alternative class names without 'compare-' prefix */
+.range-row[class*="pilz-farbe-"] .range-name,
+.progress-row[class*="pilz-farbe-"] .progress-name,
+.compare-boolean-wrap[class*="pilz-farbe-"] .boolean-name,
+/* Generic selectors */
 [class*="pilz-farbe-"] .bar-name,
 [class*="pilz-farbe-"] .range-name,
 [class*="pilz-farbe-"] .progress-name,
@@ -301,6 +306,10 @@ svg .radar-shape.pilz-farbe-2,
 .compare-bar-row[class*="pilz-farbe-"] .bar-fill,
 .compare-range-row[class*="pilz-farbe-"] .range-bar,
 .compare-progress-row[class*="pilz-farbe-"] .progress-bar,
+/* Alternative class names without 'compare-' prefix */
+.range-row[class*="pilz-farbe-"] .range-bar,
+.progress-row[class*="pilz-farbe-"] .progress-bar,
+/* Generic selectors */
 [class*="pilz-farbe-"] .bar-fill,
 [class*="pilz-farbe-"] .range-bar,
 [class*="pilz-farbe-"] .progress-bar,
@@ -322,6 +331,17 @@ svg .radar-shape.pilz-farbe-2,
 .legende-dot[class*="pilz-farbe-"],
 .item-dot[class*="pilz-farbe-"] {
   background-color: var(--pilz-line) !important;
+}
+
+/* Timeline Markers - pilz-farbe-X ist auf timeline-point */
+[class*="pilz-farbe-"] .timeline-marker {
+  background-color: var(--pilz-fill) !important;
+  border-color: var(--pilz-line) !important;
+}
+
+/* Stars - filled stars use pilz color */
+[class*="pilz-farbe-"] .star.filled {
+  color: var(--pilz-text) !important;
 }
 
 /* =====================================================

@@ -1,0 +1,80 @@
+# Primitives Morph Index
+# All basic morph configurations
+
+# === MORPH LIST ===
+# All primitives in this directory
+morphs:
+  # Basic types
+  - text
+  - badge
+  - tag
+  - number
+  - boolean
+  - link
+  - image
+  - list
+  - object
+  - range
+  - rating
+  - progress
+  - stats
+  
+  # Charts
+  - bar
+  - pie
+  - radar
+  - timeline
+  
+  # Extended
+  - map
+  - hierarchy
+  - comparison
+  - steps
+  - lifecycle
+  - network
+  - severity
+  - calendar
+  - gauge
+  - citation
+  - currency
+  - dosage
+
+# === DETECTION PRIORITY ===
+# Order matters - first match wins
+detectionOrder:
+  # Specific object patterns first
+  - map          # lat/lng coordinates
+  - citation     # authors/year/title
+  - dosage       # dose/unit
+  - currency     # amount/currency
+  - gauge        # value/min/max with zones
+  - comparison   # before/after
+  - severity     # level/label
+  - stats        # min/max/avg
+  - range        # min/max only
+  - rating       # rating/score
+  - progress     # value/max percentage
+  
+  # Specific array patterns
+  - hierarchy    # level/name
+  - lifecycle    # phase/duration
+  - network      # name/type relationships
+  - steps        # step/label
+  - calendar     # month/active
+  - timeline     # date/event
+  - radar        # axis/value
+  - bar          # label/value
+  - pie          # label/value (proportions)
+  
+  # String patterns
+  - link         # URL patterns
+  - image        # image file patterns
+  - badge        # status keywords
+  - tag          # short strings
+  
+  # Fallbacks
+  - text         # any string
+  - number       # any number
+  - boolean      # true/false
+  - list         # any array
+  - object       # any object

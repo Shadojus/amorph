@@ -1,11 +1,11 @@
 /**
- * COMPOSITES INDEX - Export aller Composite-Morphs
+ * COMPOSITES INDEX - Export of all composite morphs
  * 
- * Composite-Morphs kombinieren mehrere Basis-Morphs zu intelligenten Vergleichen.
- * Sie sind 100% DATENGETRIEBEN und erkennen automatisch die beste Darstellung.
+ * Composite morphs combine multiple base morphs into intelligent comparisons.
+ * They are 100% DATA-DRIVEN and automatically detect the best visualization.
  */
 
-// Typ-Kategorien - Import für lokale Nutzung UND Re-Export
+// Type categories - import for local use AND re-export
 import { 
   TYPE_CATEGORIES, 
   TYPE_TO_CATEGORY,
@@ -13,14 +13,14 @@ import {
   sameCategory
 } from './types.js';
 
-// Analyse-Funktionen
+// Analysis functions
 import {
   analyzeItems,
   findRelatedFields,
   calculateDiff
 } from './analyze.js';
 
-// Render-Helpers
+// Render helpers
 import {
   renderFieldMorph,
   renderMetricsComposite,
@@ -30,24 +30,24 @@ import {
   renderCategoriesComposite
 } from './render.js';
 
-// Composite-Morphs
+// Composite morphs
 import { smartCompare } from './smartCompare.js';
 import { diffCompare } from './diffCompare.js';
 
 // Named Exports
 export {
-  // Typ-Kategorien
+  // Type categories
   TYPE_CATEGORIES,
   TYPE_TO_CATEGORY,
   getCategory,
   sameCategory,
   
-  // Analyse
+  // Analysis
   analyzeItems,
   findRelatedFields,
   calculateDiff,
   
-  // Render-Helpers
+  // Render helpers
   renderFieldMorph,
   renderMetricsComposite,
   renderRangesComposite,
@@ -55,12 +55,12 @@ export {
   renderTimelineComposite,
   renderCategoriesComposite,
   
-  // Composite-Morphs
+  // Composite morphs
   smartCompare,
   diffCompare
 };
 
-// Default Export
+// Default export
 export default {
   TYPE_CATEGORIES,
   TYPE_TO_CATEGORY,

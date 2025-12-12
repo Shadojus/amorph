@@ -1,0 +1,54 @@
+{
+  "perspektive": "temporal",
+  "lebenszyklus": [
+    {
+      "phase": "Keimung",
+      "dauer": "1-2 Monate",
+      "zeitraum": "Frühjahr"
+    },
+    {
+      "phase": "Juvenilphase",
+      "dauer": "20-30 Jahre",
+      "zeitraum": "bis zur Geschlechtsreife"
+    },
+    {
+      "phase": "Geschlechtsreif",
+      "dauer": "ab 20-30 Jahren",
+      "zeitraum": "lebenslang"
+    },
+    {
+      "phase": "Optimales Wachstum",
+      "dauer": "50-200 Jahre",
+      "zeitraum": "Mittelalter"
+    }
+  ],
+  "phaenologie": {
+    "austrieb": {
+      "beginn": "April",
+      "ende": "Mai"
+    },
+    "bluete": {
+      "beginn": "April",
+      "ende": "Mai"
+    },
+    "fruchtreife": {
+      "beginn": "September",
+      "ende": "November"
+    },
+    "laubfall": {
+      "beginn": "Oktober",
+      "ende": "November",
+      "besonderheit": "Oft sehr plötzlich innerhalb weniger Tage"
+    }
+  },
+  "lebenserwartung_jahre": {
+    "min": 100,
+    "max": 3000
+  },
+  "aelteste_exemplare_jahre": 3500,
+  "wachstumsrate_cm_jahr": {
+    "jung": 50,
+    "mittel": 25,
+    "alt": 5
+  }
+}

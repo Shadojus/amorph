@@ -1,0 +1,10 @@
+/* FEATURES INDEX - Importiert alle Feature-Styles */
+
+@import url('./header/header.css');
+@import url('./suche/suche.css');
+@import url('./perspektiven/perspektiven.css');
+@import url('./ansichten/ansichten.css');
+@import url('./grid/grid.css');
+@import url('./infinitescroll/infinitescroll.css');
+@import url('./einzelansicht/einzelansicht.css');
+@import url('./vergleich/vergleich.css');

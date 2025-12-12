@@ -11,7 +11,7 @@ import { transform } from '../../core/pipeline.js';
 import { getFeldConfig, getSchema } from '../../util/semantic.js';
 
 export default function init(ctx) {
-  debug.features('Einzelansicht Feature Init');
+  debug.features('Detail view feature init');
   
   // Container für Einzelansicht
   const einzelansicht = document.createElement('div');
@@ -30,14 +30,14 @@ export default function init(ctx) {
       einzelansicht.innerHTML = `
         <div class="amorph-error-state">
           <div class="amorph-error-icon">🍄</div>
-          <div class="amorph-error-text">Pilz nicht gefunden</div>
-          <button class="amorph-back-btn" data-action="back">← Zurück zur Übersicht</button>
+          <div class="amorph-error-text">Item not found</div>
+          <button class="amorph-back-btn" data-action="back">← Back to overview</button>
         </div>
       `;
       return;
     }
     
-    debug.features('Einzelansicht rendern', { name: pilz.name, slug: pilz.slug });
+    debug.features('Render detail view', { name: pilz.name, slug: pilz.slug });
     
     // Header mit Zurück-Button
     const header = `

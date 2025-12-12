@@ -1,0 +1,87 @@
+# Morph Configuration Index
+# DATA-DRIVEN: Morphs are detected from data structure!
+
+# === GLOBAL SETTINGS ===
+settings:
+  debug: false
+  fallbackMorph: text
+  
+# === FALLBACK RULES ===
+# When no specific detection matches
+fallback:
+  - type: range
+    morph: range
+  - type: string
+    maxLength: 20
+    morph: tag
+  - type: array
+    morph: list
+  - type: boolean
+    morph: boolean
+
+# === COLOR PALETTES ===
+# Neon colors - clearly distinguishable
+# Each color has: fill (24% for areas), text (85% for labels)
+colors:
+  palette:
+    - name: "Neon Cyan"
+      rgb: [0, 255, 255]
+      fill: "rgba(0, 255, 255, 0.24)"
+      text: "rgba(0, 255, 255, 0.85)"
+    - name: "Neon Magenta"
+      rgb: [255, 0, 255]
+      fill: "rgba(255, 0, 255, 0.24)"
+      text: "rgba(255, 0, 255, 0.85)"
+    - name: "Neon Green"
+      rgb: [0, 255, 128]
+      fill: "rgba(0, 255, 128, 0.24)"
+      text: "rgba(0, 255, 128, 0.85)"
+    - name: "Neon Pink"
+      rgb: [255, 0, 128]
+      fill: "rgba(255, 0, 128, 0.24)"
+      text: "rgba(255, 0, 128, 0.85)"
+    - name: "Neon Yellow"
+      rgb: [255, 255, 0]
+      fill: "rgba(255, 255, 0, 0.24)"
+      text: "rgba(255, 255, 0, 0.85)"
+    - name: "Neon Orange"
+      rgb: [255, 128, 0]
+      fill: "rgba(255, 128, 0, 0.24)"
+      text: "rgba(255, 128, 0, 0.85)"
+    - name: "Neon Blue"
+      rgb: [0, 128, 255]
+      fill: "rgba(0, 128, 255, 0.24)"
+      text: "rgba(0, 128, 255, 0.85)"
+    - name: "Neon Violet"
+      rgb: [128, 0, 255]
+      fill: "rgba(128, 0, 255, 0.24)"
+      text: "rgba(128, 0, 255, 0.85)"
+    - name: "Neon Red"
+      rgb: [255, 50, 50]
+      fill: "rgba(255, 50, 50, 0.24)"
+      text: "rgba(255, 50, 50, 0.85)"
+    - name: "Neon Lime"
+      rgb: [200, 255, 0]
+      fill: "rgba(200, 255, 0, 0.24)"
+      text: "rgba(200, 255, 0, 0.85)"
+    - name: "Neon Turquoise"
+      rgb: [0, 255, 200]
+      fill: "rgba(0, 255, 200, 0.24)"
+      text: "rgba(0, 255, 200, 0.85)"
+    - name: "Neon Coral"
+      rgb: [255, 100, 100]
+      fill: "rgba(255, 100, 100, 0.24)"
+      text: "rgba(255, 100, 100, 0.85)"
+  
+  # Similarity threshold for color comparison (0-255)
+  similarityThreshold: 100
+  
+  # Fallback color when all are filtered
+  default: "rgba(0, 255, 255, 0.15)"
+
+# === MORPH SOURCES ===
+# Directories containing morph configurations
+sources:
+  primitives: primitives/  # Basic morphs (text, badge, number, etc.)
+  # composites: composites/  # Future: composite morphs
+  # compare: compare/        # Future: comparison morphs

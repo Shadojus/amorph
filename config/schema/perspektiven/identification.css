@@ -1,0 +1,7 @@
+/* Perspektive: Identifikation - Sandiges Glass */
+[data-perspektive-identification] {
+  --perspektive-farbe: rgba(175, 180, 185, 0.25);
+  --perspektive-farbe-2: rgba(170, 175, 180, 0.22);
+  --perspektive-farbe-3: rgba(165, 170, 175, 0.20);
+  --perspektive-farbe-4: rgba(160, 165, 170, 0.18);
+}

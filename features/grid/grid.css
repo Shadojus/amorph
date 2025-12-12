@@ -1,0 +1,64 @@
+/* GRID FEATURE STYLES */
+/* Empty, Error und No-Results States */
+
+/* === EMPTY / ERROR / NO-RESULTS STATES === */
+.amorph-empty-state,
+.amorph-error-state,
+.amorph-no-results {
+  text-align: center;
+  padding: var(--space-3xl) var(--space-lg);
+  animation: state-fade-in var(--anim-duration-normal) var(--anim-ease-out);
+}
+
+.amorph-empty-icon,
+.amorph-error-icon,
+.amorph-no-results-icon {
+  font-size: 3.5rem;
+  margin-bottom: var(--space-lg);
+  opacity: 0.5;
+}
+
+.amorph-empty-text,
+.amorph-error-text,
+.amorph-no-results-text {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.amorph-empty-hint,
+.amorph-error-hint,
+.amorph-no-results-hint {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-dim);
+}
+
+/* Error State - rötlicher Schimmer */
+.amorph-error-state {
+  background: linear-gradient(180deg, rgba(255, 50, 50, 0.03) 0%, transparent 100%);
+  border-radius: var(--radius-lg);
+}
+
+.amorph-error-icon {
+  color: var(--color-error);
+  opacity: 0.7;
+}
+
+.amorph-error-text {
+  color: var(--color-error);
+}
+
+/* No Results - subtiler */
+.amorph-no-results {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.01) 0%, transparent 100%);
+}
+
+.amorph-no-results-query {
+  font-weight: 600;
+  color: var(--color-highlight);
+}
+
+@keyframes state-fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

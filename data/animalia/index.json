@@ -1,0 +1,11 @@
+{
+  "sammlung": "animalia",
+  "beschreibung": "Tierreich - Animalia",
+  "typ": "json-perspektiven",
+  "spezies": [
+    {
+      "slug": "monarchfalter",
+      "ordner": "monarchfalter"
+    }
+  ]
+}

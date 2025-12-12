@@ -1,0 +1,52 @@
+{
+  "perspektive": "medicine",
+  "traditionelle_anwendung": [
+    {
+      "region": "China (TCM)",
+      "anwendung": "Asthma, Husten, Blasenbeschwerden",
+      "pflanzenteil": "Samen, Blätter",
+      "seit_jahren": 2000
+    },
+    {
+      "region": "Japan (Kampo)",
+      "anwendung": "Gedächtnis, Durchblutung",
+      "pflanzenteil": "Blätter",
+      "seit_jahren": 1000
+    }
+  ],
+  "moderne_anwendung": [
+    {
+      "indikation": "Demenz / Alzheimer",
+      "evidenz": 50,
+      "empfehlung": "Umstritten, keine eindeutige Wirksamkeit nachgewiesen"
+    },
+    {
+      "indikation": "Periphere Durchblutungsstörungen",
+      "evidenz": 70,
+      "empfehlung": "Moderate Evidenz, von einigen Leitlinien empfohlen"
+    },
+    {
+      "indikation": "Tinnitus",
+      "evidenz": 40,
+      "empfehlung": "Schwache Evidenz"
+    },
+    {
+      "indikation": "Schwindel",
+      "evidenz": 60,
+      "empfehlung": "Moderate Evidenz"
+    }
+  ],
+  "zugelassene_praeparate": [
+    {
+      "name": "EGb 761",
+      "hersteller": "Schwabe",
+      "standardisierung": "24% Flavonoide, 6% Terpenlaktone"
+    }
+  ],
+  "kontraindikationen": [
+    "Blutungsneigung",
+    "Vor Operationen",
+    "Schwangerschaft",
+    "Epilepsie"
+  ]
+}

@@ -4,7 +4,7 @@ import { semanticScore as schemaSemanticScore, getSuchfelder } from './semantic.
 export function createDataSource(config) {
   const { typ, url, headers = {}, sammlung, indexUrl, baseUrl } = config.quelle;
   
-  debug.daten('DataSource erstellen', { typ, url, indexUrl, baseUrl });
+  debug.data('Creating DataSource', { type: typ, url, indexUrl, baseUrl });
   
   switch (typ) {
     case 'pocketbase':
@@ -15,9 +15,11 @@ export function createDataSource(config) {
       return new JsonSource(url);
     case 'json-multi':
       return new JsonMultiSource(indexUrl, baseUrl);
+    case 'json-perspektiven':
+      return new JsonPerspektivenSource(indexUrl, baseUrl);
     default:
-      debug.fehler(`Unbekannter Datenquellen-Typ: ${typ}`);
-      throw new Error(`Unbekannter Datenquellen-Typ: ${typ}`);
+      debug.error(`Unknown data source type: ${typ}`);
+      throw new Error(`Unknown data source type: ${typ}`);
   }
 }
 
@@ -114,14 +116,14 @@ class JsonSource {
   
   async ensureData() {
     if (!this.data) {
-      debug.daten('Lade JSON-Daten...', { url: this.url });
+      debug.data('Loading JSON data...', { url: this.url });
       const response = await fetch(this.url);
       if (!response.ok) {
-        throw new Error(`Daten konnten nicht geladen werden: ${response.status}`);
+        throw new Error(`Data could not be loaded: ${response.status}`);
       }
       this.data = await response.json();
-      debug.daten('JSON geladen', { 
-        anzahl: Array.isArray(this.data) ? this.data.length : (this.data.items?.length || 0) 
+      debug.data('JSON loaded', { 
+        count: Array.isArray(this.data) ? this.data.length : (this.data.items?.length || 0) 
       });
     }
     return Array.isArray(this.data) ? this.data : this.data.items || [];
@@ -133,7 +135,7 @@ class JsonSource {
     
     if (search && search.trim()) {
       const query = search.toLowerCase().trim();
-      debug.suche('JsonSource Query', { query, totalItems: items.length, offset, limit });
+      debug.search('JsonSource Query', { query, totalItems: items.length, offset, limit });
       
       // Intelligente Suche: Jedes Item bewerten und Match-Terme sammeln
       const scored = items.map(item => {
@@ -162,8 +164,8 @@ class JsonSource {
       this.totalCount = this.lastFilteredData.length;
       items = this.lastFilteredData;
       
-      debug.suche('Suche komplett', { 
-        treffer: items.length, 
+      debug.search('Search complete', { 
+        hits: items.length, 
         matchedTerms: [...this.lastMatchedTerms].slice(0, 10)
       });
     } else {
@@ -173,7 +175,7 @@ class JsonSource {
     
     // Pagination: offset und limit anwenden
     const paginatedItems = items.slice(offset, offset + limit);
-    debug.daten('Pagination', { offset, limit, returned: paginatedItems.length, total: this.totalCount });
+    debug.data('Pagination', { offset, limit, returned: paginatedItems.length, total: this.totalCount });
     
     return paginatedItems;
   }
@@ -188,7 +190,7 @@ class JsonSource {
     const items = this.lastFilteredData.slice(offset, offset + limit);
     const hasMore = offset + limit < this.totalCount;
     
-    debug.daten('Load More', { offset, limit, returned: items.length, hasMore, total: this.totalCount });
+    debug.data('Load more', { offset, limit, returned: items.length, hasMore, total: this.totalCount });
     
     return { items, hasMore };
   }
@@ -219,9 +221,9 @@ class JsonSource {
  * JSON Multi Source - Lädt Items aus einzelnen JSON-Dateien
  * 
  * Struktur:
- * - data/pilze/index.json → Liste aller Dateien
- * - data/pilze/steinpilz.json → Einzelner Pilz
- * - data/pilze/pfifferling.json → Einzelner Pilz
+ * - data/fungi/index.json → Liste aller Dateien
+ * - data/fungi/steinpilz.json → Einzelner Pilz
+ * - data/fungi/pfifferling.json → Einzelner Pilz
  * - ...
  * 
  * Vorteile:
@@ -242,7 +244,7 @@ class JsonMultiSource {
   
   async ensureData() {
     if (!this.data) {
-      debug.daten('Lade JSON-Multi Index...', { indexUrl: this.indexUrl });
+      debug.data('Loading JSON-Multi index...', { indexUrl: this.indexUrl });
       
       // 1. Index laden
       const indexResponse = await fetch(this.indexUrl);
@@ -252,7 +254,7 @@ class JsonMultiSource {
       const index = await indexResponse.json();
       const dateien = index.dateien || [];
       
-      debug.daten('Index geladen', { anzahlDateien: dateien.length });
+      debug.data('Index loaded', { fileCount: dateien.length });
       
       // 2. Alle Dateien parallel laden
       const loadPromises = dateien.map(async (datei) => {
@@ -260,7 +262,7 @@ class JsonMultiSource {
         try {
           const response = await fetch(url);
           if (!response.ok) {
-            debug.warn(`Datei nicht gefunden: ${url}`);
+            debug.warn(`File not found: ${url}`);
             return null;
           }
           return response.json();
@@ -273,8 +275,8 @@ class JsonMultiSource {
       const results = await Promise.all(loadPromises);
       this.data = results.filter(item => item !== null);
       
-      debug.daten('Alle Dateien geladen', { 
-        anzahl: this.data.length,
+      debug.data('All files loaded', { 
+        count: this.data.length,
         items: this.data.map(i => i.name || i.slug || i.id).join(', ')
       });
     }
@@ -287,7 +289,7 @@ class JsonMultiSource {
     
     if (search && search.trim()) {
       const query = search.toLowerCase().trim();
-      debug.suche('JsonMultiSource Query', { query, totalItems: items.length, offset, limit });
+      debug.search('JsonMultiSource Query', { query, totalItems: items.length, offset, limit });
       
       // Intelligente Suche mit Scoring
       const scored = items.map(item => {
@@ -353,6 +355,227 @@ class JsonMultiSource {
   async getById(id) {
     const items = await this.ensureData();
     return items.find(item => item.id === id);
+  }
+  
+  getMatchedTerms() {
+    return this.lastMatchedTerms;
+  }
+}
+
+/**
+ * JSON Perspektiven Source - Lädt Spezies mit modularen Perspektiven-Dateien
+ * 
+ * Struktur:
+ * - data/animalia/index.json → Liste aller Spezies
+ * - data/animalia/monarchfalter/index.json → Basis-Info + Liste der Perspektiven
+ * - data/animalia/monarchfalter/identification.json → Perspektive: Identification
+ * - data/animalia/monarchfalter/ecology.json → Perspektive: Ecology
+ * - ...
+ * 
+ * Vorteile:
+ * - Jede Perspektive kann unabhängig bearbeitet werden
+ * - Nur benötigte Perspektiven werden geladen (Lazy Loading)
+ * - Skaliert gut für viele Spezies und Perspektiven
+ */
+class JsonPerspektivenSource {
+  constructor(indexUrl, baseUrl) {
+    this.indexUrl = indexUrl;
+    this.baseUrl = baseUrl.endsWith('/') ? baseUrl : baseUrl + '/';
+    this.data = null;
+    this.lastMatchedTerms = new Set();
+    this.lastFilteredData = [];
+    this.totalCount = 0;
+    this.loadedPerspektiven = new Map(); // Cache für geladene Perspektiven
+  }
+  
+  async ensureData() {
+    if (!this.data) {
+      debug.data('Loading JSON-Perspektiven index...', { indexUrl: this.indexUrl });
+      
+      // 1. Sammlungs-Index laden
+      const indexResponse = await fetch(this.indexUrl);
+      if (!indexResponse.ok) {
+        throw new Error(`Index could not be loaded: ${indexResponse.status}`);
+      }
+      const index = await indexResponse.json();
+      // Support both German and English field names
+      const speziesListe = index.spezies || index.species || [];
+      
+      debug.data('Collection index loaded', { speciesCount: speziesListe.length });
+      
+      // 2. Alle Spezies-Index-Dateien parallel laden
+      const loadPromises = speziesListe.map(async (speziesInfo) => {
+        // Support both German 'ordner' and English 'folder'
+        const ordner = typeof speziesInfo === 'string' ? speziesInfo : (speziesInfo.ordner || speziesInfo.folder);
+        const url = `${this.baseUrl}${ordner}/index.json`;
+        
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            debug.warn(`Species index not found: ${url}`);
+            return null;
+          }
+          const speziesData = await response.json();
+          speziesData._ordner = ordner; // For later loading of perspectives
+          speziesData._baseUrl = `${this.baseUrl}${ordner}/`;
+          return speziesData;
+        } catch (e) {
+          debug.warn(`Error loading ${url}:`, e);
+          return null;
+        }
+      });
+      
+      const results = await Promise.all(loadPromises);
+      this.data = results.filter(item => item !== null);
+      
+      debug.data('All species indices loaded', { 
+        count: this.data.length,
+        items: this.data.map(i => i.name || i.slug).join(', ')
+      });
+    }
+    return this.data;
+  }
+  
+  /**
+   * Lädt alle Perspektiven für eine Spezies und merged sie ins Hauptobjekt
+   */
+  async loadAllPerspektiven(spezies) {
+    // Support both German 'perspektiven' and English 'perspectives'
+    const perspektivenListe = spezies.perspektiven || spezies.perspectives;
+    
+    debug.data('loadAllPerspektiven check', { 
+      name: spezies.name,
+      hasOrdner: !!spezies._ordner, 
+      ordner: spezies._ordner,
+      hasPerspektiven: !!perspektivenListe,
+      perspektivenCount: perspektivenListe?.length
+    });
+    
+    if (!spezies._ordner || !perspektivenListe) {
+      debug.warn('Skipping perspectives load', { reason: !spezies._ordner ? 'no _ordner' : 'no perspectives list' });
+      return spezies;
+    }
+    
+    const cacheKey = spezies.slug || spezies.id;
+    if (this.loadedPerspektiven.has(cacheKey)) {
+      return this.loadedPerspektiven.get(cacheKey);
+    }
+    
+    debug.data('Loading perspectives for', { name: spezies.name, count: perspektivenListe.length });
+    
+    // Alle Perspektiven-Dateien parallel laden
+    const loadPromises = perspektivenListe.map(async (perspektive) => {
+      const url = `${spezies._baseUrl}${perspektive}.json`;
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          debug.warn(`Perspective not found: ${url}`);
+          return null;
+        }
+        return { perspektive, data: await response.json() };
+      } catch (e) {
+        debug.warn(`Error loading ${url}:`, e);
+        return null;
+      }
+    });
+    
+    const perspektivenResults = await Promise.all(loadPromises);
+    
+    // Merge all perspective data into main object
+    const merged = { ...spezies };
+    for (const result of perspektivenResults) {
+      if (result && result.data) {
+        // Remove perspective marker, merge rest
+        const { perspektive: marker, ...daten } = result.data;
+        Object.assign(merged, daten);
+        merged[`_perspektive_${result.perspektive}`] = true; // Marker that this perspective is loaded
+      }
+    }
+    
+    // Cache
+    this.loadedPerspektiven.set(cacheKey, merged);
+    
+    debug.data('Perspectives merged', { 
+      name: spezies.name, 
+      keys: Object.keys(merged).length 
+    });
+    
+    return merged;
+  }
+  
+  async query({ search, limit = 50, offset = 0 } = {}) {
+    let items = await this.ensureData();
+    this.lastMatchedTerms = new Set();
+    
+    // Load all perspectives for all items (for complete search)
+    const fullItems = await Promise.all(items.map(item => this.loadAllPerspektiven(item)));
+    items = fullItems;
+    
+    if (search && search.trim()) {
+      const query = search.toLowerCase().trim();
+      debug.search('JsonPerspektivenSource Query', { query, totalItems: items.length, offset, limit });
+      
+      const scored = items.map(item => {
+        const result = scoreItemWithMatches(item, query);
+        return { item, score: result.score, matches: result.matches };
+      });
+      
+      const filtered = scored.filter(s => s.score > 0);
+      
+      for (const s of filtered) {
+        for (const match of s.matches) {
+          this.lastMatchedTerms.add(match);
+        }
+      }
+      
+      this.lastFilteredData = filtered
+        .sort((a, b) => b.score - a.score)
+        .map(s => s.item);
+      
+      this.totalCount = this.lastFilteredData.length;
+      items = this.lastFilteredData;
+      
+      debug.search('Search complete', { 
+        hits: items.length, 
+        matchedTerms: [...this.lastMatchedTerms].slice(0, 10)
+      });
+    } else {
+      this.lastFilteredData = items;
+      this.totalCount = items.length;
+    }
+    
+    const paginatedItems = items.slice(offset, offset + limit);
+    debug.data('Pagination', { offset, limit, returned: paginatedItems.length, total: this.totalCount });
+    
+    return paginatedItems;
+  }
+  
+  async loadMore(offset, limit = 20) {
+    const items = this.lastFilteredData.slice(offset, offset + limit);
+    const hasMore = offset + limit < this.totalCount;
+    return { items, hasMore };
+  }
+  
+  getTotalCount() {
+    return this.totalCount;
+  }
+  
+  async getBySlug(slug) {
+    const items = await this.ensureData();
+    const item = items.find(item => item.slug === slug);
+    if (item) {
+      return this.loadAllPerspektiven(item);
+    }
+    return null;
+  }
+  
+  async getById(id) {
+    const items = await this.ensureData();
+    const item = items.find(item => item.id === id);
+    if (item) {
+      return this.loadAllPerspektiven(item);
+    }
+    return null;
   }
   
   getMatchedTerms() {
@@ -548,7 +771,7 @@ export function highlightInContainer(container, query, matchedTerms = new Set(),
     // Rating
     '.rating-name', '.rating-wert',
     // Tag/Chips
-    '.chip-wert', '.chip-pilze span',
+    '.chip-wert', '.chip-fungi span',
     // List
     '.list-wert', '.compare-list-item',
     // Radar (nur HTML-Teile, nicht SVG)

@@ -8,7 +8,7 @@
  */
 
 import { debug } from '../../observer/debug.js';
-import { header as headerMorph } from '../../morphs/header.js';
+import { header as headerMorph } from '../../config/header.js';
 import { getPerspektivenKeywords, getPerspektivenListe } from '../../util/semantic.js';
 import { getState as getAnsichtState } from '../ansichten/index.js';
 
@@ -27,7 +27,7 @@ export default function init(ctx) {
   const perspektivenConfig = ctx.config.perspektiven || {};
   if (!perspektivenConfig.liste || perspektivenConfig.liste.length === 0) {
     perspektivenConfig.liste = schemaListe;
-    debug.features('Perspektiven aus Schema geladen', { anzahl: schemaListe.length });
+    debug.features('Perspectives loaded from schema', { count: schemaListe.length });
   }
   
   const headerConfig = {
@@ -39,7 +39,7 @@ export default function init(ctx) {
       ...(ctx.config.ansicht || {}),
       // Callback für Ansicht-Wechsel (Morph → Feature → Event-Bus)
       onAnsichtWechsel: (ansichtId) => {
-        debug.header('Ansicht-Wechsel Callback', { ansicht: ansichtId });
+        debug.header('View switch callback', { view: ansichtId });
         // Global emittieren für andere Features (detail, vergleich, grid, ansichten)
         document.dispatchEvent(new CustomEvent('amorph:ansicht-wechsel', {
           detail: { ansicht: ansichtId }
@@ -76,6 +76,28 @@ export default function init(ctx) {
     });
   }
   
+  // Event-Handler: Einzelnen Pilz aus Auswahl entfernen
+  document.addEventListener('amorph:remove-from-selection', async (e) => {
+    const { id } = e.detail || {};
+    if (!id) return;
+    
+    const { toggleAuswahl } = await import('../ansichten/index.js');
+    // toggleAuswahl entfernt alle Felder eines Pilzes wenn er bereits ausgewählt ist
+    const pilzDaten = await getPilzDatenById(id);
+    toggleAuswahl(id, pilzDaten);
+    
+    debug.header('Pilz removed from selection', { id });
+  });
+  
+  // Helper: Pilz-Daten aus Cache oder State holen
+  async function getPilzDatenById(id) {
+    // Versuche aus Auswahl zu holen
+    const { getAuswahlNachPilz } = await import('../ansichten/index.js');
+    const nachPilz = getAuswahlNachPilz();
+    const pilzData = nachPilz.get(String(id));
+    return pilzData?.pilzDaten || { id, name: id };
+  }
+  
   // Auswahl-Updates für die Auswahl-Zeile
   document.addEventListener('amorph:auswahl-geaendert', async (e) => {
     const { pilzIds, anzahl } = e.detail || {};
@@ -86,10 +108,10 @@ export default function init(ctx) {
       const nachPilz = getAuswahlNachPilz();
       
       // Array für Header aufbauen
-      const pilze = [];
+      const fungi = [];
       let farbIndex = 0;
       for (const [pilzId, data] of nachPilz) {
-        pilze.push({
+        fungi.push({
           id: pilzId,
           name: data.pilzDaten?.name || pilzId,
           slug: data.pilzDaten?.slug || pilzId,
@@ -98,7 +120,7 @@ export default function init(ctx) {
         farbIndex++;
       }
       
-      headerEl.updateAuswahlListe(pilze);
+      headerEl.updateAuswahlListe(fungi);
     } else if (headerEl.updateAuswahlListe) {
       headerEl.updateAuswahlListe([]);
     }
@@ -125,15 +147,15 @@ export default function init(ctx) {
     const aktiveAnsicht = getAnsichtState().aktiveAnsicht;
     const imVergleichsView = aktiveAnsicht === 'vergleich';
     
-    debug.header('Ansicht-Check', {
+    debug.header('View check', {
       query,
-      aktiveAnsicht,
-      imVergleichsView
+      activeView: aktiveAnsicht,
+      inCompareView: imVergleichsView
     });
     
     // Im Vergleich-View: NUR Highlights anwenden, KEINE DB-Suche
     if (imVergleichsView) {
-      debug.header('Vergleich-View: Nur Highlights, keine DB-Suche');
+      debug.header('Compare view: Highlights only, no DB search');
       // Event emittieren für Vergleich-View Highlights
       ctx.emit('suche:ergebnisse', { query, ergebnisse: [], matchedTerms: new Set(), nurHighlights: true });
       return;
@@ -146,7 +168,7 @@ export default function init(ctx) {
       const ergebnisse = await ctx.search(query);
       letzteSuchergebnisse = ergebnisse || [];
       
-      debug.suche('Ergebnisse', { anzahl: letzteSuchergebnisse.length });
+      debug.search('Results', { count: letzteSuchergebnisse.length });
       
       // Auto-Perspektiven aktivieren basierend auf Query und Ergebnissen
       if (letzteSuchergebnisse.length > 0 && query) {
@@ -177,7 +199,7 @@ export default function init(ctx) {
       ctx.emit('suche:ergebnisse', { query, ergebnisse: letzteSuchergebnisse, matchedTerms });
       
     } catch (e) {
-      debug.fehler('Suchfehler', e);
+      debug.error('Search error', e);
     } finally {
       sucheForm?.classList.remove('ladend');
     }
@@ -208,7 +230,7 @@ export default function init(ctx) {
     // Auto-Suche Event (von URL oder Initial)
     document.addEventListener('amorph:auto-search', (e) => {
       const query = e.detail?.query ?? '';
-      debug.header('Auto-Suche Event empfangen', { query });
+      debug.header('Auto search event received', { query });
       if (input) {
         input.value = query;
         suchen();
@@ -240,13 +262,13 @@ export default function init(ctx) {
     }, { threshold: 0 });
     
     observer.observe(sentinel);
-    debug.header('Scroll-Detection via IntersectionObserver eingerichtet');
+    debug.header('Scroll detection via IntersectionObserver set up');
   }
   setupScrollDetection();
   
   // === PERSPEKTIVEN LOGIK ===
   function togglePerspektive(id, btn) {
-    debug.perspektiven('Toggle', { id, warAktiv: aktivePerspektiven.has(id) });
+    debug.perspectives('Toggle', { id, wasActive: aktivePerspektiven.has(id) });
     
     if (aktivePerspektiven.has(id)) {
       aktivePerspektiven.delete(id);
@@ -305,7 +327,7 @@ export default function init(ctx) {
       aktiveBadgesContainer.appendChild(badge);
     }
     
-    debug.perspektiven('Badges aktualisiert', { anzahl: aktivePerspektiven.size });
+    debug.perspectives('Badges updated', { count: aktivePerspektiven.size });
   }
 
   function anwendenPerspektiven() {
@@ -329,7 +351,7 @@ export default function init(ctx) {
       for (const p of liste) {
         appContainer.removeAttribute(`data-perspektive-${p.id}`);
       }
-      debug.perspektiven('Keine aktiv - alle Felder sichtbar');
+      debug.perspectives('None active - all fields visible');
     } else {
       // Perspektiven aktiv → relevante Felder markieren
       appContainer.classList.add('perspektiven-aktiv');
@@ -364,8 +386,8 @@ export default function init(ctx) {
         }
       }
       
-      // Felder markieren mit allen zugehörigen Farben
-      debug.perspektiven('Felder zu markieren', { anzahl: feldZuFarben.size, felder: Array.from(feldZuFarben.keys()) });
+      // Mark fields with all associated colors
+      debug.perspectives('Fields to mark', { count: feldZuFarben.size, fields: Array.from(feldZuFarben.keys()) });
       
       let gefunden = 0;
       let nichtGefunden = [];
@@ -423,15 +445,15 @@ export default function init(ctx) {
         }
       }
       
-      debug.perspektiven('Aktiv', { 
-        perspektiven: Array.from(aktivePerspektiven),
-        felder: [...feldZuFarben.keys()]
+      debug.perspectives('Active', { 
+        perspectives: Array.from(aktivePerspektiven),
+        fields: [...feldZuFarben.keys()]
       });
     }
     
     // Event emittieren - sowohl ctx-intern als auch document-weit
     const eventData = { aktiv: Array.from(aktivePerspektiven) };
-    debug.header('Perspektiven-Event wird gesendet', eventData);
+    debug.header('Sending perspectives event', eventData);
     ctx.emit('perspektiven:geaendert', eventData);
     document.dispatchEvent(new CustomEvent('perspektiven:geaendert', { 
       detail: eventData
@@ -519,7 +541,7 @@ export default function init(ctx) {
       }
     }
     
-    debug.perspektiven('Treffer-Markierung', { 
+    debug.perspectives('Hit marking', { 
       buttons: [...(perspektivenBtns || [])].filter(b => b.classList.contains('hat-treffer')).map(b => b.dataset.perspektive)
     });
   }
@@ -571,7 +593,7 @@ export default function init(ctx) {
       }
     }
     
-    debug.perspektiven('Auto-Erkennung', Object.fromEntries(gefunden));
+    debug.perspectives('Auto detection', Object.fromEntries(gefunden));
     
     // Nur aktivieren wenn es deutliche Unterschiede gibt
     if (gefunden.size > 0) {
@@ -605,7 +627,7 @@ export default function init(ctx) {
         // Badges in Suchleiste aktualisieren
         aktualisiereAktiveBadges();
         
-        debug.perspektiven('Auto-aktiviert', beste);
+        debug.perspectives('Auto activated', beste);
       }
     } else {
       // Keine passende Perspektive gefunden → alle deaktivieren
@@ -617,7 +639,7 @@ export default function init(ctx) {
       aktivePerspektiven.clear();
       aktualisiereAktiveBadges();
       anwendenPerspektiven();
-      debug.perspektiven('Keine passende Perspektive gefunden');
+      debug.perspectives('No matching perspective found');
     }
   }
   
@@ -635,5 +657,5 @@ export default function init(ctx) {
   // Header direkt in body einfügen (für position: fixed über volle Breite)
   // Nicht in #app Container, sonst wird er durch max-width begrenzt
   document.body.insertAdjacentElement('afterbegin', ctx.dom);
-  debug.mount('Header in body eingefügt');
+  debug.mount('Header inserted into body');
 }

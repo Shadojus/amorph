@@ -1,111 +1,117 @@
 /**
- * Transformationspipeline
- * DATEN → MORPHS → DOM
+ * Transformation Pipeline
+ * DATA → MORPHS → DOM
  * 
- * DATENGETRIEBEN: Morphs werden aus der Datenstruktur erkannt!
- * Erkennungsregeln kommen aus config/morphs.yaml
+ * DATA-DRIVEN: Morphs are detected from data structure!
+ * Detection rules come from config/morphs.yaml
  */
 
 import { morphs } from '../morphs/index.js';
 import { debug } from '../observer/debug.js';
 import { getFeldMorphs, getVersteckteFelder, getFeldConfig, sortBySchemaOrder } from '../util/semantic.js';
 
-// Erkennung-Config wird beim ersten Aufruf geladen
-let erkennungConfig = null;
+// Detection config loaded on first call
+let detectionConfig = null;
 
 /**
- * Setzt die Erkennungs-Konfiguration (aus morphs.yaml)
+ * Sets the detection configuration (from morphs.yaml)
  */
 export function setErkennungConfig(config) {
-  erkennungConfig = config?.erkennung || null;
-  debug.morphs('Erkennungs-Config geladen', { 
-    hatBadge: !!erkennungConfig?.badge,
-    hatRating: !!erkennungConfig?.rating,
-    hatProgress: !!erkennungConfig?.progress
+  detectionConfig = config?.erkennung || null;
+  debug.detection('Detection config loaded', { 
+    hasBadge: !!detectionConfig?.badge,
+    hasRating: !!detectionConfig?.rating,
+    hasProgress: !!detectionConfig?.progress,
+    objectRules: Object.keys(detectionConfig?.objekt || {}).length,
+    arrayRules: Object.keys(detectionConfig?.array || {}).length
   });
 }
 
 export function transform(daten, config, customMorphs = {}) {
-  debug.morphs('Transform Start', { 
-    typ: Array.isArray(daten) ? 'array' : typeof daten,
-    anzahl: Array.isArray(daten) ? daten.length : 1
+  debug.render('Transform start', { 
+    type: Array.isArray(daten) ? 'array' : typeof daten,
+    count: Array.isArray(daten) ? daten.length : 1
   });
   
-  // Erkennungs-Config aus morphs.yaml laden falls vorhanden
-  if (!erkennungConfig && config?.morphs?.erkennung) {
+  // Load detection config from morphs.yaml if available
+  if (!detectionConfig && config?.morphs?.erkennung) {
     setErkennungConfig(config.morphs);
   }
   
-  const alleMorphs = { ...morphs, ...customMorphs };
+  const allMorphs = { ...morphs, ...customMorphs };
   
-  // Feld-Morphs aus Schema laden (als Fallback/Override)
-  const schemaFeldMorphs = getFeldMorphs();
-  const versteckteFelder = getVersteckteFelder();
+  // Load field morphs from schema (as fallback/override)
+  const schemaFieldMorphs = getFeldMorphs();
+  const hiddenFields = getVersteckteFelder();
   
-  function morphen(wert, feldname = null) {
-    // Versteckte Felder überspringen
-    if (feldname && versteckteFelder.includes(feldname)) {
+  function morphField(value, fieldName = null) {
+    // Skip hidden fields
+    if (fieldName && hiddenFields.includes(fieldName)) {
       return null;
     }
     
-    // Leere Werte überspringen (null, undefined, leere Strings, leere Arrays)
-    if (wert === null || wert === undefined) return null;
-    if (wert === '') return null;
-    if (Array.isArray(wert) && wert.length === 0) return null;
-    if (typeof wert === 'object' && !Array.isArray(wert) && Object.keys(wert).length === 0) return null;
+    // Skip empty values (null, undefined, empty strings, empty arrays)
+    if (value === null || value === undefined) return null;
+    if (value === '') return null;
+    if (Array.isArray(value) && value.length === 0) return null;
+    if (typeof value === 'object' && !Array.isArray(value) && Object.keys(value).length === 0) return null;
     
-    const typ = detectType(wert);
-    const morphName = findMorph(typ, wert, feldname, config.morphs, schemaFeldMorphs);
-    let morph = alleMorphs[morphName];
+    const type = detectType(value);
+    const morphName = findMorph(type, value, fieldName, config.morphs, schemaFieldMorphs);
+    
+    // Debug: Log type detection
+    debug.detection('Type detection', { fieldName, type, morphName, valueType: typeof value, isArray: Array.isArray(value) });
+    
+    let morph = allMorphs[morphName];
     let actualMorphName = morphName;
     
-    // Debug: medicine-Felder tracken (warn statt morphs weil morphs gemutet ist)
-    const medicineFelder = ['medicineisch', 'traditionelle_medicine', 'therapeutische_kategorien', 'wirkungsprofil', 'wirkstoffe', 'safety_score', 'nebenwirkungen', 'dosierung'];
-    if (feldname && medicineFelder.includes(feldname)) {
-      debug.warn('medicine-Feld gefunden', { feldname, typ, morphName, wertTyp: typeof wert, istArray: Array.isArray(wert) });
+    // Debug: track medicine fields
+    const medicineFields = ['medicineisch', 'traditionelle_medicine', 'therapeutische_kategorien', 'wirkungsprofil', 'wirkstoffe', 'safety_score', 'nebenwirkungen', 'dosierung'];
+    if (fieldName && medicineFields.includes(fieldName)) {
+      debug.warn('Medicine field found', { fieldName, type, morphName, valueType: typeof value, isArray: Array.isArray(value) });
     }
     
     if (!morph) {
-      debug.warn(`Morph nicht gefunden: ${morphName}, nutze text`);
-      morph = alleMorphs.text;
+      debug.warn(`Morph not found: ${morphName}, using text`);
+      morph = allMorphs.text;
       actualMorphName = 'text';
     }
     
-    // Config zusammenbauen: morphs.yaml + schema.yaml Feld-Config
-    const morphConfig = getMorphConfig(actualMorphName, feldname, config);
-    const element = morph(wert, morphConfig, morphen);
+    // Build config: morphs.yaml + schema.yaml field config
+    const morphConfig = getMorphConfig(actualMorphName, fieldName, config);
+    const element = morph(value, morphConfig, morphField);
     
-    // Morph hat nichts zurückgegeben → Fallback zu leerem span
+    // Morph returned nothing → fallback to empty span
     if (!element) {
-      debug.warn(`Morph ${actualMorphName} hat null/undefined zurückgegeben`, { feldname, wert });
-      // Erstelle leeres Element statt null zurückzugeben
+      debug.warn(`Morph ${actualMorphName} returned null/undefined`, { fieldName, value });
+      // Create empty element instead of returning null
       const fallback = document.createElement('span');
       fallback.className = 'amorph-empty';
-      fallback.textContent = typeof wert === 'object' ? JSON.stringify(wert) : String(wert);
+      fallback.textContent = typeof value === 'object' ? JSON.stringify(value) : String(value);
       
       const container = document.createElement('amorph-container');
       container.setAttribute('data-morph', morphName);
       container.setAttribute('data-fallback', 'true');
-      if (feldname) container.setAttribute('data-field', feldname);
+      if (fieldName) container.setAttribute('data-field', fieldName);
       container.appendChild(fallback);
       return container;
     }
     
     if (!(element instanceof Node)) {
-      debug.warn(`Morph ${actualMorphName} hat keinen Node zurückgegeben`, { feldname, typ: typeof element });
+      debug.warn(`Morph ${actualMorphName} did not return a Node`, { fieldName, type: typeof element });
       return null;
     }
     
-    // In Container wrappen
+    // Wrap in container
     const container = document.createElement('amorph-container');
     container.setAttribute('data-morph', morphName);
-    if (feldname) container.setAttribute('data-field', feldname);
+    if (fieldName) container.setAttribute('data-field', fieldName);
     container.appendChild(element);
     
     return container;
   }
   
-  // Array von Objekten: Jedes Objekt als Einheit
+  // Array of objects: Each object as a unit
   if (Array.isArray(daten)) {
     const fragment = document.createDocumentFragment();
     for (const item of daten) {
@@ -113,41 +119,41 @@ export function transform(daten, config, customMorphs = {}) {
       itemContainer.setAttribute('data-morph', 'item');
       itemContainer.className = 'amorph-item';
       
-      // ID für Auswahl-System
+      // ID for selection system
       const itemId = item.id || item.slug || JSON.stringify(item).slice(0, 50);
       itemContainer.dataset.itemId = itemId;
-      // Daten als JSON für späteren Zugriff (für Detail/Vergleich)
+      // Data as JSON for later access (for detail/compare)
       itemContainer.dataset.itemData = JSON.stringify(item);
       
-      // Keyboard Navigation: Fokussierbar machen
+      // Keyboard navigation: Make focusable
       itemContainer.setAttribute('tabindex', '0');
       
       if (typeof item === 'object' && item !== null) {
-        // Felder in Schema-Reihenfolge rendern
+        // Render fields in schema order
         const sortedEntries = sortBySchemaOrder(item);
         
-        // Debug: Prüfen ob medicine-Felder im Item vorhanden sind
-        const medicineFelder = ['medicineisch', 'traditionelle_medicine', 'therapeutische_kategorien', 'wirkungsprofil', 'wirkstoffe'];
-        const vorhandenemedicine = medicineFelder.filter(f => f in item);
-        if (vorhandenemedicine.length > 0) {
-          debug.warn('Item hat medicine-Felder', { itemName: item.name, felder: vorhandenemedicine, alleKeys: Object.keys(item).length });
+        // Debug: Check if medicine fields exist in item
+        const medicineFields = ['medicineisch', 'traditionelle_medicine', 'therapeutische_kategorien', 'wirkungsprofil', 'wirkstoffe'];
+        const presentMedicineFields = medicineFields.filter(f => f in item);
+        if (presentMedicineFields.length > 0) {
+          debug.warn('Item has medicine fields', { itemName: item.name, fields: presentMedicineFields, totalKeys: Object.keys(item).length });
         }
         
         for (const [key, value] of sortedEntries) {
-          const morphed = morphen(value, key);
+          const morphed = morphField(value, key);
           if (morphed) {
             itemContainer.appendChild(morphed);
           } else {
-            // Debug: Warum wurde das Feld nicht gerendert?
+            // Debug: Why was the field not rendered?
             const isEmptyArray = Array.isArray(value) && value.length === 0;
             const isEmptyObj = typeof value === 'object' && value !== null && !Array.isArray(value) && Object.keys(value).length === 0;
             if (!isEmptyArray && !isEmptyObj && value !== null && value !== undefined && value !== '') {
-              debug.warn('Feld nicht gerendert', { key, valueType: typeof value, isArray: Array.isArray(value), arrayLen: Array.isArray(value) ? value.length : 0 });
+              debug.warn('Field not rendered', { key, valueType: typeof value, isArray: Array.isArray(value), arrayLen: Array.isArray(value) ? value.length : 0 });
             }
           }
         }
       } else {
-        const morphed = morphen(item);
+        const morphed = morphField(item);
         if (morphed) itemContainer.appendChild(morphed);
       }
       
@@ -156,52 +162,52 @@ export function transform(daten, config, customMorphs = {}) {
     return fragment;
   }
   
-  // Einzelnes Objekt
+  // Single object
   if (typeof daten === 'object' && daten !== null) {
     const fragment = document.createDocumentFragment();
     for (const [key, value] of Object.entries(daten)) {
-      const morphed = morphen(value, key);
+      const morphed = morphField(value, key);
       if (morphed) fragment.appendChild(morphed);
     }
     return fragment;
   }
   
-  return morphen(daten);
+  return morphField(daten);
 }
 
-function detectType(wert) {
-  if (wert === null || wert === undefined) return 'null';
-  if (typeof wert === 'boolean') return 'boolean';
-  if (typeof wert === 'number') return detectNumberType(wert);
-  if (typeof wert === 'string') return detectStringType(wert);
+function detectType(value) {
+  if (value === null || value === undefined) return 'null';
+  if (typeof value === 'boolean') return 'boolean';
+  if (typeof value === 'number') return detectNumberType(value);
+  if (typeof value === 'string') return detectStringType(value);
   
-  if (Array.isArray(wert)) {
-    return detectArrayType(wert);
+  if (Array.isArray(value)) {
+    return detectArrayType(value);
   }
   
-  if (typeof wert === 'object') {
-    return detectObjectType(wert);
+  if (typeof value === 'object') {
+    return detectObjectType(value);
   }
   
   return 'unknown';
 }
 
 /**
- * Erkennt den besten Morph für Zahlen
- * Regeln kommen aus config/morphs.yaml → erkennung
+ * Detects the best morph for numbers
+ * Rules come from config/morphs.yaml → detection
  */
-function detectNumberType(wert) {
-  const cfg = erkennungConfig || {};
+function detectNumberType(value) {
+  const cfg = detectionConfig || {};
   
-  // Rating: aus Config oder Fallback 0-10 mit Dezimalstellen
-  const rating = cfg.rating || { min: 0, max: 10, dezimalstellen: true };
-  if (wert >= rating.min && wert <= rating.max && rating.dezimalstellen && !Number.isInteger(wert)) {
+  // Rating: from config or fallback 0-10 with decimals
+  const rating = cfg.rating || { min: 0, max: 10, decimalsRequired: true };
+  if (value >= rating.min && value <= rating.max && rating.decimalsRequired && !Number.isInteger(value)) {
     return 'rating';
   }
   
-  // Progress: aus Config oder Fallback 0-100 Ganzzahl
-  const progress = cfg.progress || { min: 0, max: 100, ganzzahl: true };
-  if (wert >= progress.min && wert <= progress.max && (!progress.ganzzahl || Number.isInteger(wert))) {
+  // Progress: from config or fallback 0-100 integer
+  const progress = cfg.progress || { min: 0, max: 100, integersOnly: true };
+  if (value >= progress.min && value <= progress.max && (!progress.integersOnly || Number.isInteger(value))) {
     return 'progress';
   }
   
@@ -209,22 +215,21 @@ function detectNumberType(wert) {
 }
 
 /**
- * Erkennt den besten Morph für Strings
- * Keywords kommen aus config/morphs.yaml → erkennung.badge
+ * Detects the best morph for strings
+ * Keywords come from config/morphs.yaml → detection.badge
  */
-function detectStringType(wert) {
-  const lower = wert.toLowerCase().trim();
-  const cfg = erkennungConfig?.badge || {};
+function detectStringType(value) {
+  const lower = value.toLowerCase().trim();
+  const cfg = detectionConfig?.badge || {};
   
-  // Badge: Keywords aus Config oder Fallback
+  // Badge: Keywords from config or fallback
   const keywords = cfg.keywords || [
-    'aktiv', 'inaktiv', 'ja', 'nein', 'essbar', 'giftig', 'tödlich',
     'active', 'inactive', 'yes', 'no', 'online', 'offline',
-    'offen', 'geschlossen', 'verfügbar', 'vergriffen'
+    'open', 'closed', 'available', 'unavailable', 'edible', 'toxic', 'deadly'
   ];
-  const maxLaenge = cfg.maxLaenge || 25;
+  const maxLength = cfg.maxLength || 25;
   
-  if (wert.length <= maxLaenge && keywords.some(kw => lower.includes(kw))) {
+  if (value.length <= maxLength && keywords.some(kw => lower.includes(kw))) {
     return 'badge';
   }
   
@@ -232,56 +237,62 @@ function detectStringType(wert) {
 }
 
 /**
- * Erkennt den besten Morph für Arrays
- * Regeln kommen aus config/morphs.yaml → erkennung.array
+ * Detects the best morph for arrays
+ * Rules come from config/morphs.yaml → detection.array
  */
-function detectArrayType(wert) {
-  if (wert.length === 0) return 'array';
+function detectArrayType(value) {
+  if (value.length === 0) return 'array';
   
-  const first = wert[0];
-  const cfg = erkennungConfig?.array || {};
+  const first = value[0];
+  const cfg = detectionConfig?.array || {};
   
-  // Helper: Stellt sicher dass wir ein Array haben
+  // Helper: Ensure we have an array
   const ensureArray = (val, fallback) => {
     if (Array.isArray(val)) return val;
     if (typeof val === 'string') return val.split(',').map(s => s.trim());
     return fallback;
   };
   
-  // Alle Elemente sind Objekte?
+  // All elements are objects?
   if (typeof first === 'object' && first !== null) {
     const keys = Object.keys(first);
     
-    // Radar: aus Config oder Fallback
+    // Lifecycle: Arrays with phase/step structure (check FIRST before other rules!)
+    const lifecycleKeys = ['phase', 'step', 'stage', 'stadium', 'schritt'];
+    if (lifecycleKeys.some(k => k in first)) {
+      return 'lifecycle';
+    }
+    
+    // Radar: from config or fallback
     const radarCfg = cfg.radar || {};
-    const radarKeys = ensureArray(radarCfg.benoetigtKeys, ['axis', 'value', 'score', 'dimension', 'factor']);
-    if (wert.length >= (radarCfg.minItems || 3) && 
+    const radarKeys = ensureArray(radarCfg.requiredKeys, ['axis', 'value', 'score', 'dimension', 'factor']);
+    if (value.length >= (radarCfg.minItems || 3) && 
         radarKeys.some(k => k in first)) {
       return 'radar';
     }
     
-    // Timeline: aus Config oder Fallback
+    // Timeline: from config or fallback
     const timelineCfg = cfg.timeline || {};
-    const timelineKeys = ensureArray(timelineCfg.benoetigtKeys, ['date', 'time', 'datum', 'monat', 'periode']);
+    const timelineKeys = ensureArray(timelineCfg.requiredKeys, ['date', 'time', 'month', 'period']);
     if (timelineKeys.some(k => k in first)) {
       return 'timeline';
     }
     
-    // Pie/Bar: Arrays mit label/value Struktur (aus Config)
+    // Pie/Bar: Arrays with label/value structure (from config)
     const arrayCfg = cfg.array || cfg || {};
     const pieCfg = arrayCfg.pie || {};
     const barCfg = arrayCfg.bar || {};
-    const labelKeys = ensureArray(pieCfg.benoetigtKeys || barCfg.benoetigtKeys, ['label', 'name', 'category']);
+    const labelKeys = ensureArray(pieCfg.requiredKeys || barCfg.requiredKeys, ['label', 'name', 'category']);
     const valueKeys = ensureArray(pieCfg.alternativeKeys || barCfg.alternativeKeys, ['value', 'count', 'amount', 'score']);
     const hasLabel = labelKeys.some(k => k in first);
     const hasValue = valueKeys.some(k => k in first);
     if (hasLabel && hasValue) {
-      return wert.length <= 6 ? 'pie' : 'bar';
+      return value.length <= 6 ? 'pie' : 'bar';
     }
   }
   
-  // Alle Elemente sind Zahlen → Bar Chart
-  if (wert.every(v => typeof v === 'number')) {
+  // All elements are numbers → Bar Chart
+  if (value.every(v => typeof v === 'number')) {
     return 'bar';
   }
   
@@ -289,63 +300,63 @@ function detectArrayType(wert) {
 }
 
 /**
- * Erkennt den besten Morph für Objekte
- * Regeln kommen aus config/morphs.yaml → erkennung.objekt
+ * Detects the best morph for objects
+ * Rules come from config/morphs.yaml → detection.object
  */
-function detectObjectType(wert) {
-  const keys = Object.keys(wert);
-  const cfg = erkennungConfig?.objekt || {};
+function detectObjectType(value) {
+  const keys = Object.keys(value);
+  const cfg = detectionConfig?.objekt || {};
   
-  // Helper: Stellt sicher dass wir ein Array haben (YAML-Parser kann String zurückgeben)
+  // Helper: Ensure we have an array (YAML parser may return string)
   const ensureArray = (val, fallback) => {
     if (Array.isArray(val)) return val;
     if (typeof val === 'string') return val.split(',').map(s => s.trim());
     return fallback;
   };
   
-  // Range: aus Config oder Fallback (min + max)
+  // Range: from config or fallback (min + max)
   const rangeCfg = cfg.range || {};
-  const rangeKeys = ensureArray(rangeCfg.benoetigtKeys, ['min', 'max']);
-  if (rangeKeys.every(k => k in wert)) {
-    // Prüfen ob es Stats ist (hat zusätzlich avg/mean)
+  const rangeKeys = ensureArray(rangeCfg.requiredKeys, ['min', 'max']);
+  if (rangeKeys.every(k => k in value)) {
+    // Check if it's Stats (has additional avg/mean)
     const statsCfg = cfg.stats || {};
-    const statsKeys = ensureArray(statsCfg.benoetigtKeys, ['min', 'max', 'avg', 'mean', 'median']);
-    if (statsKeys.filter(k => k in wert).length >= 3) {
+    const statsKeys = ensureArray(statsCfg.requiredKeys, ['min', 'max', 'avg', 'mean', 'median']);
+    if (statsKeys.filter(k => k in value).length >= 3) {
       return 'stats';
     }
     return 'range';
   }
   
-  // Rating: aus Config oder Fallback (hat rating/score/stars Feld)
+  // Rating: from config or fallback (has rating/score/stars field)
   const ratingCfg = cfg.rating || {};
-  const ratingKeys = ensureArray(ratingCfg.benoetigtKeys, ['rating']);
+  const ratingKeys = ensureArray(ratingCfg.requiredKeys, ['rating']);
   const ratingAltKeys = ensureArray(ratingCfg.alternativeKeys, ['score', 'stars']);
-  if (ratingKeys.some(k => k in wert) || ratingAltKeys.some(k => k in wert)) {
+  if (ratingKeys.some(k => k in value) || ratingAltKeys.some(k => k in value)) {
     return 'rating';
   }
   
-  // Progress: aus Config oder Fallback (value/current + max/total)
+  // Progress: from config or fallback (value/current + max/total)
   const progressCfg = cfg.progress || {};
-  const progressKeys = ensureArray(progressCfg.benoetigtKeys, ['value']);
+  const progressKeys = ensureArray(progressCfg.requiredKeys, ['value']);
   const progressAltKeys = ensureArray(progressCfg.alternativeKeys, ['current', 'max', 'total']);
-  const hasProgressPrimary = progressKeys.some(k => k in wert) || progressAltKeys.filter(k => ['current'].includes(k)).some(k => k in wert);
-  const hasProgressMax = ['max', 'total'].some(k => k in wert);
+  const hasProgressPrimary = progressKeys.some(k => k in value) || progressAltKeys.filter(k => ['current'].includes(k)).some(k => k in value);
+  const hasProgressMax = ['max', 'total'].some(k => k in value);
   if (hasProgressPrimary && hasProgressMax) {
     return 'progress';
   }
   
-  // Badge: aus Config oder Fallback (status/variant Feld)
+  // Badge: from config or fallback (status/variant field)
   const badgeCfg = cfg.badge || {};
-  const badgeKeys = ensureArray(badgeCfg.benoetigtKeys, ['status']);
+  const badgeKeys = ensureArray(badgeCfg.requiredKeys, ['status']);
   const badgeAltKeys = ensureArray(badgeCfg.alternativeKeys, ['variant']);
-  if (badgeKeys.some(k => k in wert) || badgeAltKeys.some(k => k in wert)) {
+  if (badgeKeys.some(k => k in value) || badgeAltKeys.some(k => k in value)) {
     return 'badge';
   }
   
-  // Pie: aus Config oder Fallback (nur numerische Werte)
-  const pieCfg = cfg.pie || { nurNumerisch: true, minKeys: 2, maxKeys: 8 };
-  const allNumeric = keys.every(k => typeof wert[k] === 'number');
-  if (pieCfg.nurNumerisch && allNumeric && 
+  // Pie: from config or fallback (only numeric values)
+  const pieCfg = cfg.pie || { numericOnly: true, minKeys: 2, maxKeys: 8 };
+  const allNumeric = keys.every(k => typeof value[k] === 'number');
+  if (pieCfg.numericOnly && allNumeric && 
       keys.length >= (pieCfg.minKeys || 2) && 
       keys.length <= (pieCfg.maxKeys || 8)) {
     return 'pie';
@@ -354,29 +365,29 @@ function detectObjectType(wert) {
   return 'object';
 }
 
-function findMorph(typ, wert, feldname, morphConfig, schemaFeldMorphs = {}) {
-  // 1. Explizite Feld-Zuweisung aus morphs.yaml
-  if (feldname && morphConfig?.felder?.[feldname]) {
-    return morphConfig.felder[feldname];
+function findMorph(type, value, fieldName, morphConfig, schemaFieldMorphs = {}) {
+  // 1. Explicit field assignment from morphs.yaml
+  if (fieldName && morphConfig?.felder?.[fieldName]) {
+    return morphConfig.felder[fieldName];
   }
   
-  // 2. Feld-Typ aus Schema (Single Source of Truth)
-  if (feldname && schemaFeldMorphs[feldname]) {
-    return schemaFeldMorphs[feldname];
+  // 2. Field type from schema (Single Source of Truth)
+  if (fieldName && schemaFieldMorphs[fieldName]) {
+    return schemaFieldMorphs[fieldName];
   }
   
-  // 3. Regeln prüfen
+  // 3. Check rules
   if (morphConfig?.regeln) {
-    for (const regel of morphConfig.regeln) {
-      if (matchesRegel(regel, typ, wert)) {
-        return regel.morph;
+    for (const rule of morphConfig.regeln) {
+      if (matchesRule(rule, type, value)) {
+        return rule.morph;
       }
     }
   }
   
-  // 4. Standard-Mapping (erweitert mit neuen Morphs)
+  // 4. Default mapping (extended with new morphs)
   const defaults = {
-    // Basis-Typen
+    // Base types
     'string': 'text',
     'number': 'number',
     'boolean': 'boolean',
@@ -385,7 +396,7 @@ function findMorph(typ, wert, feldname, morphConfig, schemaFeldMorphs = {}) {
     'range': 'range',
     'null': 'text',
     
-    // Visuelle Morphs (automatisch erkannt)
+    // Visual morphs (auto-detected)
     'pie': 'pie',
     'bar': 'bar',
     'radar': 'radar',
@@ -393,92 +404,99 @@ function findMorph(typ, wert, feldname, morphConfig, schemaFeldMorphs = {}) {
     'progress': 'progress',
     'stats': 'stats',
     'timeline': 'timeline',
-    'badge': 'badge'
+    'badge': 'badge',
+    'lifecycle': 'lifecycle'
   };
   
-  return defaults[typ] || 'text';
+  return defaults[type] || 'text';
 }
 
-function matchesRegel(regel, typ, wert) {
-  if (regel.typ && regel.typ !== typ) return false;
-  if (regel.hat && typeof wert === 'object') {
-    return regel.hat.every(key => key in wert);
+function matchesRule(rule, type, value) {
+  // Support both 'type' and 'typ' (German from config.js mapping)
+  const ruleType = rule.type || rule.typ;
+  if (ruleType && ruleType !== type) return false;
+  
+  if (rule.has && typeof value === 'object') {
+    return rule.has.every(key => key in value);
   }
-  if (regel.maxLaenge && typeof wert === 'string') {
-    return wert.length <= regel.maxLaenge;
+  
+  // Support both 'maxLength' and 'maxLaenge' (German from config.js mapping)
+  const maxLen = rule.maxLength || rule.maxLaenge;
+  if (maxLen && typeof value === 'string') {
+    return value.length <= maxLen;
   }
   return true;
 }
 
 /**
- * Morph-Config zusammenbauen aus:
- * 1. morphs.yaml config (generisch)
- * 2. schema.yaml feld-config (feld-spezifisch, überschreibt)
+ * Build morph config from:
+ * 1. morphs.yaml config (generic)
+ * 2. schema.yaml field-config (field-specific, overrides)
  */
-function getMorphConfig(morphName, feldname, config) {
-  // Basis-Config aus morphs.yaml
-  const basisConfig = config?.morphs?.config?.[morphName] || {};
+function getMorphConfig(morphName, fieldName, config) {
+  // Base config from morphs.yaml
+  const baseConfig = config?.morphs?.config?.[morphName] || {};
   
-  // Feld-spezifische Config aus Schema
-  const feldConfig = feldname ? getFeldConfig(feldname) : {};
+  // Field-specific config from schema
+  const fieldConfig = fieldName ? getFeldConfig(fieldName) : {};
   
-  // Zusammenführen: Schema überschreibt morphs.yaml
-  const merged = { ...basisConfig };
+  // Merge: Schema overrides morphs.yaml
+  const merged = { ...baseConfig };
   
-  // Farben aus Schema übernehmen (für Tags)
-  if (feldConfig.farben) {
-    merged.farben = { ...basisConfig.farben, ...feldConfig.farben };
+  // Colors from schema (for tags)
+  if (fieldConfig.farben) {
+    merged.farben = { ...baseConfig.farben, ...fieldConfig.farben };
   }
   
-  // Einheit aus Schema übernehmen (für Ranges)
-  if (feldConfig.einheit) {
-    merged.einheit = feldConfig.einheit;
+  // Unit from schema (for ranges)
+  if (fieldConfig.einheit) {
+    merged.einheit = fieldConfig.einheit;
   }
   
-  // Label aus Schema
-  if (feldConfig.label) {
-    merged.label = feldConfig.label;
+  // Label from schema
+  if (fieldConfig.label) {
+    merged.label = fieldConfig.label;
   }
   
   return merged;
 }
 
-export async function render(container, daten, config) {
-  debug.render('Render Start', { 
-    hatDaten: !!daten, 
-    anzahl: Array.isArray(daten) ? daten.length : (daten ? 1 : 0) 
+export async function render(container, data, config) {
+  debug.render('Render start', { 
+    hasData: !!data, 
+    count: Array.isArray(data) ? data.length : (data ? 1 : 0) 
   });
   
-  // Empty State entfernen
+  // Remove empty state
   const emptyState = container.querySelector('.amorph-empty-state');
   if (emptyState) {
     emptyState.remove();
   }
   
-  // Nur den Daten-Bereich leeren, nicht die Features!
-  // Features haben data-feature Attribut, Daten-Items haben data-morph="item"
+  // Only clear the data area, not the features!
+  // Features have data-feature attribute, data items have data-morph="item"
   const dataItems = container.querySelectorAll(':scope > amorph-container[data-morph="item"]');
-  debug.render('Alte Items entfernen', { anzahl: dataItems.length });
+  debug.render('Removing old items', { count: dataItems.length });
   for (const item of dataItems) {
     item.remove();
   }
   
-  // Wenn keine Daten, nichts rendern
-  if (!daten || (Array.isArray(daten) && daten.length === 0)) {
-    debug.render('Keine Daten zum Rendern');
+  // If no data, render nothing
+  if (!data || (Array.isArray(data) && data.length === 0)) {
+    debug.render('No data to render');
     container.dispatchEvent(new CustomEvent('amorph:rendered', {
-      detail: { anzahl: 0, timestamp: Date.now() }
+      detail: { count: 0, timestamp: Date.now() }
     }));
     return;
   }
   
-  const dom = transform(daten, config);
+  const dom = transform(data, config);
   container.appendChild(dom);
   
-  const anzahl = Array.isArray(daten) ? daten.length : 1;
-  debug.render('Render komplett', { anzahl });
+  const count = Array.isArray(data) ? data.length : 1;
+  debug.render('Render complete', { count });
   
   container.dispatchEvent(new CustomEvent('amorph:rendered', {
-    detail: { anzahl, timestamp: Date.now() }
+    detail: { count, timestamp: Date.now() }
   }));
 }

@@ -1,7 +1,0 @@
-/* Perspektive: Interaktionen - Verbindungs-Orange */
-[data-perspektive-interactions] {
-  --perspektive-farbe: rgba(255, 140, 0, 0.65);
-  --perspektive-farbe-2: rgba(255, 165, 0, 0.65);
-  --perspektive-farbe-3: rgba(255, 127, 80, 0.65);
-  --perspektive-farbe-4: rgba(255, 99, 71, 0.65);
-}

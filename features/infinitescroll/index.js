@@ -13,7 +13,7 @@ const DEFAULT_BATCH_SIZE = 12;
 const TRIGGER_THRESHOLD = 200; // Pixel vor Ende
 
 export default function init(ctx) {
-  debug.features('Infinite Scroll Feature Init');
+  debug.features('Infinite scroll feature init');
   
   // State
   let currentOffset = 0;
@@ -31,14 +31,14 @@ export default function init(ctx) {
   loader.className = 'amorph-infinite-loader';
   loader.innerHTML = `
     <div class="loader-spinner"></div>
-    <span class="loader-text">Lade weitere...</span>
+    <span class="loader-text">Loading more...</span>
   `;
   loader.style.display = 'none';
   
   // Container finden
   const container = document.querySelector('[data-amorph-container]');
   if (!container) {
-    debug.fehler('Infinite Scroll: Container nicht gefunden');
+    debug.error('Infinite Scroll: Container not found');
     return;
   }
   
@@ -75,7 +75,7 @@ export default function init(ctx) {
       if (!result || !result.items?.length) {
         hasMore = false;
         loader.style.display = 'none';
-        debug.features('Infinite Scroll: Keine weiteren Items');
+        debug.features('Infinite Scroll: No more items');
         return;
       }
       
@@ -89,8 +89,8 @@ export default function init(ctx) {
       // Vor dem Sentinel einfügen
       sentinel.parentNode.insertBefore(fragment, sentinel);
       
-      debug.features('Infinite Scroll: Items geladen', { 
-        neu: items.length, 
+      debug.features('Infinite Scroll: Items loaded', { 
+        new: items.length, 
         offset: currentOffset, 
         hasMore 
       });
@@ -101,7 +101,7 @@ export default function init(ctx) {
       }));
       
     } catch (error) {
-      debug.fehler('Infinite Scroll Fehler', error);
+      debug.error('Infinite scroll error', error);
     } finally {
       isLoading = false;
       loader.style.display = 'none';
@@ -126,7 +126,7 @@ export default function init(ctx) {
     reset(e.detail?.query);
     hasMore = total > initialBatch;
     
-    debug.features('Infinite Scroll: Nach Suche', { total, hasMore });
+    debug.features('Infinite Scroll: After search', { total, hasMore });
   });
   
   // Bei Ansicht-Wechsel deaktivieren (Vergleich braucht kein Infinite Scroll)

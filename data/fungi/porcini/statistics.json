@@ -1,0 +1,86 @@
+{
+  "average_weight_g": { "min": 50, "max": 500, "avg": 150 },
+  "cap_diameter_cm": { "min": 5, "max": 30, "avg": 12 },
+  "stem_height_cm": { "min": 5, "max": 25, "avg": 12 },
+  
+  "size_distribution": [
+    { "label": "Small (<100g)", "value": 30 },
+    { "label": "Medium (100-250g)", "value": 45 },
+    { "label": "Large (250-500g)", "value": 20 },
+    { "label": "Giant (>500g)", "value": 5 }
+  ],
+  
+  "population_statistics": {
+    "average_per_hectare": 15,
+    "peak_season_per_hectare": 50,
+    "annual_variation_percent": 40
+  },
+  
+  "yield_statistics": {
+    "good_year_kg_per_hectare": 25,
+    "average_year_kg_per_hectare": 10,
+    "poor_year_kg_per_hectare": 2
+  },
+  
+  "annual_production": [
+    { "axis": "2019", "value": 75 },
+    { "axis": "2020", "value": 45 },
+    { "axis": "2021", "value": 90 },
+    { "axis": "2022", "value": 60 },
+    { "axis": "2023", "value": 85 }
+  ],
+  
+  "global_harvest_tonnes": 75000,
+  "european_harvest_tonnes": 45000,
+  
+  "harvest_by_country": [
+    { "label": "Italy", "value": 15000 },
+    { "label": "Poland", "value": 8000 },
+    { "label": "Germany", "value": 5000 },
+    { "label": "France", "value": 4000 },
+    { "label": "Other", "value": 13000 }
+  ],
+  
+  "price_statistics_eur_per_kg": {
+    "fresh_retail": { "min": 20, "max": 80, "avg": 40 },
+    "fresh_wholesale": { "min": 10, "max": 40, "avg": 20 },
+    "dried_retail": { "min": 80, "max": 200, "avg": 120 }
+  },
+  
+  "price_trend": [
+    { "date": "2019-01", "event": "Stable prices" },
+    { "date": "2020-08", "event": "COVID-19 demand spike" },
+    { "date": "2022-06", "event": "Drought reduced supply" },
+    { "date": "2023-09", "event": "Good harvest, prices normalized" }
+  ],
+  
+  "nutritional_stats_per_100g": {
+    "calories": { "min": 22, "max": 30, "avg": 26 },
+    "protein_g": { "min": 2.5, "max": 5.0, "avg": 3.7 },
+    "fiber_g": { "min": 1.5, "max": 3.5, "avg": 2.5 }
+  },
+  
+  "spore_statistics": {
+    "spore_size_um": { "min": 14, "max": 17 },
+    "spore_width_um": { "min": 4.5, "max": 5.5 },
+    "spores_per_fruiting_body": "billions"
+  },
+  
+  "records": {
+    "heaviest_kg": 3.2,
+    "largest_cap_cm": 57,
+    "oldest_mycelium_years": "estimated >100"
+  },
+  
+  "comparison_metrics": [
+    { "axis": "Culinary value", "value": 95 },
+    { "axis": "Economic value", "value": 90 },
+    { "axis": "Ecological importance", "value": 85 },
+    { "axis": "Research interest", "value": 70 },
+    { "axis": "Conservation priority", "value": 65 }
+  ],
+  
+  "data_sources": ["EUROSTAT", "FAO", "National forestry reports"],
+  "data_quality": "moderate",
+  "last_updated": "2024-01"
+}

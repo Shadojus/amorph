@@ -1,13 +1,11 @@
 /* AMORPH v5 - Alle Styles */
 
 @import './base.css';
-@import './morphs.css';
-@import './features.css';
+@import '../morphs/primitives/index.css';
+@import '../features/index.css';
 @import './layouts.css';
-@import './perspektiven.css';
 @import './ansichten.css';
 @import './vektorraum.css';
-@import './compare.css';
-@import './einzelansicht.css';
+@import '../morphs/compare/compare.css';
 @import './pilz-farben.css';
 

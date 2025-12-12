@@ -1,4 +1,0 @@
-# Datenquelle
-quelle:
-  typ: json
-  url: ./data/items.json

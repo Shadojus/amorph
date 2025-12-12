@@ -1,0 +1,76 @@
+{
+  "medicinal_potential": "moderate",
+  "traditional_use": true,
+  "evidence_level": "preliminary",
+  
+  "bioactive_compounds": [
+    { "name": "Beta-glucans", "effect": "Immune modulation", "evidence": "strong" },
+    { "name": "Ergothioneine", "effect": "Antioxidant", "evidence": "moderate" },
+    { "name": "Lectins", "effect": "Anti-tumor (research)", "evidence": "preliminary" }
+  ],
+  
+  "health_benefits": [
+    { "label": "Immune support", "value": 75 },
+    { "label": "Antioxidant", "value": 70 },
+    { "label": "Anti-inflammatory", "value": 55 },
+    { "label": "Cardiovascular", "value": 45 },
+    { "label": "Anti-tumor", "value": 35 }
+  ],
+  
+  "traditional_medicine_uses": {
+    "Europe": "General tonic, wound healing",
+    "China": "Qi strengthening, digestion",
+    "Native_American": "Not traditionally used"
+  },
+  
+  "modern_research_areas": [
+    "Immunomodulation",
+    "Antioxidant properties",
+    "Anti-cancer potential",
+    "Prebiotic effects"
+  ],
+  
+  "clinical_trials": 0,
+  "research_publications": 127,
+  
+  "recommended_dosage": {
+    "dose": 5,
+    "unit": "g",
+    "frequency": "daily",
+    "form": "dried powder",
+    "warning": "Not medical advice - consult healthcare provider"
+  },
+  
+  "supplement_forms": ["Dried whole", "Powder", "Extract"],
+  "supplement_availability": "limited",
+  
+  "contraindications_medical": [
+    "Blood thinners (theoretical)",
+    "Autoimmune conditions (immune stimulation)"
+  ],
+  
+  "drug_interactions_possible": ["Immunosuppressants"],
+  
+  "efficacy_rating": 6.2,
+  
+  "comparison_to_medicinal_mushrooms": {
+    "vs_reishi": { "before": 45, "after": 65, "trend": "lower" },
+    "vs_shiitake": { "before": 50, "after": 55, "trend": "similar" },
+    "vs_lions_mane": { "before": 40, "after": 70, "trend": "lower" }
+  },
+  
+  "safety_for_medical_use": {
+    "value": 90,
+    "min": 0,
+    "max": 100,
+    "zones": [
+      { "max": 33, "color": "red", "label": "Caution" },
+      { "max": 66, "color": "yellow", "label": "Moderate" },
+      { "max": 100, "color": "green", "label": "Safe" }
+    ]
+  },
+  
+  "veterinary_use": false,
+  
+  "future_potential": "Promising but requires more clinical research"
+}

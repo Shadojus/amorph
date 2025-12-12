@@ -1,0 +1,39 @@
+{
+  "perspektive": "statistics",
+  "zellgroesse": {
+    "laenge_um": {
+      "min": 1.0,
+      "max": 3.0,
+      "durchschnitt": 2.0,
+      "einheit": "µm"
+    },
+    "durchmesser_um": {
+      "min": 0.5,
+      "max": 1.0,
+      "durchschnitt": 0.75,
+      "einheit": "µm"
+    }
+  },
+  "anzahl_im_darm_pro_g": {
+    "min": 10000000,
+    "max": 1000000000,
+    "durchschnitt": 100000000,
+    "einheit": "Zellen/g Stuhl"
+  },
+  "genom_statistik": {
+    "referenzstamm": "K-12 MG1655",
+    "basenpaare": 4639221,
+    "gene": 4288,
+    "kodierende_sequenz_prozent": 87.8
+  },
+  "infektionsstatistik_global": {
+    "etec_faelle_pro_jahr": 400000000,
+    "ehec_faelle_pro_jahr": 100000,
+    "todesfaelle_pro_jahr": 70000
+  },
+  "forschungsstatistik": {
+    "pubmed_artikel_gesamt": 450000,
+    "neue_artikel_pro_jahr": 8000,
+    "nobelpreise_verwandt": 8
+  }
+}

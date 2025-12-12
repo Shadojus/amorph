@@ -1,0 +1,26 @@
+{
+  "id": "plantae-001",
+  "slug": "ginkgo",
+  "name": "Ginkgo",
+  "wissenschaftlich": "Ginkgo biloba",
+  "bild": "images/plantae/ginkgo-biloba.jpg",
+  "beschreibung": "Der Ginkgo ist ein lebendes Fossil und die einzige überlebende Art der Ginkgogewächse. Seine fächerförmigen Blätter und die extreme Langlebigkeit machen ihn zu einem Symbol für Ausdauer und Widerstandsfähigkeit.",
+  "taxonomie_regnum": "Plantae",
+  "perspektiven": [
+    "identification",
+    "ecology",
+    "geography",
+    "conservation",
+    "chemistry",
+    "temporal",
+    "statistics",
+    "interactions",
+    "safety",
+    "research",
+    "culture",
+    "economy",
+    "medicine",
+    "culinary",
+    "cultivation"
+  ]
+}

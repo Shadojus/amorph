@@ -1,0 +1,7 @@
+/* Perspektive: Temporal - Sandiges Glass */
+[data-perspektive-temporal] {
+  --perspektive-farbe: rgba(175, 175, 180, 0.25);
+  --perspektive-farbe-2: rgba(170, 170, 175, 0.22);
+  --perspektive-farbe-3: rgba(165, 165, 170, 0.20);
+  --perspektive-farbe-4: rgba(160, 160, 165, 0.18);
+}

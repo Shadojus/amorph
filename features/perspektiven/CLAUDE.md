@@ -66,4 +66,5 @@ config/schema/perspektiven/
 2. ID zu `index.yaml` hinzufügen
 3. Felder zu `felder.yaml` hinzufügen
 4. CSS zu `styles/perspektiven.css` hinzufügen
-5. Compare-Morph in `themes/pilze/morphs/compare/` erstellen
+
+**Kein Theme-Code nötig!** smartCompare erkennt Typen automatisch.

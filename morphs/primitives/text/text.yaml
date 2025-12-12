@@ -1,0 +1,18 @@
+# Text Morph Configuration
+# Simple text display for strings
+
+id: text
+name: Text
+description: Plain text display for string values
+category: primitives
+
+# Detection rules
+detection:
+  type: string
+  fallback: true  # Default for unmatched strings
+
+# Configuration
+config:
+  maxLength: 500
+  truncate: true
+  showMore: true

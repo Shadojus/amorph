@@ -1,26 +1,26 @@
 /**
- * COMPARE BASE - Utilities für Compare-Morphs
+ * COMPARE BASE - Utilities for Compare-Morphs
  * 
- * Gemeinsame Funktionen für alle Compare-Morphs:
- * - Farb-Zuweisung für Items
- * - Section/Container-Erstellung
- * - Typ-Erkennung (config-driven aus morphs.yaml)
+ * Common functions for all Compare-Morphs:
+ * - Color assignment for items
+ * - Section/Container creation
+ * - Type detection (config-driven from morphs.yaml)
  * 
- * DATENGETRIEBEN: Keywords und Regeln kommen aus config/morphs.yaml!
+ * DATA-DRIVEN: Keywords and rules come from config/morphs.yaml!
  */
 
-import { debug } from '../../observer/debug.js';
+import { debug } from '../../../observer/debug.js';
 
-// Farben-Config wird von außen gesetzt (aus morphs.yaml)
-let farbenConfig = null;
+// Colors config is set externally (from morphs.yaml)
+let colorsConfig = null;
 
-// Erkennung-Config wird von außen gesetzt (aus morphs.yaml)
-let erkennungConfig = null;
+// Detection config is set externally (from morphs.yaml)
+let detectionConfig = null;
 
-// Pilz-Farben: Nur RGB für Distanz-Berechnung
-// Die eigentlichen Farben kommen aus pilz-farben.css via CSS-Klassen
-// OVER THE TOP NEON - maximale Sättigung!
-const FALLBACK_FARBEN = [
+// Item Colors: Only RGB for distance calculation
+// Actual colors come from pilz-farben.css via CSS classes
+// OVER THE TOP NEON - maximum saturation!
+const FALLBACK_COLORS = [
   { index: 0, name: 'Electric Cyan', rgb: [0, 255, 255] },
   { index: 1, name: 'Electric Magenta', rgb: [255, 0, 255] },
   { index: 2, name: 'Radioactive Green', rgb: [0, 255, 0] },
@@ -35,14 +35,14 @@ const FALLBACK_FARBEN = [
   { index: 11, name: 'Lava Coral', rgb: [255, 50, 100] }
 ];
 
-// Cache für aktive Perspektiven-Farben
-let aktivePerspektivenFarben = [];
+// Cache for active perspective colors
+let activePerspectiveColors = [];
 
 /**
- * Berechnet die Farbdistanz zwischen zwei RGB-Werten
- * Verwendet euklidische Distanz im RGB-Raum
+ * Calculates the color distance between two RGB values
+ * Uses euclidean distance in RGB space
  */
-function farbDistanz(rgb1, rgb2) {
+function colorDistance(rgb1, rgb2) {
   const dr = rgb1[0] - rgb2[0];
   const dg = rgb1[1] - rgb2[1];
   const db = rgb1[2] - rgb2[2];
@@ -50,7 +50,7 @@ function farbDistanz(rgb1, rgb2) {
 }
 
 /**
- * Extrahiert RGB-Werte aus einem rgba() String
+ * Extracts RGB values from an rgba() string
  */
 function parseRgba(rgbaString) {
   const match = rgbaString.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
@@ -61,140 +61,152 @@ function parseRgba(rgbaString) {
 }
 
 /**
- * Setzt die aktiven Perspektiven-Farben (wird vom Vergleich-Feature aufgerufen)
- * @param {string[]} farben - Array von rgba() Farbstrings
+ * Sets the active perspective colors (called by compare feature)
+ * @param {string[]} colors - Array of rgba() color strings
  */
-export function setAktivePerspektivenFarben(farben) {
-  aktivePerspektivenFarben = farben
+export function setActivePerspectiveColors(colors) {
+  activePerspectiveColors = colors
     .map(f => parseRgba(f))
     .filter(Boolean);
   
-  debug.morphs('Aktive Perspektiven-Farben gesetzt', { 
-    anzahl: aktivePerspektivenFarben.length,
-    farben: aktivePerspektivenFarben 
+  debug.morphs('Active perspective colors set', { 
+    count: activePerspectiveColors.length,
+    colors: activePerspectiveColors 
   });
 }
 
+// Legacy alias for backwards compatibility
+export const setAktivePerspektivenFarben = setActivePerspectiveColors;
+
 /**
- * Filtert Farben die zu ähnlich zu den aktiven Perspektiven sind
- * @param {Array} palette - Array von Farb-Objekten {name, rgb, color}
- * @param {number} schwellenwert - Minimale Distanz (0-255)
+ * Filters colors that are too similar to active perspectives
+ * @param {Array} palette - Array of color objects {name, rgb, color}
+ * @param {number} threshold - Minimum distance (0-255)
  */
-function filtereFarben(palette, schwellenwert = 80) {
-  if (aktivePerspektivenFarben.length === 0) {
+function filterColors(palette, threshold = 80) {
+  if (activePerspectiveColors.length === 0) {
     return palette;
   }
   
-  const gefiltert = palette.filter(farbe => {
-    // Prüfe Distanz zu jeder aktiven Perspektiven-Farbe
-    for (const perspFarbe of aktivePerspektivenFarben) {
-      const distanz = farbDistanz(farbe.rgb, perspFarbe);
-      if (distanz < schwellenwert) {
-        debug.morphs(`Farbe ${farbe.name} zu ähnlich zu Perspektive`, { distanz, schwellenwert });
+  const filtered = palette.filter(color => {
+    // Check distance to each active perspective color
+    for (const perspColor of activePerspectiveColors) {
+      const distance = colorDistance(color.rgb, perspColor);
+      if (distance < threshold) {
+        debug.morphs(`Color ${color.name} too similar to perspective`, { distance, threshold });
         return false;
       }
     }
     return true;
   });
   
-  debug.morphs('Farben gefiltert', { 
+  debug.morphs('Colors filtered', { 
     original: palette.length, 
-    gefiltert: gefiltert.length,
-    aktivePerspektiven: aktivePerspektivenFarben.length 
+    filtered: filtered.length,
+    activePerspectives: activePerspectiveColors.length 
   });
   
-  // Falls alle gefiltert wurden, nimm die mit der größten Distanz
-  if (gefiltert.length === 0) {
-    const mitDistanz = palette.map(farbe => {
-      const minDistanz = Math.min(...aktivePerspektivenFarben.map(pf => farbDistanz(farbe.rgb, pf)));
-      return { ...farbe, distanz: minDistanz };
+  // If too few colors left, take those with greatest distance (minimum 6)
+  if (filtered.length < 2) {
+    const withDistance = palette.map(color => {
+      const minDistance = Math.min(...activePerspectiveColors.map(pc => colorDistance(color.rgb, pc)));
+      return { ...color, distance: minDistance };
     });
-    mitDistanz.sort((a, b) => b.distanz - a.distanz);
-    return mitDistanz.slice(0, Math.min(4, palette.length));
+    withDistance.sort((a, b) => b.distance - a.distance);
+    return withDistance.slice(0, Math.min(6, palette.length));
   }
   
-  return gefiltert;
+  return filtered;
 }
 
 /**
- * Setzt die Farben-Konfiguration (aus morphs.yaml)
+ * Sets the colors configuration (from morphs.yaml)
  */
-export function setFarbenConfig(config) {
-  farbenConfig = config?.farben || null;
-  debug.morphs('Compare Farben-Config geladen', { 
-    items: farbenConfig?.items?.length || 0,
-    diagramme: farbenConfig?.diagramme?.length || 0
+export function setColorsConfig(config) {
+  colorsConfig = config?.colors || config?.farben || null;
+  debug.morphs('Compare colors config loaded', { 
+    items: colorsConfig?.items?.length || 0,
+    diagrams: colorsConfig?.diagrams?.length || colorsConfig?.diagramme?.length || 0
   });
 }
 
+// Legacy alias for backwards compatibility
+export const setFarbenConfig = setColorsConfig;
+
 /**
- * Setzt die Erkennungs-Konfiguration (aus morphs.yaml)
- * WICHTIG: Macht detectType config-driven statt hardcoded!
+ * Sets the detection configuration (from morphs.yaml)
+ * IMPORTANT: Makes detectType config-driven instead of hardcoded!
  */
-export function setErkennungConfig(config) {
-  erkennungConfig = config?.erkennung || null;
-  debug.morphs('Compare Erkennung-Config geladen', { 
-    hatBadge: !!erkennungConfig?.badge,
-    keywords: erkennungConfig?.badge?.keywords?.length || 0
+export function setDetectionConfig(config) {
+  detectionConfig = config?.detection || config?.erkennung || null;
+  debug.morphs('Compare detection config loaded', { 
+    hasBadge: !!detectionConfig?.badge,
+    keywords: detectionConfig?.badge?.keywords?.length || 0
   });
 }
 
-/**
- * Holt die konfigurierten Farben
- * @param {string} typ - 'pilze' oder 'diagramme'
- * @returns {Array} Array von Farb-Objekten oder Strings
- */
-export function getFarben(typ = 'pilze') {
-  const configFarben = farbenConfig?.[typ];
-  
-  // Wenn Config vorhanden und Array von Objekten mit rgb
-  if (Array.isArray(configFarben) && configFarben[0]?.rgb) {
-    return configFarben;
-  }
-  
-  return FALLBACK_FARBEN;
-}
+// Legacy alias for backwards compatibility
+export const setErkennungConfig = setDetectionConfig;
 
 /**
- * Erstellt Farbzuordnung für Items (Pilze, Pflanzen, etc.)
- * Filtert automatisch Farben die zu ähnlich zu aktiven Perspektiven sind
- * @param {Array} itemIds - Array von Item-IDs
- * @returns {Map} ID → {farbIndex: number, farbKlasse: string, fill: rgba, text: rgba, line: rgba}
+ * Gets the configured colors
+ * @param {string} type - 'items' or 'diagrams'
+ * @returns {Array} Array of color objects or strings
  */
-export function erstelleFarben(itemIds) {
-  const farben = new Map();
+export function getColors(type = 'items') {
+  const configColors = colorsConfig?.[type] || colorsConfig?.fungi;
   
-  // Hole Palette und filtere nach aktiven Perspektiven
-  const vollePalette = getFarben('pilze');
-  const schwellenwert = farbenConfig?.aehnlichkeit_schwellenwert || 80;
-  const gefilterte = filtereFarben(vollePalette, schwellenwert);
+  // If config available and array of objects with rgb
+  if (Array.isArray(configColors) && configColors[0]?.rgb) {
+    return configColors;
+  }
   
-  debug.morphs('erstelleFarben', { 
+  return FALLBACK_COLORS;
+}
+
+// Legacy alias for backwards compatibility
+export const getFarben = getColors;
+
+/**
+ * Creates color assignment for items
+ * Automatically filters colors that are too similar to active perspectives
+ * @param {Array} itemIds - Array of item IDs
+ * @returns {Map} ID → {colorIndex: number, colorClass: string, fill: rgba, text: rgba, line: rgba}
+ */
+export function createColors(itemIds) {
+  const colors = new Map();
+  
+  // Get palette and filter by active perspectives
+  const fullPalette = getColors('items');
+  const threshold = colorsConfig?.similarity_threshold || colorsConfig?.aehnlichkeit_schwellenwert || 80;
+  const filtered = filterColors(fullPalette, threshold);
+  
+  debug.morphs('createColors', { 
     items: itemIds.length, 
-    paletteVoll: vollePalette.length,
-    paletteGefiltert: gefilterte.length,
-    aktivePerspektiven: aktivePerspektivenFarben.length
+    paletteFull: fullPalette.length,
+    paletteFiltered: filtered.length,
+    activePerspectives: activePerspectiveColors.length
   });
   
   itemIds.forEach((id, i) => {
     const normalizedId = String(id);
-    const paletteIndex = i % gefilterte.length;
-    const farbObj = gefilterte[paletteIndex];
+    const paletteIndex = i % filtered.length;
+    const colorObj = filtered[paletteIndex];
     
-    // Verwende den originalen Index aus der Palette für die CSS-Klasse
-    // Falls kein Index vorhanden, nutze den Palette-Index
-    const farbIndex = farbObj?.index ?? paletteIndex;
-    const farbKlasse = `pilz-farbe-${farbIndex}`;
+    // Use original index from palette for CSS class
+    // If no index available, use palette index
+    const colorIndex = colorObj?.index ?? paletteIndex;
+    const colorClass = `pilz-farbe-${colorIndex}`;
     
-    // Generiere aus RGB falls vorhanden
-    // BUGFIX: RGB könnte String sein vom YAML-Parser!
-    let rgb = farbObj?.rgb;
+    // Generate from RGB if available
+    // BUGFIX: RGB could be string from YAML parser!
+    let rgb = colorObj?.rgb;
     let r, g, b;
     
     if (Array.isArray(rgb)) {
       [r, g, b] = rgb;
     } else if (typeof rgb === 'string') {
-      // YAML hat es als String geparst, z.B. "[0, 255, 255]"
+      // YAML parsed it as string, e.g. "[0, 255, 255]"
       const match = rgb.match(/\[?\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\]?/);
       if (match) {
         r = parseInt(match[1]);
@@ -207,9 +219,12 @@ export function erstelleFarben(itemIds) {
       r = g = b = 100;
     }
     
-    farben.set(normalizedId, {
-      farbIndex,
-      farbKlasse,
+    colors.set(normalizedId, {
+      colorIndex,
+      colorClass,
+      // Legacy aliases for backwards compatibility
+      farbIndex: colorIndex,
+      farbKlasse: colorClass,
       rgb: `${r}, ${g}, ${b}`,
       fill: `rgba(${r}, ${g}, ${b}, 0.24)`,
       text: `rgba(${r}, ${g}, ${b}, 0.85)`,
@@ -219,45 +234,48 @@ export function erstelleFarben(itemIds) {
     });
   });
   
-  return farben;
+  return colors;
 }
 
+// Legacy alias for backwards compatibility
+export const erstelleFarben = createColors;
+
 /**
- * Erstellt einen Section-Container mit optionalem Abwahl-Button
- * @param {string} label - Überschrift
- * @param {string} farbe - Akzentfarbe (optional)
- * @param {string} feldName - Feldname für Abwahl-Funktionalität (optional)
+ * Creates a section container with optional deselect button
+ * @param {string} label - Heading
+ * @param {string} color - Accent color (optional)
+ * @param {string} fieldName - Field name for deselect functionality (optional)
  */
-export function createSection(label, farbe = null, feldName = null) {
+export function createSection(label, color = null, fieldName = null) {
   const section = document.createElement('div');
   section.className = 'compare-section';
   
-  if (farbe) {
-    section.style.setProperty('--section-farbe', farbe);
+  if (color) {
+    section.style.setProperty('--section-color', color);
   }
   
-  // Feldname als data-Attribut für spätere Referenz
-  if (feldName) {
-    section.dataset.feldName = feldName;
+  // Field name as data attribute for later reference
+  if (fieldName) {
+    section.dataset.fieldName = fieldName;
   }
   
   const header = document.createElement('div');
   header.className = 'compare-section-header';
   
-  // Label-Text
+  // Label text
   const labelSpan = document.createElement('span');
   labelSpan.className = 'compare-section-label';
   labelSpan.textContent = label;
   header.appendChild(labelSpan);
   
-  // Abwahl-Button (nur wenn feldName vorhanden)
-  if (feldName) {
+  // Deselect button (only if fieldName provided)
+  if (fieldName) {
     const removeBtn = document.createElement('button');
     removeBtn.className = 'compare-section-remove';
     removeBtn.type = 'button';
-    removeBtn.title = `${label} abwählen`;
+    removeBtn.title = `Deselect ${label}`;
     removeBtn.innerHTML = '×';
-    removeBtn.dataset.feldName = feldName;
+    removeBtn.dataset.fieldName = fieldName;
     header.appendChild(removeBtn);
   }
   
@@ -274,41 +292,42 @@ export function createSection(label, farbe = null, feldName = null) {
 }
 
 /**
- * Erstellt Section nur wenn Feld noch nicht gerendert wurde (Deduplizierung)
+ * Creates section only if field hasn't been rendered yet (deduplication)
  * 
- * @param {string} feldName - Eindeutiger Feldname für Deduplizierung
- * @param {string} label - Überschrift der Section
- * @param {string} farbe - Akzentfarbe (optional)
- * @param {Set} skipFelder - Set von bereits gerenderten Feldnamen
- * @returns {Object|null} Section oder null wenn bereits gerendert
+ * @param {string} fieldName - Unique field name for deduplication
+ * @param {string} label - Section heading
+ * @param {string} color - Accent color (optional)
+ * @param {Set} skipFields - Set of already rendered field names
+ * @returns {Object|null} Section or null if already rendered
  */
-export function createSectionIfNew(feldName, label, farbe = null, skipFelder = null) {
-  // Wenn skipFelder existiert und Feld bereits gerendert wurde → null
-  if (skipFelder && skipFelder.has(feldName)) {
-    debug.morphs('Section übersprungen (bereits gerendert)', { feldName });
+export function createSectionIfNew(fieldName, label, color = null, skipFields = null) {
+  // If skipFields exists and field already rendered → null
+  if (skipFields && skipFields.has(fieldName)) {
+    debug.morphs('Section skipped (already rendered)', { fieldName });
     return null;
   }
   
-  // Feld als gerendert markieren
-  if (skipFelder) {
-    skipFelder.add(feldName);
+  // Mark field as rendered
+  if (skipFields) {
+    skipFields.add(fieldName);
   }
   
-  // Normale Section erstellen MIT feldName für Abwahl-Button
-  return createSection(label, farbe, feldName);
+  // Create normal section WITH fieldName for deselect button
+  return createSection(label, color, fieldName);
 }
 
 /**
- * Erstellt einen Perspektiven-Header
+ * Creates a perspective header
  */
 export function createHeader(config) {
-  const { symbol, title, count, farben } = config;
+  const { symbol, title, count, colors, farben } = config;
   
   const header = document.createElement('div');
-  header.className = 'compare-perspektive-header';
+  header.className = 'compare-perspective-header';
   
-  if (farben?.[0]) {
-    header.style.setProperty('--p-farbe', farben[0]);
+  const colorArray = colors || farben;
+  if (colorArray?.[0]) {
+    header.style.setProperty('--p-color', colorArray[0]);
   }
   
   header.innerHTML = `
@@ -321,32 +340,37 @@ export function createHeader(config) {
 }
 
 /**
- * Erstellt Legende für Items
+ * Creates legend for items
  */
-export function createLegende(items) {
-  const legende = document.createElement('div');
-  legende.className = 'compare-legende';
+export function createLegend(items) {
+  const legend = document.createElement('div');
+  legend.className = 'compare-legende';
   
   items.forEach(item => {
     const el = document.createElement('span');
-    el.className = 'compare-legende-item';
+    // Apply pilz-farbe-X class for CSS custom properties
+    const colorClass = item.farbKlasse || item.colorClass || '';
+    el.className = `compare-legende-item ${colorClass}`;
     el.innerHTML = `
-      <span class="legende-dot" style="background:${item.farbe}"></span>
+      <span class="legende-dot"></span>
       <span class="legende-name">${item.name}</span>
     `;
-    legende.appendChild(el);
+    legend.appendChild(el);
   });
 
-  return legende;
+  return legend;
 }
 
+// Legacy alias for backwards compatibility
+export const createLegende = createLegend;
+
 // =============================================================================
-// TYP-ERKENNUNG - 100% CONFIG-DRIVEN (aus morphs.yaml)
+// TYPE DETECTION - 100% CONFIG-DRIVEN (from morphs.yaml)
 // =============================================================================
 
 /**
- * Helper: Stellt sicher dass wir ein Array haben
- * (YAML-Parser kann manchmal String statt Array zurückgeben)
+ * Helper: Ensures we have an array
+ * (YAML parser can sometimes return string instead of array)
  */
 function ensureArray(val, fallback) {
   if (Array.isArray(val)) return val;
@@ -355,37 +379,37 @@ function ensureArray(val, fallback) {
 }
 
 /**
- * DATENGETRIEBEN: Erkennt den Typ aus der Datenstruktur
+ * DATA-DRIVEN: Detects the type from the data structure
  * 
- * WICHTIG: Nutzt erkennungConfig aus morphs.yaml!
- * Keine hardcodierten Keywords mehr.
+ * IMPORTANT: Uses detectionConfig from morphs.yaml!
+ * No hardcoded keywords anymore.
  */
-export function detectType(wert) {
-  if (wert === null || wert === undefined) return 'empty';
-  if (typeof wert === 'boolean') return 'boolean';
-  if (typeof wert === 'number') return detectNumberType(wert);
-  if (typeof wert === 'string') return detectStringType(wert);
-  if (Array.isArray(wert)) return detectArrayType(wert);
-  if (typeof wert === 'object') return detectObjectType(wert);
+export function detectType(value) {
+  if (value === null || value === undefined) return 'empty';
+  if (typeof value === 'boolean') return 'boolean';
+  if (typeof value === 'number') return detectNumberType(value);
+  if (typeof value === 'string') return detectStringType(value);
+  if (Array.isArray(value)) return detectArrayType(value);
+  if (typeof value === 'object') return detectObjectType(value);
   return 'text';
 }
 
 /**
- * Erkennt den besten Morph für Zahlen
- * Regeln kommen aus config/morphs.yaml → erkennung
+ * Detects the best morph for numbers
+ * Rules come from config/morphs.yaml → detection
  */
-function detectNumberType(wert) {
-  const cfg = erkennungConfig || {};
+function detectNumberType(value) {
+  const cfg = detectionConfig || {};
   
-  // Rating: aus Config oder Fallback 0-10 mit Dezimalstellen
-  const rating = cfg.rating || { min: 0, max: 10, dezimalstellen: true };
-  if (wert >= rating.min && wert <= rating.max && rating.dezimalstellen && !Number.isInteger(wert)) {
+  // Rating: from config or fallback 0-10 with decimals
+  const rating = cfg.rating || { min: 0, max: 10, decimals: true, dezimalstellen: true };
+  if (value >= rating.min && value <= rating.max && (rating.decimals || rating.dezimalstellen) && !Number.isInteger(value)) {
     return 'rating';
   }
   
-  // Progress: aus Config oder Fallback 0-100 Ganzzahl
-  const progress = cfg.progress || { min: 0, max: 100, ganzzahl: true };
-  if (wert >= progress.min && wert <= progress.max && (!progress.ganzzahl || Number.isInteger(wert))) {
+  // Progress: from config or fallback 0-100 integer
+  const progress = cfg.progress || { min: 0, max: 100, integer: true, ganzzahl: true };
+  if (value >= progress.min && value <= progress.max && (!(progress.integer || progress.ganzzahl) || Number.isInteger(value))) {
     return 'progress';
   }
   
@@ -393,21 +417,21 @@ function detectNumberType(wert) {
 }
 
 /**
- * Erkennt den besten Morph für Strings
- * Keywords kommen aus config/morphs.yaml → erkennung.badge
+ * Detects the best morph for strings
+ * Keywords come from config/morphs.yaml → detection.badge
  * 
- * KEINE HARDCODIERTEN KEYWORDS MEHR!
+ * NO HARDCODED KEYWORDS ANYMORE!
  */
-function detectStringType(wert) {
-  const lower = wert.toLowerCase().trim();
-  const cfg = erkennungConfig?.badge || {};
+function detectStringType(value) {
+  const lower = value.toLowerCase().trim();
+  const cfg = detectionConfig?.badge || {};
   
-  // Badge: Keywords NUR aus Config (Fallback ist leer = reiner text)
-  // Das garantiert 100% Datengetriebenheit
+  // Badge: Keywords ONLY from config (fallback is empty = pure text)
+  // This guarantees 100% data-drivenness
   const keywords = cfg.keywords || [];
-  const maxLaenge = cfg.maxLaenge || 25;
+  const maxLength = cfg.maxLength || cfg.maxLaenge || 25;
   
-  if (keywords.length > 0 && wert.length <= maxLaenge && keywords.some(kw => lower.includes(kw.toLowerCase()))) {
+  if (keywords.length > 0 && value.length <= maxLength && keywords.some(kw => lower.includes(kw.toLowerCase()))) {
     return 'badge';
   }
   
@@ -415,55 +439,55 @@ function detectStringType(wert) {
 }
 
 /**
- * Erkennt den besten Morph für Arrays
- * Regeln kommen aus config/morphs.yaml → erkennung.array
+ * Detects the best morph for arrays
+ * Rules come from config/morphs.yaml → detection.array
  */
-function detectArrayType(wert) {
-  if (wert.length === 0) return 'list';
+function detectArrayType(value) {
+  if (value.length === 0) return 'list';
   
-  const first = wert[0];
-  const cfg = erkennungConfig?.array || {};
+  const first = value[0];
+  const cfg = detectionConfig?.array || {};
   
-  // String-Arrays → List
+  // String arrays → List
   if (typeof first === 'string') return 'list';
   
-  // Objekt-Arrays: Struktur analysieren
+  // Object arrays: analyze structure
   if (typeof first === 'object' && first !== null) {
     const keys = Object.keys(first);
     
-    // Radar: aus Config oder Fallback
+    // Radar: from config or fallback
     const radarCfg = cfg.radar || {};
-    const radarKeys = ensureArray(radarCfg.benoetigtKeys, ['axis', 'value']);
+    const radarKeys = ensureArray(radarCfg.requiredKeys || radarCfg.benoetigtKeys, ['axis', 'value']);
     const radarAltKeys = ensureArray(radarCfg.alternativeKeys, ['dimension', 'score', 'factor']);
     const allRadarKeys = [...radarKeys, ...radarAltKeys];
-    if (wert.length >= (radarCfg.minItems || 3) && allRadarKeys.some(k => k in first)) {
+    if (value.length >= (radarCfg.minItems || 3) && allRadarKeys.some(k => k in first)) {
       return 'radar';
     }
     
-    // Timeline: aus Config oder Fallback
+    // Timeline: from config or fallback
     const timelineCfg = cfg.timeline || {};
-    const timelineKeys = ensureArray(timelineCfg.benoetigtKeys, ['date', 'event']);
-    const timelineAltKeys = ensureArray(timelineCfg.alternativeKeys, ['time', 'datum', 'monat', 'periode', 'label']);
+    const timelineKeys = ensureArray(timelineCfg.requiredKeys || timelineCfg.benoetigtKeys, ['date', 'event']);
+    const timelineAltKeys = ensureArray(timelineCfg.alternativeKeys, ['time', 'datum', 'month', 'monat', 'period', 'periode', 'label']);
     const allTimelineKeys = [...timelineKeys, ...timelineAltKeys];
     if (allTimelineKeys.some(k => k in first)) {
       return 'timeline';
     }
     
-    // Bar/Pie: aus Config oder Fallback
+    // Bar/Pie: from config or fallback
     const barCfg = cfg.bar || {};
     const pieCfg = cfg.pie || {};
-    const labelKeys = ensureArray(barCfg.benoetigtKeys || pieCfg.benoetigtKeys, ['label', 'value']);
+    const labelKeys = ensureArray(barCfg.requiredKeys || barCfg.benoetigtKeys || pieCfg.requiredKeys || pieCfg.benoetigtKeys, ['label', 'value']);
     const valueAltKeys = ensureArray(barCfg.alternativeKeys || pieCfg.alternativeKeys, ['name', 'amount', 'count', 'score']);
     const hasLabel = labelKeys.some(k => k in first);
     const hasValue = valueAltKeys.some(k => k in first) || 'value' in first;
     
     if (hasLabel && hasValue) {
-      return wert.length <= 6 ? 'pie' : 'bar';
+      return value.length <= 6 ? 'pie' : 'bar';
     }
   }
   
-  // Zahlen-Arrays → Bar
-  if (wert.every(v => typeof v === 'number')) {
+  // Number arrays → Bar
+  if (value.every(v => typeof v === 'number')) {
     return 'bar';
   }
   
@@ -471,30 +495,30 @@ function detectArrayType(wert) {
 }
 
 /**
- * Erkennt den besten Morph für Objekte
- * Regeln kommen aus config/morphs.yaml → erkennung.objekt
+ * Detects the best morph for objects
+ * Rules come from config/morphs.yaml → detection.object
  */
-function detectObjectType(wert) {
-  const keys = Object.keys(wert);
-  const cfg = erkennungConfig?.objekt || {};
+function detectObjectType(value) {
+  const keys = Object.keys(value);
+  const cfg = detectionConfig?.object || detectionConfig?.objekt || {};
   
-  // Range: aus Config oder Fallback (min + max)
+  // Range: from config or fallback (min + max)
   const rangeCfg = cfg.range || {};
-  const rangeKeys = ensureArray(rangeCfg.benoetigtKeys, ['min', 'max']);
-  if (rangeKeys.every(k => k in wert) && keys.length <= (rangeCfg.maxKeys || 3)) {
-    // Prüfen ob es Stats ist (hat zusätzlich avg/mean)
+  const rangeKeys = ensureArray(rangeCfg.requiredKeys || rangeCfg.benoetigtKeys, ['min', 'max']);
+  if (rangeKeys.every(k => k in value) && keys.length <= (rangeCfg.maxKeys || 3)) {
+    // Check if it's stats (also has avg/mean)
     const statsCfg = cfg.stats || {};
-    const statsKeys = ensureArray(statsCfg.benoetigtKeys, ['min', 'max', 'avg']);
-    if (statsKeys.filter(k => k in wert).length >= 3) {
+    const statsKeys = ensureArray(statsCfg.requiredKeys || statsCfg.benoetigtKeys, ['min', 'max', 'avg']);
+    if (statsKeys.filter(k => k in value).length >= 3) {
       return 'stats';
     }
     return 'range';
   }
   
-  // Pie: aus Config oder Fallback (nur numerische Werte)
-  const pieCfg = cfg.pie || { nurNumerisch: true, minKeys: 2, maxKeys: 8 };
-  const allNumeric = keys.every(k => typeof wert[k] === 'number');
-  if (pieCfg.nurNumerisch !== false && allNumeric && 
+  // Pie: from config or fallback (only numeric values)
+  const pieCfg = cfg.pie || { onlyNumeric: true, nurNumerisch: true, minKeys: 2, maxKeys: 8 };
+  const allNumeric = keys.every(k => typeof value[k] === 'number');
+  if ((pieCfg.onlyNumeric !== false && pieCfg.nurNumerisch !== false) && allNumeric && 
       keys.length >= (pieCfg.minKeys || 2) && 
       keys.length <= (pieCfg.maxKeys || 8)) {
     return 'pie';
@@ -504,13 +528,21 @@ function detectObjectType(wert) {
 }
 
 export default {
+  // New English function names
+  setColorsConfig,
+  setDetectionConfig,
+  setActivePerspectiveColors,
+  getColors,
+  createColors,
+  createSection,
+  createHeader,
+  createLegend,
+  detectType,
+  // Legacy German aliases for backwards compatibility
   setFarbenConfig,
   setErkennungConfig,
   setAktivePerspektivenFarben,
   getFarben,
   erstelleFarben,
-  createSection,
-  createHeader,
-  createLegende,
-  detectType
+  createLegende
 };
