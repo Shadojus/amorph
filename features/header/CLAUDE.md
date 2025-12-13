@@ -1,58 +1,38 @@
 # Feature: Header
 
-Das Header-Feature kombiniert Suche + 17 Perspektiven + Auswahl in einem Container.
+App-Header mit Branding, Suche, Perspektiven, Auswahl.
 
-## Übersicht
+## Layout
 
-| Komponente | Funktion |
-|------------|----------|
-| Zeile 0 | Branding (App-Name + Bifroest) |
-| Zeile 1 | Suche + Badges + Ansicht-Switch |
-| Zeile 2 | 17 Perspektiven-Grid |
-| Zeile 3 | Ausgewählte Pilze (Badges + Links) |
+| Zeile | Inhalt |
+|-------|--------|
+| 0 | Branding (Logo + Bifroest) |
+| 1 | Suche + Aktive-Filter-Badges + Ansicht-Switch |
+| 2 | 15 Perspektiven-Buttons |
+| 3 | Ausgewählte Pilze (Badges mit ×) |
 
 ## Features
 
-- **Live-Suche**: Mit konfigurierbarem Debounce
-- **17 Perspektiven**: Auto-Aktivierung basierend auf Query und Ergebnissen
-- **Auswahl-Badges**: Zeigt ausgewählte Pilze mit Link zur Einzelansicht
-- **Scroll-Detection**: Via IntersectionObserver
-- **Multi-Color Glow**: Bei mehreren aktiven Perspektiven
+- **Live-Suche**: Mit Debounce
+- **15 Perspektiven**: Toggle-Buttons
+- **Auswahl-Badges**: Links zur Einzelansicht, × zum Entfernen
+- **Glass-Design**: Transparenter Header mit Blur
 
 ## Events
 
 **Emittiert:**
-- `header:suche:ergebnisse` → Query + Ergebnisse + matchedTerms
-- `perspektiven:geaendert` → aktive Perspektiven (aus 17)
-- `amorph:ansicht-wechsel` → Ansicht-ID
+- `header:suche:ergebnisse`
+- `perspektiven:geaendert`
+- `amorph:ansicht-wechsel`
+- `amorph:remove-from-selection`
 
 **Hört auf:**
-- `amorph:auswahl-geaendert` → Aktualisiert Auswahl-Zeile + Counter
-- `amorph:auto-search` → Triggert Suche aus URL-State
+- `amorph:auswahl-geaendert`
+- `amorph:auto-search`
 
-## 17 Perspektiven-Buttons
+## CSS
 
-```javascript
-// Perspektiven mit Multi-Farben-Support
-function anwendenPerspektiven() {
-  // Felder markieren mit allen zugehörigen Farben
-  for (const [feldname, perspektivFarben] of feldZuFarben) {
-    if (perspektivFarben.length === 1) {
-      // Einzelne Perspektive - alle 4 Farben setzen
-      feld.style.setProperty('--feld-perspektive-farbe', farben[0]);
-    } else {
-      // Mehrere Perspektiven - Multicolor-Gradient
-      feld.setAttribute('data-perspektive-multi', 'true');
-    }
-  }
-}
-```
-
-## CSS-Klassen
-
-- `.amorph-suche` - Suchcontainer
-- `.amorph-perspektiven` - 17 Perspektiven-Navigation
-- `.amorph-perspektive-btn` - Einzelner Perspektiven-Button
-- `.amorph-perspektive-btn.aktiv` - Aktive Perspektive
-- `.amorph-ansicht-switch` - Ansicht-Toggle
-- `.scrolled` - Header bei Scroll-Position > 0
+- `.amorph-header` - Glass-Container
+- `.amorph-suche-wrapper` - Suchzeile
+- `.amorph-perspektiven` - Perspektiven-Grid
+- `.amorph-auswahl-badge` - Pilz-Badge mit Glass

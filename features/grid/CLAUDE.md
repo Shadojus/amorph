@@ -1,14 +1,13 @@
 # Feature: Grid
 
-Glasmorphism-Karten-Layout für die Hauptansicht.
+Glasmorphism-Karten-Layout.
 
-## Übersicht
+## Features
 
-Das Grid-Feature bietet:
+- Black Glasmorphism Design
+- Perspektiven-Feld-Visibility
 - Layouts: Liste, Grid, Kompakt
-- **Black Glasmorphism Design**
-- **Perspektiven-Feld-Visibility**: Zeigt/versteckt Felder basierend auf aktiven Perspektiven
-- Layout wird auf `[data-amorph-container]` via `data-layout` gesetzt
+- Felder anklickbar für Auswahl
 
 ## Glasmorphism
 
@@ -22,27 +21,16 @@ Das Grid-Feature bietet:
 
 ## Perspektiven-Integration
 
-Felder haben `data-perspektive-*` Attribute:
-
 ```html
 <amorph-container 
   data-field="chemistry_primaer_metabolite"
   data-perspektive-chemistry="true">
 ```
 
-Bei aktiver Perspektive werden nur zugehörige Felder angezeigt.
-
-## Layouts
-
-| Layout | Beschreibung | Icon |
-|--------|--------------|------|
-| `liste` | Vertikal, ein Element pro Zeile | ☰ |
-| `grid` | Karten-Layout, mehrere Spalten | ⊞ |
-| `kompakt` | Minimale Höhe, dichte Darstellung | ▤ |
+Bei aktiver Perspektive: nur zugehörige Felder sichtbar.
 
 ## Feld-Auswahl
 
-- Jedes Feld in einer Card ist klickbar
-- Klick auf Feld → Event `amorph:feld-auswahl` mit `{pilzId, feldName, wert}`
-- Ausgewählte Felder bekommen `.feld-ausgewaehlt` Klasse
-- Perspektiven-Glow verstärkt sich bei Auswahl
+- Klick auf Feld → `amorph:feld-auswahl` Event
+- Ausgewählt → `.feld-ausgewaehlt` Klasse
+- Entfernt aus Header → Grid deselektiert

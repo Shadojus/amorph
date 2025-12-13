@@ -1,90 +1,91 @@
-# AMORPH v5
+# AMORPH
 
 Formlos. Zustandslos. Transformierend.
 
 ## Systemübersicht
 
-AMORPH ist ein datengetriebenes Transformations-Framework für Pilzdaten-Visualisierung.
+Datengetriebenes Transformations-Framework für Pilzdaten-Visualisierung.
 
 ```
 DATEN (JSON) → detectType() → MORPH → DOM
 ```
 
-### Architektur
+## Architektur
 
 | Ordner | Zweck |
 |--------|-------|
-| `config/` | YAML-Konfiguration, Schema, 17 Perspektiven |
+| `config/` | YAML-Konfiguration, Schema, 15 Perspektiven |
 | `core/` | Config-Loader, Pipeline, Web Component |
-| `features/` | Isolierte Feature-Module (Header, Grid, Vergleich, Einzelansicht, Infinite Scroll) |
+| `features/` | Isolierte Feature-Module |
 | `morphs/` | Reine Transformations-Funktionen + Compare-Morphs |
-| `styles/` | CSS mit Design-Tokens + Black Glasmorphism |
+| `styles/` | CSS + Black Glasmorphism |
 | `observer/` | Debug, Rendering, Session Tracking |
-| `util/` | DOM-Helpers, Fetch, Semantic-Utils, Router, Session |
+| `util/` | DOM-Helpers, Fetch, Router, Session |
 
-### Design: Black Glasmorphism + Neon
+## Design: Black Glasmorphism + Neon
 
-- **Hintergrund**: Woodfloor-Textur + 88-92% schwarzes Overlay
-- **Glass-Cards**: `backdrop-filter: blur(16px)`, dezente weiße Borders
-- **Pilz-Farben**: 12 OVER-THE-TOP Neonfarben
-- **Perspektiven**: 17 Perspektiven mit eigenen Farben + Multi-Color Glow
+- **Hintergrund**: Woodfloor-Textur + schwarzes Overlay
+- **Glass-Elemente**: `backdrop-filter: blur()`, dezente Borders
+- **Pilz-Farben**: 12 Neonfarben für Item-Identifikation
+- **Perspektiven-Farben**: 15 Perspektiven mit eigenen Farbschemata
 
-### 17 Perspektiven-System
+## 15 Perspektiven
 
-| Perspektive | Symbol | Fokus |
-|-------------|--------|-------|
-| culinary | 🍳 | Geschmack, Zubereitung, Essbarkeit |
-| medicine | 💊 | Wirkstoffe, Therapie, Dosierung |
-| cultivation | 🌱 | Kultivierung, Substrate, Ertrag |
-| safety | ⚠️ | Toxine, Verwechslung, Erste Hilfe |
-| Wissenschaft | 🔬 | Taxonomie, Genetik, Mikroskopie |
-| statistics | 📊 | Fundstatistics, Trends, Verbreitung |
-| chemistry | 🧪 | Metabolite, Enzyme, Volatilome |
-| Sensorik | 👃 | Aroma, Geschmack, Textur |
-| Ökologie | 🌿 | Habitat, Symbiosen, interactions |
-| Temporal | ⏰ | Lebenszyklus, Saisonalität |
-| geography | 🗺️ | Verbreitung, Fundorte, Klima |
-| economy | 💰 | Markt, Preise, Handel |
-| conservation | 🛡️ | IUCN-Status, Bedrohungen |
-| culture | 📜 | Mythologie, Geschichte, Kunst |
-| research | 📚 | Publikationen, Patente |
-| interactions | 🔗 | Wirte, Mikrobiom, Symbiosen |
-| Visual | 🎨 | Bilder, Farben, 360° |
+| ID | Symbol | Fokus |
+|----|--------|-------|
+| chemistry | 🧪 | Metabolite, Enzyme |
+| conservation | 🛡️ | IUCN-Status, Schutz |
+| culinary | 🍳 | Essbarkeit, Zubereitung |
+| cultivation | 🌱 | Anbau, Substrate |
+| culture | 📜 | Mythologie, Geschichte |
+| ecology | 🌿 | Habitat, Symbiosen |
+| economy | 💰 | Markt, Preise |
+| geography | 🗺️ | Verbreitung, Klima |
+| identification | 🔍 | Bestimmungsmerkmale |
+| interactions | 🔗 | Wirte, Mikrobiom |
+| medicine | 💊 | Wirkstoffe, Therapie |
+| research | 📚 | Publikationen |
+| safety | ⚠️ | Toxine, Verwechslung |
+| statistics | 📊 | Fundstatistiken |
+| temporal | ⏰ | Saisonalität |
 
-### Features
+## Features
 
 | Feature | Beschreibung |
 |---------|--------------|
-| `header` | Suche, Perspektiven, Ansicht-Switch, Auswahl-Badges |
-| `grid` | Karten-Layout, Felder anklickbar |
-| `ansichten` | View-Controller (Karten/Vergleich) |
-| `vergleich` | Perspektiven-Vergleich mit smartCompare (datengetrieben) |
-| `einzelansicht` | Pilz-Detail-Page `/:slug` |
-| `infinitescroll` | Automatisches Nachladen beim Scrollen |
+| `header` | Branding, Suche, Perspektiven, Auswahl |
+| `grid` | Karten-Layout |
+| `ansichten` | View-Controller + Auswahl-State |
+| `vergleich` | smartCompare (datengetrieben) |
+| `einzelansicht` | Detail-Page `/:slug` |
+| `infinitescroll` | Auto-Nachladen |
+| `suche` | Semantische Suche |
+| `perspektiven` | Perspektiven-Toggle |
 
-### URL State Persistenz
+## URL State
 
-State wird automatisch in URL gespeichert:
-- `?suche=steinpilz` - Suchbegriff
-- `?perspektiven=chemistry,sensorik` - Aktive Perspektiven
-- `?ansicht=vergleich` - Aktive Ansicht
-
-### Datengetriebene Typ-Erkennung
-
-```javascript
-{ min: 10, max: 25 }           → 'range'
-{ min: 80, max: 350, avg: 180 } → 'stats'
-[{ axis: 'X', value: 95 }]     → 'radar'
-{ Protein: 30, Fett: 20 }      → 'pie'
-4.5                            → 'rating'
-85                             → 'progress'
+```
+?suche=steinpilz
+?perspektiven=chemistry,ecology
+?ansicht=vergleich
 ```
 
-### Morph-Purity Regel
+## Typ-Erkennung
 
 ```javascript
-// ✅ ERLAUBT: DOM erstellen, Callbacks aufrufen
-// ❌ VERBOTEN: Globale Events, document.dispatchEvent()
+{ min, max }           → 'range'
+{ min, max, avg }      → 'stats'
+[{ axis, value }]      → 'radar'
+{ A: 30, B: 20 }       → 'pie'
+4.5                    → 'rating'
+85                     → 'progress'
 ```
 
-**Morphs sind REINE Transformationen: `(wert, config) → HTMLElement`**
+## Morph-Purity
+
+```javascript
+// ✅ DOM erstellen, Callbacks
+// ❌ Globale Events, Side-Effects
+```
+
+**Morphs: `(wert, config) → HTMLElement`**

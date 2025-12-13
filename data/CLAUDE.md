@@ -1,56 +1,43 @@
 # Data
 
-Beispieldaten für AMORPH. **Datenstruktur bestimmt den Morph!**
+Pilzdaten für AMORPH.
 
-## fungi.json - Datenstruktur
+## Struktur
 
-11 Pilze mit Daten für 17 Perspektiven:
+```
+data/
+└── pilze/
+    ├── index.json      ← Alle Pilze
+    └── steinpilz.json  ← Einzelner Pilz
+```
 
-| Pilz | Besondere Perspektiven-Daten |
-|------|------------------------------|
-| Steinpilz | Ökologie, geography, Temporal |
-research |
-| Birkenporling | research, interactions, Visual |
-| Fliegenpilz | culture, Temporal, Visual, Ökologie |
 ## Datenformat
 
 ```javascript
 {
-  // Basis-Felder
   "id": "string",
   "slug": "string",
   "name": "string",
-  "wissenschaftlich": "string",
-
-  // AUTO-ERKANNT aus Struktur
+  
+  // Auto-erkannt aus Struktur:
   "temperatur": { "min": 10, "max": 25 },  // → range
-  "naehrwerte": { "Protein": 26, ... },    // → pie
-  "profil": [{ "axis": "X", "value": 95 }], // → radar
-  "bewertung": 4.8,                         // → rating
-  "beliebtheit": 92,                        // → progress
-
-  // Perspektiven-Felder (Beispiele)
+  "naehrwerte": { "Protein": 26 },         // → pie
+  "bewertung": 4.8,                        // → rating
+  
+  // Perspektiven-Felder:
   "chemistry_primaer_metabolite": [...],
-  "chemistry_sekundaer_metabolite": [...],
-  "sensorik_aroma": { "profile": [...] },
   "ecology_symbiose_partner": [...],
-  "economy_preise": { ... },
-  "culture_mythologie": [...],
-  "research_publikationen": [...]
+  "economy_preise": { ... }
 }
 ```
 
-## Datengetrieben-Prinzip
+## Typ-Erkennung
 
-**Keine expliziten Typ-Angaben nötig!** Die Pipeline erkennt automatisch:
-
-| Datenstruktur | Erkannter Morph |
-|---------------|-----------------|
+| Struktur | Morph |
+|----------|-------|
 | `{min, max}` | range |
 | `{min, max, avg}` | stats |
-| `{A: 30, B: 50}` (nur Zahlen) | pie |
-| `[{axis, value}]` (3+) | radar |
-| `[{date, event}]` | timeline |
-| `[{label, value}]` | bar |
-| `4.8` (0-10 Dezimal) | rating |
-| `92` (0-100 Integer) | progress |
+| `{A: 30, B: 50}` | pie |
+| `[{axis, value}]` | radar |
+| `4.8` (0-10) | rating |
+| `92` (0-100) | progress |

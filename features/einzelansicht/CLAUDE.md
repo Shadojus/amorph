@@ -1,44 +1,37 @@
 # Feature: Einzelansicht
 
-Vollständige Pilz-Detailseite als eigene Page.
+Vollständige Pilz-Detailseite.
 
-## Übersicht
-
-- **Route**: `/:slug` (SEO-freundlich)
-- **Zurück**: Button zur Übersicht
-- **Datengetrieben**: Alle Felder werden automatisch gerendert
-- **17 Perspektiven**: Felder gruppiert nach Perspektive
-
-## URL-Schema
+## Route
 
 ```
-/steinpilz     → Einzelansicht Steinpilz
-/pfifferling   → Einzelansicht Pfifferling
-/shiitake      → Einzelansicht Shiitake
+/:slug → /steinpilz, /pfifferling, /shiitake
 ```
+
+## Features
+
+- SEO-freundliche URLs
+- Zurück-Button zur Übersicht
+- Alle Felder automatisch gerendert
+- Nach Perspektiven gruppiert
 
 ## Perspektiven-Gruppierung
 
-Felder werden nach ihren Perspektiven gruppiert angezeigt:
-
 ```
-🧪 chemistry
+🧪 Chemie
 ├── Primäre Metabolite
 ├── Sekundäre Metabolite
 └── Enzyme
 
-👃 Sensorik
-├── Aroma-Profil
-├── Geschmack
-└── Textur
+🌿 Ökologie
+├── Symbiose-Partner
+└── Habitat
 ```
 
-## CSS-Klassen
+## CSS
 
 - `.amorph-einzelansicht` - Container
-- `.einzelansicht-header` - Header mit Zurück-Button
+- `.einzelansicht-header` - Header + Zurück
 - `.einzelansicht-bild` - Großes Bild
-- `.einzelansicht-beschreibung` - Beschreibungstext
-- `.einzelansicht-felder` - Grid der Feld-Sections
-- `.einzelansicht-feld` - Einzelnes Feld
+- `.einzelansicht-felder` - Feld-Grid
 - `.einzelansicht-perspektive` - Perspektiven-Gruppe

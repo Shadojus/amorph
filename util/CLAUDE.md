@@ -2,58 +2,45 @@
 
 Kleine Helfer. Keine Abhängigkeiten.
 
-## Übersicht
+## Dateien
 
 | Datei | Zweck |
 |-------|-------|
 | `dom.js` | Sichere DOM-Manipulation |
-| `fetch.js` | Datenbank-Zugriff + Infinite Scroll |
-| `session.js` | Session-Handling + URL-State |
-| `semantic.js` | Config-Gateway (Schema + Morphs-Config) |
+| `fetch.js` | Datenquellen + Infinite Scroll |
+| `session.js` | URL-State Persistenz |
+| `semantic.js` | Schema-Gateway |
 | `router.js` | Client-side Routing |
 
-## session.js - URL State Persistenz
+## session.js
 
 ```javascript
-// URL State lesen/schreiben
 getUrlState()                  // → { suche, perspektiven, ansicht }
-setUrlState({ suche, ... })    // Speichert in URL (ohne Reload)
+setUrlState({ suche, ... })    // In URL speichern (kein Reload)
 
-// Perspektiven in URL
-?perspektiven=chemistry,sensorik,ecology
+// URL: ?perspektiven=chemistry,ecology
 ```
 
-## fetch.js - Datenquellen + Infinite Scroll
+## fetch.js
 
 ```javascript
-// Datenquelle erstellen
 createDataSource(config)
 
-// JsonSource hat Infinite Scroll Support
 dataSource.loadMore(offset, limit)  // → { items, hasMore }
-dataSource.getTotalCount()          // Gesamtanzahl
+dataSource.getTotalCount()
 ```
 
-## dom.js - Sichere DOM-Manipulation
+## dom.js
 
 ```javascript
-// Element erstellen mit Attributen und Kindern
-export function el(tag, attrs = {}, children = []) { ... }
-
-// Text sicher setzen (kein innerHTML!)
-export function setText(element, text) { ... }
-
-// CSS-Klassen toggle
-export function toggleClass(element, className, force) { ... }
+el(tag, attrs, children)    // Element erstellen
+setText(element, text)      // Text sicher setzen
+toggleClass(el, cls, force) // Klasse toggle
 ```
 
-## semantic.js - Schema-Gateway
+## semantic.js
 
 ```javascript
-// Feldname → Label aus felder.yaml
-getFeldLabel(feldname)  // → "Primäre Metabolite"
-
-// Feldname → Perspektiven aus 17 perspektiven/*.yaml
-getFeldPerspektiven(feldname)  // → ["chemistry"]
+getFeldLabel(feldname)        // → "Primäre Metabolite"
+getFeldPerspektiven(feldname) // → ["chemistry"]
 ```
-

@@ -6,61 +6,41 @@ Eigenständig. Isoliert. Optional.
 
 ```
 features/
-├── context.js      ← Feature-Context Factory
-├── index.js        ← Feature-Registry + Initialisierung
-├── header/         ← App-Header (Branding, Suche, 17 Perspektiven)
-├── grid/           ← Karten-Ansicht
-├── vergleich/      ← Vergleichs-Ansicht mit smartCompare (DATA-DRIVEN)
-├── einzelansicht/  ← Detail-Page (/:slug)
-├── infinitescroll/ ← Automatisches Nachladen
-├── suche/          ← Suchfunktion
-├── perspektiven/   ← 17 Perspektiven-Buttons + Multi-Color Glow
-└── ansichten/      ← Ansicht-Switch (Karten ↔ Vergleich)
+├── context.js        ← Feature-Context Factory
+├── index.js          ← Feature-Registry
+├── header/           ← Branding, Suche, Perspektiven
+├── grid/             ← Karten-Ansicht
+├── ansichten/        ← View-Controller + Auswahl-State
+├── vergleich/        ← smartCompare-Ansicht
+├── einzelansicht/    ← Detail-Page /:slug
+├── infinitescroll/   ← Auto-Nachladen
+├── suche/            ← Suchfunktion
+└── perspektiven/     ← 15 Perspektiven-Buttons
 ```
 
-## Ansichten
-
-| Ansicht | Feature | Beschreibung |
-|---------|---------|--------------|
-| **Grid** | `grid/` | Karten-Layout, Felder anklickbar |
-| **Vergleich** | `vergleich/` | smartCompare, Items nebeneinander |
-| **Einzelansicht** | `einzelansicht/` | Full-Page Pilz-Detail |
-
-## Feature-Context API
+## Context API
 
 ```javascript
-export function createContext(name, config) {
-  return {
-    dom,          // Eigener DOM-Bereich
-    config,       // Read-only Config  
-    on(),         // Event-Listener
-    emit(),       // Event-Emitter
-    mount(),      // In Container
-    destroy()     // Cleanup
-  };
+createContext(name, config) → {
+  dom,        // Eigener DOM-Bereich
+  config,     // Read-only Config
+  on(),       // Event-Listener
+  emit(),     // Event-Emitter
+  mount(),    // In Container
+  destroy()   // Cleanup
 }
 ```
 
-## Event-Bus
+## Events
 
 ```javascript
-ctx.emit('pilz:ausgewaehlt', { id: 'steinpilz' });
+ctx.emit('pilz:ausgewaehlt', { id });
 document.addEventListener('amorph:pilz:ausgewaehlt', handler);
 ```
-
-## 17 Perspektiven im Header
-
-Header zeigt alle 17 Perspektiven als Toggle-Buttons mit:
-- Symbol + Name
-- 4-Farben-Gradient bei Aktivierung
-- Multi-Color Glow bei mehreren aktiven Perspektiven
 
 ## Regeln
 
 ```javascript
-// ✅ ERLAUBT:
-ctx.dom, ctx.emit(), document.addEventListener()
-
-// ❌ VERBOTEN:
-window.*, document.body.*
+// ✅ ctx.dom, ctx.emit(), document.addEventListener()
+// ❌ window.*, document.body.*
 ```

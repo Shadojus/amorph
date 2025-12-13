@@ -1,12 +1,12 @@
-# Infinite Scroll Feature
+# Feature: Infinite Scroll
 
-Lädt automatisch weitere Items wenn der User ans Ende scrollt.
+Automatisches Nachladen beim Scrollen.
 
 ## Architektur
 
 - **IntersectionObserver**: Performante Scroll-Detektion
-- **Sentinel-Element**: Unsichtbarer Trigger am Ende der Liste
-- **Batch Loading**: Lädt jeweils 12 Items nach
+- **Sentinel-Element**: Unsichtbarer Trigger am Ende
+- **Batch Loading**: 12 Items pro Batch
 
 ## API
 
@@ -18,12 +18,15 @@ dataSource.getTotalCount() → number
 
 ## Events
 
-- Lauscht: `header:suche:ergebnisse` (Reset bei neuer Suche)
-- Lauscht: `amorph:ansicht-wechsel` (Deaktiviert bei Vergleich)
-- Emittiert: `amorph:items-loaded` (Nach Laden neuer Items)
+**Hört auf:**
+- `header:suche:ergebnisse` (Reset bei Suche)
+- `amorph:ansicht-wechsel` (Deaktiviert bei Vergleich)
+
+**Emittiert:**
+- `amorph:items-loaded` (Nach Laden)
 
 ## Integration
 
 1. Feature in `features.yaml` aktivieren
-2. DataSource muss `loadMore()` unterstützen
-3. Container braucht `[data-amorph-container]` Attribut
+2. DataSource mit `loadMore()` bereitstellen
+3. Container mit `[data-amorph-container]`

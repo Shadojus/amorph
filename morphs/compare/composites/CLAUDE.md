@@ -1,51 +1,46 @@
 # Compare Composites
 
-100% DATA-DRIVEN intelligent comparison system.
+Intelligentes Vergleichssystem.
 
-## Structure
+## Struktur
 
 ```
-morphs/compare/composites/
+composites/
 ├── analyze.js      ← analyzeItems(), findRelatedFields()
 ├── render.js       ← renderFieldMorph(), render*Composite()
-├── smartCompare.js ← Main: auto-detects + renders
-├── diffCompare.js  ← Highlights differences
+├── smartCompare.js ← Haupt-Entry-Point
+├── diffCompare.js  ← Unterschiede hervorheben
 ├── types.js        ← TYPE_CATEGORIES, TYPE_TO_CATEGORY
 └── index.js        ← Exports
 ```
 
-## smartCompare (Main Entry Point)
-
-Analyzes data structure and auto-selects the best visualization:
+## smartCompare
 
 ```javascript
-import { smartCompare } from './composites/index.js';
-
-// Automatic analysis + rendering
 const element = smartCompare(items, {
-  includeOnly: ['field1', 'field2']  // Optional: Filter fields
+  includeOnly: ['field1', 'field2']
 });
 
-// Internally:
-// 1. analyzeItems(items) → Extract fields from items[0].data
-// 2. detectType(value) → Detect type per field
-// 3. findRelatedFields(fields) → Group by category
-// 4. render*Composite() → Render each group
+// Intern:
+// 1. analyzeItems(items) → Felder extrahieren
+// 2. detectType(value) → Typ pro Feld
+// 3. findRelatedFields(fields) → Nach Kategorie gruppieren
+// 4. render*Composite() → Jede Gruppe rendern
 ```
 
-## Data Flow
+## Datenfluss
 
 ```
-items[0].data → analyzeItems() → fields{} → findRelatedFields() → groups[]
-     ↓
-  detectType(value) → type (bar, radar, tag, etc.)
-     ↓
-  TYPE_TO_CATEGORY[type] → category (numeric, ranges, multidim, etc.)
-     ↓
-  renderGroup() → DOM
+items[0].data 
+  → analyzeItems() 
+  → fields{} 
+  → detectType() 
+  → TYPE_TO_CATEGORY 
+  → renderGroup() 
+  → DOM
 ```
 
-## Type Categories (types.js)
+## Typ-Kategorien
 
 ```javascript
 TYPE_CATEGORIES = {
@@ -57,39 +52,4 @@ TYPE_CATEGORIES = {
   textual: ['text', 'string', 'object'],
   media: ['image', 'link']
 };
-```
-
-## analyzeItems (analyze.js)
-
-```javascript
-// Extracts fields from first item's data
-const { fields, categories } = analyzeItems(items);
-
-// fields = {
-//   fieldName: { name, type, category, values: [{id, name, value, color}] }
-// }
-```
-
-## Render Functions (render.js)
-
-| Function | Category | Visualization |
-|----------|----------|---------------|
-| `renderFieldMorph` | Single field | Appropriate primitive |
-| `renderMetricsComposite` | numeric | Grouped bars |
-| `renderRangesComposite` | ranges | Overlapping ranges |
-| `renderProfileComposite` | multidim | Radar + Pie |
-| `renderTimelineComposite` | sequential | Overlaid timelines |
-| `renderCategoriesComposite` | categorical | Tags, booleans |
-
-## diffCompare
-
-Highlights differences between items:
-
-```javascript
-import { diffCompare } from './composites/index.js';
-
-const element = diffCompare(items, {
-  showSame: false,      // Hide identical values
-  highlightDiff: true   // Color-code differences
-});
 ```
