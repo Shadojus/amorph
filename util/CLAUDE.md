@@ -7,18 +7,24 @@ Kleine Helfer. Keine Abhängigkeiten.
 | Datei | Zweck |
 |-------|-------|
 | `dom.js` | Sichere DOM-Manipulation |
-| `fetch.js` | Datenquellen + Infinite Scroll |
+| `fetch.js` | Datenquellen + Pagination |
 | `session.js` | URL-State Persistenz |
 | `semantic.js` | Schema-Gateway |
 | `router.js` | Client-side Routing |
+
+## semantic.js
+
+```javascript
+getFeldMorphs()                // → { feldname: morphName }
+getFeldConfig(feldname)        // → { label, einheit, ... }
+sortBySchemaOrder(item)        // → Sortierte Entries
+```
 
 ## session.js
 
 ```javascript
 getUrlState()                  // → { suche, perspektiven, ansicht }
-setUrlState({ suche, ... })    // In URL speichern (kein Reload)
-
-// URL: ?perspektiven=chemistry,ecology
+setUrlState({ suche })         // URL aktualisieren
 ```
 
 ## fetch.js
@@ -27,7 +33,7 @@ setUrlState({ suche, ... })    // In URL speichern (kein Reload)
 createDataSource(config)
 
 dataSource.loadMore(offset, limit)  // → { items, hasMore }
-dataSource.getTotalCount()
+dataSource.search(query)            // → Gefilterte Items
 ```
 
 ## dom.js
@@ -36,11 +42,4 @@ dataSource.getTotalCount()
 el(tag, attrs, children)    // Element erstellen
 setText(element, text)      // Text sicher setzen
 toggleClass(el, cls, force) // Klasse toggle
-```
-
-## semantic.js
-
-```javascript
-getFeldLabel(feldname)        // → "Primäre Metabolite"
-getFeldPerspektiven(feldname) // → ["chemistry"]
 ```

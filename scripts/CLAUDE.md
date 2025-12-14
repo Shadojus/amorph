@@ -1,22 +1,10 @@
 # Scripts
 
-Build- und Check-Scripts.
+Build- und Validierungs-Scripts.
 
 ## Dateien
 
-```
-scripts/
-├── build.js   ← Production Build
-└── check.js   ← Validation, Linting
-```
-
-## build.js
-
-Erstellt optimierte Production-Builds.
-
-## check.js
-
-Validiert:
-- Schema-Konsistenz
-- Perspektiven-Vollständigkeit
-- Morph-Registrierung
+| Datei | Zweck |
+|-------|-------|
+| `build.js` | Production Build |
+| `check.js` | Schema-Validierung |

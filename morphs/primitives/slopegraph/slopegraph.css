@@ -1,0 +1,295 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   SLOPEGRAPH MORPH - Vorher-Nachher Vergleich
+   Kirk's Prinzipien: Slopegraph für Ranking/Veränderungsvergleiche
+   Zeigt Trends durch Liniensteigung, semantische Farben für Richtung
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.amorph-slopegraph {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-sm);
+  background: var(--glass-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+  
+  /* Einblend-Animation */
+  animation: slopegraph-einblenden 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slopegraph-einblenden {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.amorph-slopegraph-leer {
+  color: var(--color-text-dim);
+  font-style: italic;
+  font-size: var(--font-size-sm);
+  text-align: center;
+  padding: var(--space-md);
+}
+
+.amorph-slopegraph-titel {
+  font-size: var(--ui-font-sm);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+/* Header mit Zeitpunkt-Labels */
+.amorph-slopegraph-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-2xs) var(--space-xs);
+  margin-bottom: var(--space-xs);
+}
+
+.amorph-slopegraph-zeit {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.amorph-slopegraph-spacer {
+  flex: 1;
+  height: 1px;
+  margin: 0 var(--space-md);
+  background: linear-gradient(90deg, 
+    var(--glass-border), 
+    transparent 30%, 
+    transparent 70%, 
+    var(--glass-border)
+  );
+}
+
+/* Container für Zeilen */
+.amorph-slopegraph-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+/* Einzelne Vergleichszeile */
+.amorph-slopegraph-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-2xs) 0;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.amorph-slopegraph-row:hover {
+  background: var(--glass-bg);
+  transform: translateX(2px);
+}
+
+/* Seiten (links/rechts) */
+.amorph-slopegraph-side {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  min-width: 90px;
+}
+
+.amorph-slopegraph-left {
+  justify-content: flex-start;
+}
+
+.amorph-slopegraph-right {
+  justify-content: flex-end;
+}
+
+.amorph-slopegraph-name {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 60px;
+}
+
+.amorph-slopegraph-value {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Mittlerer SVG-Bereich */
+.amorph-slopegraph-middle {
+  flex: 1;
+  min-width: 80px;
+  max-width: 150px;
+  height: 40px;
+}
+
+.amorph-slopegraph-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Verbindungslinien */
+.amorph-slopegraph-line {
+  stroke-width: 2;
+  stroke-linecap: round;
+  transition: stroke-width 0.2s ease;
+  
+  /* Animation beim Einblenden */
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: slopegraph-draw 0.6s ease-out forwards;
+}
+
+@keyframes slopegraph-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.amorph-slopegraph-row:hover .amorph-slopegraph-line {
+  stroke-width: 3;
+}
+
+/* Aufwärts-Linie - grün */
+.amorph-slopegraph-line-up {
+  stroke: rgb(76, 175, 80);
+  filter: drop-shadow(0 0 3px rgba(76, 175, 80, 0.4));
+}
+
+/* Abwärts-Linie - rot */
+.amorph-slopegraph-line-down {
+  stroke: rgb(255, 82, 82);
+  filter: drop-shadow(0 0 3px rgba(255, 82, 82, 0.4));
+}
+
+/* Stabil-Linie - neutral */
+.amorph-slopegraph-line-stable {
+  stroke: var(--color-text-dim);
+}
+
+/* Punkte */
+.amorph-slopegraph-point {
+  fill: var(--color-bg);
+  stroke: var(--color-text-muted);
+  stroke-width: 2;
+  transition: all 0.2s ease;
+}
+
+.amorph-slopegraph-row:hover .amorph-slopegraph-point {
+  r: 5;
+}
+
+/* Endpunkt-Farbe basierend auf Trend */
+.amorph-slopegraph-point-up {
+  fill: rgb(76, 175, 80);
+  stroke: rgb(76, 175, 80);
+  filter: drop-shadow(0 0 4px rgba(76, 175, 80, 0.6));
+}
+
+.amorph-slopegraph-point-down {
+  fill: rgb(255, 82, 82);
+  stroke: rgb(255, 82, 82);
+  filter: drop-shadow(0 0 4px rgba(255, 82, 82, 0.6));
+}
+
+.amorph-slopegraph-point-stable {
+  fill: var(--color-text-dim);
+  stroke: var(--color-text-dim);
+}
+
+/* Veränderungs-Anzeige */
+.amorph-slopegraph-change {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 9px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+
+.amorph-slopegraph-change .change-icon {
+  font-size: 11px;
+}
+
+/* Aufwärts - grün mit Glow */
+.amorph-slopegraph-change-up {
+  color: rgb(76, 175, 80);
+  background: rgba(76, 175, 80, 0.15);
+  text-shadow: 0 0 6px rgba(76, 175, 80, 0.5);
+}
+
+/* Abwärts - rot mit Glow */
+.amorph-slopegraph-change-down {
+  color: rgb(255, 82, 82);
+  background: rgba(255, 82, 82, 0.15);
+  text-shadow: 0 0 6px rgba(255, 82, 82, 0.5);
+}
+
+/* Stabil - neutral */
+.amorph-slopegraph-change-stable {
+  color: var(--color-text-muted);
+  background: var(--glass-bg);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   KRITISCHE WERTE - Visuelle Hierarchie
+   Große Veränderungen hervorheben
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Kritischer Anstieg (>50%) */
+.amorph-slopegraph-row[data-trend="up"]:has(.amorph-slopegraph-change:contains('50%')),
+.amorph-slopegraph-row.critical-up {
+  background: rgba(76, 175, 80, 0.08);
+  border-left: 2px solid rgb(76, 175, 80);
+}
+
+/* Kritischer Abfall (>50%) */
+.amorph-slopegraph-row[data-trend="down"]:has(.amorph-slopegraph-change:contains('50%')),
+.amorph-slopegraph-row.critical-down {
+  background: rgba(255, 82, 82, 0.08);
+  border-left: 2px solid rgb(255, 82, 82);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PERSPEKTIVEN-INTEGRATION
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+[data-perspektive] .amorph-slopegraph-zeit {
+  color: var(--perspektive-color, var(--color-accent));
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 400px) {
+  .amorph-slopegraph-side {
+    min-width: 70px;
+  }
+  
+  .amorph-slopegraph-name {
+    max-width: 40px;
+    font-size: 9px;
+  }
+  
+  .amorph-slopegraph-middle {
+    min-width: 60px;
+  }
+}

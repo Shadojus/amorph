@@ -2,9 +2,9 @@
 
 Formlos. Zustandslos. Transformierend.
 
-## Systemübersicht
+## Konzept
 
-Datengetriebenes Transformations-Framework für Pilzdaten-Visualisierung.
+Datengetriebenes Transformations-Framework. Struktur der Daten bestimmt Darstellung.
 
 ```
 DATEN (JSON) → detectType() → MORPH → DOM
@@ -15,19 +15,20 @@ DATEN (JSON) → detectType() → MORPH → DOM
 | Ordner | Zweck |
 |--------|-------|
 | `config/` | YAML-Konfiguration, Schema, 15 Perspektiven |
-| `core/` | Config-Loader, Pipeline, Web Component |
+| `core/` | Config-Loader, Pipeline, Container |
 | `features/` | Isolierte Feature-Module |
-| `morphs/` | Reine Transformations-Funktionen + Compare-Morphs |
+| `morphs/` | Transformations-Funktionen (30+ Primitives) |
 | `styles/` | CSS + Black Glasmorphism |
-| `observer/` | Debug, Rendering, Session Tracking |
-| `util/` | DOM-Helpers, Fetch, Router, Session |
+| `observer/` | Debug, Rendering, Session |
+| `util/` | DOM, Fetch, Router, Semantic |
+| `data/` | Beispieldaten (Pilze, Tiere, Pflanzen) |
 
-## Design: Black Glasmorphism + Neon
+## Design: Black Glasmorphism
 
 - **Hintergrund**: Woodfloor-Textur + schwarzes Overlay
 - **Glass-Elemente**: `backdrop-filter: blur()`, dezente Borders
 - **Pilz-Farben**: 12 Neonfarben für Item-Identifikation
-- **Perspektiven-Farben**: 15 Perspektiven mit eigenen Farbschemata
+- **Kompaktes Layout**: Inline-Felder, automatische Labels
 
 ## 15 Perspektiven
 
@@ -49,43 +50,22 @@ DATEN (JSON) → detectType() → MORPH → DOM
 | statistics | 📊 | Fundstatistiken |
 | temporal | ⏰ | Saisonalität |
 
-## Features
-
-| Feature | Beschreibung |
-|---------|--------------|
-| `header` | Branding, Suche, Perspektiven, Auswahl |
-| `grid` | Karten-Layout |
-| `ansichten` | View-Controller + Auswahl-State |
-| `vergleich` | smartCompare (datengetrieben) |
-| `einzelansicht` | Detail-Page `/:slug` |
-| `infinitescroll` | Auto-Nachladen |
-| `suche` | Semantische Suche |
-| `perspektiven` | Perspektiven-Toggle |
-
-## URL State
-
-```
-?suche=steinpilz
-?perspektiven=chemistry,ecology
-?ansicht=vergleich
-```
-
-## Typ-Erkennung
+## Typ-Erkennung (Kirk-Prinzipien)
 
 ```javascript
 { min, max }           → 'range'
-{ min, max, avg }      → 'stats'
+{ min, max, avg }      → 'stats'  
 [{ axis, value }]      → 'radar'
 { A: 30, B: 20 }       → 'pie'
+[num, num, ...]        → 'sparkline'
 4.5                    → 'rating'
 85                     → 'progress'
 ```
 
-## Morph-Purity
+## Morph-Signatur
 
 ```javascript
-// ✅ DOM erstellen, Callbacks
-// ❌ Globale Events, Side-Effects
+function morph(wert, config, morphField) → HTMLElement
 ```
 
-**Morphs: `(wert, config) → HTMLElement`**
+**Regeln**: DOM erstellen ✅ | Globale Events ❌

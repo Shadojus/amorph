@@ -1,11 +1,11 @@
 # Feature: Einzelansicht
 
-Vollständige Pilz-Detailseite.
+Detail-Seite für einzelne Items.
 
 ## Route
 
 ```
-/:slug → /steinpilz, /pfifferling, /shiitake
+/:slug → /steinpilz, /monarch-butterfly
 ```
 
 ## Features
@@ -20,18 +20,9 @@ Vollständige Pilz-Detailseite.
 ```
 🧪 Chemie
 ├── Primäre Metabolite
-├── Sekundäre Metabolite
-└── Enzyme
+└── Sekundäre Metabolite
 
 🌿 Ökologie
 ├── Symbiose-Partner
 └── Habitat
 ```
-
-## CSS
-
-- `.amorph-einzelansicht` - Container
-- `.einzelansicht-header` - Header + Zurück
-- `.einzelansicht-bild` - Großes Bild
-- `.einzelansicht-felder` - Feld-Grid
-- `.einzelansicht-perspektive` - Perspektiven-Gruppe

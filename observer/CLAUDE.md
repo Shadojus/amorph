@@ -4,15 +4,13 @@ Beobachten. Melden. Nicht eingreifen.
 
 ## Dateien
 
-```
-observer/
-├── index.js        ← Export
-├── debug.js        ← Farbkodiertes Logging (AKTIV)
-├── interaction.js  ← Klicks, Hovers (vorbereitet)
-├── rendering.js    ← Mounts, Transforms (vorbereitet)
-├── session.js      ← User-Sessions (vorbereitet)
-└── target.js       ← Output-Adapter (vorbereitet)
-```
+| Datei | Zweck |
+|-------|-------|
+| `debug.js` | Farbkodiertes Logging |
+| `interaction.js` | Klicks, Hovers |
+| `rendering.js` | DOM-Mutationen |
+| `session.js` | User-Sessions |
+| `target.js` | Output-Adapter |
 
 ## debug.js
 
@@ -20,20 +18,19 @@ observer/
 import { debug } from '../observer/debug.js';
 
 debug.morphs('Badge erkannt', { wert });
-debug.suche('Ergebnisse', { anzahl });
-debug.perspektiven('Geladen', { count: 15 });
+debug.detection('Typ erkannt', { type, morph });
+debug.render('Transform', { count });
 ```
 
 ## Kategorien
 
-| Kategorie | Farbe | Verwendung |
-|-----------|-------|------------|
-| `amorph` | Pink | System-Start |
-| `config` | Lila | Config-Laden |
-| `schema` | Violett | Schema, Perspektiven |
-| `morphs` | Blau | Morph-Erkennung |
-| `suche` | Grün | Suchanfragen |
-| `features` | Gold | Feature-Init |
-| `perspektiven` | Cyan | Perspektiven-Toggle |
-| `header` | Orange | Header-Events |
-| `ansichten` | Magenta | View-Wechsel |
+| Kategorie | Verwendung |
+|-----------|------------|
+| `amorph` | System-Start |
+| `config` | Config-Laden |
+| `schema` | Schema, Perspektiven |
+| `morphs` | Morph-Aufrufe |
+| `detection` | Typ-Erkennung |
+| `render` | DOM-Rendering |
+| `suche` | Suchanfragen |
+| `features` | Feature-Init |

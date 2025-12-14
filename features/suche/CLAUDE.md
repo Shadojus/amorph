@@ -5,7 +5,7 @@ Semantische Suche mit View-Awareness.
 ## Verhalten
 
 - **Grid-View**: DB-Suche + Render
-- **Vergleich-View**: Nur Highlights, keine DB-Suche
+- **Vergleich-View**: Nur Highlights
 
 ## Semantik
 
@@ -18,23 +18,9 @@ suche:
     values: [essbar, bedingt essbar]
 ```
 
-## Prinzip
-
-```
-Eingabe → DB-Query → Neue Daten → Neu Rendern
-```
-
-Kein lokaler Cache. DB ist Wahrheit.
-
 ## Events
 
 | Event | Beschreibung |
 |-------|--------------|
-| `header:suche:ergebnisse` | Query + Ergebnisse + matchedTerms |
+| `header:suche:ergebnisse` | Query + Ergebnisse |
 | `header:suche:fehler` | Bei Fehlern |
-
-## CSS
-
-- `.amorph-suche` - Suchfeld-Container
-- `.amorph-suche input` - Input-Feld
-- `.amorph-aktive-filter` - Aktive Perspektiven-Badges

@@ -1,6 +1,6 @@
 # Compare Morphs
 
-100% DATA-DRIVEN Vergleichssystem.
+Datengetriebenes Vergleichssystem.
 
 ## Struktur
 
@@ -8,18 +8,11 @@
 compare/
 ├── base.js         ← createColors(), detectType()
 ├── index.js        ← Export
-├── composites.js   ← Re-export
-├── primitives/     ← 16 Compare-Primitives
-│   ├── bar.js
-│   ├── radar.js
-│   ├── pie.js
-│   └── ...
+├── primitives/     ← Compare-Varianten der Basis-Morphs
 └── composites/     ← Intelligente Vergleiche
-    ├── analyze.js
-    ├── render.js
     ├── smartCompare.js
-    ├── diffCompare.js
-    └── types.js
+    ├── analyze.js
+    └── render.js
 ```
 
 ## smartCompare
@@ -35,25 +28,21 @@ const el = smartCompare(items, {
 ## Datenfluss
 
 ```
-items[0].data → analyzeItems() → detectType() → render()
+items → analyzeItems() → detectType() → render()
 ```
 
 ## Typ-Kategorien
 
 | Kategorie | Typen |
 |-----------|-------|
-| numeric | number, rating, progress, bar |
+| numeric | number, rating, progress |
 | ranges | range, stats |
 | multidim | radar, pie |
-| sequential | timeline |
-| categorical | tag, badge, boolean, list |
-| textual | text, string, object |
-| media | image, link |
+| sequential | timeline, sparkline |
+| categorical | tag, badge, boolean |
 
 ## Farb-System
 
 ```javascript
-createColors(itemIds) → Map<id, {colorClass, fill, text, line}>
+createColors(itemIds) → Map<id, {colorClass, fill, text}>
 ```
-
-CSS macht Styling (`pilz-farben.css`).

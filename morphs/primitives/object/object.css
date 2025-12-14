@@ -1,20 +1,58 @@
-/* OBJECT MORPH */
+/* OBJECT MORPH - Kompaktes Key-Value Layout */
 .amorph-object {
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: var(--space-xs) var(--space-md);
+  grid-template-columns: minmax(80px, auto) 1fr;
+  gap: 2px 12px;
   margin: 0;
+  font-size: 12px;
 }
 
 .amorph-object dt {
   font-weight: 500;
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  color: var(--color-text-muted, #8b8b8b);
+  font-size: 11px;
+  padding: 2px 0;
+  /* Keine Uppercase - formatLabel macht das schon */
 }
 
 .amorph-object dd {
   margin: 0;
-  color: var(--color-text);
+  color: var(--color-text, #e0e0e0);
+  padding: 2px 0;
+  word-break: break-word;
+}
+
+/* Verschachteltes Object: Eingerückt */
+.amorph-object .amorph-object {
+  margin-left: 8px;
+  padding-left: 8px;
+  border-left: 2px solid rgba(255, 255, 255, 0.1);
+  grid-column: 1 / -1;
+  font-size: 11px;
+}
+
+/* Array inline */
+.amorph-object-array {
+  display: inline;
+  font-size: inherit;
+}
+
+.amorph-object-empty {
+  color: var(--color-text-muted, #666);
+  font-style: italic;
+}
+
+/* Zahlen rechtsbündig */
+.amorph-object-number {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* Boolean-Werte farbig */
+.amorph-object-true {
+  color: var(--color-success, #4caf50);
+}
+
+.amorph-object-false {
+  color: var(--color-text-muted, #666);
 }

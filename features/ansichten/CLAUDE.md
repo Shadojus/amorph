@@ -1,6 +1,6 @@
 # Feature: Ansichten
 
-Verwaltet Auswahl-State und Ansicht-State.
+Verwaltet Auswahl-State und View-State.
 
 ## State
 
@@ -12,27 +12,19 @@ const state = {
 };
 ```
 
-## Exports
+## API
 
 ```javascript
-import { 
-  toggleFeldAuswahl,
-  istFeldAusgewaehlt,
-  getAuswahl,
-  getAuswahlPilzIds,
-  getAnsichtState,
-  setAktiveAnsicht
-} from './ansichten/index.js';
+toggleFeldAuswahl(pilzId, feldName, daten)
+istFeldAusgewaehlt(pilzId, feldName)
+getAuswahl()
+getAuswahlPilzIds()
+setAktiveAnsicht(ansicht)
 ```
 
 ## Events
 
 | Event | Richtung | Beschreibung |
 |-------|----------|--------------|
-| `amorph:auswahl-geaendert` | OUT | Auswahl geändert (inkl. `entfernterPilz`) |
+| `amorph:auswahl-geaendert` | OUT | Auswahl geändert |
 | `amorph:ansicht-wechsel` | IN | Ansicht wechseln |
-
-## CSS
-
-- `.header-auswahl` - Auswahl-Zeile (transparent)
-- `.amorph-auswahl-badge` - Pilz-Badge mit Glass

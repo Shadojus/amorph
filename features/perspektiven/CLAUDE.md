@@ -1,41 +1,29 @@
 # Feature: Perspektiven
 
-15 verschiedene Blickwinkel auf Pilzdaten.
+15 verschiedene Blickwinkel auf Daten.
 
 ## 15 Perspektiven
 
-| ID | Symbol | Farbe |
+| ID | Symbol | Fokus |
 |----|--------|-------|
-| chemistry | 🧪 | Violett |
-| conservation | 🛡️ | Rot |
-| culinary | 🍳 | Grün |
-| cultivation | 🌱 | Braun |
-| culture | 📜 | Braun |
-| ecology | 🌿 | Grün |
-| economy | 💰 | Gold |
-| geography | 🗺️ | Blau |
-| identification | 🔍 | Grau |
-| interactions | 🔗 | Magenta |
-| medicine | 💊 | Türkis |
-| research | 📚 | Cyan |
-| safety | ⚠️ | Rot |
-| statistics | 📊 | Grau |
-| temporal | ⏰ | Indigo |
-
-## Config
-
-```
-config/schema/perspektiven/
-├── index.yaml        ← Aktive Liste
-├── chemistry.yaml
-├── conservation.yaml
-└── ...
-```
+| chemistry | 🧪 | Metabolite |
+| conservation | 🛡️ | Schutz |
+| culinary | 🍳 | Küche |
+| cultivation | 🌱 | Anbau |
+| culture | 📜 | Kultur |
+| ecology | 🌿 | Ökologie |
+| economy | 💰 | Wirtschaft |
+| geography | 🗺️ | Verbreitung |
+| identification | 🔍 | Bestimmung |
+| interactions | 🔗 | Interaktionen |
+| medicine | 💊 | Medizin |
+| research | 📚 | Forschung |
+| safety | ⚠️ | Sicherheit |
+| statistics | 📊 | Statistik |
+| temporal | ⏰ | Zeit |
 
 ## Neue Perspektive
 
-1. YAML in `config/schema/perspektiven/`
-2. ID zu `index.yaml` hinzufügen
-3. CSS zu `styles/perspektiven/` hinzufügen
-
-**Kein Theme-Code nötig!** smartCompare erkennt automatisch.
+1. YAML: `config/schema/perspektiven/name.yaml`
+2. Index: ID zu `index.yaml` hinzufügen
+3. CSS: `styles/perspektiven/name.css`

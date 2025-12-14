@@ -1,50 +1,50 @@
 # Schema
 
-Data-driven modulares Schema-System.
+Modulares Schema-System.
 
 ## Struktur
 
 ```
 schema/
-├── index.yaml        ← Dokumentation
-├── basis.yaml        ← Kern-Konfiguration
-├── semantik.yaml     ← Such-Mappings
-└── perspektiven/     ← 15 Perspektiven (self-contained)
-    ├── index.yaml    ← Aktive Perspektiven-Liste
+├── basis.yaml        ← Kern-Felder (id, name, slug)
+├── semantik.yaml     ← Suche, Farben, Schwellwerte
+└── perspektiven/     ← 15 Perspektiven
+    ├── index.yaml    ← Aktive Liste
     ├── chemistry.yaml
-    ├── conservation.yaml
-    ├── culinary.yaml
-    ├── cultivation.yaml
-    ├── culture.yaml
     ├── ecology.yaml
-    ├── economy.yaml
-    ├── geography.yaml
-    ├── identification.yaml
-    ├── interactions.yaml
-    ├── medicine.yaml
-    ├── research.yaml
-    ├── safety.yaml
-    ├── statistics.yaml
-    └── temporal.yaml
+    └── ...
 ```
 
-## Perspektiven-Datei Format
+## semantik.yaml
 
 ```yaml
-id: my_perspective
-name: My Perspective
-symbol: 🔮
-farben:
-  - "rgba(r, g, b, 0.65)"
+visuell:
+  farben:
+    kritisch: "#f44336"
+    warnung: "#ff9800"  
+    positiv: "#4caf50"
+  schwellwerte:
+    standard: [30, 70]      # <30 kritisch, >70 positiv
+    invertiert: [70, 30]    # Umgekehrt für Toxizität
+```
+
+## Perspektiven-Format
+
+```yaml
+id: chemistry
+name: Chemie
+symbol: 🧪
+farben: ['#9f7aea', '#805ad5']
 felder:
-  - field_name_1
-  - field_name_2
+  - chemistry_primaer_metabolite
+  - chemistry_sekundaer_metabolite
 keywords:
-  - suchbegriff
+  - metabolit
+  - enzym
 ```
 
 ## Neue Perspektive
 
-1. YAML-Datei erstellen in `perspektiven/`
-2. ID zu `perspektiven/index.yaml` hinzufügen
-3. CSS zu `styles/perspektiven/` hinzufügen
+1. YAML erstellen: `perspektiven/name.yaml`
+2. ID hinzufügen: `perspektiven/index.yaml`
+3. CSS erstellen: `styles/perspektiven/name.css`

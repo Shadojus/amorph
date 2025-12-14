@@ -1,32 +1,39 @@
 # Primitives
 
-28+ Basis-Morphs für Datenvisualisierung.
+30+ Basis-Morphs für Datenvisualisierung.
 
-## Struktur
+## Übersicht
 
+| Kategorie | Morphs |
+|-----------|--------|
+| **Text** | text, number, boolean |
+| **Kategorien** | tag, badge, list |
+| **Charts** | bar, pie, radar, gauge |
+| **Statistik** | stats, range, progress, rating |
+| **Trends** | sparkline, slopegraph, heatmap |
+| **Zeit** | timeline, lifecycle, steps, calendar |
+| **Struktur** | object, hierarchy, network |
+| **Medien** | image, link, map, citation |
+| **Spezial** | dosage, currency, severity |
+
+## Dateien
+
+Jeder Morph hat eigenen Ordner:
 ```
 primitives/
-├── index.js      ← Export aller Morphs
-├── index.yaml    ← Shared Settings
-├── index.css     ← Shared Styles
-│
-├── badge/        ← Status-Badges
-├── bar/          ← Balkendiagramme
-├── boolean/      ← Ja/Nein
-├── image/        ← Bilder
-├── list/         ← Listen
-├── number/       ← Zahlen
-├── object/       ← Key-Value
-├── pie/          ← Tortendiagramme
-├── progress/     ← Fortschritt
-├── radar/        ← Spider-Charts
-├── range/        ← Min-Max
-├── rating/       ← Sterne
-├── stats/        ← Statistiken
-├── tag/          ← Tags
-├── text/         ← Text
-├── timeline/     ← Zeitachse
-└── ...           ← Weitere (gauge, calendar, etc.)
+├── bar/
+│   ├── bar.js
+│   └── bar.css
+├── sparkline/
+│   ├── sparkline.js
+│   └── sparkline.css
+└── ...
+```
+
+## Signatur
+
+```javascript
+function morph(wert, config, morphField) → HTMLElement
 ```
 
 ## Prinzipien
@@ -34,9 +41,4 @@ primitives/
 1. **Keine Domain-Logik** - "Pilz" verboten
 2. **Reine Funktionen** - Kein State
 3. **Datengetrieben** - Struktur bestimmt Darstellung
-
-## Signatur
-
-```javascript
-function morph(wert, config) → HTMLElement
-```
+4. **Kompakt** - Platzsparende Styles

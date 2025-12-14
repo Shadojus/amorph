@@ -28,6 +28,9 @@ export { pie } from './pie/pie.js';
 export { rating } from './rating/rating.js';
 export { progress } from './progress/progress.js';
 export { timeline } from './timeline/timeline.js';
+export { sparkline } from './sparkline/sparkline.js';
+export { slopegraph } from './slopegraph/slopegraph.js';
+export { heatmap } from './heatmap/heatmap.js';
 
 // Media-Morphs
 export { image } from './image/image.js';
@@ -63,6 +66,9 @@ import { pie } from './pie/pie.js';
 import { rating } from './rating/rating.js';
 import { progress } from './progress/progress.js';
 import { timeline } from './timeline/timeline.js';
+import { sparkline } from './sparkline/sparkline.js';
+import { slopegraph } from './slopegraph/slopegraph.js';
+import { heatmap } from './heatmap/heatmap.js';
 import { image } from './image/image.js';
 import { link } from './link/link.js';
 import { map } from './map/map.js';
@@ -100,6 +106,12 @@ export const primitives = {
   rating,
   progress,
   timeline,
+  sparkline,
+  trend: sparkline,  // Alias
+  slopegraph,
+  slope: slopegraph,  // Alias
+  heatmap,
+  matrix: heatmap,  // Alias
   
   // Media
   image,

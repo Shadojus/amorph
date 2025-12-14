@@ -1,17 +1,9 @@
 # Themes
 
-Pilz-spezifische Theme-Overrides.
-
-## Struktur
-
-```
-themes/
-└── pilze/
-    └── morphs/   ← Pilz-spezifische Morph-Styles
-```
+Optionale Style-Overrides.
 
 ## Hinweis
 
-Das Vergleichssystem ist jetzt **DATA-DRIVEN** und benötigt keine Theme-Dateien mehr. smartCompare erkennt Typen automatisch.
+Das System ist **datengetrieben** und benötigt keine Theme-Dateien. Morphs erkennen Typen automatisch.
 
-Dieser Ordner enthält nur noch optionale Pilz-spezifische Style-Overrides.
+Dieser Ordner enthält nur optionale domänen-spezifische Style-Overrides.

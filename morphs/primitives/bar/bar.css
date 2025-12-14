@@ -1,58 +1,57 @@
-/* BAR CHART MORPH */
+/* BAR CHART MORPH - Kompakte horizontale Balken */
 .amorph-bar {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  padding: var(--space-sm);
-  background: var(--glass-bg);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--glass-border);
+  gap: 3px;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .amorph-bar-titel {
-  font-size: var(--ui-font-sm);
+  font-size: 10px;
   font-weight: 600;
-  color: var(--color-text-muted);
+  color: rgba(255, 255, 255, 0.5);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding-bottom: var(--space-xs);
-  border-bottom: 1px solid var(--glass-border);
-  margin-bottom: var(--space-2xs);
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 2px;
 }
 
 .amorph-bar-leer {
-  color: var(--color-text-dim);
+  color: var(--color-text-dim, #666);
   font-style: italic;
-  font-size: var(--font-size-sm);
+  font-size: 11px;
 }
 
 .amorph-bar-scale {
   display: flex;
   justify-content: space-between;
-  padding: var(--space-xs) 60px 0 60px;
+  padding: 3px 45px 0 50px;
   font-size: 7px;
-  color: var(--color-text-dim);
+  color: rgba(255, 255, 255, 0.35);
   font-variant-numeric: tabular-nums;
-  border-top: 1px solid var(--glass-border);
-  margin-top: var(--space-2xs);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  margin-top: 2px;
 }
 
 .amorph-bar-scale-mid {
-  color: var(--color-text-dim);
   opacity: 0.7;
 }
 
 .amorph-bar-row {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: 6px;
 }
 
 .amorph-bar-label {
-  flex: 0 0 55px;
+  flex: 0 0 45px;
   font-size: 9px;
-  font-weight: 600;
-  color: var(--color-text-muted);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
   text-align: right;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -61,27 +60,27 @@
 
 .amorph-bar-track {
   flex: 1;
-  height: 12px;
-  background: var(--glass-bg);
-  border-radius: var(--ui-radius-sm);
+  height: 10px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
   overflow: hidden;
-  border: 1px solid var(--glass-border);
+  border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .amorph-bar-fill {
   height: 100%;
   background: linear-gradient(90deg, 
-    color-mix(in srgb, var(--color-accent) 42%, transparent),
-    color-mix(in srgb, var(--color-accent) 58%, transparent)
+    rgba(100, 181, 246, 0.4),
+    rgba(100, 181, 246, 0.6)
   );
-  border-radius: var(--ui-radius-sm);
+  border-radius: 3px;
   transition: width 0.3s ease;
 }
 
 .amorph-bar-value {
-  flex: 0 0 45px;
+  flex: 0 0 35px;
   font-size: 9px;
   font-weight: 600;
-  color: var(--color-text-muted);
+  color: rgba(255, 255, 255, 0.7);
   font-variant-numeric: tabular-nums;
 }

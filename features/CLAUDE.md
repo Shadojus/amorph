@@ -2,21 +2,18 @@
 
 Eigenständig. Isoliert. Optional.
 
-## Struktur
+## Übersicht
 
-```
-features/
-├── context.js        ← Feature-Context Factory
-├── index.js          ← Feature-Registry
-├── header/           ← Branding, Suche, Perspektiven
-├── grid/             ← Karten-Ansicht
-├── ansichten/        ← View-Controller + Auswahl-State
-├── vergleich/        ← smartCompare-Ansicht
-├── einzelansicht/    ← Detail-Page /:slug
-├── infinitescroll/   ← Auto-Nachladen
-├── suche/            ← Suchfunktion
-└── perspektiven/     ← 15 Perspektiven-Buttons
-```
+| Feature | Zweck |
+|---------|-------|
+| `header` | Branding, Suche, Perspektiven, Auswahl |
+| `grid` | Karten-Layout mit Glass-Cards |
+| `ansichten` | View-Controller + Auswahl-State |
+| `vergleich` | smartCompare-Ansicht |
+| `einzelansicht` | Detail-Page `/:slug` |
+| `infinitescroll` | Auto-Nachladen |
+| `suche` | Semantische Suche |
+| `perspektiven` | 15 Perspektiven-Buttons |
 
 ## Context API
 
@@ -41,6 +38,7 @@ document.addEventListener('amorph:pilz:ausgewaehlt', handler);
 ## Regeln
 
 ```javascript
-// ✅ ctx.dom, ctx.emit(), document.addEventListener()
+// ✅ ctx.dom, ctx.emit()
+// ✅ document.addEventListener()
 // ❌ window.*, document.body.*
 ```

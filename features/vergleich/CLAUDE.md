@@ -1,10 +1,8 @@
 # Feature: Vergleich
 
-100% DATA-DRIVEN comparison mit smartCompare.
+Datengetriebene Vergleichsansicht.
 
 ## Architektur
-
-Kein themes/ Ordner - alles automatisch:
 
 ```javascript
 import { smartCompare } from '../../morphs/compare/composites/index.js';
@@ -22,20 +20,12 @@ for (const perspId of aktivePerspektiven) {
 
 1. `getAuswahlNachPilz()` → Ausgewählte Items
 2. `createColors(itemIds)` → Farben zuweisen
-3. `getPerspektive(perspId)` → Perspektiven-Definition
-4. `smartCompare(items, config)` → Automatisches Rendering
-
-## Glasmorphism
-
-```css
-.compare-perspektive {
-  background: linear-gradient(135deg, rgba(0,0,0,0.88), rgba(0,0,0,0.92));
-  backdrop-filter: blur(16px);
-}
-```
+3. `smartCompare(items, config)` → Automatisches Rendering
 
 ## Events
 
-- `perspektive:activated`
-- `perspektive:deactivated`
-- `vergleich:render`
+| Event | Beschreibung |
+|-------|--------------|
+| `perspektive:activated` | Perspektive aktiviert |
+| `perspektive:deactivated` | Perspektive deaktiviert |
+| `vergleich:render` | Neu gerendert |

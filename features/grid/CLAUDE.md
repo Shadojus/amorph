@@ -7,7 +7,7 @@ Glasmorphism-Karten-Layout.
 - Black Glasmorphism Design
 - Perspektiven-Feld-Visibility
 - Layouts: Liste, Grid, Kompakt
-- Felder anklickbar für Auswahl
+- Kompakte Feld-Darstellung
 
 ## Glasmorphism
 
@@ -21,16 +21,10 @@ Glasmorphism-Karten-Layout.
 
 ## Perspektiven-Integration
 
-```html
-<amorph-container 
-  data-field="chemistry_primaer_metabolite"
-  data-perspektive-chemistry="true">
-```
-
 Bei aktiver Perspektive: nur zugehörige Felder sichtbar.
 
-## Feld-Auswahl
-
-- Klick auf Feld → `amorph:feld-auswahl` Event
-- Ausgewählt → `.feld-ausgewaehlt` Klasse
-- Entfernt aus Header → Grid deselektiert
+```html
+<amorph-container 
+  data-field="chemistry_metabolite"
+  data-perspektive-chemistry="true">
+```

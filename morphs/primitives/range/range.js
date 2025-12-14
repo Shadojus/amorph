@@ -22,7 +22,8 @@ export function range(wert, config = {}) {
   text.textContent = `${min}${einheit} – ${max}${einheit}`;
   el.appendChild(text);
   
-  if (config.visualisierung) {
+  // Show visual bar by default (unless explicitly disabled)
+  if (config.visualisierung !== false) {
     const bar = document.createElement('span');
     bar.className = 'amorph-range-bar';
     bar.setAttribute('role', 'img');

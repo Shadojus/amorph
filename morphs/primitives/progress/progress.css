@@ -1,73 +1,69 @@
-/* PROGRESS MORPH */
+/* PROGRESS MORPH - Kompakter Fortschrittsbalken */
 .amorph-progress {
-  padding: var(--space-sm);
-  background: var(--glass-bg);
-  border-radius: var(--ui-radius-md);
-  border: 1px solid var(--glass-border);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 6px;
+  background: transparent;
+  border-radius: 4px;
 }
 
 .amorph-progress-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--space-xs);
-  font-size: var(--ui-font-sm);
+  margin-bottom: 2px;
+  font-size: 10px;
 }
 
 .amorph-progress-label {
-  font-weight: 600;
-  color: var(--color-text-muted);
-}
-
-.amorph-progress-value {
-  color: var(--color-text-dim);
-  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .amorph-progress-track {
   position: relative;
-  height: 10px;
-  background: var(--glass-bg);
-  border-radius: 5px;
+  flex: 1;
+  height: 6px;
+  min-width: 50px;
+  max-width: 100px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
   overflow: hidden;
-  border: 1px solid var(--glass-border);
+  border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .amorph-progress-fill {
   height: 100%;
-  border-radius: 5px;
+  border-radius: 3px;
   transition: width 0.3s ease;
 }
 
-/* Progress-Farben - Glas-Stil */
+.amorph-progress-value-display {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Progress-Farben */
 .amorph-progress-high {
   background: linear-gradient(90deg, 
-    rgba(100, 220, 160, 0.28),
-    rgba(100, 220, 160, 0.45)
+    rgba(76, 175, 80, 0.5),
+    rgba(76, 175, 80, 0.7)
   );
 }
 
 .amorph-progress-medium {
   background: linear-gradient(90deg, 
-    rgba(240, 190, 80, 0.28),
-    rgba(240, 190, 80, 0.45)
+    rgba(255, 152, 0, 0.5),
+    rgba(255, 152, 0, 0.7)
   );
 }
 
 .amorph-progress-low {
   background: linear-gradient(90deg,
-    rgba(240, 110, 110, 0.28),
-    rgba(240, 110, 110, 0.45)
+    rgba(244, 67, 54, 0.5),
+    rgba(244, 67, 54, 0.7)
   );
-}
-
-.amorph-progress-percent {
-  position: absolute;
-  right: 6px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 9px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.60);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }

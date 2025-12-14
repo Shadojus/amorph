@@ -14,6 +14,51 @@ import { getFeldMorphs, getVersteckteFelder, getFeldConfig, sortBySchemaOrder } 
 let detectionConfig = null;
 
 /**
+ * Formatiert Feldnamen human-readable
+ * PROTEIN_G → Protein (g)
+ * spore_size_um → Spore Size (µm)
+ * snake_case → Title Case
+ */
+function formatFieldLabel(key) {
+  // Bekannte Einheiten-Suffixe erkennen
+  const unitMap = {
+    '_g': ' (g)',
+    '_mg': ' (mg)',
+    '_ug': ' (µg)',
+    '_um': ' (µm)',
+    '_mm': ' (mm)',
+    '_cm': ' (cm)',
+    '_m': ' (m)',
+    '_kg': ' (kg)',
+    '_l': ' (L)',
+    '_ml': ' (ml)',
+    '_pct': ' (%)',
+    '_percent': ' (%)'
+  };
+  
+  let label = key;
+  let unit = '';
+  
+  // Prüfe auf Einheit am Ende
+  for (const [suffix, unitStr] of Object.entries(unitMap)) {
+    if (label.toLowerCase().endsWith(suffix)) {
+      unit = unitStr;
+      label = label.slice(0, -suffix.length);
+      break;
+    }
+  }
+  
+  // snake_case und UPPER_CASE zu Title Case
+  label = label
+    .replace(/_/g, ' ')
+    .replace(/([a-z])([A-Z])/g, '$1 $2') // camelCase
+    .toLowerCase()
+    .replace(/\b\w/g, c => c.toUpperCase()); // Title Case
+  
+  return label + unit;
+}
+
+/**
  * Sets the detection configuration (from morphs.yaml)
  */
 export function setErkennungConfig(config) {
@@ -105,7 +150,11 @@ export function transform(daten, config, customMorphs = {}) {
     // Wrap in container
     const container = document.createElement('amorph-container');
     container.setAttribute('data-morph', morphName);
-    if (fieldName) container.setAttribute('data-field', fieldName);
+    if (fieldName) {
+      container.setAttribute('data-field', fieldName);
+      // Human-readable Label
+      container.setAttribute('data-label', formatFieldLabel(fieldName));
+    }
     container.appendChild(element);
     
     return container;
@@ -192,9 +241,20 @@ function detectType(value) {
   return 'unknown';
 }
 
-/**
- * Detects the best morph for numbers
- * Rules come from config/morphs.yaml → detection
+/* ═══════════════════════════════════════════════════════════════════════════════
+ * NUMBER TYPE DETECTION
+ * ═══════════════════════════════════════════════════════════════════════════════
+ * 
+ * RATING: 0-10 mit Dezimalstellen (z.B. 7.5, 8.2)
+ *   → Kleine Skala, typisch für Bewertungen
+ *   → Dezimalen zeigen Präzision (vs. ganzzahlige Progress-Werte)
+ * 
+ * PROGRESS: 0-100 Ganzzahlen (z.B. 75, 100)
+ *   → Prozentuale Werte, Fortschrittsbalken
+ *   → Ganzzahlen unterscheiden von Rating
+ * 
+ * NUMBER: Alle anderen numerischen Werte
+ *   → Standardanzeige für beliebige Zahlen
  */
 function detectNumberType(value) {
   const cfg = detectionConfig || {};
@@ -214,18 +274,53 @@ function detectNumberType(value) {
   return 'number';
 }
 
-/**
- * Detects the best morph for strings
- * Keywords come from config/morphs.yaml → detection.badge
+/* ═══════════════════════════════════════════════════════════════════════════════
+ * STRING TYPE DETECTION
+ * ═══════════════════════════════════════════════════════════════════════════════
+ * 
+ * LINK: URL-Pattern erkannt (http://, https://, www.)
+ *   → Externe/interne Links, klickbar
+ * 
+ * IMAGE: Bildpfad erkannt (.jpg, .png, .webp, .svg, .gif)
+ *   → Bildanzeige mit Vorschau
+ * 
+ * BADGE: Status-Keywords + kurze Länge (≤25 Zeichen)
+ *   → Farbcodierte Status-Anzeigen: active, edible, toxic, etc.
+ *   → Kirk: Semantische Farben für Zustände
+ * 
+ * TAG: Kurze Strings (≤20 Zeichen) ohne Status-Semantik
+ *   → Kategorien, Labels, kurze Begriffe
+ * 
+ * TEXT: Alle anderen Strings
+ *   → Standard-Textanzeige
  */
 function detectStringType(value) {
   const lower = value.toLowerCase().trim();
   const cfg = detectionConfig?.badge || {};
   
-  // Badge: Keywords from config or fallback
+  /* ─── LINK: URL-Patterns ─── */
+  if (/^https?:\/\/|^www\./i.test(value)) {
+    return 'link';
+  }
+  
+  /* ─── IMAGE: Bildpfade ─── */
+  if (/\.(jpg|jpeg|png|gif|webp|svg|bmp|ico)$/i.test(value)) {
+    return 'image';
+  }
+  
+  /* ─── BADGE: Status-Keywords (kurz + semantisch bedeutsam) ─── */
   const keywords = cfg.keywords || [
+    // Verfügbarkeit
     'active', 'inactive', 'yes', 'no', 'online', 'offline',
-    'open', 'closed', 'available', 'unavailable', 'edible', 'toxic', 'deadly'
+    'open', 'closed', 'available', 'unavailable', 'enabled', 'disabled',
+    // Essbarkeit (Kirk: semantische Farben!)
+    'edible', 'toxic', 'deadly', 'poisonous', 'choice', 'caution',
+    'essbar', 'giftig', 'tödlich', 'bedingt',
+    // Qualität/Status
+    'good', 'bad', 'excellent', 'poor', 'warning', 'danger', 'safe',
+    'pending', 'approved', 'rejected', 'complete', 'incomplete',
+    // Kategorien
+    'high', 'medium', 'low', 'critical', 'normal', 'none'
   ];
   const maxLength = cfg.maxLength || 25;
   
@@ -233,12 +328,76 @@ function detectStringType(value) {
     return 'badge';
   }
   
+  /* ─── TAG: Kurze Strings ohne Status-Bedeutung ─── */
+  if (value.length <= 20 && !value.includes(' ') || value.length <= 15) {
+    return 'tag';
+  }
+  
   return 'string';
 }
 
-/**
- * Detects the best morph for arrays
- * Rules come from config/morphs.yaml → detection.array
+/* ═══════════════════════════════════════════════════════════════════════════════
+ * ARRAY TYPE DETECTION (Kirk: Chart-Auswahl nach Datenstruktur)
+ * ═══════════════════════════════════════════════════════════════════════════════
+ * 
+ * PRIORITÄT: Spezifische Muster vor generischen!
+ * 
+ * SPARKLINE: Numerisches Array (alle Zahlen)
+ *   → Kirk: Inline-Trends für Zeitreihen
+ *   → Kompakte Darstellung von Entwicklungen
+ *   → Beispiel: [12, 45, 23, 67, 34]
+ * 
+ * SLOPEGRAPH: Array mit vorher/nachher Struktur
+ *   → Kirk: Vorher-Nachher-Vergleiche, Ranking-Änderungen
+ *   → Beispiel: [{name: "A", vorher: 10, nachher: 20}, ...]
+ * 
+ * HEATMAP: 2D-Matrix (Array von Arrays mit Zahlen)
+ *   → Kirk: Matrix-Visualisierung, Korrelationen
+ *   → Beispiel: [[1,2,3], [4,5,6], [7,8,9]]
+ * 
+ * LIFECYCLE: Phase/Step-Struktur (Prozessschritte)
+ *   → Lebenszyklus, Prozessabläufe mit Phasen
+ *   → Beispiel: [{phase: "Spore", duration: "2 weeks"}, ...]
+ * 
+ * TIMELINE: Zeitbasierte Events (date/time/month)
+ *   → Kirk: Zeitreihen mit Ereignissen
+ *   → Beispiel: [{date: "2023-01", event: "Start"}, ...]
+ * 
+ * RADAR: Mehrdimensionale Daten (3+ Achsen)
+ *   → Kirk: Profile, Skill-Charts, Vergleiche
+ *   → Min. 3 Achsen benötigt!
+ *   → Beispiel: [{axis: "Geschmack", value: 80}, ...]
+ * 
+ * HIERARCHY: Verschachtelte Ebenen (level/parent)
+ *   → Taxonomien, Baumstrukturen
+ *   → Beispiel: [{name: "Root", level: 0}, {name: "Child", level: 1}]
+ * 
+ * NETWORK: Beziehungsdaten (connections/relations)
+ *   → Kirk: Netzwerk-Visualisierungen
+ *   → Beispiel: [{name: "A", connections: ["B", "C"]}, ...]
+ * 
+ * STEPS: Prozessschritte (step/order)
+ *   → Anleitungen, Workflows
+ *   → Beispiel: [{step: 1, action: "Sammeln"}, ...]
+ * 
+ * CALENDAR: Monats/Saison-Daten
+ *   → Verfügbarkeitskalender
+ *   → Beispiel: [{month: "Jan", active: true}, ...]
+ * 
+ * PIE: Wenige Kategorien (≤6) mit label/value
+ *   → Kirk: Proportionen, Anteile (max 6 Slices!)
+ *   → Beispiel: [{label: "A", value: 30}, {label: "B", value: 70}]
+ * 
+ * BAR: Viele Kategorien (>6) mit label/value
+ *   → Kirk: Kategorienvergleiche, Rankings
+ *   → Beispiel: [{label: "Item1", value: 45}, ...]
+ * 
+ * SEVERITY: Schweregrade/Bedrohungen
+ *   → Kirk: Kritische Werte hervorheben
+ *   → Beispiel: [{typ: "Risiko", schwere: 80}, ...]
+ * 
+ * LIST: Fallback für alle anderen Arrays
+ *   → Einfache Auflistung
  */
 function detectArrayType(value) {
   if (value.length === 0) return 'array';
@@ -246,114 +405,307 @@ function detectArrayType(value) {
   const first = value[0];
   const cfg = detectionConfig?.array || {};
   
-  // Helper: Ensure we have an array
+  // Helper: Array aus String oder Array
   const ensureArray = (val, fallback) => {
     if (Array.isArray(val)) return val;
     if (typeof val === 'string') return val.split(',').map(s => s.trim());
     return fallback;
   };
   
-  // All elements are objects?
-  if (typeof first === 'object' && first !== null) {
-    const keys = Object.keys(first);
-    
-    // Lifecycle: Arrays with phase/step structure (check FIRST before other rules!)
-    const lifecycleKeys = ['phase', 'step', 'stage', 'stadium', 'schritt'];
-    if (lifecycleKeys.some(k => k in first)) {
-      return 'lifecycle';
+  /* ─── SPARKLINE: Rein numerisches Array → Inline-Trend ─── */
+  // Kirk: Sparklines für kompakte Zeitreihen-Darstellung
+  if (value.every(v => typeof v === 'number')) {
+    // Mindestens 3 Werte für einen sinnvollen Trend
+    if (value.length >= 3) {
+      return 'sparkline';
     }
-    
-    // Radar: from config or fallback
-    const radarCfg = cfg.radar || {};
-    const radarKeys = ensureArray(radarCfg.requiredKeys, ['axis', 'value', 'score', 'dimension', 'factor']);
-    if (value.length >= (radarCfg.minItems || 3) && 
-        radarKeys.some(k => k in first)) {
-      return 'radar';
-    }
-    
-    // Timeline: from config or fallback
-    const timelineCfg = cfg.timeline || {};
-    const timelineKeys = ensureArray(timelineCfg.requiredKeys, ['date', 'time', 'month', 'period']);
-    if (timelineKeys.some(k => k in first)) {
-      return 'timeline';
-    }
-    
-    // Pie/Bar: Arrays with label/value structure (from config)
-    const arrayCfg = cfg.array || cfg || {};
-    const pieCfg = arrayCfg.pie || {};
-    const barCfg = arrayCfg.bar || {};
-    const labelKeys = ensureArray(pieCfg.requiredKeys || barCfg.requiredKeys, ['label', 'name', 'category']);
-    const valueKeys = ensureArray(pieCfg.alternativeKeys || barCfg.alternativeKeys, ['value', 'count', 'amount', 'score']);
-    const hasLabel = labelKeys.some(k => k in first);
-    const hasValue = valueKeys.some(k => k in first);
-    if (hasLabel && hasValue) {
-      return value.length <= 6 ? 'pie' : 'bar';
+    return 'bar'; // Fallback für 2 Werte
+  }
+  
+  /* ─── HEATMAP: 2D-Matrix (Array von Arrays) ─── */
+  // Kirk: Heatmap für Matrix-Daten, Korrelationen
+  if (value.every(v => Array.isArray(v) && v.every(n => typeof n === 'number'))) {
+    if (value.length >= 2 && value[0].length >= 2) {
+      return 'heatmap';
     }
   }
   
-  // All elements are numbers → Bar Chart
-  if (value.every(v => typeof v === 'number')) {
+  // Ab hier: Array von Objekten
+  if (typeof first !== 'object' || first === null) {
+    return 'array';
+  }
+  
+  const keys = Object.keys(first);
+  
+  /* ─── SLOPEGRAPH: Vorher-Nachher Vergleich ─── */
+  // Kirk: Slopegraph zeigt Veränderungen zwischen zwei Zeitpunkten
+  const slopeKeys = ['vorher', 'nachher', 'before', 'after', 'start', 'end', 'v1', 'v2', 'alt', 'neu'];
+  const hasSlopeStructure = slopeKeys.filter(k => k in first).length >= 2;
+  if (hasSlopeStructure && 'name' in first || 'label' in first) {
+    return 'slopegraph';
+  }
+  
+  /* ─── LIFECYCLE: Phasen/Stadien eines Prozesses ─── */
+  // Lebenszyklus mit phase/stadium/stage
+  const lifecycleKeys = ['phase', 'stage', 'stadium', 'schritt', 'stufe'];
+  if (lifecycleKeys.some(k => k in first)) {
+    return 'lifecycle';
+  }
+  
+  /* ─── STEPS: Schrittweise Anleitungen ─── */
+  // Workflows, Anleitungen mit step/order
+  const stepsKeys = ['step', 'order', 'nummer', 'reihenfolge'];
+  if (stepsKeys.some(k => k in first) && ('action' in first || 'beschreibung' in first || 'text' in first)) {
+    return 'steps';
+  }
+  
+  /* ─── TIMELINE: Zeitbasierte Ereignisse ─── */
+  // Kirk: Zeitreihen mit date/time/month
+  const timelineCfg = cfg.timeline || {};
+  const timelineKeys = ensureArray(timelineCfg.requiredKeys, ['date', 'time', 'datum', 'zeit', 'period', 'year', 'jahr']);
+  if (timelineKeys.some(k => k in first) && ('event' in first || 'ereignis' in first || 'description' in first || 'label' in first)) {
+    return 'timeline';
+  }
+  
+  /* ─── CALENDAR: Monats/Saison-Kalender ─── */
+  // Verfügbarkeitskalender mit month/monat + active
+  const calendarKeys = ['month', 'monat', 'saison', 'season'];
+  if (calendarKeys.some(k => k in first) && ('active' in first || 'aktiv' in first || 'available' in first)) {
+    return 'calendar';
+  }
+  
+  /* ─── RADAR: Mehrdimensionale Profile (min 3 Achsen!) ─── */
+  // Kirk: Radar für Profile, Skill-Charts
+  const radarCfg = cfg.radar || {};
+  const radarKeys = ensureArray(radarCfg.requiredKeys, ['axis', 'achse', 'dimension', 'factor', 'faktor', 'kategorie']);
+  const radarValueKeys = ['value', 'wert', 'score', 'rating', 'level'];
+  const hasRadarAxis = radarKeys.some(k => k in first);
+  const hasRadarValue = radarValueKeys.some(k => k in first);
+  if (value.length >= 3 && hasRadarAxis && hasRadarValue) {
+    return 'radar';
+  }
+  
+  /* ─── HIERARCHY: Verschachtelte Strukturen ─── */
+  // Taxonomien, Baumstrukturen
+  const hierarchyKeys = ['level', 'ebene', 'parent', 'children', 'kinder'];
+  if (hierarchyKeys.some(k => k in first)) {
+    return 'hierarchy';
+  }
+  
+  /* ─── NETWORK: Beziehungsnetzwerke ─── */
+  // Kirk: Connection/Flow Diagramme
+  const networkKeys = ['connections', 'relations', 'verbindungen', 'links', 'edges'];
+  if (networkKeys.some(k => k in first)) {
+    return 'network';
+  }
+  
+  /* ─── SEVERITY: Schweregrad/Warnungen ─── */
+  // Kirk: Kritische Werte visuell hervorheben
+  const severityKeys = ['schwere', 'severity', 'level', 'bedrohung', 'risiko', 'gefahr'];
+  const severityTypeKeys = ['typ', 'type', 'art', 'kategorie'];
+  const hasSeverityValue = severityKeys.some(k => k in first && typeof first[k] === 'number');
+  const hasSeverityType = severityTypeKeys.some(k => k in first);
+  if (hasSeverityValue && hasSeverityType) {
+    return 'severity';
+  }
+  
+  /* ─── PIE vs BAR: Label/Value Strukturen ─── */
+  // Kirk: Pie für wenige Kategorien (≤6), Bar für viele (>6)
+  const labelKeys = ['label', 'name', 'kategorie', 'category', 'item', 'typ', 'type', 'method', 'methode'];
+  const valueKeys = ['value', 'wert', 'count', 'anzahl', 'amount', 'menge', 'score', 'percent', 'prozent', 'suitability', 'rating'];
+  const hasLabel = labelKeys.some(k => k in first);
+  const hasValue = valueKeys.some(k => k in first && typeof first[k] === 'number');
+  
+  if (hasLabel && hasValue) {
+    // Kirk: Pie max 6 Slices, darüber Bar Chart
+    return value.length <= 6 ? 'pie' : 'bar';
+  }
+  
+  /* ─── BAR: Nur Value (ohne explizites Label) ─── */
+  // Index wird als Label verwendet
+  if (hasValue && !hasLabel) {
     return 'bar';
   }
   
   return 'array';
 }
 
-/**
- * Detects the best morph for objects
- * Rules come from config/morphs.yaml → detection.object
+/* ═══════════════════════════════════════════════════════════════════════════════
+ * OBJECT TYPE DETECTION (Kirk: Chart-Auswahl nach Datenstruktur)
+ * ═══════════════════════════════════════════════════════════════════════════════
+ * 
+ * PRIORITÄT: Spezifische Muster vor generischen!
+ * 
+ * MAP: Geografische Koordinaten (lat/lng)
+ *   → Kirk: Geografische Visualisierungen
+ *   → Beispiel: {lat: 48.1, lng: 11.5, name: "München"}
+ * 
+ * CITATION: Quellenangaben (author/year/title)
+ *   → Wissenschaftliche Referenzen
+ *   → Beispiel: {author: "Kirk", year: 2016, title: "Data Vis"}
+ * 
+ * DOSAGE: Dosierungsangaben (dose/amount + unit)
+ *   → Medizinische/Rezept-Daten
+ *   → Beispiel: {dose: 500, unit: "mg", frequency: "daily"}
+ * 
+ * CURRENCY: Währungsangaben (amount + currency)
+ *   → Finanzielle Werte
+ *   → Beispiel: {amount: 19.99, currency: "EUR"}
+ * 
+ * GAUGE: Score mit Min/Max/Zonen
+ *   → Kirk: Tachometer-Anzeigen für Scores
+ *   → Beispiel: {value: 75, min: 0, max: 100, zones: [...]}
+ * 
+ * SLOPEGRAPH: Objekt mit vorher/nachher Sub-Objekten
+ *   → Kirk: Vorher-Nachher-Vergleiche
+ *   → Beispiel: {vorher: {A: 10}, nachher: {A: 20}}
+ * 
+ * STATS: Statistische Kennzahlen (min/max/avg)
+ *   → Kirk: Box-Plots, Verteilungsanalysen
+ *   → Beispiel: {min: 5, max: 100, avg: 42, median: 38}
+ * 
+ * RANGE: Nur Min/Max (ohne weitere Stats)
+ *   → Wertebereiche, Spannen
+ *   → Beispiel: {min: 10, max: 25}
+ * 
+ * RATING: Bewertungen (rating/score/stars)
+ *   → Kirk: Rating-Anzeigen mit Sternen/Punkten
+ *   → Beispiel: {rating: 4.5, max: 5}
+ * 
+ * PROGRESS: Fortschritt (value/current + max/total)
+ *   → Fortschrittsbalken
+ *   → Beispiel: {current: 75, total: 100}
+ * 
+ * BADGE: Status-Objekte (status/variant)
+ *   → Kirk: Semantische Farben für Zustände
+ *   → Beispiel: {status: "active", label: "Online"}
+ * 
+ * PIE: Nur numerische Werte (2-8 Keys)
+ *   → Kirk: Proportionen, Anteile
+ *   → Beispiel: {Protein: 26, Fett: 8, Kohlenhydrate: 52}
+ * 
+ * OBJECT: Fallback für komplexe Objekte
+ *   → Rekursive Darstellung
  */
 function detectObjectType(value) {
   const keys = Object.keys(value);
   const cfg = detectionConfig?.objekt || {};
   
-  // Helper: Ensure we have an array (YAML parser may return string)
+  // Helper: Array aus String oder Array
   const ensureArray = (val, fallback) => {
     if (Array.isArray(val)) return val;
     if (typeof val === 'string') return val.split(',').map(s => s.trim());
     return fallback;
   };
   
-  // Range: from config or fallback (min + max)
+  /* ─── MAP: Geografische Koordinaten ─── */
+  // Kirk: Choropleth Maps, Symbol Maps
+  const mapKeys = ['lat', 'latitude', 'lng', 'longitude', 'lon', 'breitengrad', 'laengengrad'];
+  const hasCoordinates = mapKeys.filter(k => k in value).length >= 2;
+  if (hasCoordinates) {
+    return 'map';
+  }
+  
+  /* ─── CITATION: Quellenangaben ─── */
+  // Wissenschaftliche Referenzen
+  const citationKeys = ['author', 'autor', 'authors', 'autoren', 'year', 'jahr', 'title', 'titel'];
+  const citationMatches = citationKeys.filter(k => k in value).length;
+  if (citationMatches >= 2) {
+    return 'citation';
+  }
+  
+  /* ─── DOSAGE: Dosierungsangaben ─── */
+  // Medizinische Daten
+  const dosageKeys = ['dose', 'dosis', 'dosierung', 'amount', 'menge'];
+  const dosageUnitKeys = ['unit', 'einheit', 'frequency', 'frequenz'];
+  const hasDosage = dosageKeys.some(k => k in value) && dosageUnitKeys.some(k => k in value);
+  if (hasDosage) {
+    return 'dosage';
+  }
+  
+  /* ─── CURRENCY: Währungsangaben ─── */
+  // Finanzielle Werte
+  const currencyKeys = ['currency', 'waehrung', 'curr'];
+  const amountKeys = ['amount', 'betrag', 'price', 'preis', 'cost', 'kosten'];
+  const hasCurrency = currencyKeys.some(k => k in value) && amountKeys.some(k => k in value);
+  if (hasCurrency) {
+    return 'currency';
+  }
+  
+  /* ─── GAUGE: Score mit Zonen/Bereichen ─── */
+  // Kirk: Tachometer für Scores
+  const hasGaugeValue = ('value' in value || 'wert' in value || 'score' in value);
+  const hasGaugeZones = ('zones' in value || 'zonen' in value || 'bereiche' in value);
+  const hasGaugeMinMax = ('min' in value && 'max' in value);
+  if (hasGaugeValue && (hasGaugeZones || hasGaugeMinMax)) {
+    // Unterscheide Gauge von Stats: Gauge hat Zonen oder ist ein einzelner Score
+    if (hasGaugeZones || (!('avg' in value) && !('mean' in value) && !('median' in value))) {
+      return 'gauge';
+    }
+  }
+  
+  /* ─── SLOPEGRAPH: Objekt mit vorher/nachher ─── */
+  // Kirk: Vorher-Nachher Vergleich auf Objekt-Ebene
+  const slopeObjKeys = ['vorher', 'nachher', 'before', 'after'];
+  const hasSlopeObjects = slopeObjKeys.filter(k => k in value && typeof value[k] === 'object').length >= 2;
+  if (hasSlopeObjects) {
+    return 'slopegraph';
+  }
+  
+  // Jahres-Vergleich: {2020: {...}, 2023: {...}}
+  const jahrKeys = keys.filter(k => /^\d{4}$/.test(k));
+  if (jahrKeys.length >= 2 && jahrKeys.every(k => typeof value[k] === 'object')) {
+    return 'slopegraph';
+  }
+  
+  /* ─── STATS: Statistische Kennzahlen ─── */
+  // Kirk: Box-Plots, Verteilungen
+  const statsCfg = cfg.stats || {};
+  const statsKeys = ensureArray(statsCfg.requiredKeys, ['min', 'max', 'avg', 'mean', 'median', 'durchschnitt', 'mittelwert']);
+  const statsMatches = statsKeys.filter(k => k in value).length;
+  if (statsMatches >= 3) {
+    return 'stats';
+  }
+  
+  /* ─── RANGE: Min/Max Bereich ─── */
+  // Wertebereiche (einfacher als Stats)
   const rangeCfg = cfg.range || {};
   const rangeKeys = ensureArray(rangeCfg.requiredKeys, ['min', 'max']);
-  if (rangeKeys.every(k => k in value)) {
-    // Check if it's Stats (has additional avg/mean)
-    const statsCfg = cfg.stats || {};
-    const statsKeys = ensureArray(statsCfg.requiredKeys, ['min', 'max', 'avg', 'mean', 'median']);
-    if (statsKeys.filter(k => k in value).length >= 3) {
-      return 'stats';
-    }
+  if (rangeKeys.every(k => k in value) && statsMatches < 3) {
     return 'range';
   }
   
-  // Rating: from config or fallback (has rating/score/stars field)
+  /* ─── RATING: Bewertungen ─── */
+  // Kirk: Sterne/Punkte-Bewertungen
   const ratingCfg = cfg.rating || {};
-  const ratingKeys = ensureArray(ratingCfg.requiredKeys, ['rating']);
-  const ratingAltKeys = ensureArray(ratingCfg.alternativeKeys, ['score', 'stars']);
+  const ratingKeys = ensureArray(ratingCfg.requiredKeys, ['rating', 'bewertung']);
+  const ratingAltKeys = ensureArray(ratingCfg.alternativeKeys, ['score', 'stars', 'sterne', 'punkte']);
   if (ratingKeys.some(k => k in value) || ratingAltKeys.some(k => k in value)) {
     return 'rating';
   }
   
-  // Progress: from config or fallback (value/current + max/total)
+  /* ─── PROGRESS: Fortschrittsanzeige ─── */
+  // Fortschrittsbalken
   const progressCfg = cfg.progress || {};
-  const progressKeys = ensureArray(progressCfg.requiredKeys, ['value']);
-  const progressAltKeys = ensureArray(progressCfg.alternativeKeys, ['current', 'max', 'total']);
-  const hasProgressPrimary = progressKeys.some(k => k in value) || progressAltKeys.filter(k => ['current'].includes(k)).some(k => k in value);
-  const hasProgressMax = ['max', 'total'].some(k => k in value);
-  if (hasProgressPrimary && hasProgressMax) {
+  const progressKeys = ensureArray(progressCfg.requiredKeys, ['value', 'wert', 'current', 'aktuell', 'progress', 'fortschritt']);
+  const progressMaxKeys = ['max', 'total', 'gesamt', 'von'];
+  const hasProgressValue = progressKeys.some(k => k in value);
+  const hasProgressMax = progressMaxKeys.some(k => k in value);
+  if (hasProgressValue && hasProgressMax) {
     return 'progress';
   }
   
-  // Badge: from config or fallback (status/variant field)
+  /* ─── BADGE: Status-Objekte ─── */
+  // Kirk: Semantische Farben für Zustände
   const badgeCfg = cfg.badge || {};
   const badgeKeys = ensureArray(badgeCfg.requiredKeys, ['status']);
-  const badgeAltKeys = ensureArray(badgeCfg.alternativeKeys, ['variant']);
+  const badgeAltKeys = ensureArray(badgeCfg.alternativeKeys, ['variant', 'typ', 'type', 'zustand', 'state']);
   if (badgeKeys.some(k => k in value) || badgeAltKeys.some(k => k in value)) {
     return 'badge';
   }
   
-  // Pie: from config or fallback (only numeric values)
+  /* ─── PIE: Nur numerische Werte ─── */
+  // Kirk: Pie Charts für Proportionen (2-8 Kategorien)
   const pieCfg = cfg.pie || { numericOnly: true, minKeys: 2, maxKeys: 8 };
   const allNumeric = keys.every(k => typeof value[k] === 'number');
   if (pieCfg.numericOnly && allNumeric && 
@@ -405,7 +757,27 @@ function findMorph(type, value, fieldName, morphConfig, schemaFieldMorphs = {}) 
     'stats': 'stats',
     'timeline': 'timeline',
     'badge': 'badge',
-    'lifecycle': 'lifecycle'
+    'lifecycle': 'lifecycle',
+    'tag': 'tag',
+    
+    // New Kirk-based morphs
+    'sparkline': 'sparkline',
+    'slopegraph': 'slopegraph',
+    'heatmap': 'heatmap',
+    
+    // Extended morphs
+    'map': 'map',
+    'citation': 'citation',
+    'dosage': 'dosage',
+    'currency': 'currency',
+    'gauge': 'gauge',
+    'hierarchy': 'hierarchy',
+    'network': 'network',
+    'steps': 'steps',
+    'calendar': 'calendar',
+    'severity': 'severity',
+    'link': 'link',
+    'image': 'image'
   };
   
   return defaults[type] || 'text';

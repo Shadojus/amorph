@@ -32,28 +32,7 @@
   color: var(--color-error);
 }
 
-/* === TAG === */
-.amorph-tag {
-  display: inline-flex;
-  align-items: center;
-  height: var(--ui-height-md);
-  padding: 0 var(--space-sm);
-  font-size: var(--ui-font-md);
-  font-weight: 500;
-  background: rgba(0, 0, 0, 0.20);
-  color: var(--color-text);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--ui-radius-md);
-  text-transform: capitalize;
-  white-space: nowrap;
-}
-
-/* Tag mit Custom-Farbe */
-.amorph-tag[style*="--tag-farbe"] {
-  background: color-mix(in srgb, var(--tag-farbe) 15%, rgba(0,0,0,0.5));
-  border-color: color-mix(in srgb, var(--tag-farbe) 25%, transparent);
-  color: var(--tag-farbe);
-}
+/* === TAG: Styles in morphs/primitives/tag/tag.css === */
 
 /* === RANGE === */
 .amorph-range {

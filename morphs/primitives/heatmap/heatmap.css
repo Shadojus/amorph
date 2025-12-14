@@ -1,0 +1,269 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   HEATMAP MORPH - Matrix-Wärme-Visualisierung
+   Kirk's Prinzipien: Heatmap für Matrix-Werte, semantische Farbskala
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.amorph-heatmap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+  background: var(--glass-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+  
+  /* Einblend-Animation */
+  animation: heatmap-einblenden 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes heatmap-einblenden {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.amorph-heatmap-leer {
+  color: var(--color-text-dim);
+  font-style: italic;
+  font-size: var(--font-size-sm);
+  text-align: center;
+  padding: var(--space-md);
+}
+
+.amorph-heatmap-titel {
+  font-size: var(--ui-font-sm);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+/* Grid-Container */
+.amorph-heatmap-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Header-Zeile (Spalten-Labels) */
+.amorph-heatmap-header-row {
+  display: flex;
+  gap: 2px;
+}
+
+.amorph-heatmap-corner {
+  width: 50px;
+  flex-shrink: 0;
+}
+
+.amorph-heatmap-col-header {
+  flex: 1;
+  min-width: 32px;
+  max-width: 60px;
+  font-size: 8px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: var(--space-2xs);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Daten-Zeilen */
+.amorph-heatmap-row {
+  display: flex;
+  gap: 2px;
+}
+
+.amorph-heatmap-row-header {
+  width: 50px;
+  flex-shrink: 0;
+  font-size: 8px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: var(--space-xs);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Einzelne Zellen */
+.amorph-heatmap-cell {
+  flex: 1;
+  min-width: 32px;
+  max-width: 60px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+  cursor: default;
+  
+  /* Zellen-Animation */
+  animation: heatmap-cell-einblenden 0.3s ease-out backwards;
+}
+
+@keyframes heatmap-cell-einblenden {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Verzögerte Animation pro Zelle */
+.amorph-heatmap-row:nth-child(2) .amorph-heatmap-cell { animation-delay: 0.05s; }
+.amorph-heatmap-row:nth-child(3) .amorph-heatmap-cell { animation-delay: 0.1s; }
+.amorph-heatmap-row:nth-child(4) .amorph-heatmap-cell { animation-delay: 0.15s; }
+.amorph-heatmap-row:nth-child(5) .amorph-heatmap-cell { animation-delay: 0.2s; }
+.amorph-heatmap-row:nth-child(6) .amorph-heatmap-cell { animation-delay: 0.25s; }
+
+.amorph-heatmap-cell:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.amorph-heatmap-cell-empty {
+  background: var(--glass-bg);
+  border: 1px dashed var(--glass-border);
+}
+
+.amorph-heatmap-cell-empty::after {
+  content: '–';
+  color: var(--color-text-dim);
+}
+
+/* Kritische Werte - Glow-Effekt */
+.amorph-heatmap-cell-critical {
+  box-shadow: 
+    0 0 8px rgba(255, 82, 82, 0.5),
+    inset 0 0 4px rgba(255, 255, 255, 0.2);
+  animation: heatmap-critical-pulse 2s ease-in-out infinite;
+}
+
+@keyframes heatmap-critical-pulse {
+  0%, 100% {
+    box-shadow: 
+      0 0 8px rgba(255, 82, 82, 0.5),
+      inset 0 0 4px rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    box-shadow: 
+      0 0 16px rgba(255, 82, 82, 0.7),
+      inset 0 0 6px rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Niedrige Werte - subtiler Effekt */
+.amorph-heatmap-cell-low {
+  box-shadow: 
+    0 0 6px rgba(33, 150, 243, 0.4),
+    inset 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LEGENDE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.amorph-heatmap-legende {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  padding-top: var(--space-xs);
+  border-top: 1px solid var(--glass-border);
+}
+
+.amorph-heatmap-legende-bar {
+  height: 8px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(90deg,
+    rgb(33, 150, 243) 0%,
+    rgb(76, 175, 80) 25%,
+    rgb(255, 235, 59) 50%,
+    rgb(255, 152, 0) 75%,
+    rgb(255, 82, 82) 100%
+  );
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.amorph-heatmap-legende-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 8px;
+  color: var(--color-text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.amorph-heatmap-legende-min {
+  color: rgb(33, 150, 243);
+}
+
+.amorph-heatmap-legende-max {
+  color: rgb(255, 82, 82);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PERSPEKTIVEN-INTEGRATION
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+[data-perspektive] .amorph-heatmap-titel {
+  color: var(--perspektive-color, var(--color-text-muted));
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 400px) {
+  .amorph-heatmap-cell {
+    min-width: 24px;
+    font-size: 7px;
+  }
+  
+  .amorph-heatmap-row-header,
+  .amorph-heatmap-corner {
+    width: 35px;
+  }
+  
+  .amorph-heatmap-col-header,
+  .amorph-heatmap-row-header {
+    font-size: 7px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   COMPACT MODE (für kleine Container)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.amorph-heatmap.compact .amorph-heatmap-cell {
+  min-width: 20px;
+  font-size: 0;
+}
+
+.amorph-heatmap.compact .amorph-heatmap-row-header,
+.amorph-heatmap.compact .amorph-heatmap-col-header {
+  display: none;
+}
+
+.amorph-heatmap.compact .amorph-heatmap-corner {
+  display: none;
+}

@@ -1,24 +1,26 @@
-/* RANGE MORPH */
+/* RANGE MORPH - Kompakte Bereichsanzeige */
 .amorph-range {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: 6px;
+  font-size: 11px;
 }
 
 .amorph-range-text {
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 11px;
 }
 
 .amorph-range-bar {
   flex: 1;
   height: 4px;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.4);
   border-radius: 2px;
   position: relative;
-  min-width: 80px;
+  min-width: 60px;
+  max-width: 120px;
   overflow: hidden;
 }
 
@@ -29,16 +31,16 @@
   left: var(--range-start, 0%);
   width: calc(var(--range-end, 100%) - var(--range-start, 0%));
   height: 100%;
-  background: var(--color-accent);
+  background: var(--color-accent, #64b5f6);
   border-radius: 2px;
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 .amorph-range-label {
   font-size: 9px;
-  font-weight: 600;
-  color: var(--color-text-muted);
-  margin-right: var(--space-xs-plus);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  margin-right: 4px;
 }
 
 .amorph-range-scale {
@@ -46,6 +48,6 @@
   justify-content: space-between;
   width: 100%;
   font-size: 7px;
-  color: var(--color-text-dim);
-  margin-top: var(--space-2xs);
+  color: rgba(255, 255, 255, 0.35);
+  margin-top: 2px;
 }

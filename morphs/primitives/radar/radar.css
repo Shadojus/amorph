@@ -1,50 +1,48 @@
-/* RADAR CHART MORPH */
+/* RADAR CHART MORPH - Kompaktes Netzdiagramm */
 .amorph-radar {
   position: relative;
-  padding: var(--space-sm);
-  background: var(--glass-bg);
-  border-radius: var(--ui-radius-lg);
-  border: 1px solid var(--glass-border);
+  padding: 4px;
+  background: transparent;
+  border-radius: 4px;
 }
 
 .amorph-radar-leer {
-  color: var(--color-text-dim);
+  color: var(--color-text-dim, #666);
   font-style: italic;
-  font-size: var(--ui-font-sm);
+  font-size: 11px;
   text-align: center;
-  padding: var(--space-md);
+  padding: 10px;
 }
 
 .amorph-radar-svg {
   width: 100%;
-  max-width: 140px;
+  max-width: 120px;
   display: block;
   margin: 0 auto;
 }
 
 .amorph-radar-grid {
   fill: none;
-  stroke: rgba(255, 255, 255, 0.06);
+  stroke: rgba(255, 255, 255, 0.05);
   stroke-width: 1;
 }
 
 .amorph-radar-axis {
-  stroke: var(--glass-border);
+  stroke: rgba(255, 255, 255, 0.08);
   stroke-width: 0.5;
 }
 
 .amorph-radar-shape {
-  fill: color-mix(in srgb, var(--color-accent) 10%, transparent);
-  stroke: color-mix(in srgb, var(--color-accent) 38%, transparent);
+  fill: rgba(100, 181, 246, 0.2);
+  stroke: rgba(100, 181, 246, 0.6);
   stroke-width: 1.5;
   stroke-linejoin: round;
 }
 
 .amorph-radar-point {
-  fill: color-mix(in srgb, var(--color-accent) 58%, transparent);
-  stroke: var(--glass-bg-active);
+  fill: rgba(100, 181, 246, 0.5);
+  stroke: rgba(0, 0, 0, 0.5);
   stroke-width: 1;
-  filter: none;
 }
 
 .amorph-radar-labels {
@@ -59,15 +57,15 @@
 .amorph-radar-label {
   position: absolute;
   transform: translate(-50%, -50%);
-  font-size: 8px;
+  font-size: 7px;
   font-weight: 600;
-  color: var(--color-text-muted);
+  color: rgba(255, 255, 255, 0.6);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
   white-space: nowrap;
 }
 
 .amorph-radar-scale {
   font-size: 6px;
-  fill: var(--color-text-dim);
+  fill: rgba(255, 255, 255, 0.35);
   font-variant-numeric: tabular-nums;
 }

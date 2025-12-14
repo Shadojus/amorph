@@ -1,5 +1,6 @@
 # Primitives Morph Index
 # All basic morph configurations
+# KIRK'S PRINZIPIEN: Chart-Auswahl basiert auf Datenstruktur!
 
 # === MORPH LIST ===
 # All primitives in this directory
@@ -19,62 +20,69 @@ morphs:
   - progress
   - stats
   
-  # Charts
-  - bar
-  - pie
-  - radar
-  - timeline
+  # Charts (Kirk-Prinzipien)
+  - bar          # Kategorienvergleiche, Rankings (>6 Items)
+  - pie          # Proportionen, Anteile (≤6 Items)
+  - radar        # Mehrdimensionale Profile (min 3 Achsen)
+  - timeline     # Zeitbasierte Ereignisse
+  - heatmap      # Matrix/Korrelations-Daten
+  - slopegraph   # Vorher-Nachher Vergleiche
+  - sparkline    # Inline-Trends für Zeitreihen
   
   # Extended
-  - map
-  - hierarchy
-  - comparison
-  - steps
-  - lifecycle
-  - network
-  - severity
-  - calendar
-  - gauge
-  - citation
-  - currency
-  - dosage
+  - map          # Geografische Koordinaten
+  - hierarchy    # Verschachtelte Strukturen
+  - comparison   # Direkter Vergleich
+  - steps        # Schrittweise Anleitungen
+  - lifecycle    # Phasen/Lebenszyklus
+  - network      # Beziehungsnetzwerke
+  - severity     # Schweregrade/Warnungen
+  - calendar     # Monats/Saison-Kalender
+  - gauge        # Tachometer/Score-Anzeigen
+  - citation     # Quellenangaben
+  - currency     # Währungsangaben
+  - dosage       # Dosierungen
 
 # === DETECTION PRIORITY ===
-# Order matters - first match wins
+# Order matters - first match wins!
+# Kirk: Spezifische Muster VOR generischen erkennen
 detectionOrder:
-  # Specific object patterns first
-  - map          # lat/lng coordinates
-  - citation     # authors/year/title
-  - dosage       # dose/unit
-  - currency     # amount/currency
-  - gauge        # value/min/max with zones
-  - comparison   # before/after
-  - severity     # level/label
-  - stats        # min/max/avg
-  - range        # min/max only
-  - rating       # rating/score
-  - progress     # value/max percentage
+  # ─── SPEZIELLE OBJEKT-MUSTER (zuerst!) ───
+  - map          # lat/lng → Geografisch (Kirk: Choropleth/Symbol Maps)
+  - citation     # author/year/title → Quellen
+  - dosage       # dose/unit → Medizinisch
+  - currency     # amount/currency → Finanziell
+  - gauge        # value/min/max + zones → Tachometer (Kirk: Score-Visualisierung)
+  - slopegraph   # vorher/nachher oder Jahre → Vorher-Nachher (Kirk: Slopegraph!)
+  - stats        # min/max/avg/median → Statistik (Kirk: Box Plot Daten)
+  - range        # min/max only → Wertebereiche
+  - rating       # rating/score/stars → Bewertungen
+  - progress     # value + max/total → Fortschritt
+  - badge        # status/variant → Semantische Status
   
-  # Specific array patterns
-  - hierarchy    # level/name
-  - lifecycle    # phase/duration
-  - network      # name/type relationships
-  - steps        # step/label
-  - calendar     # month/active
-  - timeline     # date/event
-  - radar        # axis/value
-  - bar          # label/value
-  - pie          # label/value (proportions)
+  # ─── SPEZIELLE ARRAY-MUSTER ───
+  - heatmap      # 2D-Matrix [[1,2], [3,4]] → Heatmap (Kirk: Matrix/Korrelation)
+  - sparkline    # [1,2,3,4,5] rein numerisch → Trend (Kirk: Inline-Sparklines)
+  - hierarchy    # level/parent → Baumstrukturen
+  - lifecycle    # phase/stage/stadium → Lebenszyklus
+  - network      # connections/relations → Netzwerke (Kirk: Flow/Connection)
+  - steps        # step/order + action → Anleitungen
+  - calendar     # month/active → Kalender
+  - timeline     # date/event → Zeitlinie (Kirk: Zeitreihen)
+  - severity     # typ + schwere → Warnungen (Kirk: Kritische Werte hervorheben)
+  - radar        # axis/value (min 3!) → Profile (Kirk: Spider/Radar Chart)
+  - pie          # label/value (≤6) → Proportionen (Kirk: max 6 Slices!)
+  - bar          # label/value (>6) → Vergleiche (Kirk: Kategorienvergleich)
   
-  # String patterns
-  - link         # URL patterns
-  - image        # image file patterns
-  - badge        # status keywords
-  - tag          # short strings
+  # ─── STRING-MUSTER ───
+  - link         # http://... → URLs
+  - image        # .jpg/.png → Bilder
+  - badge        # "active"/"toxic" → Status-Keywords
+  - tag          # kurze Strings → Kategorien
   
-  # Fallbacks
-  - text         # any string
-  - number       # any number
+  # ─── FALLBACKS ───
+  - text         # jeder String
+  - number       # jede Zahl
   - boolean      # true/false
-  - list         # any array
-  - object       # any object
+  - list         # jedes Array
+  - object       # jedes Objekt

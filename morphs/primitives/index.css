@@ -17,3 +17,7 @@
 @import url('./stats/stats.css');
 @import url('./timeline/timeline.css');
 @import url('./badge/badge.css');
+@import url('./gauge/gauge.css');
+@import url('./sparkline/sparkline.css');
+@import url('./slopegraph/slopegraph.css');
+@import url('./heatmap/heatmap.css');

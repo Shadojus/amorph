@@ -1,24 +1,25 @@
-/* BADGE MORPH */
+/* BADGE MORPH - Kompakt inline */
 .amorph-badge {
   display: inline-flex;
   align-items: center;
   gap: 3px;
-  height: var(--ui-height-sm);
-  padding: 0 var(--space-xs-plus);
-  font-size: var(--ui-font-sm);
+  height: 20px;
+  padding: 0 6px;
+  font-size: 10px;
   font-weight: 600;
   background: color-mix(in srgb, var(--badge-bg, #64748b) 12%, rgba(0,0,0,0.3));
   border: 1px solid color-mix(in srgb, var(--badge-border, #64748b) 20%, transparent);
   color: color-mix(in srgb, var(--badge-text, #94a3b8) 85%, white);
-  border-radius: var(--ui-radius-sm);
+  border-radius: 3px;
   text-transform: uppercase;
   letter-spacing: 0.02em;
   white-space: nowrap;
+  vertical-align: middle;
 }
 
 .amorph-badge-icon {
-  font-size: 0.7em;
-  opacity: 0.75;
+  font-size: 0.75em;
+  opacity: 0.8;
 }
 
 .amorph-badge-text {

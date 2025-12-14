@@ -2,6 +2,107 @@
 # Keyword-Mappings für intelligente Suche
 # Kann pro Projekt angepasst werden
 
+# ═══════════════════════════════════════════════════════════════════════════════
+# KIRK'S DATENVISUALISIERUNGS-PRINZIPIEN
+# Semantische Farben, Schwellwerte und visuelle Hierarchie
+# ═══════════════════════════════════════════════════════════════════════════════
+
+visuell:
+  # Semantische Farb-Interpretation für Werte
+  # RGB-Werte für CSS-Variablen
+  farben:
+    kritisch:
+      rgb: "255, 82, 82"       # Rot - Gefahr/kritisch
+      glow: "0 0 12px rgba(255, 82, 82, 0.6)"
+    warnung:
+      rgb: "255, 193, 7"       # Gelb/Orange - Warnung
+      glow: "0 0 10px rgba(255, 193, 7, 0.5)"
+    neutral:
+      rgb: "158, 158, 158"     # Grau - Neutral
+      glow: "none"
+    positiv:
+      rgb: "76, 175, 80"       # Grün - Gut/positiv
+      glow: "0 0 10px rgba(76, 175, 80, 0.5)"
+    exzellent:
+      rgb: "0, 230, 118"       # Helles Grün - Exzellent
+      glow: "0 0 12px rgba(0, 230, 118, 0.6)"
+    info:
+      rgb: "33, 150, 243"      # Blau - Information
+      glow: "0 0 8px rgba(33, 150, 243, 0.4)"
+  
+  # Schwellwerte für automatische Interpretation
+  # Prozentuale Werte (0-100)
+  schwellwerte:
+    # Standard für Fortschritt/Completion
+    standard:
+      kritisch: 20      # 0-20%: kritisch niedrig
+      warnung: 40       # 20-40%: Warnung
+      neutral: 60       # 40-60%: Neutral
+      positiv: 80       # 60-80%: Gut
+      exzellent: 100    # 80-100%: Exzellent
+    
+    # Invertiert (höher = schlechter, z.B. Toxizität, Gefahr)
+    invertiert:
+      exzellent: 20     # 0-20%: Sicher/gut
+      positiv: 40       # 20-40%: Akzeptabel
+      neutral: 60       # 40-60%: Vorsicht
+      warnung: 80       # 60-80%: Gefährlich
+      kritisch: 100     # 80-100%: Kritisch gefährlich
+    
+    # Binär (nur gut/schlecht)
+    binaer:
+      kritisch: 50      # 0-50%: Schlecht
+      positiv: 100      # 50-100%: Gut
+  
+  # Felder mit invertierter Interpretation (höher = schlechter)
+  invertierte_felder:
+    - toxizitaet
+    - gefahr
+    - risiko
+    - sterblichkeit
+    - schweregrad
+    - severity
+    - bedrohung
+    - gefaehrdung
+    - kritikalitaet
+  
+  # Felder mit binärer Interpretation
+  binaere_felder:
+    - essbar
+    - verfuegbar
+    - aktiv
+    - vorhanden
+    - sicher
+  
+  # Animationen für verschiedene Zustände
+  animationen:
+    einblenden:
+      dauer: "0.3s"
+      easing: "cubic-bezier(0.4, 0, 0.2, 1)"
+    kritisch:
+      animation: "pulse-kritisch 2s ease-in-out infinite"
+    hover:
+      transform: "translateY(-2px)"
+      transition: "0.2s ease"
+  
+  # Annotations/Hinweise für kritische Werte
+  annotations:
+    kritisch:
+      icon: "⚠️"
+      prefix: "Achtung: "
+    warnung:
+      icon: "⚡"
+      prefix: "Hinweis: "
+    exzellent:
+      icon: "✓"
+      prefix: ""
+  
+  # Tooltip-Konfiguration
+  tooltips:
+    verzoegerung: 300   # ms
+    position: "top"
+    maxBreite: 250      # px
+
 semantik:
   # ═══════════════════════════════════════════════════════════════════════════
   # ESSBARKEIT (culinary)

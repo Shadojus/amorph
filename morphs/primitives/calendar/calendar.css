@@ -1,0 +1,71 @@
+/* CALENDAR MORPH - Kalender/Datum-Darstellung */
+.amorph-calendar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.amorph-calendar-icon {
+  font-size: 14px;
+  opacity: 0.6;
+}
+
+.amorph-calendar-date {
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+}
+
+.amorph-calendar-time {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 10px;
+}
+
+/* Relative Zeit */
+.amorph-calendar-relative {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 10px;
+  font-style: italic;
+}
+
+/* Datum-Range */
+.amorph-calendar-range {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.amorph-calendar-range-separator {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Kalender-Badge für Monate */
+.amorph-calendar-badge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  padding: 4px 8px;
+  min-width: 40px;
+}
+
+.amorph-calendar-badge-month {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.amorph-calendar-badge-day {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.1;
+}
+
+.amorph-calendar-badge-year {
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.4);
+}

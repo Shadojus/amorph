@@ -1,6 +1,6 @@
 # Styles
 
-Black Glasmorphism + Neon-Farben.
+Black Glasmorphism + Kompaktes Layout.
 
 ## Dateien
 
@@ -8,33 +8,24 @@ Black Glasmorphism + Neon-Farben.
 |-------|-------|
 | `index.css` | Import aller Styles |
 | `base.css` | Design-Tokens, Typografie |
-| `morphs.css` | Basis-Morph Styles |
-| `compare.css` | Compare-Morph Styles |
+| `morphs.css` | Morph-Styles (Legacy) |
+| `layouts.css` | Grid, Cards, Feld-Container |
 | `pilz-farben.css` | 12 Neonfarben |
-| `perspektiven.css` | 15 Perspektiven-Farben |
-| `features.css` | Feature-Styles |
-| `layouts.css` | Grid-Layout, Glass-Cards |
 | `ansichten.css` | View-Styles |
 | `vektorraum.css` | Vergleich-Ansicht |
-| `einzelansicht.css` | Detail-Page |
 
-## Pilz-Farben
+## Layout-System
 
-12 Neonfarben für Item-Identifikation:
+```css
+/* Inline-Felder: Tags, Badges, Zahlen */
+amorph-container[data-morph="tag"] { display: inline-block; }
 
-| Index | Name | RGB |
-|-------|------|-----|
-| 0 | Electric Cyan | 0, 255, 255 |
-| 1 | Electric Magenta | 255, 0, 255 |
-| 2 | Radioactive Green | 0, 255, 0 |
-| ... | ... | ... |
+/* Block-Felder: Charts, Objects */
+amorph-container[data-morph="bar"] { display: block; }
 
-## Perspektiven-Farben
-
-Jede Perspektive hat eigene CSS-Datei in `perspektiven/`:
-- `chemistry.css` - Violett
-- `safety.css` - Rot
-- etc.
+/* Automatische Labels via CSS */
+amorph-container::before { content: attr(data-label); }
+```
 
 ## Glasmorphism
 
@@ -45,3 +36,9 @@ Jede Perspektive hat eigene CSS-Datei in `perspektiven/`:
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 ```
+
+## Kompakte Morphs
+
+- Tags: 22px Höhe, 11px Font
+- Badges: 20px Höhe, 10px Font
+- Charts: Kleinere Padding, transparente Backgrounds

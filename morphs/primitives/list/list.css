@@ -1,39 +1,53 @@
-/* LIST MORPH */
+/* LIST MORPH - Kompakt inline */
 .amorph-list {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
-  gap: var(--space-xs-plus);
+  gap: 4px 6px;
+  align-items: center;
+  font-size: 12px;
 }
 
 .amorph-list li {
-  display: inline;
-  color: var(--color-text);
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-text, #e0e0e0);
+  line-height: 1.4;
 }
 
-.amorph-list li::after {
-  content: ', ';
-  color: var(--color-text-dim);
-}
-
-.amorph-list li:last-child::after {
-  content: '';
+/* Separator between items (comma) */
+.amorph-list li:not(:last-child)::after {
+  content: ',';
+  color: var(--color-text-dim, #666);
+  margin-left: 1px;
 }
 
 /* List als Tags */
+.amorph-list[data-style="tags"] {
+  gap: 4px;
+}
+
 .amorph-list[data-style="tags"] li {
-  background: rgba(0, 0, 0, 0.20);
-  border: 1px solid var(--glass-border);
-  height: var(--ui-height-md);
-  padding: 0 var(--space-sm);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  height: 22px;
+  padding: 0 8px;
   display: inline-flex;
   align-items: center;
-  border-radius: var(--ui-radius-md);
-  font-size: var(--ui-font-md);
+  border-radius: 4px;
+  font-size: 11px;
 }
 
 .amorph-list[data-style="tags"] li::after {
   content: '';
+}
+
+/* Truncation indicator */
+.amorph-list[data-truncated="true"]::after {
+  content: '+' attr(data-total);
+  font-size: 10px;
+  color: var(--color-text-muted, #888);
+  margin-left: 4px;
 }

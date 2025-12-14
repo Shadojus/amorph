@@ -11,9 +11,7 @@ Automatisches Nachladen beim Scrollen.
 ## API
 
 ```javascript
-// DataSource muss implementieren:
 dataSource.loadMore(offset, limit) → Promise<{ items, hasMore }>
-dataSource.getTotalCount() → number
 ```
 
 ## Events
@@ -24,9 +22,3 @@ dataSource.getTotalCount() → number
 
 **Emittiert:**
 - `amorph:items-loaded` (Nach Laden)
-
-## Integration
-
-1. Feature in `features.yaml` aktivieren
-2. DataSource mit `loadMore()` bereitstellen
-3. Container mit `[data-amorph-container]`

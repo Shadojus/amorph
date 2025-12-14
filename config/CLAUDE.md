@@ -4,38 +4,37 @@ YAML als Single Source of Truth.
 
 ## Dateien
 
-```
-config/
-├── manifest.yaml   ← App-Name, Version
-├── daten.yaml      ← Datenquelle (JSON-Pfad)
-├── morphs.yaml     ← Morph-Config, Typ-Erkennung
-├── features.yaml   ← Aktive Features
-├── observer.yaml   ← Debug-Config
-└── schema/         ← Modulares Schema-System
-    ├── basis.yaml
-    ├── index.yaml
-    ├── semantik.yaml
-    └── perspektiven/   ← 15 Perspektiven-Dateien
-```
+| Datei | Zweck |
+|-------|-------|
+| `manifest.yaml` | App-Name, Version |
+| `daten.yaml` | Datenquelle (JSON-Pfad) |
+| `morphs.yaml` | Morph-Config, Typ-Erkennung |
+| `features.yaml` | Aktive Features |
+| `observer.yaml` | Debug-Config |
 
 ## Schema-System
 
-Perspektiven definieren ihre eigenen Felder:
+```
+schema/
+├── basis.yaml       ← Kern-Felder
+├── semantik.yaml    ← Suche, Farben, Schwellwerte
+└── perspektiven/    ← 15 Perspektiven-Definitionen
+```
+
+### semantik.yaml
 
 ```yaml
-# perspektiven/chemistry.yaml
-id: chemistry
-name: Chemie
-symbol: 🧪
-farben: ['#9f7aea', '#805ad5', '#6b46c1', '#553c9a']
-felder:
-  - chemistry_primaer_metabolite
-  - chemistry_sekundaer_metabolite
-  - chemistry_enzyme
+visuell:
+  farben:
+    kritisch: "#f44336"
+    warnung: "#ff9800"
+    positiv: "#4caf50"
+  schwellwerte:
+    standard: [30, 70]
 ```
 
 ## Neue Perspektive
 
-1. `config/schema/perspektiven/name.yaml` erstellen
-2. ID zu `perspektiven/index.yaml` hinzufügen
-3. CSS zu `styles/perspektiven/name.css` hinzufügen
+1. YAML erstellen: `schema/perspektiven/name.yaml`
+2. ID hinzufügen: `perspektiven/index.yaml`
+3. CSS erstellen: `styles/perspektiven/name.css`

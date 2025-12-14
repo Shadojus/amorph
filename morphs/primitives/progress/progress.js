@@ -36,29 +36,23 @@ export function progress(wert, config = {}) {
   const percent = maxValue > 0 ? Math.min(100, (value / maxValue) * 100) : 0;
   const einheit = config.einheit || wert?.unit || wert?.einheit || '';
   
-  // Header mit Label und Wert
-  const header = document.createElement('div');
-  header.className = 'amorph-progress-header';
-  
+  // Header mit Label und Wert (nur wenn Label vorhanden)
   if (label) {
+    const header = document.createElement('div');
+    header.className = 'amorph-progress-header';
+    
     const labelEl = document.createElement('span');
     labelEl.className = 'amorph-progress-label';
     labelEl.textContent = label;
     header.appendChild(labelEl);
-  }
-  
-  const valueEl = document.createElement('span');
-  valueEl.className = 'amorph-progress-value';
-  valueEl.textContent = `${formatValue(value, einheit)} / ${formatValue(maxValue, einheit)}`;
-  header.appendChild(valueEl);
-  
-  if (label || config.showHeader !== false) {
+    
     el.appendChild(header);
   }
   
   // Track
   const track = document.createElement('div');
   track.className = 'amorph-progress-track';
+  track.title = `${formatValue(value, einheit)} / ${formatValue(maxValue, einheit)} (${percent.toFixed(0)}%)`;
   
   // Fill
   const fill = document.createElement('div');
@@ -76,13 +70,13 @@ export function progress(wert, config = {}) {
   
   track.appendChild(fill);
   
-  // Prozent-Anzeige im Balken
-  const percentEl = document.createElement('span');
-  percentEl.className = 'amorph-progress-percent';
-  percentEl.textContent = `${percent.toFixed(0)}%`;
-  track.appendChild(percentEl);
+  // Wert-Anzeige rechts vom Balken (kompakt)
+  const valueDisplay = document.createElement('span');
+  valueDisplay.className = 'amorph-progress-value-display';
+  valueDisplay.textContent = `${formatValue(value, einheit)}`;
   
   el.appendChild(track);
+  el.appendChild(valueDisplay);
   
   return el;
 }

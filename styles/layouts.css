@@ -207,25 +207,145 @@ amorph-container[data-field="name"] {
 }
 
 /* === FELD-CONTAINER IN KARTEN === */
-amorph-container[data-morph="item"] amorph-container[data-field] {
-  padding: var(--space-xs) var(--space-sm);
-  margin: 1px 0;
-  border-radius: var(--ui-radius-md);
-  /* Subtiler Hintergrund nur bei komplexen Morphs */
-  background: transparent;
-  border: none;
+/* Kompaktes Layout: Felder fließen zusammen */
+amorph-container[data-morph="item"] {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
-/* Komplexe Morphs bekommen Container-Style */
-amorph-container[data-morph="item"] amorph-container[data-field="naehrwerte"],
-amorph-container[data-morph="item"] amorph-container[data-field="profil"],
-amorph-container[data-morph="item"] amorph-container[data-field="wirkstoffe"],
-amorph-container[data-morph="item"] amorph-container[data-field="ernte_stats"],
-amorph-container[data-morph="item"] amorph-container[data-field="lebenszyklus"] {
-  background: rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  padding: var(--space-sm);
+/* Standard Feld-Container: Minimales Padding */
+amorph-container[data-morph="item"] amorph-container[data-field] {
+  padding: 2px 10px;
+  margin: 0;
+  border-radius: 0;
+  background: transparent;
+  border: none;
+  font-size: 12px;
+}
+
+/* INLINE-FELDER: Tags, Badges, Listen, kurze Texte inline */
+amorph-container[data-morph="item"] amorph-container[data-morph="tag"],
+amorph-container[data-morph="item"] amorph-container[data-morph="badge"],
+amorph-container[data-morph="item"] amorph-container[data-morph="list"],
+amorph-container[data-morph="item"] amorph-container[data-morph="number"],
+amorph-container[data-morph="item"] amorph-container[data-morph="boolean"],
+amorph-container[data-morph="item"] amorph-container[data-morph="text"]:not([data-field="beschreibung"]):not([data-field="name"]):not([data-field="description"]) {
+  display: inline-block;
+  padding: 2px 4px;
+  margin: 0;
+  vertical-align: middle;
+}
+
+/* Inline-Felder mit Label als Prefix */
+amorph-container[data-morph="item"] amorph-container[data-morph="number"]::before,
+amorph-container[data-morph="item"] amorph-container[data-morph="text"]:not([data-field="beschreibung"]):not([data-field="name"]):not([data-field="description"])::before {
+  content: attr(data-label) ": ";
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.45);
+  margin-right: 2px;
+}
+
+/* BLOCK-FELDER: Charts, komplexe Strukturen als eigene Blöcke */
+amorph-container[data-morph="item"] amorph-container[data-morph="bar"],
+amorph-container[data-morph="item"] amorph-container[data-morph="pie"],
+amorph-container[data-morph="item"] amorph-container[data-morph="radar"],
+amorph-container[data-morph="item"] amorph-container[data-morph="stats"],
+amorph-container[data-morph="item"] amorph-container[data-morph="range"],
+amorph-container[data-morph="item"] amorph-container[data-morph="timeline"],
+amorph-container[data-morph="item"] amorph-container[data-morph="lifecycle"],
+amorph-container[data-morph="item"] amorph-container[data-morph="heatmap"],
+amorph-container[data-morph="item"] amorph-container[data-morph="sparkline"],
+amorph-container[data-morph="item"] amorph-container[data-morph="slopegraph"],
+amorph-container[data-morph="item"] amorph-container[data-morph="gauge"],
+amorph-container[data-morph="item"] amorph-container[data-morph="severity"],
+amorph-container[data-morph="item"] amorph-container[data-morph="object"],
+amorph-container[data-morph="item"] amorph-container[data-morph="hierarchy"] {
+  display: block;
+  padding: 6px 8px;
   margin: 4px 0;
+  background: rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+}
+
+/* Block-Felder: Label als Titel */
+amorph-container[data-morph="item"] amorph-container[data-morph="bar"]::before,
+amorph-container[data-morph="item"] amorph-container[data-morph="pie"]::before,
+amorph-container[data-morph="item"] amorph-container[data-morph="radar"]::before,
+amorph-container[data-morph="item"] amorph-container[data-morph="stats"]::before,
+amorph-container[data-morph="item"] amorph-container[data-morph="object"]::before,
+amorph-container[data-morph="item"] amorph-container[data-morph="hierarchy"]::before {
+  content: attr(data-label);
+  display: block;
+  font-size: 9px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Bild immer zuerst */
+amorph-container[data-morph="item"] amorph-container[data-field="bild"],
+amorph-container[data-morph="item"] amorph-container[data-field="image"],
+amorph-container[data-morph="item"] amorph-container[data-field="bild_url"] {
+  order: -100;
+  display: block;
+  padding: 0;
+  margin: calc(-1 * var(--space-md)) calc(-1 * var(--space-md)) 8px;
+}
+
+amorph-container[data-morph="item"] amorph-container[data-field="bild"]::before,
+amorph-container[data-morph="item"] amorph-container[data-field="image"]::before,
+amorph-container[data-morph="item"] amorph-container[data-field="bild_url"]::before {
+  display: none;
+}
+
+/* Name prominent */
+amorph-container[data-morph="item"] amorph-container[data-field="name"] {
+  order: -90;
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 4px 10px;
+}
+
+amorph-container[data-morph="item"] amorph-container[data-field="name"]::before {
+  display: none;
+}
+
+/* Wissenschaftlicher Name kleiner */
+amorph-container[data-morph="item"] amorph-container[data-field="wissenschaftlicher_name"],
+amorph-container[data-morph="item"] amorph-container[data-field="scientific_name"] {
+  order: -89;
+  display: block;
+  font-size: 11px;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.5);
+  padding: 0 10px 6px;
+}
+
+amorph-container[data-morph="item"] amorph-container[data-field="wissenschaftlicher_name"]::before,
+amorph-container[data-morph="item"] amorph-container[data-field="scientific_name"]::before {
+  display: none;
+}
+
+/* Beschreibung als Block */
+amorph-container[data-morph="item"] amorph-container[data-field="beschreibung"],
+amorph-container[data-morph="item"] amorph-container[data-field="description"] {
+  display: block;
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 6px 10px;
+}
+
+amorph-container[data-morph="item"] amorph-container[data-field="beschreibung"]::before,
+amorph-container[data-morph="item"] amorph-container[data-field="description"]::before {
+  display: none;
 }
 
 amorph-container[data-morph="item"] amorph-container[data-field]:last-child {
