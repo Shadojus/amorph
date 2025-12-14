@@ -5,6 +5,9 @@
 
 import { debug } from '../observer/debug.js';
 
+// Morphs die inline dargestellt werden sollen
+const INLINE_MORPHS = ['tag', 'badge', 'boolean', 'number', 'rating'];
+
 export class AmorphContainer extends HTMLElement {
   constructor() {
     super();
@@ -18,6 +21,9 @@ export class AmorphContainer extends HTMLElement {
       }
       :host([inline]) {
         display: inline-block;
+        vertical-align: middle;
+        margin-right: 4px;
+        margin-bottom: 4px;
       }
       :host([data-morph="item"]) {
         padding: var(--item-padding, 1rem);
@@ -36,6 +42,12 @@ export class AmorphContainer extends HTMLElement {
   }
   
   connectedCallback() {
+    // Automatisch inline Attribut setzen für kleine Morphs
+    const morph = this.dataset.morph;
+    if (INLINE_MORPHS.includes(morph)) {
+      this.setAttribute('inline', '');
+    }
+    
     debug.mount('Container', { morph: this.dataset.morph, field: this.dataset.field });
     this.dispatchEvent(new CustomEvent('amorph:mounted', {
       bubbles: true,

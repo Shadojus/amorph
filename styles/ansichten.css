@@ -67,10 +67,10 @@ amorph-container[data-field].feld-ausgewaehlt {
   --_farbe1: var(--feld-p-farbe-1, var(--_accent));
   --_farbe2: var(--feld-p-farbe-2, var(--_accent));
   background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--_accent) 15%, transparent) 0%,
-    color-mix(in srgb, var(--_farbe1) 10%, transparent) 50%,
-    color-mix(in srgb, var(--_farbe2) 5%, transparent) 100%
+    90deg,
+    color-mix(in srgb, var(--_accent) 10%, transparent) 0%,
+    color-mix(in srgb, var(--_farbe1) 5%, transparent) 5%,
+    transparent 12%
   ) !important;
   /* Glasmorphism */
   backdrop-filter: blur(4px);

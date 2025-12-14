@@ -240,15 +240,17 @@
 
 .amorph-detail-felder {
   padding: var(--space-lg);
-  display: grid;
-  gap: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
 }
 
 .amorph-detail-feld {
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: var(--space-md);
-  padding: var(--space-sm) 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-xs) var(--space-sm);
+  padding: var(--space-xs) 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 
@@ -257,14 +259,23 @@
 }
 
 .amorph-detail-label {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  min-width: 100px;
+  flex-shrink: 0;
 }
 
 .amorph-detail-wert {
   color: var(--color-text);
+  display: inline;
+}
+
+/* Tags und Badges in Detail-Ansicht inline */
+.amorph-detail-wert .amorph-tag,
+.amorph-detail-wert .amorph-badge {
+  margin: 1px 2px;
 }
 
 /* === RESPONSIVE === */

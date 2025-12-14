@@ -2,15 +2,15 @@
 .amorph-tag {
   display: inline-flex;
   align-items: center;
-  height: 22px;
-  padding: 0 8px;
-  margin: 2px;
-  font-size: 10px;
+  height: 20px;
+  padding: 0 6px;
+  margin: 1px;
+  font-size: 9px;
   font-weight: 500;
   background: rgba(60, 100, 160, 0.15);
   color: rgba(180, 210, 255, 0.9);
   border: 1px solid rgba(100, 150, 255, 0.15);
-  border-radius: 4px;
+  border-radius: 3px;
   text-transform: capitalize;
   white-space: nowrap;
   vertical-align: middle;

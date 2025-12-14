@@ -4,12 +4,12 @@
 :root {
   /* === UNIFIED DESIGN SYSTEM === */
   /* Einheitliche Größen für alle interaktiven Elemente */
-  --ui-height-sm: 22px;
-  --ui-height-md: 26px;
-  --ui-height-lg: 34px;
-  --ui-radius-sm: 6px;
-  --ui-radius-md: 8px;
-  --ui-radius-lg: 12px;
+  --ui-height-sm: 26px;
+  --ui-height-md: 32px;
+  --ui-height-lg: 40px;
+  --ui-radius-sm: 8px;
+  --ui-radius-md: 14px;
+  --ui-radius-lg: 20px;
   --ui-font-sm: 0.68rem;
   --ui-font-md: 0.75rem;
   --ui-font-lg: 0.88rem;

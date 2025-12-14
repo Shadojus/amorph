@@ -1,5 +1,5 @@
 /* SUCHE FEATURE STYLES */
-/* Black Glasmorphism - Suchleiste mit aktiven Filtern */
+/* Pure Black Glasmorphism */
 
 /* === SUCHE WRAPPER === */
 .amorph-suche-wrapper {
@@ -8,35 +8,27 @@
   align-items: center;
   gap: 0;
   min-width: 0;
-  height: 32px;
-  /* Deep Glass */
-  background: linear-gradient(
-    135deg,
-    rgba(18, 18, 25, 0.9) 0%,
-    rgba(12, 12, 18, 0.95) 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 16px;
-  padding: 0 12px;
-  transition: all 0.2s ease;
+  height: var(--header-element-height, 34px);
+  /* Pure Black Glass */
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 255, 255, 0.1);
+  border-radius: var(--header-element-radius, 17px);
+  padding: 0 var(--header-padding-x, 14px);
+  transition: all 0.2s var(--anim-ease-out);
 }
 
 .amorph-suche-wrapper:focus-within {
-  border-color: rgba(255, 255, 255, 0.12);
-  background: linear-gradient(
-    135deg,
-    rgba(25, 25, 35, 0.92) 0%,
-    rgba(18, 18, 25, 0.96) 100%
-  );
+  border-color: rgba(0, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.6);
   box-shadow: 
-    0 4px 24px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(0, 255, 255, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
 /* Suche-Container innerhalb Wrapper */
 [data-morph="suche"] {
   flex: 1 1 auto;
-  min-width: 100px;
+  min-width: 80px;
   max-width: none;
 }
 
@@ -48,23 +40,30 @@
   border: none;
 }
 
-/* Lupe Icon vor Input */
+/* Lupe Icon */
 .amorph-suche::before {
   content: '🔍';
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   opacity: 0.4;
-  margin: 0 6px 0 0;
+  margin-right: 10px;
   flex-shrink: 0;
+  filter: grayscale(0.5) brightness(1.2);
+}
+
+.amorph-suche-wrapper:focus-within .amorph-suche::before {
+  opacity: 0.6;
+  filter: grayscale(0.2) brightness(1.3);
 }
 
 .amorph-suche input {
   flex: 1;
   min-width: 40px;
   padding: 0;
-  font-size: 0.75rem;
+  font-size: var(--header-font, 0.72rem);
   background: transparent;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.92);
   border: none;
+  letter-spacing: 0.01em;
 }
 
 .amorph-suche input:focus {
@@ -72,8 +71,8 @@
 }
 
 .amorph-suche input::placeholder {
-  color: rgba(255, 255, 255, 0.3);
-  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.28);
+  font-size: var(--header-font, 0.72rem);
 }
 
 .amorph-suche button {
@@ -84,17 +83,17 @@
   opacity: 0.5;
 }
 
-/* === AKTIVE FILTER BADGES === */
+/* === AKTIVE FILTER BADGES - Inline im Suchfeld === */
 .amorph-aktive-filter {
   display: flex;
   flex-wrap: nowrap;
   justify-content: flex-end;
   gap: 4px;
-  flex: 1;
   padding: 0 4px;
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  max-width: 50%;
 }
 
 .amorph-aktive-filter::-webkit-scrollbar {
@@ -105,33 +104,29 @@
   display: none;
 }
 
-/* Aktive Perspektiven-Badges - Pill Style */
+/* Aktive Perspektiven-Badges - Glowing Pills */
 .amorph-filter-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 20px;
-  padding: 0 8px;
-  font-size: 0.62rem;
+  height: calc(var(--header-element-height, 34px) - 10px);
+  padding: 0 10px;
+  font-size: 0.64rem;
   font-weight: 600;
   text-transform: capitalize;
   letter-spacing: 0.02em;
-  /* Glowing Badge */
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--badge-farbe, #888) 18%, rgba(10, 10, 15, 0.9)) 0%,
-    color-mix(in srgb, var(--badge-farbe, #888) 12%, rgba(5, 5, 10, 0.95)) 100%
-  );
-  color: var(--badge-farbe, #888);
-  text-shadow: 0 0 8px color-mix(in srgb, var(--badge-farbe, #888) 50%, transparent);
-  border: 1px solid color-mix(in srgb, var(--badge-farbe, #888) 25%, transparent);
-  border-radius: 10px;
+  /* Glowing Badge mit Perspektiv-Farbe */
+  background: rgba(0, 0, 0, 0.6);
+  color: var(--badge-farbe, #0ff);
+  text-shadow: 0 0 8px var(--badge-farbe, #0ff);
+  border: 1px solid color-mix(in srgb, var(--badge-farbe, #0ff) 40%, transparent);
+  border-radius: calc(var(--header-element-radius, 17px) - 5px);
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   box-shadow: 
-    0 0 12px color-mix(in srgb, var(--badge-farbe, #888) 15%, transparent),
-    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    0 0 10px color-mix(in srgb, var(--badge-farbe, #0ff) 20%, transparent),
+    inset 0 0 8px color-mix(in srgb, var(--badge-farbe, #0ff) 5%, transparent);
 }
 
 .amorph-filter-badge .badge-icon {
@@ -139,40 +134,37 @@
 }
 
 .amorph-filter-badge:hover {
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--badge-farbe, #888) 25%, rgba(15, 15, 20, 0.9)) 0%,
-    color-mix(in srgb, var(--badge-farbe, #888) 18%, rgba(10, 10, 15, 0.95)) 100%
-  );
-  border-color: color-mix(in srgb, var(--badge-farbe, #888) 40%, transparent);
+  background: rgba(0, 0, 0, 0.7);
+  border-color: color-mix(in srgb, var(--badge-farbe, #0ff) 60%, transparent);
   box-shadow: 
-    0 0 20px color-mix(in srgb, var(--badge-farbe, #888) 25%, transparent),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    0 0 16px color-mix(in srgb, var(--badge-farbe, #0ff) 35%, transparent),
+    inset 0 0 10px color-mix(in srgb, var(--badge-farbe, #0ff) 8%, transparent);
   transform: scale(1.02);
 }
 
 /* === RESPONSIVE === */
-@media (max-width: 600px) {
-  .amorph-suche-wrapper {
-    height: 28px;
-    padding: 0 8px;
-  }
-  [data-morph="suche"] {
-    min-width: 80px;
-    max-width: none;
-    flex: 1 1 auto;
-  }
-  .amorph-suche input {
-    font-size: 0.68rem;
-  }
-  .amorph-suche::before {
-    margin: 0 4px 0 0;
-    font-size: 0.6rem;
+@media (max-width: 768px) {
+  .amorph-aktive-filter {
+    max-width: 40%;
   }
   .amorph-filter-badge {
-    height: 18px;
+    height: calc(var(--header-element-height, 30px) - 8px);
     padding: 0 6px;
     font-size: 0.58rem;
-    border-radius: 9px;
+  }
+}
+
+@media (max-width: 480px) {
+  .amorph-suche::before {
+    margin-right: 6px;
+    font-size: 0.6rem;
+  }
+  .amorph-aktive-filter {
+    max-width: 35%;
+    gap: 3px;
+  }
+  .amorph-filter-badge {
+    padding: 0 5px;
+    font-size: 0.55rem;
   }
 }

@@ -231,31 +231,33 @@
 .amorph-compare-tag .compare-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--gap-default);
+  gap: 4px;
 }
 
 .compare-chip {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  background: rgba(0, 0, 0, 0.15);
-  border-radius: 20px;
-  overflow: hidden;
+  gap: 4px;
+  padding: 3px 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  font-size: 11px;
 }
 
-.compare-chip .chip-wert {
-  padding: var(--space-xs-plus) var(--space-sm-plus);
-  font-size: var(--font-pilz-name);
+.compare-chip .chip-wert,
+.compare-chip .chip-value {
   font-weight: 500;
   color: white;
 }
 
-.compare-chip .chip-fungi {
-  padding: var(--space-xs-plus) var(--space-sm-plus) var(--space-xs-plus) var(--space-xs-plus);
-  font-size: var(--font-label);
-  color: rgba(255, 255, 255, 0.60);
+.compare-chip .chip-fungi,
+.compare-chip .chip-items {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
 }
 
-.compare-chip .chip-fungi span {
+.compare-chip .chip-fungi span,
+.compare-chip .chip-items span {
   font-weight: 500;
 }
 
@@ -263,36 +265,36 @@
 .amorph-compare-list .compare-list-items {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-sm);
+  gap: 4px;
 }
 
 .compare-list-item {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: var(--space-sm);
-  padding: 5px var(--space-sm-plus);
-  background: rgba(0, 0, 0, 0.20);
-  border-radius: 16px;
-  font-size: var(--font-pilz-name);
+  gap: 4px;
+  padding: 3px 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  font-size: 11px;
 }
 
 .compare-list-item.gemeinsam {
-  background: rgba(100, 220, 160, 0.06);
-  border: 1px solid rgba(100, 220, 160, 0.14);
+  background: rgba(100, 220, 160, 0.08);
+  border: 1px solid rgba(100, 220, 160, 0.15);
 }
 
 .compare-list-item .list-wert {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .compare-list-item .list-fungi {
   display: flex;
-  gap: 3px;
+  gap: 2px;
 }
 
 .compare-list-item .pilz-dot {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
 }
 

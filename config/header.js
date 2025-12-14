@@ -3,11 +3,11 @@
  * Container für Suche + Perspektiven + Ansicht-Switch
  * Sticky am oberen Rand - Dark Glasmorphism Design
  * 
- * KOMPAKTES LAYOUT (wie das alte, gute):
- * Zeile 0: FUNGINOMI .......................... Part of Bifroest
- * Zeile 1: [🔍 Suche] [aktive Filter-Badges...] [⊞][▥]
- * Zeile 2: [Perspektiven-Grid mit bunten Glow-Effekten]
- * Zeile 3: [Ausgewählte Pilze: 🍄 Steinpilz  🍄 Pfifferling ...] (transparent)
+ * LAYOUT:
+ * Zeile 0: [FUNGINOMI] .................................. [Part of Bifroest]
+ * Zeile 1: [🔍 Suche .............. aktive Filter-Badges...] [⊞][▥]
+ * Zeile 2: [Perspektiven-Buttons]
+ * Zeile 3: [Ausgewählte Pilze] (nur wenn Auswahl)
  */
 
 import { debug } from '../observer/debug.js';
@@ -29,7 +29,7 @@ export function header(config, morphConfig = {}) {
   const partnerName = partner.name || '';
   const partnerUrl = partner.url || '';
   
-  // === ZEILE 0: Branding (kompakt) ===
+  // === ZEILE 0: Branding (Logo links, Partner rechts) ===
   const zeile0 = document.createElement('div');
   zeile0.className = 'amorph-header-row amorph-header-branding';
   

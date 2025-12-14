@@ -1,25 +1,45 @@
 # Feature: Ansichten
 
-Verwaltet Auswahl-State und View-State.
+Verwaltet FELD-Auswahl und View-State.
+
+## Dateien
+
+| Datei | Zweck |
+|-------|-------|
+| `index.js` | Feature-Entry, State-Management, UI |
+| `ansichten.css` | View-Styles |
 
 ## State
 
 ```javascript
 const state = {
-  auswahl: new Map(),       // Map<"pilzId:feldName", {...}>
-  aktiveAnsicht: 'karten',  // 'karten' | 'vergleich' | 'detail'
-  detailPilzId: null
+  // Map<"pilzId:feldName", {pilzId, feldName, wert, pilzDaten}>
+  auswahl: new Map(),
+  aktiveAnsicht: 'karten',  // 'karten' | 'detail' | 'vergleich'
+  detailPilzId: null        // Welcher Pilz im Detail
 };
 ```
 
 ## API
 
 ```javascript
-toggleFeldAuswahl(pilzId, feldName, daten)
-istFeldAusgewaehlt(pilzId, feldName)
-getAuswahl()
-getAuswahlPilzIds()
-setAktiveAnsicht(ansicht)
+// State
+getState()                               → state
+setAktiveAnsicht(ansicht)                // View wechseln
+
+// Feld-Auswahl
+toggleFeldAuswahl(pilzId, feldName, wert, pilzDaten)
+istFeldAusgewaehlt(pilzId, feldName)     → boolean
+removeFeldAuswahl(pilzId, feldName)
+
+// Queries
+getAuswahl()                             → Map
+getAuswahlPilzIds()                      → string[]
+getAuswahlNachPilz()                     → Map<pilzId, {...}>
+getAuswahlNachFeld()                     → Map<feldName, [{pilzId, wert}]>
+
+// Legacy (wählt ALLE Felder eines Items)
+toggleAuswahl(id, daten)
 ```
 
 ## Events
@@ -27,4 +47,10 @@ setAktiveAnsicht(ansicht)
 | Event | Richtung | Beschreibung |
 |-------|----------|--------------|
 | `amorph:auswahl-geaendert` | OUT | Auswahl geändert |
-| `amorph:ansicht-wechsel` | IN | Ansicht wechseln |
+| `amorph:ansicht-wechsel` | IN/OUT | Ansicht wechseln |
+
+## Auswahl-Logik
+
+- **Grid-View**: Einzelne FELDER sind anklickbar
+- **Auswahl-Key**: `"pilzId:feldName"` (eindeutig)
+- **Gleiche Felder** verschiedener Items → im Vergleich zusammen

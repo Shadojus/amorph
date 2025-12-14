@@ -63,13 +63,21 @@
    - Multi-Perspektiven: --p-farbe-0, --p-farbe-1, ..., --feld-gradient, --feld-bg-gradient
    ============================================ */
 
-/* === BASIS: Perspektive aktiv (Single) === */
+/* === BASIS: Perspektive aktiv (Single) - NICHT AUSGEWÄHLT === */
+/* Dezent - kein extra Styling */
 .amorph-compare.perspektive-aktiv {
   position: relative;
+  /* Kein extra Padding, kein Rahmen */
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+}
+
+/* === AUSGEWÄHLTE FELDER: Farbiger Gradient-Hintergrund === */
+.amorph-compare.perspektive-aktiv.feld-ausgewaehlt {
   padding-left: var(--space-md, 12px);
   margin-left: 4px;
   /* Dezenter Glasmorphism Hintergrund mit 4-Farben-Grid */
-  /* Fallback: neutrales Silber (gelb = Culinary-spezifisch) */
   background: linear-gradient(
     135deg,
     color-mix(in srgb, var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.65)) 8%, rgba(0,0,0,0.3)) 0%,
@@ -78,19 +86,23 @@
   );
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
-  border: none;
-  border-radius: 12px;
 }
 
-/* Leuchtender vertikaler Glow-Streifen (wie im Grid) */
+/* Leuchtender vertikaler Glow-Streifen - NUR bei AUSGEWÄHLTEN Feldern */
 .amorph-compare.perspektive-aktiv::before {
+  content: none;
+}
+
+/* Ausgewählt: Voller Glow-Streifen mit Animation */
+.amorph-compare.perspektive-aktiv.feld-ausgewaehlt::before {
   content: '';
   position: absolute;
   left: 0;
   top: 8px;
   bottom: 8px;
   width: 2px;
-  /* 4-Farben Gradient aus der Perspektive - Fallback neutral */
+  border-radius: 2px;
+  /* 4-Farben Gradient aus der Perspektive */
   background: linear-gradient(
     180deg,
     color-mix(in srgb, var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.65)) 70%, transparent) 0%,
@@ -98,20 +110,29 @@
     color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe, rgba(160, 165, 170, 0.65))) 50%, transparent) 66%,
     color-mix(in srgb, var(--feld-p-farbe-3, var(--feld-perspektive-farbe, rgba(150, 155, 160, 0.65))) 40%, transparent) 100%
   );
-  border-radius: 2px;
-  /* Dezenter Glow-Effekt */
+  /* Leuchtender Glow-Effekt */
   box-shadow: 
     0 0 4px color-mix(in srgb, var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.65)) 50%, transparent),
     0 0 8px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 30%, transparent);
   animation: compare-glow-single 4s ease-in-out infinite;
 }
 
-/* Label mit Perspektiven-Farbe - gleiche Optik wie der vertikale Balken */
+/* Label mit Perspektiven-Farbe - NICHT AUSGEWÄHLT: Dezent */
 .amorph-compare.perspektive-aktiv .compare-label,
 .amorph-compare.perspektive-aktiv .compare-section-header {
-  color: var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.95));
+  color: color-mix(in srgb, var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.95)) 60%, rgba(180, 185, 190, 0.7));
   font-weight: 500;
   letter-spacing: 0.08em;
+  border-bottom-color: color-mix(in srgb, var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.65)) 30%, transparent);
+  /* Kein Glow wenn nicht ausgewählt */
+  text-shadow: none;
+  animation: none;
+}
+
+/* Label AUSGEWÄHLT: Voller Glow */
+.amorph-compare.perspektive-aktiv.feld-ausgewaehlt .compare-label,
+.amorph-compare.perspektive-aktiv.feld-ausgewaehlt .compare-section-header {
+  color: var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.95));
   border-bottom-color: color-mix(in srgb, var(--feld-perspektive-farbe, rgba(180, 185, 190, 0.65)) 50%, transparent);
   /* Glow-Effekt wie der Balken */
   text-shadow: 
@@ -125,15 +146,34 @@
 /* ============================================
    MULTI-PERSPEKTIVEN: Mehrere aktive Perspektiven
    ============================================ */
+/* Nicht ausgewählt: Dezent - kein extra Styling */
 .amorph-compare.perspektive-aktiv[data-perspektive-multi="true"] {
-  /* Multi-Gradient Hintergrund (wie Grid-View: --feld-bg-gradient) */
+  background: transparent;
+  border: none;
+}
+
+/* Ausgewählt: Multi-Gradient Hintergrund */
+.amorph-compare.perspektive-aktiv[data-perspektive-multi="true"].feld-ausgewaehlt {
+  padding-left: var(--space-md, 12px);
+  margin-left: 4px;
   background: var(--feld-bg-gradient, linear-gradient(135deg, rgba(180, 185, 190, 0.06), rgba(170, 180, 190, 0.06)));
 }
 
-/* Multi-Perspektiven: Animierter Gradient Glow-Streifen */
+/* Multi-Perspektiven: Kein Streifen wenn NICHT ausgewählt */
 .amorph-compare.perspektive-aktiv[data-perspektive-multi="true"]::before {
+  content: none;
+}
+
+/* Multi-Perspektiven: Voller Glow-Streifen wenn AUSGEWÄHLT */
+.amorph-compare.perspektive-aktiv[data-perspektive-multi="true"].feld-ausgewaehlt::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
   width: 3px;
-  /* Animierter vertikaler Gradient aus allen Perspektiven (wie Grid-View: --feld-gradient) */
+  border-radius: 2px;
+  /* Animierter vertikaler Gradient aus allen Perspektiven */
   background: var(--feld-gradient, linear-gradient(180deg, rgba(180, 185, 190, 0.65), rgba(170, 180, 190, 0.65)));
   background-size: 100% 200%;
   /* Kombinierter leuchtender Glow aus allen Farben */
@@ -141,20 +181,28 @@
     0 0 6px var(--p-farbe-0, rgba(180, 185, 190, 0.65)),
     0 0 6px var(--p-farbe-1, rgba(170, 180, 190, 0.65)),
     0 0 12px color-mix(in srgb, var(--p-farbe-0, rgba(180, 185, 190, 0.65)) 60%, transparent),
-    0 0 12px color-mix(in srgb, var(--p-farbe-1, rgba(170, 180, 190, 0.65)) 60%, transparent),
-    0 0 20px color-mix(in srgb, var(--p-farbe-2, rgba(160, 175, 190, 0.65)) 40%, transparent),
-    0 0 20px color-mix(in srgb, var(--p-farbe-3, rgba(150, 170, 190, 0.65)) 40%, transparent);
+    0 0 12px color-mix(in srgb, var(--p-farbe-1, rgba(170, 180, 190, 0.65)) 60%, transparent);
   animation: compare-multi-flow 3s ease-in-out infinite;
 }
 
-/* Multi-Perspektiven Label mit Gradient-Text */
+/* Multi-Perspektiven Label - NICHT AUSGEWÄHLT: Dezente Farbe */
 .amorph-compare.perspektive-aktiv[data-perspektive-multi="true"] .compare-label {
+  color: color-mix(in srgb, var(--p-farbe-0, rgba(180, 185, 190, 0.9)) 60%, rgba(180, 185, 190, 0.7));
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: currentColor;
+  background-clip: unset;
+  font-weight: 500;
+  text-shadow: none;
+}
+
+/* Multi-Perspektiven Label - AUSGEWÄHLT: Gradient-Text */
+.amorph-compare.perspektive-aktiv[data-perspektive-multi="true"].feld-ausgewaehlt .compare-label {
   background: var(--feld-gradient, linear-gradient(90deg, rgba(180, 185, 190, 0.9), rgba(170, 180, 190, 0.9)));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-weight: 600;
-  text-shadow: none;
 }
 
 /* === ANIMATIONEN === */

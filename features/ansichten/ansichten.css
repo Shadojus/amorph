@@ -1,22 +1,18 @@
 /* ANSICHTEN FEATURE STYLES */
-/* Black Glasmorphism - View-Switch und Auswahl-Zeile */
+/* Black Glasmorphism - Harmonischer View-Switch */
 
 /* === ANSICHT-UMSCHALTER === */
 .amorph-ansicht-switch {
   display: flex;
   gap: 2px;
-  height: 32px;
+  height: var(--header-element-height, 34px);
   padding: 3px;
-  /* Deep Glass */
-  background: linear-gradient(
-    135deg,
-    rgba(18, 18, 25, 0.9) 0%,
-    rgba(12, 12, 18, 0.95) 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 16px;
+  /* Pure Black Glass */
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 255, 255, 0.1);
+  border-radius: var(--header-element-radius, 17px);
   flex-shrink: 0;
-  margin-left: 8px;
+  margin-left: auto;
 }
 
 .amorph-ansicht-btn {
@@ -24,41 +20,41 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 24px;
-  font-size: 0.85rem;
+  width: calc(var(--header-element-height, 32px) - 8px);
+  height: calc(var(--header-element-height, 32px) - 8px);
+  font-size: 0.82rem;
   background: transparent;
   color: rgba(255, 255, 255, 0.4);
   border: none;
-  border-radius: 12px;
+  border-radius: calc(var(--header-element-radius, 16px) - 4px);
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.15s var(--anim-ease-out);
 }
 
 .amorph-ansicht-btn .btn-icon {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 }
 
-/* Counter-Badge im Vergleich-Button */
+/* Counter-Badge */
 .amorph-ansicht-btn .btn-counter {
   position: absolute;
-  top: -4px;
-  right: -4px;
-  font-size: 0.55rem;
+  top: -3px;
+  right: -3px;
+  font-size: 0.52rem;
   font-weight: 700;
-  min-width: 14px;
-  height: 14px;
+  min-width: 13px;
+  height: 13px;
   padding: 0 3px;
-  line-height: 14px;
+  line-height: 13px;
   text-align: center;
   background: rgba(0, 0, 0, 0.7);
-  color: var(--color-accent, #4ade80);
-  text-shadow: 0 0 6px var(--color-accent, #4ade80);
-  border: 1px solid color-mix(in srgb, var(--color-accent, #4ade80) 30%, transparent);
-  border-radius: 7px;
+  color: var(--color-accent, rgba(100, 220, 160, 0.9));
+  text-shadow: 0 0 5px var(--color-accent, rgba(100, 220, 160, 0.5));
+  border: 1px solid color-mix(in srgb, var(--color-accent, rgba(100, 220, 160, 0.9)) 25%, transparent);
+  border-radius: 6px;
   opacity: 0;
   transform: scale(0);
-  transition: all 0.15s ease;
+  transition: all 0.15s var(--anim-ease-bounce);
   z-index: 5;
 }
 
@@ -68,19 +64,17 @@
 }
 
 .amorph-ansicht-btn:hover:not(.disabled) {
-  color: rgba(255, 255, 255, 0.7);
-  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .amorph-ansicht-btn.aktiv,
 .amorph-ansicht-btn[aria-selected="true"] {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0.05) 100%
-  );
-  color: rgba(255, 255, 255, 0.95);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  background: rgba(0, 255, 255, 0.12);
+  color: rgba(0, 255, 255, 0.95);
+  box-shadow: 
+    0 0 10px rgba(0, 255, 255, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 /* Disabled Buttons */
@@ -90,16 +84,11 @@
   cursor: not-allowed;
 }
 
-/* Counter Glow */
-.amorph-ansicht-btn:not(.disabled) .btn-counter[data-count]:not([data-count="0"]) {
-  text-shadow: 0 0 6px currentColor, 0 0 10px currentColor;
-}
-
 /* Glow wenn aktivierbar */
 .amorph-ansicht-btn:not(.disabled):not([data-min-auswahl="0"]):not(.aktiv) {
-  box-shadow: 0 0 8px color-mix(in srgb, var(--color-accent, rgba(100, 220, 160, 0.45)) 40%, transparent);
-  background: rgba(100, 220, 160, 0.05);
-  color: var(--color-accent, rgba(100, 220, 160, 0.75));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--color-accent, rgba(100, 220, 160, 0.4)) 35%, transparent);
+  background: rgba(100, 220, 160, 0.04);
+  color: color-mix(in srgb, var(--color-accent, rgba(100, 220, 160, 0.8)) 80%, white);
 }
 
 /* === AUSWAHL-ZEILE === */
@@ -107,25 +96,24 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: var(--space-2xs) 0;
-  margin-top: var(--space-2xs);
-  /* Komplett transparent - kein Hintergrund! */
+  padding: var(--space-xs) 0;
+  margin-top: var(--space-xs);
   background: transparent;
   border-radius: 0;
   animation: auswahl-einblenden var(--anim-duration-normal) var(--anim-ease-out);
 }
 
 @keyframes auswahl-einblenden {
-  from { opacity: 0; transform: translateY(-5px); }
+  from { opacity: 0; transform: translateY(-4px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Auswahl-Label versteckt - kein "AUSWAHL:" Text */
+/* Auswahl-Label versteckt */
 .amorph-auswahl-label {
   display: none;
 }
 
-/* Pilz-Liste - transparent, kein Hintergrund */
+/* Pilz-Liste */
 .amorph-auswahl-liste {
   display: flex;
   flex-wrap: wrap;
@@ -133,7 +121,6 @@
   flex: 1;
   overflow-x: auto;
   scrollbar-width: none;
-  /* Kein Hintergrund! */
   background: transparent;
   padding: 0;
 }
@@ -142,41 +129,33 @@
   display: none;
 }
 
-/* Pilz-Badges - Glass Pills mit eigenem × Button */
+/* Pilz-Badges - Schwebender Text ohne Rahmen */
 .amorph-auswahl-badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 6px 4px 10px;
+  padding: 4px 8px;
   font-size: 0.72rem;
-  font-weight: 600;
-  /* Glass Effect */
-  background: linear-gradient(
-    135deg,
-    rgba(15, 15, 22, 0.75) 0%,
-    rgba(10, 10, 16, 0.7) 100%
-  );
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid color-mix(in srgb, var(--pilz-line, rgba(0, 255, 255, 0.5)) 50%, transparent);
-  border-radius: 14px;
+  font-weight: 500;
+  /* Kein Hintergrund, kein Rahmen - nur Text */
+  background: transparent;
+  border: none;
+  border-radius: 0;
   color: var(--pilz-text, rgb(0, 255, 255));
-  text-shadow: 0 0 8px var(--pilz-glow, rgba(0, 255, 255, 0.4));
-  transition: all 0.2s ease;
+  text-shadow: 0 0 10px color-mix(in srgb, var(--pilz-text, rgb(0, 255, 255)) 50%, transparent);
+  box-shadow: none;
+  transition: all 0.2s var(--anim-ease-out);
   white-space: nowrap;
 }
 
 .amorph-auswahl-badge:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(20, 20, 28, 0.8) 0%,
-    rgba(15, 15, 22, 0.75) 100%
-  );
-  border-color: var(--pilz-line, rgba(0, 255, 255, 0.6));
-  box-shadow: 0 0 15px var(--pilz-glow, rgba(0, 255, 255, 0.25));
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  text-shadow: 0 0 14px color-mix(in srgb, var(--pilz-text, rgb(0, 255, 255)) 70%, transparent);
 }
 
-/* Badge Name - klickbar für Navigation */
+/* Badge Name */
 .amorph-auswahl-badge .badge-name {
   color: inherit;
   text-decoration: none;
@@ -188,27 +167,28 @@
   opacity: 0.8;
 }
 
-/* × Icon auf jedem Badge - zum Entfernen */
+/* × Icon */
 .amorph-auswahl-badge .badge-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 16px;
-  height: 16px;
-  font-size: 0.8rem;
+  width: 14px;
+  height: 14px;
+  font-size: 0.65rem;
   font-weight: 400;
   line-height: 1;
-  background: rgba(255, 255, 255, 0.08);
+  background: transparent;
   border-radius: 50%;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.35);
   cursor: pointer;
   transition: all 0.15s ease;
+  margin-left: 2px;
 }
 
 .amorph-auswahl-badge .badge-icon:hover {
-  background: rgba(255, 80, 80, 0.35);
-  color: rgba(255, 130, 130, 1);
-  transform: scale(1.15);
+  background: rgba(255, 80, 80, 0.3);
+  color: rgba(255, 120, 120, 1);
+  transform: scale(1.1);
 }
 
 /* Globaler Clear-Button - versteckt (× ist jetzt auf jedem Badge) */
@@ -252,34 +232,51 @@
 }
 
 /* === RESPONSIVE === */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+  .amorph-ansicht-btn {
+    width: calc(var(--header-element-height, 30px) - 6px);
+    height: calc(var(--header-element-height, 30px) - 6px);
+    font-size: 0.78rem;
+  }
+  .amorph-ansicht-btn .btn-icon {
+    font-size: 0.82rem;
+  }
+  .amorph-auswahl-badge {
+    height: calc(var(--header-element-height, 30px) - 8px);
+    padding: 0 8px;
+  }
+}
+
+@media (max-width: 480px) {
   .amorph-ansicht-switch {
-    padding: var(--space-2xs);
-    margin-left: 4px;
+    padding: 2px;
   }
   .amorph-ansicht-btn {
-    padding: 5px var(--space-sm);
-    font-size: 0.9rem;
+    width: calc(var(--header-element-height, 28px) - 6px);
+    height: calc(var(--header-element-height, 28px) - 6px);
+    font-size: 0.72rem;
   }
   .amorph-ansicht-btn .btn-counter {
-    font-size: 0.55rem;
-    min-width: 14px;
-    height: 14px;
-    line-height: 14px;
+    font-size: 0.48rem;
+    min-width: 11px;
+    height: 11px;
+    line-height: 11px;
+    top: -2px;
+    right: -2px;
   }
   .amorph-header-auswahl {
     padding: var(--space-2xs) 0;
-    gap: 6px;
+    gap: 4px;
   }
   .amorph-auswahl-badge {
-    padding: 3px 5px 3px 8px;
-    font-size: 0.65rem;
-    gap: 4px;
-    border-radius: 12px;
+    height: calc(var(--header-element-height, 28px) - 6px);
+    padding: 0 6px;
+    font-size: 0.6rem;
+    gap: 3px;
   }
   .amorph-auswahl-badge .badge-icon {
-    width: 14px;
-    height: 14px;
-    font-size: 0.7rem;
+    width: 12px;
+    height: 12px;
+    font-size: 0.6rem;
   }
 }

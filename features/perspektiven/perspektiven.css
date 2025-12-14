@@ -1,5 +1,5 @@
 /* PERSPEKTIVEN FEATURE STYLES */
-/* Black Glasmorphism - Perspektiven-Grid, Buttons und Filter-Logik */
+/* Black Glasmorphism - Harmonische Perspektiven-Buttons */
 
 /* === PERSPEKTIVEN CONTAINER === */
 .amorph-perspektiven {
@@ -8,8 +8,7 @@
   gap: 6px;
   justify-content: flex-start;
   align-items: center;
-  padding: var(--space-2xs) 0;
-  /* Horizontal scroll on mobile */
+  padding: var(--space-xs) 0;
   min-width: max-content;
 }
 
@@ -22,43 +21,40 @@
 .amorph-perspektive-btn {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
-  height: 26px;
-  padding: 0 10px;
+  gap: 5px;
+  height: calc(var(--header-element-height, 34px) - 8px);
+  padding: 0 12px;
   font-size: 0.68rem;
   font-weight: 500;
   text-transform: capitalize;
   white-space: nowrap;
-  /* Deep Glass Effect */
-  background: linear-gradient(
-    135deg,
-    rgba(20, 20, 28, 0.85) 0%,
-    rgba(15, 15, 22, 0.9) 100%
-  );
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  /* Pure Black Glass */
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: calc(var(--header-element-radius, 17px) - 4px);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s var(--anim-ease-out);
   position: relative;
-  /* Perspektiven mit Treffern werden via JS nach vorne sortiert */
-  order: 100; /* Default - hinten */
+  order: 100;
 }
 
-/* Perspektiven mit Treffern bekommen order basierend auf Treffer-Anzahl */
+/* Perspektiven mit Treffern */
 .amorph-perspektive-btn.hat-treffer {
-  order: 0; /* Vorne */
-  color: rgba(255, 255, 255, 0.7);
-  border-color: rgba(255, 255, 255, 0.08);
+  order: 0;
+  color: rgba(255, 255, 255, 0.75);
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 /* Emoji-Symbole */
 .amorph-perspektive-btn .btn-symbol {
-  font-size: 0.75em;
+  font-size: 0.72em;
   line-height: 1;
-  opacity: 0.7;
+  opacity: 0.65;
+  transition: opacity 0.15s ease;
 }
 
 .amorph-perspektive-btn .btn-name {
@@ -67,13 +63,9 @@
 }
 
 .amorph-perspektive-btn:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(30, 30, 40, 0.9) 0%,
-    rgba(25, 25, 35, 0.95) 100%
-  );
-  border-color: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.85);
+  background: rgba(0, 0, 0, 0.6);
+  border-color: rgba(0, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
   transform: translateY(-1px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
@@ -82,44 +74,73 @@
   opacity: 1;
 }
 
-/* AKTIV - verstecken! Aktive Perspektiven werden nur als Badge in Suchleiste gezeigt */
+/* AKTIV - verstecken! Nur als Badge in Suchleiste */
 .amorph-perspektive-btn.aktiv,
 .amorph-perspektive-btn[aria-pressed="true"] {
   display: none;
 }
 
-/* Treffer-Badge - Glow Zahl */
+/* Treffer-Badge - Kompakt */
 .amorph-perspektive-btn.hat-treffer::after {
   content: attr(data-treffer-anzahl);
   position: absolute;
-  top: -5px;
-  right: -3px;
-  font-size: 0.55rem;
+  top: -4px;
+  right: -2px;
+  font-size: 0.52rem;
   font-weight: 700;
   line-height: 1;
   padding: 2px 4px;
-  min-width: 14px;
+  min-width: 13px;
   text-align: center;
-  /* Glowing number */
-  background: rgba(0, 0, 0, 0.6);
-  color: var(--p-farbe, rgba(255, 255, 255, 0.9));
-  text-shadow: 0 0 6px var(--p-farbe, rgba(255, 255, 255, 0.5));
-  border: 1px solid color-mix(in srgb, var(--p-farbe, white) 30%, transparent);
-  border-radius: 7px;
+  /* Glow number */
+  background: rgba(0, 0, 0, 0.65);
+  color: var(--p-farbe, rgba(255, 255, 255, 0.85));
+  text-shadow: 0 0 5px var(--p-farbe, rgba(255, 255, 255, 0.4));
+  border: 1px solid color-mix(in srgb, var(--p-farbe, white) 25%, transparent);
+  border-radius: 6px;
   z-index: 10;
 }
 
-/* Aktive Perspektive Badge noch intensiver */
 .amorph-perspektive-btn.aktiv.hat-treffer::after,
 .amorph-perspektive-btn[aria-pressed="true"].hat-treffer::after {
-  background: color-mix(in srgb, var(--p-farbe) 15%, rgba(0, 0, 0, 0.7));
-  box-shadow: 0 0 8px color-mix(in srgb, var(--p-farbe) 40%, transparent);
+  background: color-mix(in srgb, var(--p-farbe) 12%, rgba(0, 0, 0, 0.7));
+  box-shadow: 0 0 6px color-mix(in srgb, var(--p-farbe) 35%, transparent);
 }
 
 @keyframes badge-glow-pop {
   0% { transform: scale(0); opacity: 0; }
-  70% { transform: scale(1.15); }
+  70% { transform: scale(1.1); }
   100% { transform: scale(1); opacity: 1; }
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .amorph-perspektive-btn {
+    height: calc(var(--header-element-height, 30px) - 6px);
+    padding: 0 8px;
+    gap: 3px;
+  }
+  .amorph-perspektive-btn .btn-symbol {
+    font-size: 0.68em;
+  }
+}
+
+@media (max-width: 480px) {
+  .amorph-perspektiven {
+    gap: 4px;
+  }
+  .amorph-perspektive-btn {
+    height: calc(var(--header-element-height, 28px) - 4px);
+    padding: 0 6px;
+    font-size: 0.62rem;
+  }
+  .amorph-perspektive-btn.hat-treffer::after {
+    font-size: 0.48rem;
+    padding: 1px 3px;
+    min-width: 11px;
+    top: -3px;
+    right: -1px;
+  }
 }
 
 /* === PERSPEKTIVEN-FILTER auf Feldern === */
@@ -140,10 +161,18 @@ amorph-container[data-field] {
   display: block !important;
 }
 
-/* === SICHTBARE FELDER - Leuchtender Glow === */
+/* === SICHTBARE FELDER - NICHT AUSGEWÄHLT: Sehr dezent === */
 [data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-perspektive-sichtbar] {
   display: block !important;
   position: relative;
+  /* Kein extra Padding, keine Umrandung - nur sichtbar */
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+}
+
+/* === SICHTBARE FELDER - AUSGEWÄHLT: Farbiger Gradient === */
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-perspektive-sichtbar].feld-ausgewaehlt {
   padding-left: var(--space-sm);
   background: linear-gradient(
     135deg,
@@ -151,18 +180,22 @@ amorph-container[data-field] {
     color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 5%, transparent) 50%,
     color-mix(in srgb, var(--feld-p-farbe-2, var(--feld-perspektive-farbe)) 3%, transparent) 100%
   );
-  border-radius: var(--radius-sm);
 }
 
-/* Leuchtender vertikaler Glow-Streifen */
+/* Vertikaler Streifen - NICHT AUSGEWÄHLT: Keiner */
 [data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-perspektive-sichtbar]::before {
+  content: none;
+}
+
+/* Vertikaler Streifen - AUSGEWÄHLT: Voller Glow */
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-perspektive-sichtbar].feld-ausgewaehlt::before {
   content: '';
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
-  width: 3px;
-  border-radius: 2px;
+  width: 2px;
+  border-radius: 1px;
   background: linear-gradient(
     180deg,
     color-mix(in srgb, var(--feld-perspektive-farbe, var(--color-accent)) 70%, transparent) 0%,
@@ -194,8 +227,15 @@ amorph-container[data-field] {
   }
 }
 
-/* === MULTI-PERSPEKTIVEN - Mehrfarbiger Glow === */
+/* === MULTI-PERSPEKTIVEN - NICHT AUSGEWÄHLT: Dezent === */
 [data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-perspektive-multi] {
+  /* Kein extra Styling - nur sichtbar */
+  background: transparent;
+  border: none;
+}
+
+/* === MULTI-PERSPEKTIVEN - AUSGEWÄHLT: Farbiger Gradient === */
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-perspektive-multi].feld-ausgewaehlt {
   padding-left: var(--space-md);
   background: var(--feld-bg-gradient, 
     linear-gradient(135deg, 
@@ -205,18 +245,27 @@ amorph-container[data-field] {
   );
 }
 
-/* Multi-Perspektiven: Animierter Gradient-Streifen */
+/* Multi-Perspektiven Streifen - NICHT AUSGEWÄHLT: Keiner */
 [data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-perspektive-multi]::before {
-  width: 4px;
+  content: none;
+}
+
+/* Multi-Perspektiven Streifen - AUSGEWÄHLT: Voller Glow */
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-perspektive-multi].feld-ausgewaehlt::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  border-radius: 1px;
   background: var(--feld-gradient, var(--color-accent));
   background-size: 100% 200%;
   box-shadow:
     0 0 8px var(--p-farbe-0, var(--color-accent)),
     0 0 8px var(--p-farbe-1, var(--color-accent)),
     0 0 16px color-mix(in srgb, var(--p-farbe-0, var(--color-accent)) 70%, transparent),
-    0 0 16px color-mix(in srgb, var(--p-farbe-1, var(--color-accent)) 70%, transparent),
-    0 0 28px color-mix(in srgb, var(--p-farbe-0, var(--color-accent)) 40%, transparent),
-    0 0 28px color-mix(in srgb, var(--p-farbe-1, var(--color-accent)) 40%, transparent);
+    0 0 16px color-mix(in srgb, var(--p-farbe-1, var(--color-accent)) 70%, transparent);
   animation: multi-color-flow 3s ease-in-out infinite;
 }
 
@@ -229,95 +278,5 @@ amorph-container[data-field] {
     background-position: 0% 100%;
     opacity: 1;
     filter: brightness(1.1);
-  }
-}
-
-/* === AUSGEWÄHLTE FELDER - Intensiverer Glow === */
-[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-perspektive-sichtbar].feld-ausgewaehlt::before {
-  width: 4px !important;
-  box-shadow: 
-    0 0 8px var(--feld-perspektive-farbe, var(--color-accent)),
-    0 0 16px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 40%, transparent) !important;
-  animation: feld-auswahl-sanft 3s ease-in-out infinite !important;
-}
-
-@keyframes feld-auswahl-sanft {
-  0%, 100% {
-    opacity: 0.9;
-    box-shadow:
-      0 0 8px var(--feld-perspektive-farbe, var(--color-accent)),
-      0 0 16px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 40%, transparent);
-  }
-  50% {
-    opacity: 1;
-    box-shadow:
-      0 0 12px var(--feld-perspektive-farbe, var(--color-accent)),
-      0 0 24px color-mix(in srgb, var(--feld-p-farbe-1, var(--feld-perspektive-farbe)) 50%, transparent);
-  }
-}
-
-
-/* === MULTI-AUSWAHL Glow === */
-[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-perspektive-multi].feld-ausgewaehlt::before {
-  /* Fallback neutral - echte Farben kommen via --feld-gradient/--p-farbe-X */
-  background: var(--feld-gradient, linear-gradient(180deg, rgba(180, 185, 190, 0.65), rgba(170, 180, 190, 0.65))) !important;
-  box-shadow:
-    0 0 4px color-mix(in srgb, var(--p-farbe-0, rgba(180, 185, 190, 0.65)) 60%, transparent),
-    0 0 4px color-mix(in srgb, var(--p-farbe-1, rgba(170, 180, 190, 0.65)) 60%, transparent),
-    0 0 8px color-mix(in srgb, var(--p-farbe-0, rgba(180, 185, 190, 0.65)) 30%, transparent),
-    0 0 8px color-mix(in srgb, var(--p-farbe-1, rgba(170, 180, 190, 0.65)) 30%, transparent) !important;
-  animation: multi-auswahl-glow 4s ease-in-out infinite !important;
-}
-
-@keyframes multi-auswahl-glow {
-  0%, 100% {
-    opacity: 0.8;
-    filter: brightness(0.95);
-  }
-  50% {
-    opacity: 1;
-    filter: brightness(1.1);
-  }
-}
-
-/* === RESPONSIVE === */
-@media (max-width: 900px) {
-  .amorph-perspektiven {
-    gap: 5px;
-  }
-  .amorph-perspektive-btn {
-    height: 24px;
-    padding: 0 8px;
-    font-size: 0.62rem;
-    border-radius: 12px;
-  }
-  .amorph-perspektive-btn .btn-symbol {
-    font-size: 0.7em;
-  }
-}
-
-@media (max-width: 600px) {
-  .amorph-perspektiven {
-    gap: 4px;
-  }
-  .amorph-perspektive-btn {
-    height: 22px;
-    padding: 0 6px;
-    font-size: 0.55rem;
-    border-radius: 11px;
-  }
-  .amorph-perspektive-btn .btn-symbol {
-    font-size: 0.7em;
-  }
-  .amorph-perspektive-btn .btn-name {
-    /* Name bleibt immer sichtbar - Icons allein sind nicht universell verständlich */
-    font-size: 0.52rem;
-  }
-  .amorph-perspektive-btn.hat-treffer::after {
-    top: -4px;
-    right: -2px;
-    font-size: 0.5rem;
-    min-width: 12px;
-    padding: 1px 3px;
   }
 }

@@ -1,39 +1,39 @@
 /* HEADER FEATURE STYLES */
-/* Black Glasmorphism - Sticky Header */
+/* Pure Black Glasmorphism */
+
+/* === UNIFIED HEADER SIZES === */
+:root {
+  --header-element-height: 34px;
+  --header-element-radius: 17px;
+  --header-gap: 8px;
+  --header-padding-x: 14px;
+  --header-font: 0.72rem;
+}
 
 /* === HEADER WRAPPER === */
 .amorph-feature-header {
   position: sticky;
   top: 0;
   z-index: 100;
-  padding: var(--space-sm) var(--space-md);
-  /* True Black Glass - mehr Transparenz */
-  background: linear-gradient(
-    180deg,
-    rgba(12, 12, 18, 0.75) 0%,
-    rgba(8, 8, 14, 0.7) 100%
-  );
-  backdrop-filter: blur(20px) saturate(1.3);
-  -webkit-backdrop-filter: blur(20px) saturate(1.3);
-  /* Glass edges */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding: var(--space-sm) var(--space-lg);
+  /* Pure Black Glass */
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(40px) saturate(1.5);
+  -webkit-backdrop-filter: blur(40px) saturate(1.5);
+  /* Subtle cyan glass edge */
+  border-bottom: 1px solid rgba(0, 255, 255, 0.08);
   box-shadow: 
-    0 4px 30px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
+    0 4px 32px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  transition: all 0.3s var(--anim-ease-out);
 }
 
 /* Header-Schatten wenn gescrollt */
 .amorph-feature-header.scrolled {
-  background: linear-gradient(
-    180deg,
-    rgba(5, 5, 8, 0.96) 0%,
-    rgba(8, 8, 12, 0.94) 100%
-  );
+  background: rgba(0, 0, 0, 0.95);
   box-shadow: 
-    0 8px 48px rgba(0, 0, 0, 0.7),
-    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    0 8px 48px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.02);
 }
 
 /* === HEADER ROWS === */
@@ -44,13 +44,19 @@
   margin: 0 auto;
 }
 
-/* Zeile 0: Branding - jetzt definiert in BRANDING Sektion unten */
-
-/* Zeile 1: Hauptzeile - Suche + Badges + Ansicht-Switch */
-.amorph-header-main {
-  gap: var(--space-sm);
-  flex-wrap: nowrap;
+/* Zeile 0: Branding */
+.amorph-header-branding {
+  justify-content: space-between;
+  padding-bottom: var(--space-xs);
   margin-bottom: var(--space-xs);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Zeile 1: Hauptzeile - Suche + Ansicht-Switch */
+.amorph-header-main {
+  gap: var(--header-gap);
+  flex-wrap: nowrap;
+  margin-bottom: var(--space-sm);
 }
 
 /* Zeile 2: Perspektiven - horizontal scrollbar */
@@ -60,15 +66,15 @@
   overflow-y: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  margin: 0 calc(-1 * var(--space-md));
-  padding: var(--space-2xs) var(--space-md);
+  margin: 0 calc(-1 * var(--space-lg));
+  padding: var(--space-2xs) var(--space-lg);
 }
 
 .amorph-header-perspektiven::-webkit-scrollbar {
   display: none;
 }
 
-/* Alte Klassen für Kompatibilität */
+/* Legacy-Klassen für Kompatibilität */
 .amorph-header-suche {
   margin-bottom: var(--space-sm);
 }
@@ -80,139 +86,107 @@
 }
 
 /* === BRANDING === */
-/* App-Titel links - Black Glass Pill mit Bifroest rechts daneben */
-.amorph-header-branding {
-  justify-content: flex-start;
-  align-items: center;
-  gap: var(--space-sm);
-  padding-bottom: var(--space-xs);
-  margin-bottom: var(--space-xs);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-}
-
 .amorph-header-titel {
-  font-weight: 700;
-  font-size: var(--font-lg);
-  letter-spacing: 0.1em;
-  text-decoration: none;
-  white-space: nowrap;
-  /* Glass Pill Container */
   display: inline-flex;
   align-items: center;
-  padding: 4px 14px;
-  background: linear-gradient(
-    135deg,
-    rgba(20, 20, 28, 0.6) 0%,
-    rgba(15, 15, 22, 0.5) 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 0;
+  background: transparent;
+  border: none;
+  transition: opacity 0.2s ease;
 }
 
 .amorph-header-titel:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(25, 25, 35, 0.7) 0%,
-    rgba(20, 20, 28, 0.6) 100%
-  );
-  border-color: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  opacity: 0.8;
 }
 
 .amorph-header-titel .titel-text {
-  /* Dezenter Weiss-Silber Gradient */
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.95) 0%,
-    rgba(200, 210, 220, 0.9) 50%,
-    rgba(255, 255, 255, 0.95) 100%
-  );
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  /* Subtiler Glow */
-  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.15));
-  transition: filter 0.3s ease;
+  color: rgba(255, 255, 255, 0.95);
 }
 
-.amorph-header-titel:hover .titel-text {
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.25))
-          drop-shadow(0 0 20px rgba(200, 210, 220, 0.15));
-}
-
-/* Bifroest Link - direkt neben Logo */
+/* Bifroest Link */
 .amorph-header-bifroest {
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.62rem;
+  color: rgba(255, 255, 255, 0.3);
   white-space: nowrap;
   text-decoration: none;
-  transition: color 0.2s ease;
-  /* Kein flex-grow, bleibt neben Logo */
+  transition: all 0.2s ease;
 }
 
 .amorph-header-bifroest:hover {
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.45);
 }
 
 .amorph-header-bifroest .bifroest-name {
-  color: #9b59b6;
+  color: rgba(155, 89, 182, 0.75);
+  margin-left: 4px;
   transition: all 0.2s ease;
 }
 
 .amorph-header-bifroest:hover .bifroest-name {
-  color: #b389c7;
-  text-shadow: 0 0 12px rgba(155, 89, 182, 0.5);
+  color: rgba(175, 120, 200, 0.95);
+  text-shadow: 0 0 10px rgba(155, 89, 182, 0.4);
 }
 
 /* === RESPONSIVE === */
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .amorph-feature-header {
-    padding: var(--space-xs) var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+  }
+  .amorph-header-perspektiven {
+    margin: 0 calc(-1 * var(--space-md));
+    padding: 0 var(--space-md);
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --header-element-height: 30px;
+    --header-element-radius: 15px;
+    --header-gap: 8px;
+    --header-padding-x: 10px;
+    --header-font: 0.68rem;
+  }
+  .amorph-feature-header {
+    padding: var(--space-sm);
   }
   .amorph-header-main {
     gap: var(--space-xs);
+    margin-bottom: var(--space-xs);
   }
   .amorph-header-bifroest {
     display: none;
   }
   .amorph-header-perspektiven {
     margin: 0 calc(-1 * var(--space-sm));
-    padding: var(--space-2xs) var(--space-sm);
+    padding: 0 var(--space-sm);
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 480px) {
+  :root {
+    --header-element-height: 30px;
+    --header-element-radius: 15px;
+    --header-gap: 6px;
+    --header-padding-x: 10px;
+    --header-font: 0.64rem;
+  }
   .amorph-feature-header {
-    padding: var(--space-2xs) var(--space-xs);
+    padding: var(--space-xs) var(--space-sm);
   }
   .amorph-header-branding {
-    padding-bottom: 2px;
-    margin-bottom: var(--space-2xs);
+    padding-bottom: 4px;
+    margin-bottom: 6px;
   }
   .amorph-header-titel {
-    font-size: var(--font-md);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
   }
   .amorph-header-main {
-    gap: var(--space-2xs);
-    margin-bottom: var(--space-2xs);
-  }
-  .amorph-header-perspektiven {
-    margin: 0 calc(-1 * var(--space-xs));
-    padding: var(--space-2xs) var(--space-xs);
-  }
-}
-
-  .amorph-header-titel {
-    font-size: 0.72rem !important;
-  }
-  .amorph-header-bifroest {
-    font-size: 0.48rem;
-  }
-  .amorph-header-main {
-    gap: var(--gap-tight);
-    margin-bottom: var(--space-xs-plus);
+    margin-bottom: 6px;
   }
 }
