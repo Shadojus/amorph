@@ -1,0 +1,28 @@
+# Slopegraph Morph Configuration
+# Before/after comparison visualization
+
+id: slopegraph
+name: Slopegraph
+description: Shows change between two points in time
+category: charts
+
+# Detection rules
+detection:
+  type: object
+  requiredKeys:
+    - before
+    - after
+  alternativeKeys:
+    - start
+    - end
+    - from
+    - to
+    - vorher
+    - nachher
+
+# Configuration
+config:
+  showValues: true
+  showChange: true
+  animated: true
+  height: 60

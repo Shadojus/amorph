@@ -1,6 +1,7 @@
 /* AMORPH v5 - Alle Styles */
 
 @import './base.css';
+@import './universe.css';
 @import '../morphs/primitives/index.css';
 @import '../features/index.css';
 @import './layouts.css';

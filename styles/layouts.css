@@ -1,31 +1,21 @@
 /* AMORPH v5 - Layout Styles */
-/* Black Glasmorphism - Einheitliches Design System */
+/* Universe Theme - Einheitliches kosmisches Grid */
 
 /* === ITEM CONTAINER (Glass Cards) === */
 amorph-container[data-morph="item"] {
-  /* Pure Black Glasmorphism - Schwarze Seele des Glases */
-  background: 
-    linear-gradient(
-      160deg,
-      rgba(0, 0, 0, 0.92) 0%,
-      rgba(0, 0, 0, 0.95) 50%,
-      rgba(0, 0, 0, 0.90) 100%
-    ),
-    url('../styles/woodfloor/Moss_Woodsf_Laub.png');
-  background-size: cover, cover;
-  background-position: center, center;
-  /* Einheitliches Black Glasmorphism */
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-md);
-  transition: var(--transition-glass), var(--transition-transform);
+  /* Universe Dark Glass */
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(100, 150, 255, 0.08);
+  border-radius: 8px;
+  padding: 0;
+  transition: all 0.25s ease;
   overflow: visible;
-  /* Einheitliche Schatten */
+  /* Subtiler kosmischer Schimmer */
   box-shadow: 
-    var(--glass-inset),
-    var(--glass-shadow);
+    inset 0 1px 0 rgba(255, 255, 255, 0.02),
+    0 4px 24px rgba(0, 0, 0, 0.4);
 }
 
 /* Scroll-Container für Card-Inhalt - Scrollbar nur beim Scrollen */
@@ -68,15 +58,15 @@ amorph-container[data-morph="item"] > .amorph-item-content {
   margin-left: -8px;
 }
 
-/* Card Hover - Scrollbar + visuelles Feedback */
+/* Card Hover */
 amorph-container[data-morph="item"]:hover {
-  scrollbar-color: rgba(255,255,255,0.2) transparent;
-  border-color: var(--glass-border-hover);
+  scrollbar-color: rgba(100,150,255,0.2) transparent;
+  border-color: rgba(100, 150, 255, 0.15);
   transform: translateY(-2px);
   box-shadow: 
-    var(--glass-inset),
-    var(--glass-shadow-hover),
-    0 0 24px rgba(255, 255, 255, 0.02);
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(60, 100, 160, 0.08);
 }
 
 /* Name in Karten - weiß, nicht cyan */
@@ -207,46 +197,69 @@ amorph-container[data-field="name"] {
 }
 
 /* === FELD-CONTAINER IN KARTEN === */
-/* Kompaktes Layout: Felder fließen zusammen */
+/* Klare visuelle Struktur mit Sektionen */
 amorph-container[data-morph="item"] {
   display: flex;
   flex-direction: column;
   gap: 0;
+  /* Kosmisches Grid im Hintergrund */
+  background-image: 
+    linear-gradient(rgba(60, 100, 160, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(60, 100, 160, 0.02) 1px, transparent 1px);
+  background-size: 25px 25px;
 }
 
-/* Standard Feld-Container: Minimales Padding */
+/* Standard Feld-Container: Klare Abgrenzung */
 amorph-container[data-morph="item"] amorph-container[data-field] {
-  padding: 2px 10px;
+  padding: 8px 12px;
   margin: 0;
   border-radius: 0;
   background: transparent;
   border: none;
+  border-bottom: 1px solid rgba(100, 150, 255, 0.04);
   font-size: 12px;
 }
 
-/* INLINE-FELDER: Tags, Badges, Listen, kurze Texte inline */
+/* Letztes Feld ohne Border */
+amorph-container[data-morph="item"] amorph-container[data-field]:last-child {
+  border-bottom: none;
+}
+
+/* Feld-Label als konsistentes Prefix */
+amorph-container[data-morph="item"] amorph-container[data-field]::before {
+  content: attr(data-label);
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 600;
+  color: rgba(150, 180, 220, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-right: 8px;
+  min-width: 80px;
+}
+
+/* INLINE-FELDER: Tags, Badges, Listen, kurze Texte */
 amorph-container[data-morph="item"] amorph-container[data-morph="tag"],
 amorph-container[data-morph="item"] amorph-container[data-morph="badge"],
 amorph-container[data-morph="item"] amorph-container[data-morph="list"],
 amorph-container[data-morph="item"] amorph-container[data-morph="number"],
 amorph-container[data-morph="item"] amorph-container[data-morph="boolean"],
+amorph-container[data-morph="item"] amorph-container[data-morph="progress"],
 amorph-container[data-morph="item"] amorph-container[data-morph="text"]:not([data-field="beschreibung"]):not([data-field="name"]):not([data-field="description"]) {
-  display: inline-block;
-  padding: 2px 4px;
-  margin: 0;
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  gap: 8px;
 }
 
-/* Inline-Felder mit Label als Prefix */
+/* Inline-Felder: Wert nach Label */
 amorph-container[data-morph="item"] amorph-container[data-morph="number"]::before,
+amorph-container[data-morph="item"] amorph-container[data-morph="progress"]::before,
 amorph-container[data-morph="item"] amorph-container[data-morph="text"]:not([data-field="beschreibung"]):not([data-field="name"]):not([data-field="description"])::before {
-  content: attr(data-label) ": ";
-  font-size: 10px;
-  color: rgba(255, 255, 255, 0.45);
-  margin-right: 2px;
+  flex-shrink: 0;
 }
 
-/* BLOCK-FELDER: Charts, komplexe Strukturen als eigene Blöcke */
+/* BLOCK-FELDER: Charts, komplexe Strukturen als eigene Sektionen */
 amorph-container[data-morph="item"] amorph-container[data-morph="bar"],
 amorph-container[data-morph="item"] amorph-container[data-morph="pie"],
 amorph-container[data-morph="item"] amorph-container[data-morph="radar"],
@@ -260,32 +273,42 @@ amorph-container[data-morph="item"] amorph-container[data-morph="slopegraph"],
 amorph-container[data-morph="item"] amorph-container[data-morph="gauge"],
 amorph-container[data-morph="item"] amorph-container[data-morph="severity"],
 amorph-container[data-morph="item"] amorph-container[data-morph="object"],
+amorph-container[data-morph="item"] amorph-container[data-morph="map"],
+amorph-container[data-morph="item"] amorph-container[data-morph="network"],
 amorph-container[data-morph="item"] amorph-container[data-morph="hierarchy"] {
   display: block;
-  padding: 6px 8px;
-  margin: 4px 0;
-  background: rgba(0, 0, 0, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  border-radius: 4px;
+  padding: 10px 12px;
+  margin: 6px 8px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(100, 150, 255, 0.06);
+  border-radius: 6px;
+  /* Kosmisches Grid */
+  background-image: 
+    linear-gradient(rgba(60, 100, 160, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(60, 100, 160, 0.025) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.3) 100%);
+  background-size: 20px 20px, 20px 20px, 100% 100%;
 }
 
-/* Block-Felder: Label als Titel */
+/* Block-Felder: Kein doppeltes Label */
 amorph-container[data-morph="item"] amorph-container[data-morph="bar"]::before,
 amorph-container[data-morph="item"] amorph-container[data-morph="pie"]::before,
 amorph-container[data-morph="item"] amorph-container[data-morph="radar"]::before,
 amorph-container[data-morph="item"] amorph-container[data-morph="stats"]::before,
 amorph-container[data-morph="item"] amorph-container[data-morph="object"]::before,
+amorph-container[data-morph="item"] amorph-container[data-morph="map"]::before,
+amorph-container[data-morph="item"] amorph-container[data-morph="network"]::before,
 amorph-container[data-morph="item"] amorph-container[data-morph="hierarchy"]::before {
   content: attr(data-label);
   display: block;
   font-size: 9px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(150, 180, 220, 0.5);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 4px;
-  padding-bottom: 3px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(100, 150, 255, 0.08);
 }
 
 /* Bild immer zuerst */
@@ -295,7 +318,8 @@ amorph-container[data-morph="item"] amorph-container[data-field="bild_url"] {
   order: -100;
   display: block;
   padding: 0;
-  margin: calc(-1 * var(--space-md)) calc(-1 * var(--space-md)) 8px;
+  margin: 0;
+  border-bottom: none;
 }
 
 amorph-container[data-morph="item"] amorph-container[data-field="bild"]::before,
@@ -304,13 +328,23 @@ amorph-container[data-morph="item"] amorph-container[data-field="bild_url"]::bef
   display: none;
 }
 
+/* Bild in Card - volle Breite oben */
+amorph-container[data-morph="item"] amorph-container[data-field="bild"] .amorph-image img,
+amorph-container[data-morph="item"] amorph-container[data-field="image"] .amorph-image img {
+  border-radius: 8px 8px 0 0;
+  max-height: 180px;
+  border: none;
+  border-bottom: 1px solid rgba(100, 150, 255, 0.08);
+}
+
 /* Name prominent */
 amorph-container[data-morph="item"] amorph-container[data-field="name"] {
   order: -90;
   display: block;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
-  padding: 4px 10px;
+  padding: 12px 12px 4px;
+  border-bottom: none;
 }
 
 amorph-container[data-morph="item"] amorph-container[data-field="name"]::before {
@@ -324,8 +358,9 @@ amorph-container[data-morph="item"] amorph-container[data-field="scientific_name
   display: block;
   font-size: 11px;
   font-style: italic;
-  color: rgba(255, 255, 255, 0.5);
-  padding: 0 10px 6px;
+  color: rgba(150, 180, 220, 0.6);
+  padding: 0 12px 8px;
+  border-bottom: 1px solid rgba(100, 150, 255, 0.06);
 }
 
 amorph-container[data-morph="item"] amorph-container[data-field="wissenschaftlicher_name"]::before,
@@ -337,10 +372,11 @@ amorph-container[data-morph="item"] amorph-container[data-field="scientific_name
 amorph-container[data-morph="item"] amorph-container[data-field="beschreibung"],
 amorph-container[data-morph="item"] amorph-container[data-field="description"] {
   display: block;
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1.5;
-  color: rgba(255, 255, 255, 0.7);
-  padding: 6px 10px;
+  color: rgba(255, 255, 255, 0.65);
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(100, 150, 255, 0.06);
 }
 
 amorph-container[data-morph="item"] amorph-container[data-field="beschreibung"]::before,

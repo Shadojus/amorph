@@ -1,29 +1,31 @@
-/* CALENDAR MORPH - Kalender/Datum-Darstellung */
+/* CALENDAR MORPH - Universe Theme */
 .amorph-calendar {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-size: 12px;
+  padding: 4px 0;
+  background: transparent;
 }
 
 .amorph-calendar-icon {
   font-size: 14px;
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 .amorph-calendar-date {
   font-variant-numeric: tabular-nums;
-  color: var(--color-text);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .amorph-calendar-time {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(100, 150, 255, 0.6);
   font-size: 10px;
 }
 
 /* Relative Zeit */
 .amorph-calendar-relative {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(150, 200, 255, 0.5);
   font-size: 10px;
   font-style: italic;
 }
@@ -32,40 +34,45 @@
 .amorph-calendar-range {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 
 .amorph-calendar-range-separator {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(100, 150, 255, 0.3);
 }
 
-/* Kalender-Badge für Monate */
+/* Kalender-Badge für Monate - Leuchtend */
 .amorph-calendar-badge {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 4px;
-  padding: 4px 8px;
-  min-width: 40px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(100, 150, 255, 0.15);
+  border-radius: 6px;
+  padding: 6px 10px;
+  min-width: 44px;
+  box-shadow: 
+    0 2px 12px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.02);
 }
 
 .amorph-calendar-badge-month {
   font-size: 9px;
   font-weight: 600;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(150, 200, 255, 0.6);
+  letter-spacing: 0.05em;
 }
 
 .amorph-calendar-badge-day {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
-  color: var(--color-text);
+  color: rgba(255, 255, 255, 0.95);
   line-height: 1.1;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
 }
 
 .amorph-calendar-badge-year {
   font-size: 8px;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.35);
 }

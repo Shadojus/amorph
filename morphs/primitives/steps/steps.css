@@ -1,0 +1,98 @@
+/* STEPS MORPH - Schrittfolgen/Prozesse */
+.amorph-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  padding-left: 16px;
+}
+
+.amorph-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  position: relative;
+  padding: 6px 0;
+}
+
+/* Verbindungslinie */
+.amorph-step::before {
+  content: '';
+  position: absolute;
+  left: -12px;
+  top: 18px;
+  bottom: -6px;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.amorph-step:last-child::before {
+  display: none;
+}
+
+/* Schritt-Nummer */
+.amorph-step-number {
+  position: absolute;
+  left: -16px;
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  font-size: 0;
+  flex-shrink: 0;
+}
+
+.amorph-step[data-status="complete"] .amorph-step-number {
+  background: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.amorph-step[data-status="current"] .amorph-step-number {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 8px var(--color-accent-glow);
+}
+
+/* Schritt-Inhalt */
+.amorph-step-content {
+  flex: 1;
+}
+
+.amorph-step-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.amorph-step-description {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 2px;
+}
+
+/* Horizontal Steps */
+.amorph-steps-horizontal {
+  flex-direction: row;
+  padding-left: 0;
+  gap: 8px;
+}
+
+.amorph-steps-horizontal .amorph-step {
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+}
+
+.amorph-steps-horizontal .amorph-step::before {
+  left: auto;
+  right: -50%;
+  top: 5px;
+  bottom: auto;
+  width: 100%;
+  height: 1px;
+}
+
+.amorph-steps-horizontal .amorph-step-number {
+  position: static;
+}

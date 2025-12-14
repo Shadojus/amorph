@@ -485,7 +485,7 @@ export default function init(ctx) {
   // Markiere Perspektiven-Buttons mit Treffer-Indikator
   function markiereTreffer(ergebnisse, query = '') {
     const liste = headerConfig.perspektiven.liste || [];
-    const q = query.toLowerCase();
+    const q = (typeof query === 'string' ? query : String(query || '')).toLowerCase();
     
     // Keywords aus Schema nutzen (Fallback auf leere Arrays)
     const perspektivenKeywords = schemaKeywords;
@@ -506,7 +506,8 @@ export default function init(ctx) {
       
       // 1. Query-basierte Treffer
       for (const keyword of keywords) {
-        if (q.includes(keyword)) {
+        // Keywords are already lowercase from getPerspektivenKeywords
+        if (typeof keyword === 'string' && q.includes(keyword)) {
           trefferAnzahl += ergebnisse.length; // Alle Ergebnisse relevant
           break;
         }
@@ -552,7 +553,7 @@ export default function init(ctx) {
     markiereTreffer(ergebnisse, query);
     
     const liste = headerConfig.perspektiven.liste || [];
-    const q = query.toLowerCase();
+    const q = (typeof query === 'string' ? query : String(query || '')).toLowerCase();
     
     // Keywords aus Schema nutzen
     const perspektivenKeywords = schemaKeywords;
@@ -566,7 +567,8 @@ export default function init(ctx) {
       
       // 1. Query-basierte Relevanz (höchste Priorität)
       for (const keyword of keywords) {
-        if (q.includes(keyword)) {
+        // Keywords are already lowercase from getPerspektivenKeywords
+        if (typeof keyword === 'string' && q.includes(keyword)) {
           score += 10; // Hoher Score für Query-Match
         }
       }

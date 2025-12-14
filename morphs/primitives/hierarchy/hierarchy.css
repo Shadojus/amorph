@@ -1,0 +1,117 @@
+/* HIERARCHY MORPH - Universe Theme */
+.amorph-hierarchy {
+  font-size: 11px;
+  padding: 4px;
+  background: transparent;
+}
+
+.amorph-hierarchy-node {
+  position: relative;
+  padding-left: 18px;
+  margin: 4px 0;
+}
+
+/* Leuchtende Verbindungslinie */
+.amorph-hierarchy-node::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, 
+    rgba(100, 150, 255, 0.3) 0%, 
+    rgba(100, 150, 255, 0.1) 100%);
+  box-shadow: 0 0 4px rgba(100, 150, 255, 0.2);
+}
+
+/* Horizontale Verbindung mit Leuchtpunkt */
+.amorph-hierarchy-node::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 12px;
+  width: 10px;
+  height: 1px;
+  background: rgba(100, 150, 255, 0.3);
+  box-shadow: 0 0 3px rgba(100, 150, 255, 0.2);
+}
+
+.amorph-hierarchy-node:last-child::before {
+  bottom: calc(100% - 12px);
+}
+
+/* Node-Label mit Leuchtpunkt */
+.amorph-hierarchy-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  color: var(--color-text);
+  position: relative;
+}
+
+/* Leuchtender Punkt vor jedem Node */
+.amorph-hierarchy-label::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(180, 210, 255, 0.8);
+  box-shadow: 
+    0 0 3px rgba(180, 210, 255, 0.8),
+    0 0 6px rgba(100, 150, 255, 0.5);
+  flex-shrink: 0;
+}
+
+.amorph-hierarchy-icon {
+  font-size: 10px;
+  opacity: 0.4;
+}
+
+/* Root Node - Heller leuchtend */
+.amorph-hierarchy > .amorph-hierarchy-node {
+  padding-left: 0;
+}
+
+.amorph-hierarchy > .amorph-hierarchy-node::before,
+.amorph-hierarchy > .amorph-hierarchy-node::after {
+  display: none;
+}
+
+.amorph-hierarchy > .amorph-hierarchy-node > .amorph-hierarchy-label {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.amorph-hierarchy > .amorph-hierarchy-node > .amorph-hierarchy-label::before {
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 
+    0 0 4px rgba(255, 255, 255, 0.9),
+    0 0 8px rgba(200, 220, 255, 0.6),
+    0 0 16px rgba(150, 180, 255, 0.4);
+}
+
+/* Kinder */
+.amorph-hierarchy-children {
+  margin-left: 6px;
+}
+
+/* Kompakte Inline-Variante */
+.amorph-hierarchy-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.amorph-hierarchy-inline-separator {
+  color: rgba(100, 150, 255, 0.4);
+  text-shadow: 0 0 4px rgba(100, 150, 255, 0.3);
+}

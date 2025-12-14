@@ -133,8 +133,8 @@ class JsonSource {
     let items = await this.ensureData();
     this.lastMatchedTerms = new Set();
     
-    if (search && search.trim()) {
-      const query = search.toLowerCase().trim();
+    if (search && String(search).trim()) {
+      const query = String(search).toLowerCase().trim();
       debug.search('JsonSource Query', { query, totalItems: items.length, offset, limit });
       
       // Intelligente Suche: Jedes Item bewerten und Match-Terme sammeln
@@ -287,8 +287,8 @@ class JsonMultiSource {
     let items = await this.ensureData();
     this.lastMatchedTerms = new Set();
     
-    if (search && search.trim()) {
-      const query = search.toLowerCase().trim();
+    if (search && String(search).trim()) {
+      const query = String(search).toLowerCase().trim();
       debug.search('JsonMultiSource Query', { query, totalItems: items.length, offset, limit });
       
       // Intelligente Suche mit Scoring
@@ -511,8 +511,8 @@ class JsonPerspektivenSource {
     const fullItems = await Promise.all(items.map(item => this.loadAllPerspektiven(item)));
     items = fullItems;
     
-    if (search && search.trim()) {
-      const query = search.toLowerCase().trim();
+    if (search && String(search).trim()) {
+      const query = String(search).toLowerCase().trim();
       debug.search('JsonPerspektivenSource Query', { query, totalItems: items.length, offset, limit });
       
       const scored = items.map(item => {
@@ -626,7 +626,7 @@ function scoreItemWithMatches(item, query) {
     score += 20;
     // Finde die tatsächlichen Matches in den Texten
     for (const text of allTexts) {
-      if (text.toLowerCase().includes(query)) {
+      if (typeof text === 'string' && text.toLowerCase().includes(query)) {
         // Extrahiere das passende Wort/Fragment
         const idx = text.toLowerCase().indexOf(query);
         const matchedWord = text.slice(idx, idx + query.length);
@@ -651,7 +651,7 @@ function scoreItemWithMatches(item, query) {
       score += 10;
       // Finde das passende Wort im Original
       for (const text of allTexts) {
-        if (text.toLowerCase().includes(word)) {
+        if (typeof text === 'string' && text.toLowerCase().includes(word)) {
           const words = text.split(/\s+/);
           for (const w of words) {
             if (w.toLowerCase().includes(word)) {
@@ -712,11 +712,11 @@ export function extractAllTexts(obj, texts = []) {
  * @returns {{ results: Array, matchedTerms: Set, scores: Map }}
  */
 export function localSearch(items, query) {
-  if (!query?.trim() || !items?.length) {
+  if (!query || !String(query).trim() || !items?.length) {
     return { results: items || [], matchedTerms: new Set(), scores: new Map() };
   }
   
-  const q = query.toLowerCase().trim();
+  const q = String(query).toLowerCase().trim();
   const matchedTerms = new Set();
   const scores = new Map();
   
@@ -810,7 +810,7 @@ export function highlightInContainer(container, query, matchedTerms = new Set(),
     ]);
     
     // Ganze Query (falls kurz genug und sinnvoll)
-    const cleanQuery = query.toLowerCase().trim();
+    const cleanQuery = String(query).toLowerCase().trim();
     if (cleanQuery.length >= 2 && cleanQuery.length <= 30) {
       highlightTerms.add(cleanQuery);
     }

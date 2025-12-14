@@ -95,7 +95,7 @@ function formatLabel(key) {
     '_percent': ' (%)'
   };
   
-  let label = key;
+  let label = String(key || '');
   let unit = '';
   
   // Prüfe auf Einheit am Ende
@@ -121,7 +121,7 @@ function formatLabel(key) {
  * Formatiert Zahlen je nach Kontext
  */
 function formatNumber(val, key) {
-  const keyLower = key.toLowerCase();
+  const keyLower = String(key || '').toLowerCase();
   
   // Prozent-Erkennung
   if (keyLower.includes('percent') || keyLower.includes('pct') || keyLower.includes('anteil')) {

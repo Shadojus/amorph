@@ -170,7 +170,7 @@ function normalisiereDosierung(wert) {
 function detectUnit(obj) {
   // Aus Feldnamen extrahieren
   for (const key of Object.keys(obj)) {
-    const lower = key.toLowerCase();
+    const lower = String(key || '').toLowerCase();
     if (lower.includes('_mg') || lower.endsWith('mg')) return 'mg';
     if (lower.includes('_g') || lower.endsWith('g')) return 'g';
     if (lower.includes('_ml') || lower.endsWith('ml')) return 'ml';
@@ -200,7 +200,7 @@ function formatKey(key) {
 }
 
 function detectSeverity(obj) {
-  const warning = (obj.warnung || obj.warning || '').toLowerCase();
+  const warning = String(obj.warnung || obj.warning || '').toLowerCase();
   if (warning.includes('gefährlich') || warning.includes('tödlich') || warning.includes('lethal')) {
     return 'danger';
   }
@@ -212,7 +212,7 @@ function detectSeverity(obj) {
 
 function getDosageIcon(dose) {
   if (dose.route) {
-    const route = dose.route.toLowerCase();
+    const route = String(dose.route).toLowerCase();
     if (route.includes('oral') || route.includes('schluck')) return '💊';
     if (route.includes('inhalat')) return '🌬️';
     if (route.includes('topisch') || route.includes('haut')) return '🧴';

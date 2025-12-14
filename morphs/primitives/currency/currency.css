@@ -1,0 +1,41 @@
+/* CURRENCY MORPH - Währungsanzeige */
+.amorph-currency {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.amorph-currency-symbol {
+  font-size: 0.85em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.amorph-currency-value {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.amorph-currency-decimals {
+  font-size: 0.8em;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Positive/Negative Werte */
+.amorph-currency[data-sign="positive"] {
+  color: var(--color-success);
+}
+
+.amorph-currency[data-sign="negative"] {
+  color: var(--color-error);
+}
+
+/* Größe anpassen */
+.amorph-currency-small {
+  font-size: 12px;
+}
+
+.amorph-currency-large {
+  font-size: 20px;
+  font-weight: 600;
+}

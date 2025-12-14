@@ -1,16 +1,13 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   HEATMAP MORPH - Matrix-Wärme-Visualisierung
-   Kirk's Prinzipien: Heatmap für Matrix-Werte, semantische Farbskala
+   HEATMAP MORPH - Universe Theme
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .amorph-heatmap {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
-  padding: var(--space-sm);
-  background: var(--glass-bg);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--glass-border);
+  padding: 8px;
+  background: transparent;
   
   /* Einblend-Animation */
   animation: heatmap-einblenden 0.4s cubic-bezier(0.4, 0, 0.2, 1);

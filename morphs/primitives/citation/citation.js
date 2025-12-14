@@ -176,7 +176,7 @@ function extractCitation(item) {
 }
 
 function detectPublicationType(item) {
-  const title = (item.titel || item.title || '').toLowerCase();
+  const title = String(item.titel || item.title || '').toLowerCase();
   if (title.includes('review')) return 'Review';
   if (title.includes('meta-analysis') || title.includes('metaanalyse')) return 'Meta-Analyse';
   if (item.journal || item.zeitschrift) return 'Artikel';

@@ -39,23 +39,23 @@
   --color-warning: rgba(240, 190, 80, 0.90);
   --color-error: rgba(240, 110, 110, 0.90);
   
-  /* === BLACK GLASMORPHISM - Schwarze Seele des Glases === */
-  /* Hintergründe: Reines Schwarz mit Transparenz */
-  --glass-bg: rgba(0, 0, 0, 0.45);
-  --glass-bg-hover: rgba(0, 0, 0, 0.55);
-  --glass-bg-active: rgba(0, 0, 0, 0.65);
-  /* Borders: Sehr dezentes Weiß für Glaskanten */
-  --glass-border: rgba(255, 255, 255, 0.06);
-  --glass-border-hover: rgba(255, 255, 255, 0.1);
-  --glass-border-active: rgba(255, 255, 255, 0.14);
+  /* === BLACK GLASMORPHISM - Universe Theme === */
+  /* Dunkleres Glas mit kosmischer Tiefe */
+  --glass-bg: rgba(0, 0, 0, 0.55);
+  --glass-bg-hover: rgba(0, 0, 0, 0.65);
+  --glass-bg-active: rgba(0, 0, 0, 0.75);
+  /* Borders: Sehr dezentes Blau-Weiß für Glaskanten */
+  --glass-border: rgba(100, 150, 255, 0.06);
+  --glass-border-hover: rgba(100, 150, 255, 0.12);
+  --glass-border-active: rgba(100, 150, 255, 0.18);
   /* Blur-Effekte */
-  --glass-blur: blur(20px);
-  --glass-blur-strong: blur(32px);
-  /* Schatten: Tiefe schwarze Schatten */
-  --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
-  --glass-shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.7);
+  --glass-blur: blur(24px);
+  --glass-blur-strong: blur(36px);
+  /* Schatten: Tiefe schwarze Schatten mit blauem Schimmer */
+  --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.5), 0 0 40px rgba(50, 80, 150, 0.05);
+  --glass-shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 60px rgba(50, 80, 150, 0.08);
   /* Inset: Subtiler Lichtschimmer oben */
-  --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.02);
   
   /* === SPACING-SYSTEM === */
   /* 4px Basis-Einheit für konsistente Abstände */
@@ -173,7 +173,7 @@ body {
   min-height: 100vh;
 }
 
-/* Subtiler Gradient-Hintergrund */
+/* Subtiler Gradient-Hintergrund - Kosmisches Grid */
 body::before {
   content: '';
   position: fixed;
@@ -182,7 +182,14 @@ body::before {
   right: 0;
   bottom: 0;
   background: 
-    radial-gradient(ellipse 100% 80% at 50% 0%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+    /* Kosmisches Gitter */
+    linear-gradient(rgba(60, 100, 160, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(60, 100, 160, 0.03) 1px, transparent 1px),
+    /* Nebula-Effekte */
+    radial-gradient(ellipse 80% 50% at 20% 30%, rgba(40, 60, 120, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 80% 70%, rgba(60, 40, 100, 0.06) 0%, transparent 40%),
+    radial-gradient(ellipse 100% 80% at 50% 0%, rgba(255, 255, 255, 0.015) 0%, transparent 50%);
+  background-size: 30px 30px, 30px 30px, 100% 100%, 100% 100%, 100% 100%;
   pointer-events: none;
   z-index: -1;
 }

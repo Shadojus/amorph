@@ -1,10 +1,11 @@
-/* GAUGE MORPH - Kompakter Halbkreis-Tachometer */
+/* GAUGE MORPH - Universe Theme */
 .amorph-gauge {
-  padding: 4px;
+  padding: 8px;
+  background: transparent;
 }
 
 .amorph-gauge-leer {
-  color: var(--color-text-dim, #666);
+  color: rgba(255, 255, 255, 0.3);
   font-style: italic;
   font-size: 11px;
 }
@@ -12,7 +13,7 @@
 .amorph-gauge-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 12px;
   justify-content: center;
 }
 
@@ -20,10 +21,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
-  min-width: 60px;
+  gap: 4px;
+  min-width: 70px;
   flex: 1;
-  max-width: calc(100% / var(--gauge-count, 1) - 6px);
+  max-width: calc(100% / var(--gauge-count, 1) - 8px);
 }
 
 /* SVG Gauge */
@@ -36,7 +37,7 @@
 
 .amorph-gauge-track {
   fill: none;
-  stroke: rgba(255, 255, 255, 0.08);
+  stroke: rgba(255, 255, 255, 0.05);
   stroke-width: 8;
   stroke-linecap: round;
 }
@@ -46,20 +47,22 @@
   stroke-width: 8;
   stroke-linecap: round;
   transition: stroke-dashoffset 0.5s ease-out;
+  filter: drop-shadow(0 0 4px currentColor);
 }
 
-/* Wert in der Mitte */
+/* Wert in der Mitte - Leuchtend */
 .amorph-gauge-value {
   font-size: 14px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
-  fill: rgba(255, 255, 255, 0.85);
+  fill: rgba(255, 255, 255, 0.95);
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.3));
 }
 
 /* Label unter dem Gauge */
 .amorph-gauge-label {
   font-size: 9px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.45);
   text-align: center;
   text-transform: capitalize;
   max-width: 100%;
@@ -68,16 +71,20 @@
   white-space: nowrap;
 }
 
-/* Farb-Zonen */
+/* Farb-Zonen - Leuchtende Farben */
 .amorph-gauge-fill[data-zone="low"] {
-  stroke: #f44336;
+  stroke: rgba(255, 100, 100, 0.9);
+  filter: drop-shadow(0 0 6px rgba(255, 100, 100, 0.6));
 }
 .amorph-gauge-fill[data-zone="medium"] {
-  stroke: #ff9800;
+  stroke: rgba(255, 200, 100, 0.9);
+  filter: drop-shadow(0 0 6px rgba(255, 200, 100, 0.6));
 }
 .amorph-gauge-fill[data-zone="high"] {
-  stroke: #4caf50;
+  stroke: rgba(100, 255, 150, 0.9);
+  filter: drop-shadow(0 0 6px rgba(100, 255, 150, 0.6));
 }
 .amorph-gauge-fill[data-zone="default"] {
-  stroke: #64b5f6;
+  stroke: rgba(100, 180, 255, 0.9);
+  filter: drop-shadow(0 0 6px rgba(100, 180, 255, 0.6));
 }

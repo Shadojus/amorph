@@ -78,7 +78,7 @@ function normalisierePhasen(wert) {
 }
 
 function getPhaseIcon(name, index) {
-  const lower = name.toLowerCase();
+  const lower = String(name || '').toLowerCase();
   
   // Bekannte Phasen
   if (lower.includes('ei') || lower.includes('egg')) return '🥚';

@@ -115,7 +115,7 @@ export function semanticScore(item, query) {
   
   let score = 0;
   const matchedTerms = new Set();
-  const q = query.toLowerCase();
+  const q = (typeof query === 'string' ? query : String(query || '')).toLowerCase();
   
   debug.search('Semantic analysis starting', { 
     item: item.name || item.id, 
@@ -127,7 +127,7 @@ export function semanticScore(item, query) {
   for (const [regelName, regel] of Object.entries(schemaCache.semantik)) {
     // Prüfe ob Query eines der Keywords enthält
     const keywords = regel.keywords || [];
-    const keywordMatch = keywords.some(kw => q.includes(kw.toLowerCase()));
+    const keywordMatch = keywords.some(kw => typeof kw === 'string' && q.includes(kw.toLowerCase()));
     
     if (!keywordMatch) continue;
     
@@ -143,7 +143,7 @@ export function semanticScore(item, query) {
     if (regel.werte) {
       const wertLower = String(feldWert).toLowerCase();
       for (const erlaubterWert of regel.werte) {
-        if (wertLower === erlaubterWert.toLowerCase()) {
+        if (typeof erlaubterWert === 'string' && wertLower === erlaubterWert.toLowerCase()) {
           matched = true;
           matchedTerms.add(String(feldWert));
           break;
@@ -159,12 +159,12 @@ export function semanticScore(item, query) {
       
       for (const suchText of suchTexte) {
         for (const muster of regel.enthält) {
-          if (suchText.includes(muster.toLowerCase())) {
+          if (typeof muster === 'string' && suchText.includes(muster.toLowerCase())) {
             matched = true;
             // Originalen Wert finden
             if (Array.isArray(feldWert)) {
               for (const v of feldWert) {
-                if (String(v).toLowerCase().includes(muster.toLowerCase())) {
+                if (typeof muster === 'string' && String(v).toLowerCase().includes(muster.toLowerCase())) {
                   matchedTerms.add(String(v));
                 }
               }
@@ -234,7 +234,11 @@ export function getPerspektivenKeywords() {
   
   const result = {};
   for (const [id, config] of Object.entries(schemaCache.perspektiven)) {
-    result[id] = config.keywords || [];
+    // Ensure all keywords are strings
+    const keywords = config.keywords || [];
+    result[id] = keywords
+      .filter(kw => kw !== null && kw !== undefined)
+      .map(kw => typeof kw === 'string' ? kw.toLowerCase() : String(kw).toLowerCase());
     // Debug: Show keywords per perspective
     if (result[id].length > 0) {
       debug.perspectives(`Keywords for ${id}`, { 
@@ -471,7 +475,7 @@ export function getFeldConfig(feldname) {
  * Morph type detection is centralized in pipeline.js using morphs.yaml
  */
 function inferFeldMetadata(feldname) {
-  const name = feldname.toLowerCase();
+  const name = String(feldname || '').toLowerCase();
   const metadata = {};
   
   // Generate human-readable label from field name

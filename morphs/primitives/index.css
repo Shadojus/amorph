@@ -21,3 +21,16 @@
 @import url('./sparkline/sparkline.css');
 @import url('./slopegraph/slopegraph.css');
 @import url('./heatmap/heatmap.css');
+
+/* Erweiterte Morphs */
+@import url('./dosage/dosage.css');
+@import url('./currency/currency.css');
+@import url('./citation/citation.css');
+@import url('./calendar/calendar.css');
+@import url('./steps/steps.css');
+@import url('./map/map.css');
+@import url('./hierarchy/hierarchy.css');
+@import url('./network/network.css');
+@import url('./comparison/comparison.css');
+@import url('./severity/severity.css');
+@import url('./lifecycle/lifecycle.css');

@@ -1,0 +1,91 @@
+/* SEVERITY MORPH - Schweregrad-Anzeige */
+.amorph-severity {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  border: 1px solid transparent;
+  font-size: 11px;
+}
+
+/* Severity-Level Farben */
+.amorph-severity[data-level="1"],
+.amorph-severity[data-level="low"],
+.amorph-severity[data-level="info"] {
+  border-color: rgba(100, 180, 220, 0.3);
+  background: rgba(100, 180, 220, 0.08);
+}
+
+.amorph-severity[data-level="2"],
+.amorph-severity[data-level="medium"],
+.amorph-severity[data-level="warning"] {
+  border-color: rgba(240, 190, 80, 0.3);
+  background: rgba(240, 190, 80, 0.08);
+}
+
+.amorph-severity[data-level="3"],
+.amorph-severity[data-level="high"],
+.amorph-severity[data-level="error"] {
+  border-color: rgba(240, 140, 80, 0.3);
+  background: rgba(240, 140, 80, 0.08);
+}
+
+.amorph-severity[data-level="4"],
+.amorph-severity[data-level="critical"],
+.amorph-severity[data-level="danger"] {
+  border-color: rgba(240, 90, 90, 0.3);
+  background: rgba(240, 90, 90, 0.08);
+}
+
+/* Icon */
+.amorph-severity-icon {
+  font-size: 12px;
+}
+
+.amorph-severity[data-level="1"] .amorph-severity-icon,
+.amorph-severity[data-level="low"] .amorph-severity-icon,
+.amorph-severity[data-level="info"] .amorph-severity-icon {
+  color: rgba(100, 180, 220, 0.9);
+}
+
+.amorph-severity[data-level="2"] .amorph-severity-icon,
+.amorph-severity[data-level="medium"] .amorph-severity-icon,
+.amorph-severity[data-level="warning"] .amorph-severity-icon {
+  color: rgba(240, 190, 80, 0.9);
+}
+
+.amorph-severity[data-level="3"] .amorph-severity-icon,
+.amorph-severity[data-level="high"] .amorph-severity-icon,
+.amorph-severity[data-level="error"] .amorph-severity-icon {
+  color: rgba(240, 140, 80, 0.9);
+}
+
+.amorph-severity[data-level="4"] .amorph-severity-icon,
+.amorph-severity[data-level="critical"] .amorph-severity-icon,
+.amorph-severity[data-level="danger"] .amorph-severity-icon {
+  color: rgba(240, 90, 90, 0.9);
+}
+
+/* Label */
+.amorph-severity-label {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+/* Beschreibung */
+.amorph-severity-description {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Kompakte Variante - nur Icon */
+.amorph-severity-compact {
+  padding: 3px 6px;
+  gap: 4px;
+}
+
+.amorph-severity-compact .amorph-severity-label {
+  font-size: 10px;
+}

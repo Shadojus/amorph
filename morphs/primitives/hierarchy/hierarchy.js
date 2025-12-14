@@ -52,7 +52,7 @@ export function hierarchy(wert, config = {}) {
 }
 
 function detectHierarchyType(wert) {
-  const keys = Object.keys(wert).map(k => k.toLowerCase());
+  const keys = Object.keys(wert).map(k => String(k).toLowerCase());
   
   for (const [type, hierarchy] of Object.entries(KNOWN_HIERARCHIES)) {
     const matches = hierarchy.filter(h => keys.some(k => k.includes(h)));
@@ -96,9 +96,9 @@ function extractLevels(wert, hierarchyType) {
 }
 
 function findValue(obj, key) {
-  const lowerKey = key.toLowerCase();
+  const lowerKey = String(key || '').toLowerCase();
   for (const [k, v] of Object.entries(obj)) {
-    if (k.toLowerCase().includes(lowerKey)) {
+    if (String(k).toLowerCase().includes(lowerKey)) {
       return typeof v === 'object' ? null : String(v);
     }
   }

@@ -1,0 +1,20 @@
+# Heatmap Morph Configuration
+# 2D grid color intensity visualization
+
+id: heatmap
+name: Heatmap
+description: Color-coded matrix visualization
+category: charts
+
+# Detection rules
+detection:
+  type: array
+  nested: true
+  hint: matrix
+
+# Configuration
+config:
+  colorScheme: thermal  # thermal | semantic | gradient
+  showValues: true
+  cellSize: auto
+  animated: true

@@ -61,9 +61,10 @@ export function stats(wert, config = {}) {
   for (const [key, value] of Object.entries(wert)) {
     // Nur numerische Werte und keine meta-Felder
     if (typeof value !== 'number') continue;
-    if (['unit', 'einheit', 'id'].includes(key.toLowerCase())) continue;
+    const keyLower = String(key || '').toLowerCase();
+    if (['unit', 'einheit', 'id'].includes(keyLower)) continue;
     
-    const icon = STAT_ICONS[key.toLowerCase()] || '•';
+    const icon = STAT_ICONS[keyLower] || '•';
     const label = formatLabel(key);
     
     statsArray.push({ key, label, value, icon });

@@ -36,7 +36,7 @@ function formatFieldLabel(key) {
     '_percent': ' (%)'
   };
   
-  let label = key;
+  let label = String(key || '');
   let unit = '';
   
   // Prüfe auf Einheit am Ende
@@ -295,6 +295,10 @@ function detectNumberType(value) {
  *   → Standard-Textanzeige
  */
 function detectStringType(value) {
+  // Ensure value is a string before calling toLowerCase
+  if (typeof value !== 'string') {
+    return 'text';
+  }
   const lower = value.toLowerCase().trim();
   const cfg = detectionConfig?.badge || {};
   
@@ -324,7 +328,8 @@ function detectStringType(value) {
   ];
   const maxLength = cfg.maxLength || 25;
   
-  if (value.length <= maxLength && keywords.some(kw => lower.includes(kw))) {
+  // Ensure keywords are strings before comparison
+  if (value.length <= maxLength && keywords.some(kw => typeof kw === 'string' && lower.includes(kw.toLowerCase()))) {
     return 'badge';
   }
   

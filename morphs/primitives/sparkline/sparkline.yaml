@@ -1,0 +1,22 @@
+# Sparkline Morph Configuration
+# Compact inline trend visualization
+
+id: sparkline
+name: Sparkline
+description: Mini inline chart for trends
+category: charts
+
+# Detection rules
+detection:
+  type: array
+  minLength: 3
+  numericValues: true
+  hint: series
+
+# Configuration
+config:
+  height: 20
+  showEndpoint: true
+  showMinMax: false
+  strokeWidth: 1.5
+  animated: true

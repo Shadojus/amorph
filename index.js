@@ -342,7 +342,7 @@ function showNoResults(container, query) {
 }
 
 function highlightMatches(container, query, matchedTerms = new Set()) {
-  const q = query.toLowerCase();
+  const q = String(query || '').toLowerCase();
   
   // Highlight-Begriffe: Primär die tatsächlich gematchten Terme aus der Suche verwenden
   let highlightTerms = new Set(matchedTerms);

@@ -423,7 +423,8 @@ function detectNumberType(value) {
  * NO HARDCODED KEYWORDS ANYMORE!
  */
 function detectStringType(value) {
-  const lower = value.toLowerCase().trim();
+  const strValue = String(value || '');
+  const lower = strValue.toLowerCase().trim();
   const cfg = detectionConfig?.badge || {};
   
   // Badge: Keywords ONLY from config (fallback is empty = pure text)
@@ -431,7 +432,7 @@ function detectStringType(value) {
   const keywords = cfg.keywords || [];
   const maxLength = cfg.maxLength || cfg.maxLaenge || 25;
   
-  if (keywords.length > 0 && value.length <= maxLength && keywords.some(kw => lower.includes(kw.toLowerCase()))) {
+  if (keywords.length > 0 && strValue.length <= maxLength && keywords.some(kw => lower.includes(String(kw || '').toLowerCase()))) {
     return 'badge';
   }
   

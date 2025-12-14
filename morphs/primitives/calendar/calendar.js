@@ -115,7 +115,7 @@ function normalisiereKalender(wert) {
 }
 
 function parseMonthRange(str) {
-  if (!str) return [];
+  if (!str || typeof str !== 'string') return [];
   
   const months = [];
   const lower = str.toLowerCase();
@@ -145,7 +145,7 @@ function parseMonthRange(str) {
 }
 
 function parseMonthName(str) {
-  if (!str) return null;
+  if (!str || typeof str !== 'string') return null;
   const lower = str.toLowerCase().trim();
   
   const monthMap = {

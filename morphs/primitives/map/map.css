@@ -1,0 +1,145 @@
+/* MAP MORPH - Universe Theme */
+.amorph-map {
+  display: block;
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  background: transparent;
+  border: none;
+}
+
+.amorph-map-container {
+  width: 100%;
+  height: 160px;
+  position: relative;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+/* Leuchtender Koordinaten-Punkt */
+.amorph-map-marker {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, 
+    rgba(255, 255, 255, 1) 0%, 
+    rgba(180, 210, 255, 0.9) 30%, 
+    rgba(100, 150, 255, 0.6) 60%, 
+    transparent 100%);
+  box-shadow: 
+    0 0 6px rgba(180, 210, 255, 0.8),
+    0 0 12px rgba(100, 150, 255, 0.5),
+    0 0 24px rgba(80, 120, 200, 0.3);
+  animation: marker-pulse 2.5s ease-in-out infinite;
+}
+
+.amorph-map-marker::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(100, 150, 255, 0.15) 0%, transparent 70%);
+  animation: marker-ring 2.5s ease-in-out infinite;
+}
+
+@keyframes marker-pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.9; }
+}
+
+@keyframes marker-ring {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.3); opacity: 0.2; }
+}
+
+.amorph-map-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 11px;
+}
+
+.amorph-map-placeholder-icon {
+  font-size: 28px;
+  margin-bottom: 6px;
+  opacity: 0.4;
+}
+
+/* Koordinaten-Anzeige */
+.amorph-map-coords {
+  display: flex;
+  gap: 12px;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.5);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.amorph-map-coord {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.amorph-map-coord-label {
+  color: rgba(255, 255, 255, 0.35);
+  font-weight: 500;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.amorph-map-coord-value {
+  color: rgba(180, 210, 255, 0.9);
+  text-shadow: 0 0 8px rgba(100, 150, 255, 0.3);
+}
+
+/* Location Name */
+.amorph-map-location {
+  padding: 8px 10px;
+  font-size: 11px;
+  color: var(--color-text);
+  background: rgba(0, 0, 0, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.amorph-map-location-icon {
+  margin-right: 5px;
+  opacity: 0.5;
+}
+
+/* Kompakte Variante */
+.amorph-map-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.amorph-map-inline-icon {
+  opacity: 0.4;
+}
+
+/* Multi-Marker Container */
+.amorph-map-markers {
+  position: absolute;
+  inset: 0;
+}
+
+/* Verbindungslinien zwischen Markern */
+.amorph-map-connection {
+  stroke: rgba(100, 150, 255, 0.2);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+  filter: drop-shadow(0 0 2px rgba(100, 150, 255, 0.3));
+}

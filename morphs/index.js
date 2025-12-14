@@ -20,6 +20,24 @@ import { timeline } from './primitives/timeline/timeline.js';
 import { badge } from './primitives/badge/badge.js';
 import { lifecycle } from './primitives/lifecycle/lifecycle.js';
 
+// Erweiterte Morphs - Charts & Visualisierungen
+import { sparkline } from './primitives/sparkline/sparkline.js';
+import { slopegraph } from './primitives/slopegraph/slopegraph.js';
+import { heatmap } from './primitives/heatmap/heatmap.js';
+import { gauge } from './primitives/gauge/gauge.js';
+
+// Erweiterte Morphs - Spezial-Darstellungen
+import { dosage } from './primitives/dosage/dosage.js';
+import { currency } from './primitives/currency/currency.js';
+import { citation } from './primitives/citation/citation.js';
+import { calendar } from './primitives/calendar/calendar.js';
+import { steps } from './primitives/steps/steps.js';
+import { map } from './primitives/map/map.js';
+import { hierarchy } from './primitives/hierarchy/hierarchy.js';
+import { network } from './primitives/network/network.js';
+import { comparison } from './primitives/comparison/comparison.js';
+import { severity } from './primitives/severity/severity.js';
+
 // ============================================================================
 // FEATURE-MORPHS - Systemweite Features
 // ============================================================================
@@ -133,15 +151,33 @@ export const morphs = {
   header,
   
   // Visuelle Morphs
-  pie,      // Kreisdiagramm für Verteilungen
-  bar,      // Balkendiagramm für Vergleiche
-  radar,    // Radar-Chart für Profile (3+ Achsen)
-  rating,   // Sterne-Bewertung (0-5, 0-10, 0-100)
-  progress, // Fortschrittsbalken
-  stats,    // statistics-Karte (min/max/avg)
-  timeline, // Zeitliche Abfolge
-  badge,    // Farbige Status-Labels
-  lifecycle, // Lebenszyklen / Phasen
+  pie,        // Kreisdiagramm für Verteilungen
+  bar,        // Balkendiagramm für Vergleiche
+  radar,      // Radar-Chart für Profile (3+ Achsen)
+  rating,     // Sterne-Bewertung (0-5, 0-10, 0-100)
+  progress,   // Fortschrittsbalken
+  stats,      // statistics-Karte (min/max/avg)
+  timeline,   // Zeitliche Abfolge
+  badge,      // Farbige Status-Labels
+  lifecycle,  // Lebenszyklen / Phasen
+  
+  // Erweiterte Chart-Morphs
+  sparkline,  // Mini-Trend-Linie
+  slopegraph, // Vorher/Nachher-Vergleich
+  heatmap,    // Farbcodierte Matrix
+  gauge,      // Tachometer-Anzeige
+  
+  // Spezial-Morphs
+  dosage,     // Dosierungsanzeige
+  currency,   // Währungsformatierung
+  citation,   // Quellenangaben
+  calendar,   // Kalender/Datum-Darstellung
+  steps,      // Schrittfolgen
+  map,        // Geo-Karte
+  hierarchy,  // Baumstruktur
+  network,    // Netzwerk-Graph
+  comparison, // Vergleichsdarstellung
+  severity,   // Schweregrad-Anzeige
   
   // Compare-Morphs (Vergleich) - Alle Typen
   compareMorph,
@@ -177,6 +213,7 @@ export const morphs = {
 // Log registrierte Morphs
 debug.morphs('registry', { 
   primitives: ['text', 'number', 'boolean', 'tag', 'range', 'list', 'object', 'image', 'link', 'pie', 'bar', 'radar', 'rating', 'progress', 'stats', 'timeline', 'badge', 'lifecycle'],
+  extended: ['sparkline', 'slopegraph', 'heatmap', 'gauge', 'dosage', 'currency', 'citation', 'calendar', 'steps', 'map', 'hierarchy', 'network', 'comparison', 'severity'],
   features: ['suche', 'perspektiven', 'header'],
   compare: ['compareMorph', 'compareBar', 'compareRating', 'compareTag', 'compareList', 'compareImage', 'compareRadar', 'comparePie', 'compareText', 'compareTimeline', 'compareRange', 'compareProgress', 'compareBoolean', 'compareStats', 'compareObject'],
   composites: ['smartCompare', 'diffCompare']
@@ -189,6 +226,12 @@ export {
   // Primitives
   text, number, boolean, tag, range, list, object, image, link, 
   pie, bar, radar, rating, progress, stats, timeline, badge, lifecycle,
+  
+  // Extended Charts & Visualizations
+  sparkline, slopegraph, heatmap, gauge,
+  
+  // Special Morphs
+  dosage, currency, citation, calendar, steps, map, hierarchy, network, comparison, severity,
   
   // Features
   suche, perspektiven, header,

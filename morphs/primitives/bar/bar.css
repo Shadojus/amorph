@@ -1,27 +1,25 @@
-/* BAR CHART MORPH - Kompakte horizontale Balken */
+/* BAR CHART MORPH - Universe Theme */
 .amorph-bar {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
   padding: 8px;
-  background: rgba(0, 0, 0, 0.12);
-  border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: transparent;
 }
 
 .amorph-bar-titel {
   font-size: 10px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.45);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding-bottom: 4px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  margin-bottom: 2px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(100, 150, 255, 0.1);
+  margin-bottom: 4px;
 }
 
 .amorph-bar-leer {
-  color: var(--color-text-dim, #666);
+  color: rgba(255, 255, 255, 0.3);
   font-style: italic;
   font-size: 11px;
 }
@@ -29,29 +27,29 @@
 .amorph-bar-scale {
   display: flex;
   justify-content: space-between;
-  padding: 3px 45px 0 50px;
+  padding: 4px 45px 0 50px;
   font-size: 7px;
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.3);
   font-variant-numeric: tabular-nums;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
-  margin-top: 2px;
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+  margin-top: 4px;
 }
 
 .amorph-bar-scale-mid {
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 .amorph-bar-row {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .amorph-bar-label {
-  flex: 0 0 45px;
+  flex: 0 0 50px;
   font-size: 9px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.55);
   text-align: right;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -60,9 +58,9 @@
 
 .amorph-bar-track {
   flex: 1;
-  height: 10px;
-  background: rgba(0, 0, 0, 0.25);
-  border-radius: 3px;
+  height: 12px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 4px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.03);
 }
@@ -70,11 +68,12 @@
 .amorph-bar-fill {
   height: 100%;
   background: linear-gradient(90deg, 
-    rgba(100, 181, 246, 0.4),
-    rgba(100, 181, 246, 0.6)
+    rgba(100, 150, 255, 0.5),
+    rgba(150, 200, 255, 0.7)
   );
-  border-radius: 3px;
-  transition: width 0.3s ease;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+  box-shadow: 0 0 8px rgba(100, 150, 255, 0.3);
 }
 
 .amorph-bar-value {

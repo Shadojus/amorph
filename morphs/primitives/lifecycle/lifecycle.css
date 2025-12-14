@@ -1,0 +1,118 @@
+/* LIFECYCLE MORPH - Universe Theme */
+.amorph-lifecycle {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  background: transparent;
+}
+
+.amorph-lifecycle-leer {
+  color: rgba(255, 255, 255, 0.3);
+  font-style: italic;
+  font-size: 11px;
+}
+
+.amorph-lifecycle-titel {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(100, 150, 255, 0.1);
+}
+
+/* Phasen-Container */
+.amorph-lifecycle-stages {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+/* Einzelne Phase */
+.amorph-lifecycle-stage {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  transition: all 0.2s ease;
+}
+
+.amorph-lifecycle-stage:hover {
+  background: rgba(0, 0, 0, 0.4);
+  border-color: rgba(100, 150, 255, 0.15);
+}
+
+/* Leuchtender Punkt */
+.amorph-lifecycle-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(150, 200, 255, 0.6);
+  flex-shrink: 0;
+  box-shadow: 
+    0 0 4px rgba(150, 200, 255, 0.8),
+    0 0 8px rgba(100, 150, 255, 0.5);
+}
+
+/* Aktive Phase - Heller */
+.amorph-lifecycle-stage.active .amorph-lifecycle-dot {
+  background: rgba(255, 220, 150, 0.9);
+  box-shadow: 
+    0 0 6px rgba(255, 220, 150, 0.9),
+    0 0 12px rgba(255, 200, 100, 0.6);
+}
+
+.amorph-lifecycle-name {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.amorph-lifecycle-duration {
+  font-size: 9px;
+  color: rgba(150, 200, 255, 0.5);
+}
+
+/* Verbindungs-Pfeil */
+.amorph-lifecycle-arrow {
+  color: rgba(100, 150, 255, 0.3);
+  font-size: 10px;
+}
+
+/* Kompakte Inline-Variante */
+.amorph-lifecycle-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Phase-Farben nach Typ */
+.amorph-lifecycle-stage[data-type="growth"] .amorph-lifecycle-dot {
+  background: rgba(100, 255, 150, 0.7);
+  box-shadow: 0 0 6px rgba(100, 255, 150, 0.8), 0 0 12px rgba(80, 200, 120, 0.5);
+}
+
+.amorph-lifecycle-stage[data-type="mature"] .amorph-lifecycle-dot {
+  background: rgba(255, 220, 100, 0.7);
+  box-shadow: 0 0 6px rgba(255, 220, 100, 0.8), 0 0 12px rgba(200, 180, 80, 0.5);
+}
+
+.amorph-lifecycle-stage[data-type="decay"] .amorph-lifecycle-dot {
+  background: rgba(255, 150, 100, 0.7);
+  box-shadow: 0 0 6px rgba(255, 150, 100, 0.8), 0 0 12px rgba(200, 120, 80, 0.5);
+}
+
+.amorph-lifecycle-stage[data-type="dormant"] .amorph-lifecycle-dot {
+  background: rgba(180, 180, 200, 0.5);
+  box-shadow: 0 0 4px rgba(180, 180, 200, 0.6), 0 0 8px rgba(150, 150, 180, 0.3);
+}
