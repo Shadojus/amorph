@@ -10,16 +10,16 @@
 
 import { debug } from '../../../observer/debug.js';
 
-// Universe-Farbpalette für Punkte
+// Blue theme - point colors
 const PUNKT_FARBEN = [
-  'rgba(78, 205, 196, 0.8)',   // Türkis
-  'rgba(255, 107, 107, 0.8)',  // Koralle
-  'rgba(255, 230, 109, 0.8)',  // Gelb
-  'rgba(149, 225, 211, 0.8)',  // Mint
-  'rgba(108, 92, 231, 0.8)',   // Lila
-  'rgba(253, 121, 168, 0.8)',  // Pink
-  'rgba(0, 184, 148, 0.8)',    // Grün
-  'rgba(9, 132, 227, 0.8)'     // Blau
+  'rgba(100, 180, 255, 0.8)',   // Light Sky Blue
+  'rgba(80, 160, 240, 0.8)',    // Bright Blue
+  'rgba(60, 140, 220, 0.8)',    // Ocean Blue
+  'rgba(120, 200, 255, 0.7)',   // Ice Blue
+  'rgba(40, 120, 200, 0.8)',    // Deep Blue
+  'rgba(140, 210, 255, 0.7)',   // Pale Blue
+  'rgba(70, 150, 230, 0.8)',    // Azure
+  'rgba(90, 170, 250, 0.75)'    // Soft Blue
 ];
 
 export function scatterplot(wert, config = {}) {

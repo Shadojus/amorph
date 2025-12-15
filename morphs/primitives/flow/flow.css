@@ -106,7 +106,7 @@
       rgba(15, 20, 25, 0.98) 0%,
       rgba(25, 30, 35, 0.95) 100%
     );
-    border-color: rgba(0, 255, 255, 0.1);
+    border-color: rgba(100, 160, 255, 0.1);
   }
   
   .amorph-flow-curve {
@@ -118,12 +118,12 @@
   }
   
   .amorph-flow-node-circle {
-    fill: rgba(0, 200, 200, 0.4);
-    stroke: rgba(0, 255, 255, 0.6);
+    fill: rgba(80, 140, 200, 0.4);
+    stroke: rgba(100, 160, 255, 0.6);
   }
   
   .amorph-flow-node-glow {
-    fill: rgba(0, 255, 255, 0.15);
+    fill: rgba(100, 160, 255, 0.15);
   }
   
   .amorph-flow-node-label {
@@ -140,25 +140,25 @@
 [data-theme="dark"] .amorph-flow,
 .universe .amorph-flow {
   background: rgba(10, 15, 20, 0.9);
-  border-color: rgba(0, 255, 255, 0.15);
+  border-color: rgba(100, 160, 255, 0.15);
 }
 
 .amorph-flow.dark .amorph-flow-curve,
 [data-theme="dark"] .amorph-flow .amorph-flow-curve,
 .universe .amorph-flow .amorph-flow-curve {
-  stroke: rgba(100, 180, 180, 0.5);
-  filter: drop-shadow(0 0 4px rgba(0, 255, 255, 0.3));
+  stroke: rgba(100, 140, 180, 0.5);
+  filter: drop-shadow(0 0 4px rgba(100, 160, 255, 0.3));
 }
 
 .amorph-flow.dark .amorph-flow-particle,
 [data-theme="dark"] .amorph-flow .amorph-flow-particle,
 .universe .amorph-flow .amorph-flow-particle {
-  fill: rgba(0, 255, 200, 0.6);
+  fill: rgba(100, 180, 255, 0.6);
 }
 
 .amorph-flow.dark .amorph-flow-node-circle,
 [data-theme="dark"] .amorph-flow .amorph-flow-node-circle,
 .universe .amorph-flow .amorph-flow-node-circle {
-  fill: rgba(0, 180, 180, 0.5);
-  stroke: rgba(0, 255, 255, 0.7);
+  fill: rgba(80, 140, 180, 0.5);
+  stroke: rgba(100, 160, 255, 0.7);
 }

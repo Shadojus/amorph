@@ -10,14 +10,14 @@
   padding: 16px;
   background: rgba(0, 0, 0, 0.4);
   border-radius: 12px;
-  border: 1px solid rgba(0, 255, 255, 0.15);
+  border: 1px solid rgba(100, 160, 255, 0.15);
 }
 
 .amorph-treemap-titel {
   font-size: 14px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
-  text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+  text-shadow: 0 0 8px rgba(100, 160, 255, 0.5);
   text-align: center;
 }
 

@@ -11,12 +11,12 @@
 
 import { debug } from '../../../observer/debug.js';
 
-// Universe-Farbpalette
+// Blue theme - universe palette
 const LOLLIPOP_FARBEN = {
-  positiv: 'rgba(78, 205, 196, 0.8)',   // Türkis
-  negativ: 'rgba(255, 107, 107, 0.8)',  // Koralle
-  neutral: 'rgba(149, 225, 211, 0.8)',  // Mint
-  highlight: 'rgba(255, 230, 109, 0.8)' // Gelb
+  positiv: 'rgba(100, 180, 255, 0.8)',   // Light Sky Blue
+  negativ: 'rgba(60, 120, 180, 0.8)',    // Deep Blue (for negative)
+  neutral: 'rgba(140, 200, 255, 0.7)',   // Ice Blue
+  highlight: 'rgba(150, 220, 255, 0.9)'  // Bright highlight
 };
 
 export function lollipop(wert, config = {}) {

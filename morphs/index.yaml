@@ -79,6 +79,20 @@ colors:
   # Fallback color when all are filtered
   default: "rgba(0, 255, 255, 0.15)"
 
+# === DIAGRAM COLORS (Blue Theme) ===
+# Monochromatic blue palette for all chart morphs
+# Harmonious, professional, cohesive with Universe theme
+farben:
+  diagramme:
+    - "rgba(100, 180, 255, 0.65)"   # Light Sky Blue
+    - "rgba(80, 160, 240, 0.65)"    # Bright Blue
+    - "rgba(60, 140, 220, 0.65)"    # Ocean Blue
+    - "rgba(120, 200, 255, 0.55)"   # Ice Blue
+    - "rgba(40, 120, 200, 0.65)"    # Deep Blue
+    - "rgba(140, 210, 255, 0.50)"   # Pale Blue
+    - "rgba(70, 150, 230, 0.65)"    # Azure
+    - "rgba(90, 170, 250, 0.60)"    # Soft Blue
+
 # === MORPH SOURCES ===
 # Directories containing morph configurations
 sources:

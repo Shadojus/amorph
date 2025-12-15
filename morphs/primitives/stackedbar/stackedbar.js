@@ -13,16 +13,16 @@
 import { debug } from '../../../observer/debug.js';
 import { getFarben } from '../../../util/semantic.js';
 
-// Segment-Farben
+// Blue theme - monochromatic fallback
 const FARBEN_FALLBACK = [
-  'rgba(0, 200, 255, 0.7)',     // Cyan
-  'rgba(255, 0, 200, 0.7)',     // Magenta
-  'rgba(0, 255, 128, 0.7)',     // Grün
-  'rgba(255, 200, 0, 0.7)',     // Gelb
-  'rgba(200, 100, 255, 0.7)',   // Violett
-  'rgba(255, 100, 100, 0.7)',   // Rot
-  'rgba(100, 200, 200, 0.7)',   // Türkis
-  'rgba(200, 200, 100, 0.7)'    // Olive
+  'rgba(100, 180, 255, 0.7)',    // Light Sky Blue
+  'rgba(80, 160, 240, 0.7)',     // Bright Blue
+  'rgba(60, 140, 220, 0.7)',     // Ocean Blue
+  'rgba(120, 200, 255, 0.6)',    // Ice Blue
+  'rgba(40, 120, 200, 0.7)',     // Deep Blue
+  'rgba(140, 210, 255, 0.55)',   // Pale Blue
+  'rgba(70, 150, 230, 0.7)',     // Azure
+  'rgba(90, 170, 250, 0.65)'     // Soft Blue
 ];
 
 export function stackedbar(wert, config = {}) {

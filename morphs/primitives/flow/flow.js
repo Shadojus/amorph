@@ -12,24 +12,24 @@
 
 import { debug } from '../../../observer/debug.js';
 
-// Organische Farbpalette (pastellig, biologisch)
+// Blue theme - flow colors
 const FLOW_COLORS = [
-  'rgba(200, 180, 160, 0.6)',   // Warm Beige
-  'rgba(180, 200, 200, 0.6)',   // Cool Cyan
-  'rgba(200, 160, 160, 0.6)',   // Soft Rose
-  'rgba(160, 180, 160, 0.6)',   // Sage Green
-  'rgba(180, 160, 180, 0.6)',   // Dusty Lavender
-  'rgba(200, 190, 160, 0.6)',   // Sand
-  'rgba(160, 180, 200, 0.6)',   // Sky Blue
-  'rgba(190, 170, 160, 0.6)'    // Terracotta
+  'rgba(100, 180, 255, 0.6)',   // Light Sky Blue
+  'rgba(80, 160, 240, 0.6)',    // Bright Blue
+  'rgba(60, 140, 220, 0.6)',    // Ocean Blue
+  'rgba(120, 200, 255, 0.55)',  // Ice Blue
+  'rgba(40, 120, 200, 0.6)',    // Deep Blue
+  'rgba(140, 210, 255, 0.5)',   // Pale Blue
+  'rgba(70, 150, 230, 0.6)',    // Azure
+  'rgba(90, 170, 250, 0.55)'    // Soft Blue
 ];
 
 const PARTICLE_COLORS = [
-  'rgba(255, 200, 180, 0.8)',   // Peach
-  'rgba(180, 220, 220, 0.8)',   // Aqua
-  'rgba(220, 180, 180, 0.8)',   // Blush
-  'rgba(180, 200, 180, 0.8)',   // Mint
-  'rgba(200, 180, 200, 0.8)'    // Lilac
+  'rgba(150, 210, 255, 0.8)',   // Light Blue
+  'rgba(120, 190, 255, 0.8)',   // Sky Blue
+  'rgba(100, 170, 250, 0.8)',   // Azure
+  'rgba(130, 200, 255, 0.8)',   // Ice Blue
+  'rgba(110, 180, 255, 0.8)'    // Soft Blue
 ];
 
 export function flow(wert, config = {}) {

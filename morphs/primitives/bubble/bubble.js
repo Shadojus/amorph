@@ -13,16 +13,16 @@
 import { debug } from '../../../observer/debug.js';
 import { getFarben } from '../../../util/semantic.js';
 
-// Neon-Farben für Kategorien
+// Blue theme - monochromatic fallback
 const FARBEN_FALLBACK = [
-  'rgba(0, 255, 255, 0.6)',     // Cyan
-  'rgba(255, 0, 255, 0.6)',     // Magenta
-  'rgba(0, 255, 128, 0.6)',     // Grün
-  'rgba(255, 0, 128, 0.6)',     // Pink
-  'rgba(255, 255, 0, 0.6)',     // Gelb
-  'rgba(255, 128, 0, 0.6)',     // Orange
-  'rgba(0, 128, 255, 0.6)',     // Blau
-  'rgba(128, 0, 255, 0.6)'      // Violett
+  'rgba(100, 180, 255, 0.6)',    // Light Sky Blue
+  'rgba(80, 160, 240, 0.6)',     // Bright Blue
+  'rgba(60, 140, 220, 0.6)',     // Ocean Blue
+  'rgba(120, 200, 255, 0.5)',    // Ice Blue
+  'rgba(40, 120, 200, 0.6)',     // Deep Blue
+  'rgba(140, 210, 255, 0.45)',   // Pale Blue
+  'rgba(70, 150, 230, 0.6)',     // Azure
+  'rgba(90, 170, 250, 0.55)'     // Soft Blue
 ];
 
 function getBubbleFarben() {

@@ -10,14 +10,14 @@
   padding: 16px;
   background: rgba(0, 0, 0, 0.4);
   border-radius: 12px;
-  border: 1px solid rgba(0, 255, 255, 0.15);
+  border: 1px solid rgba(100, 160, 255, 0.15);
 }
 
 .amorph-pictogram-titel {
   font-size: 14px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
-  text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+  text-shadow: 0 0 8px rgba(100, 160, 255, 0.5);
   text-align: center;
 }
 
@@ -37,7 +37,7 @@
 
 .amorph-pictogram-legende-icon {
   font-size: 16px;
-  filter: drop-shadow(0 0 4px rgba(0, 255, 255, 0.5));
+  filter: drop-shadow(0 0 4px rgba(100, 160, 255, 0.5));
 }
 
 /* Container Layouts */
@@ -94,18 +94,18 @@
 .amorph-pictogram-icon {
   font-size: 16px;
   display: inline-block;
-  filter: drop-shadow(0 0 3px rgba(0, 255, 255, 0.4));
+  filter: drop-shadow(0 0 3px rgba(100, 160, 255, 0.4));
   animation: pictogram-appear 0.3s ease backwards;
   transition: all 0.2s ease;
 }
 
 .amorph-pictogram-icon:hover {
   transform: scale(1.3);
-  filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.8));
+  filter: drop-shadow(0 0 8px rgba(100, 160, 255, 0.8));
 }
 
 .amorph-pictogram-icon.partial {
-  filter: grayscale(50%) drop-shadow(0 0 2px rgba(0, 255, 255, 0.3));
+  filter: grayscale(50%) drop-shadow(0 0 2px rgba(100, 160, 255, 0.3));
 }
 
 @keyframes pictogram-appear {
@@ -125,7 +125,7 @@
   font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
   font-family: 'Courier New', monospace;
-  text-shadow: 0 0 4px rgba(0, 255, 255, 0.4);
+  text-shadow: 0 0 4px rgba(100, 160, 255, 0.4);
 }
 
 .amorph-pictogram.layout-vergleich .amorph-pictogram-wert {

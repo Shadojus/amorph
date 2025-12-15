@@ -13,18 +13,18 @@
 import { debug } from '../../../observer/debug.js';
 import { getFarben } from '../../../util/semantic.js';
 
-// Farben für Gruppen
+// Blue theme with semantic positive/negative
 const GRUPPE_FARBEN = {
-  positive: 'rgba(0, 200, 100, 0.7)',
-  negative: 'rgba(200, 50, 50, 0.7)',
-  neutral: 'rgba(100, 100, 100, 0.5)',
-  // Kategorien
-  technology: 'rgba(0, 200, 255, 0.6)',
-  finance: 'rgba(100, 200, 100, 0.6)',
-  healthcare: 'rgba(200, 100, 200, 0.6)',
-  energy: 'rgba(255, 150, 50, 0.6)',
-  consumer: 'rgba(255, 200, 100, 0.6)',
-  industrial: 'rgba(150, 150, 200, 0.6)'
+  positive: 'rgba(100, 200, 150, 0.7)',   // Keep green for positive
+  negative: 'rgba(200, 100, 100, 0.7)',   // Keep red for negative
+  neutral: 'rgba(100, 160, 220, 0.6)',    // Blue neutral
+  // Categories - all blue variants
+  technology: 'rgba(80, 160, 240, 0.6)',
+  finance: 'rgba(60, 140, 220, 0.6)',
+  healthcare: 'rgba(100, 180, 255, 0.6)',
+  energy: 'rgba(40, 120, 200, 0.6)',
+  consumer: 'rgba(120, 200, 255, 0.55)',
+  industrial: 'rgba(70, 150, 230, 0.6)'
 };
 
 export function treemap(wert, config = {}) {

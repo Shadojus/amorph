@@ -23,12 +23,12 @@ id: temporal
 name: Temporal
 symbol: ⏳
 
-# Time-Indigo color scheme
+# Soft twilight - subtle time pastels
 colors:
-  - "rgba(120, 120, 200, 0.65)"   # Time-Indigo (Primary)
-  - "rgba(105, 105, 185, 0.65)"   # Cycle-Violet (Secondary)
-  - "rgba(90, 90, 170, 0.65)"     # History-Blue (Tertiary)
-  - "rgba(75, 75, 155, 0.65)"     # Epoch-Indigo (Quaternary)
+  - "rgba(200, 200, 210, 0.40)"
+  - "rgba(195, 195, 205, 0.38)"
+  - "rgba(190, 190, 200, 0.35)"
+  - "rgba(185, 185, 195, 0.32)"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # FIELDS - Flat structure translated from DB schema

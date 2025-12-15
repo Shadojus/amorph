@@ -10,14 +10,14 @@
   padding: 16px;
   background: rgba(0, 0, 0, 0.4);
   border-radius: 12px;
-  border: 1px solid rgba(0, 255, 255, 0.15);
+  border: 1px solid rgba(100, 160, 255, 0.15);
 }
 
 .amorph-scatterplot-titel {
   font-size: 14px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
-  text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+  text-shadow: 0 0 8px rgba(100, 160, 255, 0.5);
   text-align: center;
 }
 
@@ -54,10 +54,10 @@
 
 /* Trendlinie */
 .amorph-scatterplot-trend {
-  stroke: rgba(0, 255, 255, 0.4);
+  stroke: rgba(100, 160, 255, 0.4);
   stroke-width: 2;
   stroke-dasharray: 8 4;
-  filter: drop-shadow(0 0 4px rgba(0, 255, 255, 0.5));
+  filter: drop-shadow(0 0 4px rgba(100, 160, 255, 0.5));
 }
 
 /* Punkte */

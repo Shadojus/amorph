@@ -18,12 +18,12 @@ id: cultivation
 name: Cultivation
 symbol: 🌱
 
-# Bio-Phosphor tones - luminous bioluminescent (0.65 for distinction)
+# Soft mint - subtle growing pastels
 colors:
-  - "rgba(180, 255, 200, 0.65)"  
-  - "rgba(150, 240, 180, 0.65)"  
-  - "rgba(120, 225, 165, 0.65)"  
-  - "rgba(100, 210, 150, 0.65)"  
+  - "rgba(195, 215, 200, 0.40)"
+  - "rgba(190, 210, 195, 0.38)"
+  - "rgba(185, 205, 190, 0.35)"
+  - "rgba(180, 200, 185, 0.32)"  
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # FIELDS - Flat structure for optimal morph recognition

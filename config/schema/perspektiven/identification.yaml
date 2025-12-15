@@ -27,12 +27,12 @@ id: identification
 name: Identification
 symbol: 🔍
 
-# Analysis cyan tones - scientific, precise (0.65)
+# Soft sky - subtle analysis pastels
 colors:
-  - "rgba(100, 200, 220, 0.65)"  
-  - "rgba(80, 180, 200, 0.65)"   
-  - "rgba(60, 160, 180, 0.65)"   
-  - "rgba(40, 140, 160, 0.65)"   
+  - "rgba(195, 210, 215, 0.40)"
+  - "rgba(190, 205, 210, 0.38)"
+  - "rgba(185, 200, 205, 0.35)"
+  - "rgba(180, 195, 200, 0.32)"   
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # FIELDS - Ordered by identification workflow

@@ -13,14 +13,14 @@
 import { debug } from '../../../observer/debug.js';
 import { getFarben } from '../../../util/semantic.js';
 
-// Serien-Farben
+// Blue theme - monochromatic fallback
 const SERIES_COLORS = [
-  'rgba(100, 150, 200, 0.8)',   // Blue
-  'rgba(200, 150, 100, 0.8)',   // Orange
-  'rgba(150, 200, 100, 0.8)',   // Green
-  'rgba(200, 100, 150, 0.8)',   // Pink
-  'rgba(150, 100, 200, 0.8)',   // Purple
-  'rgba(200, 200, 100, 0.8)'    // Yellow
+  'rgba(100, 180, 255, 0.8)',    // Light Sky Blue
+  'rgba(80, 160, 240, 0.8)',     // Bright Blue
+  'rgba(60, 140, 220, 0.8)',     // Ocean Blue
+  'rgba(120, 200, 255, 0.7)',    // Ice Blue
+  'rgba(40, 120, 200, 0.8)',     // Deep Blue
+  'rgba(140, 210, 255, 0.65)'    // Pale Blue
 ];
 
 export function groupedbar(wert, config = {}) {

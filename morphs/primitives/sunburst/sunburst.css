@@ -10,7 +10,7 @@
   padding: 16px;
   background: rgba(0, 0, 0, 0.4);
   border-radius: 12px;
-  border: 1px solid rgba(0, 255, 255, 0.15);
+  border: 1px solid rgba(100, 160, 255, 0.15);
   align-items: center;
 }
 
@@ -18,7 +18,7 @@
   font-size: 14px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
-  text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+  text-shadow: 0 0 8px rgba(100, 160, 255, 0.5);
   text-align: center;
 }
 
@@ -47,9 +47,9 @@
 /* Center */
 .amorph-sunburst-center {
   fill: rgba(0, 0, 0, 0.6);
-  stroke: rgba(0, 255, 255, 0.4);
+  stroke: rgba(100, 160, 255, 0.4);
   stroke-width: 2;
-  filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.3));
+  filter: drop-shadow(0 0 8px rgba(100, 160, 255, 0.3));
 }
 
 .amorph-sunburst-center-text {
@@ -58,7 +58,7 @@
   fill: rgba(255, 255, 255, 0.9);
   text-anchor: middle;
   dominant-baseline: middle;
-  text-shadow: 0 0 6px rgba(0, 255, 255, 0.5);
+  text-shadow: 0 0 6px rgba(100, 160, 255, 0.5);
 }
 
 /* Labels */
