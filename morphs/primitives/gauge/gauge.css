@@ -1,19 +1,19 @@
 /* GAUGE MORPH - Universe Theme */
 .amorph-gauge {
-  padding: 8px;
+  padding: 12px;
   background: transparent;
 }
 
 .amorph-gauge-leer {
   color: rgba(255, 255, 255, 0.3);
   font-style: italic;
-  font-size: 11px;
+  font-size: var(--font-size-sm, 13px);
 }
 
 .amorph-gauge-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 14px;
   justify-content: center;
 }
 
@@ -21,8 +21,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  min-width: 70px;
+  gap: 6px;
+  min-width: 80px;
   flex: 1;
   max-width: calc(100% / var(--gauge-count, 1) - 8px);
 }
@@ -30,7 +30,7 @@
 /* SVG Gauge */
 .amorph-gauge-svg {
   width: 100%;
-  max-width: 80px;
+  max-width: 90px;
   height: auto;
   aspect-ratio: 2 / 1.2;
 }
@@ -52,7 +52,7 @@
 
 /* Wert in der Mitte - Leuchtend */
 .amorph-gauge-value {
-  font-size: 14px;
+  font-size: var(--font-size-lg, 16px);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   fill: rgba(255, 255, 255, 0.95);

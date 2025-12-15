@@ -4,8 +4,8 @@
 .amorph-bar {
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  padding: 8px;
+  gap: 4px;
+  padding: 12px;
   background: transparent;
 }
 
@@ -14,13 +14,13 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  padding-bottom: 6px;
+  padding-bottom: 8px;
   border-bottom: 1px solid rgba(100, 150, 255, 0.1);
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .amorph-bar-titel {
-  font-size: 10px;
+  font-size: var(--font-size-xs, 12px);
   font-weight: 600;
   color: rgba(255, 255, 255, 0.5);
   text-transform: uppercase;
@@ -30,8 +30,8 @@
 /* KIRK: Summary-Stats im Header */
 .amorph-bar-summary {
   display: flex;
-  gap: 10px;
-  font-size: 9px;
+  gap: 12px;
+  font-size: var(--font-size-xs, 11px);
   font-variant-numeric: tabular-nums;
 }
 
@@ -46,7 +46,7 @@
 .amorph-bar-leer {
   color: rgba(255, 255, 255, 0.3);
   font-style: italic;
-  font-size: 11px;
+  font-size: var(--font-size-sm, 13px);
 }
 
 /* Container mit optionaler Referenzlinie */
@@ -69,20 +69,20 @@
 .amorph-bar-scale {
   display: flex;
   justify-content: space-between;
-  padding: 6px 40px 0 58px;
-  font-size: 8px;
+  padding: 8px 40px 0 58px;
+  font-size: var(--font-size-2xs, 10px);
   color: rgba(255, 255, 255, 0.35);
   font-variant-numeric: tabular-nums;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
-  margin-top: 6px;
+  margin-top: 8px;
 }
 
 /* Balken-Zeile */
 .amorph-bar-row {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 2px 0;
+  gap: 10px;
+  padding: 3px 0;
   transition: all 0.2s ease;
 }
 
@@ -119,8 +119,8 @@
 
 /* Label mit Ranking */
 .amorph-bar-label {
-  flex: 0 0 50px;
-  font-size: 10px;
+  flex: 0 0 60px;
+  font-size: var(--font-size-xs, 12px);
   font-weight: 500;
   color: rgba(255, 255, 255, 0.6);
   text-align: right;
@@ -133,22 +133,22 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 14px;
-  height: 14px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   background: rgba(100, 180, 255, 0.2);
   color: rgba(100, 180, 255, 0.9);
-  font-size: 8px;
+  font-size: var(--font-size-2xs, 10px);
   font-weight: 700;
-  margin-right: 4px;
+  margin-right: 6px;
 }
 
 /* Track */
 .amorph-bar-track {
   flex: 1;
-  height: 14px;
+  height: 18px;
   background: rgba(0, 0, 0, 0.4);
-  border-radius: 3px;
+  border-radius: 4px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.03);
 }
@@ -184,8 +184,8 @@
 
 /* Wert */
 .amorph-bar-value {
-  flex: 0 0 40px;
-  font-size: 10px;
+  flex: 0 0 50px;
+  font-size: var(--font-size-xs, 12px);
   font-weight: 600;
   color: rgba(255, 255, 255, 0.8);
   font-variant-numeric: tabular-nums;
@@ -195,10 +195,10 @@
 /* KIRK: Veränderungsindikator */
 .amorph-bar-change {
   display: inline-block;
-  font-size: 8px;
-  margin-left: 4px;
-  padding: 1px 3px;
-  border-radius: 3px;
+  font-size: var(--font-size-2xs, 10px);
+  margin-left: 6px;
+  padding: 2px 5px;
+  border-radius: 4px;
 }
 
 .amorph-bar-change.positive {
@@ -215,23 +215,23 @@
 .amorph-bar-row[data-trend="up"] .amorph-bar-label::before {
   content: '↑';
   color: rgba(100, 255, 150, 0.7);
-  margin-right: 3px;
-  font-size: 8px;
+  margin-right: 4px;
+  font-size: var(--font-size-2xs, 10px);
 }
 
 .amorph-bar-row[data-trend="down"] .amorph-bar-label::before {
   content: '↓';
   color: rgba(255, 100, 100, 0.7);
-  margin-right: 3px;
-  font-size: 8px;
+  margin-right: 4px;
+  font-size: var(--font-size-2xs, 10px);
 }
 
 /* Annotation */
 .amorph-bar-annotation {
-  font-size: 9px;
+  font-size: var(--font-size-xs, 11px);
   color: rgba(255, 255, 255, 0.4);
   font-style: italic;
-  padding-top: 6px;
+  padding-top: 8px;
   border-top: 1px dashed rgba(255, 255, 255, 0.1);
-  margin-top: 6px;
+  margin-top: 8px;
 }

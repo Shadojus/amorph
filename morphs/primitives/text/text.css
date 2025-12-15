@@ -4,8 +4,8 @@
 .amorph-text {
   display: inline;
   color: rgba(255, 255, 255, 0.85);
-  font-size: 12px;
-  line-height: 1.5;
+  font-size: var(--font-size-sm, 14px);
+  line-height: 1.6;
 }
 
 /* Hervorgehobener Text */
@@ -23,7 +23,7 @@
 
 /* Text als Objekt-Fallback */
 .amorph-text-object {
-  font-size: 11px;
+  font-size: var(--font-size-xs, 12px);
   color: rgba(255, 255, 255, 0.5);
   font-style: italic;
 }

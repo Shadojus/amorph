@@ -4,15 +4,15 @@
 :root {
   /* === UNIFIED DESIGN SYSTEM === */
   /* Einheitliche Größen für alle interaktiven Elemente */
-  --ui-height-sm: 26px;
-  --ui-height-md: 32px;
-  --ui-height-lg: 40px;
+  --ui-height-sm: 32px;
+  --ui-height-md: 40px;
+  --ui-height-lg: 48px;
   --ui-radius-sm: 8px;
   --ui-radius-md: 14px;
   --ui-radius-lg: 20px;
-  --ui-font-sm: 0.68rem;
-  --ui-font-md: 0.75rem;
-  --ui-font-lg: 0.88rem;
+  --ui-font-sm: 0.8rem;
+  --ui-font-md: 0.9rem;
+  --ui-font-lg: 1rem;
   
   /* === FARBSCHEMA === */
   /* Akzentfarbe: Neutrales Weiß - Perspektiven liefern Farben */
@@ -117,14 +117,14 @@
   --font-family: system-ui, -apple-system, sans-serif;
   
   /* Responsive Größen-Skala */
-  --font-size-2xs: clamp(8px, 0.5rem + 0.1vw, 9px);    /* Scale-Beschriftungen */
-  --font-size-xs: clamp(9px, 0.55rem + 0.1vw, 10px);   /* Kleine Labels */
-  --font-size-sm: clamp(10px, 0.6rem + 0.15vw, 11px);  /* Standard-Text, Werte */
-  --font-size-base: clamp(11px, 0.65rem + 0.15vw, 12px); /* Pilz-Namen, Labels */
-  --font-size-md: clamp(12px, 0.7rem + 0.15vw, 13px);  /* Section-Header */
-  --font-size-lg: clamp(13px, 0.75rem + 0.2vw, 14px);  /* Feld-Überschriften */
-  --font-size-xl: clamp(14px, 0.85rem + 0.25vw, 16px); /* Perspektiven-Titel */
-  --font-size-2xl: clamp(18px, 1rem + 0.4vw, 20px);    /* Große Zahlen, Icons */
+  --font-size-2xs: clamp(10px, 0.6rem + 0.15vw, 11px);    /* Scale-Beschriftungen */
+  --font-size-xs: clamp(11px, 0.65rem + 0.15vw, 12px);   /* Kleine Labels */
+  --font-size-sm: clamp(12px, 0.7rem + 0.2vw, 14px);  /* Standard-Text, Werte */
+  --font-size-base: clamp(13px, 0.75rem + 0.2vw, 15px); /* Pilz-Namen, Labels */
+  --font-size-md: clamp(14px, 0.8rem + 0.2vw, 16px);  /* Section-Header */
+  --font-size-lg: clamp(15px, 0.85rem + 0.25vw, 17px);  /* Feld-Überschriften */
+  --font-size-xl: clamp(17px, 1rem + 0.3vw, 20px); /* Perspektiven-Titel */
+  --font-size-2xl: clamp(22px, 1.2rem + 0.5vw, 26px);    /* Große Zahlen, Icons */
   
   /* Semantische Aliases für Compare-Elemente */
   --font-pilz-name: var(--font-size-sm);       /* ~11px - Pilz-Namen überall gleich! */

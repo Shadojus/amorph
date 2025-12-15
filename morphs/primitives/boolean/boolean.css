@@ -4,11 +4,11 @@
 .amorph-boolean {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   font-weight: 500;
-  font-size: 11px;
-  padding: 3px 8px;
-  border-radius: 4px;
+  font-size: var(--font-size-sm, 13px);
+  padding: 5px 10px;
+  border-radius: 6px;
   background: rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -16,8 +16,8 @@
 /* Leuchtender Indikator-Punkt */
 .amorph-boolean::before {
   content: '';
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   flex-shrink: 0;
 }

@@ -2,16 +2,16 @@
 .amorph-badge {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
-  height: 18px;
-  padding: 0 5px;
-  margin: 1px;
-  font-size: 8px;
+  gap: 4px;
+  height: 24px;
+  padding: 0 8px;
+  margin: 2px;
+  font-size: var(--font-size-xs, 11px);
   font-weight: 600;
   background: color-mix(in srgb, var(--badge-bg, #64748b) 18%, rgba(0,0,0,0.3));
   border: 1px solid color-mix(in srgb, var(--badge-border, #64748b) 25%, transparent);
   color: color-mix(in srgb, var(--badge-text, #94a3b8) 90%, white);
-  border-radius: 3px;
+  border-radius: 4px;
   text-transform: uppercase;
   letter-spacing: 0.03em;
   white-space: nowrap;

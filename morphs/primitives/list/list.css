@@ -7,52 +7,52 @@
   padding: 0;
   display: inline-flex;
   flex-wrap: wrap;
-  gap: 4px 8px;
+  gap: 6px 10px;
   align-items: center;
-  font-size: 12px;
+  font-size: var(--font-size-sm, 14px);
 }
 
 .amorph-list li {
   display: inline-flex;
   align-items: center;
   color: rgba(255, 255, 255, 0.8);
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 /* Separator - Leuchtender Punkt statt Komma */
 .amorph-list li:not(:last-child)::after {
   content: '·';
   color: rgba(100, 180, 255, 0.6);
-  margin-left: 6px;
+  margin-left: 8px;
   text-shadow: 0 0 4px rgba(100, 180, 255, 0.4);
 }
 
 /* List als Tags - Leuchtende Kapseln */
 .amorph-list[data-style="tags"] {
-  gap: 6px;
+  gap: 8px;
 }
 
 .amorph-list[data-style="tags"] li {
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(100, 180, 255, 0.15);
-  height: 24px;
-  padding: 0 10px;
+  height: 28px;
+  padding: 0 12px;
   display: inline-flex;
   align-items: center;
-  border-radius: 12px;
-  font-size: 11px;
+  border-radius: 14px;
+  font-size: var(--font-size-sm, 13px);
   color: rgba(255, 255, 255, 0.85);
   transition: all 0.2s ease;
 }
 
 .amorph-list[data-style="tags"] li::before {
   content: '';
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: rgba(100, 180, 255, 0.6);
   box-shadow: 0 0 4px rgba(100, 180, 255, 0.5);
-  margin-right: 6px;
+  margin-right: 8px;
 }
 
 .amorph-list[data-style="tags"] li::after {

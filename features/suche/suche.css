@@ -6,14 +6,14 @@
   flex: 1;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   min-width: 0;
-  height: var(--header-element-height, 34px);
+  height: var(--header-element-height, 40px);
   /* Pure Black Glass */
   background: rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(0, 255, 255, 0.1);
-  border-radius: var(--header-element-radius, 17px);
-  padding: 0 6px 0 var(--header-padding-x, 14px);
+  border-radius: var(--header-element-radius, 20px);
+  padding: 0 8px 0 var(--header-padding-x, 16px);
   transition: all 0.2s var(--anim-ease-out);
   overflow: visible;
 }
@@ -46,9 +46,9 @@
 /* Lupe Icon */
 .amorph-suche::before {
   content: '🔍';
-  font-size: 0.65rem;
+  font-size: 0.8rem;
   opacity: 0.4;
-  margin-right: 10px;
+  margin-right: 12px;
   flex-shrink: 0;
   filter: grayscale(0.5) brightness(1.2);
 }
@@ -62,7 +62,7 @@
   flex: 1;
   min-width: 40px;
   padding: 0;
-  font-size: var(--header-font, 0.72rem);
+  font-size: var(--header-font, 0.85rem);
   background: transparent;
   color: rgba(255, 255, 255, 0.92);
   border: none;
@@ -75,7 +75,7 @@
 
 .amorph-suche input::placeholder {
   color: rgba(255, 255, 255, 0.28);
-  font-size: var(--header-font, 0.72rem);
+  font-size: var(--header-font, 0.85rem);
 }
 
 .amorph-suche button {
