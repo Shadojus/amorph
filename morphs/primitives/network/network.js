@@ -202,11 +202,40 @@ function extractNetworkData(wert, config) {
   if (Array.isArray(wert)) {
     for (const item of wert) {
       if (typeof item === 'object') {
-        const name = item.partner || item.name || item.target || item.ziel || '';
-        const typ = item.typ || item.type || item.relation || 'default';
-        if (name) {
+        const name = item.partner || item.name || item.target || item.ziel || item.organism || '';
+        const typ = item.typ || item.type || item.relation || item.relationship || item.beziehung || 'default';
+        
+        // Pattern 2: connections Array
+        // Format: { name: "A", connections: ["B", "C"] } oder { name: "A", connections: [{ target: "B", typ: "..." }] }
+        if (item.connections || item.verbindungen || item.links) {
+          const conns = item.connections || item.verbindungen || item.links;
+          const sourceNode = item.name || item.id || 'Unbekannt';
+          
+          // Setze center auf ersten Knoten wenn nicht konfiguriert
+          if (!config.center && !config.zentrum && nodes.length === 0) {
+            center = sourceNode;
+          } else {
+            nodes.push({ name: sourceNode });
+            edges.push({ typ: 'default', intensity: 50 });
+          }
+          
+          for (const conn of conns) {
+            if (typeof conn === 'string') {
+              nodes.push({ name: conn });
+              edges.push({ typ: 'default', intensity: 50 });
+            } else if (typeof conn === 'object') {
+              const targetName = conn.target || conn.ziel || conn.name || conn.partner || '';
+              const connTyp = conn.typ || conn.type || conn.relation || conn.relationship || 'default';
+              if (targetName) {
+                nodes.push({ name: targetName });
+                edges.push({ typ: connTyp, intensity: conn.intensity || conn.intensitaet || conn.strength || 50 });
+              }
+            }
+          }
+        } else if (name) {
+          // Pattern 1: name + type (Original-Pattern)
           nodes.push({ name });
-          edges.push({ typ, intensity: item.intensitaet || item.intensity || 50 });
+          edges.push({ typ, intensity: item.intensitaet || item.intensity || item.strength || 50 });
         }
       } else if (typeof item === 'string') {
         nodes.push({ name: item });

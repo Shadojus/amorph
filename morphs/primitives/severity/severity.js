@@ -87,28 +87,55 @@ export function severity(wert, config = {}) {
 function normalisiereSeverity(wert) {
   const items = [];
   
+  // String-Level zu numerischen Werten mappen
+  const LEVEL_MAP = {
+    trivial: 10, gering: 10, minimal: 10,
+    minor: 30, niedrig: 30, low: 30,
+    moderate: 50, mittel: 50, medium: 50,
+    severe: 75, major: 75, hoch: 75, high: 75,
+    critical: 95, kritisch: 95, extrem: 95
+  };
+  
+  // Helper: Wert zu Nummer konvertieren
+  const toNumericValue = (val) => {
+    if (typeof val === 'number') return Math.min(100, Math.max(0, val));
+    if (typeof val === 'string') {
+      const mapped = LEVEL_MAP[val.toLowerCase()];
+      if (mapped !== undefined) return mapped;
+      // Versuche als Zahl zu parsen
+      const parsed = parseFloat(val);
+      if (!isNaN(parsed)) return Math.min(100, Math.max(0, parsed));
+    }
+    return 0;
+  };
+  
   if (typeof wert === 'number') {
-    items.push({ label: 'Schweregrad', value: Math.min(100, Math.max(0, wert)), description: '' });
+    items.push({ label: 'Schweregrad', value: toNumericValue(wert), description: '' });
+  } else if (typeof wert === 'string') {
+    // Einzelner String-Level
+    items.push({ label: wert, value: toNumericValue(wert), description: '' });
   } else if (Array.isArray(wert)) {
     for (const item of wert) {
       if (typeof item === 'number') {
-        items.push({ label: `Level`, value: Math.min(100, Math.max(0, item)), description: '' });
+        items.push({ label: `Level`, value: toNumericValue(item), description: '' });
+      } else if (typeof item === 'string') {
+        items.push({ label: item, value: toNumericValue(item), description: '' });
       } else if (typeof item === 'object') {
-        const value = item.schwere || item.severity || item.level || item.value || item.wert || 0;
+        const rawValue = item.schwere || item.severity || item.level || item.value || item.wert || item.grade || 0;
         items.push({
-          label: item.typ || item.type || item.name || item.label || 'Unbekannt',
-          value: Math.min(100, Math.max(0, value)),
+          label: item.typ || item.type || item.name || item.label || item.kategorie || 'Unbekannt',
+          value: toNumericValue(rawValue),
           description: item.beschreibung || item.description || ''
         });
       }
     }
   } else if (typeof wert === 'object') {
     // Einzelnes Objekt
-    if ('schwere' in wert || 'severity' in wert || 'level' in wert) {
-      const value = wert.schwere || wert.severity || wert.level || 0;
+    if ('schwere' in wert || 'severity' in wert || 'level' in wert || 'grade' in wert) {
+      const rawValue = wert.schwere || wert.severity || wert.level || wert.grade || 0;
       items.push({
-        label: wert.typ || wert.type || wert.name || 'Schweregrad',
-        value: Math.min(100, Math.max(0, value)),
+        label: wert.typ || wert.type || wert.name || wert.label || 'Schweregrad',
+        value: toNumericValue(rawValue),
         description: wert.beschreibung || wert.description || ''
       });
     }
@@ -116,10 +143,10 @@ function normalisiereSeverity(wert) {
     if (wert.bedrohungen || wert.threats) {
       const arr = wert.bedrohungen || wert.threats;
       for (const item of arr) {
-        const value = item.schwere || item.severity || item.level || 0;
+        const rawValue = item.schwere || item.severity || item.level || item.grade || 0;
         items.push({
-          label: item.typ || item.type || item.name || 'Unbekannt',
-          value: Math.min(100, Math.max(0, value)),
+          label: item.typ || item.type || item.name || item.label || 'Unbekannt',
+          value: toNumericValue(rawValue),
           description: item.beschreibung || item.description || ''
         });
       }

@@ -17,8 +17,8 @@ export function gauge(wert, config = {}) {
   const el = document.createElement('div');
   el.className = 'amorph-gauge';
   
-  // Mehrere Gauges für Objekte
-  const gauges = normalisiereGauge(wert);
+  // Mehrere Gauges für Objekte - config weitergeben für min/max/zones
+  const gauges = normalisiereGauge(wert, config);
   
   if (gauges.length === 0) {
     el.innerHTML = '<span class="amorph-gauge-leer">Keine Daten</span>';
@@ -38,18 +38,31 @@ export function gauge(wert, config = {}) {
   return el;
 }
 
-function normalisiereGauge(wert) {
+function normalisiereGauge(wert, config = {}) {
   const gauges = [];
   
+  // Default-Zones können über config überschrieben werden
+  const defaultZones = [
+    { start: 0, end: 33, color: 'rgba(240, 80, 80, 0.2)', label: 'niedrig' },
+    { start: 33, end: 66, color: 'rgba(240, 200, 80, 0.2)', label: 'mittel' },
+    { start: 66, end: 100, color: 'rgba(100, 220, 140, 0.2)', label: 'hoch' }
+  ];
+  
   if (typeof wert === 'number') {
-    gauges.push({ value: wert, max: 100, label: '' });
+    gauges.push({ value: wert, min: config.min ?? 0, max: config.max ?? 100, label: '', zones: config.zones || defaultZones });
   } else if (typeof wert === 'object' && !Array.isArray(wert)) {
-    // Einzelnes Gauge-Objekt
-    if ('value' in wert || 'wert' in wert) {
+    // Einzelnes Gauge-Objekt mit min/max/zones Unterstützung
+    if ('value' in wert || 'wert' in wert || 'score' in wert) {
+      const min = wert.min ?? config.min ?? 0;
+      const max = wert.max ?? config.max ?? 100;
+      // Zones aus Daten oder Config
+      const zones = wert.zones || wert.zonen || wert.bereiche || config.zones || defaultZones;
       gauges.push({
-        value: wert.value || wert.wert || 0,
-        max: wert.max || 100,
-        label: wert.label || wert.name || ''
+        value: wert.value ?? wert.wert ?? wert.score ?? 0,
+        min,
+        max,
+        label: wert.label || wert.name || '',
+        zones: normalisiereZones(zones, min, max)
       });
     } else {
       // Mehrere Key-Value-Paare
@@ -57,8 +70,10 @@ function normalisiereGauge(wert) {
         if (typeof value === 'number') {
           gauges.push({
             value: value,
-            max: 100,
-            label: formatLabel(key)
+            min: config.min ?? 0,
+            max: config.max ?? 100,
+            label: formatLabel(key),
+            zones: config.zones || defaultZones
           });
         }
       }
@@ -66,18 +81,58 @@ function normalisiereGauge(wert) {
   } else if (Array.isArray(wert)) {
     for (const item of wert) {
       if (typeof item === 'number') {
-        gauges.push({ value: item, max: 100, label: '' });
+        gauges.push({ value: item, min: config.min ?? 0, max: config.max ?? 100, label: '', zones: config.zones || defaultZones });
       } else if (typeof item === 'object') {
+        const min = item.min ?? config.min ?? 0;
+        const max = item.max ?? config.max ?? 100;
+        const zones = item.zones || item.zonen || config.zones || defaultZones;
         gauges.push({
-          value: item.value || item.wert || item.score || 0,
-          max: item.max || 100,
-          label: item.label || item.name || ''
+          value: item.value ?? item.wert ?? item.score ?? 0,
+          min,
+          max,
+          label: item.label || item.name || '',
+          zones: normalisiereZones(zones, min, max)
         });
       }
     }
   }
   
   return gauges.slice(0, 4); // Max 4 Gauges
+}
+
+// Normalisiert Zones zu Prozent-Bereichen relativ zu min/max
+function normalisiereZones(zones, min, max) {
+  if (!zones || !Array.isArray(zones)) {
+    return [
+      { start: 0, end: 33, color: 'rgba(240, 80, 80, 0.2)' },
+      { start: 33, end: 66, color: 'rgba(240, 200, 80, 0.2)' },
+      { start: 66, end: 100, color: 'rgba(100, 220, 140, 0.2)' }
+    ];
+  }
+  
+  const range = max - min;
+  return zones.map(z => {
+    // Wenn Zone bereits als Prozent definiert ist (0-100)
+    if (z.percent) {
+      return {
+        start: z.start,
+        end: z.end,
+        color: z.color || getZoneColor(z.start)
+      };
+    }
+    // Ansonsten absolute Werte zu Prozent konvertieren
+    return {
+      start: ((z.start - min) / range) * 100,
+      end: ((z.end - min) / range) * 100,
+      color: z.color || z.farbe || getZoneColor(((z.start - min) / range) * 100)
+    };
+  });
+}
+
+function getZoneColor(percent) {
+  if (percent >= 66) return 'rgba(100, 220, 140, 0.2)';
+  if (percent >= 33) return 'rgba(240, 200, 80, 0.2)';
+  return 'rgba(240, 80, 80, 0.2)';
 }
 
 function formatLabel(key) {
@@ -88,8 +143,9 @@ function formatLabel(key) {
 }
 
 function createSingleGauge(data, config) {
-  const { value, max, label } = data;
-  const percent = Math.min(100, Math.max(0, (value / max) * 100));
+  const { value, min = 0, max, label, zones } = data;
+  const range = max - min;
+  const percent = Math.min(100, Math.max(0, ((value - min) / range) * 100));
   
   const container = document.createElement('div');
   container.className = 'amorph-gauge-item';
@@ -112,14 +168,14 @@ function createSingleGauge(data, config) {
   bgArc.setAttribute('stroke-linecap', 'round');
   svg.appendChild(bgArc);
   
-  // Farbzonen im Hintergrund
-  const zones = [
+  // Farbzonen aus Daten oder Default
+  const displayZones = zones || [
     { start: 0, end: 33, color: 'rgba(240, 80, 80, 0.2)' },
     { start: 33, end: 66, color: 'rgba(240, 200, 80, 0.2)' },
     { start: 66, end: 100, color: 'rgba(100, 220, 140, 0.2)' }
   ];
   
-  for (const zone of zones) {
+  for (const zone of displayZones) {
     const startAngle = 180 - (zone.start / 100 * 180);
     const endAngle = 180 - (zone.end / 100 * 180);
     const zoneArc = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -174,7 +230,7 @@ function createSingleGauge(data, config) {
   minLabel.setAttribute('y', size / 2 + 5);
   minLabel.setAttribute('fill', 'rgba(255,255,255,0.4)');
   minLabel.setAttribute('font-size', '8');
-  minLabel.textContent = '0';
+  minLabel.textContent = String(min);
   svg.appendChild(minLabel);
   
   const maxLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');

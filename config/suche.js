@@ -2,6 +2,7 @@
  * Suche Morph
  * Transformiert Suche-Config zu Suchleisten-Element
  * Inkl. Highlight-Navigation (Pfeile zum Springen zwischen Treffern)
+ * Navigation wechselt auch Perspektiven, damit versteckte Highlights sichtbar werden
  */
 
 import { debug } from '../observer/debug.js';
@@ -59,76 +60,159 @@ export function suche(config, morphConfig = {}) {
   form.appendChild(button);
   
   // === Highlight Navigation Logik ===
-  // Zählt nur SICHTBARE Text-Highlights und springt zur exakten Stelle
-  let currentHighlightIndex = 0;
+  let currentHighlightIndex = -1; // Start bei -1, erster Klick geht zu 0
   let highlights = [];
   
-  function isVisible(el) {
-    // Prüft ob Element wirklich sichtbar ist
-    if (!el) return false;
-    const rect = el.getBoundingClientRect();
-    const style = window.getComputedStyle(el);
-    return (
-      rect.width > 0 && 
-      rect.height > 0 && 
-      style.display !== 'none' && 
-      style.visibility !== 'hidden' &&
-      style.opacity !== '0'
-    );
+  function getAllHighlights() {
+    // Alle Highlights finden, auch versteckte
+    // Sortiert nach DOM-Position (oben nach unten)
+    return Array.from(document.querySelectorAll('.amorph-highlight'));
   }
   
   function updateHighlights() {
-    // Finde nur SICHTBARE Highlight-Marks
-    const allHighlights = document.querySelectorAll('.amorph-highlight');
-    highlights = Array.from(allHighlights).filter(isVisible);
+    highlights = getAllHighlights();
     const count = highlights.length;
     
     if (count > 0) {
       highlightNav.style.display = 'flex';
-      currentHighlightIndex = Math.min(currentHighlightIndex, count - 1);
-      counter.textContent = `${currentHighlightIndex + 1}/${count}`;
+      // Reset Index bei neuer Suche
+      currentHighlightIndex = -1;
+      counter.textContent = `0/${count}`;
     } else {
       highlightNav.style.display = 'none';
-      currentHighlightIndex = 0;
+      currentHighlightIndex = -1;
       counter.textContent = '';
     }
   }
   
-  function getVisibleHighlights() {
-    // Immer frische Liste holen
-    const allHighlights = document.querySelectorAll('.amorph-highlight');
-    return Array.from(allHighlights).filter(isVisible);
+  /**
+   * Findet die Perspektive für ein Feld und aktiviert sie (ohne Toggle)
+   */
+  function ensureHighlightVisible(highlight) {
+    // Finde das data-field Container des Highlights
+    const fieldContainer = highlight.closest('amorph-container[data-field]');
+    if (!fieldContainer) {
+      debug.search('ensureHighlightVisible: Kein fieldContainer gefunden');
+      return false;
+    }
+    
+    const fieldName = fieldContainer.dataset.field;
+    if (!fieldName) return false;
+    
+    // Basisfelder sind immer sichtbar
+    const basisFelder = ['name', 'image', 'bild', 'scientific_name', 'wissenschaftlich', 'description', 'beschreibung'];
+    if (basisFelder.includes(fieldName)) return false;
+    
+    // Prüfe ob das Feld gerade sichtbar ist (hat data-perspektive-sichtbar oder keine Perspektive aktiv)
+    const appContainer = document.querySelector('[data-amorph-container]');
+    const perspektivenAktiv = appContainer?.classList.contains('perspektiven-aktiv');
+    
+    if (!perspektivenAktiv) return false; // Alle Felder sichtbar
+    
+    const istSichtbar = fieldContainer.hasAttribute('data-perspektive-sichtbar');
+    debug.search('ensureHighlightVisible: Feld-Check', { 
+      fieldName, 
+      istSichtbar,
+      hatPerspektiveAttr: fieldContainer.hasAttribute('data-perspektive-sichtbar')
+    });
+    
+    if (istSichtbar) return false; // Feld schon sichtbar
+    
+    // Feld ist versteckt - finde und aktiviere passende Perspektive
+    debug.search('ensureHighlightVisible: Feld versteckt, suche Perspektive', { fieldName });
+    
+    const perspektivenNav = document.querySelector('.amorph-perspektiven');
+    if (!perspektivenNav) return false;
+    
+    const buttons = perspektivenNav.querySelectorAll('.amorph-perspektive-btn');
+    for (const btn of buttons) {
+      try {
+        const felder = JSON.parse(btn.dataset.felder || '[]');
+        if (felder.includes(fieldName)) {
+          // Nur klicken wenn NICHT bereits aktiv
+          if (!btn.classList.contains('aktiv')) {
+            debug.search('ensureHighlightVisible: Aktiviere Perspektive', { 
+              fieldName, 
+              perspektive: btn.dataset.perspektive 
+            });
+            btn.click();
+            return true; // Signal dass Perspektive gewechselt wurde
+          }
+          debug.search('ensureHighlightVisible: Perspektive schon aktiv', { 
+            fieldName, 
+            perspektive: btn.dataset.perspektive 
+          });
+          return false;
+        }
+      } catch (e) {
+        debug.error('Fehler beim Parsen der Felder', e);
+      }
+    }
+    
+    debug.search('ensureHighlightVisible: Keine passende Perspektive gefunden!', { fieldName });
+    return false;
+    return false;
   }
   
   function scrollToHighlight(index) {
     const current = highlights[index];
-    if (!current) return;
+    debug.search('scrollToHighlight', { 
+      index, 
+      total: highlights.length,
+      element: current?.textContent?.substring(0, 20),
+      field: current?.closest('amorph-container[data-field]')?.dataset?.field
+    });
     
-    // Entferne alte Markierung
-    document.querySelectorAll('.amorph-highlight-current').forEach(h => 
-      h.classList.remove('amorph-highlight-current')
-    );
+    if (!current) {
+      debug.search('scrollToHighlight: Element nicht gefunden!', { index });
+      return;
+    }
     
-    current.classList.add('amorph-highlight-current');
-    current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Erst Perspektive wechseln wenn nötig
+    const switched = ensureHighlightVisible(current);
+    
+    // Warten bis CSS-Transition und DOM-Update fertig sind
+    const delay = switched ? 150 : 0;
+    
+    setTimeout(() => {
+      // Entferne alte Markierung
+      document.querySelectorAll('.amorph-highlight-current').forEach(h => 
+        h.classList.remove('amorph-highlight-current')
+      );
+      
+      current.classList.add('amorph-highlight-current');
+      current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      debug.search('scrollToHighlight: Gescrollt zu', { index, text: current.textContent });
+    }, delay);
   }
   
   function goToNext() {
-    // Frische Liste holen
-    highlights = getVisibleHighlights();
+    highlights = getAllHighlights();
+    debug.search('goToNext', { 
+      vorher: currentHighlightIndex, 
+      total: highlights.length,
+      highlightTexts: highlights.map(h => h.textContent).slice(0, 5)
+    });
+    
     if (highlights.length === 0) return;
     
+    // Von -1 (kein aktuelles) zu 0 (erstes), dann zyklisch
     currentHighlightIndex = (currentHighlightIndex + 1) % highlights.length;
     counter.textContent = `${currentHighlightIndex + 1}/${highlights.length}`;
+    debug.search('goToNext: Neuer Index', { nachher: currentHighlightIndex });
     scrollToHighlight(currentHighlightIndex);
   }
   
   function goToPrev() {
-    // Frische Liste holen
-    highlights = getVisibleHighlights();
+    highlights = getAllHighlights();
     if (highlights.length === 0) return;
     
-    currentHighlightIndex = (currentHighlightIndex - 1 + highlights.length) % highlights.length;
+    // Von -1 oder 0 zum letzten, sonst eins zurück
+    if (currentHighlightIndex <= 0) {
+      currentHighlightIndex = highlights.length - 1;
+    } else {
+      currentHighlightIndex = currentHighlightIndex - 1;
+    }
     counter.textContent = `${currentHighlightIndex + 1}/${highlights.length}`;
     scrollToHighlight(currentHighlightIndex);
   }
@@ -148,7 +232,7 @@ export function suche(config, morphConfig = {}) {
   // Keyboard Navigation (Enter = next, Shift+Enter = prev)
   input.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-      highlights = getVisibleHighlights();
+      highlights = getAllHighlights();
       if (highlights.length > 0) {
         e.preventDefault();
         if (e.shiftKey) {

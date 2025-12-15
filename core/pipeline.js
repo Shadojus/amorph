@@ -264,31 +264,34 @@ function detectType(value) {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
- * NUMBER TYPE DETECTION
+ * NUMBER TYPE DETECTION (Kirk: Kontextgerechte Zahlen-Darstellung)
  * ═══════════════════════════════════════════════════════════════════════════════
  * 
- * RATING: 0-10 mit Dezimalstellen (z.B. 7.5, 8.2)
- *   → Kleine Skala, typisch für Bewertungen
- *   → Dezimalen zeigen Präzision (vs. ganzzahlige Progress-Werte)
+ * RATING: 0-10 Skala (Kirk: Sterne/Punkte-Bewertungen)
+ *   → Kleine Skala für Bewertungen (1-5 Sterne, 0-10 Punkte)
+ *   → Ganzzahlen UND Dezimalen erlaubt (4 oder 4.5)
+ *   → Beispiel: 7.5, 8, 4.2
  * 
- * PROGRESS: 0-100 Ganzzahlen (z.B. 75, 100)
- *   → Prozentuale Werte, Fortschrittsbalken
- *   → Ganzzahlen unterscheiden von Rating
+ * PROGRESS: 11-100 Ganzzahlen (Kirk: Fortschrittsbalken)
+ *   → Prozentuale Werte, Completion-Status
+ *   → Bereich 11-100 um Überschneidung mit Rating zu vermeiden
+ *   → Beispiel: 75, 100, 33
  * 
  * NUMBER: Alle anderen numerischen Werte
+ *   → Werte >100 oder negative Werte
  *   → Standardanzeige für beliebige Zahlen
  */
 function detectNumberType(value) {
   const cfg = detectionConfig || {};
   
-  // Rating: from config or fallback 0-10 with decimals
-  const rating = cfg.rating || { min: 0, max: 10, decimalsRequired: true };
-  if (value >= rating.min && value <= rating.max && rating.decimalsRequired && !Number.isInteger(value)) {
+  // Rating: 0-10 (Ganzzahlen UND Dezimalen) - Kirk: Sterne-Bewertungen
+  const rating = cfg.rating || { min: 0, max: 10 };
+  if (value >= rating.min && value <= rating.max) {
     return 'rating';
   }
   
-  // Progress: from config or fallback 0-100 integer
-  const progress = cfg.progress || { min: 0, max: 100, integersOnly: true };
+  // Progress: 11-100 Ganzzahlen - Kirk: Fortschrittsbalken
+  const progress = cfg.progress || { min: 11, max: 100, integersOnly: true };
   if (value >= progress.min && value <= progress.max && (!progress.integersOnly || Number.isInteger(value))) {
     return 'progress';
   }
@@ -480,9 +483,9 @@ function detectArrayType(value) {
   }
   
   /* ─── STEPS: Schrittweise Anleitungen ─── */
-  // Workflows, Anleitungen mit step/order
+  // Workflows, Anleitungen mit step/order + label/action/beschreibung
   const stepsKeys = ['step', 'order', 'nummer', 'reihenfolge'];
-  if (stepsKeys.some(k => k in first) && ('action' in first || 'beschreibung' in first || 'text' in first)) {
+  if (stepsKeys.some(k => k in first) && ('action' in first || 'beschreibung' in first || 'text' in first || 'label' in first)) {
     return 'steps';
   }
   
@@ -513,24 +516,40 @@ function detectArrayType(value) {
   }
   
   /* ─── HIERARCHY: Verschachtelte Strukturen ─── */
-  // Taxonomien, Baumstrukturen
-  const hierarchyKeys = ['level', 'ebene', 'parent', 'children', 'kinder'];
+  // Taxonomien, Baumstrukturen mit level/rank/parent/children
+  const hierarchyKeys = ['level', 'ebene', 'parent', 'children', 'kinder', 'rank', 'taxonomy'];
   if (hierarchyKeys.some(k => k in first)) {
     return 'hierarchy';
   }
   
   /* ─── NETWORK: Beziehungsnetzwerke ─── */
   // Kirk: Connection/Flow Diagramme
-  const networkKeys = ['connections', 'relations', 'verbindungen', 'links', 'edges'];
-  if (networkKeys.some(k => k in first)) {
+  // Pattern 1: Explizite connections Array
+  // Pattern 2: name + type/relationship Struktur
+  const networkConnectionKeys = ['connections', 'relations', 'verbindungen', 'links', 'edges'];
+  const networkNameKeys = ['name', 'partner', 'organism'];
+  const networkTypeKeys = ['type', 'relationship', 'typ', 'beziehung'];
+  const hasNetworkConnections = networkConnectionKeys.some(k => k in first);
+  const hasNetworkStructure = networkNameKeys.some(k => k in first) && networkTypeKeys.some(k => k in first);
+  if (hasNetworkConnections || hasNetworkStructure) {
     return 'network';
   }
   
   /* ─── SEVERITY: Schweregrad/Warnungen ─── */
   // Kirk: Kritische Werte visuell hervorheben
-  const severityKeys = ['schwere', 'severity', 'level', 'bedrohung', 'risiko', 'gefahr'];
-  const severityTypeKeys = ['typ', 'type', 'art', 'kategorie'];
-  const hasSeverityValue = severityKeys.some(k => k in first && typeof first[k] === 'number');
+  // Unterstützt numerische Werte (0-100) und String-Level (trivial, minor, moderate, severe, critical)
+  const severityKeys = ['schwere', 'severity', 'level', 'bedrohung', 'risiko', 'gefahr', 'grade'];
+  const severityTypeKeys = ['typ', 'type', 'art', 'kategorie', 'label'];
+  const severityStringLevels = ['trivial', 'minor', 'moderate', 'severe', 'critical', 'gering', 'mittel', 'hoch', 'kritisch'];
+  const hasSeverityValue = severityKeys.some(k => {
+    if (!(k in first)) return false;
+    const val = first[k];
+    // Numerisch: 0-100
+    if (typeof val === 'number') return true;
+    // String-Level
+    if (typeof val === 'string' && severityStringLevels.includes(val.toLowerCase())) return true;
+    return false;
+  });
   const hasSeverityType = severityTypeKeys.some(k => k in first);
   if (hasSeverityValue && hasSeverityType) {
     return 'severity';
@@ -671,15 +690,29 @@ function detectObjectType(value) {
     }
   }
   
-  /* ─── SLOPEGRAPH: Objekt mit vorher/nachher ─── */
-  // Kirk: Vorher-Nachher Vergleich auf Objekt-Ebene
+  /* ─── COMPARISON: Einfacher Vorher-Nachher-Vergleich mit Zahlen ─── */
+  // Einzelwerte: vorher/nachher als Zahlen (nicht Objekte!)
+  const comparisonKeys = ['vorher', 'nachher', 'before', 'after', 'from', 'to', 'alt', 'neu'];
+  const comparisonMatches = comparisonKeys.filter(k => k in value && typeof value[k] === 'number').length;
+  if (comparisonMatches >= 2) {
+    return 'comparison';
+  }
+  
+  // Jahres-Vergleich mit Zahlen: {2020: 500, 2024: 300}
+  const yearKeys = keys.filter(k => /^\d{4}$/.test(k));
+  if (yearKeys.length >= 2 && yearKeys.every(k => typeof value[k] === 'number')) {
+    return 'comparison';
+  }
+  
+  /* ─── SLOPEGRAPH: Objekt mit vorher/nachher Sub-Objekten ─── */
+  // Kirk: Vorher-Nachher Vergleich auf Objekt-Ebene (komplexe Daten)
   const slopeObjKeys = ['vorher', 'nachher', 'before', 'after'];
   const hasSlopeObjects = slopeObjKeys.filter(k => k in value && typeof value[k] === 'object').length >= 2;
   if (hasSlopeObjects) {
     return 'slopegraph';
   }
   
-  // Jahres-Vergleich: {2020: {...}, 2023: {...}}
+  // Jahres-Vergleich mit Objekten: {2020: {...}, 2023: {...}}
   const jahrKeys = keys.filter(k => /^\d{4}$/.test(k));
   if (jahrKeys.length >= 2 && jahrKeys.every(k => typeof value[k] === 'object')) {
     return 'slopegraph';
@@ -732,12 +765,12 @@ function detectObjectType(value) {
   }
   
   /* ─── PIE: Nur numerische Werte ─── */
-  // Kirk: Pie Charts für Proportionen (2-8 Kategorien)
-  const pieCfg = cfg.pie || { numericOnly: true, minKeys: 2, maxKeys: 8 };
+  // Kirk: Pie Charts für Proportionen (MAX 6 Kategorien!)
+  const pieCfg = cfg.pie || { numericOnly: true, minKeys: 2, maxKeys: 6 };
   const allNumeric = keys.every(k => typeof value[k] === 'number');
   if (pieCfg.numericOnly && allNumeric && 
       keys.length >= (pieCfg.minKeys || 2) && 
-      keys.length <= (pieCfg.maxKeys || 8)) {
+      keys.length <= (pieCfg.maxKeys || 6)) {
     return 'pie';
   }
   
@@ -803,6 +836,7 @@ function findMorph(type, value, fieldName, morphConfig, schemaFieldMorphs = {}) 
     'steps': 'steps',
     'calendar': 'calendar',
     'severity': 'severity',
+    'comparison': 'comparison',
     'link': 'link',
     'image': 'image'
   };
