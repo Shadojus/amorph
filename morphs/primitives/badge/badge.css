@@ -1,28 +1,102 @@
 /* BADGE MORPH - Universe Theme */
+/* Badges: Semantische Status-Indikatoren mit Glow-Effekt */
+/* Unterscheidung zu Tags: Pillenform, Icon-betont, leuchtender Rand */
+
 .amorph-badge {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  height: 24px;
-  padding: 0 8px;
-  margin: 2px;
-  font-size: var(--font-size-xs, 11px);
+  gap: 6px;
+  height: 28px;
+  padding: 0 12px;
+  margin: 3px;
+  font-size: var(--font-size-xs, 12px);
   font-weight: 600;
-  background: color-mix(in srgb, var(--badge-bg, #64748b) 18%, rgba(0,0,0,0.3));
-  border: 1px solid color-mix(in srgb, var(--badge-border, #64748b) 25%, transparent);
-  color: color-mix(in srgb, var(--badge-text, #94a3b8) 90%, white);
-  border-radius: 4px;
+  /* Stärkerer Glaseffekt mit Glow */
+  background: color-mix(in srgb, var(--badge-bg, #64748b) 22%, rgba(0,0,0,0.5));
+  border: 1.5px solid var(--badge-border, rgba(100, 150, 200, 0.3));
+  color: var(--badge-text, rgba(200, 220, 255, 0.95));
+  /* Pillenform - klar unterscheidbar von eckigen Tags */
+  border-radius: 14px;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.05em;
   white-space: nowrap;
   vertical-align: middle;
+  /* Glow-Effekt für Status-Feeling */
+  box-shadow: 
+    0 0 8px color-mix(in srgb, var(--badge-border, rgba(100, 150, 200, 0.3)) 40%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: all 0.2s ease;
 }
 
+.amorph-badge:hover {
+  transform: translateY(-1px);
+  box-shadow: 
+    0 0 14px color-mix(in srgb, var(--badge-border, rgba(100, 150, 200, 0.3)) 60%, transparent),
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Icon - Prominenter und leuchtend */
 .amorph-badge-icon {
-  font-size: 0.8em;
-  opacity: 0.8;
+  font-size: 1em;
+  line-height: 1;
+  opacity: 1;
+  filter: drop-shadow(0 0 3px currentColor);
 }
 
+/* Text */
 .amorph-badge-text {
   line-height: 1;
+}
+
+/* === VARIANT-SPEZIFISCHE STYLES === */
+
+/* Success - Grünes Leuchten */
+.amorph-badge[data-variant="success"] {
+  --badge-bg: rgba(100, 220, 160, 0.15);
+  --badge-border: rgba(100, 220, 160, 0.5);
+  --badge-text: rgba(100, 220, 160, 0.95);
+  box-shadow: 
+    0 0 10px rgba(100, 220, 160, 0.25),
+    inset 0 1px 0 rgba(100, 220, 160, 0.1);
+}
+
+/* Danger - Rotes Warnsignal */
+.amorph-badge[data-variant="danger"] {
+  --badge-bg: rgba(240, 110, 110, 0.15);
+  --badge-border: rgba(240, 110, 110, 0.5);
+  --badge-text: rgba(240, 110, 110, 0.95);
+  box-shadow: 
+    0 0 10px rgba(240, 110, 110, 0.25),
+    inset 0 1px 0 rgba(240, 110, 110, 0.1);
+}
+
+/* Warning - Gelbes Achtung-Signal */
+.amorph-badge[data-variant="warning"] {
+  --badge-bg: rgba(240, 190, 80, 0.15);
+  --badge-border: rgba(240, 190, 80, 0.5);
+  --badge-text: rgba(240, 190, 80, 0.95);
+  box-shadow: 
+    0 0 10px rgba(240, 190, 80, 0.25),
+    inset 0 1px 0 rgba(240, 190, 80, 0.1);
+}
+
+/* Info - Blaues Info-Signal */
+.amorph-badge[data-variant="info"] {
+  --badge-bg: rgba(90, 160, 240, 0.15);
+  --badge-border: rgba(90, 160, 240, 0.5);
+  --badge-text: rgba(90, 160, 240, 0.95);
+  box-shadow: 
+    0 0 10px rgba(90, 160, 240, 0.25),
+    inset 0 1px 0 rgba(90, 160, 240, 0.1);
+}
+
+/* Neutral - Dezentes Grau */
+.amorph-badge[data-variant="neutral"] {
+  --badge-bg: rgba(140, 160, 180, 0.12);
+  --badge-border: rgba(140, 160, 180, 0.35);
+  --badge-text: rgba(180, 195, 210, 0.85);
+  box-shadow: 
+    0 0 6px rgba(140, 160, 180, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }

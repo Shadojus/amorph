@@ -1,4 +1,7 @@
 /* TAG MORPH - Universe Theme */
+/* Tags: Neutrale Kategorien/Labels - ECKIG, ohne Icon, dezent */
+/* Unterscheidung zu Badges: Eckig, kein Glow, keine Icons */
+
 .amorph-tag {
   display: inline-flex;
   align-items: center;
@@ -7,14 +10,16 @@
   margin: 2px;
   font-size: var(--font-size-xs, 12px);
   font-weight: 500;
-  background: rgba(60, 100, 160, 0.15);
-  color: rgba(180, 210, 255, 0.9);
-  border: 1px solid rgba(100, 150, 255, 0.15);
+  background: rgba(60, 100, 160, 0.12);
+  color: rgba(180, 210, 255, 0.85);
+  border: 1px solid rgba(100, 150, 255, 0.12);
+  /* ECKIG - Klar unterscheidbar von runden Badges */
   border-radius: 4px;
   text-transform: capitalize;
   white-space: nowrap;
   vertical-align: middle;
   transition: all 0.15s ease;
+  /* Kein Glow - dezenter als Badges */
 }
 
 /* Tag mit Custom-Farbe */

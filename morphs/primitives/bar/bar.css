@@ -4,8 +4,8 @@
 .amorph-bar {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 12px;
+  gap: 5px;
+  padding: 14px;
   background: transparent;
 }
 
@@ -14,29 +14,29 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(100, 150, 255, 0.1);
-  margin-bottom: 6px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(100, 150, 255, 0.12);
+  margin-bottom: 8px;
 }
 
 .amorph-bar-titel {
-  font-size: var(--font-size-xs, 12px);
+  font-size: var(--font-size-sm, 13px);
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.6);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
 }
 
 /* KIRK: Summary-Stats im Header */
 .amorph-bar-summary {
   display: flex;
-  gap: 12px;
-  font-size: var(--font-size-xs, 11px);
+  gap: 14px;
+  font-size: var(--font-size-xs, 12px);
   font-variant-numeric: tabular-nums;
 }
 
 .amorph-bar-summary .summary-max {
-  color: rgba(100, 255, 150, 0.8);
+  color: rgba(100, 255, 150, 0.85);
 }
 
 .amorph-bar-summary .summary-avg {
@@ -57,11 +57,11 @@
 .amorph-bar-container.has-reference::before {
   content: '';
   position: absolute;
-  left: calc(50px + 8px + var(--reference-line, 50%));
+  left: calc(90px + 10px + var(--reference-line, 50%));
   top: 0;
   bottom: 0;
   width: 1px;
-  background: rgba(255, 200, 100, 0.3);
+  background: rgba(255, 200, 100, 0.4);
   z-index: 1;
 }
 
@@ -69,12 +69,12 @@
 .amorph-bar-scale {
   display: flex;
   justify-content: space-between;
-  padding: 8px 40px 0 58px;
-  font-size: var(--font-size-2xs, 10px);
-  color: rgba(255, 255, 255, 0.35);
+  padding: 10px 55px 0 100px;
+  font-size: var(--font-size-xs, 11px);
+  color: rgba(255, 255, 255, 0.4);
   font-variant-numeric: tabular-nums;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  margin-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  margin-top: 10px;
 }
 
 /* Balken-Zeile */
@@ -82,33 +82,53 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 3px 0;
+  padding: 4px 0;
   transition: all 0.2s ease;
+  border-radius: 4px;
+}
+
+/* Zebra-Stripes für bessere Lesbarkeit */
+.amorph-bar-row:nth-child(odd) {
+  background: rgba(255, 255, 255, 0.015);
+}
+
+/* Hover-Effekt */
+.amorph-bar-row:hover {
+  background: rgba(100, 150, 255, 0.08);
+}
+
+.amorph-bar-row:hover .amorph-bar-label {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.amorph-bar-row:hover .amorph-bar-fill {
+  filter: brightness(1.15);
 }
 
 /* KIRK: Hervorhebung Extremwerte */
 .amorph-bar-row.is-max {
-  background: rgba(100, 255, 150, 0.05);
-  border-radius: 4px;
-  margin: 0 -4px;
-  padding: 2px 4px;
+  background: rgba(100, 255, 150, 0.08) !important;
+  margin: 2px -6px;
+  padding: 5px 6px;
 }
 
 .amorph-bar-row.is-max .amorph-bar-label {
-  color: rgba(100, 255, 150, 0.9);
+  color: rgba(100, 255, 150, 0.95);
   font-weight: 600;
 }
 
 .amorph-bar-row.is-max .amorph-bar-fill {
   background: linear-gradient(90deg, 
     rgba(100, 255, 150, 0.5),
-    rgba(100, 255, 150, 0.8)
+    rgba(100, 255, 150, 0.85)
   );
-  box-shadow: 0 0 12px rgba(100, 255, 150, 0.4);
+  box-shadow: 
+    0 0 16px rgba(100, 255, 150, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .amorph-bar-row.is-min .amorph-bar-fill {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
   box-shadow: none;
 }
 
@@ -117,87 +137,128 @@
   border-radius: 4px;
 }
 
-/* Label mit Ranking */
+/* Label - BREITER für lange Namen */
 .amorph-bar-label {
-  flex: 0 0 60px;
+  flex: 0 0 90px;
   font-size: var(--font-size-xs, 12px);
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.65);
   text-align: right;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: color 0.15s ease;
+}
+
+/* Tooltip für abgeschnittene Labels */
+.amorph-bar-label[title] {
+  cursor: help;
 }
 
 .amorph-bar-label .rank {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background: rgba(100, 180, 255, 0.2);
   color: rgba(100, 180, 255, 0.9);
   font-size: var(--font-size-2xs, 10px);
   font-weight: 700;
-  margin-right: 6px;
+  margin-right: 8px;
 }
 
-/* Track */
+/* Track - Höher und mit mehr Tiefe */
 .amorph-bar-track {
   flex: 1;
-  height: 18px;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 4px;
+  height: 22px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Fill */
+/* Fill - Mit besserem Gradient und Animation */
 .amorph-bar-fill {
   height: 100%;
   background: linear-gradient(90deg, 
-    rgba(100, 150, 255, 0.4),
-    rgba(100, 180, 255, 0.7)
+    rgba(80, 140, 255, 0.5) 0%,
+    rgba(100, 180, 255, 0.75) 50%,
+    rgba(120, 200, 255, 0.85) 100%
   );
-  border-radius: 3px;
-  transition: width 0.4s ease-out;
-  box-shadow: 0 0 8px rgba(100, 150, 255, 0.3);
+  border-radius: 5px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 0 10px rgba(100, 160, 255, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  position: relative;
+}
+
+/* Glanz-Effekt auf dem Balken */
+.amorph-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, 
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  border-radius: 5px 5px 0 0;
 }
 
 /* Farbkodierung nach Wert */
 .amorph-bar-fill[data-level="high"] {
   background: linear-gradient(90deg, 
-    rgba(100, 255, 150, 0.5),
-    rgba(100, 255, 150, 0.8)
+    rgba(80, 220, 140, 0.5) 0%,
+    rgba(100, 255, 150, 0.75) 50%,
+    rgba(120, 255, 170, 0.9) 100%
   );
-  box-shadow: 0 0 10px rgba(100, 255, 150, 0.4);
+  box-shadow: 
+    0 0 14px rgba(100, 255, 150, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .amorph-bar-fill[data-level="low"] {
   background: linear-gradient(90deg, 
-    rgba(255, 100, 100, 0.4),
-    rgba(255, 100, 100, 0.6)
+    rgba(220, 80, 80, 0.4) 0%,
+    rgba(255, 100, 100, 0.6) 50%,
+    rgba(255, 120, 120, 0.7) 100%
+  );
+  box-shadow: 
+    0 0 10px rgba(255, 100, 100, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
   );
   box-shadow: 0 0 8px rgba(255, 100, 100, 0.3);
 }
 
-/* Wert */
+/* Wert - Prominenter */
 .amorph-bar-value {
-  flex: 0 0 50px;
-  font-size: var(--font-size-xs, 12px);
+  flex: 0 0 55px;
+  font-size: var(--font-size-sm, 13px);
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.85);
   font-variant-numeric: tabular-nums;
   text-align: right;
+}
+
+/* Max-Wert hervorheben */
+.amorph-bar-row.is-max .amorph-bar-value {
+  color: rgba(100, 255, 150, 0.95);
+  text-shadow: 0 0 8px rgba(100, 255, 150, 0.4);
 }
 
 /* KIRK: Veränderungsindikator */
 .amorph-bar-change {
   display: inline-block;
-  font-size: var(--font-size-2xs, 10px);
+  font-size: var(--font-size-xs, 11px);
   margin-left: 6px;
-  padding: 2px 5px;
+  padding: 3px 6px;
   border-radius: 4px;
 }
 
@@ -228,10 +289,59 @@
 
 /* Annotation */
 .amorph-bar-annotation {
-  font-size: var(--font-size-xs, 11px);
-  color: rgba(255, 255, 255, 0.4);
+  font-size: var(--font-size-xs, 12px);
+  color: rgba(255, 255, 255, 0.45);
   font-style: italic;
-  padding-top: 8px;
+  padding-top: 10px;
   border-top: 1px dashed rgba(255, 255, 255, 0.1);
-  margin-top: 8px;
+  margin-top: 10px;
+}
+
+/* === ANIMATION === */
+/* Einblend-Animation für Balken */
+@keyframes bar-fill-in {
+  from {
+    width: 0 !important;
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.amorph-bar-fill {
+  animation: bar-fill-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Gestaffelte Animation für Zeilen */
+.amorph-bar-row:nth-child(1) .amorph-bar-fill { animation-delay: 0ms; }
+.amorph-bar-row:nth-child(2) .amorph-bar-fill { animation-delay: 50ms; }
+.amorph-bar-row:nth-child(3) .amorph-bar-fill { animation-delay: 100ms; }
+.amorph-bar-row:nth-child(4) .amorph-bar-fill { animation-delay: 150ms; }
+.amorph-bar-row:nth-child(5) .amorph-bar-fill { animation-delay: 200ms; }
+.amorph-bar-row:nth-child(6) .amorph-bar-fill { animation-delay: 250ms; }
+.amorph-bar-row:nth-child(7) .amorph-bar-fill { animation-delay: 300ms; }
+.amorph-bar-row:nth-child(8) .amorph-bar-fill { animation-delay: 350ms; }
+.amorph-bar-row:nth-child(9) .amorph-bar-fill { animation-delay: 400ms; }
+.amorph-bar-row:nth-child(10) .amorph-bar-fill { animation-delay: 450ms; }
+
+/* === RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-bar-label {
+    flex: 0 0 70px;
+    font-size: var(--font-size-xs, 11px);
+  }
+  
+  .amorph-bar-track {
+    height: 20px;
+  }
+  
+  .amorph-bar-value {
+    flex: 0 0 50px;
+    font-size: var(--font-size-xs, 12px);
+  }
+  
+  .amorph-bar-scale {
+    padding: 8px 50px 0 80px;
+  }
 }
