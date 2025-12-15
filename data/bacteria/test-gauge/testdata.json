@@ -1,0 +1,36 @@
+{
+  "luftfeuchtigkeit": {
+    "value": 85,
+    "min": 0,
+    "max": 100,
+    "zones": [
+      { "from": 0, "to": 50, "color": "#ef4444" },
+      { "from": 50, "to": 80, "color": "#f59e0b" },
+      { "from": 80, "to": 95, "color": "#22c55e" },
+      { "from": 95, "to": 100, "color": "#f59e0b" }
+    ]
+  },
+  
+  "temperatur": {
+    "wert": 22.5,
+    "min": 10,
+    "max": 35
+  },
+  
+  "co2_konzentration": {
+    "score": 1200,
+    "min": 400,
+    "max": 5000
+  },
+  
+  "ph_wert": {
+    "value": 6.2,
+    "min": 0,
+    "max": 14,
+    "zonen": [
+      { "from": 0, "to": 4, "label": "sauer" },
+      { "from": 4, "to": 7, "label": "leicht sauer" },
+      { "from": 7, "to": 10, "label": "basisch" }
+    ]
+  }
+}

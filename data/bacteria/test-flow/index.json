@@ -1,0 +1,10 @@
+{
+  "id": "test-flow",
+  "slug": "test-flow",
+  "name": "Flow-Test Bakterium",
+  "wissenschaftlich": "Testus flowus",
+  "bild": "images/bacteria/e-coli.jpg",
+  "beschreibung": "Testorganismus für Flow-Morph Validierung",
+  "taxonomie_regnum": "Bacteria",
+  "perspektiven": ["testdata"]
+}

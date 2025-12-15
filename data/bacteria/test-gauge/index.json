@@ -1,0 +1,10 @@
+{
+  "id": "test-gauge",
+  "slug": "test-gauge",
+  "name": "Gauge-Test Bakterium",
+  "wissenschaftlich": "Testus gaugeus",
+  "bild": "images/bacteria/e-coli.jpg",
+  "beschreibung": "Testorganismus für Gauge-Morph Validierung",
+  "taxonomie_regnum": "Bacteria",
+  "perspektiven": ["testdata"]
+}

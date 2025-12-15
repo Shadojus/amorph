@@ -52,6 +52,7 @@ export function hierarchy(wert, config = {}) {
 }
 
 function detectHierarchyType(wert) {
+  if (!wert || typeof wert !== 'object') return 'generic';
   const keys = Object.keys(wert).map(k => String(k).toLowerCase());
   
   for (const [type, hierarchy] of Object.entries(KNOWN_HIERARCHIES)) {
@@ -67,6 +68,9 @@ function detectHierarchyType(wert) {
 function extractLevels(wert, hierarchyType) {
   const levels = [];
   
+  // Guard against null/undefined
+  if (!wert || typeof wert !== 'object') return levels;
+
   if (hierarchyType !== 'generic' && KNOWN_HIERARCHIES[hierarchyType]) {
     // Bekannte Hierarchie - in definierter Reihenfolge
     const order = KNOWN_HIERARCHIES[hierarchyType];
@@ -96,6 +100,7 @@ function extractLevels(wert, hierarchyType) {
 }
 
 function findValue(obj, key) {
+  if (!obj || typeof obj !== 'object') return null;
   const lowerKey = String(key || '').toLowerCase();
   for (const [k, v] of Object.entries(obj)) {
     if (String(k).toLowerCase().includes(lowerKey)) {

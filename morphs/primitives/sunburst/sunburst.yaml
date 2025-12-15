@@ -1,0 +1,24 @@
+# Sunburst Morph Configuration
+# Radial hierarchy visualization
+
+id: sunburst
+name: Sunburst Chart
+description: Radiale Hierarchie-Darstellung
+category: charts
+
+# Detection rules
+detection:
+  type: object
+  requiredKeys:
+    - name
+    - children
+  alternativeKeys:
+    - label
+    - value
+    - parent
+
+# Configuration
+config:
+  animated: true
+  showLabels: true
+  innerRadius: 30

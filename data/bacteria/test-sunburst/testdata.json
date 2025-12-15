@@ -1,0 +1,40 @@
+{
+  "pilz_taxonomie": [
+    { "name": "Basidiomycota", "value": 7800, "children": [
+      { "name": "Agaricomycetes", "value": 7500, "children": [
+        { "name": "Agaricales", "value": 4000 },
+        { "name": "Boletales", "value": 1500 },
+        { "name": "Russulales", "value": 1200 },
+        { "name": "Polyporales", "value": 800 }
+      ]},
+      { "name": "Tremellomycetes", "value": 300 }
+    ]},
+    { "name": "Ascomycota", "value": 5100, "children": [
+      { "name": "Pezizomycetes", "value": 3100, "children": [
+        { "name": "Pezizales", "value": 2500 },
+        { "name": "Morchellales", "value": 600 }
+      ]},
+      { "name": "Sordariomycetes", "value": 2000, "children": [
+        { "name": "Xylariales", "value": 900 },
+        { "name": "Hypocreales", "value": 1100 }
+      ]}
+    ]}
+  ],
+  
+  "sammelgebiete_hierarchie": [
+    { "name": "Süd", "size": 1200, "children": [
+      { "name": "Bayern", "size": 650 },
+      { "name": "Baden-Württemberg", "size": 350 },
+      { "name": "Hessen", "size": 200 }
+    ]},
+    { "name": "Ost", "size": 1100, "children": [
+      { "name": "Sachsen", "size": 450 },
+      { "name": "Brandenburg", "size": 380 },
+      { "name": "Thüringen", "size": 270 }
+    ]},
+    { "name": "Nord", "size": 800, "children": [
+      { "name": "Niedersachsen", "size": 450 },
+      { "name": "Schleswig-Holstein", "size": 350 }
+    ]}
+  ]
+}

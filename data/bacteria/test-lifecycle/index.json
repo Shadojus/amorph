@@ -1,0 +1,10 @@
+{
+  "id": "test-lifecycle",
+  "slug": "test-lifecycle",
+  "name": "Lifecycle-Test Bakterium",
+  "wissenschaftlich": "Testus lifecycleus",
+  "bild": "images/bacteria/e-coli.jpg",
+  "beschreibung": "Testorganismus für Lifecycle-Morph Validierung",
+  "taxonomie_regnum": "Bacteria",
+  "perspektiven": ["testdata"]
+}

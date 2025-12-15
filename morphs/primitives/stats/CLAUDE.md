@@ -1,23 +1,45 @@
 # Stats Morph
 
-Statistische Zusammenfassung mit Min/Max/Durchschnitt.
+Hierarchische statistische Zusammenfassung nach Kirk-Prinzipien.
+
+## Design-Prinzipien (Kirk)
+
+1. **Hierarchie**: Primäre Stats (total, count) groß oben, sekundäre unten
+2. **Sentiment-Farben**: Grün=positiv, Rot=negativ
+3. **Typ-Kategorisierung**: Visuelle Unterscheidung nach Statistik-Typ
+4. **Mini-Visualisierung**: Bar für Range-Daten
+5. **Sortierung nach Priorität**: Wichtigste Stats zuerst
 
 ## Datenstruktur
 
 ```typescript
 type StatsInput = {
+  // Primär (priority 1)
+  total?: number;
+  count?: number;
+  
+  // Sekundär (priority 2)
   min: number;
   max: number;
   avg: number;
-  count?: number;
+  
+  // Range (priority 3)
+  range?: number;
+  spread?: number;
+  
+  // Trend (priority 4)
   median?: number;
-  sum?: number;
   mean?: number;
-  total?: number;
+  mode?: number;
+  
+  // Variance (priority 5)
+  sum?: number;
+  variance?: number;
+  std?: number;
 };
 
 // Beispiele
-{ min: 10, max: 90, avg: 45 }
+{ total: 1500, count: 150, min: 10, max: 90, avg: 45 }
 { min: 0, max: 100, avg: 67, count: 150, median: 65 }
 ```
 
@@ -25,16 +47,16 @@ type StatsInput = {
 
 - **Typ:** `object`
 - **Required:** `min`, `max`, `avg`
-- **Optional:** `count`, `total`, `sum`, `median`, `mean`
+- **Optional:** `count`, `total`, `sum`, `median`, `mean`, `range`, `variance`
 - **Priorität:** Nach range (range hat nur min/max)
 
 ## Wann STATS verwenden
 
 ✅ **Geeignet für:**
-- Statistische Übersichten
+- Statistische Übersichten mit mehreren Kennzahlen
 - Box-Plot-Daten (Kirk)
-- Zusammenfassungen von Messreihen
-- Aggregierte Daten
+- Aggregierte Messreihen
+- Wissenschaftliche Zusammenfassungen
 
 ❌ **Nicht verwenden für:**
 - Nur Min/Max → `range`
@@ -48,6 +70,17 @@ type StatsInput = {
 |--------|-----|---------|--------------|
 | `showChart` | boolean | true | Mini-Visualisierung |
 | `decimals` | number | 2 | Dezimalstellen |
+| `showHierarchy` | boolean | true | Primär/Sekundär Trennung |
+
+### Stat-Typen und Sentiment
+
+| Stat | Typ | Sentiment |
+|------|-----|-----------|
+| `total`, `count`, `sum` | primary | positiv |
+| `min`, `max`, `avg` | secondary | neutral |
+| `range`, `spread` | range | positiv (hoch) |
+| `median`, `mean`, `mode` | trend | neutral |
+| `variance`, `std` | variance | negativ (hoch) |
 
 ## Signatur
 
@@ -57,4 +90,4 @@ stats(wert: StatsObject, config?: StatsConfig) → HTMLElement
 
 ## Kirk-Prinzip (Box Plot)
 
-> **Verteilungs-Zusammenfassung:** Min, Max und Durchschnitt zeigen die Streuung der Daten. Die Visualisierung entspricht dem Box-Plot-Konzept aus Kirks Buch - eine kompakte Darstellung statistischer Kennzahlen.
+> **Verteilungs-Zusammenfassung:** Min, Max und Durchschnitt zeigen die Streuung der Daten. Die hierarchische Darstellung priorisiert die wichtigsten Kennzahlen (Total, Count) während sekundäre Statistiken unterstützend wirken.

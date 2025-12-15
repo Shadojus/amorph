@@ -1,0 +1,10 @@
+{
+  "id": "test-bar",
+  "slug": "test-bar",
+  "name": "Bar-Test Bakterium",
+  "wissenschaftlich": "Testus barus",
+  "bild": "images/bacteria/e-coli.jpg",
+  "beschreibung": "Testorganismus für Bar-Morph Validierung",
+  "taxonomie_regnum": "Bacteria",
+  "perspektiven": ["testdata"]
+}

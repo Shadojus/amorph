@@ -1,12 +1,76 @@
-/* BOOLEAN MORPH */
+/* BOOLEAN MORPH - Universe Biosphere Theme */
+/* Leuchtende Statusanzeige für Ja/Nein Werte */
+
 .amorph-boolean {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-weight: 500;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+/* Leuchtender Indikator-Punkt */
+.amorph-boolean::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* TRUE - Grünes Leuchten */
 .amorph-boolean[data-value="true"] {
-  color: var(--color-success);
+  color: rgba(100, 255, 150, 0.9);
 }
 
+.amorph-boolean[data-value="true"]::before {
+  background: rgba(100, 255, 150, 0.9);
+  box-shadow: 
+    0 0 6px rgba(100, 255, 150, 0.8),
+    0 0 12px rgba(100, 255, 150, 0.4);
+}
+
+/* FALSE - Rotes Leuchten */
 .amorph-boolean[data-value="false"] {
-  color: var(--color-error);
+  color: rgba(255, 100, 100, 0.9);
+}
+
+.amorph-boolean[data-value="false"]::before {
+  background: rgba(255, 100, 100, 0.9);
+  box-shadow: 
+    0 0 6px rgba(255, 100, 100, 0.8),
+    0 0 12px rgba(255, 100, 100, 0.4);
+}
+
+/* UNKNOWN/NULL - Gedämpftes Leuchten */
+.amorph-boolean[data-value="unknown"],
+.amorph-boolean[data-value="null"] {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.amorph-boolean[data-value="unknown"]::before,
+.amorph-boolean[data-value="null"]::before {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
+}
+
+/* Hover - verstärktes Leuchten */
+.amorph-boolean:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.amorph-boolean[data-value="true"]:hover::before {
+  box-shadow: 
+    0 0 8px rgba(100, 255, 150, 1),
+    0 0 16px rgba(100, 255, 150, 0.6);
+}
+
+.amorph-boolean[data-value="false"]:hover::before {
+  box-shadow: 
+    0 0 8px rgba(255, 100, 100, 1),
+    0 0 16px rgba(255, 100, 100, 0.6);
 }

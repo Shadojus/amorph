@@ -29,6 +29,21 @@ morphs:
   - slopegraph   # Vorher-Nachher Vergleiche
   - sparkline    # Inline-Trends für Zeitreihen
   
+  # Kirk Session 1 - Neue Charts
+  - bubble       # Proportionale Kreise (Größe = Menge)
+  - boxplot      # Box-and-Whisker (Verteilungen)
+  - treemap      # Flächen-proportionale Kacheln
+  - stackedbar   # Gestapelte Balken (Teil-Ganzes)
+  - dotplot      # Kategorie-Scatter
+  - sunburst     # Radiale Hierarchie
+  
+  # Kirk Session 2 - Flow & Mehr
+  - flow         # Organische Ströme/Verbindungen (DESIGN-BASIS!)
+  - groupedbar   # Mehrere Serien pro Kategorie
+  - scatterplot  # X/Y-Korrelationen mit Trendlinie
+  - lollipop     # Elegante Balken-Alternative
+  - pictogram    # Icon-Wiederholung (Isotype)
+  
   # Extended
   - map          # Geografische Koordinaten
   - hierarchy    # Verschachtelte Strukturen
@@ -47,6 +62,13 @@ morphs:
 # Order matters - first match wins!
 # Kirk: Spezifische Muster VOR generischen erkennen
 detectionOrder:
+  # ─── FLOW/CONNECTION-MUSTER (neu, höchste Priorität!) ───
+  - flow          # from/to + connections → Organische Ströme (DESIGN-BASIS!)
+  - scatterplot   # x/y Paare → Korrelation mit Trendlinie
+  - groupedbar    # kategorie + multiple numerische Werte → Gruppierte Balken
+  - lollipop      # sortierte Werte, Rankings → Elegante Balken
+  - pictogram     # zählbare Mengen + icon Kontext → Isotype
+  
   # ─── SPEZIELLE OBJEKT-MUSTER (zuerst!) ───
   - map          # lat/lng → Geografisch (Kirk: Choropleth/Symbol Maps)
   - citation     # author/year/title → Quellen
@@ -59,6 +81,14 @@ detectionOrder:
   - rating       # rating/score/stars → Bewertungen
   - progress     # value + max/total → Fortschritt
   - badge        # status/variant → Semantische Status
+  
+  # ─── KIRK SESSION 1 - NEUE CHART-MUSTER ───
+  - bubble       # items mit size/value → Proportionale Kreise
+  - boxplot      # min/q1/median/q3/max → Box-and-Whisker
+  - treemap      # hierarchische Werte mit size → Flächen-Tiles
+  - stackedbar   # kategorie + teile die sich summieren → Gestapelt
+  - dotplot      # kategorie + einzelne Punkte → Kategorie-Scatter
+  - sunburst     # parent/children hierarchie → Radial
   
   # ─── SPEZIELLE ARRAY-MUSTER ───
   - heatmap      # 2D-Matrix [[1,2], [3,4]] → Heatmap (Kirk: Matrix/Korrelation)

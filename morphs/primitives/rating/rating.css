@@ -1,39 +1,73 @@
-/* RATING MORPH - Kompakte Bewertung */
+/* RATING MORPH - Universe Biosphere Theme */
+/* Leuchtende Sternenbewertung */
+
 .amorph-rating {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  height: 20px;
-  padding: 0 6px;
-  background: rgba(0, 0, 0, 0.15);
-  border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  gap: 6px;
+  height: 24px;
+  padding: 0 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .amorph-rating-stars {
   display: inline-flex;
-  gap: 1px;
+  gap: 2px;
 }
 
 .amorph-rating-star {
-  font-size: 9px;
+  font-size: 11px;
+  transition: all 0.2s ease;
 }
 
+/* Voller Stern - Goldenes Leuchten */
 .amorph-rating-full {
-  color: rgba(255, 193, 7, 0.8);
+  color: rgba(255, 200, 50, 0.95);
+  text-shadow: 
+    0 0 6px rgba(255, 200, 50, 0.8),
+    0 0 12px rgba(255, 200, 50, 0.4);
 }
 
+/* Halber Stern - Gedämpftes Leuchten */
 .amorph-rating-half {
-  color: rgba(255, 193, 7, 0.4);
+  color: rgba(255, 200, 50, 0.5);
+  text-shadow: 0 0 4px rgba(255, 200, 50, 0.3);
 }
 
+/* Leerer Stern - Subtiler Umriss */
 .amorph-rating-empty {
-  color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.15);
 }
 
+/* Numerischer Wert */
 .amorph-rating-value {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.8);
   font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
+}
+
+/* Hover - Verstärktes Leuchten */
+.amorph-rating:hover .amorph-rating-full {
+  text-shadow: 
+    0 0 8px rgba(255, 200, 50, 1),
+    0 0 16px rgba(255, 200, 50, 0.6);
+}
+
+/* Rating-Varianten nach Kontext */
+.amorph-rating[data-context="danger"] .amorph-rating-full {
+  color: rgba(255, 100, 100, 0.95);
+  text-shadow: 
+    0 0 6px rgba(255, 100, 100, 0.8),
+    0 0 12px rgba(255, 100, 100, 0.4);
+}
+
+.amorph-rating[data-context="safety"] .amorph-rating-full {
+  color: rgba(100, 255, 150, 0.95);
+  text-shadow: 
+    0 0 6px rgba(100, 255, 150, 0.8),
+    0 0 12px rgba(100, 255, 150, 0.4);
 }

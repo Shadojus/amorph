@@ -1,0 +1,24 @@
+# Stacked Bar Morph Configuration
+# Stacked bar chart visualization
+
+id: stackedbar
+name: Stacked Bar Chart
+description: Gestapelte Balken für Teil-Ganzes Beziehungen
+category: charts
+
+# Detection rules
+detection:
+  type: array
+  requiredKeys:
+    - category
+    - values
+  alternativeKeys:
+    - label
+    - segments
+    - parts
+
+# Configuration
+config:
+  orientation: horizontal
+  showValues: true
+  animated: true

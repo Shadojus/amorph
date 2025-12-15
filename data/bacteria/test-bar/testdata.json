@@ -1,0 +1,23 @@
+{
+  "erntemenge_kg": [
+    { "label": "Steinpilz", "value": 245 },
+    { "label": "Pfifferling", "value": 189 },
+    { "label": "Champignon", "value": 520 },
+    { "label": "Marone", "value": 156 },
+    { "label": "Austernpilz", "value": 312 },
+    { "label": "Shiitake", "value": 278 },
+    { "label": "Kräuterseitling", "value": 145 },
+    { "label": "Parasol", "value": 98 }
+  ],
+  
+  "preise_euro_kg": [
+    { "name": "Trüffel (weiß)", "wert": 4500 },
+    { "name": "Trüffel (schwarz)", "wert": 1200 },
+    { "name": "Morchel", "wert": 85 },
+    { "name": "Steinpilz", "wert": 35 },
+    { "name": "Pfifferling", "wert": 28 },
+    { "name": "Champignon", "wert": 4 },
+    { "name": "Austernpilz", "wert": 8 },
+    { "name": "Shiitake", "wert": 12 }
+  ]
+}

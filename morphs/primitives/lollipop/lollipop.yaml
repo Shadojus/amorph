@@ -1,0 +1,25 @@
+# Lollipop Morph Configuration
+# Elegant bar alternative
+
+id: lollipop
+name: Lollipop Chart
+description: Elegante Balken-Alternative für Rankings
+category: charts
+
+# Detection rules
+detection:
+  type: array
+  requiredKeys:
+    - label
+    - value
+  alternativeKeys:
+    - name
+    - score
+    - amount
+
+# Configuration
+config:
+  orientation: horizontal
+  dotSize: 10
+  animated: true
+  sorted: true

@@ -1,0 +1,26 @@
+# Bubble Morph Configuration
+# Proportional circles visualization
+
+id: bubble
+name: Bubble Chart
+description: Proportionale Kreise für Größenvergleiche
+category: charts
+
+# Detection rules - Bubble for FLAT data without hierarchy
+detection:
+  type: array
+  requiredKeys:
+    - value
+  alternativeKeys:
+    - name
+    - label
+    - size
+    - amount
+  excludeKeys:
+    - children
+
+# Configuration
+config:
+  size: 300
+  animated: true
+  showLabels: true

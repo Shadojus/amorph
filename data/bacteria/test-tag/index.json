@@ -1,0 +1,10 @@
+{
+  "id": "test-tag",
+  "slug": "test-tag",
+  "name": "Tag-Test Bakterium",
+  "wissenschaftlich": "Testus tagus",
+  "bild": "images/bacteria/e-coli.jpg",
+  "beschreibung": "Testorganismus für Tag-Morph Validierung",
+  "taxonomie_regnum": "Bacteria",
+  "perspektiven": ["testdata"]
+}

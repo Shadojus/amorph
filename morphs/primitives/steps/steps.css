@@ -1,10 +1,12 @@
-/* STEPS MORPH - Schrittfolgen/Prozesse */
+/* STEPS MORPH - Universe Biosphere Theme */
+/* Prozessschritte mit leuchtenden Knoten */
+
 .amorph-steps {
   display: flex;
   flex-direction: column;
   gap: 0;
   position: relative;
-  padding-left: 16px;
+  padding-left: 20px;
 }
 
 .amorph-step {
@@ -12,62 +14,87 @@
   align-items: flex-start;
   gap: 10px;
   position: relative;
-  padding: 6px 0;
+  padding: 8px 0;
 }
 
-/* Verbindungslinie */
+/* Verbindungslinie - Leuchtend */
 .amorph-step::before {
   content: '';
   position: absolute;
-  left: -12px;
-  top: 18px;
-  bottom: -6px;
+  left: -16px;
+  top: 20px;
+  bottom: -8px;
   width: 1px;
-  background: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(180deg,
+    rgba(100, 150, 255, 0.25) 0%,
+    rgba(100, 150, 255, 0.08) 100%);
+  box-shadow: 0 0 4px rgba(100, 150, 255, 0.15);
 }
 
 .amorph-step:last-child::before {
   display: none;
 }
 
-/* Schritt-Nummer */
+/* Schritt-Nummer - Leuchtender Punkt */
 .amorph-step-number {
   position: absolute;
-  left: -16px;
-  width: 10px;
-  height: 10px;
-  background: rgba(255, 255, 255, 0.15);
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  left: -20px;
+  width: 8px;
+  height: 8px;
+  background: rgba(150, 180, 255, 0.6);
+  border: none;
   border-radius: 50%;
   font-size: 0;
   flex-shrink: 0;
+  box-shadow: 
+    0 0 4px rgba(150, 180, 255, 0.8),
+    0 0 8px rgba(100, 150, 255, 0.4);
 }
 
 .amorph-step[data-status="complete"] .amorph-step-number {
-  background: var(--color-success);
-  border-color: var(--color-success);
+  background: rgba(100, 220, 140, 0.8);
+  box-shadow: 
+    0 0 4px rgba(100, 220, 140, 0.9),
+    0 0 8px rgba(100, 220, 140, 0.5);
 }
 
 .amorph-step[data-status="current"] .amorph-step-number {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
-  box-shadow: 0 0 8px var(--color-accent-glow);
+  background: rgba(255, 220, 150, 0.9);
+  box-shadow: 
+    0 0 6px rgba(255, 220, 150, 0.9),
+    0 0 12px rgba(255, 200, 100, 0.6);
+  animation: pulse-step 2s ease-in-out infinite;
+}
+
+@keyframes pulse-step {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
 }
 
 /* Schritt-Inhalt */
 .amorph-step-content {
   flex: 1;
+  padding: 4px 10px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  transition: all 0.2s ease;
+}
+
+.amorph-step:hover .amorph-step-content {
+  background: rgba(0, 0, 0, 0.35);
+  border-color: rgba(100, 150, 255, 0.12);
 }
 
 .amorph-step-label {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
-  color: var(--color-text);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .amorph-step-description {
-  font-size: 10px;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.45);
   margin-top: 2px;
 }
 

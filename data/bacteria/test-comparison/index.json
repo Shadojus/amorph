@@ -1,0 +1,10 @@
+{
+  "id": "test-comparison",
+  "slug": "test-comparison",
+  "name": "Comparison-Test Bakterium",
+  "wissenschaftlich": "Testus comparisonus",
+  "bild": "images/bacteria/e-coli.jpg",
+  "beschreibung": "Testorganismus für Comparison-Morph Validierung",
+  "taxonomie_regnum": "Bacteria",
+  "perspektiven": ["testdata"]
+}

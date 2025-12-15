@@ -75,7 +75,10 @@ export function setErkennungConfig(config) {
 export function transform(daten, config, customMorphs = {}) {
   debug.render('Transform start', { 
     type: Array.isArray(daten) ? 'array' : typeof daten,
-    count: Array.isArray(daten) ? daten.length : 1
+    count: Array.isArray(daten) ? daten.length : 1,
+    configNull: config === null,
+    configUndefined: config === undefined,
+    datenNull: daten === null
   });
   
   // Load detection config from morphs.yaml if available
@@ -101,8 +104,19 @@ export function transform(daten, config, customMorphs = {}) {
     if (Array.isArray(value) && value.length === 0) return null;
     if (typeof value === 'object' && !Array.isArray(value) && Object.keys(value).length === 0) return null;
     
-    const type = detectType(value);
-    const morphName = findMorph(type, value, fieldName, config.morphs, schemaFieldMorphs);
+    let type, morphName;
+    try {
+      type = detectType(value);
+      morphName = findMorph(type, value, fieldName, config?.morphs, schemaFieldMorphs);
+    } catch (detectError) {
+      debug.error('Detection/findMorph failed', { 
+        fieldName, 
+        valueType: typeof value,
+        valueNull: value === null,
+        error: detectError.message 
+      });
+      throw detectError;
+    }
     
     // Debug: Log type detection
     debug.detection('Type detection', { fieldName, type, morphName, valueType: typeof value, isArray: Array.isArray(value) });
@@ -124,7 +138,19 @@ export function transform(daten, config, customMorphs = {}) {
     
     // Build config: morphs.yaml + schema.yaml field config
     const morphConfig = getMorphConfig(actualMorphName, fieldName, config);
-    const element = morph(value, morphConfig, morphField);
+    let element;
+    try {
+      element = morph(value, morphConfig, morphField);
+    } catch (morphError) {
+      debug.error('Morph execution failed', { 
+        morphName: actualMorphName, 
+        fieldName, 
+        valueType: typeof value,
+        error: morphError.message,
+        stack: morphError.stack?.split('\n').slice(0, 3).join('\n')
+      });
+      throw morphError;
+    }
     
     // Morph returned nothing → fallback to empty span
     if (!element) {
@@ -179,6 +205,7 @@ export function transform(daten, config, customMorphs = {}) {
       
       if (typeof item === 'object' && item !== null) {
         // Render fields in schema order
+        debug.render('Sorting item fields', { itemName: item.name, itemSlug: item.slug, keys: Object.keys(item).length });
         const sortedEntries = sortBySchemaOrder(item);
         
         // === STICKY HEADER: Bild + Name + wissenschaftlicher Name ===
@@ -246,7 +273,8 @@ export function transform(daten, config, customMorphs = {}) {
   return morphField(daten);
 }
 
-function detectType(value) {
+// Export für Tests
+export function detectType(value) {
   if (value === null || value === undefined) return 'null';
   if (typeof value === 'boolean') return 'boolean';
   if (typeof value === 'number') return detectNumberType(value);
@@ -442,6 +470,189 @@ function detectArrayType(value) {
     return fallback;
   };
   
+  /* ═══════════════════════════════════════════════════════════════════════════════
+   * KIRK SESSION 2 - NEUE HOCHPRIORITÄTS-MUSTER
+   * Flow, Scatterplot, Groupedbar, Lollipop, Pictogram
+   * 
+   * WICHTIG: Reihenfolge ist entscheidend für eindeutige Erkennung!
+   * Spezifischere Muster MÜSSEN vor generischeren kommen.
+   * ═══════════════════════════════════════════════════════════════════════════════
+   */
+  
+  // Ab hier: Objekt-Arrays prüfen (vor numerischen Arrays!)
+  if (typeof first === 'object' && first !== null) {
+    const keys = Object.keys(first);
+    
+    /* ─── FLOW: Organische Ströme/Verbindungen (DESIGN-BASIS!) ─── */
+    // Kirk: Flow-Diagramme für Verbindungen zwischen Entitäten
+    // SPEZIFISCH: Braucht BEIDE from UND to (nicht nur connections!)
+    // Pattern 1: from/to Paare (EINDEUTIG für Flow!)
+    const flowFromKeys = ['from', 'von', 'source', 'quelle'];
+    const flowToKeys = ['to', 'nach', 'target', 'ziel'];
+    const hasFlowFrom = flowFromKeys.some(k => k in first);
+    const hasFlowTo = flowToKeys.some(k => k in first);
+    const hasFlowFromTo = hasFlowFrom && hasFlowTo;
+    // Pattern 2: Explizite flows/edges mit Gewichtung (nicht nur connections!)
+    const hasExplicitFlows = ('flows' in first && Array.isArray(first.flows)) ||
+                             ('edges' in first && Array.isArray(first.edges) && 
+                              first.edges[0] && ('weight' in first.edges[0] || 'value' in first.edges[0]));
+    if (hasFlowFromTo || hasExplicitFlows) {
+      return 'flow';
+    }
+    
+    /* ─── PICTOGRAM: Zählbare Mengen mit EXPLIZITEM Icon ─── */
+    // Kirk: Isotype-inspirierte Icon-Wiederholung
+    // SPEZIFISCH: Braucht icon/symbol/emoji UND count/anzahl
+    const pictogramIconKeys = ['icon', 'symbol', 'emoji'];
+    const pictogramCountKeys = ['count', 'anzahl'];
+    const hasIcon = pictogramIconKeys.some(k => k in first);
+    const hasPictogramCount = pictogramCountKeys.some(k => k in first && typeof first[k] === 'number');
+    // NUR wenn explizites Icon vorhanden - sonst andere Morphs!
+    if (hasIcon && hasPictogramCount) {
+      return 'pictogram';
+    }
+    
+    /* ─── SCATTERPLOT: X/Y Koordinaten für Korrelationsanalyse ─── */
+    // Kirk: Streudiagramm mit Trendlinie
+    // SPEZIFISCH: Braucht EXPLIZITE x/y Keys (nicht beliebige numerische!)
+    const hasExplicitXY = ('x' in first && 'y' in first && 
+                          typeof first.x === 'number' && typeof first.y === 'number');
+    if (hasExplicitXY) {
+      return 'scatterplot';
+    }
+    
+    /* ─── GROUPEDBAR: Mehrere Serien pro Kategorie ─── */
+    // Kirk: Gruppierte Balken für Mehrfachvergleiche (Messi Goals/Games)
+    // SPEZIFISCH: Braucht Kategorie-Key UND mindestens 2 BENANNTE numerische Serien
+    // Die Serien-Keys sollten keine generischen value/wert sein!
+    const categoryKeys = ['kategorie', 'category', 'jahr', 'year'];
+    const hasGroupedCategory = categoryKeys.some(k => k in first);
+    // Numerische Keys die NICHT generisch sind (value, wert, count, etc.)
+    const genericValueKeys = ['value', 'wert', 'count', 'anzahl', 'amount', 'menge', 'score', 'x', 'y', 'id', 'index'];
+    const seriesKeys = keys.filter(k => 
+      typeof first[k] === 'number' && 
+      !categoryKeys.includes(k) && 
+      !genericValueKeys.includes(k)
+    );
+    // Groupedbar NUR wenn spezifische Serien-Namen (wie "tore", "spiele", "goals", "games")
+    if (hasGroupedCategory && seriesKeys.length >= 2) {
+      return 'groupedbar';
+    }
+    
+    /* ─── LOLLIPOP: Rankings mit Divergenz oder explizitem Rank ─── */
+    // Kirk: Elegante Alternative zum Balkendiagramm
+    // SPEZIFISCH: Braucht rank/position ODER divergierende (pos+neg) Werte
+    const lollipopRankKeys = ['rank', 'ranking', 'position', 'platz'];
+    const hasRankingHint = lollipopRankKeys.some(k => k in first);
+    const lollipopValueKeys = ['gap', 'abweichung', 'difference', 'differenz', 'delta'];
+    const hasLollipopValue = lollipopValueKeys.some(k => k in first && typeof first[k] === 'number');
+    // Pattern 1: Expliziter Rank
+    if (hasRankingHint) {
+      return 'lollipop';
+    }
+    // Pattern 2: Divergierende Werte (mindestens ein negativer)
+    if (hasLollipopValue) {
+      const hasDivergingData = value.some(v => {
+        const val = lollipopValueKeys.reduce((acc, k) => acc ?? v[k], null);
+        return typeof val === 'number' && val < 0;
+      });
+      if (hasDivergingData) {
+        return 'lollipop';
+      }
+    }
+    
+    /* ═══════════════════════════════════════════════════════════════════════════════
+     * KIRK SESSION 1 - MORPHS (bubble, boxplot, treemap, stackedbar, dotplot, sunburst)
+     * ═══════════════════════════════════════════════════════════════════════════════
+     */
+    
+    /* ─── BOXPLOT: Statistische Verteilungen (5-Number Summary) ─── */
+    // Kirk: Box-and-Whisker für Verteilungsanalyse
+    // SPEZIFISCH: Braucht min, q1, median, q3, max (oder Teilmenge davon)
+    const boxplotKeys = ['min', 'q1', 'median', 'q3', 'max', 'quartile1', 'quartile3', 'iqr'];
+    const boxplotMatches = boxplotKeys.filter(k => k in first).length;
+    // Mindestens 3 dieser Keys (z.B. min, median, max ODER q1, median, q3)
+    if (boxplotMatches >= 3) {
+      return 'boxplot';
+    }
+    
+    /* ─── BUBBLE: Proportionale Kreise (size/radius) ─── */
+    // Kirk: Bubble Charts für Mengenvergleiche
+    // SPEZIFISCH: Braucht size/radius/r + label/name ABER KEINE children (das wäre Treemap/Sunburst!)
+    const bubbleSizeKeys = ['size', 'radius', 'r', 'groesse', 'magnitude', 'area'];
+    const bubbleLabelKeys = ['label', 'name', 'bezeichnung', 'titel'];
+    const hasBubbleSize = bubbleSizeKeys.some(k => k in first && typeof first[k] === 'number');
+    const hasBubbleLabel = bubbleLabelKeys.some(k => k in first);
+    const hasBubbleChildren = 'children' in first && Array.isArray(first.children);
+    // Bubble NUR wenn explizit size/radius vorhanden UND KEINE children
+    if (hasBubbleSize && hasBubbleLabel && !hasBubbleChildren) {
+      return 'bubble';
+    }
+    
+    /* ─── SUNBURST: Radiale Hierarchie (children + value) ─── */
+    // Kirk: Konzentrische Ringe für hierarchische Proportionen
+    // SPEZIFISCH: Braucht children Array + value/size
+    // Unterschied zu Treemap: Sunburst ist radial, hat KEIN change (Treemap-Ding)
+    const hasSunburstChildren = 'children' in first && Array.isArray(first.children);
+    const hasSunburstValue = ('value' in first || 'size' in first || 'wert' in first) && 
+                             typeof (first.value ?? first.size ?? first.wert) === 'number';
+    const hasSunburstChange = 'change' in first || 'veraenderung' in first || 'delta' in first;
+    // Sunburst: hierarchisch mit children + Werten ABER OHNE change (das wäre Treemap)
+    if (hasSunburstChildren && hasSunburstValue && !hasSunburstChange) {
+      return 'sunburst';
+    }
+    
+    /* ─── TREEMAP: Flächenproportionale Kacheln ─── */
+    // Kirk: Treemap für hierarchische Teil-Ganzes-Beziehungen
+    // SPEZIFISCH: Braucht children Array ODER items mit size/value in flacher Struktur
+    // Unterschied zu Sunburst: Treemap ist rechteckig, hat oft `change` für Veränderung
+    // Pattern 1: Hierarchisch mit children (ohne radiale Sunburst-Präferenz)
+    const hasTreemapChildren = 'children' in first && Array.isArray(first.children);
+    // Pattern 2: Flache Struktur mit size/value + optional change/veraenderung
+    const treemapSizeKeys = ['size', 'value', 'wert', 'area', 'flaeche'];
+    const hasTreemapSize = treemapSizeKeys.some(k => k in first && typeof first[k] === 'number');
+    const hasTreemapChange = 'change' in first || 'veraenderung' in first || 'delta' in first;
+    // Treemap wenn hierarchisch mit children
+    if (hasTreemapChildren) {
+      return 'treemap';
+    }
+    // ODER wenn flach mit size + change (für Change-Treemaps wie FinViz)
+    if (hasTreemapSize && hasTreemapChange && value.length >= 3) {
+      return 'treemap';
+    }
+    
+    /* ─── STACKEDBAR: Gestapelte Balken (Teile summieren sich) ─── */
+    // Kirk: 100% Stacked Bar für Teil-Ganzes-Verhältnisse
+    // SPEZIFISCH: Braucht segments/teile Array ODER mehrere %-Werte
+    const stackedSegmentKeys = ['segments', 'teile', 'parts', 'anteile', 'slices'];
+    const hasStackedSegments = stackedSegmentKeys.some(k => k in first && Array.isArray(first[k]));
+    // Pattern 2: Mehrere Prozentwerte die sich zu ~100 summieren
+    const percentKeys = keys.filter(k => {
+      const val = first[k];
+      return typeof val === 'number' && val >= 0 && val <= 100;
+    });
+    const percentSum = percentKeys.reduce((sum, k) => sum + first[k], 0);
+    const looksLikePercents = percentKeys.length >= 2 && percentSum >= 95 && percentSum <= 105;
+    if (hasStackedSegments) {
+      return 'stackedbar';
+    }
+    // Stacked wenn es wie Prozente aussieht UND Kategorie vorhanden
+    const hasStackedCategory = ('kategorie' in first || 'category' in first || 'label' in first || 'name' in first);
+    if (looksLikePercents && hasStackedCategory && percentKeys.length >= 3) {
+      return 'stackedbar';
+    }
+    
+    /* ─── DOTPLOT: Kategorie-Scatter (einzelne Punkte pro Kategorie) ─── */
+    // Kirk: Dotplot für Verteilungen innerhalb Kategorien
+    // SPEZIFISCH: Braucht kategorie + punkte/points Array ODER werte Array
+    const dotplotPointKeys = ['punkte', 'points', 'werte', 'values', 'dots'];
+    const hasDotplotPoints = dotplotPointKeys.some(k => k in first && Array.isArray(first[k]));
+    const hasDotplotCategory = ('kategorie' in first || 'category' in first || 'gruppe' in first || 'group' in first);
+    if (hasDotplotPoints && hasDotplotCategory) {
+      return 'dotplot';
+    }
+  }
+  
   /* ─── SPARKLINE: Rein numerisches Array → Inline-Trend ─── */
   // Kirk: Sparklines für kompakte Zeitreihen-Darstellung
   if (value.every(v => typeof v === 'number')) {
@@ -460,7 +671,7 @@ function detectArrayType(value) {
     }
   }
   
-  // Ab hier: Array von Objekten
+  // Ab hier: Array von Objekten (existierende Logik)
   if (typeof first !== 'object' || first === null) {
     return 'array';
   }
@@ -469,9 +680,11 @@ function detectArrayType(value) {
   
   /* ─── SLOPEGRAPH: Vorher-Nachher Vergleich ─── */
   // Kirk: Slopegraph zeigt Veränderungen zwischen zwei Zeitpunkten
+  // SPEZIFISCH: Braucht ZWEI der vorher/nachher Keys UND name/label
   const slopeKeys = ['vorher', 'nachher', 'before', 'after', 'start', 'end', 'v1', 'v2', 'alt', 'neu'];
   const hasSlopeStructure = slopeKeys.filter(k => k in first).length >= 2;
-  if (hasSlopeStructure && 'name' in first || 'label' in first) {
+  const hasSlopeName = 'name' in first || 'label' in first;
+  if (hasSlopeStructure && hasSlopeName) {
     return 'slopegraph';
   }
   
@@ -522,16 +735,23 @@ function detectArrayType(value) {
     return 'hierarchy';
   }
   
-  /* ─── NETWORK: Beziehungsnetzwerke ─── */
+  /* ─── NETWORK: Beziehungsnetzwerke (NICHT Flow!) ─── */
   // Kirk: Connection/Flow Diagramme
-  // Pattern 1: Explizite connections Array
-  // Pattern 2: name + type/relationship Struktur
-  const networkConnectionKeys = ['connections', 'relations', 'verbindungen', 'links', 'edges'];
+  // UNTERSCHEIDUNG zu Flow:
+  // - Flow: hat from/to ODER edges mit weight → organische Ströme
+  // - Network: hat connections/relations OHNE from/to → Knotennetzwerk
+  // Pattern 1: Explizite connections Array (OHNE from/to!)
+  const networkConnectionKeys = ['connections', 'relations', 'verbindungen'];
   const networkNameKeys = ['name', 'partner', 'organism'];
   const networkTypeKeys = ['type', 'relationship', 'typ', 'beziehung'];
-  const hasNetworkConnections = networkConnectionKeys.some(k => k in first);
+  // Prüfe ob NICHT Flow-Pattern (from/to)
+  const flowFromKeys = ['from', 'von', 'source', 'quelle'];
+  const flowToKeys = ['to', 'nach', 'target', 'ziel'];
+  const hasFlowPattern = flowFromKeys.some(k => k in first) && flowToKeys.some(k => k in first);
+  // Network nur wenn connections OHNE Flow-Pattern
+  const hasNetworkConnections = networkConnectionKeys.some(k => k in first && Array.isArray(first[k]));
   const hasNetworkStructure = networkNameKeys.some(k => k in first) && networkTypeKeys.some(k => k in first);
-  if (hasNetworkConnections || hasNetworkStructure) {
+  if (!hasFlowPattern && (hasNetworkConnections || hasNetworkStructure)) {
     return 'network';
   }
   
@@ -820,10 +1040,23 @@ function findMorph(type, value, fieldName, morphConfig, schemaFieldMorphs = {}) 
     'lifecycle': 'lifecycle',
     'tag': 'tag',
     
-    // New Kirk-based morphs
+    // New Kirk-based morphs (Session 1)
     'sparkline': 'sparkline',
     'slopegraph': 'slopegraph',
     'heatmap': 'heatmap',
+    'bubble': 'bubble',
+    'boxplot': 'boxplot',
+    'treemap': 'treemap',
+    'stackedbar': 'stackedbar',
+    'dotplot': 'dotplot',
+    'sunburst': 'sunburst',
+    
+    // New Kirk-based morphs (Session 2)
+    'flow': 'flow',
+    'groupedbar': 'groupedbar',
+    'scatterplot': 'scatterplot',
+    'lollipop': 'lollipop',
+    'pictogram': 'pictogram',
     
     // Extended morphs
     'map': 'map',
@@ -897,7 +1130,10 @@ function getMorphConfig(morphName, fieldName, config) {
 export async function render(container, data, config) {
   debug.render('Render start', { 
     hasData: !!data, 
-    count: Array.isArray(data) ? data.length : (data ? 1 : 0) 
+    count: Array.isArray(data) ? data.length : (data ? 1 : 0),
+    dataType: typeof data,
+    isArray: Array.isArray(data),
+    configKeys: config ? Object.keys(config) : null
   });
   
   // Remove empty state
@@ -923,8 +1159,18 @@ export async function render(container, data, config) {
     return;
   }
   
-  const dom = transform(data, config);
-  container.appendChild(dom);
+  try {
+    debug.render('Calling transform', { dataLength: Array.isArray(data) ? data.length : 1 });
+    const dom = transform(data, config);
+    debug.render('Transform complete, appending to container');
+    container.appendChild(dom);
+  } catch (transformError) {
+    debug.error('Transform failed', { 
+      error: transformError.message, 
+      stack: transformError.stack?.split('\n').slice(0, 5).join('\n')
+    });
+    throw transformError;
+  }
   
   const count = Array.isArray(data) ? data.length : 1;
   debug.render('Render complete', { count });

@@ -1,0 +1,238 @@
+/**
+ * 🍭 LOLLIPOP CSS - Lollipop Chart
+ * Universe Biosphere Theme
+ */
+
+.amorph-lollipop {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 255, 255, 0.15);
+}
+
+.amorph-lollipop-titel {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+  text-align: center;
+}
+
+/* === HORIZONTAL === */
+.amorph-lollipop.horizontal .amorph-lollipop-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.amorph-lollipop-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 50px;
+  gap: 12px;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.amorph-lollipop-row:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.amorph-lollipop-row.highlight {
+  background: rgba(255, 230, 109, 0.1);
+}
+
+.amorph-lollipop-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.amorph-lollipop-track {
+  position: relative;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+}
+
+.amorph-lollipop-baseline {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.3);
+  z-index: 1;
+}
+
+.amorph-lollipop-line {
+  position: absolute;
+  top: 50%;
+  height: 2px;
+  transform: translateY(-50%);
+  border-radius: 1px;
+  transition: all 0.3s ease;
+}
+
+.amorph-lollipop-line.positiv {
+  box-shadow: 0 0 4px rgba(78, 205, 196, 0.5);
+}
+
+.amorph-lollipop-line.negativ {
+  box-shadow: 0 0 4px rgba(255, 107, 107, 0.5);
+}
+
+.amorph-lollipop-dot {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+  box-shadow: 0 0 8px currentColor;
+  z-index: 2;
+}
+
+.amorph-lollipop-dot:hover {
+  transform: translate(-50%, -50%) scale(1.3);
+  box-shadow: 0 0 14px currentColor;
+}
+
+.amorph-lollipop-dot.highlight {
+  width: 16px;
+  height: 16px;
+  box-shadow: 
+    0 0 12px rgba(255, 230, 109, 0.8),
+    0 0 20px rgba(255, 230, 109, 0.4);
+}
+
+.amorph-lollipop-wert {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+  text-align: left;
+}
+
+.amorph-lollipop-wert.positiv {
+  color: #4ecdc4;
+  text-shadow: 0 0 4px rgba(78, 205, 196, 0.5);
+}
+
+.amorph-lollipop-wert.negativ {
+  color: #ff6b6b;
+  text-shadow: 0 0 4px rgba(255, 107, 107, 0.5);
+}
+
+/* === VERTIKAL === */
+.amorph-lollipop.vertikal .amorph-lollipop-container-vertikal {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: flex-end;
+  min-height: 200px;
+}
+
+.amorph-lollipop-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 30px;
+}
+
+.amorph-lollipop-track-vertikal {
+  position: relative;
+  width: 20px;
+  height: 160px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+}
+
+.amorph-lollipop-baseline-vertikal {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.amorph-lollipop-line-vertikal {
+  position: absolute;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  border-radius: 1px;
+}
+
+.amorph-lollipop-wert-vertikal {
+  font-size: 9px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.amorph-lollipop-label-vertikal {
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.6);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  max-height: 60px;
+  overflow: hidden;
+}
+
+/* Empty State */
+.amorph-lollipop-leer {
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Light Theme */
+@media (prefers-color-scheme: light) {
+  .amorph-lollipop:not(.universe) {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+  
+  .amorph-lollipop:not(.universe) .amorph-lollipop-titel {
+    color: rgba(0, 0, 0, 0.85);
+    text-shadow: none;
+  }
+  
+  .amorph-lollipop:not(.universe) .amorph-lollipop-label {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .amorph-lollipop:not(.universe) .amorph-lollipop-track {
+    background: rgba(0, 0, 0, 0.05);
+  }
+  
+  .amorph-lollipop:not(.universe) .amorph-lollipop-baseline {
+    background: rgba(0, 0, 0, 0.2);
+  }
+  
+  .amorph-lollipop:not(.universe) .amorph-lollipop-line {
+    box-shadow: none;
+  }
+  
+  .amorph-lollipop:not(.universe) .amorph-lollipop-dot {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .amorph-lollipop:not(.universe) .amorph-lollipop-wert {
+    text-shadow: none;
+  }
+  
+  .amorph-lollipop:not(.universe) .amorph-lollipop-wert.positiv {
+    color: #00a896;
+  }
+  
+  .amorph-lollipop:not(.universe) .amorph-lollipop-wert.negativ {
+    color: #e63946;
+  }
+}

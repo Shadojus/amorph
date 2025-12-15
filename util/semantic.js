@@ -86,6 +86,11 @@ export function getFeldReihenfolge() {
  * @returns {Array<[string, any]>} Sortierte Einträge [key, value]
  */
 export function sortBySchemaOrder(obj) {
+  // Defensive check for null/undefined
+  if (obj === null || obj === undefined) {
+    debug.warn('sortBySchemaOrder received null/undefined');
+    return [];
+  }
   const reihenfolge = getFeldReihenfolge();
   const entries = Object.entries(obj);
   

@@ -1,0 +1,22 @@
+{
+  "myzel_verbindungen": [
+    { "from": "Fliegenpilz", "to": "Birke", "strength": 85 },
+    { "from": "Fliegenpilz", "to": "Fichte", "strength": 72 },
+    { "from": "Steinpilz", "to": "Eiche", "strength": 95 },
+    { "from": "Steinpilz", "to": "Buche", "strength": 88 },
+    { "from": "Steinpilz", "to": "Fichte", "strength": 65 },
+    { "from": "Pfifferling", "to": "Eiche", "strength": 78 },
+    { "from": "Pfifferling", "to": "Buche", "strength": 82 },
+    { "from": "Marone", "to": "Fichte", "strength": 90 },
+    { "from": "Marone", "to": "Kiefer", "strength": 75 }
+  ],
+  
+  "naehrstoff_fluesse": [
+    { "source": "Zucker", "target": "Pilz", "value": 120 },
+    { "source": "Pilz", "target": "Stickstoff", "value": 85 },
+    { "source": "Stickstoff", "target": "Baum", "value": 70 },
+    { "source": "Baum", "target": "Zucker", "value": 150 },
+    { "source": "Wasser", "target": "Pilz", "value": 60 },
+    { "source": "Pilz", "target": "Mineralien", "value": 45 }
+  ]
+}

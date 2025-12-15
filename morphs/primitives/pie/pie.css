@@ -1,23 +1,25 @@
-/* PIE CHART MORPH - Kompaktes Kreisdiagramm */
+/* PIE CHART MORPH - Universe Biosphere Theme */
+/* Leuchtende Kreisdiagramme wie Zellstrukturen */
+
 .amorph-pie {
-  padding: 6px;
+  padding: 8px;
   background: transparent;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 .amorph-pie-titel {
   font-size: 10px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.6);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   padding-bottom: 4px;
-  margin-bottom: 6px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(100, 180, 255, 0.1);
 }
 
 .amorph-pie-leer {
-  color: var(--color-text-dim, #666);
+  color: rgba(255, 255, 255, 0.4);
   font-style: italic;
   font-size: 11px;
 }
@@ -25,16 +27,19 @@
 .amorph-pie-container {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .amorph-pie-chart {
   position: relative;
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background: conic-gradient(from 0deg, var(--pie-gradient, #333));
   flex-shrink: 0;
+  box-shadow: 
+    0 0 12px rgba(100, 180, 255, 0.15),
+    inset 0 0 8px rgba(0, 0, 0, 0.3);
 }
 
 .amorph-pie-center {
@@ -42,33 +47,35 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
 .amorph-pie-total {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
 }
 
 .amorph-pie-label {
   font-size: 6px;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.45);
   text-transform: uppercase;
 }
 
 .amorph-pie-legend {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
   flex: 1;
   min-width: 0;
 }
@@ -76,7 +83,7 @@
 .amorph-pie-legend-item {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   font-size: 10px;
 }
 

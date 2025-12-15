@@ -1,0 +1,21 @@
+{
+  "hutdurchmesser_verteilung": [
+    { "name": "Steinpilz", "min": 5, "q1": 8, "median": 12, "q3": 18, "max": 30 },
+    { "name": "Champignon", "min": 2, "q1": 4, "median": 6, "q3": 8, "max": 12 },
+    { "name": "Pfifferling", "min": 2, "q1": 3, "median": 5, "q3": 7, "max": 10 },
+    { "name": "Parasol", "min": 10, "q1": 15, "median": 25, "q3": 32, "max": 40 },
+    { "name": "Riesenschirmling", "min": 15, "q1": 22, "median": 30, "q3": 38, "max": 50 }
+  ],
+  
+  "sporenlaenge_mikrometer": [
+    { "name": "Steinpilz", "min": 12, "q1": 14, "median": 16, "q3": 18, "max": 22 },
+    { "name": "Fliegenpilz", "min": 8, "q1": 9, "median": 10, "q3": 11, "max": 13 },
+    { "name": "Champignon", "min": 5, "q1": 6, "median": 7, "q3": 8, "max": 9 }
+  ],
+  
+  "gewicht_gramm": [
+    { "name": "Kleine Pilze", "min": 5, "q1": 15, "median": 25, "q3": 40, "max": 80 },
+    { "name": "Mittlere Pilze", "min": 50, "q1": 80, "median": 120, "q3": 180, "max": 300 },
+    { "name": "Große Pilze", "min": 150, "q1": 250, "median": 400, "q3": 600, "max": 1200 }
+  ]
+}

@@ -1,6 +1,14 @@
 # Network Morph
 
-Beziehungsnetzwerk mit typisierten Verbindungen.
+Organisches Beziehungsnetzwerk nach Kirk-Prinzipien.
+
+## Design-Prinzipien (Kirk)
+
+1. **Organische Kurven**: Bezier-Kurven statt gerade Linien
+2. **Proportionale Größe**: Node-Größe nach Intensität/Wichtigkeit
+3. **Farbkodierung**: Beziehungstypen farblich unterschieden
+4. **Annotationen**: Interaktionstypen direkt an Kanten
+5. **Zentraler Fokus**: Hauptelement prominent in der Mitte
 
 ## Datenstruktur
 
@@ -9,6 +17,7 @@ Beziehungsnetzwerk mit typisierten Verbindungen.
 type NetworkInput = Array<{
   name: string;
   type: string;
+  intensity?: number;  // 0-100, beeinflusst Node-Größe
   strength?: number;
   details?: string;
 }>;
@@ -22,9 +31,9 @@ type NetworkInput = Array<{
 
 // Beispiele
 [
-  { name: "Birke", type: "symbiosis", strength: 0.9 },
-  { name: "Eiche", type: "symbiosis", strength: 0.7 },
-  { name: "Schnecke", type: "predation", strength: 0.3 }
+  { name: "Birke", type: "symbiosis", intensity: 90 },
+  { name: "Eiche", type: "symbiosis", intensity: 70 },
+  { name: "Schnecke", type: "predation", intensity: 30 }
 ]
 ```
 
@@ -33,12 +42,12 @@ type NetworkInput = Array<{
 - **Typ:** `array`
 - **Pattern 1:** `name` + `type` (oder `partner` + `relationship`)
 - **Pattern 2:** `connections` Array (explizite Verbindungsliste)
-- **Optional:** `strength`, `details`, `organism`
+- **Optional:** `intensity`, `strength`, `details`, `organism`
 - **Priorität:** Nach hierarchy (allgemeinere Struktur)
 
 ```javascript
 // Pattern 1: Implizite Beziehungen
-[{ name: "Birke", type: "symbiosis", strength: 0.9 }]
+[{ name: "Birke", type: "symbiosis", intensity: 90 }]
 
 // Pattern 2: Explizite Verbindungen
 [{ name: "A", connections: ["B", "C"] }]
@@ -61,21 +70,24 @@ type NetworkInput = Array<{
 
 | Option | Typ | Default | Beschreibung |
 |--------|-----|---------|--------------|
-| `showStrength` | boolean | true | Verbindungsstärke anzeigen |
-| `centerNode` | boolean | true | Zentraler Knoten |
-| `animated` | boolean | true | Animation |
-| `typeColors` | object | {...} | Farben pro Typ |
-| `typeIcons` | object | {...} | Icons pro Typ |
+| `center` | string | Auto | Name des zentralen Knotens |
+| `size` | number | 280 | SVG-Größe in Pixeln |
+| `showLegend` | boolean | true | Legende anzeigen |
 
-### Beziehungstypen
+### Beziehungstypen (biologisch)
 
-| Typ | Farbe | Icon |
-|-----|-------|------|
-| `symbiosis` | Grün | 🤝 |
-| `parasitism` | Rot | 🦠 |
-| `predation` | Orange | 🍽️ |
-| `commensalism` | Blau | 🏠 |
-| `competition` | Magenta | ⚔️ |
+| Typ | Farbe | Symbol |
+|-----|-------|--------|
+| `symbiosis` | Grün | ⚭ |
+| `mykorrhiza` | Grün | 🌿 |
+| `parasitism` | Rot | ⊘ |
+| `predation` | Orange | → |
+| `competition` | Amber | ⇆ |
+| `commensalism` | Blau | ⤵ |
+| `pollination` | Pink | ✿ |
+| `food` | Braun | ◈ |
+| `habitat` | Grün | ⌂ |
+| `decomposer` | Braun | ↻ |
 
 ## Signatur
 

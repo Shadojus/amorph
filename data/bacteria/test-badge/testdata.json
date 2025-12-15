@@ -1,0 +1,21 @@
+{
+  "essbarkeit_steinpilz": {
+    "status": "essbar",
+    "label": "Speisepilz"
+  },
+  
+  "essbarkeit_fliegenpilz": {
+    "status": "giftig",
+    "variant": "danger"
+  },
+  
+  "verfuegbarkeit": {
+    "status": "available",
+    "typ": "saisonal"
+  },
+  
+  "qualitaet": {
+    "variant": "success",
+    "label": "Premium A+"
+  }
+}

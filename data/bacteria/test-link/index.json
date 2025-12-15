@@ -1,0 +1,10 @@
+{
+  "id": "test-link",
+  "slug": "test-link",
+  "name": "Link-Test Bakterium",
+  "wissenschaftlich": "Testus linkus",
+  "bild": "images/bacteria/e-coli.jpg",
+  "beschreibung": "Testorganismus für Link-Morph Validierung",
+  "taxonomie_regnum": "Bacteria",
+  "perspektiven": ["testdata"]
+}

@@ -1,14 +1,29 @@
-/* TEXT MORPH */
+/* TEXT MORPH - Universe Biosphere Theme */
+/* Organisch lesbare Texte */
+
 .amorph-text {
   display: inline;
-  color: var(--color-text, #e0e0e0);
+  color: rgba(255, 255, 255, 0.85);
   font-size: 12px;
-  line-height: 1.4;
+  line-height: 1.5;
+}
+
+/* Hervorgehobener Text */
+.amorph-text[data-emphasis="true"] {
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+}
+
+/* Wissenschaftliche Namen - Kursiv mit Glow */
+.amorph-text[data-type="scientific"] {
+  font-style: italic;
+  color: rgba(180, 220, 255, 0.9);
+  text-shadow: 0 0 6px rgba(180, 220, 255, 0.2);
 }
 
 /* Text als Objekt-Fallback */
 .amorph-text-object {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.5);
   font-style: italic;
 }

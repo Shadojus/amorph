@@ -1,33 +1,40 @@
 /**
- * 🕸️ NETWORK MORPH - Interaktions-Netzwerk
+ * 🕸️ NETWORK MORPH - Organisches Beziehungs-Netzwerk
  * 
- * Zeigt Beziehungen als Netzwerk-Diagramm
- * DATENGETRIEBEN - Erkennt Interaktions-Strukturen
+ * DESIGN-PRINZIPIEN (basierend auf organischen Flow-Diagrammen):
+ * - Organische Kurven: Bezier statt gerade Linien
+ * - Größe nach Bedeutung: Node-Größe zeigt Wichtigkeit
+ * - Farbkodierung: Beziehungstypen farblich unterschieden
+ * - Cluster: Verwandte Nodes gruppiert
+ * - Annotationen: Interaktionstypen direkt an Kanten
  * 
  * Input: [{typ: "Symbiose", partner: "A"}, {typ: "Prädation", partner: "B"}]
  *    oder {knoten: [...], kanten: [...]}
- * Output: Netzwerk-Visualisierung mit Zentral-Element
+ * Output: Organisches Netzwerk mit fließenden Verbindungen
  */
 
 import { debug } from '../../../observer/debug.js';
 
-// Interaktionstypen mit Farben
+// Interaktionstypen mit Farben (biologisch)
 const INTERACTION_TYPES = {
-  symbiose: { color: 'rgba(100, 220, 160, 0.8)', icon: '🤝' },
-  symbiosis: { color: 'rgba(100, 220, 160, 0.8)', icon: '🤝' },
-  mykorrhiza: { color: 'rgba(100, 220, 160, 0.8)', icon: '🌿' },
-  parasitismus: { color: 'rgba(240, 110, 110, 0.8)', icon: '🦠' },
-  parasitism: { color: 'rgba(240, 110, 110, 0.8)', icon: '🦠' },
-  praedation: { color: 'rgba(240, 150, 80, 0.8)', icon: '🦅' },
-  predation: { color: 'rgba(240, 150, 80, 0.8)', icon: '🦅' },
-  konkurrenz: { color: 'rgba(240, 190, 80, 0.8)', icon: '⚔️' },
-  competition: { color: 'rgba(240, 190, 80, 0.8)', icon: '⚔️' },
-  kommensalismus: { color: 'rgba(90, 160, 240, 0.8)', icon: '🏠' },
-  bestaeubung: { color: 'rgba(240, 180, 220, 0.8)', icon: '🐝' },
-  pollination: { color: 'rgba(240, 180, 220, 0.8)', icon: '🐝' },
-  nahrung: { color: 'rgba(180, 140, 100, 0.8)', icon: '🍽️' },
-  food: { color: 'rgba(180, 140, 100, 0.8)', icon: '🍽️' },
-  default: { color: 'rgba(140, 160, 180, 0.8)', icon: '🔗' }
+  symbiose: { color: 'rgba(100, 220, 160, 0.8)', stroke: '#64dc9c', icon: '⚭' },
+  symbiosis: { color: 'rgba(100, 220, 160, 0.8)', stroke: '#64dc9c', icon: '⚭' },
+  mykorrhiza: { color: 'rgba(100, 220, 160, 0.8)', stroke: '#64dc9c', icon: '🌿' },
+  mutualism: { color: 'rgba(100, 220, 160, 0.8)', stroke: '#64dc9c', icon: '⚭' },
+  parasitismus: { color: 'rgba(240, 110, 110, 0.8)', stroke: '#f06e6e', icon: '⊘' },
+  parasitism: { color: 'rgba(240, 110, 110, 0.8)', stroke: '#f06e6e', icon: '⊘' },
+  praedation: { color: 'rgba(240, 150, 80, 0.8)', stroke: '#f09650', icon: '→' },
+  predation: { color: 'rgba(240, 150, 80, 0.8)', stroke: '#f09650', icon: '→' },
+  konkurrenz: { color: 'rgba(240, 190, 80, 0.8)', stroke: '#f0be50', icon: '⇆' },
+  competition: { color: 'rgba(240, 190, 80, 0.8)', stroke: '#f0be50', icon: '⇆' },
+  kommensalismus: { color: 'rgba(90, 160, 240, 0.8)', stroke: '#5aa0f0', icon: '⤵' },
+  bestaeubung: { color: 'rgba(240, 180, 220, 0.8)', stroke: '#f0b4dc', icon: '✿' },
+  pollination: { color: 'rgba(240, 180, 220, 0.8)', stroke: '#f0b4dc', icon: '✿' },
+  nahrung: { color: 'rgba(180, 140, 100, 0.8)', stroke: '#b48c64', icon: '◈' },
+  food: { color: 'rgba(180, 140, 100, 0.8)', stroke: '#b48c64', icon: '◈' },
+  habitat: { color: 'rgba(120, 180, 120, 0.8)', stroke: '#78b478', icon: '⌂' },
+  decomposer: { color: 'rgba(160, 140, 100, 0.8)', stroke: '#a08c64', icon: '↻' },
+  default: { color: 'rgba(140, 160, 180, 0.8)', stroke: '#8ca0b4', icon: '○' }
 };
 
 export function network(wert, config = {}) {
@@ -45,16 +52,33 @@ export function network(wert, config = {}) {
   }
   
   // SVG-Container
-  const size = config.size || 250;
+  const size = config.size || 280;
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('viewBox', `0 0 ${size} ${size}`);
   svg.setAttribute('class', 'amorph-network-svg');
   
+  // Defs für Gradienten und Filter
+  const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+  
+  // Glow Filter
+  const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+  filter.setAttribute('id', 'nodeGlow');
+  filter.setAttribute('x', '-50%');
+  filter.setAttribute('y', '-50%');
+  filter.setAttribute('width', '200%');
+  filter.setAttribute('height', '200%');
+  filter.innerHTML = `
+    <feGaussianBlur stdDeviation="3" result="blur"/>
+    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+  `;
+  defs.appendChild(filter);
+  svg.appendChild(defs);
+  
   const centerX = size / 2;
   const centerY = size / 2;
-  const radius = (size / 2) - 50;
+  const radius = (size / 2) - 55;
   
-  // Kanten zeichnen
+  // Kanten als organische Bezier-Kurven
   const edgesGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
   edgesGroup.setAttribute('class', 'amorph-network-edges');
   
@@ -65,51 +89,60 @@ export function network(wert, config = {}) {
     
     const edge = edges[i] || {};
     const typeConfig = getInteractionType(edge.typ || edge.type);
+    const intensity = edge.intensity || 50;
     
-    // Linie
-    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    line.setAttribute('x1', centerX);
-    line.setAttribute('y1', centerY);
-    line.setAttribute('x2', x);
-    line.setAttribute('y2', y);
-    line.setAttribute('stroke', typeConfig.color);
-    line.setAttribute('stroke-width', '2');
-    line.setAttribute('stroke-opacity', '0.6');
-    edgesGroup.appendChild(line);
+    // Organische Bezier-Kurve statt gerader Linie
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    const curve = createOrganicCurve(centerX, centerY, x, y, i, nodes.length);
+    path.setAttribute('d', curve);
+    path.setAttribute('stroke', typeConfig.color);
+    path.setAttribute('stroke-width', Math.max(1, intensity / 25));
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke-linecap', 'round');
+    path.setAttribute('opacity', '0.6');
+    path.setAttribute('class', 'amorph-network-edge');
+    edgesGroup.appendChild(path);
     
-    // Interaktions-Icon auf der Linie
-    const midX = (centerX + x) / 2;
-    const midY = (centerY + y) / 2;
+    // Kleine Annotations-Punkte auf der Kurve
+    const midAngle = angle + (Math.random() - 0.5) * 0.3;
+    const midDist = radius * 0.5;
+    const midX = centerX + Math.cos(midAngle) * midDist;
+    const midY = centerY + Math.sin(midAngle) * midDist;
     
-    const iconBg = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    iconBg.setAttribute('cx', midX);
-    iconBg.setAttribute('cy', midY);
-    iconBg.setAttribute('r', '10');
-    iconBg.setAttribute('fill', 'rgba(0,0,0,0.8)');
-    edgesGroup.appendChild(iconBg);
-    
-    const icon = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    icon.setAttribute('x', midX);
-    icon.setAttribute('y', midY);
-    icon.setAttribute('text-anchor', 'middle');
-    icon.setAttribute('dominant-baseline', 'middle');
-    icon.setAttribute('font-size', '10');
-    icon.textContent = typeConfig.icon;
-    edgesGroup.appendChild(icon);
+    // Annotation-Punkt
+    const annotDot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    annotDot.setAttribute('cx', midX);
+    annotDot.setAttribute('cy', midY);
+    annotDot.setAttribute('r', '4');
+    annotDot.setAttribute('fill', typeConfig.color);
+    annotDot.setAttribute('class', 'amorph-network-annotation');
+    annotDot.setAttribute('opacity', '0.8');
+    edgesGroup.appendChild(annotDot);
   }
   svg.appendChild(edgesGroup);
   
-  // Zentral-Knoten
+  // Zentral-Knoten (größer, prominent)
   const centerNode = document.createElementNS('http://www.w3.org/2000/svg', 'g');
   centerNode.setAttribute('class', 'amorph-network-center');
+  centerNode.setAttribute('data-central', 'true');
+  
+  // Äußerer Glow-Ring
+  const centerGlow = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  centerGlow.setAttribute('cx', centerX);
+  centerGlow.setAttribute('cy', centerY);
+  centerGlow.setAttribute('r', '35');
+  centerGlow.setAttribute('fill', 'rgba(100, 180, 255, 0.1)');
+  centerGlow.setAttribute('class', 'amorph-network-center-glow');
+  centerNode.appendChild(centerGlow);
   
   const centerCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
   centerCircle.setAttribute('cx', centerX);
   centerCircle.setAttribute('cy', centerY);
-  centerCircle.setAttribute('r', '25');
-  centerCircle.setAttribute('fill', 'rgba(var(--color-accent-rgb), 0.2)');
-  centerCircle.setAttribute('stroke', 'var(--color-accent)');
+  centerCircle.setAttribute('r', '24');
+  centerCircle.setAttribute('fill', 'rgba(0, 0, 0, 0.7)');
+  centerCircle.setAttribute('stroke', 'rgba(100, 180, 255, 0.6)');
   centerCircle.setAttribute('stroke-width', '2');
+  centerCircle.setAttribute('filter', 'url(#nodeGlow)');
   centerNode.appendChild(centerCircle);
   
   const centerText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
@@ -117,15 +150,15 @@ export function network(wert, config = {}) {
   centerText.setAttribute('y', centerY);
   centerText.setAttribute('text-anchor', 'middle');
   centerText.setAttribute('dominant-baseline', 'middle');
-  centerText.setAttribute('fill', 'white');
-  centerText.setAttribute('font-size', '12');
-  centerText.setAttribute('font-weight', 'bold');
-  centerText.textContent = center.substring(0, 8);
+  centerText.setAttribute('fill', 'rgba(255, 255, 255, 0.95)');
+  centerText.setAttribute('font-size', '10');
+  centerText.setAttribute('font-weight', '600');
+  centerText.textContent = truncateText(center, 8);
   centerNode.appendChild(centerText);
   
   svg.appendChild(centerNode);
   
-  // Äußere Knoten
+  // Äußere Knoten (Größe variiert nach Intensität)
   const nodesGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
   nodesGroup.setAttribute('class', 'amorph-network-nodes');
   
@@ -137,16 +170,35 @@ export function network(wert, config = {}) {
     
     const edge = edges[i] || {};
     const typeConfig = getInteractionType(edge.typ || edge.type);
+    const intensity = edge.intensity || 50;
+    
+    // Node-Größe basiert auf Intensität
+    const nodeRadius = 12 + (intensity / 20);
+    
+    const nodeGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    nodeGroup.setAttribute('class', 'amorph-network-node');
+    nodeGroup.setAttribute('data-type', edge.typ || edge.type || 'default');
+    
+    // Äußerer Ring (Typ-Farbe)
+    const outerRing = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    outerRing.setAttribute('cx', x);
+    outerRing.setAttribute('cy', y);
+    outerRing.setAttribute('r', nodeRadius + 2);
+    outerRing.setAttribute('fill', 'none');
+    outerRing.setAttribute('stroke', typeConfig.color);
+    outerRing.setAttribute('stroke-width', '2');
+    outerRing.setAttribute('opacity', '0.5');
+    nodeGroup.appendChild(outerRing);
     
     // Knoten-Kreis
     const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
     circle.setAttribute('cx', x);
     circle.setAttribute('cy', y);
-    circle.setAttribute('r', '18');
-    circle.setAttribute('fill', 'rgba(0,0,0,0.6)');
+    circle.setAttribute('r', nodeRadius);
+    circle.setAttribute('fill', 'rgba(0, 0, 0, 0.6)');
     circle.setAttribute('stroke', typeConfig.color);
-    circle.setAttribute('stroke-width', '2');
-    nodesGroup.appendChild(circle);
+    circle.setAttribute('stroke-width', '1.5');
+    nodeGroup.appendChild(circle);
     
     // Knoten-Label
     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
@@ -154,37 +206,32 @@ export function network(wert, config = {}) {
     text.setAttribute('y', y);
     text.setAttribute('text-anchor', 'middle');
     text.setAttribute('dominant-baseline', 'middle');
-    text.setAttribute('fill', 'white');
+    text.setAttribute('fill', 'rgba(255, 255, 255, 0.9)');
     text.setAttribute('font-size', '8');
-    text.textContent = node.name.substring(0, 6);
-    nodesGroup.appendChild(text);
+    text.textContent = truncateText(node.name, 6);
+    nodeGroup.appendChild(text);
+    
+    nodesGroup.appendChild(nodeGroup);
   }
   svg.appendChild(nodesGroup);
   
   el.appendChild(svg);
   
-  // Legende
+  // Kompakte Legende
   if (config.showLegend !== false && edges.length > 0) {
     const legend = document.createElement('div');
     legend.className = 'amorph-network-legend';
     
     const uniqueTypes = [...new Set(edges.map(e => e.typ || e.type || 'default'))];
-    for (const type of uniqueTypes.slice(0, 5)) {
+    for (const type of uniqueTypes.slice(0, 4)) {
       const typeConfig = getInteractionType(type);
       
       const item = document.createElement('div');
       item.className = 'amorph-network-legend-item';
-      
-      const dot = document.createElement('span');
-      dot.className = 'amorph-network-legend-dot';
-      dot.style.background = typeConfig.color;
-      item.appendChild(dot);
-      
-      const label = document.createElement('span');
-      label.className = 'amorph-network-legend-label';
-      label.textContent = type;
-      item.appendChild(label);
-      
+      item.innerHTML = `
+        <span class="legend-dot" style="background: ${typeConfig.color}"></span>
+        <span class="legend-label">${formatTypeName(type)}</span>
+      `;
       legend.appendChild(item);
     }
     
@@ -192,6 +239,32 @@ export function network(wert, config = {}) {
   }
   
   return el;
+}
+
+// Erstellt organische Bezier-Kurve
+function createOrganicCurve(x1, y1, x2, y2, index, total) {
+  // Kontrollpunkt seitlich versetzt für organische Kurve
+  const midX = (x1 + x2) / 2;
+  const midY = (y1 + y2) / 2;
+  
+  // Versatz basierend auf Index für Variation
+  const offset = 15 + (index % 3) * 8;
+  const angle = Math.atan2(y2 - y1, x2 - x1) + Math.PI / 2;
+  const direction = index % 2 === 0 ? 1 : -1;
+  
+  const ctrlX = midX + Math.cos(angle) * offset * direction;
+  const ctrlY = midY + Math.sin(angle) * offset * direction;
+  
+  return `M ${x1} ${y1} Q ${ctrlX} ${ctrlY} ${x2} ${y2}`;
+}
+
+function truncateText(text, maxLen) {
+  if (!text) return '';
+  return text.length > maxLen ? text.substring(0, maxLen) : text;
+}
+
+function formatTypeName(type) {
+  return type.charAt(0).toUpperCase() + type.slice(1).replace(/_/g, ' ');
 }
 
 function extractNetworkData(wert, config) {
@@ -206,12 +279,10 @@ function extractNetworkData(wert, config) {
         const typ = item.typ || item.type || item.relation || item.relationship || item.beziehung || 'default';
         
         // Pattern 2: connections Array
-        // Format: { name: "A", connections: ["B", "C"] } oder { name: "A", connections: [{ target: "B", typ: "..." }] }
         if (item.connections || item.verbindungen || item.links) {
           const conns = item.connections || item.verbindungen || item.links;
           const sourceNode = item.name || item.id || 'Unbekannt';
           
-          // Setze center auf ersten Knoten wenn nicht konfiguriert
           if (!config.center && !config.zentrum && nodes.length === 0) {
             center = sourceNode;
           } else {
@@ -233,7 +304,6 @@ function extractNetworkData(wert, config) {
             }
           }
         } else if (name) {
-          // Pattern 1: name + type (Original-Pattern)
           nodes.push({ name });
           edges.push({ typ, intensity: item.intensitaet || item.intensity || item.strength || 50 });
         }
@@ -243,15 +313,11 @@ function extractNetworkData(wert, config) {
       }
     }
   } else if (typeof wert === 'object') {
-    // Interaktionen-Objekt
     if (wert.interaktionen || wert.interactions) {
-      const arr = wert.interaktionen || wert.interactions;
-      return extractNetworkData(arr, config);
+      return extractNetworkData(wert.interaktionen || wert.interactions, config);
     }
-    // Knoten/Kanten-Format
     if (wert.knoten || wert.nodes) {
-      const n = wert.knoten || wert.nodes;
-      for (const item of n) {
+      for (const item of (wert.knoten || wert.nodes)) {
         nodes.push({ name: typeof item === 'string' ? item : item.name || item.id });
       }
     }

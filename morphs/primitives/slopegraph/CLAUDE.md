@@ -1,47 +1,57 @@
 # Slopegraph Morph
 
-Vorher-Nachher-Vergleich mit Steigungslinien.
+Vorher-Nachher-Vergleich mit Steigungslinien nach Kirk-Prinzipien.
+
+## Design-Prinzipien (Kirk)
+
+1. **Zwei Zeitpunkte**: Links=Vorher, Rechts=Nachher
+2. **Steigung zeigt Magnitude**: Steil=große Änderung
+3. **Farbkodierung**: Grün=Anstieg, Rot=Rückgang
+4. **Werte an Endpunkten**: Direkte Annotation
+5. **Prozent-Änderung**: Delta prominent angezeigt
 
 ## Datenstruktur
 
 ```typescript
 // Objekt mit Vorher/Nachher
 type SlopegraphInput = {
-  before: number;
-  after: number;
-  label?: string;
-  unit?: string;
+  vorher: Record<string, number>;
+  nachher: Record<string, number>;
 };
 
-// Alternative Keys
-type SlopegraphInput = {
-  start: number;
-  end: number;
-} | {
-  from: number;
-  to: number;
-} | {
+// Array von Objekten
+type SlopegraphInput = Array<{
+  name: string;
   vorher: number;
   nachher: number;
-};
+}>;
+
+// Alternative Keys
+vorher/nachher, before/after, start/end, v1/v2
 
 // Beispiele
-{ before: 100, after: 150 }
-{ start: 45, end: 78, label: "Umsatz" }
-{ from: 3.5, to: 4.2, unit: "Rating" }
+{
+  vorher: {Manning: 45, Brady: 30},
+  nachher: {Manning: 55, Brady: 48}
+}
+
+[
+  {name: "Manning", vorher: 45, nachher: 55},
+  {name: "Brady", vorher: 30, nachher: 48}
+]
 ```
 
 ## Erkennungsregeln
 
-- **Typ:** `object`
-- **Required:** `before`/`after` ODER `start`/`end` ODER `from`/`to` ODER `vorher`/`nachher`
+- **Typ:** `object` oder `array`
+- **Required:** vorher/nachher Struktur mit matching Keys
 - **Priorität:** Vor comparison (Slopegraph ist visueller)
 
 ## Wann SLOPEGRAPH verwenden (Kirk)
 
 ✅ **Geeignet für:**
 - **Vorher-Nachher-Vergleiche** (2 Zeitpunkte)
-- Ranking-Veränderungen
+- Ranking-Veränderungen (Peyton Manning Record Chart)
 - Performance-Vergleiche
 - A/B-Test-Ergebnisse
 
@@ -54,10 +64,18 @@ type SlopegraphInput = {
 
 | Option | Typ | Default | Beschreibung |
 |--------|-----|---------|--------------|
-| `showValues` | boolean | true | Werte anzeigen |
-| `showChange` | boolean | true | Änderung anzeigen |
-| `animated` | boolean | true | Animation |
-| `height` | number | 60 | Höhe in Pixeln |
+| `titel` | string | - | Titel über Chart |
+
+### Implementierte Kirk-Features
+
+| Feature | Beschreibung |
+|---------|--------------|
+| **Header-Labels** | Vorher/Nachher beschriftet |
+| **Verbindungslinie** | SVG-Linie zwischen Punkten |
+| **Steigungsfarbe** | Grün=↑, Rot=↓, Grau=→ |
+| **Wert-Annotation** | Zahlen an beiden Enden |
+| **Trend-Badge** | Prozent-Änderung rechts |
+| **Y-Normalisierung** | Alle Linien im gleichen Scale |
 
 ## Signatur
 
@@ -81,12 +99,3 @@ slopegraph(wert: SlopegraphObject, config?: SlopegraphConfig) → HTMLElement
 | ↗ Steil aufwärts | Großer Anstieg |
 | → Flach | Wenig Veränderung |
 | ↘ Steil abwärts | Großer Rückgang |
-
-### Slopegraph vs Comparison
-
-| Aspekt | Slopegraph | Comparison |
-|--------|------------|------------|
-| **Fokus** | Visuelle Steigung | Numerische Differenz |
-| **Darstellung** | Linie mit Punkten | Zahlen mit Trend-Icon |
-| **Platz** | Mehr (höher) | Weniger (kompakt) |
-| **Vergleiche** | Mehrere parallel | Einzeln |

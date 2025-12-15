@@ -1,0 +1,134 @@
+/**
+ * 🗺️ TREEMAP CSS - Flächenproportionale Rechtecke
+ * Universe Biosphere Theme mit Glow-Effekten
+ */
+
+.amorph-treemap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 255, 255, 0.15);
+}
+
+.amorph-treemap-titel {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+  text-align: center;
+}
+
+/* Container */
+.amorph-treemap-container {
+  position: relative;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Tiles */
+.amorph-treemap-tile {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+.amorph-treemap-tile:hover {
+  z-index: 10;
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 
+    0 0 15px rgba(255, 255, 255, 0.3),
+    inset 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+/* Positive/Negative Coloring (Stock-Style) */
+.amorph-treemap-tile.is-positive {
+  border-color: rgba(0, 200, 100, 0.3);
+}
+
+.amorph-treemap-tile.is-negative {
+  border-color: rgba(200, 50, 50, 0.3);
+}
+
+/* Labels */
+.amorph-treemap-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.8),
+    0 0 4px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.amorph-treemap-label.is-small {
+  font-size: 9px;
+}
+
+/* Change Percentage */
+.amorph-treemap-change {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.amorph-treemap-tile.is-positive .amorph-treemap-change {
+  color: rgba(200, 255, 200, 0.95);
+}
+
+.amorph-treemap-tile.is-negative .amorph-treemap-change {
+  color: rgba(255, 200, 200, 0.95);
+}
+
+/* Legend */
+.amorph-treemap-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.amorph-treemap-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.amorph-treemap-legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  box-shadow: 0 0 4px currentColor;
+}
+
+.amorph-treemap-legend-label {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Empty State */
+.amorph-treemap-leer {
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+}

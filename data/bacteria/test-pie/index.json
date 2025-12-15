@@ -1,0 +1,10 @@
+{
+  "id": "test-pie",
+  "slug": "test-pie",
+  "name": "Pie-Test Bakterium",
+  "wissenschaftlich": "Testus pieus",
+  "bild": "images/bacteria/e-coli.jpg",
+  "beschreibung": "Testorganismus für Pie-Morph Validierung",
+  "taxonomie_regnum": "Bacteria",
+  "perspektiven": ["testdata"]
+}

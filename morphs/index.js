@@ -26,6 +26,21 @@ import { slopegraph } from './primitives/slopegraph/slopegraph.js';
 import { heatmap } from './primitives/heatmap/heatmap.js';
 import { gauge } from './primitives/gauge/gauge.js';
 
+// Neue Kirk-Morphs (Session 1)
+import { bubble } from './primitives/bubble/bubble.js';
+import { boxplot } from './primitives/boxplot/boxplot.js';
+import { treemap } from './primitives/treemap/treemap.js';
+import { stackedbar } from './primitives/stackedbar/stackedbar.js';
+import { dotplot } from './primitives/dotplot/dotplot.js';
+import { sunburst } from './primitives/sunburst/sunburst.js';
+
+// Neue Kirk-Morphs (Session 2)
+import flow from './primitives/flow/flow.js';
+import groupedbar from './primitives/groupedbar/groupedbar.js';
+import scatterplot from './primitives/scatterplot/scatterplot.js';
+import lollipop from './primitives/lollipop/lollipop.js';
+import pictogram from './primitives/pictogram/pictogram.js';
+
 // Erweiterte Morphs - Spezial-Darstellungen
 import { dosage } from './primitives/dosage/dosage.js';
 import { currency } from './primitives/currency/currency.js';
@@ -167,6 +182,21 @@ export const morphs = {
   heatmap,    // Farbcodierte Matrix
   gauge,      // Tachometer-Anzeige
   
+  // Neue Kirk-Morphs (Session 1)
+  bubble,     // Proportionale Kreise
+  boxplot,    // Box-and-Whisker
+  treemap,    // Flächen-Tiles
+  stackedbar, // Gestapelte Balken
+  dotplot,    // Kategorie-Scatter
+  sunburst,   // Radiale Hierarchie
+  
+  // Neue Kirk-Morphs (Session 2)
+  flow,       // Organische Ströme
+  groupedbar, // Gruppierte Balken
+  scatterplot,// X/Y-Korrelation
+  lollipop,   // Elegante Balken
+  pictogram,  // Icon-Wiederholung
+  
   // Spezial-Morphs
   dosage,     // Dosierungsanzeige
   currency,   // Währungsformatierung
@@ -214,6 +244,7 @@ export const morphs = {
 debug.morphs('registry', { 
   primitives: ['text', 'number', 'boolean', 'tag', 'range', 'list', 'object', 'image', 'link', 'pie', 'bar', 'radar', 'rating', 'progress', 'stats', 'timeline', 'badge', 'lifecycle'],
   extended: ['sparkline', 'slopegraph', 'heatmap', 'gauge', 'dosage', 'currency', 'citation', 'calendar', 'steps', 'map', 'hierarchy', 'network', 'comparison', 'severity'],
+  kirkMorphs: ['bubble', 'boxplot', 'treemap', 'stackedbar', 'dotplot', 'sunburst', 'flow', 'groupedbar', 'scatterplot', 'lollipop', 'pictogram'],
   features: ['suche', 'perspektiven', 'header'],
   compare: ['compareMorph', 'compareBar', 'compareRating', 'compareTag', 'compareList', 'compareImage', 'compareRadar', 'comparePie', 'compareText', 'compareTimeline', 'compareRange', 'compareProgress', 'compareBoolean', 'compareStats', 'compareObject'],
   composites: ['smartCompare', 'diffCompare']
@@ -229,6 +260,10 @@ export {
   
   // Extended Charts & Visualizations
   sparkline, slopegraph, heatmap, gauge,
+  
+  // Neue Kirk-Morphs
+  bubble, boxplot, treemap, stackedbar, dotplot, sunburst,
+  flow, groupedbar, scatterplot, lollipop, pictogram,
   
   // Special Morphs
   dosage, currency, citation, calendar, steps, map, hierarchy, network, comparison, severity,

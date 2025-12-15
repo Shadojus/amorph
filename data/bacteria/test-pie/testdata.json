@@ -1,0 +1,27 @@
+{
+  "artenverteilung": [
+    { "label": "Basidiomycota", "value": 32000 },
+    { "label": "Ascomycota", "value": 64000 },
+    { "label": "Zygomycota", "value": 1000 },
+    { "label": "Andere", "value": 3000 }
+  ],
+  
+  "marktanteile": [
+    { "name": "Champignon", "wert": 68 },
+    { "name": "Austernpilz", "wert": 12 },
+    { "name": "Shiitake", "wert": 10 },
+    { "name": "Sonstige", "wert": 10 }
+  ],
+  
+  "naehrwerte_objekt": {
+    "Kohlenhydrate": 45,
+    "Protein": 35,
+    "Ballaststoffe": 15,
+    "Fett": 5
+  },
+  
+  "einfaches_pie": {
+    "positiv": 72,
+    "negativ": 28
+  }
+}

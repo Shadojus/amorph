@@ -1,0 +1,10 @@
+{
+  "id": "test-number",
+  "slug": "test-number",
+  "name": "Number-Test Bakterium",
+  "wissenschaftlich": "Testus numberus",
+  "bild": "images/bacteria/e-coli.jpg",
+  "beschreibung": "Testorganismus für Number-Morph Validierung",
+  "taxonomie_regnum": "Bacteria",
+  "perspektiven": ["testdata"]
+}

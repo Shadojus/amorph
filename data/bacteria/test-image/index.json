@@ -1,0 +1,10 @@
+{
+  "id": "test-image",
+  "slug": "test-image",
+  "name": "Image-Test Bakterium",
+  "wissenschaftlich": "Testus imageus",
+  "bild": "images/bacteria/e-coli.jpg",
+  "beschreibung": "Testorganismus für Image-Morph Validierung",
+  "taxonomie_regnum": "Bacteria",
+  "perspektiven": ["testdata"]
+}

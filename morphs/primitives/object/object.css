@@ -1,34 +1,36 @@
-/* OBJECT MORPH - Kompaktes Key-Value Layout */
+/* OBJECT MORPH - Universe Biosphere Theme */
+/* Kompaktes Key-Value Layout mit leuchtenden Akzenten */
+
 .amorph-object {
   display: grid;
   grid-template-columns: minmax(80px, auto) 1fr;
-  gap: 2px 12px;
+  gap: 3px 14px;
   margin: 0;
   font-size: 12px;
 }
 
 .amorph-object dt {
   font-weight: 500;
-  color: var(--color-text-muted, #8b8b8b);
+  color: rgba(255, 255, 255, 0.55);
   font-size: 11px;
   padding: 2px 0;
-  /* Keine Uppercase - formatLabel macht das schon */
 }
 
 .amorph-object dd {
   margin: 0;
-  color: var(--color-text, #e0e0e0);
+  color: rgba(255, 255, 255, 0.9);
   padding: 2px 0;
   word-break: break-word;
 }
 
-/* Verschachteltes Object: Eingerückt */
+/* Verschachteltes Object: Eingerückt mit leuchtender Linie */
 .amorph-object .amorph-object {
-  margin-left: 8px;
-  padding-left: 8px;
-  border-left: 2px solid rgba(255, 255, 255, 0.1);
+  margin-left: 10px;
+  padding-left: 10px;
+  border-left: 2px solid rgba(100, 180, 255, 0.15);
   grid-column: 1 / -1;
   font-size: 11px;
+  box-shadow: -2px 0 8px rgba(100, 180, 255, 0.05);
 }
 
 /* Array inline */
@@ -38,21 +40,24 @@
 }
 
 .amorph-object-empty {
-  color: var(--color-text-muted, #666);
+  color: rgba(255, 255, 255, 0.35);
   font-style: italic;
 }
 
-/* Zahlen rechtsbündig */
+/* Zahlen rechtsbündig mit Glow */
 .amorph-object-number {
   font-variant-numeric: tabular-nums;
   text-align: right;
+  color: rgba(100, 220, 255, 0.9);
+  text-shadow: 0 0 6px rgba(100, 220, 255, 0.2);
 }
 
-/* Boolean-Werte farbig */
+/* Boolean-Werte leuchtend */
 .amorph-object-true {
-  color: var(--color-success, #4caf50);
+  color: rgba(100, 255, 150, 0.9);
+  text-shadow: 0 0 6px rgba(100, 255, 150, 0.3);
 }
 
 .amorph-object-false {
-  color: var(--color-text-muted, #666);
+  color: rgba(255, 255, 255, 0.4);
 }

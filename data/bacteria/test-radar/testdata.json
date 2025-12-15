@@ -1,0 +1,27 @@
+{
+  "steinpilz_profil": [
+    { "axis": "Geschmack", "value": 95 },
+    { "axis": "Nährwert", "value": 85 },
+    { "axis": "Verfügbarkeit", "value": 60 },
+    { "axis": "Preis-Leistung", "value": 70 },
+    { "axis": "Haltbarkeit", "value": 75 },
+    { "axis": "Vielseitigkeit", "value": 90 }
+  ],
+  
+  "lebensraum_eignung": [
+    { "achse": "Laubwald", "wert": 95 },
+    { "achse": "Nadelwald", "wert": 45 },
+    { "achse": "Mischwald", "wert": 85 },
+    { "achse": "Parkanlage", "wert": 30 },
+    { "achse": "Wiese", "wert": 10 },
+    { "achse": "Feuchtgebiet", "wert": 55 }
+  ],
+  
+  "qualitaetsprofil": [
+    { "dimension": "Frische", "score": 95 },
+    { "dimension": "Größe", "score": 90 },
+    { "dimension": "Farbe", "score": 92 },
+    { "dimension": "Festigkeit", "score": 95 },
+    { "dimension": "Sauberkeit", "score": 98 }
+  ]
+}

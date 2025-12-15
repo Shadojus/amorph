@@ -1,0 +1,10 @@
+{
+  "id": "test-currency",
+  "slug": "test-currency",
+  "name": "Currency-Test Bakterium",
+  "wissenschaftlich": "Testus currencyus",
+  "bild": "images/bacteria/e-coli.jpg",
+  "beschreibung": "Testorganismus für Currency-Morph Validierung",
+  "taxonomie_regnum": "Bacteria",
+  "perspektiven": ["testdata"]
+}

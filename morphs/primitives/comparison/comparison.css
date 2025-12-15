@@ -1,75 +1,137 @@
-/* COMPARISON MORPH - Vergleichsdarstellung */
+/* COMPARISON MORPH - Universe Biosphere Theme */
+/* Vorher-Nachher Vergleich mit organischem Glow */
+
 .amorph-comparison {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
+  padding: 8px;
+  background: transparent;
 }
 
-.amorph-comparison-row {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: 8px;
-  align-items: center;
+.amorph-comparison-leer {
+  color: rgba(255, 255, 255, 0.3);
+  font-style: italic;
   font-size: 11px;
 }
 
-/* Wert-Zellen */
-.amorph-comparison-left,
-.amorph-comparison-right {
-  padding: 4px 8px;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
-}
-
-.amorph-comparison-left {
-  text-align: right;
-}
-
-.amorph-comparison-right {
-  text-align: left;
-}
-
-/* Operator/Vergleich */
-.amorph-comparison-operator {
-  font-size: 10px;
-  color: rgba(255, 255, 255, 0.4);
-  padding: 2px 6px;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 3px;
-}
-
-/* Gewinner hervorheben */
-.amorph-comparison-left[data-winner="true"],
-.amorph-comparison-right[data-winner="true"] {
-  background: rgba(100, 220, 160, 0.12);
-  border: 1px solid rgba(100, 220, 160, 0.2);
-  color: var(--color-success);
-}
-
-/* Labels */
 .amorph-comparison-label {
-  font-size: 9px;
-  color: rgba(255, 255, 255, 0.4);
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-
-/* Header */
-.amorph-comparison-header {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: 8px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  margin-bottom: 4px;
-}
-
-.amorph-comparison-header-item {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
-  color: var(--color-text);
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(100, 150, 255, 0.1);
 }
 
-.amorph-comparison-header-item:first-child {
-  text-align: right;
+/* Werte-Container */
+.amorph-comparison-values {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* Von/Nach Werte */
+.amorph-comparison-from,
+.amorph-comparison-to {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 14px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  min-width: 70px;
+}
+
+.amorph-comparison-from-label,
+.amorph-comparison-to-label {
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.amorph-comparison-from-value,
+.amorph-comparison-to-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Pfeil mit Änderung */
+.amorph-comparison-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.amorph-comparison-arrow-icon {
+  font-size: 18px;
+  color: rgba(150, 180, 255, 0.8);
+  text-shadow: 0 0 8px rgba(150, 180, 255, 0.5);
+}
+
+.amorph-comparison-change {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* Trend-Farben mit Glow */
+.amorph-comparison[data-trend="up"] .amorph-comparison-arrow-icon {
+  color: rgba(100, 220, 140, 0.9);
+  text-shadow: 0 0 8px rgba(100, 220, 140, 0.6);
+}
+.amorph-comparison[data-trend="up"] .amorph-comparison-change {
+  color: rgba(100, 220, 140, 0.9);
+}
+
+.amorph-comparison[data-trend="down"] .amorph-comparison-arrow-icon {
+  color: rgba(240, 120, 100, 0.9);
+  text-shadow: 0 0 8px rgba(240, 120, 100, 0.6);
+}
+.amorph-comparison[data-trend="down"] .amorph-comparison-change {
+  color: rgba(240, 120, 100, 0.9);
+}
+
+.amorph-comparison[data-trend="neutral"] .amorph-comparison-arrow-icon {
+  color: rgba(200, 200, 200, 0.7);
+}
+.amorph-comparison[data-trend="neutral"] .amorph-comparison-change {
+  color: rgba(200, 200, 200, 0.7);
+}
+
+/* Visueller Balken */
+.amorph-comparison-bar {
+  position: relative;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.amorph-comparison-bar-from,
+.amorph-comparison-bar-to {
+  position: absolute;
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s var(--anim-ease-out, ease);
+}
+
+.amorph-comparison-bar-from {
+  background: rgba(150, 180, 255, 0.4);
+  box-shadow: 0 0 6px rgba(150, 180, 255, 0.3);
+}
+
+.amorph-comparison-bar-to {
+  background: rgba(100, 220, 160, 0.6);
+  box-shadow: 0 0 8px rgba(100, 220, 160, 0.4);
 }

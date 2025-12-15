@@ -1,16 +1,38 @@
-/* LINK MORPH */
+/* LINK MORPH - Universe Biosphere Theme */
+/* Leuchtende Verknüpfungen */
+
 .amorph-link {
-  color: var(--color-accent);
+  color: rgba(100, 200, 255, 0.9);
   text-decoration: none;
-  transition: opacity 0.2s;
+  transition: all 0.2s ease;
+  text-shadow: 0 0 4px rgba(100, 200, 255, 0.2);
 }
 
 .amorph-link:hover {
-  opacity: 0.8;
-  text-decoration: underline;
+  color: rgba(100, 220, 255, 1);
+  text-shadow: 0 0 10px rgba(100, 220, 255, 0.6);
+  text-decoration: none;
 }
 
+/* Externer Link - Mit Icon-Glow */
+.amorph-link[data-external="true"]::after {
+  content: ' ↗';
+  font-size: 0.8em;
+  opacity: 0.6;
+}
+
+.amorph-link[data-external="true"]:hover::after {
+  opacity: 1;
+  text-shadow: 0 0 6px rgba(100, 220, 255, 0.5);
+}
+
+/* Ungültiger Link */
 .amorph-link[data-invalid] {
-  color: var(--color-text-dim);
+  color: rgba(255, 255, 255, 0.35);
   cursor: not-allowed;
+  text-shadow: none;
+}
+
+.amorph-link[data-invalid]:hover {
+  text-shadow: none;
 }

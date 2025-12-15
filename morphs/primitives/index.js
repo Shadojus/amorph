@@ -32,6 +32,21 @@ export { sparkline } from './sparkline/sparkline.js';
 export { slopegraph } from './slopegraph/slopegraph.js';
 export { heatmap } from './heatmap/heatmap.js';
 
+// Neue Kirk-Morphs
+export { bubble } from './bubble/bubble.js';
+export { boxplot } from './boxplot/boxplot.js';
+export { treemap } from './treemap/treemap.js';
+export { stackedbar } from './stackedbar/stackedbar.js';
+export { dotplot } from './dotplot/dotplot.js';
+export { sunburst } from './sunburst/sunburst.js';
+
+// Noch neuere Kirk-Morphs (Session 2)
+export { default as flow } from './flow/flow.js';
+export { default as groupedbar } from './groupedbar/groupedbar.js';
+export { default as scatterplot } from './scatterplot/scatterplot.js';
+export { default as lollipop } from './lollipop/lollipop.js';
+export { default as pictogram } from './pictogram/pictogram.js';
+
 // Media-Morphs
 export { image } from './image/image.js';
 export { link } from './link/link.js';
@@ -84,6 +99,21 @@ import { citation } from './citation/citation.js';
 import { currency } from './currency/currency.js';
 import { dosage } from './dosage/dosage.js';
 
+// Neue Kirk-Morphs
+import { bubble } from './bubble/bubble.js';
+import { boxplot } from './boxplot/boxplot.js';
+import { treemap } from './treemap/treemap.js';
+import { stackedbar } from './stackedbar/stackedbar.js';
+import { dotplot } from './dotplot/dotplot.js';
+import { sunburst } from './sunburst/sunburst.js';
+
+// Noch neuere Kirk-Morphs (Session 2)
+import flow from './flow/flow.js';
+import groupedbar from './groupedbar/groupedbar.js';
+import scatterplot from './scatterplot/scatterplot.js';
+import lollipop from './lollipop/lollipop.js';
+import pictogram from './pictogram/pictogram.js';
+
 export const primitives = {
   // Text
   text,
@@ -112,6 +142,36 @@ export const primitives = {
   slope: slopegraph,  // Alias
   heatmap,
   matrix: heatmap,  // Alias
+  
+  // Neue Kirk-Morphs
+  bubble,
+  bubbles: bubble,  // Alias
+  boxplot,
+  box: boxplot,  // Alias
+  treemap,
+  tiles: treemap,  // Alias
+  stackedbar,
+  stacked: stackedbar,  // Alias
+  dotplot,
+  scatter: dotplot,  // Alias
+  sunburst,
+  radial: sunburst,  // Alias
+  
+  // Noch neuere Kirk-Morphs (Session 2)
+  flow,
+  stream: flow,  // Alias
+  myzel: flow,  // Alias - für biologische Netzwerke
+  groupedbar,
+  grouped: groupedbar,  // Alias
+  multiseries: groupedbar,  // Alias
+  scatterplot,
+  correlation: scatterplot,  // Alias
+  xy: scatterplot,  // Alias
+  lollipop,
+  lolly: lollipop,  // Alias
+  pictogram,
+  isotype: pictogram,  // Alias
+  icons: pictogram,  // Alias
   
   // Media
   image,

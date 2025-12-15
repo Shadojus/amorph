@@ -1,0 +1,112 @@
+/**
+ * ☀️ SUNBURST CSS - Radiale Hierarchie
+ * Universe Biosphere Theme mit Glow-Effekten
+ */
+
+.amorph-sunburst {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 255, 255, 0.15);
+  align-items: center;
+}
+
+.amorph-sunburst-titel {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+  text-align: center;
+}
+
+/* SVG */
+.amorph-sunburst-svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Segments */
+.amorph-sunburst-segment {
+  stroke: rgba(0, 0, 0, 0.4);
+  stroke-width: 1;
+  transition: all 0.2s ease;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
+}
+
+.amorph-sunburst-segment:hover {
+  stroke: rgba(255, 255, 255, 0.6);
+  stroke-width: 2;
+  filter: 
+    drop-shadow(0 0 8px rgba(255, 255, 255, 0.4))
+    brightness(1.2);
+}
+
+/* Center */
+.amorph-sunburst-center {
+  fill: rgba(0, 0, 0, 0.6);
+  stroke: rgba(0, 255, 255, 0.4);
+  stroke-width: 2;
+  filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.3));
+}
+
+.amorph-sunburst-center-text {
+  font-size: 11px;
+  font-weight: 600;
+  fill: rgba(255, 255, 255, 0.9);
+  text-anchor: middle;
+  dominant-baseline: middle;
+  text-shadow: 0 0 6px rgba(0, 255, 255, 0.5);
+}
+
+/* Labels */
+.amorph-sunburst-label {
+  font-size: 8px;
+  fill: rgba(255, 255, 255, 0.9);
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: none;
+  text-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.8),
+    0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Legend */
+.amorph-sunburst-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+}
+
+.amorph-sunburst-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.amorph-sunburst-legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  box-shadow: 0 0 4px currentColor;
+}
+
+.amorph-sunburst-legend-label {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Empty State */
+.amorph-sunburst-leer {
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+}

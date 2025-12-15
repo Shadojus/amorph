@@ -1,0 +1,25 @@
+# Pictogram Morph Configuration
+# Icon repetition (Isotype)
+
+id: pictogram
+name: Pictogram
+description: Icon-Wiederholung für zählbare Mengen (Isotype)
+category: charts
+
+# Detection rules
+detection:
+  type: object
+  requiredKeys:
+    - count
+  alternativeKeys:
+    - value
+    - amount
+    - icon
+    - symbol
+
+# Configuration
+config:
+  iconSize: 24
+  maxIcons: 100
+  columns: 10
+  animated: true

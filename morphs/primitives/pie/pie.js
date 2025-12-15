@@ -112,7 +112,7 @@ function normalisiereWert(wert) {
   if (Array.isArray(wert)) {
     return wert.map(item => {
       if (typeof item === 'object') {
-        const value = item.value || item.count || item.amount || item.anzahl || 0;
+        const value = item.value || item.wert || item.count || item.amount || item.anzahl || item.anteil || 0;
         const label = item.label || item.name || item.category || item.kategorie || 'Unbekannt';
         return { label, value };
       }

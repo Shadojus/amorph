@@ -1,0 +1,25 @@
+{
+  "mykorrhiza_netzwerk": [
+    { "name": "Steinpilz-Myzel", "type": "fungi", "connections": ["Buche", "Eiche", "Fichte"] },
+    { "name": "Fliegenpilz-Myzel", "type": "fungi", "connections": ["Birke", "Fichte"] },
+    { "name": "Trüffel-Myzel", "type": "fungi", "connections": ["Eiche", "Hasel"] },
+    { "name": "Buche", "type": "tree", "connections": [] },
+    { "name": "Eiche", "type": "tree", "connections": [] },
+    { "name": "Fichte", "type": "tree", "connections": [] }
+  ],
+  
+  "verwandtschafts_netz": [
+    { "name": "Amanita", "type": "Gattung", "relations": ["A. muscaria", "A. phalloides", "A. caesarea"] },
+    { "name": "A. muscaria", "type": "Art", "relationship": "Gift" },
+    { "name": "A. phalloides", "type": "Art", "relationship": "Tödlich" },
+    { "name": "A. caesarea", "type": "Art", "relationship": "Essbar" }
+  ],
+  
+  "handels_netzwerk": [
+    { "partner": "Pilzfarm", "type": "source", "verbindungen": ["Großhandel"] },
+    { "partner": "Großhandel", "type": "middle", "verbindungen": ["Supermarkt", "Wochenmarkt", "Restaurant"] },
+    { "partner": "Supermarkt", "type": "retail", "verbindungen": ["Verbraucher"] },
+    { "partner": "Wochenmarkt", "type": "retail", "verbindungen": ["Verbraucher"] },
+    { "partner": "Restaurant", "type": "retail", "verbindungen": ["Verbraucher"] }
+  ]
+}

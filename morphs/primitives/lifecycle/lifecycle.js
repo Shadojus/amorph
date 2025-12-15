@@ -64,12 +64,19 @@ function normalisierePhasen(wert) {
       const stepPrefix = item.step !== undefined ? `${item.step}. ` : '';
       const displayName = phaseName ? `${stepPrefix}${phaseName}` : `Phase ${i + 1}`;
       
+      // Status-basierte Aktivität: 'active', 'in-progress', 'aktuell'
+      const statusValue = item.status || item.state || '';
+      const isActive = item.active || item.aktuell || item.current || 
+                       statusValue === 'active' || statusValue === 'in-progress' || 
+                       statusValue === 'current' || statusValue === 'aktuell';
+      
       return {
         name: displayName,
         dauer: dauer,
         beschreibung: item.beschreibung || item.description || '',
-        active: item.active || item.aktuell || item.current || false,
-        icon: item.icon || getPhaseIcon(phaseName || '', i)
+        active: isActive,
+        icon: item.icon || getPhaseIcon(phaseName || '', i),
+        status: statusValue
       };
     }
     

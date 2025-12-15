@@ -1,0 +1,10 @@
+{
+  "id": "test-rating",
+  "slug": "test-rating",
+  "name": "Rating-Test Bakterium",
+  "wissenschaftlich": "Testus ratingus",
+  "bild": "images/bacteria/e-coli.jpg",
+  "beschreibung": "Testorganismus für Rating-Morph Validierung",
+  "taxonomie_regnum": "Bacteria",
+  "perspektiven": ["testdata"]
+}

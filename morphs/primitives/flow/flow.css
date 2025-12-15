@@ -1,0 +1,164 @@
+/**
+ * 🌊 FLOW CSS - Organische Strömungs-Visualisierung
+ * Universe Biosphere Theme - Hauptdesign-Ästhetik
+ * Inspiriert von biologischen Netzwerken und Myzel
+ */
+
+.amorph-flow {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  background: rgba(245, 243, 240, 0.95);
+  background: linear-gradient(
+    135deg,
+    rgba(248, 246, 244, 0.98) 0%,
+    rgba(242, 240, 238, 0.95) 100%
+  );
+  border-radius: 12px;
+  border: 1px solid rgba(200, 190, 180, 0.2);
+}
+
+.amorph-flow-svg {
+  width: 100%;
+  height: auto;
+  min-height: 200px;
+}
+
+/* Strömungs-Kurven */
+.amorph-flow-curve {
+  transition: opacity 0.3s ease, stroke-width 0.3s ease;
+}
+
+.amorph-flow-curves:hover .amorph-flow-curve {
+  opacity: 0.8;
+}
+
+/* Partikel */
+.amorph-flow-particle {
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.amorph-flow-particle-ring {
+  opacity: 0.3;
+}
+
+/* Partikel Animation */
+@keyframes flow-float {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.7;
+  }
+  25% {
+    transform: translate(2px, -2px) scale(1.1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translate(0, -4px) scale(1);
+    opacity: 0.6;
+  }
+  75% {
+    transform: translate(-2px, -2px) scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+/* Knoten */
+.amorph-flow-node-circle {
+  fill: rgba(180, 170, 160, 0.6);
+  stroke: rgba(150, 140, 130, 0.8);
+  stroke-width: 1.5;
+  transition: all 0.3s ease;
+}
+
+.amorph-flow-node-glow {
+  fill: rgba(200, 190, 180, 0.2);
+  filter: blur(4px);
+}
+
+.amorph-flow-node:hover .amorph-flow-node-circle {
+  fill: rgba(200, 180, 160, 0.8);
+  stroke: rgba(180, 160, 140, 1);
+  r: 10;
+}
+
+.amorph-flow-node-label {
+  font-size: 9px;
+  fill: rgba(100, 90, 80, 0.7);
+  text-anchor: middle;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Empty State */
+.amorph-flow-leer {
+  color: rgba(150, 140, 130, 0.6);
+  font-style: italic;
+  text-align: center;
+  padding: 40px;
+}
+
+/* Dark Theme Variante (Universe Biosphere) */
+@media (prefers-color-scheme: dark) {
+  .amorph-flow {
+    background: rgba(20, 25, 30, 0.95);
+    background: linear-gradient(
+      135deg,
+      rgba(15, 20, 25, 0.98) 0%,
+      rgba(25, 30, 35, 0.95) 100%
+    );
+    border-color: rgba(0, 255, 255, 0.1);
+  }
+  
+  .amorph-flow-curve {
+    filter: drop-shadow(0 0 3px currentColor);
+  }
+  
+  .amorph-flow-particle {
+    filter: url(#flow-glow);
+  }
+  
+  .amorph-flow-node-circle {
+    fill: rgba(0, 200, 200, 0.4);
+    stroke: rgba(0, 255, 255, 0.6);
+  }
+  
+  .amorph-flow-node-glow {
+    fill: rgba(0, 255, 255, 0.15);
+  }
+  
+  .amorph-flow-node-label {
+    fill: rgba(200, 220, 220, 0.7);
+  }
+  
+  .amorph-flow-leer {
+    color: rgba(100, 150, 150, 0.5);
+  }
+}
+
+/* Forced Dark (Universe Default) */
+.amorph-flow.dark,
+[data-theme="dark"] .amorph-flow,
+.universe .amorph-flow {
+  background: rgba(10, 15, 20, 0.9);
+  border-color: rgba(0, 255, 255, 0.15);
+}
+
+.amorph-flow.dark .amorph-flow-curve,
+[data-theme="dark"] .amorph-flow .amorph-flow-curve,
+.universe .amorph-flow .amorph-flow-curve {
+  stroke: rgba(100, 180, 180, 0.5);
+  filter: drop-shadow(0 0 4px rgba(0, 255, 255, 0.3));
+}
+
+.amorph-flow.dark .amorph-flow-particle,
+[data-theme="dark"] .amorph-flow .amorph-flow-particle,
+.universe .amorph-flow .amorph-flow-particle {
+  fill: rgba(0, 255, 200, 0.6);
+}
+
+.amorph-flow.dark .amorph-flow-node-circle,
+[data-theme="dark"] .amorph-flow .amorph-flow-node-circle,
+.universe .amorph-flow .amorph-flow-node-circle {
+  fill: rgba(0, 180, 180, 0.5);
+  stroke: rgba(0, 255, 255, 0.7);
+}

@@ -1,21 +1,46 @@
-/* BAR CHART MORPH - Universe Theme */
+/* BAR CHART MORPH - Kirk Design Principles */
+/* Sortierung, Baseline, Hervorhebung, Annotation */
+
 .amorph-bar {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
   padding: 8px;
   background: transparent;
+}
+
+/* Header mit Titel und Summary */
+.amorph-bar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(100, 150, 255, 0.1);
+  margin-bottom: 4px;
 }
 
 .amorph-bar-titel {
   font-size: 10px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.5);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding-bottom: 6px;
-  border-bottom: 1px solid rgba(100, 150, 255, 0.1);
-  margin-bottom: 4px;
+}
+
+/* KIRK: Summary-Stats im Header */
+.amorph-bar-summary {
+  display: flex;
+  gap: 10px;
+  font-size: 9px;
+  font-variant-numeric: tabular-nums;
+}
+
+.amorph-bar-summary .summary-max {
+  color: rgba(100, 255, 150, 0.8);
+}
+
+.amorph-bar-summary .summary-avg {
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .amorph-bar-leer {
@@ -24,62 +49,189 @@
   font-size: 11px;
 }
 
+/* Container mit optionaler Referenzlinie */
+.amorph-bar-container {
+  position: relative;
+}
+
+.amorph-bar-container.has-reference::before {
+  content: '';
+  position: absolute;
+  left: calc(50px + 8px + var(--reference-line, 50%));
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(255, 200, 100, 0.3);
+  z-index: 1;
+}
+
+/* Skala */
 .amorph-bar-scale {
   display: flex;
   justify-content: space-between;
-  padding: 4px 45px 0 50px;
-  font-size: 7px;
-  color: rgba(255, 255, 255, 0.3);
+  padding: 6px 40px 0 58px;
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.35);
   font-variant-numeric: tabular-nums;
-  border-top: 1px solid rgba(255, 255, 255, 0.03);
-  margin-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 6px;
 }
 
-.amorph-bar-scale-mid {
-  opacity: 0.6;
-}
-
+/* Balken-Zeile */
 .amorph-bar-row {
   display: flex;
   align-items: center;
   gap: 8px;
+  padding: 2px 0;
+  transition: all 0.2s ease;
 }
 
+/* KIRK: Hervorhebung Extremwerte */
+.amorph-bar-row.is-max {
+  background: rgba(100, 255, 150, 0.05);
+  border-radius: 4px;
+  margin: 0 -4px;
+  padding: 2px 4px;
+}
+
+.amorph-bar-row.is-max .amorph-bar-label {
+  color: rgba(100, 255, 150, 0.9);
+  font-weight: 600;
+}
+
+.amorph-bar-row.is-max .amorph-bar-fill {
+  background: linear-gradient(90deg, 
+    rgba(100, 255, 150, 0.5),
+    rgba(100, 255, 150, 0.8)
+  );
+  box-shadow: 0 0 12px rgba(100, 255, 150, 0.4);
+}
+
+.amorph-bar-row.is-min .amorph-bar-fill {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: none;
+}
+
+.amorph-bar-row.is-highlight {
+  background: rgba(255, 200, 100, 0.1);
+  border-radius: 4px;
+}
+
+/* Label mit Ranking */
 .amorph-bar-label {
   flex: 0 0 50px;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.6);
   text-align: right;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
+.amorph-bar-label .rank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(100, 180, 255, 0.2);
+  color: rgba(100, 180, 255, 0.9);
+  font-size: 8px;
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+/* Track */
 .amorph-bar-track {
   flex: 1;
-  height: 12px;
-  background: rgba(0, 0, 0, 0.35);
-  border-radius: 4px;
+  height: 14px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 3px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
+/* Fill */
 .amorph-bar-fill {
   height: 100%;
   background: linear-gradient(90deg, 
-    rgba(100, 150, 255, 0.5),
-    rgba(150, 200, 255, 0.7)
+    rgba(100, 150, 255, 0.4),
+    rgba(100, 180, 255, 0.7)
   );
-  border-radius: 4px;
-  transition: width 0.4s ease;
+  border-radius: 3px;
+  transition: width 0.4s ease-out;
   box-shadow: 0 0 8px rgba(100, 150, 255, 0.3);
 }
 
+/* Farbkodierung nach Wert */
+.amorph-bar-fill[data-level="high"] {
+  background: linear-gradient(90deg, 
+    rgba(100, 255, 150, 0.5),
+    rgba(100, 255, 150, 0.8)
+  );
+  box-shadow: 0 0 10px rgba(100, 255, 150, 0.4);
+}
+
+.amorph-bar-fill[data-level="low"] {
+  background: linear-gradient(90deg, 
+    rgba(255, 100, 100, 0.4),
+    rgba(255, 100, 100, 0.6)
+  );
+  box-shadow: 0 0 8px rgba(255, 100, 100, 0.3);
+}
+
+/* Wert */
 .amorph-bar-value {
-  flex: 0 0 35px;
-  font-size: 9px;
+  flex: 0 0 40px;
+  font-size: 10px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.8);
   font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* KIRK: Veränderungsindikator */
+.amorph-bar-change {
+  display: inline-block;
+  font-size: 8px;
+  margin-left: 4px;
+  padding: 1px 3px;
+  border-radius: 3px;
+}
+
+.amorph-bar-change.positive {
+  color: rgba(100, 255, 150, 0.9);
+  background: rgba(100, 255, 150, 0.15);
+}
+
+.amorph-bar-change.negative {
+  color: rgba(255, 100, 100, 0.9);
+  background: rgba(255, 100, 100, 0.15);
+}
+
+/* Trend-Indikatoren */
+.amorph-bar-row[data-trend="up"] .amorph-bar-label::before {
+  content: '↑';
+  color: rgba(100, 255, 150, 0.7);
+  margin-right: 3px;
+  font-size: 8px;
+}
+
+.amorph-bar-row[data-trend="down"] .amorph-bar-label::before {
+  content: '↓';
+  color: rgba(255, 100, 100, 0.7);
+  margin-right: 3px;
+  font-size: 8px;
+}
+
+/* Annotation */
+.amorph-bar-annotation {
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
+  padding-top: 6px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  margin-top: 6px;
 }

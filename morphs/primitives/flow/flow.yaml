@@ -1,0 +1,28 @@
+# Flow Morph Configuration
+# Organic flow/connection visualization
+
+id: flow
+name: Flow Diagram
+description: Organische Ströme und Verbindungen
+category: charts
+
+# Detection rules
+detection:
+  type: array
+  requiredKeys:
+    - from
+    - to
+  alternativeKeys:
+    - source
+    - target
+    - start
+    - end
+    - connections
+    - links
+
+# Configuration
+config:
+  layout: organic
+  animated: true
+  showLabels: true
+  curveIntensity: 0.5

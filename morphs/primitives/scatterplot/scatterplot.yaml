@@ -1,0 +1,25 @@
+# Scatterplot Morph Configuration
+# X/Y correlation visualization
+
+id: scatterplot
+name: Scatter Plot
+description: X/Y-Korrelationen mit optionaler Trendlinie
+category: charts
+
+# Detection rules
+detection:
+  type: array
+  requiredKeys:
+    - x
+    - y
+  alternativeKeys:
+    - value1
+    - value2
+    - point
+
+# Configuration
+config:
+  dotSize: 6
+  showTrendline: true
+  showGrid: true
+  animated: true

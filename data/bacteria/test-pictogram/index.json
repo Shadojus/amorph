@@ -1,0 +1,10 @@
+{
+  "id": "test-pictogram",
+  "slug": "test-pictogram",
+  "name": "Pictogram-Test Bakterium",
+  "wissenschaftlich": "Testus pictogramus",
+  "bild": "images/bacteria/e-coli.jpg",
+  "beschreibung": "Testorganismus für Pictogram-Morph Validierung",
+  "taxonomie_regnum": "Bacteria",
+  "perspektiven": ["testdata"]
+}

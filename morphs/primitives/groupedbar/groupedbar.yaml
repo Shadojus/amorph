@@ -1,0 +1,25 @@
+# Grouped Bar Morph Configuration
+# Multiple series per category
+
+id: groupedbar
+name: Grouped Bar Chart
+description: Mehrere Serien pro Kategorie
+category: charts
+
+# Detection rules
+detection:
+  type: array
+  requiredKeys:
+    - category
+    - series
+  alternativeKeys:
+    - label
+    - groups
+    - values
+
+# Configuration
+config:
+  orientation: vertical
+  showValues: true
+  animated: true
+  barGap: 2

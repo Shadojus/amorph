@@ -1,0 +1,26 @@
+# Treemap Morph Configuration
+# Area-proportional tile visualization
+
+id: treemap
+name: Treemap
+description: Flächen-proportionale Kacheln für Hierarchien
+category: charts
+
+# Detection rules - Treemap needs hierarchical data (children) or explicit group
+detection:
+  type: array
+  requiredKeys:
+    - children
+  alternativeKeys:
+    - name
+    - label
+    - size
+    - value
+    - group
+    - change
+
+# Configuration
+config:
+  animated: true
+  showLabels: true
+  padding: 2

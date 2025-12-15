@@ -1,0 +1,10 @@
+{
+  "id": "test-steps",
+  "slug": "test-steps",
+  "name": "Steps-Test Bakterium",
+  "wissenschaftlich": "Testus stepsus",
+  "bild": "images/bacteria/e-coli.jpg",
+  "beschreibung": "Testorganismus für Steps-Morph Validierung",
+  "taxonomie_regnum": "Bacteria",
+  "perspektiven": ["testdata"]
+}

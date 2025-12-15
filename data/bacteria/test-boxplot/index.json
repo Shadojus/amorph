@@ -1,0 +1,10 @@
+{
+  "id": "test-boxplot",
+  "slug": "test-boxplot",
+  "name": "Boxplot-Test Bakterium",
+  "wissenschaftlich": "Testus boxplotus",
+  "bild": "images/bacteria/e-coli.jpg",
+  "beschreibung": "Testorganismus für Boxplot-Morph Validierung",
+  "taxonomie_regnum": "Bacteria",
+  "perspektiven": ["testdata"]
+}

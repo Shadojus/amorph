@@ -1,0 +1,30 @@
+{
+  "preisentwicklung_saison": [
+    { "name": "Steinpilz", "vorher": 55, "nachher": 28 },
+    { "name": "Pfifferling", "vorher": 42, "nachher": 22 },
+    { "name": "Marone", "vorher": 28, "nachher": 15 },
+    { "name": "Parasol", "vorher": 18, "nachher": 12 },
+    { "name": "Champignon", "vorher": 5, "nachher": 4.5 }
+  ],
+  
+  "marktanteil_wandel": [
+    { "label": "Champignon", "before": 75, "after": 68 },
+    { "label": "Austernpilz", "before": 8, "after": 12 },
+    { "label": "Shiitake", "before": 6, "after": 10 },
+    { "label": "Kräuterseitling", "before": 2, "after": 5 },
+    { "label": "Sonstige", "before": 9, "after": 5 }
+  ],
+  
+  "fundorte_vergleich": [
+    { "name": "Bayern", "start": 450, "end": 890 },
+    { "name": "Brandenburg", "start": 320, "end": 720 },
+    { "name": "Sachsen", "start": 280, "end": 650 },
+    { "name": "Niedersachsen", "start": 210, "end": 480 },
+    { "name": "Hessen", "start": 190, "end": 420 }
+  ],
+  
+  "ranking_objekt": {
+    "vorher": { "Steinpilz": 1, "Pfifferling": 2, "Marone": 4 },
+    "nachher": { "Steinpilz": 1, "Pfifferling": 3, "Marone": 2 }
+  }
+}

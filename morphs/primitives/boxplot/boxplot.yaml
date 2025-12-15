@@ -1,0 +1,26 @@
+# Boxplot Morph Configuration
+# Box-and-Whisker visualization
+
+id: boxplot
+name: Box Plot
+description: Box-and-Whisker für statistische Verteilungen
+category: charts
+
+# Detection rules
+detection:
+  type: object
+  requiredKeys:
+    - min
+    - max
+  alternativeKeys:
+    - q1
+    - q3
+    - median
+    - quartile1
+    - quartile3
+
+# Configuration
+config:
+  showMean: true
+  showOutliers: true
+  animated: true

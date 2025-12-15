@@ -1,29 +1,36 @@
-/* RANGE MORPH - Kompakte Bereichsanzeige */
+/* RANGE MORPH - Universe Biosphere Theme */
+/* Leuchtende Bereichsanzeige mit Glow */
+
 .amorph-range {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   font-size: 11px;
+  padding: 4px 0;
 }
 
 .amorph-range-text {
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 11px;
+  font-weight: 500;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
 }
 
 .amorph-range-bar {
   flex: 1;
-  height: 4px;
+  height: 6px;
   background: rgba(0, 0, 0, 0.4);
-  border-radius: 2px;
+  border-radius: 3px;
   position: relative;
   min-width: 60px;
   max-width: 120px;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+/* Leuchtender Bereichs-Fill */
 .amorph-range-bar::after {
   content: '';
   position: absolute;
@@ -31,9 +38,40 @@
   left: var(--range-start, 0%);
   width: calc(var(--range-end, 100%) - var(--range-start, 0%));
   height: 100%;
-  background: var(--color-accent, #64b5f6);
-  border-radius: 2px;
-  opacity: 0.6;
+  background: linear-gradient(90deg,
+    rgba(100, 180, 255, 0.6),
+    rgba(100, 220, 255, 0.8)
+  );
+  border-radius: 3px;
+  box-shadow: 
+    0 0 8px rgba(100, 180, 255, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Bereichs-Varianten nach Kontext */
+.amorph-range[data-context="temperature"] .amorph-range-bar::after {
+  background: linear-gradient(90deg,
+    rgba(100, 180, 255, 0.7),
+    rgba(255, 150, 100, 0.7)
+  );
+  box-shadow: 0 0 10px rgba(255, 180, 100, 0.4);
+}
+
+.amorph-range[data-context="ph"] .amorph-range-bar::after {
+  background: linear-gradient(90deg,
+    rgba(255, 100, 100, 0.6),
+    rgba(100, 255, 100, 0.6),
+    rgba(100, 100, 255, 0.6)
+  );
+  box-shadow: 0 0 8px rgba(100, 255, 150, 0.4);
+}
+
+.amorph-range[data-context="optimal"] .amorph-range-bar::after {
+  background: linear-gradient(90deg,
+    rgba(100, 255, 150, 0.6),
+    rgba(100, 255, 150, 0.8)
+  );
+  box-shadow: 0 0 10px rgba(100, 255, 150, 0.5);
 }
 
 .amorph-range-label {

@@ -22,6 +22,21 @@
 @import url('./slopegraph/slopegraph.css');
 @import url('./heatmap/heatmap.css');
 
+/* Neue Kirk-Morphs */
+@import url('./bubble/bubble.css');
+@import url('./boxplot/boxplot.css');
+@import url('./treemap/treemap.css');
+@import url('./stackedbar/stackedbar.css');
+@import url('./dotplot/dotplot.css');
+@import url('./sunburst/sunburst.css');
+
+/* Noch neuere Kirk-Morphs (Session 2) */
+@import url('./flow/flow.css');
+@import url('./groupedbar/groupedbar.css');
+@import url('./scatterplot/scatterplot.css');
+@import url('./lollipop/lollipop.css');
+@import url('./pictogram/pictogram.css');
+
 /* Erweiterte Morphs */
 @import url('./dosage/dosage.css');
 @import url('./currency/currency.css');

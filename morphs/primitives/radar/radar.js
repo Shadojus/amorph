@@ -123,9 +123,9 @@ function normalisiereWert(wert) {
   if (Array.isArray(wert)) {
     return wert.map(item => {
       if (typeof item === 'object') {
-        const value = item.value || item.score || item.rating || 
+        const value = item.value || item.wert || item.score || item.rating || 
                      item.strength || item.intensity || 0;
-        const label = item.axis || item.label || item.name || 
+        const label = item.axis || item.achse || item.label || item.name || 
                      item.dimension || item.kategorie || 'Unbekannt';
         return { label: kuerzeLabel(label), value };
       }

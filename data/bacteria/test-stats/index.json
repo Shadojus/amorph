@@ -1,0 +1,10 @@
+{
+  "id": "test-stats",
+  "slug": "test-stats",
+  "name": "Stats-Test Bakterium",
+  "wissenschaftlich": "Testus statsus",
+  "bild": "images/bacteria/e-coli.jpg",
+  "beschreibung": "Testorganismus für Stats-Morph Validierung",
+  "taxonomie_regnum": "Bacteria",
+  "perspektiven": ["testdata"]
+}

@@ -84,6 +84,17 @@ function createMiniPie(data) {
   const r = size / 2 - 2;
   
   const total = data.reduce((sum, d) => sum + (d.value || d.count || 0), 0);
+  
+  // Prevent NaN from division by zero
+  if (total === 0) {
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', cx);
+    circle.setAttribute('cy', cy);
+    circle.setAttribute('r', r);
+    circle.setAttribute('fill', 'rgba(128,128,128,0.3)');
+    svg.appendChild(circle);
+    return svg;
+  }
   // Glass colors - translucent, glowing
   const pieColors = [
     'rgba(100, 220, 160, 0.45)',   // Glass Emerald

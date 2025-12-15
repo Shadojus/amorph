@@ -1,0 +1,199 @@
+/**
+ * 👥 PICTOGRAM CSS - Icon Repeat Chart
+ * Universe Biosphere Theme
+ */
+
+.amorph-pictogram {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 255, 255, 0.15);
+}
+
+.amorph-pictogram-titel {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+  text-align: center;
+}
+
+/* Legende */
+.amorph-pictogram-legende {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 6px 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  align-self: center;
+}
+
+.amorph-pictogram-legende-icon {
+  font-size: 16px;
+  filter: drop-shadow(0 0 4px rgba(0, 255, 255, 0.5));
+}
+
+/* Container Layouts */
+.amorph-pictogram-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.amorph-pictogram.layout-grid .amorph-pictogram-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+}
+
+.amorph-pictogram.layout-zeile .amorph-pictogram-icons {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+/* Item */
+.amorph-pictogram-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.amorph-pictogram.layout-vergleich .amorph-pictogram-item {
+  display: grid;
+  grid-template-columns: 100px 1fr 60px;
+  align-items: center;
+  gap: 12px;
+}
+
+.amorph-pictogram-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+.amorph-pictogram.layout-vergleich .amorph-pictogram-label {
+  text-align: right;
+}
+
+/* Icons Container */
+.amorph-pictogram-icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  align-items: center;
+}
+
+/* Einzelnes Icon */
+.amorph-pictogram-icon {
+  font-size: 16px;
+  display: inline-block;
+  filter: drop-shadow(0 0 3px rgba(0, 255, 255, 0.4));
+  animation: pictogram-appear 0.3s ease backwards;
+  transition: all 0.2s ease;
+}
+
+.amorph-pictogram-icon:hover {
+  transform: scale(1.3);
+  filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.8));
+}
+
+.amorph-pictogram-icon.partial {
+  filter: grayscale(50%) drop-shadow(0 0 2px rgba(0, 255, 255, 0.3));
+}
+
+@keyframes pictogram-appear {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Wert */
+.amorph-pictogram-wert {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: 'Courier New', monospace;
+  text-shadow: 0 0 4px rgba(0, 255, 255, 0.4);
+}
+
+.amorph-pictogram.layout-vergleich .amorph-pictogram-wert {
+  text-align: right;
+}
+
+/* Empty State */
+.amorph-pictogram-leer {
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Hover Effects */
+.amorph-pictogram-item:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.amorph-pictogram-item:hover .amorph-pictogram-label {
+  color: rgba(255, 255, 255, 1);
+}
+
+/* Verschiedene Icon-Stile für Kategorien */
+.amorph-pictogram-item[data-index="0"] .amorph-pictogram-icon {
+  filter: drop-shadow(0 0 3px rgba(78, 205, 196, 0.5));
+}
+
+.amorph-pictogram-item[data-index="1"] .amorph-pictogram-icon {
+  filter: drop-shadow(0 0 3px rgba(255, 107, 107, 0.5));
+}
+
+.amorph-pictogram-item[data-index="2"] .amorph-pictogram-icon {
+  filter: drop-shadow(0 0 3px rgba(255, 230, 109, 0.5));
+}
+
+.amorph-pictogram-item[data-index="3"] .amorph-pictogram-icon {
+  filter: drop-shadow(0 0 3px rgba(149, 225, 211, 0.5));
+}
+
+/* Light Theme */
+@media (prefers-color-scheme: light) {
+  .amorph-pictogram:not(.universe) {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+  
+  .amorph-pictogram:not(.universe) .amorph-pictogram-titel {
+    color: rgba(0, 0, 0, 0.85);
+    text-shadow: none;
+  }
+  
+  .amorph-pictogram:not(.universe) .amorph-pictogram-legende {
+    background: rgba(0, 0, 0, 0.05);
+    color: rgba(0, 0, 0, 0.6);
+  }
+  
+  .amorph-pictogram:not(.universe) .amorph-pictogram-label {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .amorph-pictogram:not(.universe) .amorph-pictogram-icon {
+    filter: none;
+  }
+  
+  .amorph-pictogram:not(.universe) .amorph-pictogram-wert {
+    color: rgba(0, 0, 0, 0.8);
+    text-shadow: none;
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "test-lollipop",
+  "slug": "test-lollipop",
+  "name": "Lollipop-Test Bakterium",
+  "wissenschaftlich": "Testus lollipopus",
+  "bild": "images/bacteria/e-coli.jpg",
+  "beschreibung": "Testorganismus für Lollipop-Morph Validierung",
+  "taxonomie_regnum": "Bacteria",
+  "perspektiven": ["testdata"]
+}

@@ -12,7 +12,7 @@ export function compareStats(items, config = {}) {
   const allKeys = new Set();
   items.forEach(item => {
     const val = item.value ?? item.wert;
-    if (typeof val === 'object' && !Array.isArray(val)) {
+    if (typeof val === 'object' && val !== null && !Array.isArray(val)) {
       Object.keys(val).forEach(k => allKeys.add(k));
     }
   });

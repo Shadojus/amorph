@@ -1,0 +1,24 @@
+# Dotplot Morph Configuration
+# Category scatter visualization
+
+id: dotplot
+name: Dot Plot
+description: Kategorie-Scatter für diskrete Verteilungen
+category: charts
+
+# Detection rules
+detection:
+  type: array
+  requiredKeys:
+    - category
+    - value
+  alternativeKeys:
+    - label
+    - x
+    - point
+
+# Configuration
+config:
+  dotSize: 8
+  animated: true
+  showGrid: true

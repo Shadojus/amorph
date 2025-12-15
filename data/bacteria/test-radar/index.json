@@ -1,0 +1,10 @@
+{
+  "id": "test-radar",
+  "slug": "test-radar",
+  "name": "Radar-Test Bakterium",
+  "wissenschaftlich": "Testus radarus",
+  "bild": "images/bacteria/e-coli.jpg",
+  "beschreibung": "Testorganismus für Radar-Morph Validierung",
+  "taxonomie_regnum": "Bacteria",
+  "perspektiven": ["testdata"]
+}

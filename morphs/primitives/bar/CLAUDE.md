@@ -1,6 +1,14 @@
 # Bar Morph
 
-Horizontales Balkendiagramm für Kategorienvergleiche.
+Horizontales Balkendiagramm nach Kirk-Prinzipien.
+
+## Design-Prinzipien (Kirk)
+
+1. **Sortierung**: Werte automatisch sortiert (größter oben)
+2. **Hervorhebung**: Max/Min Werte visuell markiert
+3. **Referenzlinie**: Durchschnitt als gestrichelte Linie
+4. **Annotation**: Werte direkt am Balken, Trends als ↑↓
+5. **Baseline**: Immer bei 0 für ehrliche Vergleiche
 
 ## Datenstruktur
 
@@ -10,6 +18,9 @@ type BarInput = Array<{
   label: string;
   value: number;
   unit?: string;
+  trend?: number;      // Optional: Trendrichtung
+  highlight?: boolean; // Optional: Hervorhebung
+  change?: number;     // Optional: Prozentuale Änderung
 }>;
 
 // Array von Zahlen (mit config.labels)
@@ -31,6 +42,16 @@ type BarInput = Record<string, number>;
 - **Object:** Numerische Werte
 - **Priorität:** Nach pie (bar für >6 Items, pie für ≤6)
 
+## Kirk-Features
+
+| Feature | Beschreibung |
+|---------|--------------|
+| `sort` | Automatisch nach Wert sortiert (default: true) |
+| `showSummary` | Max/Durchschnitt im Header |
+| `showReference` | Durchschnittslinie im Chart |
+| `showRank` | Top 3 mit Rangziffern |
+| `colorByValue` | Farbkodierung (high/medium/low) |
+
 ## Wann BAR verwenden (Kirk)
 
 ✅ **Geeignet für:**
@@ -49,11 +70,14 @@ type BarInput = Record<string, number>;
 
 | Option | Typ | Default | Beschreibung |
 |--------|-----|---------|--------------|
-| `orientation` | string | "horizontal" | horizontal / vertical |
-| `showValues` | boolean | true | Werte anzeigen |
-| `animated` | boolean | true | Animation |
-| `maxBars` | number | 10 | Max. Balken |
+| `sort` | boolean | true | Nach Wert sortieren |
+| `showSummary` | boolean | true | Summary-Stats im Header |
+| `showReference` | boolean | true | Referenzlinie anzeigen |
+| `showRank` | boolean | false | Top 3 nummerieren |
+| `colorByValue` | boolean | false | Farbkodierung nach Wert |
+| `maxBalken` | number | 10 | Max. Balken |
 | `showScale` | boolean | true | Skala anzeigen |
+| `annotation` | string | - | Fußnoten-Annotation |
 
 ## Signatur
 

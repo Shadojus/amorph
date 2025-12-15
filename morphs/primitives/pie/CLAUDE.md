@@ -1,6 +1,14 @@
 # Pie Morph
 
-Kreisdiagramm (Donut) für Proportionen und Anteile.
+Donut-Chart für Proportionen und Anteile nach Kirk-Prinzipien.
+
+## Design-Prinzipien (Kirk)
+
+1. **Max 6 Segmente**: Mehr ist unlesbar
+2. **Donut-Style**: Total in der Mitte, weniger Chart-Junk
+3. **Prozent-Anzeige**: Werte direkt an Segmenten
+4. **Legende**: Klar zugeordnete Farben
+5. **Conic Gradient**: Saubere CSS-basierte Darstellung
 
 ## Datenstruktur
 
@@ -43,11 +51,19 @@ type PieInput = Record<string, number>;
 
 | Option | Typ | Default | Beschreibung |
 |--------|-----|---------|--------------|
-| `donut` | boolean | false | Donut-Style mit Loch |
-| `showLabels` | boolean | true | Labels anzeigen |
-| `showPercentage` | boolean | true | Prozente anzeigen |
-| `animated` | boolean | true | Animation |
+| `titel` | string | - | Titel über Chart |
 | `totalLabel` | string | "Total" | Label in der Mitte |
+| `farben` | object | - | Farben pro Label |
+
+### Implementierte Kirk-Features
+
+| Feature | Beschreibung |
+|---------|--------------|
+| **Donut-Center** | Total-Wert prominent in der Mitte |
+| **Prozent-Labels** | Automatische % Berechnung |
+| **Neon-Farben** | Pilz-Theme mit 24% Transparenz |
+| **Legende** | Farbpunkte + Label + Prozent |
+| **Conic Gradient** | CSS-native Darstellung |
 
 ## Signatur
 
@@ -71,11 +87,3 @@ pie(wert: PieInput, config?: PieConfig) → HTMLElement
 | 2-4 | ✅ Ideal für Pie |
 | 5-6 | ⚠️ Noch akzeptabel |
 | >6 | ❌ Bar-Chart verwenden! |
-
-### Warum Donut?
-
-Kirk bevorzugt Donut-Charts:
-- Weniger "Chart Junk"
-- Platz für Total/Label in der Mitte
-- Modernere Ästhetik
-- Bessere Vergleichbarkeit der Segmente

@@ -1,0 +1,10 @@
+{
+  "id": "test-map",
+  "slug": "test-map",
+  "name": "Map-Test Bakterium",
+  "wissenschaftlich": "Testus mapus",
+  "bild": "images/bacteria/e-coli.jpg",
+  "beschreibung": "Testorganismus für Map-Morph Validierung",
+  "taxonomie_regnum": "Bacteria",
+  "perspektiven": ["testdata"]
+}

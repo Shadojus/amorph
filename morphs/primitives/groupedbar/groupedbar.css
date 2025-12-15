@@ -1,0 +1,162 @@
+/**
+ * 📊 GROUPEDBAR CSS - Gruppierte Balken
+ * Universe Biosphere Theme mit Glow-Effekten
+ */
+
+.amorph-groupedbar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 255, 255, 0.15);
+}
+
+.amorph-groupedbar-titel {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+  text-align: center;
+}
+
+/* Legend */
+.amorph-groupedbar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  padding-bottom: 8px;
+}
+
+.amorph-groupedbar-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.amorph-groupedbar-legend-color {
+  width: 14px;
+  height: 10px;
+  border-radius: 2px;
+  box-shadow: 0 0 6px currentColor;
+}
+
+/* Chart Container */
+.amorph-groupedbar-chart {
+  display: flex;
+  gap: 8px;
+  min-height: 200px;
+}
+
+/* Y-Axis */
+.amorph-groupedbar-yaxis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 24px;
+  min-width: 40px;
+}
+
+.amorph-groupedbar-ytick {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: right;
+}
+
+/* Bars Container */
+.amorph-groupedbar-bars {
+  flex: 1;
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  padding-bottom: 4px;
+}
+
+/* Group */
+.amorph-groupedbar-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 40px;
+}
+
+.amorph-groupedbar-bars-wrapper {
+  display: flex;
+  gap: 2px;
+  align-items: flex-end;
+  height: 160px;
+  width: 100%;
+  justify-content: center;
+}
+
+/* Bar Container */
+.amorph-groupedbar-bar-container {
+  flex: 1;
+  max-width: 30px;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+/* Bar */
+.amorph-groupedbar-bar {
+  width: 100%;
+  border-radius: 3px 3px 0 0;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 2px;
+  box-shadow: 
+    0 0 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.amorph-groupedbar-bar:hover {
+  filter: brightness(1.2);
+  box-shadow: 
+    0 0 12px currentColor,
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Value Label */
+.amorph-groupedbar-value {
+  font-size: 9px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  padding-top: 4px;
+}
+
+/* Category Label */
+.amorph-groupedbar-label {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* Empty State */
+.amorph-groupedbar-leer {
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Hover Effects */
+.amorph-groupedbar-group:hover .amorph-groupedbar-label {
+  color: rgba(255, 255, 255, 1);
+  text-shadow: 0 0 4px rgba(0, 255, 255, 0.3);
+}
