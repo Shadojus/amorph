@@ -2,9 +2,9 @@ import { debug } from '../observer/debug.js';
 import { semanticScore as schemaSemanticScore, getSuchfelder } from './semantic.js';
 
 export function createDataSource(config) {
-  const { typ, url, headers = {}, sammlung, indexUrl, baseUrl } = config.quelle;
+  const { typ, url, headers = {}, sammlung, indexUrl, baseUrl, dataPath } = config.quelle;
   
-  debug.data('Creating DataSource', { type: typ, url, indexUrl, baseUrl });
+  debug.data('Creating DataSource', { type: typ, url, indexUrl, baseUrl, dataPath });
   
   switch (typ) {
     case 'pocketbase':
@@ -17,6 +17,9 @@ export function createDataSource(config) {
       return new JsonMultiSource(indexUrl, baseUrl);
     case 'json-perspektiven':
       return new JsonPerspektivenSource(indexUrl, baseUrl);
+    case 'json-universe':
+      // NEU: Durchsucht alle Sammlungen im data/ Ordner
+      return new JsonUniverseSource(dataPath || './data/');
     default:
       debug.error(`Unknown data source type: ${typ}`);
       throw new Error(`Unknown data source type: ${typ}`);
@@ -584,6 +587,203 @@ class JsonPerspektivenSource {
 }
 
 /**
+ * JsonUniverseSource - Durchsucht ALLE Sammlungen im data/ Ordner
+ * Datengetrieben: Entdeckt automatisch alle Sammlungen und Spezies
+ */
+class JsonUniverseSource {
+  constructor(dataPath) {
+    this.dataPath = dataPath.endsWith('/') ? dataPath : dataPath + '/';
+    this.data = null;
+    this.lastMatchedTerms = new Set();
+    this.lastFilteredData = [];
+    this.totalCount = 0;
+    this.loadedPerspektiven = new Map();
+    this.collections = []; // Entdeckte Sammlungen
+  }
+  
+  async ensureData() {
+    if (this.data) return this.data;
+    
+    debug.data('JsonUniverseSource: Discovering collections...', { dataPath: this.dataPath });
+    
+    // Bekannte Sammlungen (später durch Discovery ersetzen)
+    const knownCollections = ['fungi', 'animalia', 'plantae', 'bacteria'];
+    this.data = [];
+    
+    for (const collection of knownCollections) {
+      try {
+        const indexUrl = `${this.dataPath}${collection}/index.json`;
+        const response = await fetch(indexUrl);
+        
+        if (!response.ok) {
+          debug.data(`Collection not found: ${collection}`);
+          continue;
+        }
+        
+        const index = await response.json();
+        // Support both German and English field names
+        const speziesListe = index.spezies || index.species || [];
+        
+        debug.data(`Collection loaded: ${collection}`, { speciesCount: speziesListe.length });
+        this.collections.push(collection);
+        
+        // Alle Spezies dieser Sammlung laden
+        for (const speziesInfo of speziesListe) {
+          const ordner = typeof speziesInfo === 'string' 
+            ? speziesInfo 
+            : (speziesInfo.ordner || speziesInfo.folder);
+          
+          const speziesUrl = `${this.dataPath}${collection}/${ordner}/index.json`;
+          
+          try {
+            const speziesResponse = await fetch(speziesUrl);
+            if (!speziesResponse.ok) continue;
+            
+            const speziesData = await speziesResponse.json();
+            speziesData._sammlung = collection;
+            speziesData._ordner = ordner;
+            speziesData._baseUrl = `${this.dataPath}${collection}/${ordner}/`;
+            
+            this.data.push(speziesData);
+          } catch (e) {
+            debug.warn(`Error loading species ${ordner}:`, e);
+          }
+        }
+      } catch (e) {
+        debug.warn(`Error loading collection ${collection}:`, e);
+      }
+    }
+    
+    debug.data('JsonUniverseSource: All data loaded', { 
+      collections: this.collections,
+      totalSpecies: this.data.length,
+      items: this.data.map(i => `${i._sammlung}/${i.slug}`).join(', ')
+    });
+    
+    return this.data;
+  }
+  
+  /**
+   * Lädt alle Perspektiven für eine Spezies
+   */
+  async loadAllPerspektiven(spezies) {
+    const perspektivenListe = spezies.perspektiven || spezies.perspectives;
+    
+    if (!spezies._ordner || !perspektivenListe) {
+      return spezies;
+    }
+    
+    const cacheKey = `${spezies._sammlung}/${spezies.slug}`;
+    if (this.loadedPerspektiven.has(cacheKey)) {
+      return this.loadedPerspektiven.get(cacheKey);
+    }
+    
+    debug.data('Loading perspectives for', { name: spezies.name, count: perspektivenListe.length });
+    
+    const loadPromises = perspektivenListe.map(async (perspektive) => {
+      const url = `${spezies._baseUrl}${perspektive}.json`;
+      try {
+        const response = await fetch(url);
+        if (!response.ok) return null;
+        return { perspektive, data: await response.json() };
+      } catch (e) {
+        return null;
+      }
+    });
+    
+    const results = await Promise.all(loadPromises);
+    
+    const merged = { ...spezies };
+    for (const result of results) {
+      if (result?.data) {
+        const { perspektive: marker, ...daten } = result.data;
+        Object.assign(merged, daten);
+      }
+    }
+    
+    this.loadedPerspektiven.set(cacheKey, merged);
+    return merged;
+  }
+  
+  async query({ search, limit = 50, offset = 0 } = {}) {
+    let items = await this.ensureData();
+    this.lastMatchedTerms = new Set();
+    
+    // Alle Perspektiven laden für vollständige Suche
+    const fullItems = await Promise.all(items.map(item => this.loadAllPerspektiven(item)));
+    items = fullItems;
+    
+    if (search && String(search).trim()) {
+      const query = String(search).toLowerCase().trim();
+      debug.search('JsonUniverseSource Query', { 
+        query, 
+        totalItems: items.length, 
+        collections: this.collections 
+      });
+      
+      const scored = items.map(item => {
+        const result = scoreItemWithMatches(item, query);
+        return { item, score: result.score, matches: result.matches };
+      });
+      
+      const filtered = scored.filter(s => s.score > 0);
+      
+      for (const s of filtered) {
+        for (const match of s.matches) {
+          this.lastMatchedTerms.add(match);
+        }
+      }
+      
+      this.lastFilteredData = filtered
+        .sort((a, b) => b.score - a.score)
+        .map(s => s.item);
+      
+      this.totalCount = this.lastFilteredData.length;
+      items = this.lastFilteredData;
+      
+      debug.search('Universe search complete', { 
+        hits: items.length, 
+        matchedTerms: [...this.lastMatchedTerms].slice(0, 10)
+      });
+    } else {
+      this.lastFilteredData = items;
+      this.totalCount = items.length;
+    }
+    
+    return items.slice(offset, offset + limit);
+  }
+  
+  async loadMore(limit = 20) {
+    const offset = this.lastFilteredData.length;
+    return this.lastFilteredData.slice(offset, offset + limit);
+  }
+  
+  getTotalCount() {
+    return this.totalCount;
+  }
+  
+  async getBySlug(slug) {
+    const items = await this.ensureData();
+    const item = items.find(i => i.slug === slug);
+    return item ? this.loadAllPerspektiven(item) : null;
+  }
+  
+  async getById(id) {
+    const items = await this.ensureData();
+    const item = items.find(i => i.id === id);
+    return item ? this.loadAllPerspektiven(item) : null;
+  }
+  
+  getMatchedTerms() {
+    return this.lastMatchedTerms;
+  }
+  
+  getCollections() {
+    return this.collections;
+  }
+}
+
+/**
  * Bewertet wie gut ein Item zur Suchanfrage passt UND gibt gefundene Matches zurück
  * @returns {{ score: number, matches: string[] }}
  */
@@ -750,46 +950,14 @@ export function localSearch(items, query) {
 
 /**
  * Highlight-Funktion für beliebige Container
- * Markiert Treffer in Text-Elementen
+ * NEU: Nutzt TreeWalker um ALLE Text-Nodes zu finden, auch in verschachtelten Elementen
  * 
  * @param {Element} container - DOM-Element in dem gesucht wird
  * @param {string} query - Original-Query
  * @param {Set} matchedTerms - Gefundene Begriffe
- * @param {Object} options - { selectors: Array von CSS-Selektoren }
+ * @param {Object} options - { deep: true für TreeWalker-Modus }
  */
 export function highlightInContainer(container, query, matchedTerms = new Set(), options = {}) {
-  // Erweiterte Selektoren für Grid-View UND Vergleich-View
-  // Alle Text-tragenden Elemente die durchsucht werden sollen
-  // HINWEIS: SVG-Elemente (wie radar-label) werden übersprungen da innerHTML sie zerstört
-  const selectors = options.selectors || [
-    // Grid-View
-    '.amorph-text', '.amorph-tag', '.amorph-label', '.amorph-value',
-    // Vergleich-View Compare-Morphs - Labels
-    '.compare-label', 
-    // Bar
-    '.bar-name', '.bar-wert',
-    // Rating
-    '.rating-name', '.rating-wert',
-    // Tag/Chips
-    '.chip-wert', '.chip-fungi span',
-    // List
-    '.list-wert', '.compare-list-item',
-    // Radar (nur HTML-Teile, nicht SVG)
-    '.radar-achse', '.radar-compact-row',
-    // Pie
-    '.pie-pilz',
-    // Text
-    '.compare-text-row',
-    // Timeline
-    '.timeline-event', '.timeline-label',
-    // Wirkstoffe
-    '.wirkstoffe-name', '.wirkstoffe-label',
-    // Image
-    '.img-label',
-    // Legende (wichtig für Pilznamen)
-    '.legende-item', '.compare-legende .legende-item'
-  ];
-  
   // Highlight-Begriffe sammeln
   let highlightTerms = new Set();
   
@@ -806,7 +974,8 @@ export function highlightInContainer(container, query, matchedTerms = new Set(),
   if (query) {
     const stopwords = new Set([
       'der', 'die', 'das', 'und', 'oder', 'für', 'mit', 'von', 'zu', 'bei',
-      'was', 'ist', 'ein', 'eine', 'kann', 'man', 'wie', 'wo', 'wer', 'welche'
+      'was', 'ist', 'ein', 'eine', 'kann', 'man', 'wie', 'wo', 'wer', 'welche',
+      'the', 'a', 'an', 'and', 'or', 'for', 'with', 'from', 'to', 'at', 'in', 'on', 'is', 'are'
     ]);
     
     // Ganze Query (falls kurz genug und sinnvoll)
@@ -826,43 +995,94 @@ export function highlightInContainer(container, query, matchedTerms = new Set(),
   
   if (highlightTerms.size === 0) return 0;
   
-  debug.suche('highlightInContainer - Suche nach', { terms: [...highlightTerms] });
+  debug.suche('highlightInContainer', { terms: [...highlightTerms], deep: options.deep !== false });
   
+  // NEU: TreeWalker-basiertes Highlighting für verschachtelte Elemente
   let count = 0;
-  const elements = container.querySelectorAll(selectors.join(', '));
   
-  for (const el of elements) {
-    // Skip SVG-Elemente (können nicht mit innerHTML manipuliert werden)
-    if (el instanceof SVGElement || el.closest('svg')) {
-      continue;
-    }
-    
-    // Skip wenn schon Highlights drin
-    if (el.querySelector('.amorph-highlight')) continue;
-    
-    const originalText = el.textContent;
-    if (!originalText || originalText.trim().length === 0) continue;
-    
-    let html = escapeHtml(originalText);
-    let hasMatch = false;
-    
-    for (const term of highlightTerms) {
-      if (term.length < 2) continue;
-      
-      const regex = new RegExp(`(${escapeRegex(term)})`, 'gi');
-      if (regex.test(originalText)) {
-        html = html.replace(new RegExp(`(${escapeRegex(term)})`, 'gi'), '<mark class="amorph-highlight">$1</mark>');
-        hasMatch = true;
+  // Sammle alle Text-Nodes mit TreeWalker
+  const textNodes = [];
+  const walker = document.createTreeWalker(
+    container,
+    NodeFilter.SHOW_TEXT,
+    {
+      acceptNode: (node) => {
+        // Skip wenn in SVG
+        if (node.parentElement?.closest('svg')) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        // Skip wenn schon in einem Highlight
+        if (node.parentElement?.classList?.contains('amorph-highlight')) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        // Skip leere Nodes
+        if (!node.textContent || !node.textContent.trim()) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        // Skip Script/Style
+        const tagName = node.parentElement?.tagName?.toLowerCase();
+        if (tagName === 'script' || tagName === 'style') {
+          return NodeFilter.FILTER_REJECT;
+        }
+        return NodeFilter.FILTER_ACCEPT;
       }
     }
+  );
+  
+  let node;
+  while (node = walker.nextNode()) {
+    textNodes.push(node);
+  }
+  
+  // Regex für alle Terme bauen
+  const termsArray = [...highlightTerms].filter(t => t.length >= 2);
+  if (termsArray.length === 0) return 0;
+  
+  // Sortiere nach Länge (längste zuerst) um überlappende Matches zu vermeiden
+  termsArray.sort((a, b) => b.length - a.length);
+  const combinedRegex = new RegExp(`(${termsArray.map(escapeRegex).join('|')})`, 'gi');
+  
+  // Text-Nodes durchgehen und markieren
+  for (const textNode of textNodes) {
+    const text = textNode.textContent;
+    if (!combinedRegex.test(text)) continue;
     
-    if (hasMatch) {
-      el.innerHTML = html;
+    // Reset regex state
+    combinedRegex.lastIndex = 0;
+    
+    // Fragment erstellen mit markierten Teilen
+    const fragment = document.createDocumentFragment();
+    let lastIndex = 0;
+    let match;
+    
+    while ((match = combinedRegex.exec(text)) !== null) {
+      // Text vor dem Match
+      if (match.index > lastIndex) {
+        fragment.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
+      }
+      
+      // Markierter Teil
+      const mark = document.createElement('mark');
+      mark.className = 'amorph-highlight';
+      mark.textContent = match[1];
+      fragment.appendChild(mark);
+      
+      lastIndex = combinedRegex.lastIndex;
       count++;
+    }
+    
+    // Rest nach letztem Match
+    if (lastIndex < text.length) {
+      fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
+    }
+    
+    // Nur ersetzen wenn wirklich Matches gefunden wurden
+    if (fragment.childNodes.length > 1 || (fragment.childNodes.length === 1 && fragment.firstChild.nodeName === 'MARK')) {
+      textNode.parentNode.replaceChild(fragment, textNode);
     }
   }
   
-  debug.suche('highlightInContainer', { terms: [...highlightTerms], markiert: count });
+  debug.suche('highlightInContainer done', { terms: termsArray.length, marked: count });
   return count;
 }
 

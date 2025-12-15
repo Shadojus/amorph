@@ -12,7 +12,7 @@ import { loadConfig } from './core/config.js';
 import { transform, render, setErkennungConfig } from './core/pipeline.js';
 import { setupObservers, stopObservers } from './observer/index.js';
 import { loadFeatures, unloadFeatures } from './features/index.js';
-import { createDataSource } from './util/fetch.js';
+import { createDataSource, highlightInContainer, clearHighlights } from './util/fetch.js';
 import { getSession, getUrlState, setUrlState } from './util/session.js';
 import { setSchema, setMorphsConfig } from './util/semantic.js';
 import { debug } from './observer/debug.js';
@@ -342,87 +342,18 @@ function showNoResults(container, query) {
 }
 
 function highlightMatches(container, query, matchedTerms = new Set()) {
-  const q = String(query || '').toLowerCase();
+  // Alte Highlights entfernen
+  clearHighlights(container);
   
-  // Highlight-Begriffe: Primär die tatsächlich gematchten Terme aus der Suche verwenden
-  let highlightTerms = new Set(matchedTerms);
+  // Neue TreeWalker-basierte Highlight-Funktion nutzen
+  // Diese findet ALLE Text-Nodes, auch in verschachtelten Elementen
+  const count = highlightInContainer(container, query, matchedTerms);
+  debug.render('highlight', { query, matchedTerms: matchedTerms.size, highlighted: count });
   
-  // Falls keine matchedTerms übergeben wurden, Fallback auf Query-Analyse
-  if (highlightTerms.size === 0) {
-    // Stopwörter die ignoriert werden (Deutsch + Englisch)
-    const stopwords = new Set([
-      'der', 'die', 'das', 'den', 'dem', 'des', 'ein', 'eine', 'einer', 'einem', 'einen',
-      'und', 'oder', 'aber', 'wenn', 'weil', 'dass', 'als', 'auch', 'nur', 'noch',
-      'was', 'wer', 'wie', 'wo', 'wann', 'warum', 'welche', 'welcher', 'welches',
-      'ist', 'sind', 'war', 'waren', 'wird', 'werden', 'wurde', 'wurden',
-      'hat', 'haben', 'hatte', 'hatten', 'kann', 'können', 'konnte', 'konnten',
-      'muss', 'müssen', 'musste', 'mussten', 'soll', 'sollen', 'sollte', 'sollten',
-      'will', 'wollen', 'wollte', 'wollten', 'darf', 'dürfen', 'durfte', 'durften',
-      'ich', 'du', 'er', 'sie', 'es', 'wir', 'ihr', 'mich', 'dich', 'sich', 'uns', 'euch',
-      'mein', 'dein', 'sein', 'unser', 'euer', 'ihr',
-      'von', 'zu', 'bei', 'mit', 'nach', 'aus', 'für', 'über', 'unter', 'vor', 'hinter',
-      'auf', 'in', 'an', 'um', 'durch', 'gegen', 'ohne', 'bis', 'seit', 'während',
-      'nicht', 'kein', 'keine', 'keiner', 'keinem', 'keinen',
-      'sehr', 'mehr', 'viel', 'wenig', 'ganz', 'gar', 'schon', 'noch', 'immer', 'nie',
-      'hier', 'dort', 'da', 'so', 'dann', 'also', 'denn', 'doch', 'ja', 'nein',
-      'man', 'alle', 'alles', 'jeder', 'jede', 'jedes', 'jedem', 'jeden'
-    ]);
-    
-    // Query in Wörter zerlegen und Stopwörter entfernen
-    const queryWords = q
-      .split(/\s+/)
-      .map(w => w.replace(/[?!.,;:'"()]/g, ''))
-      .filter(w => w.length > 2 && !stopwords.has(w));
-    
-    for (const word of queryWords) {
-      highlightTerms.add(word);
-    }
-  }
-  
-  // Wenn keine Terme gefunden, abbrechen
-  if (highlightTerms.size === 0) return;
-  
-  // Debug
-  debug.render('highlight', { query: q, terms: [...highlightTerms], fromSearch: matchedTerms.size > 0 });
-  
-  // ALLE Text-Elemente in Items durchsuchen
-  const items = container.querySelectorAll('.amorph-item');
-  
-  for (const item of items) {
-    const textElements = item.querySelectorAll('.amorph-text, .amorph-tag');
-    
-    for (const el of textElements) {
-      const originalText = el.textContent;
-      let html = escapeHtml(originalText);
-      let hasMatch = false;
-      
-      // Alle Highlight-Begriffe prüfen
-      for (const term of highlightTerms) {
-        if (term.length < 3) continue; // Mindestens 3 Zeichen
-        
-        const regex = new RegExp(`(${escapeRegex(term)})`, 'gi');
-        
-        if (regex.test(originalText)) {
-          html = html.replace(new RegExp(`(${escapeRegex(term)})`, 'gi'), '<mark class="amorph-highlight">$1</mark>');
-          hasMatch = true;
-        }
-      }
-      
-      if (hasMatch) {
-        el.innerHTML = html;
-      }
-    }
-  }
-}
-
-function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
-}
-
-function escapeRegex(string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // Event für Highlight-Navigation auslösen
+  document.dispatchEvent(new CustomEvent('amorph:highlights-updated', {
+    detail: { count, query }
+  }));
 }
 
 // Exports für modulare Nutzung

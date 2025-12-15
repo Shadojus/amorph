@@ -1,6 +1,12 @@
 # Datenquelle - wähle eine:
 
-# Option 1: Modulare Perspektiven-Struktur (NEU - empfohlen)
+# Option 1: UNIVERSE MODE (NEU - empfohlen für Entwicklung)
+# Durchsucht automatisch ALLE Sammlungen im data/ Ordner
+quelle:
+  typ: json-universe
+  dataPath: ./data/
+
+# Option 2: Modulare Perspektiven-Struktur (einzelne Sammlung)
 # Jede Spezies hat eigenen Ordner mit separaten Perspektiven-Dateien
 # quelle:
 #   typ: json-perspektiven
@@ -12,22 +18,15 @@
 #   indexUrl: ./data/animalia/index.json
 #   baseUrl: ./data/animalia/
 
-# # quelle:
-# #   typ: json-perspektiven
-# #   indexUrl: ./data/plantae/index.json
-# #   baseUrl: ./data/plantae/
+# quelle:
+#   typ: json-perspektiven
+#   indexUrl: ./data/plantae/index.json
+#   baseUrl: ./data/plantae/
 
-# # quelle:
-# #   typ: json-perspektiven
-# #   indexUrl: ./data/bacteria/index.json
-# #   baseUrl: ./data/bacteria/
-
-# Option 2: Modulare Perspektiven-Struktur (AKTIV)
-# Jede Spezies hat eigenen Ordner mit separaten Perspektiven-Dateien
-quelle:
-  typ: json-perspektiven
-  indexUrl: ./data/fungi/index.json
-  baseUrl: ./data/fungi/
+# quelle:
+#   typ: json-perspektiven
+#   indexUrl: ./data/bacteria/index.json
+#   baseUrl: ./data/bacteria/
 
 # Option 3: Einzelne JSON-Datei (Legacy - alle Items in einer Datei)
 # quelle:

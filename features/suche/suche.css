@@ -6,15 +6,16 @@
   flex: 1;
   display: flex;
   align-items: center;
-  gap: 0;
+  gap: 6px;
   min-width: 0;
   height: var(--header-element-height, 34px);
   /* Pure Black Glass */
   background: rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(0, 255, 255, 0.1);
   border-radius: var(--header-element-radius, 17px);
-  padding: 0 var(--header-padding-x, 14px);
+  padding: 0 6px 0 var(--header-padding-x, 14px);
   transition: all 0.2s var(--anim-ease-out);
+  overflow: visible;
 }
 
 .amorph-suche-wrapper:focus-within {
@@ -28,8 +29,9 @@
 /* Suche-Container innerhalb Wrapper */
 [data-morph="suche"] {
   flex: 1 1 auto;
-  min-width: 80px;
+  min-width: 60px;
   max-width: none;
+  overflow: hidden;
 }
 
 .amorph-suche {
@@ -38,6 +40,7 @@
   height: 100%;
   background: transparent;
   border: none;
+  gap: 0;
 }
 
 /* Lupe Icon */
@@ -79,6 +82,84 @@
   display: none;
 }
 
+/* === HIGHLIGHT MARKS - Einheitliche Cyan-Farbe === */
+.amorph-highlight,
+mark.amorph-highlight {
+  background: rgba(0, 255, 255, 0.25) !important;
+  color: inherit !important;
+  padding: 1px 2px;
+  border-radius: 2px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* === HIGHLIGHT NAVIGATION === */
+.amorph-highlight-nav {
+  display: none;
+  align-items: center;
+  gap: 3px;
+  padding: 0 4px;
+  margin-left: 6px;
+  flex-shrink: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  height: 100%;
+}
+
+.amorph-highlight-nav[style*="flex"] {
+  display: flex;
+}
+
+.amorph-highlight-counter {
+  font-size: 0.52rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.45);
+  min-width: 20px;
+  text-align: center;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.amorph-highlight-nav-btn {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 2px;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 8px;
+  font-family: system-ui, sans-serif;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.12s ease;
+  flex-shrink: 0;
+}
+
+.amorph-highlight-nav-btn:hover {
+  background: rgba(0, 255, 255, 0.15);
+  color: rgba(0, 255, 255, 0.9);
+}
+
+.amorph-highlight-nav-btn:active {
+  transform: scale(0.85);
+}
+
+/* Aktuell markierter Treffer */
+.amorph-highlight-current {
+  background: rgba(0, 255, 255, 0.35) !important;
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
+  animation: highlight-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes highlight-pulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(0, 255, 255, 0.4); }
+  50% { box-shadow: 0 0 16px rgba(0, 255, 255, 0.6); }
+}
+
 .amorph-suche.ladend input {
   opacity: 0.5;
 }
@@ -87,12 +168,15 @@
 .amorph-aktive-filter {
   display: flex;
   flex-wrap: nowrap;
-  justify-content: flex-end;
+  align-items: center;
   gap: 4px;
-  padding: 0 4px;
+  padding: 0 2px;
   overflow-x: auto;
+  overflow-y: visible;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  flex-shrink: 1;
+  min-width: 0;
   max-width: 50%;
 }
 
@@ -104,17 +188,17 @@
   display: none;
 }
 
-/* Aktive Perspektiven-Badges - Glowing Pills */
+/* Aktive Perspektiven-Badges - Kompakter */
 .amorph-filter-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: calc(var(--header-element-height, 34px) - 10px);
-  padding: 0 10px;
-  font-size: 0.64rem;
+  height: calc(var(--header-element-height, 34px) - 12px);
+  padding: 0 8px;
+  font-size: 0.58rem;
   font-weight: 600;
   text-transform: capitalize;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   /* Glowing Badge mit Perspektiv-Farbe */
   background: rgba(0, 0, 0, 0.6);
   color: var(--badge-farbe, #0ff);

@@ -181,6 +181,14 @@ export function transform(daten, config, customMorphs = {}) {
         // Render fields in schema order
         const sortedEntries = sortBySchemaOrder(item);
         
+        // === STICKY HEADER: Bild + Name + wissenschaftlicher Name ===
+        const headerFields = ['bild', 'image', 'name', 'wissenschaftlich', 'scientific_name'];
+        const stickyHeader = document.createElement('div');
+        stickyHeader.className = 'amorph-item-header';
+        
+        const scrollContent = document.createElement('div');
+        scrollContent.className = 'amorph-item-content';
+        
         // Debug: Check if medicine fields exist in item
         const medicineFields = ['medicineisch', 'traditionelle_medicine', 'therapeutische_kategorien', 'wirkungsprofil', 'wirkstoffe'];
         const presentMedicineFields = medicineFields.filter(f => f in item);
@@ -191,7 +199,12 @@ export function transform(daten, config, customMorphs = {}) {
         for (const [key, value] of sortedEntries) {
           const morphed = morphField(value, key);
           if (morphed) {
-            itemContainer.appendChild(morphed);
+            // Header-Felder in sticky header, Rest in scrollbaren Content
+            if (headerFields.includes(key)) {
+              stickyHeader.appendChild(morphed);
+            } else {
+              scrollContent.appendChild(morphed);
+            }
           } else {
             // Debug: Why was the field not rendered?
             const isEmptyArray = Array.isArray(value) && value.length === 0;
@@ -200,6 +213,15 @@ export function transform(daten, config, customMorphs = {}) {
               debug.warn('Field not rendered', { key, valueType: typeof value, isArray: Array.isArray(value), arrayLen: Array.isArray(value) ? value.length : 0 });
             }
           }
+        }
+        
+        // Header nur hinzufügen wenn Inhalt
+        if (stickyHeader.children.length > 0) {
+          itemContainer.appendChild(stickyHeader);
+        }
+        // Content nur hinzufügen wenn Inhalt
+        if (scrollContent.children.length > 0) {
+          itemContainer.appendChild(scrollContent);
         }
       } else {
         const morphed = morphField(item);

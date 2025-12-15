@@ -11,51 +11,107 @@ amorph-container[data-morph="item"] {
   border-radius: 8px;
   padding: 0;
   transition: all 0.25s ease;
-  overflow: visible;
+  overflow: hidden;  /* Hidden für Sticky-Header */
+  display: flex;
+  flex-direction: column;
   /* Subtiler kosmischer Schimmer */
   box-shadow: 
     inset 0 1px 0 rgba(255, 255, 255, 0.02),
     0 4px 24px rgba(0, 0, 0, 0.4);
 }
 
-/* Scroll-Container für Card-Inhalt - Scrollbar nur beim Scrollen */
+/* Item-Container mit fester Höhe für Scroll */
 amorph-container[data-morph="item"] {
-  min-height: 420px;  /* Längere Cards für mehr Content */
-  max-height: 600px;  /* Mehr Platz bevor Scroll */
+  min-height: 420px;
+  max-height: 600px;
+}
+
+/* === STICKY HEADER (Bild + Name + wissenschaftlicher Name) === */
+.amorph-item-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  flex-shrink: 0;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(100, 150, 255, 0.1);
+  padding: 0;
+}
+
+/* Bild im Header - volle Breite, begrenzte Höhe */
+.amorph-item-header [data-field="bild"],
+.amorph-item-header [data-field="image"] {
+  width: 100%;
+  max-height: 180px;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.amorph-item-header [data-field="bild"] img,
+.amorph-item-header [data-field="image"] img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Name im Header */
+.amorph-item-header [data-field="name"] {
+  padding: var(--space-sm) var(--space-md) var(--space-2xs);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+/* Wissenschaftlicher Name im Header */
+.amorph-item-header [data-field="wissenschaftlich"],
+.amorph-item-header [data-field="scientific_name"] {
+  padding: 0 var(--space-md) var(--space-sm);
+  font-size: 0.75rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+
+/* === SCROLLABLE CONTENT === */
+.amorph-item-content {
+  flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  /* Scrollbar verstecken bis Hover/Scroll */
+  padding: var(--space-sm) var(--space-md);
+  /* Scrollbar Styling */
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
 }
 
-/* Letztes Element in Card - Extra Platz für Scroll */
-amorph-container[data-morph="item"] > amorph-container[data-field]:last-of-type {
-  margin-bottom: var(--space-xl);
-}
-
-/* Webkit Scrollbar - nur bei Hover sichtbar */
-amorph-container[data-morph="item"]::-webkit-scrollbar {
+.amorph-item-content::-webkit-scrollbar {
   width: 4px;
 }
 
-amorph-container[data-morph="item"]::-webkit-scrollbar-track {
+.amorph-item-content::-webkit-scrollbar-track {
   background: transparent;
 }
 
-amorph-container[data-morph="item"]::-webkit-scrollbar-thumb {
+.amorph-item-content::-webkit-scrollbar-thumb {
   background: transparent;
   border-radius: 2px;
 }
 
-amorph-container[data-morph="item"]:hover::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.2);
+.amorph-item-content:hover::-webkit-scrollbar-thumb {
+  background: rgba(100, 150, 255, 0.3);
 }
 
-amorph-container[data-morph="item"] > .amorph-item-content {
-  /* Padding für Glow-Raum links */
-  padding-left: 8px;
-  margin-left: -8px;
+/* Letztes Element in Content - Extra Platz */
+.amorph-item-content > amorph-container[data-field]:last-child {
+  margin-bottom: var(--space-lg);
+}
+
+/* Legacy: Direkte Kinder ohne Header-Struktur */
+amorph-container[data-morph="item"] > amorph-container[data-field]:last-of-type {
+  margin-bottom: var(--space-xl);
 }
 
 /* Card Hover */
