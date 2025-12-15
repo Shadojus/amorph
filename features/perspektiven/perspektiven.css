@@ -155,8 +155,11 @@ amorph-container[data-field] {
 
 /* Immer sichtbare Basisfelder */
 [data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field="name"],
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field="image"],
 [data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field="bild"],
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field="scientific_name"],
 [data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field="wissenschaftlich"],
+[data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field="description"],
 [data-amorph-container].perspektiven-aktiv .amorph-item amorph-container[data-field="beschreibung"] {
   display: block !important;
 }

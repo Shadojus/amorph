@@ -148,16 +148,11 @@ mark.amorph-highlight {
   transform: scale(0.85);
 }
 
-/* Aktuell markierter Treffer */
+/* Aktuell markierter Text-Treffer */
 .amorph-highlight-current {
-  background: rgba(0, 255, 255, 0.35) !important;
-  box-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
-  animation: highlight-pulse 1.5s ease-in-out infinite;
-}
-
-@keyframes highlight-pulse {
-  0%, 100% { box-shadow: 0 0 8px rgba(0, 255, 255, 0.4); }
-  50% { box-shadow: 0 0 16px rgba(0, 255, 255, 0.6); }
+  background: rgba(0, 255, 255, 0.5) !important;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+  border-radius: 2px;
 }
 
 .amorph-suche.ladend input {

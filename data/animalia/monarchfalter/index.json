@@ -3,7 +3,7 @@
   "slug": "monarchfalter",
   "name": "Monarchfalter",
   "wissenschaftlich": "Danaus plexippus",
-  "bild": "images/animalia/monarch-butterfly.jpg",
+  "bild": "data/animalia/monarchfalter/species_mockup_image.jpg",
   "beschreibung": "Der Monarchfalter ist bekannt für seine spektakuläre jährliche Migration über tausende Kilometer. Seine orange-schwarze Färbung signalisiert Fressfeinden seine Giftigkeit.",
   "taxonomie_regnum": "Animalia",
   "perspektiven": [

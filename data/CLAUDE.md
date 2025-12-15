@@ -95,7 +95,7 @@ data/
   "slug": "fly-agaric",
   "name": "Fly Agaric",
   "scientific_name": "Amanita muscaria",
-  "image": "images/fungi/fly-agaric.jpg",
+  "image": "data/fungi/fly-agaric/species_mockup_image.jpg",
   "description": "The iconic red and white spotted mushroom...",
   "perspectives": [
     "identification", "ecology", "geography", "conservation",

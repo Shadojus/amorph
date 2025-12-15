@@ -3,7 +3,7 @@
   "slug": "porcini",
   "name": "Porcini",
   "scientific_name": "Boletus edulis",
-  "image": "images/fungi/porcini.jpg",
+  "image": "data/fungi/porcini/species_mockup_image.jpg",
   "description": "The porcini mushroom is one of the most prized edible fungi worldwide, known for its rich, nutty flavor and meaty texture.",
   "perspectives": [
     "identification",

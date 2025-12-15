@@ -59,19 +59,34 @@ export function suche(config, morphConfig = {}) {
   form.appendChild(button);
   
   // === Highlight Navigation Logik ===
+  // Zählt nur SICHTBARE Text-Highlights und springt zur exakten Stelle
   let currentHighlightIndex = 0;
   let highlights = [];
   
+  function isVisible(el) {
+    // Prüft ob Element wirklich sichtbar ist
+    if (!el) return false;
+    const rect = el.getBoundingClientRect();
+    const style = window.getComputedStyle(el);
+    return (
+      rect.width > 0 && 
+      rect.height > 0 && 
+      style.display !== 'none' && 
+      style.visibility !== 'hidden' &&
+      style.opacity !== '0'
+    );
+  }
+  
   function updateHighlights() {
-    highlights = Array.from(document.querySelectorAll('.amorph-highlight'));
+    // Finde nur SICHTBARE Highlight-Marks
+    const allHighlights = document.querySelectorAll('.amorph-highlight');
+    highlights = Array.from(allHighlights).filter(isVisible);
     const count = highlights.length;
     
     if (count > 0) {
       highlightNav.style.display = 'flex';
       currentHighlightIndex = Math.min(currentHighlightIndex, count - 1);
-      // Kompakt: nur "1/384" ohne Leerzeichen
       counter.textContent = `${currentHighlightIndex + 1}/${count}`;
-      scrollToHighlight(currentHighlightIndex);
     } else {
       highlightNav.style.display = 'none';
       currentHighlightIndex = 0;
@@ -79,41 +94,68 @@ export function suche(config, morphConfig = {}) {
     }
   }
   
+  function getVisibleHighlights() {
+    // Immer frische Liste holen
+    const allHighlights = document.querySelectorAll('.amorph-highlight');
+    return Array.from(allHighlights).filter(isVisible);
+  }
+  
   function scrollToHighlight(index) {
-    // Entferne alte Markierung
-    highlights.forEach(h => h.classList.remove('amorph-highlight-current'));
+    const current = highlights[index];
+    if (!current) return;
     
-    if (highlights[index]) {
-      highlights[index].classList.add('amorph-highlight-current');
-      highlights[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
+    // Entferne alte Markierung
+    document.querySelectorAll('.amorph-highlight-current').forEach(h => 
+      h.classList.remove('amorph-highlight-current')
+    );
+    
+    current.classList.add('amorph-highlight-current');
+    current.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
   
   function goToNext() {
+    // Frische Liste holen
+    highlights = getVisibleHighlights();
     if (highlights.length === 0) return;
+    
     currentHighlightIndex = (currentHighlightIndex + 1) % highlights.length;
     counter.textContent = `${currentHighlightIndex + 1}/${highlights.length}`;
     scrollToHighlight(currentHighlightIndex);
   }
   
   function goToPrev() {
+    // Frische Liste holen
+    highlights = getVisibleHighlights();
     if (highlights.length === 0) return;
+    
     currentHighlightIndex = (currentHighlightIndex - 1 + highlights.length) % highlights.length;
     counter.textContent = `${currentHighlightIndex + 1}/${highlights.length}`;
     scrollToHighlight(currentHighlightIndex);
   }
   
-  nextBtn.addEventListener('click', goToNext);
-  prevBtn.addEventListener('click', goToPrev);
+  nextBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    goToNext();
+  });
+  
+  prevBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    goToPrev();
+  });
   
   // Keyboard Navigation (Enter = next, Shift+Enter = prev)
   input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && highlights.length > 0) {
-      e.preventDefault();
-      if (e.shiftKey) {
-        goToPrev();
-      } else {
-        goToNext();
+    if (e.key === 'Enter') {
+      highlights = getVisibleHighlights();
+      if (highlights.length > 0) {
+        e.preventDefault();
+        if (e.shiftKey) {
+          goToPrev();
+        } else {
+          goToNext();
+        }
       }
     }
   });
