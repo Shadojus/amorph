@@ -5,17 +5,9 @@
  */
 
 .amorph-flow {
+  /* Container-Styles werden vom äußeren Element bereitgestellt */
   display: flex;
   flex-direction: column;
-  padding: 16px;
-  background: rgba(245, 243, 240, 0.95);
-  background: linear-gradient(
-    135deg,
-    rgba(248, 246, 244, 0.98) 0%,
-    rgba(242, 240, 238, 0.95) 100%
-  );
-  border-radius: 12px;
-  border: 1px solid rgba(200, 190, 180, 0.2);
 }
 
 .amorph-flow-svg {
@@ -161,4 +153,33 @@
 .universe .amorph-flow .amorph-flow-node-circle {
   fill: rgba(80, 140, 180, 0.5);
   stroke: rgba(100, 160, 255, 0.7);
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-flow {
+    padding: 12px;
+  }
+  
+  .amorph-flow-svg {
+    min-height: 150px;
+  }
+  
+  .amorph-flow-node-label {
+    font-size: 10px;
+  }
+  
+  .amorph-flow-leer {
+    padding: 30px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-flow-svg {
+    min-height: 120px;
+  }
+  
+  .amorph-flow-node-label {
+    font-size: 9px;
+  }
 }

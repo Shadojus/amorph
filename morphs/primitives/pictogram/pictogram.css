@@ -4,13 +4,10 @@
  */
 
 .amorph-pictogram {
+  /* Container-Styles werden vom äußeren Element bereitgestellt */
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 16px;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 12px;
-  border: 1px solid rgba(100, 160, 255, 0.15);
 }
 
 .amorph-pictogram-titel {
@@ -195,5 +192,72 @@
   .amorph-pictogram:not(.universe) .amorph-pictogram-wert {
     color: rgba(0, 0, 0, 0.8);
     text-shadow: none;
+  }
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-pictogram {
+    padding: 12px;
+    gap: 10px;
+  }
+  
+  .amorph-pictogram-titel {
+    font-size: 13px;
+  }
+  
+  .amorph-pictogram-legende {
+    font-size: 10px;
+    padding: 5px 10px;
+  }
+  
+  .amorph-pictogram-legende-icon {
+    font-size: 14px;
+  }
+  
+  /* Grid Layout kompakter */
+  .amorph-pictogram.layout-grid .amorph-pictogram-container {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 12px;
+  }
+  
+  /* Vergleichs-Layout flexibler */
+  .amorph-pictogram.layout-vergleich .amorph-pictogram-item {
+    grid-template-columns: minmax(50px, 80px) 1fr minmax(40px, 50px);
+    gap: 8px;
+  }
+  
+  .amorph-pictogram-label {
+    font-size: 11px;
+  }
+  
+  .amorph-pictogram-icon {
+    font-size: 14px;
+  }
+  
+  .amorph-pictogram-wert {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-pictogram.layout-grid .amorph-pictogram-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .amorph-pictogram.layout-vergleich .amorph-pictogram-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .amorph-pictogram.layout-vergleich .amorph-pictogram-label {
+    text-align: left;
+  }
+  
+  .amorph-pictogram.layout-vergleich .amorph-pictogram-wert {
+    text-align: left;
   }
 }

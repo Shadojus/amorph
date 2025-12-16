@@ -350,7 +350,21 @@ amorph-container[data-morph="item"] amorph-container[data-morph="severity"],
 amorph-container[data-morph="item"] amorph-container[data-morph="object"],
 amorph-container[data-morph="item"] amorph-container[data-morph="map"],
 amorph-container[data-morph="item"] amorph-container[data-morph="network"],
-amorph-container[data-morph="item"] amorph-container[data-morph="hierarchy"] {
+amorph-container[data-morph="item"] amorph-container[data-morph="hierarchy"],
+amorph-container[data-morph="item"] amorph-container[data-morph="boxplot"],
+amorph-container[data-morph="item"] amorph-container[data-morph="bubble"],
+amorph-container[data-morph="item"] amorph-container[data-morph="comparison"],
+amorph-container[data-morph="item"] amorph-container[data-morph="dotplot"],
+amorph-container[data-morph="item"] amorph-container[data-morph="flow"],
+amorph-container[data-morph="item"] amorph-container[data-morph="groupedbar"],
+amorph-container[data-morph="item"] amorph-container[data-morph="lollipop"],
+amorph-container[data-morph="item"] amorph-container[data-morph="pictogram"],
+amorph-container[data-morph="item"] amorph-container[data-morph="scatterplot"],
+amorph-container[data-morph="item"] amorph-container[data-morph="stackedbar"],
+amorph-container[data-morph="item"] amorph-container[data-morph="steps"],
+amorph-container[data-morph="item"] amorph-container[data-morph="sunburst"],
+amorph-container[data-morph="item"] amorph-container[data-morph="treemap"],
+amorph-container[data-morph="item"] amorph-container[data-morph="calendar"] {
   display: block;
   padding: 10px 12px;
   margin: 6px 8px;

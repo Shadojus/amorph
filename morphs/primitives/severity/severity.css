@@ -2,13 +2,10 @@
 /* Verbesserte Kontraste und Schriftgrößen */
 
 .amorph-severity {
+  /* Container-Styles werden vom äußeren Element bereitgestellt */
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 16px;
-  background: var(--glass-bg, rgba(15, 15, 20, 0.75));
-  border-radius: 12px;
-  border: 1px solid var(--glass-border, rgba(120, 160, 220, 0.12));
 }
 
 .amorph-severity-leer {
@@ -33,16 +30,7 @@
   grid-template-columns: auto 1fr auto auto;
   align-items: center;
   gap: 12px;
-  padding: 10px 12px;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: all 0.2s ease;
-}
-
-.amorph-severity-row:hover {
-  background: rgba(0, 0, 0, 0.3);
-  border-color: rgba(100, 160, 220, 0.15);
+  padding: 8px 0;
 }
 
 /* Icon */
@@ -134,4 +122,54 @@
 @keyframes pulse-critical {
   0%, 100% { opacity: 1; filter: drop-shadow(0 0 4px currentColor); }
   50% { opacity: 0.7; filter: drop-shadow(0 0 8px currentColor); }
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-severity {
+    padding: 12px;
+    gap: 6px;
+  }
+  
+  .amorph-severity-titel {
+    font-size: var(--font-size-xs, 12px);
+  }
+  
+  .amorph-severity-row {
+    grid-template-columns: auto 1fr auto;
+    gap: 10px;
+    padding: 6px 0;
+  }
+  
+  .amorph-severity-track {
+    display: none; /* Verstecke Track auf mobil, zeige nur Icon + Label + Wert */
+  }
+  
+  .amorph-severity-icon {
+    font-size: 12px;
+    width: 20px;
+  }
+  
+  .amorph-severity-label {
+    font-size: var(--font-size-xs, 12px);
+  }
+  
+  .amorph-severity-value {
+    font-size: var(--font-size-xs, 12px);
+    min-width: 35px;
+  }
+  
+  .amorph-severity-description {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-severity-row {
+    grid-template-columns: auto 1fr;
+  }
+  
+  .amorph-severity-value {
+    display: none;
+  }
 }

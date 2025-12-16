@@ -2,9 +2,7 @@
 /* Leuchtende Kreisdiagramme wie Zellstrukturen */
 
 .amorph-pie {
-  padding: 8px;
-  background: transparent;
-  border-radius: 6px;
+  /* Container-Styles werden vom äußeren Element bereitgestellt */
 }
 
 .amorph-pie-titel {
@@ -108,4 +106,65 @@
   font-variant-numeric: tabular-nums;
   font-weight: 600;
   font-size: 9px;
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-pie {
+    padding: 12px;
+  }
+  
+  .amorph-pie-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .amorph-pie-chart {
+    width: 64px;
+    height: 64px;
+  }
+  
+  .amorph-pie-center {
+    width: 42px;
+    height: 42px;
+  }
+  
+  .amorph-pie-total {
+    font-size: 13px;
+  }
+  
+  /* 6px ist unlesbar - erhöhe auf 10px minimum */
+  .amorph-pie-label {
+    font-size: 10px;
+  }
+  
+  .amorph-pie-legend {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .amorph-pie-legend-item {
+    font-size: 11px;
+    flex: 0 0 auto;
+  }
+  
+  .amorph-pie-legend-value {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-pie-chart {
+    width: 56px;
+    height: 56px;
+  }
+  
+  .amorph-pie-center {
+    width: 36px;
+    height: 36px;
+  }
 }

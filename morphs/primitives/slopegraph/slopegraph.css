@@ -5,13 +5,10 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .amorph-slopegraph {
+  /* Container-Styles werden vom äußeren Element bereitgestellt */
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
-  padding: var(--space-sm);
-  background: var(--glass-bg);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--glass-border);
   
   /* Einblend-Animation */
   animation: slopegraph-einblenden 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -279,17 +276,57 @@
    RESPONSIVE
    ═══════════════════════════════════════════════════════════════════════════ */
 
-@media (max-width: 400px) {
+@media (max-width: 480px) {
+  .amorph-slopegraph {
+    padding: var(--space-xs);
+  }
+  
   .amorph-slopegraph-side {
-    min-width: 70px;
+    min-width: 60px;
   }
   
   .amorph-slopegraph-name {
-    max-width: 40px;
-    font-size: 9px;
+    max-width: 50px;
+    font-size: 10px;
+  }
+  
+  .amorph-slopegraph-wert {
+    font-size: 11px;
   }
   
   .amorph-slopegraph-middle {
-    min-width: 60px;
+    min-width: 50px;
+  }
+  
+  .amorph-slopegraph-change {
+    font-size: 9px;
+    padding: 2px 4px;
+  }
+  
+  .amorph-slopegraph-zeit {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-slopegraph-row {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .amorph-slopegraph-side {
+    flex: 1 1 40%;
+    min-width: 80px;
+  }
+  
+  .amorph-slopegraph-middle {
+    flex: 1 1 100%;
+    order: 3;
+    margin-top: 4px;
+    justify-content: center;
+  }
+  
+  .amorph-slopegraph-name {
+    max-width: none;
   }
 }

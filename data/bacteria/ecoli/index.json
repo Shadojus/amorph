@@ -1,9 +1,9 @@
 {
+  "bild": "images/bacteria/e-coli.jpg",
   "id": "bacteria-001",
   "slug": "ecoli",
   "name": "Escherichia coli",
   "wissenschaftlich": "Escherichia coli",
-  "bild": "images/bacteria/e-coli.jpg",
   "beschreibung": "E. coli ist eines der bestuntersuchten Lebewesen überhaupt und spielt eine zentrale Rolle in der Molekularbiologie. Die meisten Stämme sind harmlose Darmbewohner, einige jedoch gefährliche Krankheitserreger.",
   "taxonomie_regnum": "Bacteria",
   "perspektiven": [

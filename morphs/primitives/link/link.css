@@ -33,3 +33,19 @@
 .amorph-link[data-invalid]:hover {
   text-decoration: none;
 }
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-link {
+    font-size: var(--font-size-sm, 14px);
+    /* Größerer Touch-Bereich */
+    padding: 4px 0;
+    display: inline-block;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-link {
+    word-break: break-word;
+  }
+}

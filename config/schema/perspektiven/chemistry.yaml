@@ -27,12 +27,12 @@ id: chemistry
 name: Chemistry
 symbol: ⚗️
 
-# Light blue-lavender - distinct scientific pastels
+# Magenta-purple - distinct scientific pastels (no blue)
 colors:
-  - "rgba(160, 180, 240, 0.75)"
-  - "rgba(150, 170, 230, 0.70)"
-  - "rgba(140, 160, 220, 0.65)"
-  - "rgba(130, 150, 210, 0.60)"   
+  - "rgba(200, 140, 200, 0.75)"
+  - "rgba(190, 130, 190, 0.70)"
+  - "rgba(180, 120, 180, 0.65)"
+  - "rgba(170, 110, 170, 0.60)"   
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # FIELDS - Flat structure according to AMORPH convention

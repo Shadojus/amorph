@@ -26,3 +26,26 @@
   background: rgba(0, 0, 0, 0.3);
   min-height: 80px;
 }
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-image img {
+    max-height: 150px;
+    border-radius: 6px;
+  }
+  
+  .amorph-image figcaption {
+    font-size: 10px;
+    margin-top: 6px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-image img {
+    max-height: 120px;
+  }
+  
+  .amorph-image[data-error] img {
+    min-height: 60px;
+  }
+}

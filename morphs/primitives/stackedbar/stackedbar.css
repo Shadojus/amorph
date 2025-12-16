@@ -4,13 +4,10 @@
  */
 
 .amorph-stackedbar {
+  /* Container-Styles werden vom äußeren Element bereitgestellt */
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 16px;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 12px;
-  border: 1px solid rgba(100, 160, 255, 0.15);
 }
 
 .amorph-stackedbar-titel {
@@ -154,4 +151,70 @@
   box-shadow: 
     inset 0 0 8px rgba(0, 0, 0, 0.3),
     0 0 8px rgba(100, 160, 255, 0.2);
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-stackedbar {
+    padding: 12px;
+    gap: 10px;
+  }
+  
+  .amorph-stackedbar-titel {
+    font-size: 13px;
+  }
+  
+  .amorph-stackedbar-legend {
+    gap: 8px;
+  }
+  
+  .amorph-stackedbar-legend-item {
+    font-size: 10px;
+  }
+  
+  /* Flexibles Grid statt feste 100px */
+  .amorph-stackedbar-row {
+    grid-template-columns: minmax(50px, 80px) 1fr minmax(30px, auto);
+    gap: 8px;
+    min-height: 24px;
+  }
+  
+  .amorph-stackedbar-label {
+    font-size: 11px;
+  }
+  
+  .amorph-stackedbar-bar {
+    height: 20px;
+  }
+  
+  .amorph-stackedbar-segment-label {
+    font-size: 9px;
+  }
+  
+  .amorph-stackedbar-total {
+    font-size: 10px;
+    min-width: 30px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-stackedbar-row {
+    /* Vertikales Layout bei sehr kleinen Screens */
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: stretch;
+  }
+  
+  .amorph-stackedbar-label {
+    text-align: left;
+  }
+  
+  .amorph-stackedbar-bar {
+    width: 100%;
+  }
+  
+  .amorph-stackedbar-total {
+    align-self: flex-end;
+  }
 }

@@ -4,13 +4,10 @@
  */
 
 .amorph-sunburst {
+  /* Container-Styles werden vom äußeren Element bereitgestellt */
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 16px;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 12px;
-  border: 1px solid rgba(100, 160, 255, 0.15);
   align-items: center;
 }
 
@@ -109,4 +106,52 @@
   font-style: italic;
   text-align: center;
   padding: 20px;
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-sunburst {
+    padding: 12px;
+    gap: 10px;
+  }
+  
+  .amorph-sunburst-titel {
+    font-size: 13px;
+  }
+  
+  .amorph-sunburst-svg {
+    max-width: 200px;
+  }
+  
+  .amorph-sunburst-center-text {
+    font-size: 10px;
+  }
+  
+  .amorph-sunburst-label {
+    font-size: 9px;
+  }
+  
+  .amorph-sunburst-legend {
+    gap: 8px;
+  }
+  
+  .amorph-sunburst-legend-item {
+    font-size: 10px;
+  }
+  
+  .amorph-sunburst-legend-color {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-sunburst-svg {
+    max-width: 160px;
+  }
+  
+  .amorph-sunburst-legend {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

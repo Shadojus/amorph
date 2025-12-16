@@ -3,16 +3,11 @@
 
 .amorph-citation {
   display: block;
-  padding: 10px 12px 10px 14px;
-  background: rgba(0, 0, 0, 0.2);
+  padding: 8px 0 8px 12px;
   border-left: 2px solid rgba(100, 180, 255, 0.4);
-  border-radius: 0 6px 6px 0;
   font-size: 11px;
   color: rgba(255, 255, 255, 0.75);
   line-height: 1.5;
-  box-shadow: 
-    inset 0 0 20px rgba(100, 180, 255, 0.03),
-    -2px 0 8px rgba(100, 180, 255, 0.1);
 }
 
 .amorph-citation-authors {
@@ -64,4 +59,24 @@
 
 .amorph-citation-inline::after {
   content: ")";
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-citation {
+    padding: 6px 0 6px 10px;
+    font-size: 10px;
+  }
+  
+  .amorph-citation-source {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-citation {
+    padding: 5px 0 5px 8px;
+    font-size: 10px;
+    line-height: 1.4;
+  }
 }

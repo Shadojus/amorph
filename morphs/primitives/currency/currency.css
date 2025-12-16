@@ -51,3 +51,24 @@
   font-size: var(--font-size-xl, 20px);
   font-weight: 700;
 }
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-currency-value {
+    font-size: var(--font-size-sm, 14px);
+  }
+  
+  .amorph-currency-large {
+    font-size: var(--font-size-lg, 18px);
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-currency {
+    gap: 2px;
+  }
+  
+  .amorph-currency-symbol {
+    font-size: 0.85em;
+  }
+}

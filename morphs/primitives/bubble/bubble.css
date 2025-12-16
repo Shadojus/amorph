@@ -4,13 +4,10 @@
  */
 
 .amorph-bubble {
+  /* Container-Styles werden vom äußeren Element bereitgestellt */
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 16px;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 12px;
-  border: 1px solid rgba(100, 160, 255, 0.15);
 }
 
 .amorph-bubble-titel {
@@ -133,4 +130,61 @@
   font-style: italic;
   text-align: center;
   padding: 20px;
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-bubble {
+    padding: 12px;
+    gap: 10px;
+  }
+  
+  .amorph-bubble-titel {
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  
+  .amorph-bubble-svg {
+    max-width: 240px;
+  }
+  
+  .amorph-bubble-label {
+    font-size: 9px;
+  }
+  
+  .amorph-bubble-value {
+    font-size: 10px;
+  }
+  
+  .amorph-bubble-legend {
+    gap: 6px;
+  }
+  
+  .amorph-bubble-legend-item {
+    font-size: 10px;
+  }
+  
+  .amorph-bubble-legend-dot {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .amorph-bubble-total {
+    font-size: 16px;
+  }
+  
+  .amorph-bubble-total-label {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-bubble-svg {
+    max-width: 180px;
+  }
+  
+  .amorph-bubble-legend {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

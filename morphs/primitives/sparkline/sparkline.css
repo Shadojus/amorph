@@ -6,11 +6,8 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-md);
-  padding: 10px 12px;
-  background: var(--glass-bg, rgba(15, 15, 20, 0.65));
-  border-radius: 10px;
-  border: 1px solid var(--glass-border, rgba(120, 160, 220, 0.1));
-  min-width: 180px;
+  padding: 4px 0;
+  min-width: 140px;
   
   /* Einblend-Animation */
   animation: sparkline-einblenden 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -25,11 +22,6 @@
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.amorph-sparkline:hover {
-  border-color: var(--color-accent);
-  transition: all 0.2s ease;
 }
 
 .amorph-sparkline-leer {
@@ -200,13 +192,42 @@
    RESPONSIVE
    ═══════════════════════════════════════════════════════════════════════════ */
 
-@media (max-width: 400px) {
+@media (max-width: 480px) {
   .amorph-sparkline {
-    min-width: 140px;
+    min-width: 120px;
+    gap: var(--space-sm);
   }
   
   .amorph-sparkline-svg {
-    width: 70px;
+    width: 90px;
+    height: 28px;
+  }
+  
+  .amorph-sparkline-label {
+    font-size: 10px;
+  }
+  
+  .amorph-sparkline-trend {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+  
+  .amorph-sparkline-current-value {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-sparkline {
+    min-width: 100px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .amorph-sparkline-svg {
+    width: 100%;
+    max-width: 120px;
   }
   
   .amorph-sparkline-label {

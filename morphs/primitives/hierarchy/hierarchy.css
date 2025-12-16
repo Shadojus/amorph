@@ -2,11 +2,8 @@
 /* Verbesserte Abstände, Schriftgrößen und Kontraste */
 
 .amorph-hierarchy {
+  /* Container-Styles werden vom äußeren Element bereitgestellt */
   font-size: var(--font-size-base, 14px);
-  padding: 16px;
-  background: var(--glass-bg, rgba(15, 15, 20, 0.75));
-  border-radius: 12px;
-  border: 1px solid var(--glass-border, rgba(120, 160, 220, 0.12));
 }
 
 .amorph-hierarchy-node {
@@ -46,17 +43,8 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 8px 12px;
+  padding: 4px 0;
   color: rgba(255, 255, 255, 0.9);
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: all 0.2s ease;
-}
-
-.amorph-hierarchy-label:hover {
-  background: rgba(0, 0, 0, 0.3);
-  border-color: rgba(100, 160, 220, 0.15);
 }
 
 /* Punkt vor jedem Node */
@@ -88,8 +76,6 @@
   font-weight: 600;
   font-size: var(--font-size-md, 15px);
   color: rgba(255, 255, 255, 0.98);
-  background: rgba(80, 140, 220, 0.15);
-  border-color: rgba(80, 160, 240, 0.25);
 }
 
 .amorph-hierarchy > .amorph-hierarchy-node > .amorph-hierarchy-label::before {
@@ -110,12 +96,76 @@
   align-items: center;
   gap: 8px;
   font-size: var(--font-size-sm, 13px);
-  padding: 8px 12px;
-  background: rgba(15, 15, 20, 0.6);
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 4px 0;
 }
 
 .amorph-hierarchy-inline-separator {
   color: rgba(100, 160, 220, 0.6);
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-hierarchy {
+    padding: 12px;
+    font-size: var(--font-size-sm, 13px);
+  }
+  
+  /* Reduziere padding-left um Overflow zu verhindern */
+  .amorph-hierarchy-node {
+    padding-left: 18px;
+    margin: 4px 0;
+  }
+  
+  .amorph-hierarchy-node::before {
+    left: 4px;
+  }
+  
+  .amorph-hierarchy-node::after {
+    left: 4px;
+    width: 10px;
+    top: 12px;
+  }
+  
+  .amorph-hierarchy-label {
+    gap: 8px;
+    padding: 3px 0;
+  }
+  
+  .amorph-hierarchy-label::before {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .amorph-hierarchy-children {
+    margin-left: 4px;
+  }
+  
+  /* Root Node */
+  .amorph-hierarchy > .amorph-hierarchy-node > .amorph-hierarchy-label {
+    font-size: var(--font-size-sm, 13px);
+  }
+  
+  .amorph-hierarchy > .amorph-hierarchy-node > .amorph-hierarchy-label::before {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-hierarchy-node {
+    padding-left: 14px;
+  }
+  
+  .amorph-hierarchy-node::after {
+    width: 8px;
+  }
+  
+  .amorph-hierarchy-children {
+    margin-left: 2px;
+  }
+  
+  /* Bei sehr tiefer Verschachtelung horizontal scrollbar */
+  .amorph-hierarchy {
+    overflow-x: auto;
+  }
 }

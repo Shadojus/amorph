@@ -4,13 +4,10 @@
  */
 
 .amorph-boxplot {
+  /* Container-Styles werden vom äußeren Element bereitgestellt */
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 16px;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 12px;
-  border: 1px solid rgba(100, 160, 255, 0.15);
 }
 
 .amorph-boxplot-titel {
@@ -221,4 +218,74 @@
 .amorph-boxplot-row:hover .amorph-boxplot-label {
   color: rgba(255, 255, 255, 1);
   text-shadow: 0 0 4px rgba(100, 160, 255, 0.4);
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-boxplot {
+    padding: 12px;
+    gap: 10px;
+  }
+  
+  .amorph-boxplot-titel {
+    font-size: 13px;
+  }
+  
+  .amorph-boxplot-scale-labels {
+    font-size: 9px;
+  }
+  
+  .amorph-boxplot-scale-legend {
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 8px;
+  }
+  
+  /* Flexibles Grid statt feste 80px */
+  .amorph-boxplot-row {
+    grid-template-columns: minmax(40px, 70px) 1fr minmax(35px, 50px);
+    gap: 8px;
+    min-height: 28px;
+  }
+  
+  .amorph-boxplot-label {
+    font-size: 10px;
+  }
+  
+  .amorph-boxplot-viz {
+    height: 20px;
+  }
+  
+  .amorph-boxplot-values {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-boxplot-row {
+    /* Vertikales Layout bei sehr kleinen Screens */
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: stretch;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .amorph-boxplot-label {
+    text-align: left;
+  }
+  
+  .amorph-boxplot-viz {
+    width: 100%;
+    height: 18px;
+  }
+  
+  .amorph-boxplot-values {
+    text-align: left;
+  }
+  
+  .amorph-boxplot-scale-legend {
+    display: none;
+  }
 }

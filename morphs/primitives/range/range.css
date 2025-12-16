@@ -6,10 +6,7 @@
   align-items: center;
   gap: 10px;
   font-size: var(--font-size-sm, 13px);
-  padding: 8px 12px;
-  background: rgba(15, 15, 20, 0.5);
-  border-radius: 8px;
-  border: 1px solid rgba(120, 160, 220, 0.1);
+  padding: 4px 0;
 }
 
 .amorph-range-text {
@@ -84,4 +81,38 @@
   font-size: var(--font-size-2xs, 10px);
   color: rgba(255, 255, 255, 0.5);
   margin-top: 4px;
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-range {
+    gap: 8px;
+    font-size: var(--font-size-xs, 12px);
+  }
+  
+  .amorph-range-text {
+    font-size: var(--font-size-xs, 13px);
+  }
+  
+  .amorph-range-bar {
+    height: 6px;
+    min-width: 50px;
+    max-width: 100px;
+  }
+  
+  .amorph-range-label {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-range {
+    flex-wrap: wrap;
+  }
+  
+  .amorph-range-bar {
+    flex: 1 1 100%;
+    max-width: none;
+    margin-top: 4px;
+  }
 }

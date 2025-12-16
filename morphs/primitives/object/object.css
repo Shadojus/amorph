@@ -58,3 +58,51 @@
 .amorph-object-false {
   color: rgba(255, 255, 255, 0.5);
 }
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-object {
+    grid-template-columns: minmax(70px, auto) 1fr;
+    gap: 4px 12px;
+    font-size: var(--font-size-xs, 13px);
+  }
+  
+  .amorph-object dt {
+    font-size: var(--font-size-xs, 12px);
+    padding: 3px 0;
+  }
+  
+  .amorph-object dd {
+    padding: 3px 0;
+  }
+  
+  /* Verschachtelte Objects */
+  .amorph-object .amorph-object {
+    margin-left: 8px;
+    padding-left: 8px;
+    font-size: var(--font-size-xs, 12px);
+  }
+}
+
+@media (max-width: 320px) {
+  /* Einspaltiges Layout auf sehr kleinen Screens */
+  .amorph-object {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  
+  .amorph-object dt {
+    padding-bottom: 0;
+    opacity: 0.7;
+  }
+  
+  .amorph-object dd {
+    padding-top: 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .amorph-object-number {
+    text-align: left;
+  }
+}

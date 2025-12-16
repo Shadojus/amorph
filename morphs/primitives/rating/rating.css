@@ -5,11 +5,8 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  height: 32px;
-  padding: 0 12px;
-  background: rgba(15, 15, 20, 0.6);
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  height: 28px;
+  padding: 4px 0;
 }
 
 .amorph-rating-stars {
@@ -65,4 +62,30 @@
   text-shadow: 
     0 0 6px rgba(100, 255, 150, 0.8),
     0 0 12px rgba(100, 255, 150, 0.4);
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-rating {
+    gap: 8px;
+    height: 24px;
+  }
+  
+  .amorph-rating-stars {
+    gap: 2px;
+  }
+  
+  .amorph-rating-star {
+    font-size: 12px;
+  }
+  
+  .amorph-rating-value {
+    font-size: var(--font-size-xs, 12px);
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-rating {
+    flex-wrap: wrap;
+  }
 }

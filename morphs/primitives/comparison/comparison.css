@@ -2,11 +2,10 @@
 /* Vorher-Nachher Vergleich mit organischem Glow */
 
 .amorph-comparison {
+  /* Container-Styles werden vom äußeren Element bereitgestellt */
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 8px;
-  background: transparent;
 }
 
 .amorph-comparison-leer {
@@ -40,10 +39,7 @@
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  padding: 8px 14px;
-  background: rgba(0, 0, 0, 0.35);
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 8px 0;
   min-width: 70px;
 }
 
@@ -134,4 +130,68 @@
 .amorph-comparison-bar-to {
   background: rgba(100, 220, 160, 0.6);
   box-shadow: 0 0 8px rgba(100, 220, 160, 0.4);
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-comparison {
+    padding: 12px;
+    gap: 6px;
+  }
+  
+  .amorph-comparison-label {
+    font-size: 9px;
+  }
+  
+  .amorph-comparison-values {
+    gap: 8px;
+  }
+  
+  .amorph-comparison-from,
+  .amorph-comparison-to {
+    min-width: 55px;
+    padding: 6px 0;
+  }
+  
+  .amorph-comparison-from-label,
+  .amorph-comparison-to-label {
+    font-size: 7px;
+  }
+  
+  .amorph-comparison-from-value,
+  .amorph-comparison-to-value {
+    font-size: 14px;
+  }
+  
+  .amorph-comparison-arrow-icon {
+    font-size: 16px;
+  }
+  
+  .amorph-comparison-change {
+    font-size: 9px;
+    padding: 2px 4px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-comparison-values {
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  
+  .amorph-comparison-from,
+  .amorph-comparison-to {
+    min-width: 60px;
+    flex: 1;
+  }
+  
+  .amorph-comparison-arrow {
+    order: 3;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 8px;
+    margin-top: 4px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
 }

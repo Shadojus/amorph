@@ -1,10 +1,8 @@
 /* NETWORK MORPH - Universe Theme */
 .amorph-network {
+  /* Container-Styles werden vom äußeren Element bereitgestellt */
   position: relative;
   min-height: 100px;
-  background: transparent;
-  border-radius: 4px;
-  padding: 8px;
 }
 
 .amorph-network-svg {
@@ -130,4 +128,48 @@
 .amorph-network-connection {
   color: rgba(100, 150, 255, 0.4);
   font-size: 9px;
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-network {
+    padding: 12px;
+    min-height: 80px;
+  }
+  
+  .amorph-network-node-label {
+    font-size: 10px;
+  }
+  
+  /* Liste als Touch-freundliche Items */
+  .amorph-network-list {
+    gap: 6px;
+  }
+  
+  .amorph-network-item {
+    padding: 8px 12px;
+    font-size: 12px;
+    min-height: 44px; /* Touch-Target */
+    align-items: center;
+  }
+  
+  .amorph-network-item::before {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-network {
+    min-height: 60px;
+  }
+  
+  .amorph-network-list {
+    flex-direction: column;
+  }
+  
+  .amorph-network-item {
+    width: 100%;
+    justify-content: flex-start;
+  }
 }

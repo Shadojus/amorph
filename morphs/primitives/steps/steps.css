@@ -2,15 +2,12 @@
 /* Verbesserte Lesbarkeit und visuelle Struktur */
 
 .amorph-steps {
+  /* Container-Styles werden vom äußeren Element bereitgestellt */
   display: flex;
   flex-direction: column;
   gap: 4px;
   position: relative;
-  padding: 16px;
   padding-left: 48px;
-  background: var(--glass-bg, rgba(15, 15, 20, 0.75));
-  border-radius: 12px;
-  border: 1px solid var(--glass-border, rgba(120, 160, 220, 0.12));
 }
 
 .amorph-step {
@@ -132,4 +129,85 @@
 .amorph-steps-horizontal .amorph-step-number {
   position: static;
   margin-bottom: 8px;
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-steps {
+    padding: 14px;
+    padding-left: 40px;
+  }
+  
+  .amorph-step {
+    padding: 10px 0;
+  }
+  
+  /* Verbindungslinie anpassen */
+  .amorph-step::before {
+    left: -24px;
+  }
+  
+  .amorph-step-number {
+    left: -34px;
+    width: 24px;
+    height: 24px;
+    font-size: var(--font-size-xs, 11px);
+  }
+  
+  .amorph-step-content {
+    padding: 8px 10px;
+  }
+  
+  .amorph-step-label {
+    font-size: var(--font-size-sm, 13px);
+  }
+  
+  .amorph-step-description {
+    font-size: var(--font-size-xs, 12px);
+  }
+  
+  /* Horizontal auf Mobile zu vertikal */
+  .amorph-steps-horizontal {
+    flex-direction: column;
+    padding-left: 40px;
+    gap: 8px;
+  }
+  
+  .amorph-steps-horizontal .amorph-step {
+    flex-direction: row;
+    align-items: flex-start;
+    min-width: auto;
+  }
+  
+  .amorph-steps-horizontal .amorph-step::before {
+    left: -24px;
+    top: 36px;
+    bottom: -4px;
+    width: 2px;
+    height: auto;
+  }
+  
+  .amorph-steps-horizontal .amorph-step-number {
+    position: absolute;
+    left: -34px;
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-steps {
+    padding: 12px;
+    padding-left: 36px;
+  }
+  
+  .amorph-step::before {
+    left: -20px;
+  }
+  
+  .amorph-step-number {
+    left: -30px;
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+  }
 }

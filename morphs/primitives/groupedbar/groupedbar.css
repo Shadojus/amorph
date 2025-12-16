@@ -4,13 +4,10 @@
  */
 
 .amorph-groupedbar {
+  /* Container-Styles werden vom äußeren Element bereitgestellt */
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 16px;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 12px;
-  border: 1px solid rgba(100, 160, 255, 0.15);
 }
 
 .amorph-groupedbar-titel {
@@ -159,4 +156,72 @@
 .amorph-groupedbar-group:hover .amorph-groupedbar-label {
   color: rgba(255, 255, 255, 1);
   text-shadow: 0 0 4px rgba(100, 160, 255, 0.3);
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-groupedbar {
+    padding: 12px;
+    gap: 10px;
+  }
+  
+  .amorph-groupedbar-titel {
+    font-size: 13px;
+  }
+  
+  .amorph-groupedbar-legend {
+    gap: 10px;
+  }
+  
+  .amorph-groupedbar-legend-item {
+    font-size: 10px;
+  }
+  
+  .amorph-groupedbar-chart {
+    min-height: 160px;
+    gap: 4px;
+  }
+  
+  .amorph-groupedbar-yaxis {
+    min-width: 30px;
+  }
+  
+  .amorph-groupedbar-ytick {
+    font-size: 9px;
+  }
+  
+  .amorph-groupedbar-group {
+    min-width: 30px;
+  }
+  
+  /* Responsive Höhe statt fest */
+  .amorph-groupedbar-bars-wrapper {
+    height: clamp(100px, 30vw, 160px);
+  }
+  
+  .amorph-groupedbar-bar-container {
+    max-width: 20px;
+  }
+  
+  .amorph-groupedbar-value {
+    font-size: 8px;
+  }
+  
+  .amorph-groupedbar-label {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-groupedbar-bars-wrapper {
+    height: 80px;
+  }
+  
+  .amorph-groupedbar-yaxis {
+    display: none;
+  }
+  
+  .amorph-groupedbar-value {
+    display: none;
+  }
 }

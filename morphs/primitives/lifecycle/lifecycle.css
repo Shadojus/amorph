@@ -2,13 +2,10 @@
 /* Verbesserte Kontraste und Schriftgrößen */
 
 .amorph-lifecycle {
+  /* Container-Styles werden vom äußeren Element bereitgestellt */
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 16px;
-  background: var(--glass-bg, rgba(15, 15, 20, 0.75));
-  border-radius: 12px;
-  border: 1px solid var(--glass-border, rgba(120, 160, 220, 0.12));
 }
 
 .amorph-lifecycle-leer {
@@ -48,21 +45,23 @@
   align-items: center;
   gap: 6px;
   padding: 10px 12px;
-  background: rgba(15, 15, 20, 0.8);
-  border: 1px solid rgba(100, 160, 220, 0.25);
+  background: rgba(20, 35, 60, 0.85);
+  border: 1px solid rgba(100, 160, 220, 0.3);
   border-radius: 10px;
   backdrop-filter: blur(4px);
   transition: all 0.3s ease;
   z-index: 1;
   min-width: 70px;
   text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .amorph-lifecycle-node:hover {
-  background: rgba(15, 15, 20, 0.9);
-  border-color: rgba(100, 160, 220, 0.45);
+  background: rgba(30, 50, 80, 0.9);
+  border-color: rgba(100, 160, 220, 0.5);
   transform: translate(-50%, -50%) scale(1.08);
   z-index: 10;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 .amorph-lifecycle-node.amorph-lifecycle-active {
@@ -99,21 +98,11 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 14px;
-  background: rgba(0, 0, 0, 0.25);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: all 0.2s ease;
-}
-
-.amorph-lifecycle-item:hover {
-  background: rgba(0, 0, 0, 0.35);
-  border-color: rgba(100, 160, 220, 0.2);
+  padding: 6px 0;
 }
 
 .amorph-lifecycle-item.amorph-lifecycle-active {
-  background: rgba(100, 160, 220, 0.18);
-  border-color: rgba(100, 180, 240, 0.45);
+  color: rgba(100, 180, 240, 0.95);
 }
 
 .amorph-lifecycle-item-icon {
@@ -157,16 +146,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 10px;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  transition: all 0.2s ease;
-}
-
-.amorph-lifecycle-stage:hover {
-  background: rgba(0, 0, 0, 0.4);
-  border-color: rgba(100, 150, 255, 0.15);
+  padding: 4px 0;
 }
 
 /* Leuchtender Punkt */
@@ -236,4 +216,115 @@
 .amorph-lifecycle-stage[data-type="dormant"] .amorph-lifecycle-dot {
   background: rgba(180, 180, 200, 0.5);
   box-shadow: 0 0 4px rgba(180, 180, 200, 0.6), 0 0 8px rgba(150, 150, 180, 0.3);
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-lifecycle {
+    padding: 12px;
+    gap: 8px;
+  }
+  
+  .amorph-lifecycle-titel {
+    font-size: var(--font-size-xs, 12px);
+  }
+  
+  /* Circle-Mode responsive skalieren */
+  .amorph-lifecycle-circle {
+    width: clamp(160px, 60vw, 220px);
+    height: clamp(160px, 60vw, 220px);
+  }
+  
+  .amorph-lifecycle-node {
+    min-width: 55px;
+    padding: 8px 10px;
+    gap: 4px;
+  }
+  
+  .amorph-lifecycle-icon {
+    font-size: 16px;
+  }
+  
+  .amorph-lifecycle-label {
+    font-size: var(--font-size-2xs, 10px);
+  }
+  
+  .amorph-lifecycle-dauer {
+    font-size: 9px;
+  }
+  
+  /* Linear Mode kompakter */
+  .amorph-lifecycle-linear {
+    gap: 8px;
+  }
+  
+  .amorph-lifecycle-item {
+    gap: 8px;
+    padding: 4px 0;
+  }
+  
+  .amorph-lifecycle-item-icon {
+    font-size: 16px;
+  }
+  
+  .amorph-lifecycle-item-name {
+    font-size: var(--font-size-xs, 12px);
+  }
+  
+  .amorph-lifecycle-item-dauer {
+    font-size: var(--font-size-2xs, 10px);
+  }
+  
+  /* Stages Mode */
+  .amorph-lifecycle-stages {
+    gap: 4px;
+  }
+  
+  .amorph-lifecycle-name {
+    font-size: 10px;
+  }
+  
+  .amorph-lifecycle-duration {
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 320px) {
+  /* Auf sehr kleinen Screens: Circle zu Linear umwandeln */
+  .amorph-lifecycle-circle {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: static;
+  }
+  
+  .amorph-lifecycle-circle .amorph-lifecycle-svg {
+    display: none;
+  }
+  
+  .amorph-lifecycle-circle .amorph-lifecycle-node {
+    position: static;
+    transform: none;
+    flex-direction: row;
+    width: 100%;
+    min-width: auto;
+    justify-content: flex-start;
+    text-align: left;
+  }
+  
+  .amorph-lifecycle-circle .amorph-lifecycle-node:hover {
+    transform: none;
+  }
+  
+  /* Linear als Stack */
+  .amorph-lifecycle-linear {
+    flex-direction: column;
+  }
+  
+  .amorph-lifecycle-arrow {
+    transform: rotate(90deg);
+    align-self: center;
+  }
 }

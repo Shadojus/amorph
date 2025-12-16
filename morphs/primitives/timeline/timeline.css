@@ -1,8 +1,8 @@
 /* TIMELINE MORPH - Universe Theme */
 .amorph-timeline {
   position: relative;
-  padding: 8px 8px 8px 24px;
-  background: transparent;
+  padding-left: 16px; /* Nur links für die Timeline-Linie */
+  /* Container-Styles werden vom äußeren Element bereitgestellt */
 }
 
 .amorph-timeline-leer {
@@ -88,4 +88,50 @@
 .amorph-timeline-label {
   font-size: 11px;
   color: rgba(255, 255, 255, 0.7);
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-timeline {
+    padding: 12px 12px 12px 28px;
+  }
+  
+  .amorph-timeline-line {
+    left: 10px;
+  }
+  
+  .amorph-timeline-dot {
+    left: -14px;
+    width: 10px;
+    height: 10px;
+    /* Größeres Touch-Target */
+  }
+  
+  /* Touch-friendly tap area */
+  .amorph-timeline-item {
+    min-height: 44px;
+    padding-bottom: 12px;
+  }
+  
+  .amorph-timeline-time {
+    font-size: 10px;
+  }
+  
+  .amorph-timeline-label {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-timeline {
+    padding: 10px 10px 10px 24px;
+  }
+  
+  .amorph-timeline-line {
+    left: 8px;
+  }
+  
+  .amorph-timeline-dot {
+    left: -12px;
+  }
 }

@@ -27,12 +27,12 @@ id: identification
 name: Identification
 symbol: 🔍
 
-# Sky blue - distinct analysis pastels
+# Teal-green - distinct analysis pastels (no blue)
 colors:
-  - "rgba(140, 190, 230, 0.75)"
-  - "rgba(130, 180, 220, 0.70)"
-  - "rgba(120, 170, 210, 0.65)"
-  - "rgba(110, 160, 200, 0.60)"   
+  - "rgba(100, 190, 180, 0.75)"
+  - "rgba(90, 180, 170, 0.70)"
+  - "rgba(80, 170, 160, 0.65)"
+  - "rgba(70, 160, 150, 0.60)"   
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # FIELDS - Ordered by identification workflow

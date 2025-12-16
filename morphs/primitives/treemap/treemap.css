@@ -4,13 +4,10 @@
  */
 
 .amorph-treemap {
+  /* Container-Styles werden vom äußeren Element bereitgestellt */
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 16px;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 12px;
-  border: 1px solid rgba(100, 160, 255, 0.15);
 }
 
 .amorph-treemap-titel {
@@ -131,4 +128,61 @@
   font-style: italic;
   text-align: center;
   padding: 20px;
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-treemap {
+    padding: 12px;
+    gap: 10px;
+  }
+  
+  .amorph-treemap-titel {
+    font-size: 13px;
+  }
+  
+  .amorph-treemap-tile {
+    padding: 3px;
+    gap: 1px;
+  }
+  
+  .amorph-treemap-label {
+    font-size: 10px;
+  }
+  
+  .amorph-treemap-label.is-small {
+    font-size: 8px;
+  }
+  
+  .amorph-treemap-change {
+    font-size: 9px;
+  }
+  
+  .amorph-treemap-legend {
+    gap: 8px;
+  }
+  
+  .amorph-treemap-legend-item {
+    font-size: 10px;
+  }
+  
+  .amorph-treemap-legend-color {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-treemap-container {
+    min-height: 150px;
+  }
+  
+  .amorph-treemap-label.is-small {
+    display: none;
+  }
+  
+  .amorph-treemap-legend {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

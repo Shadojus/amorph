@@ -4,13 +4,10 @@
  */
 
 .amorph-lollipop {
+  /* Container-Styles werden vom äußeren Element bereitgestellt */
   display: flex;
   flex-direction: column;
   gap: 14px;
-  padding: 18px;
-  background: var(--glass-bg, rgba(15, 15, 20, 0.75));
-  border-radius: 12px;
-  border: 1px solid var(--glass-border, rgba(120, 160, 220, 0.12));
 }
 
 .amorph-lollipop-titel {
@@ -234,5 +231,81 @@
   
   .amorph-lollipop:not(.universe) .amorph-lollipop-wert.negativ {
     color: #e63946;
+  }
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-lollipop {
+    padding: 14px;
+    gap: 12px;
+  }
+  
+  .amorph-lollipop-titel {
+    font-size: var(--font-size-sm, 13px);
+  }
+  
+  /* Flexibles Grid statt feste 110px */
+  .amorph-lollipop-row {
+    grid-template-columns: minmax(50px, 80px) 1fr minmax(40px, 50px);
+    gap: 10px;
+    padding: 3px;
+    min-height: 44px; /* Touch-friendly */
+  }
+  
+  .amorph-lollipop-label {
+    font-size: var(--font-size-xs, 11px);
+  }
+  
+  .amorph-lollipop-track {
+    height: 20px;
+  }
+  
+  .amorph-lollipop-dot {
+    width: 16px;
+    height: 16px;
+    /* Größeres Touch-Target */
+  }
+  
+  .amorph-lollipop-wert {
+    font-size: 10px;
+  }
+  
+  /* Vertikal: Responsive Höhe */
+  .amorph-lollipop.vertikal .amorph-lollipop-container-vertikal {
+    min-height: 150px;
+  }
+  
+  .amorph-lollipop-track-vertikal {
+    width: 16px;
+    height: clamp(100px, 30vw, 160px);
+  }
+  
+  .amorph-lollipop-column {
+    min-width: 24px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-lollipop-row {
+    /* Vertikales Layout bei sehr kleinen Screens */
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: stretch;
+    padding: 8px 4px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .amorph-lollipop-label {
+    text-align: left;
+  }
+  
+  .amorph-lollipop-track {
+    width: 100%;
+  }
+  
+  .amorph-lollipop-wert {
+    align-self: flex-end;
   }
 }

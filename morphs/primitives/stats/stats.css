@@ -2,10 +2,7 @@
 /* Verbesserte Kontraste und Schriftgrößen */
 
 .amorph-stats {
-  padding: 16px;
-  background: var(--glass-bg, rgba(15, 15, 20, 0.75));
-  border-radius: 12px;
-  border: 1px solid var(--glass-border, rgba(120, 160, 220, 0.12));
+  /* Container-Styles werden vom äußeren Element bereitgestellt */
 }
 
 .amorph-stats-leer {
@@ -39,10 +36,7 @@
   flex-direction: column;
   align-items: center;
   flex: 1;
-  padding: 16px 12px;
-  background: rgba(0, 0, 0, 0.25);
-  border-radius: 12px;
-  border: 1px solid rgba(100, 160, 220, 0.15);
+  padding: 12px 8px;
 }
 
 .amorph-stats-primary-value {
@@ -72,16 +66,11 @@
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  padding: 12px 10px;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: all 0.2s ease;
+  padding: 8px 6px;
 }
 
 .amorph-stats-item:hover {
-  background: rgba(0, 0, 0, 0.3);
-  border-color: rgba(100, 160, 220, 0.18);
+  /* Kein Hover-Effekt ohne Box */
 }
 
 /* Typ-spezifische Styles */
@@ -147,4 +136,58 @@
     rgba(100, 180, 240, 0.8)
   );
   border-radius: 2px;
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-stats {
+    padding: 12px;
+  }
+  
+  /* Primary Stats flexibel wrappen */
+  .amorph-stats-primary {
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
+  
+  .amorph-stats-primary-item {
+    flex: 1 1 80px;
+    min-width: 80px;
+    max-width: 120px;
+    padding: 10px 6px;
+  }
+  
+  .amorph-stats-primary-value {
+    font-size: var(--font-size-xl, 22px);
+  }
+  
+  /* Grid kompakter */
+  .amorph-stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(65px, 1fr));
+    gap: 8px;
+  }
+  
+  .amorph-stats-item {
+    padding: 6px 4px;
+  }
+  
+  .amorph-stats-value {
+    font-size: var(--font-size-md, 14px);
+  }
+  
+  .amorph-stats-label {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-stats-primary-item {
+    flex: 1 1 100%;
+    max-width: none;
+  }
+  
+  .amorph-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

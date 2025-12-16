@@ -1,9 +1,6 @@
 /* RADAR CHART MORPH - Universe Theme */
 .amorph-radar {
   position: relative;
-  padding: 8px;
-  background: transparent;
-  border-radius: 4px;
 }
 
 .amorph-radar-leer {
@@ -73,4 +70,32 @@
   font-size: 6px;
   fill: rgba(255, 255, 255, 0.25);
   font-variant-numeric: tabular-nums;
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-radar {
+    padding: 12px;
+  }
+  
+  .amorph-radar-svg {
+    max-width: 180px;
+    margin: 0 auto;
+  }
+  
+  /* Labels größer für Lesbarkeit */
+  .amorph-radar-label {
+    font-size: 10px;
+  }
+  
+  /* 6px ist unlesbar - erhöhe auf 9px */
+  .amorph-radar-scale {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-radar-svg {
+    max-width: 140px;
+  }
 }

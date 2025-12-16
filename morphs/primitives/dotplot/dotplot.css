@@ -4,13 +4,10 @@
  */
 
 .amorph-dotplot {
+  /* Container-Styles werden vom äußeren Element bereitgestellt */
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 16px;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 12px;
-  border: 1px solid rgba(100, 160, 255, 0.15);
 }
 
 .amorph-dotplot-titel {
@@ -145,4 +142,85 @@
 
 .amorph-dotplot-row:hover .amorph-dotplot-dots {
   background: rgba(255, 255, 255, 0.04);
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-dotplot {
+    padding: 12px;
+    gap: 6px;
+  }
+  
+  .amorph-dotplot-titel {
+    font-size: 13px;
+  }
+  
+  /* X-Axis mit flexiblem Padding */
+  .amorph-dotplot-xaxis {
+    padding-left: 60px;
+    padding-right: 35px;
+  }
+  
+  .amorph-dotplot-tick {
+    font-size: 9px;
+  }
+  
+  /* Flexibles Grid statt feste 100px */
+  .amorph-dotplot-row {
+    grid-template-columns: minmax(45px, 70px) 1fr minmax(30px, 40px);
+    gap: 6px;
+    min-height: 32px;
+  }
+  
+  .amorph-dotplot-label {
+    font-size: 10px;
+  }
+  
+  .amorph-dotplot-dots {
+    height: 28px;
+  }
+  
+  .amorph-dotplot-dot {
+    width: 10px;
+    height: 10px;
+    /* Größeres Touch-Target */
+  }
+  
+  .amorph-dotplot-count {
+    font-size: 9px;
+  }
+  
+  .amorph-dotplot-stats {
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-dotplot-xaxis {
+    padding-left: 0;
+    padding-right: 0;
+    display: none; /* Verstecke X-Achse auf sehr kleinen Screens */
+  }
+  
+  .amorph-dotplot-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .amorph-dotplot-label {
+    text-align: left;
+  }
+  
+  .amorph-dotplot-dots {
+    width: 100%;
+  }
+  
+  .amorph-dotplot-count {
+    align-self: flex-end;
+  }
 }

@@ -1,11 +1,9 @@
 /* MAP MORPH - Universe Theme */
 .amorph-map {
+  /* Container-Styles werden vom äußeren Element bereitgestellt */
   display: block;
   position: relative;
-  border-radius: 6px;
   overflow: hidden;
-  background: transparent;
-  border: none;
 }
 
 .amorph-map-container {
@@ -13,7 +11,7 @@
   height: 160px;
   position: relative;
   background: rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
 /* Leuchtender Koordinaten-Punkt */
@@ -142,4 +140,60 @@
   stroke-width: 1;
   stroke-dasharray: 4 4;
   filter: drop-shadow(0 0 2px rgba(100, 150, 255, 0.3));
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-map {
+    padding: 12px;
+  }
+  
+  .amorph-map-container {
+    height: 120px;
+  }
+  
+  .amorph-map-marker {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .amorph-map-placeholder {
+    font-size: 10px;
+  }
+  
+  .amorph-map-placeholder-icon {
+    font-size: 24px;
+  }
+  
+  .amorph-map-coords {
+    gap: 10px;
+    padding: 6px 8px;
+    font-size: 10px;
+  }
+  
+  .amorph-map-coord-label {
+    font-size: 8px;
+  }
+  
+  .amorph-map-location {
+    padding: 6px 8px;
+    font-size: 10px;
+  }
+  
+  .amorph-map-inline {
+    gap: 6px;
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-map-container {
+    height: 100px;
+  }
+  
+  .amorph-map-coords {
+    flex-direction: column;
+    gap: 4px;
+  }
 }

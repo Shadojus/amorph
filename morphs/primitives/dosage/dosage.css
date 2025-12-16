@@ -11,31 +11,22 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 14px 16px;
-  background: rgba(15, 15, 20, 0.7);
-  border: 1px solid rgba(100, 160, 220, 0.15);
-  border-radius: 10px;
-  min-width: 120px;
+  padding: 8px 0;
+  min-width: 100px;
   flex: 1;
   max-width: 200px;
-  transition: all 0.2s ease;
-}
-
-.amorph-dosage-card:hover {
-  border-color: rgba(100, 160, 220, 0.25);
-  background: rgba(20, 20, 28, 0.75);
 }
 
 /* Warnung - Amber */
 .amorph-dosage-card[data-severity="warning"] {
-  border-color: rgba(255, 180, 60, 0.4);
-  background: rgba(255, 180, 60, 0.08);
+  border-left: 3px solid rgba(255, 180, 60, 0.6);
+  padding-left: 12px;
 }
 
 /* Gefahr - Rot */
 .amorph-dosage-card[data-severity="danger"] {
-  border-color: rgba(240, 90, 90, 0.4);
-  background: rgba(240, 90, 90, 0.08);
+  border-left: 3px solid rgba(240, 90, 90, 0.6);
+  padding-left: 12px;
 }
 
 .amorph-dosage-header {
@@ -89,4 +80,56 @@
   font-size: var(--font-size-sm, 13px);
   color: rgba(255, 255, 255, 0.5);
   font-style: italic;
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 480px) {
+  .amorph-dosage {
+    gap: 10px;
+  }
+  
+  .amorph-dosage-card {
+    min-width: 80px;
+    max-width: 160px;
+    gap: 6px;
+    padding: 6px 0;
+  }
+  
+  .amorph-dosage-header {
+    gap: 8px;
+  }
+  
+  .amorph-dosage-icon {
+    font-size: 1.1em;
+  }
+  
+  .amorph-dosage-label {
+    font-size: 10px;
+  }
+  
+  .amorph-dosage-value {
+    font-size: var(--font-size-lg, 18px);
+  }
+  
+  .amorph-dosage-unit {
+    font-size: var(--font-size-xs, 12px);
+  }
+  
+  .amorph-dosage-frequency {
+    font-size: var(--font-size-xs, 12px);
+  }
+  
+  .amorph-dosage-route {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 320px) {
+  .amorph-dosage {
+    flex-direction: column;
+  }
+  
+  .amorph-dosage-card {
+    max-width: none;
+  }
 }

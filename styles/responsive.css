@@ -1,0 +1,369 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE STYLES - Mobile Optimierung für Amorph v5
+   Universe Theme Mobile-First Anpassungen
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ===== KLEINE BILDSCHIRME (Mobile) ===== */
+@media (max-width: 480px) {
+  
+  /* === RANGE MORPH === */
+  .amorph-range {
+    flex-direction: column;
+    gap: 4px;
+    padding: 6px;
+    min-width: 100%;
+  }
+  
+  .amorph-range-labels {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    gap: 8px;
+  }
+  
+  .amorph-range-min,
+  .amorph-range-max {
+    font-size: 11px;
+  }
+  
+  .amorph-range-track {
+    width: 100%;
+    min-width: 120px;
+  }
+  
+  /* === STATS MORPH === */
+  .amorph-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  
+  .amorph-stats-item {
+    padding: 10px;
+    min-width: 0;
+  }
+  
+  .amorph-stats-value {
+    font-size: 20px;
+  }
+  
+  .amorph-stats-label {
+    font-size: 10px;
+  }
+  
+  /* === GAUGE MORPH === */
+  .amorph-gauge {
+    padding: 10px;
+  }
+  
+  .amorph-gauge-svg {
+    width: 100px;
+    height: 55px;
+  }
+  
+  .amorph-gauge-current {
+    font-size: 16px;
+  }
+  
+  /* === TIMELINE MORPH === */
+  .amorph-timeline-item-titel {
+    font-size: 12px;
+  }
+  
+  .amorph-timeline-item-text {
+    font-size: 11px;
+  }
+  
+  /* === BAR MORPH === */
+  .amorph-bar-row {
+    grid-template-columns: 80px 1fr 40px;
+    gap: 8px;
+  }
+  
+  .amorph-bar-label {
+    font-size: 11px;
+  }
+  
+  /* === LIFECYCLE MORPH === */
+  .amorph-lifecycle-nodes {
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .amorph-lifecycle-node {
+    padding: 8px 10px;
+    font-size: 11px;
+    min-width: 70px;
+  }
+  
+  .amorph-lifecycle-arrow {
+    font-size: 12px;
+    margin: 0 2px;
+  }
+  
+  /* === STEPS MORPH === */
+  .amorph-steps-container {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+  
+  .amorph-steps-step {
+    width: 100%;
+  }
+  
+  .amorph-steps-line {
+    display: none;
+  }
+  
+  /* === HIERARCHY MORPH === */
+  .amorph-hierarchy {
+    padding: 8px;
+    font-size: 12px;
+  }
+  
+  .amorph-hierarchy-node {
+    padding-left: 12px;
+  }
+  
+  /* === CALENDAR MORPH === */
+  .amorph-calendar {
+    gap: 4px;
+    padding: 8px;
+  }
+  
+  .amorph-calendar-grid {
+    gap: 3px;
+  }
+  
+  .amorph-calendar-day {
+    width: 22px;
+    height: 22px;
+    font-size: 9px;
+  }
+  
+  /* === DOSAGE MORPH === */
+  .amorph-dosage-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  /* === COMPARISON MORPH === */
+  .amorph-comparison-values {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .amorph-comparison-arrow {
+    transform: rotate(90deg);
+  }
+  
+  /* === CHART CONTAINER MORPHS === */
+  .amorph-treemap,
+  .amorph-sunburst,
+  .amorph-bubble,
+  .amorph-boxplot,
+  .amorph-scatterplot,
+  .amorph-stackedbar,
+  .amorph-groupedbar,
+  .amorph-dotplot,
+  .amorph-pictogram,
+  .amorph-heatmap,
+  .amorph-flow {
+    padding: 10px;
+  }
+  
+  .amorph-treemap-titel,
+  .amorph-sunburst-titel,
+  .amorph-bubble-titel,
+  .amorph-stackedbar-titel,
+  .amorph-groupedbar-titel,
+  .amorph-pictogram-titel {
+    font-size: 12px;
+  }
+  
+  /* === TAG MORPH === */
+  .amorph-tag {
+    height: 26px;
+    padding: 0 10px;
+    font-size: 11px;
+    margin: 2px;
+  }
+  
+  /* === BADGE MORPH === */
+  .amorph-badge {
+    height: 28px;
+    padding: 0 10px;
+    font-size: 11px;
+    gap: 6px;
+  }
+  
+  /* === RATING MORPH === */
+  .amorph-rating-stars {
+    gap: 2px;
+  }
+  
+  .amorph-rating-star {
+    font-size: 14px;
+  }
+  
+  /* === SPARKLINE MORPH === */
+  .amorph-sparkline {
+    min-width: 140px;
+    padding: 8px 10px;
+  }
+  
+  .amorph-sparkline-chart {
+    width: 70px;
+    height: 24px;
+  }
+  
+  /* === NETWORK MORPH === */
+  .amorph-network-svg {
+    min-height: 150px;
+  }
+  
+  /* === PIE MORPH === */
+  .amorph-pie-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .amorph-pie-legend {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  /* === RADAR MORPH === */
+  .amorph-radar-svg {
+    max-width: 120px;
+  }
+}
+
+/* ===== MITTLERE BILDSCHIRME (Tablet) ===== */
+@media (min-width: 481px) and (max-width: 768px) {
+  
+  /* === STATS MORPH === */
+  .amorph-stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  /* === DOSAGE MORPH === */
+  .amorph-dosage-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  /* === LIFECYCLE MORPH === */
+  .amorph-lifecycle-nodes {
+    gap: 6px;
+  }
+  
+  .amorph-lifecycle-node {
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+  
+  /* === CHART CONTAINER MORPHS === */
+  .amorph-treemap,
+  .amorph-sunburst,
+  .amorph-bubble {
+    padding: 12px;
+  }
+}
+
+/* ===== TOUCH-GERÄTE OPTIMIERUNG ===== */
+@media (hover: none) and (pointer: coarse) {
+  
+  /* Größere Touch-Bereiche */
+  .amorph-tag,
+  .amorph-badge {
+    min-height: 44px;
+    padding: 0 16px;
+  }
+  
+  .amorph-boolean {
+    padding: 12px 16px;
+    min-height: 44px;
+  }
+  
+  .amorph-rating-star {
+    font-size: 20px;
+    padding: 4px;
+  }
+  
+  .amorph-lifecycle-node {
+    min-height: 44px;
+    padding: 12px 16px;
+  }
+  
+  .amorph-steps-step {
+    padding: 14px;
+  }
+  
+  .amorph-calendar-day {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+  
+  /* Hover-Effekte entfernen */
+  .amorph-tag:hover,
+  .amorph-badge:hover,
+  .amorph-boolean:hover,
+  .amorph-lifecycle-node:hover,
+  .amorph-steps-step:hover,
+  .amorph-severity-row:hover {
+    transform: none;
+    filter: none;
+  }
+}
+
+/* ===== LANDSCAPE MOBILE ===== */
+@media (max-height: 450px) and (orientation: landscape) {
+  
+  .amorph-gauge-svg {
+    width: 90px;
+    height: 50px;
+  }
+  
+  .amorph-pie-chart {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .amorph-radar-svg {
+    max-width: 100px;
+  }
+}
+
+/* ===== DARK MODE VERSTÄRKUNG ===== */
+@media (prefers-color-scheme: dark) {
+  
+  /* Kontrast-Verstärkung für bessere Lesbarkeit */
+  .amorph-stats-value,
+  .amorph-gauge-current,
+  .amorph-number {
+    text-shadow: 0 0 8px rgba(100, 160, 255, 0.3);
+  }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  
+  .amorph-lifecycle-node,
+  .amorph-steps-step,
+  .amorph-badge,
+  .amorph-tag,
+  .amorph-boolean,
+  .amorph-calendar-day,
+  .amorph-severity-row {
+    transition: none;
+    animation: none;
+  }
+  
+  .amorph-sparkline,
+  .amorph-slopegraph,
+  .amorph-heatmap {
+    animation: none;
+  }
+}
