@@ -23,12 +23,12 @@ id: culture
 name: Culture
 symbol: 🏛️
 
-# Soft terracotta - subtle ancient pastels
+# Warm terracotta - distinct ancient pastels
 colors:
-  - "rgba(215, 200, 195, 0.40)"
-  - "rgba(210, 195, 190, 0.38)"
-  - "rgba(205, 190, 185, 0.35)"
-  - "rgba(200, 185, 180, 0.32)"
+  - "rgba(220, 160, 140, 0.75)"
+  - "rgba(210, 150, 130, 0.70)"
+  - "rgba(200, 140, 120, 0.65)"
+  - "rgba(190, 130, 110, 0.60)"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # FIELDS - Ordered by research workflow

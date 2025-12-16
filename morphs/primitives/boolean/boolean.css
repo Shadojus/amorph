@@ -1,76 +1,78 @@
-/* BOOLEAN MORPH - Universe Biosphere Theme */
-/* Leuchtende Statusanzeige für Ja/Nein Werte */
+/* BOOLEAN MORPH - Klare Statusanzeige */
+/* Deutlich lesbare Ja/Nein Werte */
 
 .amorph-boolean {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   font-weight: 500;
-  font-size: var(--font-size-sm, 13px);
-  padding: 5px 10px;
-  border-radius: 6px;
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: var(--font-size-base, 14px);
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: rgba(15, 15, 20, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Leuchtender Indikator-Punkt */
 .amorph-boolean::before {
   content: '';
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
-/* TRUE - Grünes Leuchten */
+/* TRUE - Grün, klar erkennbar */
 .amorph-boolean[data-value="true"] {
-  color: rgba(100, 255, 150, 0.9);
+  color: rgba(80, 200, 130, 0.95);
+  border-color: rgba(80, 200, 130, 0.25);
 }
 
 .amorph-boolean[data-value="true"]::before {
-  background: rgba(100, 255, 150, 0.9);
+  background: rgba(80, 200, 130, 0.95);
   box-shadow: 
-    0 0 6px rgba(100, 255, 150, 0.8),
-    0 0 12px rgba(100, 255, 150, 0.4);
+    0 0 6px rgba(80, 200, 130, 0.7),
+    0 0 12px rgba(80, 200, 130, 0.4);
 }
 
-/* FALSE - Rotes Leuchten */
+/* FALSE - Rot, klar erkennbar */
 .amorph-boolean[data-value="false"] {
-  color: rgba(255, 100, 100, 0.9);
+  color: rgba(240, 90, 90, 0.95);
+  border-color: rgba(240, 90, 90, 0.25);
 }
 
 .amorph-boolean[data-value="false"]::before {
-  background: rgba(255, 100, 100, 0.9);
+  background: rgba(240, 90, 90, 0.95);
   box-shadow: 
-    0 0 6px rgba(255, 100, 100, 0.8),
-    0 0 12px rgba(255, 100, 100, 0.4);
+    0 0 6px rgba(240, 90, 90, 0.7),
+    0 0 12px rgba(240, 90, 90, 0.4);
 }
 
-/* UNKNOWN/NULL - Gedämpftes Leuchten */
+/* UNKNOWN/NULL - Gedämpft */
 .amorph-boolean[data-value="unknown"],
 .amorph-boolean[data-value="null"] {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .amorph-boolean[data-value="unknown"]::before,
 .amorph-boolean[data-value="null"]::before {
-  background: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.25);
 }
 
-/* Hover - verstärktes Leuchten */
+/* Hover - dezente Verstärkung */
 .amorph-boolean:hover {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(20, 20, 28, 0.7);
 }
 
 .amorph-boolean[data-value="true"]:hover::before {
   box-shadow: 
-    0 0 8px rgba(100, 255, 150, 1),
-    0 0 16px rgba(100, 255, 150, 0.6);
+    0 0 8px rgba(80, 200, 130, 0.9),
+    0 0 16px rgba(80, 200, 130, 0.5);
 }
 
 .amorph-boolean[data-value="false"]:hover::before {
   box-shadow: 
-    0 0 8px rgba(255, 100, 100, 1),
-    0 0 16px rgba(255, 100, 100, 0.6);
+    0 0 8px rgba(240, 90, 90, 0.9),
+    0 0 16px rgba(240, 90, 90, 0.5);
 }

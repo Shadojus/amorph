@@ -1,36 +1,38 @@
-/* RANGE MORPH - Universe Biosphere Theme */
-/* Leuchtende Bereichsanzeige mit Glow */
+/* RANGE MORPH - Lesbare Bereichsanzeige */
+/* Verbesserte Kontraste und Schriftgrößen */
 
 .amorph-range {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  padding: 4px 0;
+  gap: 10px;
+  font-size: var(--font-size-sm, 13px);
+  padding: 8px 12px;
+  background: rgba(15, 15, 20, 0.5);
+  border-radius: 8px;
+  border: 1px solid rgba(120, 160, 220, 0.1);
 }
 
 .amorph-range-text {
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 11px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: var(--font-size-sm, 14px);
   font-weight: 500;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
 }
 
 .amorph-range-bar {
   flex: 1;
-  height: 6px;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 3px;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 4px;
   position: relative;
-  min-width: 60px;
-  max-width: 120px;
+  min-width: 70px;
+  max-width: 140px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-/* Leuchtender Bereichs-Fill */
+/* Bereichs-Fill */
 .amorph-range-bar::after {
   content: '';
   position: absolute;
@@ -39,53 +41,47 @@
   width: calc(var(--range-end, 100%) - var(--range-start, 0%));
   height: 100%;
   background: linear-gradient(90deg,
-    rgba(100, 180, 255, 0.6),
-    rgba(100, 220, 255, 0.8)
+    rgba(100, 170, 240, 0.7),
+    rgba(100, 200, 255, 0.9)
   );
   border-radius: 3px;
-  box-shadow: 
-    0 0 8px rgba(100, 180, 255, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 /* Bereichs-Varianten nach Kontext */
 .amorph-range[data-context="temperature"] .amorph-range-bar::after {
   background: linear-gradient(90deg,
-    rgba(100, 180, 255, 0.7),
-    rgba(255, 150, 100, 0.7)
+    rgba(100, 170, 240, 0.8),
+    rgba(255, 150, 100, 0.8)
   );
-  box-shadow: 0 0 10px rgba(255, 180, 100, 0.4);
 }
 
 .amorph-range[data-context="ph"] .amorph-range-bar::after {
   background: linear-gradient(90deg,
-    rgba(255, 100, 100, 0.6),
-    rgba(100, 255, 100, 0.6),
-    rgba(100, 100, 255, 0.6)
+    rgba(240, 100, 100, 0.75),
+    rgba(80, 200, 130, 0.75),
+    rgba(100, 100, 240, 0.75)
   );
-  box-shadow: 0 0 8px rgba(100, 255, 150, 0.4);
 }
 
 .amorph-range[data-context="optimal"] .amorph-range-bar::after {
   background: linear-gradient(90deg,
-    rgba(100, 255, 150, 0.6),
-    rgba(100, 255, 150, 0.8)
+    rgba(80, 200, 130, 0.75),
+    rgba(80, 200, 130, 0.9)
   );
-  box-shadow: 0 0 10px rgba(100, 255, 150, 0.5);
 }
 
 .amorph-range-label {
-  font-size: 9px;
+  font-size: var(--font-size-xs, 12px);
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.5);
-  margin-right: 4px;
+  color: rgba(255, 255, 255, 0.65);
+  margin-right: 6px;
 }
 
 .amorph-range-scale {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  font-size: 7px;
-  color: rgba(255, 255, 255, 0.35);
-  margin-top: 2px;
+  font-size: var(--font-size-2xs, 10px);
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 4px;
 }

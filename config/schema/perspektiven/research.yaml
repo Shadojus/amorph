@@ -23,12 +23,12 @@ id: research
 name: Research
 symbol: 🔬
 
-# Soft wisteria - subtle science pastels
+# Science indigo - distinct research pastels
 colors:
-  - "rgba(210, 200, 215, 0.40)"
-  - "rgba(205, 195, 210, 0.38)"
-  - "rgba(200, 190, 205, 0.35)"
-  - "rgba(195, 185, 200, 0.32)"
+  - "rgba(170, 160, 220, 0.75)"
+  - "rgba(160, 150, 210, 0.70)"
+  - "rgba(150, 140, 200, 0.65)"
+  - "rgba(140, 130, 190, 0.60)"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # FIELDS - Ordered by research workflow

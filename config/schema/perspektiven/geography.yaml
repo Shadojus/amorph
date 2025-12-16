@@ -23,12 +23,12 @@ id: geography
 name: Geography
 symbol: 🌍
 
-# Soft earth - subtle terrain pastels
+# Earth brown-orange - distinct terrain pastels
 colors:
-  - "rgba(200, 195, 185, 0.40)"
-  - "rgba(195, 190, 180, 0.38)"
-  - "rgba(190, 185, 175, 0.35)"
-  - "rgba(185, 180, 170, 0.32)"
+  - "rgba(210, 170, 130, 0.75)"
+  - "rgba(200, 160, 120, 0.70)"
+  - "rgba(190, 150, 110, 0.65)"
+  - "rgba(180, 140, 100, 0.60)"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # FIELDS - Ordered by geographic workflow

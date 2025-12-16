@@ -18,12 +18,12 @@ id: cultivation
 name: Cultivation
 symbol: 🌱
 
-# Soft mint - subtle growing pastels
+# Fresh mint green - distinct growing pastels
 colors:
-  - "rgba(195, 215, 200, 0.40)"
-  - "rgba(190, 210, 195, 0.38)"
-  - "rgba(185, 205, 190, 0.35)"
-  - "rgba(180, 200, 185, 0.32)"  
+  - "rgba(130, 220, 180, 0.75)"
+  - "rgba(120, 210, 170, 0.70)"
+  - "rgba(110, 200, 160, 0.65)"
+  - "rgba(100, 190, 150, 0.60)"  
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # FIELDS - Flat structure for optimal morph recognition

@@ -23,12 +23,12 @@ id: culinary
 name: Culinary
 symbol: 🍳
 
-# Soft warm beige - subtle pastels
+# Warm orange-beige - distinct culinary pastels
 colors:
-  - "rgba(220, 200, 180, 0.40)"
-  - "rgba(215, 195, 175, 0.38)"
-  - "rgba(210, 190, 170, 0.35)"
-  - "rgba(205, 185, 165, 0.32)"
+  - "rgba(245, 180, 130, 0.75)"
+  - "rgba(240, 170, 120, 0.70)"
+  - "rgba(235, 160, 110, 0.65)"
+  - "rgba(230, 150, 100, 0.60)"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # FIELDS - Ordered by professional workflow

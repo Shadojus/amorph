@@ -1,53 +1,48 @@
-/* RATING MORPH - Universe Biosphere Theme */
-/* Leuchtende Sternenbewertung */
+/* RATING MORPH - Lesbare Sternenbewertung */
+/* Verbesserte Kontraste und Schriftgrößen */
 
 .amorph-rating {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  height: 24px;
-  padding: 0 8px;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  gap: 10px;
+  height: 32px;
+  padding: 0 12px;
+  background: rgba(15, 15, 20, 0.6);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .amorph-rating-stars {
   display: inline-flex;
-  gap: 2px;
+  gap: 3px;
 }
 
 .amorph-rating-star {
-  font-size: 11px;
+  font-size: 14px;
   transition: all 0.2s ease;
 }
 
-/* Voller Stern - Goldenes Leuchten */
+/* Voller Stern - Gold */
 .amorph-rating-full {
-  color: rgba(255, 200, 50, 0.95);
-  text-shadow: 
-    0 0 6px rgba(255, 200, 50, 0.8),
-    0 0 12px rgba(255, 200, 50, 0.4);
+  color: rgba(255, 190, 50, 0.98);
 }
 
-/* Halber Stern - Gedämpftes Leuchten */
+/* Halber Stern */
 .amorph-rating-half {
-  color: rgba(255, 200, 50, 0.5);
-  text-shadow: 0 0 4px rgba(255, 200, 50, 0.3);
+  color: rgba(255, 190, 50, 0.6);
 }
 
-/* Leerer Stern - Subtiler Umriss */
+/* Leerer Stern */
 .amorph-rating-empty {
-  color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.25);
 }
 
 /* Numerischer Wert */
 .amorph-rating-value {
-  font-size: 11px;
+  font-size: var(--font-size-sm, 13px);
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.9);
   font-variant-numeric: tabular-nums;
-  text-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
 }
 
 /* Hover - Verstärktes Leuchten */

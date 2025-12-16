@@ -1,75 +1,80 @@
-/* HIERARCHY MORPH - Universe Theme */
+/* HIERARCHY MORPH - Lesbare Baumstruktur */
+/* Verbesserte Abstände, Schriftgrößen und Kontraste */
+
 .amorph-hierarchy {
-  font-size: 11px;
-  padding: 4px;
-  background: transparent;
+  font-size: var(--font-size-base, 14px);
+  padding: 16px;
+  background: var(--glass-bg, rgba(15, 15, 20, 0.75));
+  border-radius: 12px;
+  border: 1px solid var(--glass-border, rgba(120, 160, 220, 0.12));
 }
 
 .amorph-hierarchy-node {
   position: relative;
-  padding-left: 18px;
-  margin: 4px 0;
+  padding-left: 24px;
+  margin: 6px 0;
 }
 
-/* Leuchtende Verbindungslinie */
+/* Sichtbare Verbindungslinie */
 .amorph-hierarchy-node::before {
   content: '';
   position: absolute;
-  left: 4px;
+  left: 6px;
   top: 0;
   bottom: 0;
-  width: 1px;
-  background: linear-gradient(180deg, 
-    rgba(100, 150, 255, 0.3) 0%, 
-    rgba(100, 150, 255, 0.1) 100%);
-  box-shadow: 0 0 4px rgba(100, 150, 255, 0.2);
+  width: 2px;
+  background: rgba(100, 160, 220, 0.25);
 }
 
-/* Horizontale Verbindung mit Leuchtpunkt */
+/* Horizontale Verbindung */
 .amorph-hierarchy-node::after {
   content: '';
   position: absolute;
-  left: 4px;
-  top: 12px;
-  width: 10px;
-  height: 1px;
-  background: rgba(100, 150, 255, 0.3);
-  box-shadow: 0 0 3px rgba(100, 150, 255, 0.2);
+  left: 6px;
+  top: 14px;
+  width: 14px;
+  height: 2px;
+  background: rgba(100, 160, 220, 0.25);
 }
 
 .amorph-hierarchy-node:last-child::before {
-  bottom: calc(100% - 12px);
+  bottom: calc(100% - 14px);
 }
 
-/* Node-Label mit Leuchtpunkt */
+/* Node-Label */
 .amorph-hierarchy-label {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 8px;
-  color: var(--color-text);
-  position: relative;
+  gap: 10px;
+  padding: 8px 12px;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.2s ease;
 }
 
-/* Leuchtender Punkt vor jedem Node */
+.amorph-hierarchy-label:hover {
+  background: rgba(0, 0, 0, 0.3);
+  border-color: rgba(100, 160, 220, 0.15);
+}
+
+/* Punkt vor jedem Node */
 .amorph-hierarchy-label::before {
   content: '';
-  width: 5px;
-  height: 5px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: rgba(180, 210, 255, 0.8);
-  box-shadow: 
-    0 0 3px rgba(180, 210, 255, 0.8),
-    0 0 6px rgba(100, 150, 255, 0.5);
+  background: rgba(100, 160, 220, 0.7);
   flex-shrink: 0;
 }
 
 .amorph-hierarchy-icon {
-  font-size: 10px;
-  opacity: 0.4;
+  font-size: 1em;
+  opacity: 0.7;
 }
 
-/* Root Node - Heller leuchtend */
+/* Root Node - Hervorgehoben */
 .amorph-hierarchy > .amorph-hierarchy-node {
   padding-left: 0;
 }
@@ -81,37 +86,36 @@
 
 .amorph-hierarchy > .amorph-hierarchy-node > .amorph-hierarchy-label {
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.95);
+  font-size: var(--font-size-md, 15px);
+  color: rgba(255, 255, 255, 0.98);
+  background: rgba(80, 140, 220, 0.15);
+  border-color: rgba(80, 160, 240, 0.25);
 }
 
 .amorph-hierarchy > .amorph-hierarchy-node > .amorph-hierarchy-label::before {
-  width: 8px;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 
-    0 0 4px rgba(255, 255, 255, 0.9),
-    0 0 8px rgba(200, 220, 255, 0.6),
-    0 0 16px rgba(150, 180, 255, 0.4);
+  width: 10px;
+  height: 10px;
+  background: rgba(80, 160, 240, 0.9);
 }
 
 /* Kinder */
 .amorph-hierarchy-children {
-  margin-left: 6px;
+  margin-left: 8px;
+  margin-top: 4px;
 }
 
 /* Kompakte Inline-Variante */
 .amorph-hierarchy-inline {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  padding: 4px 8px;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  gap: 8px;
+  font-size: var(--font-size-sm, 13px);
+  padding: 8px 12px;
+  background: rgba(15, 15, 20, 0.6);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .amorph-hierarchy-inline-separator {
-  color: rgba(100, 150, 255, 0.4);
-  text-shadow: 0 0 4px rgba(100, 150, 255, 0.3);
+  color: rgba(100, 160, 220, 0.6);
 }

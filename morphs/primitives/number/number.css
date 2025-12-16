@@ -1,28 +1,25 @@
-/* NUMBER MORPH - Universe Biosphere Theme */
-/* Leuchtende Zahlenwerte */
+/* NUMBER MORPH - Lesbare Zahlenwerte */
+/* Verbesserte Kontraste und Schriftgrößen */
 
 .amorph-number {
   display: inline;
   font-variant-numeric: tabular-nums;
   font-weight: 600;
-  font-size: var(--font-size-sm, 14px);
-  color: rgba(255, 255, 255, 0.9);
+  font-size: var(--font-size-base, 15px);
+  color: rgba(255, 255, 255, 0.95);
 }
 
-/* Hervorgehobene Zahlen mit Glow */
+/* Hervorgehobene Zahlen */
 .amorph-number[data-highlight="true"] {
-  color: rgba(100, 220, 255, 0.95);
-  text-shadow: 0 0 8px rgba(100, 220, 255, 0.5);
+  color: rgba(100, 180, 240, 0.98);
 }
 
 /* Warnende Zahlen */
 .amorph-number[data-context="danger"] {
-  color: rgba(255, 100, 100, 0.95);
-  text-shadow: 0 0 6px rgba(255, 100, 100, 0.4);
+  color: rgba(240, 90, 90, 0.98);
 }
 
 /* Positive Zahlen */
 .amorph-number[data-context="success"] {
-  color: rgba(100, 255, 150, 0.95);
-  text-shadow: 0 0 6px rgba(100, 255, 150, 0.4);
+  color: rgba(80, 200, 130, 0.98);
 }

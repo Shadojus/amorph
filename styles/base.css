@@ -14,48 +14,49 @@
   --ui-font-md: 0.9rem;
   --ui-font-lg: 1rem;
   
-  /* === FARBSCHEMA === */
-  /* Akzentfarbe: Neutrales Weiß - Perspektiven liefern Farben */
-  --color-accent: rgba(255, 255, 255, 0.92);
-  --color-accent-dim: rgba(255, 255, 255, 0.65);
-  --color-accent-glow: rgba(255, 255, 255, 0.28);
-  --color-accent-subtle: rgba(255, 255, 255, 0.1);
+  /* === FARBSCHEMA - VERBESSERTE KONTRASTE === */
+  /* Akzentfarbe: Klares Weiß mit besserer Lesbarkeit */
+  --color-accent: rgba(255, 255, 255, 0.95);
+  --color-accent-dim: rgba(255, 255, 255, 0.75);
+  --color-accent-glow: rgba(255, 255, 255, 0.35);
+  --color-accent-subtle: rgba(255, 255, 255, 0.15);
   
-  /* Highlight-Farbe für Markierungen - Glas-Bernstein */
-  --color-highlight: rgba(240, 190, 80, 0.90);
-  --color-highlight-bg: rgba(240, 190, 80, 0.15);
+  /* Highlight-Farbe für Markierungen - Warmes Gold */
+  --color-highlight: rgba(255, 200, 90, 0.95);
+  --color-highlight-bg: rgba(255, 200, 90, 0.18);
   
   /* Hintergrund */
-  --color-bg: #000000;
-  --color-bg-elevated: #0a0a0a;
+  --color-bg: #0a0a0c;
+  --color-bg-elevated: #111115;
   
-  /* Text - Hauptsächlich Weiß */
-  --color-text: rgba(255, 255, 255, 0.94);
-  --color-text-muted: rgba(255, 255, 255, 0.6);
-  --color-text-dim: rgba(255, 255, 255, 0.38);
+  /* Text - WCAG AA Kontrast (mind. 4.5:1) */
+  --color-text: rgba(255, 255, 255, 0.95);
+  --color-text-muted: rgba(255, 255, 255, 0.72);
+  --color-text-dim: rgba(255, 255, 255, 0.52);
   
-  /* Semantische Farben - Glas-Stil, leuchtend durchscheinend */
-  --color-success: rgba(100, 220, 160, 0.90);
-  --color-warning: rgba(240, 190, 80, 0.90);
-  --color-error: rgba(240, 110, 110, 0.90);
+  /* Semantische Farben - Klar unterscheidbar, WCAG konform */
+  --color-success: rgba(80, 200, 130, 0.95);
+  --color-warning: rgba(255, 180, 60, 0.95);
+  --color-error: rgba(240, 90, 90, 0.95);
+  --color-info: rgba(80, 160, 240, 0.95);
   
   /* === BLACK GLASMORPHISM - Universe Theme === */
-  /* Dunkleres Glas mit kosmischer Tiefe */
-  --glass-bg: rgba(0, 0, 0, 0.55);
-  --glass-bg-hover: rgba(0, 0, 0, 0.65);
-  --glass-bg-active: rgba(0, 0, 0, 0.75);
-  /* Borders: Sehr dezentes Blau-Weiß für Glaskanten */
-  --glass-border: rgba(100, 150, 255, 0.06);
-  --glass-border-hover: rgba(100, 150, 255, 0.12);
-  --glass-border-active: rgba(100, 150, 255, 0.18);
+  /* Dunkleres Glas mit besserer Struktur */
+  --glass-bg: rgba(15, 15, 20, 0.75);
+  --glass-bg-hover: rgba(20, 20, 28, 0.82);
+  --glass-bg-active: rgba(25, 25, 35, 0.88);
+  /* Borders: Sichtbarer für bessere Struktur */
+  --glass-border: rgba(120, 160, 220, 0.12);
+  --glass-border-hover: rgba(120, 160, 220, 0.22);
+  --glass-border-active: rgba(120, 160, 220, 0.32);
   /* Blur-Effekte */
-  --glass-blur: blur(24px);
-  --glass-blur-strong: blur(36px);
-  /* Schatten: Tiefe schwarze Schatten mit blauem Schimmer */
-  --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.5), 0 0 40px rgba(50, 80, 150, 0.05);
-  --glass-shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 60px rgba(50, 80, 150, 0.08);
-  /* Inset: Subtiler Lichtschimmer oben */
-  --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  --glass-blur: blur(20px);
+  --glass-blur-strong: blur(32px);
+  /* Schatten: Definierte Tiefe */
+  --glass-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3);
+  --glass-shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4);
+  /* Inset: Sichtbarer Lichtrand */
+  --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.06);
   
   /* === SPACING-SYSTEM === */
   /* 4px Basis-Einheit für konsistente Abstände */
@@ -112,27 +113,27 @@
   --margin-element: var(--space-sm); /* 8px - Element-Außenabstand */
   --margin-section: var(--space-xl); /* 24px - Section-Außenabstand */
   
-  /* === TYPOGRAFIE-SYSTEM (RESPONSIVE) === */
-  /* Basis: clamp(min, preferred, max) für Viewport-Anpassung */
-  --font-family: system-ui, -apple-system, sans-serif;
+  /* === TYPOGRAFIE-SYSTEM (LESBAR & RESPONSIVE) === */
+  /* WCAG 2.1 AA: Minimum 14px für Fließtext, bessere Kontraste */
+  --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   
-  /* Responsive Größen-Skala */
-  --font-size-2xs: clamp(10px, 0.6rem + 0.15vw, 11px);    /* Scale-Beschriftungen */
-  --font-size-xs: clamp(11px, 0.65rem + 0.15vw, 12px);   /* Kleine Labels */
-  --font-size-sm: clamp(12px, 0.7rem + 0.2vw, 14px);  /* Standard-Text, Werte */
-  --font-size-base: clamp(13px, 0.75rem + 0.2vw, 15px); /* Pilz-Namen, Labels */
-  --font-size-md: clamp(14px, 0.8rem + 0.2vw, 16px);  /* Section-Header */
-  --font-size-lg: clamp(15px, 0.85rem + 0.25vw, 17px);  /* Feld-Überschriften */
-  --font-size-xl: clamp(17px, 1rem + 0.3vw, 20px); /* Perspektiven-Titel */
-  --font-size-2xl: clamp(22px, 1.2rem + 0.5vw, 26px);    /* Große Zahlen, Icons */
+  /* Responsive Größen-Skala - LESBAR */
+  --font-size-2xs: clamp(11px, 0.7rem + 0.1vw, 12px);    /* Skalen, minimal */
+  --font-size-xs: clamp(12px, 0.75rem + 0.1vw, 13px);   /* Kleine Labels */
+  --font-size-sm: clamp(13px, 0.8rem + 0.15vw, 15px);   /* Standard-Text */
+  --font-size-base: clamp(14px, 0.875rem + 0.15vw, 16px); /* Pilz-Namen, Labels */
+  --font-size-md: clamp(15px, 0.9rem + 0.2vw, 17px);    /* Section-Header */
+  --font-size-lg: clamp(16px, 1rem + 0.2vw, 18px);      /* Feld-Überschriften */
+  --font-size-xl: clamp(18px, 1.1rem + 0.25vw, 22px);   /* Perspektiven-Titel */
+  --font-size-2xl: clamp(24px, 1.4rem + 0.4vw, 30px);   /* Große Zahlen, Icons */
   
   /* Semantische Aliases für Compare-Elemente */
-  --font-pilz-name: var(--font-size-sm);       /* ~11px - Pilz-Namen überall gleich! */
-  --font-section-label: var(--font-size-base); /* ~12px - Section-Überschriften */
-  --font-wert: var(--font-size-sm);            /* ~11px - Zahlenwerte */
-  --font-label: var(--font-size-xs);           /* ~10px - Kleine Labels */
-  --font-scale: var(--font-size-2xs);          /* ~9px - Skalen-Beschriftungen */
-  --font-big-number: var(--font-size-2xl);     /* ~20px - Große Zahlen */
+  --font-pilz-name: var(--font-size-base);     /* ~14px - Pilz-Namen lesbar! */
+  --font-section-label: var(--font-size-md);   /* ~15px - Section-Überschriften */
+  --font-wert: var(--font-size-sm);            /* ~13px - Zahlenwerte */
+  --font-label: var(--font-size-xs);           /* ~12px - Kleine Labels */
+  --font-scale: var(--font-size-2xs);          /* ~11px - Skalen-Beschriftungen */
+  --font-big-number: var(--font-size-2xl);     /* ~24px - Große Zahlen */
   
   /* Shorthand-Aliases (für schnelleres Tippen) */
   --font-2xs: var(--font-size-2xs);

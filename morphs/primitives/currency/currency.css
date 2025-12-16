@@ -1,54 +1,53 @@
-/* CURRENCY MORPH - Universe Biosphere Theme */
-/* Währungswerte mit dezenter Leuchtung */
+/* CURRENCY MORPH - Lesbare Währungswerte */
+/* Verbesserte Kontraste und Schriftgrößen */
 
 .amorph-currency {
   display: inline-flex;
   align-items: baseline;
-  gap: 2px;
+  gap: 3px;
   font-variant-numeric: tabular-nums;
 }
 
 .amorph-currency-symbol {
-  font-size: 0.85em;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9em;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .amorph-currency-value {
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.95);
+  font-size: var(--font-size-base, 15px);
 }
 
 .amorph-currency-decimals {
-  font-size: 0.8em;
-  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.85em;
+  color: rgba(255, 255, 255, 0.65);
 }
 
-/* Positive Werte - Grünes Leuchten */
+/* Positive Werte - Grün */
 .amorph-currency[data-sign="positive"] {
-  color: rgba(100, 255, 150, 0.95);
+  color: rgba(80, 200, 130, 0.98);
 }
 
 .amorph-currency[data-sign="positive"] .amorph-currency-value {
-  text-shadow: 0 0 8px rgba(100, 255, 150, 0.4);
+  color: rgba(80, 200, 130, 0.98);
 }
 
-/* Negative Werte - Rotes Leuchten */
+/* Negative Werte - Rot */
 .amorph-currency[data-sign="negative"] {
-  color: rgba(255, 100, 100, 0.95);
+  color: rgba(240, 90, 90, 0.98);
 }
 
 .amorph-currency[data-sign="negative"] .amorph-currency-value {
-  text-shadow: 0 0 8px rgba(255, 100, 100, 0.4);
+  color: rgba(240, 90, 90, 0.98);
 }
 
 /* Größenvarianten */
 .amorph-currency-small {
-  font-size: 12px;
+  font-size: var(--font-size-sm, 13px);
 }
 
 .amorph-currency-large {
-  font-size: 20px;
+  font-size: var(--font-size-xl, 20px);
   font-weight: 700;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-}
 }

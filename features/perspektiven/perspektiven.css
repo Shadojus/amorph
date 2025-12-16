@@ -21,90 +21,99 @@
 .amorph-perspektive-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  height: calc(var(--header-element-height, 40px) - 6px);
-  padding: 0 14px;
-  font-size: 0.82rem;
+  gap: 8px;
+  height: calc(var(--header-element-height, 40px) - 4px);
+  padding: 0 16px;
+  font-size: 0.85rem;
   font-weight: 500;
   text-transform: capitalize;
   white-space: nowrap;
-  /* Pure Black Glass */
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  color: rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: calc(var(--header-element-radius, 20px) - 4px);
+  /* Pastellfarbener Hintergrund mit Perspektiven-Farbe */
+  background: color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.5)) 15%, rgba(20, 25, 35, 0.7));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: rgba(255, 255, 255, 0.75);
+  /* Farbiger Rand mit Perspektiven-Farbe */
+  border: 1px solid color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.5)) 35%, transparent);
+  border-radius: calc(var(--header-element-radius, 20px) - 2px);
   cursor: pointer;
-  transition: all 0.2s var(--anim-ease-out);
+  transition: all 0.25s var(--anim-ease-out);
   position: relative;
   order: 100;
 }
 
-/* Perspektiven mit Treffern */
+/* Perspektiven mit Treffern - leicht hervorgehoben */
 .amorph-perspektive-btn.hat-treffer {
   order: 0;
-  color: rgba(255, 255, 255, 0.75);
-  border-color: rgba(255, 255, 255, 0.1);
-  background: rgba(0, 0, 0, 0.5);
+  color: rgba(255, 255, 255, 0.9);
+  background: color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.5)) 25%, rgba(20, 25, 35, 0.75));
+  border-color: color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.5)) 50%, transparent);
 }
 
 /* Emoji-Symbole */
 .amorph-perspektive-btn .btn-symbol {
-  font-size: 0.85em;
+  font-size: 1em;
   line-height: 1;
-  opacity: 0.65;
+  opacity: 0.85;
   transition: opacity 0.15s ease;
 }
 
 .amorph-perspektive-btn .btn-name {
   line-height: 1;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
 
 .amorph-perspektive-btn:hover {
-  background: rgba(0, 0, 0, 0.6);
-  border-color: rgba(0, 255, 255, 0.2);
-  color: rgba(255, 255, 255, 0.9);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  background: color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.5)) 30%, rgba(25, 30, 40, 0.8));
+  border-color: color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.5)) 60%, transparent);
+  color: rgba(255, 255, 255, 1);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.4),
+    0 0 12px color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.5)) 25%, transparent);
 }
 
 .amorph-perspektive-btn:hover .btn-symbol {
   opacity: 1;
 }
 
-/* AKTIV - verstecken! Nur als Badge in Suchleiste */
+/* AKTIV - Deutlich sichtbar mit kräftiger Pastellfarbe */
 .amorph-perspektive-btn.aktiv,
 .amorph-perspektive-btn[aria-pressed="true"] {
-  display: none;
+  background: color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.7)) 45%, rgba(30, 35, 45, 0.85));
+  border-color: var(--p-farbe, rgba(180, 190, 200, 0.7));
+  border-width: 2px;
+  color: rgba(255, 255, 255, 1);
+  box-shadow: 
+    0 0 16px color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.7)) 40%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  order: -1;
 }
 
 /* Treffer-Badge - Kompakt */
 .amorph-perspektive-btn.hat-treffer::after {
   content: attr(data-treffer-anzahl);
   position: absolute;
-  top: -5px;
-  right: -3px;
-  font-size: 0.65rem;
+  top: -6px;
+  right: -4px;
+  font-size: 0.7rem;
   font-weight: 700;
   line-height: 1;
-  padding: 3px 5px;
-  min-width: 16px;
+  padding: 4px 6px;
+  min-width: 18px;
   text-align: center;
-  /* Glow number */
-  background: rgba(0, 0, 0, 0.65);
-  color: var(--p-farbe, rgba(255, 255, 255, 0.85));
-  text-shadow: 0 0 5px var(--p-farbe, rgba(255, 255, 255, 0.4));
-  border: 1px solid color-mix(in srgb, var(--p-farbe, white) 25%, transparent);
-  border-radius: 8px;
+  /* Pastellfarbener Badge mit Perspektiven-Farbe */
+  background: color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.8)) 60%, rgba(20, 25, 35, 0.9));
+  color: rgba(255, 255, 255, 0.95);
+  border: 1px solid color-mix(in srgb, var(--p-farbe, white) 50%, transparent);
+  border-radius: 10px;
   z-index: 10;
 }
 
 .amorph-perspektive-btn.aktiv.hat-treffer::after,
 .amorph-perspektive-btn[aria-pressed="true"].hat-treffer::after {
-  background: color-mix(in srgb, var(--p-farbe) 12%, rgba(0, 0, 0, 0.7));
-  box-shadow: 0 0 6px color-mix(in srgb, var(--p-farbe) 35%, transparent);
+  background: color-mix(in srgb, var(--p-farbe) 70%, rgba(20, 25, 35, 0.85));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--p-farbe) 50%, transparent);
 }
 
 @keyframes badge-glow-pop {

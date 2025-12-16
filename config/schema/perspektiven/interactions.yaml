@@ -25,12 +25,12 @@ id: interactions
 name: Interactions
 symbol: 🔗
 
-# Soft peach - subtle connection pastels
+# Peach orange - distinct connection pastels
 colors:
-  - "rgba(220, 205, 195, 0.40)"
-  - "rgba(215, 200, 190, 0.38)"
-  - "rgba(210, 195, 185, 0.35)"
-  - "rgba(205, 190, 180, 0.32)"
+  - "rgba(250, 190, 160, 0.75)"
+  - "rgba(245, 180, 150, 0.70)"
+  - "rgba(240, 170, 140, 0.65)"
+  - "rgba(235, 160, 130, 0.60)"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # FIELDS - Ordered by interaction types

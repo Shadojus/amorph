@@ -23,12 +23,12 @@ id: conservation
 name: Conservation
 symbol: 🌿
 
-# Soft forest - subtle green pastels
+# Forest green - distinct conservation pastels
 colors:
-  - "rgba(185, 205, 190, 0.40)"
-  - "rgba(180, 200, 185, 0.38)"
-  - "rgba(175, 195, 180, 0.35)"
-  - "rgba(170, 190, 175, 0.32)"
+  - "rgba(120, 180, 140, 0.75)"
+  - "rgba(110, 170, 130, 0.70)"
+  - "rgba(100, 160, 120, 0.65)"
+  - "rgba(90, 150, 110, 0.60)"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # FIELDS - Ordered by conservation workflow

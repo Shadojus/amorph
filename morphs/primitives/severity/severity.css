@@ -1,28 +1,30 @@
-/* SEVERITY MORPH - Universe Biosphere Theme */
-/* Schweregrad-Anzeige mit organischem Glow */
+/* SEVERITY MORPH - Lesbare Schweregrad-Anzeige */
+/* Verbesserte Kontraste und Schriftgrößen */
 
 .amorph-severity {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 8px;
-  background: transparent;
+  gap: 8px;
+  padding: 16px;
+  background: var(--glass-bg, rgba(15, 15, 20, 0.75));
+  border-radius: 12px;
+  border: 1px solid var(--glass-border, rgba(120, 160, 220, 0.12));
 }
 
 .amorph-severity-leer {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.5);
   font-style: italic;
-  font-size: 11px;
+  font-size: var(--font-size-sm, 14px);
 }
 
 .amorph-severity-titel {
-  font-size: 10px;
+  font-size: var(--font-size-sm, 13px);
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.7);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding-bottom: 6px;
-  border-bottom: 1px solid rgba(100, 150, 255, 0.1);
+  letter-spacing: 0.04em;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Einzelne Severity-Row */
@@ -30,70 +32,65 @@
   display: grid;
   grid-template-columns: auto 1fr auto auto;
   align-items: center;
-  gap: 8px;
-  padding: 6px 10px;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.03);
+  gap: 12px;
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
   transition: all 0.2s ease;
 }
 
 .amorph-severity-row:hover {
-  background: rgba(0, 0, 0, 0.4);
-  border-color: rgba(100, 150, 255, 0.12);
+  background: rgba(0, 0, 0, 0.3);
+  border-color: rgba(100, 160, 220, 0.15);
 }
 
-/* Icon - Leuchtender Punkt */
+/* Icon */
 .amorph-severity-icon {
-  font-size: 10px;
-  width: 20px;
+  font-size: 14px;
+  width: 24px;
   text-align: center;
-  filter: drop-shadow(0 0 4px currentColor);
 }
 
 /* Label */
 .amorph-severity-label {
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.85);
+  font-size: var(--font-size-sm, 13px);
+  color: rgba(255, 255, 255, 0.9);
   font-weight: 500;
   white-space: nowrap;
 }
 
 /* Track - Dunkler Balken-Hintergrund */
 .amorph-severity-track {
-  height: 4px;
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 2px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
   overflow: hidden;
-  min-width: 60px;
+  min-width: 80px;
 }
 
-/* Fill - Leuchtender Füllbalken */
+/* Fill */
 .amorph-severity-fill {
   height: 100%;
-  border-radius: 2px;
+  border-radius: 3px;
   transition: width 0.4s var(--anim-ease-out, ease);
-  box-shadow: 
-    0 0 6px currentColor,
-    0 0 12px rgba(255, 255, 255, 0.1);
 }
 
 /* Wert */
 .amorph-severity-value {
-  font-size: 10px;
+  font-size: var(--font-size-sm, 13px);
   font-weight: 600;
-  min-width: 32px;
+  min-width: 40px;
   text-align: right;
-  text-shadow: 0 0 8px currentColor;
 }
 
 /* Beschreibung */
 .amorph-severity-description {
   grid-column: 2 / -1;
-  font-size: 9px;
-  color: rgba(255, 255, 255, 0.4);
+  font-size: var(--font-size-xs, 12px);
+  color: rgba(255, 255, 255, 0.55);
   padding-left: 0;
-  margin-top: -2px;
+  margin-top: -4px;
 }
 
 /* Level-spezifische Glow-Farben */
