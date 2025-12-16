@@ -18,10 +18,11 @@
   display: inline-block;
   padding: var(--space-xs-plus) var(--space-md);
   font-size: var(--ui-font-md, 0.72rem);
-  background: rgba(234, 179, 8, 0.12);
-  color: rgba(234, 179, 8, 0.85);
-  border: 1px solid rgba(234, 179, 8, 0.25);
-  border-radius: var(--ui-radius-md, 6px);
+  /* Exakt wie Grid Block-Felder */
+  background: rgba(0, 0, 0, 0.25);
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(100, 150, 255, 0.06);
+  border-radius: 6px;
 }
 
 /* Grid für Vergleichs-Cards */
@@ -32,11 +33,39 @@
 }
 
 /* Einzelne Vergleichs-Card */
+/* EXAKT wie Grid Item Container in layouts.css */
 .amorph-vergleich-card {
-  background: rgba(20, 20, 25, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  /* Exakt wie amorph-container[data-morph="item"] */
+  background: linear-gradient(
+    180deg,
+    rgba(20, 25, 35, 0.92) 0%,
+    rgba(15, 18, 28, 0.95) 100%
+  );
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(120, 160, 220, 0.15);
+  border-radius: 16px;
   overflow: hidden;
+  /* Exakt wie Grid Cards */
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  /* Subtiles Raster wie Grid */
+  background-image: 
+    linear-gradient(rgba(80, 120, 180, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(80, 120, 180, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.amorph-vergleich-card:hover {
+  border-color: rgba(130, 170, 240, 0.25);
+  transform: translateY(-4px);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 12px 40px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(80, 120, 180, 0.1);
 }
 
 .amorph-vergleich-card-bild {
@@ -58,7 +87,8 @@
   font-size: 1.25rem;
   font-weight: 600;
   color: white;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  /* Exakt wie Grid Feld Border */
+  border-bottom: 1px solid rgba(120, 160, 220, 0.08);
 }
 
 .amorph-vergleich-card-felder {
@@ -70,7 +100,8 @@
   justify-content: space-between;
   align-items: baseline;
   padding: var(--space-sm) 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  /* Exakt wie Grid Feld Border */
+  border-bottom: 1px solid rgba(120, 160, 220, 0.08);
 }
 
 .amorph-vergleich-card-feld:last-child {

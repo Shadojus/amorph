@@ -44,13 +44,21 @@
 }
 
 /* === BASIS === */
+/* EXAKT wie Grid Block-Felder in layouts.css */
 .amorph-compare {
   width: 100%;
-  padding: var(--padding-card);
-  background: rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  border-radius: 8px;
-  margin-bottom: var(--space-sm-plus);
+  padding: 10px 12px;
+  margin: 6px 8px;
+  /* Exakt wie Grid Block-Felder */
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(100, 150, 255, 0.06);
+  border-radius: 6px;
+  /* Kosmisches Grid - exakt wie layouts.css */
+  background-image: 
+    linear-gradient(rgba(60, 100, 160, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(60, 100, 160, 0.025) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.3) 100%);
+  background-size: 20px 20px, 20px 20px, 100% 100%;
 }
 
 .compare-label {
@@ -167,9 +175,10 @@
 
 .compare-bar-row .bar-track {
   height: 18px;
-  background: rgba(0, 0, 0, 0.20);
+  background: rgba(0, 0, 0, 0.2);
   border-radius: 9px;
   overflow: hidden;
+  border: 1px solid rgba(100, 150, 255, 0.06);
 }
 
 .compare-bar-row .bar-fill {
@@ -196,7 +205,7 @@
   font-size: var(--font-scale);
   color: rgba(255, 255, 255, 0.40);
   font-variant-numeric: tabular-nums;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(120, 160, 220, 0.08);
   margin-top: var(--space-sm);
 }
 
@@ -251,7 +260,8 @@
   align-items: center;
   gap: 4px;
   padding: 3px 8px;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(100, 150, 255, 0.06);
   border-radius: 12px;
   font-size: 11px;
 }
@@ -285,7 +295,8 @@
   align-items: center;
   gap: 4px;
   padding: 3px 8px;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(100, 150, 255, 0.06);
   border-radius: 12px;
   font-size: 11px;
 }
@@ -626,6 +637,7 @@
   gap: var(--gap-tight);
   padding: var(--space-xs) var(--space-sm-plus);
   background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(100, 150, 255, 0.06);
   border-left: 3px solid;
   border-radius: 0 8px 8px 0;
   font-size: var(--font-pilz-name);
@@ -646,7 +658,8 @@
 
 .bar-group {
   background: rgba(0, 0, 0, 0.18);
-  border-radius: 8px;
+  border: 1px solid rgba(100, 150, 255, 0.06);
+  border-radius: 10px;
   padding: var(--space-sm-plus) var(--space-md);
 }
 
@@ -656,7 +669,7 @@
   color: rgba(255, 255, 255, 0.85);
   margin-bottom: var(--space-sm);
   padding-bottom: var(--space-xs);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(120, 160, 220, 0.08);
 }
 
 .bar-group-bars {
@@ -682,7 +695,8 @@
 
 .bar-group-bar .bar-track {
   height: 14px;
-  background: rgba(0, 0, 0, 0.20);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(100, 150, 255, 0.06);
   border-radius: 7px;
   overflow: hidden;
 }
@@ -702,42 +716,43 @@
 }
 
 /* === PERSPEKTIVEN COMPARE === */
+/* EXAKT wie Grid Item Container in layouts.css */
 .compare-perspektive {
   position: relative;
-  /* Woodfloor Hintergrund wie Grid-Cards */
-  background: 
-    linear-gradient(
-      160deg,
-      rgba(0, 0, 0, 0.88) 0%,
-      rgba(0, 0, 0, 0.92) 50%,
-      rgba(0, 0, 0, 0.85) 100%
-    ),
-    url('../styles/woodfloor/Moss_Woodsf_Laub.png');
-  background-size: cover, cover;
-  background-position: center, center;
-  /* Dark Glasmorphism */
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  /* Exakt wie amorph-container[data-morph="item"] */
+  background: linear-gradient(
+    180deg,
+    rgba(20, 25, 35, 0.92) 0%,
+    rgba(15, 18, 28, 0.95) 100%
+  );
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(120, 160, 220, 0.15);
   border-radius: 16px;
   padding: var(--padding-section);
   padding-left: calc(var(--space-lg) + var(--space-xs));
   margin-bottom: calc(var(--space-lg) + var(--space-xs));
-  /* Glasmorphism Schatten */
+  overflow: hidden;
+  /* Exakt wie Grid Cards */
   box-shadow: 
-    inset 0 0 40px rgba(0, 0, 0, 0.3),
-    0 4px 20px rgba(0, 0, 0, 0.4),
-    0 1px 3px rgba(0, 0, 0, 0.2);
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 2px 8px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
+  /* Subtiles Raster wie Grid */
+  background-image: 
+    linear-gradient(rgba(80, 120, 180, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(80, 120, 180, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
 }
 
 .compare-perspektive:hover {
-  border-color: rgba(255, 255, 255, 0.12);
-  transform: translateY(-2px);
+  border-color: rgba(130, 170, 240, 0.25);
+  transform: translateY(-4px);
   box-shadow: 
-    inset 0 0 40px rgba(0, 0, 0, 0.2),
-    0 8px 32px rgba(0, 0, 0, 0.5),
-    0 0 20px rgba(255, 255, 255, 0.03);
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 12px 40px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(80, 120, 180, 0.1);
 }
 
 /* Leuchtender Perspektiven-Balken - wie im Grid */
@@ -778,7 +793,7 @@
   gap: var(--space-md);
   padding-bottom: var(--space-md);
   margin-bottom: var(--space-md);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(120, 160, 220, 0.08);
 }
 
 .compare-perspektive-header .perspektive-symbol {
@@ -804,9 +819,10 @@
   gap: var(--gap-loose);
   margin-bottom: var(--space-lg);
   padding: var(--space-sm) var(--space-md);
-  background: rgba(0, 0, 0, 0.1);
+  /* Exakt wie Grid Block-Felder */
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(100, 150, 255, 0.06);
   border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .compare-legende-item {
@@ -840,14 +856,21 @@
 }
 
 .compare-section {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  padding: var(--padding-card);
-  border: 1px solid rgba(255, 255, 255, 0.03);
+  /* Exakt wie Grid Block-Felder */
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(100, 150, 255, 0.06);
+  border-radius: 6px;
+  /* Kosmisches Grid */
+  background-image: 
+    linear-gradient(rgba(60, 100, 160, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(60, 100, 160, 0.025) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.3) 100%);
+  background-size: 20px 20px, 20px 20px, 100% 100%;
 }
 
 .compare-section.section-primary {
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .compare-section.section-danger {
@@ -879,7 +902,7 @@
   flex-direction: column;
   gap: var(--gap-tight);
   padding: var(--space-sm) 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(120, 160, 220, 0.08);
 }
 
 .compare-text-wrap:last-child {
@@ -966,7 +989,8 @@
 
 .ernte-bar .bar-track {
   height: 12px;
-  background: rgba(0, 0, 0, 0.20);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(100, 150, 255, 0.06);
   border-radius: 6px;
   overflow: hidden;
 }
@@ -1010,7 +1034,8 @@
 
 .progress-row .progress-bar-container {
   height: 16px;
-  background: rgba(0, 0, 0, 0.20);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(100, 150, 255, 0.06);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -1043,6 +1068,7 @@
   gap: var(--space-sm);
   padding: var(--space-sm-plus) var(--space-md-plus);
   background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(100, 150, 255, 0.06);
   border-radius: 10px;
 }
 
@@ -1081,7 +1107,8 @@
 }
 
 .object-header {
-  background: rgba(0, 0, 0, 0.20);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(100, 150, 255, 0.06);
   border-radius: 8px 8px 0 0;
   font-size: var(--font-pilz-name);
   font-weight: 600;
@@ -1100,7 +1127,7 @@
 
 .object-row {
   background: rgba(0, 0, 0, 0.12);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(120, 160, 220, 0.08);
 }
 
 .object-row:last-child {
@@ -1145,7 +1172,8 @@
 
 .range-row .range-track {
   height: 12px;
-  background: rgba(0, 0, 0, 0.20);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(100, 150, 255, 0.06);
   border-radius: 6px;
   position: relative;
 }
@@ -1189,7 +1217,8 @@
 }
 
 .stats-header {
-  background: rgba(0, 0, 0, 0.20);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(100, 150, 255, 0.06);
   border-radius: 8px 8px 0 0;
 }
 
@@ -1210,7 +1239,7 @@
 
 .stats-row {
   background: rgba(0, 0, 0, 0.12);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(120, 160, 220, 0.08);
 }
 
 .stats-row:last-child {
@@ -1232,7 +1261,8 @@
 
 .stats-cell .stats-bar-bg {
   height: 8px;
-  background: rgba(0, 0, 0, 0.20);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(100, 150, 255, 0.06);
   border-radius: 4px;
   overflow: hidden;
 }
@@ -1307,7 +1337,7 @@
   flex-direction: column;
   gap: var(--gap-loose);
   padding-left: 12px;
-  border-left: 2px solid rgba(255, 255, 255, 0.1);
+  border-left: 2px solid rgba(120, 160, 220, 0.15);
 }
 
 .timeline-punkt {
@@ -1409,7 +1439,7 @@
   justify-content: center;
   margin-top: var(--space-sm-plus);
   padding-top: var(--space-sm);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(120, 160, 220, 0.08);
 }
 
 .pie-legende-item {
@@ -1435,7 +1465,7 @@
   justify-content: center;
   margin-top: var(--space-sm-plus);
   padding-top: var(--space-sm);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(120, 160, 220, 0.08);
 }
 
 .bar-group-legende .legende-item {
@@ -1494,10 +1524,10 @@
 .matrix-header .matrix-cell {
   display: table-cell;
   padding: var(--space-sm) var(--space-md);
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.2);
   font-size: var(--font-sm);
   font-weight: 500;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(120, 160, 220, 0.08);
 }
 
 .matrix-row {
@@ -1536,7 +1566,7 @@
 .matrix-bar {
   flex: 1;
   height: 6px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.2);
   border-radius: 3px;
   overflow: hidden;
   min-width: 40px;
@@ -1571,7 +1601,7 @@
   align-items: center;
   gap: var(--space-md);
   padding: var(--space-xs) 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(120, 160, 220, 0.08);
 }
 
 .nutrient-row:last-child {
@@ -1595,8 +1625,8 @@
   align-items: center;
   gap: 2px;
   padding: 2px 8px;
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(100, 150, 255, 0.06);
   border-radius: var(--radius-sm);
   font-size: var(--font-xs);
   color: rgba(255, 255, 255, 0.8);
@@ -1621,7 +1651,8 @@
 
 .tradition-item {
   padding: var(--space-sm);
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(100, 150, 255, 0.06);
   border-radius: var(--radius-sm);
 }
 
@@ -1629,13 +1660,14 @@
   font-weight: 600;
   margin-bottom: var(--space-sm);
   padding-bottom: var(--space-xs);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(120, 160, 220, 0.08);
 }
 
 .tradition-system {
   margin: var(--space-xs) 0;
   padding: var(--space-xs);
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(100, 150, 255, 0.06);
   border-radius: var(--radius-xs);
 }
 
@@ -1682,7 +1714,8 @@
 
 .study-item {
   padding: var(--space-sm);
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(100, 150, 255, 0.06);
   border-radius: var(--radius-sm);
 }
 
@@ -1690,13 +1723,14 @@
   font-weight: 600;
   margin-bottom: var(--space-sm);
   padding-bottom: var(--space-xs);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(120, 160, 220, 0.08);
 }
 
 .study-entry {
   margin: var(--space-xs) 0;
   padding: var(--space-xs);
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(100, 150, 255, 0.06);
   border-radius: var(--radius-xs);
 }
 
@@ -1741,7 +1775,8 @@
 
 .side-effect-item {
   padding: var(--space-sm);
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(100, 150, 255, 0.06);
   border-radius: var(--radius-sm);
 }
 
@@ -1801,7 +1836,8 @@
 
 .interaction-item {
   padding: var(--space-sm);
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(100, 150, 255, 0.06);
   border-radius: var(--radius-sm);
 }
 
@@ -1850,7 +1886,7 @@
   align-items: flex-start;
   gap: var(--space-md);
   padding: var(--space-xs) 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(120, 160, 220, 0.08);
 }
 
 .population-label {
@@ -1869,8 +1905,8 @@
 .population-chip {
   font-size: var(--font-xs);
   padding: 2px 8px;
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(100, 150, 255, 0.06);
   border-radius: var(--radius-xs);
   color: rgba(255, 255, 255, 0.7);
 }
@@ -1884,7 +1920,8 @@
 
 .dosing-item {
   padding: var(--space-sm);
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(100, 150, 255, 0.06);
   border-radius: var(--radius-sm);
 }
 
@@ -1892,13 +1929,14 @@
   font-weight: 600;
   margin-bottom: var(--space-sm);
   padding-bottom: var(--space-xs);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(120, 160, 220, 0.08);
 }
 
 .dosing-entry {
   padding: var(--space-xs);
   margin: var(--space-xs) 0;
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(100, 150, 255, 0.06);
   border-radius: var(--radius-xs);
 }
 
@@ -1928,4 +1966,573 @@
 .dosing-route {
   color: rgba(255, 255, 255, 0.4);
   font-style: italic;
+}
+
+/* === NEUE COMPARE PRIMITIVES === */
+
+/* --- BADGE COMPARE --- */
+.compare-badge-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.compare-badge-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(100, 150, 255, 0.06);
+  border-radius: var(--radius-sm, 4px);
+}
+
+.badge-name {
+  font-size: var(--font-sm, 0.85rem);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.badge-value {
+  font-size: var(--font-xs, 0.75rem);
+  padding: 2px 8px;
+  background: var(--pilz-fill, rgba(100, 150, 255, 0.2));
+  color: var(--pilz-text, rgba(255, 255, 255, 0.9));
+  border: 1px solid var(--pilz-line, rgba(100, 150, 255, 0.3));
+  border-radius: 9999px;
+}
+
+/* --- GAUGE COMPARE --- */
+.compare-gauge-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.compare-gauge-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gauge-name {
+  flex: 0 0 80px;
+  font-size: var(--font-sm, 0.85rem);
+  color: rgba(255, 255, 255, 0.7);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.gauge-track {
+  flex: 1;
+  height: 10px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(100, 150, 255, 0.06);
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.gauge-fill {
+  height: 100%;
+  background: var(--pilz-fill, rgba(100, 150, 255, 0.6));
+  border-radius: 5px;
+  transition: width 0.3s ease;
+}
+
+.gauge-wert {
+  flex: 0 0 50px;
+  font-size: var(--font-xs, 0.75rem);
+  color: rgba(255, 255, 255, 0.6);
+  text-align: right;
+}
+
+/* --- SPARKLINE COMPARE --- */
+.compare-sparkline-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.compare-sparkline-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sparkline-name {
+  flex: 0 0 80px;
+  font-size: var(--font-sm, 0.85rem);
+  color: rgba(255, 255, 255, 0.7);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.sparkline-canvas {
+  flex: 1;
+  height: 24px;
+}
+
+.sparkline-empty {
+  flex: 1;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* --- BOXPLOT COMPARE --- */
+.compare-boxplot-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.compare-boxplot-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.boxplot-name {
+  flex: 0 0 80px;
+  font-size: var(--font-sm, 0.85rem);
+  color: rgba(255, 255, 255, 0.7);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.boxplot-track {
+  flex: 1;
+  height: 20px;
+  position: relative;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
+}
+
+.boxplot-whisker {
+  position: absolute;
+  top: 50%;
+  height: 2px;
+  transform: translateY(-50%);
+  background: var(--pilz-line, rgba(100, 150, 255, 0.4));
+}
+
+.boxplot-box {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  background: var(--pilz-fill, rgba(100, 150, 255, 0.3));
+  border: 1px solid var(--pilz-line, rgba(100, 150, 255, 0.5));
+  border-radius: 2px;
+}
+
+.boxplot-median {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--pilz-text, rgba(255, 255, 255, 0.9));
+  transform: translateX(-50%);
+}
+
+/* --- BUBBLE COMPARE --- */
+.compare-bubble-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.compare-bubble-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bubble-name {
+  flex: 0 0 80px;
+  font-size: var(--font-sm, 0.85rem);
+  color: rgba(255, 255, 255, 0.7);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.bubble-circle {
+  border-radius: 50%;
+  background: var(--pilz-fill, rgba(100, 150, 255, 0.4));
+  border: 1px solid var(--pilz-line, rgba(100, 150, 255, 0.6));
+}
+
+.bubble-wert {
+  font-size: var(--font-xs, 0.75rem);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* --- CALENDAR COMPARE --- */
+.compare-calendar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.compare-calendar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.calendar-name {
+  font-size: var(--font-sm, 0.85rem);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.calendar-date {
+  font-size: var(--font-sm, 0.85rem);
+  color: var(--pilz-text, rgba(255, 255, 255, 0.9));
+}
+
+/* --- DOTPLOT COMPARE --- */
+.compare-dotplot-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.compare-dotplot-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dotplot-name {
+  flex: 0 0 80px;
+  font-size: var(--font-sm, 0.85rem);
+  color: rgba(255, 255, 255, 0.7);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.dotplot-track {
+  flex: 1;
+  height: 16px;
+  position: relative;
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(100, 150, 255, 0.06);
+  border-radius: 8px;
+}
+
+.dotplot-dot {
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--pilz-fill, rgba(100, 150, 255, 0.8));
+  transform: translate(-50%, -50%);
+}
+
+.dotplot-wert {
+  flex: 0 0 50px;
+  font-size: var(--font-xs, 0.75rem);
+  color: rgba(255, 255, 255, 0.6);
+  text-align: right;
+}
+
+/* --- LOLLIPOP COMPARE --- */
+.compare-lollipop-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.compare-lollipop-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lollipop-name {
+  flex: 0 0 80px;
+  font-size: var(--font-sm, 0.85rem);
+  color: rgba(255, 255, 255, 0.7);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.lollipop-track {
+  flex: 1;
+  height: 16px;
+  position: relative;
+}
+
+.lollipop-stick {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 2px;
+  background: var(--pilz-line, rgba(100, 150, 255, 0.5));
+  transform: translateY(-50%);
+}
+
+.lollipop-dot {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--pilz-fill, rgba(100, 150, 255, 0.8));
+  transform: translate(-50%, -50%);
+}
+
+.lollipop-wert {
+  flex: 0 0 50px;
+  font-size: var(--font-xs, 0.75rem);
+  color: rgba(255, 255, 255, 0.6);
+  text-align: right;
+}
+
+/* --- STEPS COMPARE --- */
+.compare-steps-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.compare-steps-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.steps-name {
+  flex: 0 0 80px;
+  font-size: var(--font-sm, 0.85rem);
+  color: rgba(255, 255, 255, 0.7);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.steps-wrap {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.steps-step {
+  padding: 2px 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--pilz-line, rgba(100, 150, 255, 0.2));
+  border-radius: var(--radius-sm, 4px);
+  font-size: var(--font-xs, 0.75rem);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.steps-arrow {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: var(--font-xs, 0.75rem);
+}
+
+/* --- STACKEDBAR COMPARE --- */
+.compare-stackedbar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.compare-stackedbar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stackedbar-name {
+  flex: 0 0 80px;
+  font-size: var(--font-sm, 0.85rem);
+  color: rgba(255, 255, 255, 0.7);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.stackedbar-track {
+  flex: 1;
+  height: 16px;
+  position: relative;
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(100, 150, 255, 0.06);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.stackedbar-segment {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--pilz-fill, rgba(100, 150, 255, 0.6));
+}
+
+.stackedbar-wert {
+  flex: 0 0 50px;
+  font-size: var(--font-xs, 0.75rem);
+  color: rgba(255, 255, 255, 0.6);
+  text-align: right;
+}
+
+/* --- SLOPEGRAPH COMPARE --- */
+.compare-slopegraph-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.compare-slopegraph-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.slopegraph-name {
+  flex: 0 0 80px;
+  font-size: var(--font-sm, 0.85rem);
+  color: rgba(255, 255, 255, 0.7);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.slopegraph-start,
+.slopegraph-end {
+  flex: 0 0 60px;
+  font-size: var(--font-sm, 0.85rem);
+  color: var(--pilz-text, rgba(255, 255, 255, 0.9));
+}
+
+.slopegraph-arrow {
+  font-size: 1.2rem;
+}
+
+.slopegraph-change {
+  flex: 0 0 50px;
+  font-size: var(--font-xs, 0.75rem);
+  color: rgba(255, 255, 255, 0.6);
+  text-align: right;
+}
+
+/* --- HEATMAP COMPARE --- */
+.compare-heatmap-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.compare-heatmap-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.heatmap-name {
+  flex: 0 0 80px;
+  font-size: var(--font-sm, 0.85rem);
+  color: rgba(255, 255, 255, 0.7);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.heatmap-cells {
+  flex: 1;
+  display: flex;
+  gap: 2px;
+}
+
+.heatmap-cell {
+  flex: 1;
+  height: 16px;
+  background: var(--pilz-fill, rgba(100, 150, 255, 0.8));
+  border-radius: 2px;
+}
+
+/* --- HIERARCHY/NETWORK/MAP COMPARE --- */
+.compare-hierarchy-container,
+.compare-network-container,
+.compare-map-container,
+.compare-scatterplot-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.compare-hierarchy-row,
+.compare-network-row,
+.compare-map-row,
+.compare-scatterplot-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.hierarchy-name,
+.network-name,
+.map-name,
+.scatterplot-name {
+  font-size: var(--font-sm, 0.85rem);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.hierarchy-summary,
+.network-summary,
+.map-location,
+.scatterplot-summary {
+  font-size: var(--font-xs, 0.75rem);
+  color: var(--pilz-text, rgba(255, 255, 255, 0.6));
+}
+
+/* --- PICTOGRAM COMPARE --- */
+.compare-pictogram-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.compare-pictogram-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pictogram-name {
+  flex: 0 0 80px;
+  font-size: var(--font-sm, 0.85rem);
+  color: rgba(255, 255, 255, 0.7);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.pictogram-icons {
+  flex: 1;
+  display: flex;
+  gap: 4px;
+}
+
+.pictogram-icon {
+  color: var(--pilz-fill, rgba(100, 150, 255, 0.8));
+  font-size: var(--font-sm, 0.85rem);
+}
+
+.pictogram-wert {
+  flex: 0 0 50px;
+  font-size: var(--font-xs, 0.75rem);
+  color: rgba(255, 255, 255, 0.6);
+  text-align: right;
 }
