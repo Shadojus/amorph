@@ -21,6 +21,13 @@
   --color-accent-glow: rgba(255, 255, 255, 0.35);
   --color-accent-subtle: rgba(255, 255, 255, 0.15);
   
+  /* Cyan-Akzent für interaktive Elemente */
+  --color-cyan: rgba(0, 255, 255, 0.95);
+  --color-cyan-dim: rgba(0, 255, 255, 0.6);
+  --color-cyan-glow: rgba(0, 255, 255, 0.35);
+  --color-cyan-subtle: rgba(0, 255, 255, 0.12);
+  --color-cyan-bg: rgba(0, 255, 255, 0.08);
+  
   /* Highlight-Farbe für Markierungen - Warmes Gold */
   --color-highlight: rgba(255, 200, 90, 0.95);
   --color-highlight-bg: rgba(255, 200, 90, 0.18);
@@ -109,6 +116,20 @@
   --bp-md: 768px;
   --bp-lg: 1024px;
   --bp-xl: 1280px;
+  
+  /* === Z-INDEX SYSTEM === */
+  /* Konsistente Stacking-Ordnung für alle Komponenten */
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 500;
+  --z-header: 800;
+  --z-modal: 1000;
+  --z-overlay: 9000;
+  --z-tooltip: 9500;
+  --z-top: 9999;
+  
+  /* === SEMANTISCHE SPACING === */
   --padding-section: var(--space-lg);/* 16px - Section-Innenabstand */
   --margin-element: var(--space-sm); /* 8px - Element-Außenabstand */
   --margin-section: var(--space-xl); /* 24px - Section-Außenabstand */

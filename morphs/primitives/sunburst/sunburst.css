@@ -60,7 +60,7 @@
 
 /* Labels */
 .amorph-sunburst-label {
-  font-size: 8px;
+  font-size: 10px;
   fill: rgba(255, 255, 255, 0.9);
   text-anchor: middle;
   dominant-baseline: middle;
@@ -128,7 +128,7 @@
   }
   
   .amorph-sunburst-label {
-    font-size: 9px;
+    font-size: 10px;
   }
   
   .amorph-sunburst-legend {

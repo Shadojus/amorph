@@ -63,7 +63,7 @@
   flex: 1;
   min-width: 32px;
   max-width: 60px;
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 600;
   color: var(--color-text-muted);
   text-align: center;
@@ -82,7 +82,7 @@
 .amorph-heatmap-row-header {
   width: 50px;
   flex-shrink: 0;
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 600;
   color: var(--color-text-muted);
   display: flex;
@@ -103,7 +103,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   border-radius: var(--radius-sm);
@@ -204,7 +204,7 @@
 .amorph-heatmap-legende-labels {
   display: flex;
   justify-content: space-between;
-  font-size: 8px;
+  font-size: 10px;
   color: var(--color-text-dim);
   font-variant-numeric: tabular-nums;
 }
@@ -236,8 +236,8 @@
   
   .amorph-heatmap-cell {
     min-width: 24px;
-    /* WICHTIG: 7px ist unlesbar! Erhöhe auf 9px minimum */
-    font-size: 9px;
+    /* Minimum lesbare Größe */
+    font-size: 10px;
   }
   
   .amorph-heatmap-row-header,
@@ -247,8 +247,8 @@
   
   .amorph-heatmap-col-header,
   .amorph-heatmap-row-header {
-    /* WICHTIG: 7px ist unlesbar! Erhöhe auf 9px minimum */
-    font-size: 9px;
+    /* Minimum lesbare Größe */
+    font-size: 10px;
   }
 }
 
@@ -263,7 +263,7 @@
   
   .amorph-heatmap-cell {
     min-width: 20px;
-    font-size: 8px;
+    font-size: 10px;
   }
   
   .amorph-heatmap-row-header,

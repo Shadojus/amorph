@@ -45,7 +45,7 @@
   display: flex;
   justify-content: center;
   gap: 16px;
-  font-size: 9px;
+  font-size: 10px;
   color: rgba(255, 255, 255, 0.4);
 }
 
@@ -232,13 +232,13 @@
   }
   
   .amorph-boxplot-scale-labels {
-    font-size: 9px;
+    font-size: 10px;
   }
   
   .amorph-boxplot-scale-legend {
     flex-wrap: wrap;
     gap: 8px;
-    font-size: 8px;
+    font-size: 10px;
   }
   
   /* Flexibles Grid statt feste 80px */
@@ -257,7 +257,7 @@
   }
   
   .amorph-boxplot-values {
-    font-size: 9px;
+    font-size: 10px;
   }
 }
 

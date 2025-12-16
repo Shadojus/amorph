@@ -68,6 +68,12 @@
   background: rgba(255, 255, 255, 0.06);
 }
 
+/* Focus-State für Accessibility */
+.amorph-ansicht-btn:focus-visible {
+  outline: 2px solid var(--color-accent, rgba(0, 255, 255, 0.8));
+  outline-offset: 2px;
+}
+
 .amorph-ansicht-btn.aktiv,
 .amorph-ansicht-btn[aria-selected="true"] {
   background: rgba(0, 255, 255, 0.12);

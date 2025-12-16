@@ -126,7 +126,7 @@
 
 /* Value Label */
 .amorph-groupedbar-value {
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.95);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
@@ -187,7 +187,7 @@
   }
   
   .amorph-groupedbar-ytick {
-    font-size: 9px;
+    font-size: 10px;
   }
   
   .amorph-groupedbar-group {
@@ -204,11 +204,11 @@
   }
   
   .amorph-groupedbar-value {
-    font-size: 8px;
+    font-size: 10px;
   }
   
   .amorph-groupedbar-label {
-    font-size: 9px;
+    font-size: 10px;
   }
 }
 

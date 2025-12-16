@@ -175,7 +175,7 @@
 }
 
 .amorph-lifecycle-duration {
-  font-size: 9px;
+  font-size: 10px;
   color: rgba(150, 200, 255, 0.5);
 }
 
@@ -250,7 +250,7 @@
   }
   
   .amorph-lifecycle-dauer {
-    font-size: 9px;
+    font-size: 10px;
   }
   
   /* Linear Mode kompakter */
@@ -285,7 +285,7 @@
   }
   
   .amorph-lifecycle-duration {
-    font-size: 8px;
+    font-size: 10px;
   }
 }
 

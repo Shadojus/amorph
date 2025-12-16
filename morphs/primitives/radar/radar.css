@@ -59,7 +59,7 @@
 .amorph-radar-label {
   position: absolute;
   transform: translate(-50%, -50%);
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.5);
   text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
@@ -67,7 +67,7 @@
 }
 
 .amorph-radar-scale {
-  font-size: 6px;
+  font-size: 10px;
   fill: rgba(255, 255, 255, 0.25);
   font-variant-numeric: tabular-nums;
 }
@@ -88,9 +88,9 @@
     font-size: 10px;
   }
   
-  /* 6px ist unlesbar - erhöhe auf 9px */
+  /* Minimum lesbare Größe */
   .amorph-radar-scale {
-    font-size: 9px;
+    font-size: 10px;
   }
 }
 

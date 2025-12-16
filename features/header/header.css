@@ -14,14 +14,14 @@
 .amorph-feature-header {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: var(--z-header, 800);
   padding: var(--space-sm) var(--space-lg);
   /* Pure Black Glass */
   background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(40px) saturate(1.5);
   -webkit-backdrop-filter: blur(40px) saturate(1.5);
   /* Subtle cyan glass edge */
-  border-bottom: 1px solid rgba(0, 255, 255, 0.08);
+  border-bottom: 1px solid var(--color-cyan-bg, rgba(0, 255, 255, 0.08));
   box-shadow: 
     0 4px 32px rgba(0, 0, 0, 0.6),
     inset 0 1px 0 rgba(255, 255, 255, 0.02);

@@ -167,13 +167,13 @@
 }
 
 .amorph-lollipop-wert-vertikal {
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.8);
 }
 
 .amorph-lollipop-label-vertikal {
-  font-size: 9px;
+  font-size: 10px;
   color: rgba(255, 255, 255, 0.6);
   writing-mode: vertical-rl;
   text-orientation: mixed;

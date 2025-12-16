@@ -77,6 +77,12 @@
   opacity: 1;
 }
 
+/* Focus-State für Accessibility */
+.amorph-perspektive-btn:focus-visible {
+  outline: 2px solid var(--p-farbe, rgba(180, 190, 200, 0.8));
+  outline-offset: 2px;
+}
+
 /* AKTIV - Deutlich sichtbar mit kräftiger Pastellfarbe */
 .amorph-perspektive-btn.aktiv,
 .amorph-perspektive-btn[aria-pressed="true"] {

@@ -45,7 +45,7 @@
 
 .amorph-comparison-from-label,
 .amorph-comparison-to-label {
-  font-size: 8px;
+  font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: rgba(255, 255, 255, 0.4);
@@ -140,7 +140,7 @@
   }
   
   .amorph-comparison-label {
-    font-size: 9px;
+    font-size: 10px;
   }
   
   .amorph-comparison-values {
@@ -155,7 +155,7 @@
   
   .amorph-comparison-from-label,
   .amorph-comparison-to-label {
-    font-size: 7px;
+    font-size: 10px;
   }
   
   .amorph-comparison-from-value,
@@ -168,7 +168,7 @@
   }
   
   .amorph-comparison-change {
-    font-size: 9px;
+    font-size: 10px;
     padding: 2px 4px;
   }
 }

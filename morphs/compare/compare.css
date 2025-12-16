@@ -93,8 +93,10 @@
 }
 
 .compare-section-remove {
-  width: 20px;
-  height: 20px;
+  width: 32px;
+  height: 32px;
+  min-width: 44px;  /* Touch-Target */
+  min-height: 44px; /* Touch-Target */
   padding: 0;
   border: none;
   border-radius: 4px;
@@ -106,6 +108,9 @@
   cursor: pointer;
   transition: all 0.15s ease;
   opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .compare-section:hover .compare-section-remove {
@@ -115,6 +120,13 @@
 .compare-section-remove:hover {
   background: rgba(255, 80, 80, 0.2);
   color: rgba(255, 100, 100, 0.9);
+}
+
+/* Focus-State für Accessibility */
+.compare-section-remove:focus-visible {
+  outline: 2px solid rgba(255, 100, 100, 0.8);
+  outline-offset: 2px;
+  opacity: 1;
 }
 
 .compare-section-remove:active {

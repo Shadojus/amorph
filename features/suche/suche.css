@@ -124,14 +124,14 @@ mark.amorph-highlight {
   display: flex !important;
   align-items: center;
   justify-content: center;
-  width: 14px;
-  height: 14px;
+  width: 24px;
+  height: 24px;
   padding: 0;
   background: transparent;
   border: none;
-  border-radius: 2px;
+  border-radius: 4px;
   color: rgba(255, 255, 255, 0.35);
-  font-size: 8px;
+  font-size: 10px;
   font-family: system-ui, sans-serif;
   line-height: 1;
   cursor: pointer;
@@ -140,8 +140,14 @@ mark.amorph-highlight {
 }
 
 .amorph-highlight-nav-btn:hover {
-  background: rgba(0, 255, 255, 0.15);
-  color: rgba(0, 255, 255, 0.9);
+  background: var(--color-cyan-subtle, rgba(0, 255, 255, 0.15));
+  color: var(--color-cyan, rgba(0, 255, 255, 0.9));
+}
+
+/* Focus-State für Accessibility */
+.amorph-highlight-nav-btn:focus-visible {
+  outline: 2px solid var(--color-cyan-dim, rgba(0, 255, 255, 0.8));
+  outline-offset: 2px;
 }
 
 .amorph-highlight-nav-btn:active {

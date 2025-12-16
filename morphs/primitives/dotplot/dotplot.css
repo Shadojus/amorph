@@ -162,7 +162,7 @@
   }
   
   .amorph-dotplot-tick {
-    font-size: 9px;
+    font-size: 10px;
   }
   
   /* Flexibles Grid statt feste 100px */
@@ -187,13 +187,13 @@
   }
   
   .amorph-dotplot-count {
-    font-size: 9px;
+    font-size: 10px;
   }
   
   .amorph-dotplot-stats {
     flex-wrap: wrap;
     gap: 12px;
-    font-size: 9px;
+    font-size: 10px;
   }
 }
 

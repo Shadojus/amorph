@@ -88,7 +88,7 @@
 .amorph-map-coord-label {
   color: rgba(255, 255, 255, 0.35);
   font-weight: 500;
-  font-size: 9px;
+  font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -172,7 +172,7 @@
   }
   
   .amorph-map-coord-label {
-    font-size: 8px;
+    font-size: 10px;
   }
   
   .amorph-map-location {
