@@ -1,0 +1,71 @@
+{
+  "_meta": {
+    "description": "Ecology perspective - Tests: network, hierarchy, pie (object), heatmap, calendar, range"
+  },
+  
+  "trophic_mode_primary": "Ectomycorrhizal",
+  
+  "ecological_guild": "Obligate symbiont",
+  
+  "symbiotic_relationships": [
+    {"name": "Quercus spp.", "type": "mycorrhiza", "strength": "obligate", "details": "Primary oak association"},
+    {"name": "Fagus sylvatica", "type": "mycorrhiza", "strength": "facultative", "details": "Beech association"},
+    {"name": "Betula spp.", "type": "mycorrhiza", "strength": "facultative", "details": "Birch association"},
+    {"name": "Corylus avellana", "type": "mycorrhiza", "strength": "moderate", "details": "Hazel association"},
+    {"name": "Various insects", "type": "spore dispersal", "strength": "weak", "details": "Attracted by odor"}
+  ],
+  
+  "taxonomic_hierarchy": [
+    {"level": "Kingdom", "name": "Fungi"},
+    {"level": "Division", "name": "Basidiomycota"},
+    {"level": "Class", "name": "Agaricomycetes"},
+    {"level": "Order", "name": "Agaricales"},
+    {"level": "Family", "name": "Amanitaceae"},
+    {"level": "Genus", "name": "Amanita"},
+    {"level": "Species", "name": "A. phalloides"}
+  ],
+  
+  "nutrient_cycling_contribution": {
+    "nitrogen": 40,
+    "phosphorus": 35,
+    "potassium": 15,
+    "carbon": 10
+  },
+  
+  "soil_toxin_matrix": [
+    [0.1, 0.2, 0.15, 0.1],
+    [0.3, 0.45, 0.35, 0.2],
+    [0.25, 0.4, 0.5, 0.3],
+    [0.15, 0.25, 0.3, 0.2]
+  ],
+  
+  "fruiting_calendar": [
+    {"month": 1, "active": false},
+    {"month": 2, "active": false},
+    {"month": 3, "active": false},
+    {"month": 4, "active": false},
+    {"month": 5, "active": false},
+    {"month": 6, "active": true, "intensity": 0.3},
+    {"month": 7, "active": true, "intensity": 0.5},
+    {"month": 8, "active": true, "intensity": 0.7},
+    {"month": 9, "active": true, "intensity": 1.0},
+    {"month": 10, "active": true, "intensity": 0.9},
+    {"month": 11, "active": true, "intensity": 0.4},
+    {"month": 12, "active": false}
+  ],
+  
+  "elevation_range": {
+    "min": 0,
+    "max": 1200
+  },
+  
+  "soil_ph_range": {
+    "min": 5.0,
+    "max": 7.5
+  },
+  
+  "canopy_cover_optimal": {
+    "min": 50,
+    "max": 90
+  }
+}

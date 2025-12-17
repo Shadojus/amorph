@@ -1,0 +1,57 @@
+{
+  "_meta": {
+    "description": "Cultivation perspective - Tests: lifecycle, steps, range, progress, boolean, bar"
+  },
+  
+  "cultivatable": false,
+  
+  "wild_harvest_only": true,
+  
+  "cultivation_difficulty": 95,
+  
+  "growth_lifecycle": [
+    {"phase": "Spore germination", "duration": "7-14 days", "description": "Requires specific host roots"},
+    {"phase": "Mycelium colonization", "duration": "6-12 months", "description": "Underground network formation"},
+    {"phase": "Symbiosis establishment", "duration": "2-5 years", "description": "Full mycorrhizal connection"},
+    {"phase": "First fruiting", "duration": "3-7 years", "description": "Initial mushroom production"},
+    {"phase": "Peak production", "duration": "10-30 years", "description": "Optimal harvest period"}
+  ],
+  
+  "harvest_protocol": [
+    {"step": 1, "label": "Locate", "description": "Find mature specimens near host trees"},
+    {"step": 2, "label": "Assess", "description": "Check cap firmness and worm damage"},
+    {"step": 3, "label": "Cut", "description": "Use clean knife at stem base"},
+    {"step": 4, "label": "Clean", "description": "Remove debris in field"},
+    {"step": 5, "label": "Transport", "description": "Use breathable basket, avoid plastic"}
+  ],
+  
+  "temperature_range": {
+    "min": 12,
+    "max": 24
+  },
+  
+  "humidity_range": {
+    "min": 65,
+    "max": 85
+  },
+  
+  "soil_moisture_optimal": {
+    "min": 40,
+    "max": 70
+  },
+  
+  "yield_by_region": [
+    {"label": "Central Europe", "value": 2.8},
+    {"label": "Mediterranean", "value": 1.9},
+    {"label": "Eastern Europe", "value": 3.4},
+    {"label": "Scandinavia", "value": 1.2},
+    {"label": "North America", "value": 0.8}
+  ],
+  
+  "research_cultivation_progress": 23,
+  
+  "days_to_harvest": {
+    "min": 1825,
+    "max": 2555
+  }
+}

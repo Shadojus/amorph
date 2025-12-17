@@ -1,6 +1,6 @@
 /**
- * COMPARE SLOPEGRAPH - Slope graph comparison
- * Uses the exact same HTML structure as the original slopegraph morph
+ * COMPARE SLOPEGRAPH - UNIFIED slope graph comparison
+ * All items' slopes overlaid in one chart with NEON pilz colors
  */
 
 import { debug } from '../../../../observer/debug.js';
@@ -16,136 +16,197 @@ export function compareSlopegraph(items, config = {}) {
     return el;
   }
   
-  const container = document.createElement('div');
-  container.className = 'compare-items-container';
-  
-  items.forEach((item, itemIndex) => {
+  // Normalize all items' data
+  const normalizedItems = items.map((item, idx) => {
     const rawVal = item.value ?? item.wert;
-    
-    const wrapper = document.createElement('div');
-    wrapper.className = 'compare-item-wrapper';
-    
-    const label = document.createElement('div');
-    label.className = 'compare-item-label';
-    label.textContent = item.name || item.id || `Item ${itemIndex + 1}`;
-    if (item.textFarbe) label.style.color = item.textFarbe;
-    wrapper.appendChild(label);
-    
-    // Original slopegraph structure
-    const slopegraphEl = document.createElement('div');
-    slopegraphEl.className = 'amorph-slopegraph';
-    
     const { daten, labels } = normalisiereDaten(rawVal);
+    return { ...item, daten, labels, index: idx };
+  }).filter(item => item.daten.length > 0);
+  
+  if (normalizedItems.length === 0) {
+    el.innerHTML = '<div class="compare-empty">Keine Vergleichsdaten</div>';
+    return el;
+  }
+  
+  // Use first item's labels as reference
+  const referenceLabels = normalizedItems[0].labels;
+  
+  // Find global min/max across ALL items
+  let globalMin = Infinity, globalMax = -Infinity;
+  normalizedItems.forEach(item => {
+    item.daten.forEach(d => {
+      globalMin = Math.min(globalMin, d.vorher, d.nachher);
+      globalMax = Math.max(globalMax, d.vorher, d.nachher);
+    });
+  });
+  const range = globalMax - globalMin || 1;
+  
+  // Create unified slopegraph container
+  const slopegraphEl = document.createElement('div');
+  slopegraphEl.className = 'amorph-slopegraph amorph-slopegraph-compare';
+  
+  // Header with time labels
+  const header = document.createElement('div');
+  header.className = 'amorph-slopegraph-header';
+  header.innerHTML = `
+    <span class="amorph-slopegraph-zeit">${referenceLabels.vorher}</span>
+    <span class="amorph-slopegraph-zeit">${referenceLabels.nachher}</span>
+  `;
+  slopegraphEl.appendChild(header);
+  
+  // Main SVG with all slopes from all items
+  const svgHeight = 180;
+  const svgWidth = 280;
+  
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', `0 0 ${svgWidth} ${svgHeight}`);
+  svg.setAttribute('class', 'amorph-slopegraph-svg-unified');
+  
+  // Add SVG filter defs for glow effects
+  const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+  normalizedItems.forEach((item, idx) => {
+    const glowColor = item.glowFarbe || item.lineFarbe || item.farbe || '#ff00ff';
+    const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+    filter.setAttribute('id', `slope-glow-${idx}`);
+    filter.setAttribute('x', '-50%');
+    filter.setAttribute('y', '-50%');
+    filter.setAttribute('width', '200%');
+    filter.setAttribute('height', '200%');
+    filter.innerHTML = `
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+      <feFlood flood-color="${glowColor}" flood-opacity="0.6"/>
+      <feComposite in2="blur" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    `;
+    defs.appendChild(filter);
+  });
+  svg.appendChild(defs);
+  
+  // Draw all items' slopes
+  normalizedItems.forEach((item, itemIdx) => {
+    const lineColor = item.lineFarbe || item.farbe || `hsl(${itemIdx * 90}, 70%, 55%)`;
+    const glowColor = item.glowFarbe || lineColor;
     
-    if (daten.length === 0) {
-      slopegraphEl.innerHTML = '<span class="amorph-slopegraph-leer">Keine Vergleichsdaten</span>';
-    } else {
-      // Header
-      const header = document.createElement('div');
-      header.className = 'amorph-slopegraph-header';
-      header.style.display = 'flex';
-      header.style.justifyContent = 'space-between';
-      header.style.fontSize = '9px';
-      header.style.opacity = '0.6';
-      header.style.marginBottom = '4px';
-      header.innerHTML = `
-        <span class="amorph-slopegraph-zeit">${labels.vorher}</span>
-        <span class="amorph-slopegraph-zeit">${labels.nachher}</span>
-      `;
-      slopegraphEl.appendChild(header);
+    item.daten.slice(0, 5).forEach((d, dataIdx) => {
+      // Calculate Y positions with staggering to reduce overlap
+      const baseOffset = (dataIdx / (item.daten.length || 1)) * (svgHeight - 40);
+      const y1 = 15 + ((1 - (d.vorher - globalMin) / range) * (svgHeight - 30));
+      const y2 = 15 + ((1 - (d.nachher - globalMin) / range) * (svgHeight - 30));
       
-      // Container with slopes
-      const slopeContainer = document.createElement('div');
-      slopeContainer.className = 'amorph-slopegraph-container';
+      const x1 = 40;
+      const x2 = svgWidth - 40;
       
-      const allValues = daten.flatMap(d => [d.vorher, d.nachher]);
-      const minVal = Math.min(...allValues, 0);
-      const maxVal = Math.max(...allValues, 1);
-      const range = maxVal - minVal || 1;
+      // Glow line behind
+      const glowLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      glowLine.setAttribute('x1', x1);
+      glowLine.setAttribute('y1', y1);
+      glowLine.setAttribute('x2', x2);
+      glowLine.setAttribute('y2', y2);
+      glowLine.setAttribute('stroke', glowColor);
+      glowLine.setAttribute('stroke-width', '6');
+      glowLine.setAttribute('stroke-opacity', '0.3');
+      glowLine.setAttribute('stroke-linecap', 'round');
+      svg.appendChild(glowLine);
       
-      daten.slice(0, 4).forEach((d, i) => {
-        const row = document.createElement('div');
-        row.className = 'amorph-slopegraph-row';
-        row.style.display = 'flex';
-        row.style.alignItems = 'center';
-        row.style.gap = '4px';
-        row.style.marginBottom = '4px';
-        
-        // Label
-        const rowLabel = document.createElement('span');
-        rowLabel.className = 'amorph-slopegraph-label';
-        rowLabel.textContent = d.name;
-        rowLabel.style.fontSize = '9px';
-        rowLabel.style.width = '35px';
-        row.appendChild(rowLabel);
-        
-        // Slope visualization (mini SVG)
-        const svgWrap = document.createElement('div');
-        svgWrap.style.flex = '1';
-        svgWrap.style.height = '20px';
-        
-        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('viewBox', '0 0 60 20');
-        svg.setAttribute('class', 'amorph-slopegraph-line');
-        svg.style.width = '100%';
-        svg.style.height = '100%';
-        
-        const y1 = 18 - ((d.vorher - minVal) / range) * 16;
-        const y2 = 18 - ((d.nachher - minVal) / range) * 16;
-        
-        const change = d.nachher - d.vorher;
-        const lineColor = change > 0 ? 'rgba(100,200,150,0.8)' : change < 0 ? 'rgba(220,100,100,0.8)' : 'rgba(180,180,180,0.6)';
-        
-        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-        line.setAttribute('x1', '5');
-        line.setAttribute('y1', y1);
-        line.setAttribute('x2', '55');
-        line.setAttribute('y2', y2);
-        line.setAttribute('stroke', lineColor);
-        line.setAttribute('stroke-width', '2');
-        line.setAttribute('stroke-linecap', 'round');
-        svg.appendChild(line);
-        
-        // Dots
-        const dot1 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        dot1.setAttribute('cx', '5');
-        dot1.setAttribute('cy', y1);
-        dot1.setAttribute('r', '3');
-        dot1.setAttribute('fill', lineColor);
-        svg.appendChild(dot1);
-        
-        const dot2 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        dot2.setAttribute('cx', '55');
-        dot2.setAttribute('cy', y2);
-        dot2.setAttribute('r', '3');
-        dot2.setAttribute('fill', lineColor);
-        svg.appendChild(dot2);
-        
-        svgWrap.appendChild(svg);
-        row.appendChild(svgWrap);
-        
-        // Change indicator
-        const changeEl = document.createElement('span');
-        changeEl.className = 'amorph-slopegraph-change';
-        const pct = d.vorher !== 0 ? ((change / Math.abs(d.vorher)) * 100).toFixed(0) : '—';
-        changeEl.textContent = `${change > 0 ? '+' : ''}${pct}%`;
-        changeEl.style.fontSize = '9px';
-        changeEl.style.width = '30px';
-        changeEl.style.textAlign = 'right';
-        changeEl.style.color = lineColor;
-        row.appendChild(changeEl);
-        
-        slopeContainer.appendChild(row);
-      });
+      // Main line
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', x1);
+      line.setAttribute('y1', y1);
+      line.setAttribute('x2', x2);
+      line.setAttribute('y2', y2);
+      line.setAttribute('stroke', lineColor);
+      line.setAttribute('stroke-width', '2.5');
+      line.setAttribute('stroke-linecap', 'round');
+      line.setAttribute('filter', `url(#slope-glow-${itemIdx})`);
+      svg.appendChild(line);
       
-      slopegraphEl.appendChild(slopeContainer);
-    }
-    
-    wrapper.appendChild(slopegraphEl);
-    container.appendChild(wrapper);
+      // Start dot with glow
+      const glowDot1 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      glowDot1.setAttribute('cx', x1);
+      glowDot1.setAttribute('cy', y1);
+      glowDot1.setAttribute('r', 8);
+      glowDot1.setAttribute('fill', glowColor);
+      glowDot1.setAttribute('fill-opacity', '0.3');
+      svg.appendChild(glowDot1);
+      
+      const dot1 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      dot1.setAttribute('cx', x1);
+      dot1.setAttribute('cy', y1);
+      dot1.setAttribute('r', 5);
+      dot1.setAttribute('fill', lineColor);
+      svg.appendChild(dot1);
+      
+      // End dot with glow
+      const glowDot2 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      glowDot2.setAttribute('cx', x2);
+      glowDot2.setAttribute('cy', y2);
+      glowDot2.setAttribute('r', 8);
+      glowDot2.setAttribute('fill', glowColor);
+      glowDot2.setAttribute('fill-opacity', '0.3');
+      svg.appendChild(glowDot2);
+      
+      const dot2 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      dot2.setAttribute('cx', x2);
+      dot2.setAttribute('cy', y2);
+      dot2.setAttribute('r', 5);
+      dot2.setAttribute('fill', lineColor);
+      svg.appendChild(dot2);
+      
+      // Value labels at ends
+      const labelStart = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      labelStart.setAttribute('x', x1 - 5);
+      labelStart.setAttribute('y', y1);
+      labelStart.setAttribute('text-anchor', 'end');
+      labelStart.setAttribute('dominant-baseline', 'middle');
+      labelStart.setAttribute('class', 'slopegraph-value-label');
+      labelStart.setAttribute('fill', lineColor);
+      labelStart.textContent = d.vorher.toFixed(0);
+      svg.appendChild(labelStart);
+      
+      const labelEnd = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      labelEnd.setAttribute('x', x2 + 5);
+      labelEnd.setAttribute('y', y2);
+      labelEnd.setAttribute('text-anchor', 'start');
+      labelEnd.setAttribute('dominant-baseline', 'middle');
+      labelEnd.setAttribute('class', 'slopegraph-value-label');
+      labelEnd.setAttribute('fill', lineColor);
+      labelEnd.textContent = d.nachher.toFixed(0);
+      svg.appendChild(labelEnd);
+    });
   });
   
-  el.appendChild(container);
+  slopegraphEl.appendChild(svg);
+  el.appendChild(slopegraphEl);
+  
+  // Legend with NEON glow
+  const legendEl = document.createElement('div');
+  legendEl.className = 'slopegraph-legend';
+  
+  normalizedItems.forEach(item => {
+    const lineColor = item.lineFarbe || item.farbe || `hsl(${item.index * 90}, 70%, 55%)`;
+    const glowColor = item.glowFarbe || lineColor;
+    
+    const itemEl = document.createElement('div');
+    itemEl.className = 'slopegraph-legend-item';
+    
+    // Calculate average change
+    const avgChange = item.daten.reduce((sum, d) => {
+      const change = d.vorher !== 0 ? ((d.nachher - d.vorher) / Math.abs(d.vorher)) * 100 : 0;
+      return sum + change;
+    }, 0) / item.daten.length;
+    
+    itemEl.innerHTML = `
+      <span class="slopegraph-legend-line" style="background: ${lineColor}; box-shadow: 0 0 8px ${glowColor}"></span>
+      <span class="slopegraph-legend-name">${item.name || item.id || `Item ${item.index + 1}`}</span>
+      <span class="slopegraph-legend-change" style="color: ${avgChange >= 0 ? '#7fff7f' : '#ff7f7f'}">${avgChange >= 0 ? '+' : ''}${avgChange.toFixed(0)}%</span>
+    `;
+    legendEl.appendChild(itemEl);
+  });
+  
+  el.appendChild(legendEl);
   return el;
 }
 

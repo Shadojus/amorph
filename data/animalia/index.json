@@ -1,11 +1,6 @@
 {
-  "sammlung": "animalia",
-  "beschreibung": "Tierreich - Animalia",
-  "typ": "json-perspektiven",
-  "spezies": [
-    {
-      "slug": "monarchfalter",
-      "ordner": "monarchfalter"
-    }
-  ]
+  "collection": "animalia",
+  "description": "Animal Kingdom - Animalia",
+  "type": "json-perspectives",
+  "species": []
 }

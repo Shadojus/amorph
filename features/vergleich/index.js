@@ -275,6 +275,15 @@ export default async function init(ctx) {
       const firstWert = rawItems[0]?.wert;
       const typ = cfg?.typ || detectType(firstWert) || 'text';
       
+      // DEBUG: Log field data for debugging
+      console.log(`[COMPARE DEBUG] Field: ${feldName}`, {
+        typ,
+        firstWert: JSON.stringify(firstWert)?.slice(0, 200),
+        wertType: typeof firstWert,
+        isArray: Array.isArray(firstWert),
+        configTyp: cfg?.typ
+      });
+      
       // DEBUG
       debug.features('Compare rawItems', { 
         feldName, 

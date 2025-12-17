@@ -23,21 +23,27 @@ export function compareText(items, config = {}) {
   items.forEach((item, itemIndex) => {
     const val = item.value ?? item.wert;
     
+    // Neon pilz colors
+    const baseColor = item.lineFarbe || item.farbe || `hsl(${itemIndex * 90}, 70%, 55%)`;
+    const glowColor = item.glowFarbe || baseColor;
+    const textColor = item.textFarbe || baseColor;
+    
     // Wrapper for item
     const wrapper = document.createElement('div');
     wrapper.className = 'compare-item-wrapper';
     
-    // Label with item name - apply inline text color
+    // Label with item name - apply neon color
     const label = document.createElement('div');
     label.className = 'compare-item-label';
     label.textContent = item.name || item.id || `Item ${itemIndex + 1}`;
-    if (item.textFarbe) label.style.color = item.textFarbe;
+    label.style.color = textColor;
+    label.style.textShadow = `0 0 6px ${glowColor}`;
     wrapper.appendChild(label);
     
-    // Use original text structure
+    // Use original text structure with subtle neon
     const textEl = document.createElement('span');
     textEl.className = 'amorph-text';
-    if (item.farbe) textEl.style.color = item.farbe;
+    // Don't apply heavy neon to text content (just keep readable)
     
     // Format the value using original text morph logic
     if (typeof val === 'object' && val !== null) {

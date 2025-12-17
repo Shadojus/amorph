@@ -1,0 +1,63 @@
+{
+  "_meta": {
+    "description": "Medicine perspective - Tests: radar, gauge, slopegraph, citation, severity, boolean"
+  },
+  
+  "medicinal_use": true,
+  
+  "therapeutic_profile": [
+    {"axis": "Immunomodulation", "value": 85},
+    {"axis": "Anti-inflammatory", "value": 70},
+    {"axis": "Antioxidant", "value": 90},
+    {"axis": "Hepatoprotective", "value": 65},
+    {"axis": "Neuroprotective", "value": 45},
+    {"axis": "Antimicrobial", "value": 55}
+  ],
+  
+  "efficacy_score": {
+    "value": 72,
+    "min": 0,
+    "max": 100,
+    "label": "Clinical efficacy",
+    "zones": [
+      {"min": 0, "max": 30, "label": "Low", "color": "red"},
+      {"min": 31, "max": 60, "label": "Moderate", "color": "yellow"},
+      {"min": 61, "max": 100, "label": "High", "color": "green"}
+    ]
+  },
+  
+  "cholesterol_impact": {
+    "before": 215,
+    "after": 178
+  },
+  
+  "blood_pressure_study": {
+    "before": 145,
+    "after": 128
+  },
+  
+  "key_research_citation": {
+    "author": "Zhang et al.",
+    "year": 2022,
+    "title": "Immunomodulatory effects of Boletus edulis polysaccharides",
+    "journal": "Journal of Ethnopharmacology",
+    "doi": "10.1016/j.jep.2022.115432",
+    "url": "https://doi.org/10.1016/j.jep.2022.115432"
+  },
+  
+  "drug_interactions": [
+    {"label": "Immunosuppressants", "value": 85, "severity": "high"},
+    {"label": "Anticoagulants", "value": 45, "severity": "moderate"},
+    {"label": "Antidiabetics", "value": 30, "severity": "low"}
+  ],
+  
+  "contraindication_severity": [
+    {"type": "Pregnancy", "severity": "moderate", "recommendation": "Avoid concentrated extracts"},
+    {"type": "Auto-immune", "severity": "high", "recommendation": "Consult physician"},
+    {"type": "Pre-surgery", "severity": "moderate", "recommendation": "Stop 2 weeks before"}
+  ],
+  
+  "clinical_trials_completed": 47,
+  
+  "fda_approved": false
+}

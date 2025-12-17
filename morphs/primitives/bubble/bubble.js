@@ -155,9 +155,11 @@ function normalisiereWert(wert) {
   if (Array.isArray(wert)) {
     return wert.map(item => {
       if (typeof item === 'object' && item !== null) {
-        const value = item.value || item.size || item.count || item.amount || item.radius || item.r || 0;
+        const rawValue = item.value || item.size || item.count || item.amount || item.radius || item.r || 0;
+        const numValue = Number(rawValue);
         const label = item.label || item.name || item.category || 'Unknown';
-        return { label, value: Number(value) };
+        // Ensure valid positive number
+        return { label, value: isFinite(numValue) && numValue > 0 ? numValue : 0.1 };
       }
       return null;
     }).filter(Boolean);
@@ -165,10 +167,13 @@ function normalisiereWert(wert) {
   
   // Objekt mit Label-Value Paaren
   if (typeof wert === 'object' && wert !== null) {
-    return Object.entries(wert).map(([label, value]) => ({
-      label,
-      value: typeof value === 'number' ? value : 0
-    }));
+    return Object.entries(wert).map(([label, value]) => {
+      const numValue = typeof value === 'number' ? value : 0;
+      return {
+        label,
+        value: isFinite(numValue) && numValue > 0 ? numValue : 0.1
+      };
+    });
   }
   
   return [];
@@ -184,11 +189,16 @@ function packCircles(items, size, maxValue) {
   const maxRadius = size / 3;
   const minRadius = 15;
   
+  // Ensure maxValue is valid to prevent NaN
+  const safeMaxValue = maxValue > 0 ? maxValue : 1;
+  
   // Radius basierend auf Wert berechnen (Fläche proportional)
-  const circles = items.map(item => ({
-    ...item,
-    r: Math.max(minRadius, Math.sqrt(item.value / maxValue) * maxRadius)
-  }));
+  const circles = items.map(item => {
+    const safeValue = isFinite(item.value) && item.value > 0 ? item.value : 0.1;
+    const ratio = Math.sqrt(safeValue / safeMaxValue);
+    const r = Math.max(minRadius, isFinite(ratio) ? ratio * maxRadius : minRadius);
+    return { ...item, r };
+  });
   
   // Positionierung: Größte in der Mitte, dann spiralförmig außen
   const placed = [];

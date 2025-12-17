@@ -23,15 +23,21 @@ export function compareSteps(items, config = {}) {
   items.forEach((item, itemIndex) => {
     const rawVal = item.value ?? item.wert;
     
+    // Neon pilz colors
+    const baseColor = item.lineFarbe || item.farbe || `hsl(${itemIndex * 90}, 70%, 55%)`;
+    const glowColor = item.glowFarbe || baseColor;
+    const textColor = item.textFarbe || baseColor;
+    
     // Wrapper for item
     const wrapper = document.createElement('div');
     wrapper.className = 'compare-item-wrapper';
     
-    // Label with item name - apply inline text color
+    // Label with item name - apply neon color
     const label = document.createElement('div');
     label.className = 'compare-item-label';
     label.textContent = item.name || item.id || `Item ${itemIndex + 1}`;
-    if (item.textFarbe) label.style.color = item.textFarbe;
+    label.style.color = textColor;
+    label.style.textShadow = `0 0 6px ${glowColor}`;
     wrapper.appendChild(label);
     
     // Use original steps structure
@@ -65,10 +71,17 @@ export function compareSteps(items, config = {}) {
         if (step.active) stepItem.classList.add('amorph-steps-active');
         if (step.completed) stepItem.classList.add('amorph-steps-completed');
         
-        // Badge with number
+        // Badge with number - neon styling
         const badge = document.createElement('div');
         badge.className = 'amorph-steps-badge';
         badge.textContent = step.completed ? '✓' : (step.nummer || i + 1);
+        if (step.completed || step.active) {
+          badge.style.background = baseColor;
+          badge.style.boxShadow = `0 0 8px ${glowColor}`;
+        } else {
+          badge.style.borderColor = baseColor;
+          badge.style.color = baseColor;
+        }
         stepItem.appendChild(badge);
         
         // Content
@@ -78,6 +91,10 @@ export function compareSteps(items, config = {}) {
         const title = document.createElement('div');
         title.className = 'amorph-steps-title';
         title.textContent = step.title;
+        if (step.active || step.completed) {
+          title.style.color = textColor;
+          title.style.textShadow = `0 0 4px ${glowColor}`;
+        }
         content.appendChild(title);
         
         if (step.description) {
@@ -89,11 +106,17 @@ export function compareSteps(items, config = {}) {
         
         stepItem.appendChild(content);
         
-        // Connector (not for last)
+        // Connector (not for last) - neon color
         if (!isLast) {
           const connector = document.createElement('div');
           connector.className = 'amorph-steps-connector';
-          if (step.completed) connector.classList.add('amorph-steps-connector-completed');
+          if (step.completed) {
+            connector.classList.add('amorph-steps-connector-completed');
+            connector.style.background = baseColor;
+            connector.style.boxShadow = `0 0 4px ${glowColor}`;
+          } else {
+            connector.style.background = `${baseColor}44`;
+          }
           stepItem.appendChild(connector);
         }
         

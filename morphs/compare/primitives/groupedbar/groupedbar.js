@@ -1,18 +1,9 @@
 /**
- * COMPARE GROUPEDBAR - Grouped bar chart comparison
- * Uses the exact same HTML structure as the original groupedbar morph
+ * COMPARE GROUPEDBAR - UNIFIED grouped bar chart comparison
+ * All items shown in unified groups with NEON pilz colors
  */
 
 import { debug } from '../../../../observer/debug.js';
-
-// Blue theme colors
-const SERIES_COLORS = [
-  'rgba(100, 180, 255, 0.8)',
-  'rgba(80, 160, 240, 0.8)',
-  'rgba(60, 140, 220, 0.8)',
-  'rgba(120, 200, 255, 0.7)',
-  'rgba(40, 120, 200, 0.8)'
-];
 
 export function compareGroupedbar(items, config = {}) {
   debug.morphs('compareGroupedbar', { itemCount: items?.length });
@@ -25,103 +16,111 @@ export function compareGroupedbar(items, config = {}) {
     return el;
   }
   
-  const container = document.createElement('div');
-  container.className = 'compare-items-container';
-  
-  items.forEach((item, itemIndex) => {
+  // Normalize all items' data
+  const normalizedItems = items.map((item, idx) => {
     const rawVal = item.value ?? item.wert;
-    
-    const wrapper = document.createElement('div');
-    wrapper.className = 'compare-item-wrapper';
-    
-    const label = document.createElement('div');
-    label.className = 'compare-item-label';
-    label.textContent = item.name || item.id || `Item ${itemIndex + 1}`;
-    if (item.textFarbe) label.style.color = item.textFarbe;
-    wrapper.appendChild(label);
-    
-    // Original groupedbar structure
-    const groupedbarEl = document.createElement('div');
-    groupedbarEl.className = 'amorph-groupedbar';
-    
     const { categories, series, data } = normalisiereWert(rawVal);
+    return { ...item, categories, series, data, index: idx };
+  }).filter(item => item.categories.length > 0);
+  
+  if (normalizedItems.length === 0) {
+    el.innerHTML = '<div class="compare-empty">Keine Grouped-Bar Daten</div>';
+    return el;
+  }
+  
+  // Find global max across all items
+  let globalMax = 0;
+  normalizedItems.forEach(item => {
+    item.data.forEach(d => {
+      Object.values(d.values || {}).forEach(v => {
+        if (typeof v === 'number' && v > globalMax) globalMax = v;
+      });
+    });
+  });
+  if (globalMax === 0) globalMax = 1;
+  
+  // Create unified container
+  const groupedbarEl = document.createElement('div');
+  groupedbarEl.className = 'amorph-groupedbar amorph-groupedbar-compare';
+  
+  // For each item, show its grouped bars with item-specific neon colors
+  normalizedItems.forEach((item, itemIdx) => {
+    const lineColor = item.lineFarbe || item.farbe || `hsl(${itemIdx * 90}, 70%, 55%)`;
+    const glowColor = item.glowFarbe || lineColor;
+    const textColor = item.textFarbe || lineColor;
     
-    if (categories.length === 0) {
-      groupedbarEl.innerHTML = '<span class="amorph-groupedbar-leer">Keine Grouped-Bar Daten</span>';
-    } else {
-      const allValues = data.flatMap(d => Object.values(d.values || {})).filter(v => typeof v === 'number');
-      const maxValue = allValues.length > 0 ? Math.max(...allValues) : 1;
+    // Item header
+    const itemHeader = document.createElement('div');
+    itemHeader.className = 'groupedbar-item-header';
+    itemHeader.innerHTML = `
+      <span class="groupedbar-item-indicator" style="background: ${lineColor}; box-shadow: 0 0 8px ${glowColor}"></span>
+      <span class="groupedbar-item-name" style="color: ${textColor}">${item.name || item.id || `Item ${itemIdx + 1}`}</span>
+    `;
+    groupedbarEl.appendChild(itemHeader);
+    
+    // Generate neon colors for series based on item color
+    const baseHue = parseInt(lineColor.match(/\d+/)?.[0] || 280);
+    const getSeriesColor = (idx) => {
+      const hue = (baseHue + idx * 50) % 360;
+      return `hsla(${hue}, 80%, 55%, 0.85)`;
+    };
+    
+    // Series legend
+    if (item.series.length > 1) {
+      const legend = document.createElement('div');
+      legend.className = 'amorph-groupedbar-legend-compare';
       
-      const seriesFarben = {};
-      series.forEach((s, i) => {
-        seriesFarben[s] = SERIES_COLORS[i % SERIES_COLORS.length];
+      item.series.forEach((s, idx) => {
+        const color = getSeriesColor(idx);
+        const legendItem = document.createElement('span');
+        legendItem.className = 'groupedbar-legend-item';
+        legendItem.innerHTML = `
+          <span class="groupedbar-legend-color" style="background: ${color}; box-shadow: 0 0 6px ${color}"></span>
+          <span>${s}</span>
+        `;
+        legend.appendChild(legendItem);
       });
-      
-      // Legend (compact)
-      if (series.length > 1) {
-        const legend = document.createElement('div');
-        legend.className = 'amorph-groupedbar-legend';
-        legend.style.display = 'flex';
-        legend.style.gap = '6px';
-        legend.style.fontSize = '9px';
-        legend.style.marginBottom = '4px';
-        
-        series.forEach(s => {
-          const legendItem = document.createElement('span');
-          legendItem.innerHTML = `<span style="display:inline-block;width:8px;height:8px;background:${seriesFarben[s]};margin-right:2px;border-radius:1px;"></span>${s}`;
-          legend.appendChild(legendItem);
-        });
-        groupedbarEl.appendChild(legend);
-      }
-      
-      // Chart container
-      const chartContainer = document.createElement('div');
-      chartContainer.className = 'amorph-groupedbar-chart';
-      
-      data.slice(0, 4).forEach(cat => {
-        const categoryEl = document.createElement('div');
-        categoryEl.className = 'amorph-groupedbar-category';
-        
-        const catLabel = document.createElement('div');
-        catLabel.className = 'amorph-groupedbar-category-label';
-        catLabel.textContent = cat.category;
-        catLabel.style.fontSize = '9px';
-        catLabel.style.marginBottom = '2px';
-        categoryEl.appendChild(catLabel);
-        
-        const bars = document.createElement('div');
-        bars.className = 'amorph-groupedbar-bars';
-        bars.style.display = 'flex';
-        bars.style.gap = '2px';
-        bars.style.height = '20px';
-        bars.style.alignItems = 'flex-end';
-        
-        series.forEach(s => {
-          const value = cat.values[s] || 0;
-          const height = (value / maxValue) * 100;
-          
-          const bar = document.createElement('div');
-          bar.className = 'amorph-groupedbar-bar';
-          bar.style.width = '12px';
-          bar.style.height = `${Math.max(height, 2)}%`;
-          bar.style.background = seriesFarben[s];
-          bar.style.borderRadius = '1px';
-          bar.title = `${s}: ${value}`;
-          bars.appendChild(bar);
-        });
-        
-        categoryEl.appendChild(bars);
-        chartContainer.appendChild(categoryEl);
-      });
-      
-      groupedbarEl.appendChild(chartContainer);
+      groupedbarEl.appendChild(legend);
     }
     
-    wrapper.appendChild(groupedbarEl);
-    container.appendChild(wrapper);
+    // Chart container
+    const chartContainer = document.createElement('div');
+    chartContainer.className = 'amorph-groupedbar-chart-compare';
+    
+    item.data.slice(0, 5).forEach(cat => {
+      const categoryEl = document.createElement('div');
+      categoryEl.className = 'amorph-groupedbar-category-compare';
+      
+      const catLabel = document.createElement('div');
+      catLabel.className = 'amorph-groupedbar-category-label-compare';
+      catLabel.textContent = cat.category;
+      categoryEl.appendChild(catLabel);
+      
+      const bars = document.createElement('div');
+      bars.className = 'amorph-groupedbar-bars-compare';
+      
+      item.series.forEach((s, seriesIdx) => {
+        const value = cat.values[s] || 0;
+        const height = (value / globalMax) * 100;
+        const color = getSeriesColor(seriesIdx);
+        
+        const bar = document.createElement('div');
+        bar.className = 'amorph-groupedbar-bar-compare';
+        bar.style.height = `${Math.max(height, 3)}%`;
+        bar.style.background = color;
+        bar.style.boxShadow = `0 0 8px ${color}`;
+        bar.title = `${s}: ${value}`;
+        bars.appendChild(bar);
+      });
+      
+      categoryEl.appendChild(bars);
+      chartContainer.appendChild(categoryEl);
+    });
+    
+    groupedbarEl.appendChild(chartContainer);
   });
   
-  el.appendChild(container);
+  el.appendChild(groupedbarEl);
   return el;
 }
 

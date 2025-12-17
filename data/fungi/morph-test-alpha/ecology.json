@@ -1,0 +1,71 @@
+{
+  "_meta": {
+    "description": "Ecology perspective - Tests: network, hierarchy, pie (object), heatmap, calendar, range"
+  },
+  
+  "trophic_mode_primary": "Ectomycorrhizal",
+  
+  "ecological_guild": "Obligate symbiont",
+  
+  "symbiotic_relationships": [
+    {"name": "Quercus robur", "type": "mycorrhiza", "strength": "obligate", "details": "Primary host tree"},
+    {"name": "Fagus sylvatica", "type": "mycorrhiza", "strength": "facultative", "details": "Secondary host"},
+    {"name": "Hypogymnia physodes", "type": "competition", "strength": "weak", "details": "Competes for nutrients"},
+    {"name": "Lumbricus terrestris", "type": "mutualism", "strength": "moderate", "details": "Spore dispersal"},
+    {"name": "Sciurus vulgaris", "type": "dispersal", "strength": "strong", "details": "Caches fruiting bodies"}
+  ],
+  
+  "taxonomic_hierarchy": [
+    {"level": "Kingdom", "name": "Fungi"},
+    {"level": "Division", "name": "Basidiomycota"},
+    {"level": "Class", "name": "Agaricomycetes"},
+    {"level": "Order", "name": "Boletales"},
+    {"level": "Family", "name": "Boletaceae"},
+    {"level": "Genus", "name": "Boletus"},
+    {"level": "Species", "name": "B. aureus"}
+  ],
+  
+  "nutrient_cycling_contribution": {
+    "nitrogen": 35,
+    "phosphorus": 45,
+    "potassium": 12,
+    "carbon": 8
+  },
+  
+  "soil_preference_matrix": [
+    [0.2, 0.4, 0.6, 0.3],
+    [0.5, 0.9, 0.8, 0.4],
+    [0.7, 0.8, 0.95, 0.6],
+    [0.3, 0.5, 0.7, 0.4]
+  ],
+  
+  "fruiting_calendar": [
+    {"month": 1, "active": false},
+    {"month": 2, "active": false},
+    {"month": 3, "active": false},
+    {"month": 4, "active": false},
+    {"month": 5, "active": true, "intensity": 0.3},
+    {"month": 6, "active": true, "intensity": 0.6},
+    {"month": 7, "active": true, "intensity": 0.4},
+    {"month": 8, "active": true, "intensity": 0.8},
+    {"month": 9, "active": true, "intensity": 1.0},
+    {"month": 10, "active": true, "intensity": 0.9},
+    {"month": 11, "active": true, "intensity": 0.3},
+    {"month": 12, "active": false}
+  ],
+  
+  "elevation_range": {
+    "min": 200,
+    "max": 1400
+  },
+  
+  "soil_ph_range": {
+    "min": 4.5,
+    "max": 6.8
+  },
+  
+  "canopy_cover_optimal": {
+    "min": 60,
+    "max": 85
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": 1001,
+  "slug": "morph-test-alpha",
+  "name": "Aureus morphicus",
+  "bild": "https://placehold.co/400x300/2a1f0f/d4a574?text=Aureus+morphicus",
+  "perspectives": [
+    "culinary",
+    "safety",
+    "ecology",
+    "statistics",
+    "chemistry",
+    "medicine",
+    "cultivation",
+    "geography",
+    "economy",
+    "conservation",
+    "identification",
+    "research",
+    "interactions",
+    "culture",
+    "temporal"
+  ]
+}

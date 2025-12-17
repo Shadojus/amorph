@@ -3,13 +3,13 @@
   "description": "Fungi Kingdom - Mycological Data",
   "type": "json-perspectives",
   "species": [
-    {
-      "slug": "porcini",
-      "folder": "porcini"
+        {
+      "slug": "morph-test-alpha",
+      "folder": "morph-test-alpha"
     },
-    {
-      "slug": "fly-agaric",
-      "folder": "fly-agaric"
+        {
+      "slug": "morph-test-beta",
+      "folder": "morph-test-beta"
     }
   ]
 }

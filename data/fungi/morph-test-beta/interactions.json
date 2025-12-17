@@ -1,0 +1,62 @@
+{
+  "_meta": {
+    "description": "Interactions perspective - Tests: network, flow, sunburst, hierarchy, list"
+  },
+  
+  "ecological_network": [
+    {"name": "Quercus spp.", "type": "mycorrhiza", "strength": "obligate", "details": "Primary oak host"},
+    {"name": "Corylus avellana", "type": "mycorrhiza", "strength": "facultative", "details": "Hazel association"},
+    {"name": "Carpinus betulus", "type": "mycorrhiza", "strength": "facultative", "details": "Hornbeam association"},
+    {"name": "Homo sapiens", "type": "toxicity", "strength": "lethal", "details": "Primary poisoning victim"},
+    {"name": "Canis familiaris", "type": "toxicity", "strength": "lethal", "details": "Dog poisonings common"},
+    {"name": "Various insects", "type": "spore dispersal", "strength": "weak", "details": "Attracted by smell"},
+    {"name": "Gastropoda", "type": "herbivory", "strength": "immune", "details": "Slugs unaffected by toxins"}
+  ],
+  
+  "toxin_pathway": [
+    {"from": "Ingestion", "to": "Gut absorption", "value": 100},
+    {"from": "Gut absorption", "to": "Bloodstream", "value": 95},
+    {"from": "Bloodstream", "to": "Liver", "value": 85},
+    {"from": "Liver", "to": "Hepatocyte uptake", "value": 80},
+    {"from": "Hepatocyte uptake", "to": "RNA polymerase II", "value": 75},
+    {"from": "RNA polymerase II", "to": "Cell death", "value": 70}
+  ],
+  
+  "impact_hierarchy": {
+    "name": "A. phalloides Impact",
+    "children": [
+      {
+        "name": "Human health",
+        "children": [
+          {"name": "Fatalities", "value": 95},
+          {"name": "Liver damage", "value": 85},
+          {"name": "Healthcare costs", "value": 70}
+        ]
+      },
+      {
+        "name": "Ecological",
+        "children": [
+          {"name": "Native displacement", "value": 45},
+          {"name": "Host tree stress", "value": 30}
+        ]
+      },
+      {
+        "name": "Economic",
+        "children": [
+          {"name": "Treatment costs", "value": 75},
+          {"name": "Eradication programs", "value": 40}
+        ]
+      }
+    ]
+  },
+  
+  "host_specificity": [
+    {"level": "Primary", "name": "Quercus (Oaks)"},
+    {"level": "Secondary", "name": "Corylus (Hazels)"},
+    {"level": "Secondary", "name": "Carpinus (Hornbeams)"},
+    {"level": "Occasional", "name": "Fagus (Beeches)"},
+    {"level": "Occasional", "name": "Castanea (Chestnuts)"}
+  ],
+  
+  "resistant_organisms": ["Slugs", "Snails", "Certain beetles", "Some fly larvae"]
+}

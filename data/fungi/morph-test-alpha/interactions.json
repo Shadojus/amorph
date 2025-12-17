@@ -1,0 +1,60 @@
+{
+  "_meta": {
+    "description": "Interactions perspective - Tests: network, flow, sunburst, hierarchy, list"
+  },
+  
+  "ecological_network": [
+    {"name": "Quercus robur", "type": "mycorrhiza", "strength": "obligate", "details": "Primary ectomycorrhizal partner"},
+    {"name": "Fagus sylvatica", "type": "mycorrhiza", "strength": "facultative", "details": "Secondary host tree"},
+    {"name": "Castanea sativa", "type": "mycorrhiza", "strength": "facultative", "details": "Mediterranean host"},
+    {"name": "Sciurus vulgaris", "type": "dispersal", "strength": "strong", "details": "Spore dispersal via caching"},
+    {"name": "Apodemus sylvaticus", "type": "dispersal", "strength": "moderate", "details": "Mycophagy and dispersal"},
+    {"name": "Hypomyces chrysospermus", "type": "parasitism", "strength": "weak", "details": "Bolete eater fungus"},
+    {"name": "Sepedonium chrysospermum", "type": "parasitism", "strength": "moderate", "details": "Yellow mold parasite"}
+  ],
+  
+  "nutrient_flow": [
+    {"from": "Soil", "to": "Mycelium", "value": 100},
+    {"from": "Mycelium", "to": "Host Tree", "value": 65},
+    {"from": "Host Tree", "to": "Mycelium", "value": 85},
+    {"from": "Mycelium", "to": "Fruiting Body", "value": 35},
+    {"from": "Fruiting Body", "to": "Spores", "value": 15},
+    {"from": "Spores", "to": "Environment", "value": 15}
+  ],
+  
+  "interaction_hierarchy": {
+    "name": "B. edulis Interactions",
+    "children": [
+      {
+        "name": "Mutualistic",
+        "children": [
+          {"name": "Ectomycorrhizal hosts", "value": 85},
+          {"name": "Dispersal animals", "value": 45}
+        ]
+      },
+      {
+        "name": "Antagonistic",
+        "children": [
+          {"name": "Fungal parasites", "value": 25},
+          {"name": "Insect larvae", "value": 35}
+        ]
+      },
+      {
+        "name": "Commensal",
+        "children": [
+          {"name": "Co-occurring fungi", "value": 30},
+          {"name": "Soil bacteria", "value": 40}
+        ]
+      }
+    ]
+  },
+  
+  "trophic_levels": [
+    {"level": "Producer", "name": "Host trees (Quercus, Fagus)"},
+    {"level": "Mutualist", "name": "Boletus edulis (mycorrhiza)"},
+    {"level": "Primary consumer", "name": "Mycophagous mammals"},
+    {"level": "Decomposer", "name": "Soil microbiome"}
+  ],
+  
+  "associated_species": ["Amanita muscaria", "Russula cyanoxantha", "Lactarius deliciosus", "Cantharellus cibarius"]
+}

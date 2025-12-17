@@ -1,0 +1,52 @@
+{
+  "_meta": {
+    "description": "Statistics perspective - Tests: stats, boxplot, sparkline, scatterplot, progress, number"
+  },
+  
+  "global_distribution_score": 78,
+  
+  "observation_count": 125680,
+  
+  "fatality_reporting_completeness": 45,
+  
+  "population_statistics": {
+    "min": 50000,
+    "max": 850000,
+    "avg": 320000,
+    "median": 280000,
+    "count": 89
+  },
+  
+  "cap_diameter_distribution": {
+    "min": 4,
+    "q1": 7,
+    "median": 10,
+    "q3": 13,
+    "max": 18
+  },
+  
+  "poisoning_cases_by_year": [45, 52, 38, 67, 89, 72, 95, 82, 110, 125],
+  
+  "toxin_concentration_by_age": [
+    {"x": 1, "y": 15},
+    {"x": 2, "y": 28},
+    {"x": 3, "y": 42},
+    {"x": 4, "y": 55},
+    {"x": 5, "y": 65},
+    {"x": 6, "y": 72},
+    {"x": 7, "y": 78},
+    {"x": 8, "y": 80},
+    {"x": 9, "y": 79},
+    {"x": 10, "y": 75}
+  ],
+  
+  "invasive_range_expansion_km": 12.5,
+  
+  "identification_error_rate": 23,
+  
+  "misidentification_statistics": {
+    "min": 5,
+    "max": 45,
+    "avg": 18
+  }
+}

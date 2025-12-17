@@ -23,15 +23,21 @@ export function compareTreemap(items, config = {}) {
   items.forEach((item, itemIndex) => {
     const rawVal = item.value ?? item.wert;
     
+    // Neon pilz colors
+    const baseColor = item.lineFarbe || item.farbe || `hsl(${itemIndex * 90}, 70%, 55%)`;
+    const glowColor = item.glowFarbe || baseColor;
+    const textColor = item.textFarbe || baseColor;
+    
     // Wrapper for item
     const wrapper = document.createElement('div');
     wrapper.className = 'compare-item-wrapper';
     
-    // Label with item name - apply inline text color
+    // Label with item name - apply neon color
     const label = document.createElement('div');
     label.className = 'compare-item-label';
     label.textContent = item.name || item.id || `Item ${itemIndex + 1}`;
-    if (item.textFarbe) label.style.color = item.textFarbe;
+    label.style.color = textColor;
+    label.style.textShadow = `0 0 6px ${glowColor}`;
     wrapper.appendChild(label);
     
     // Use original treemap structure (simplified)
@@ -59,14 +65,20 @@ export function compareTreemap(items, config = {}) {
         const size = Math.max(20, Math.sqrt(t.value / total) * 60);
         cell.style.width = `${size}px`;
         cell.style.height = `${size}px`;
-        cell.style.backgroundColor = `rgba(${80 + i * 20}, ${140 + i * 15}, ${220 - i * 10}, 0.6)`;
+        
+        // Use neon color with varying opacity
+        const opacity = 0.3 + (i * 0.08);
+        cell.style.backgroundColor = baseColor;
+        cell.style.opacity = (1 - i * 0.1).toString();
+        cell.style.boxShadow = `0 0 6px ${glowColor}`;
         cell.title = `${t.label}: ${t.value}`;
         
         const text = document.createElement('span');
         text.className = 'amorph-treemap-label';
         text.textContent = t.label.slice(0, 8);
         text.style.fontSize = '8px';
-        text.style.color = 'rgba(255,255,255,0.8)';
+        text.style.color = 'rgba(255,255,255,0.9)';
+        text.style.textShadow = `0 0 4px ${glowColor}`;
         cell.appendChild(text);
         
         grid.appendChild(cell);

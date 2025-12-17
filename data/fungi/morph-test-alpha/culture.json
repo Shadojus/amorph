@@ -1,0 +1,42 @@
+{
+  "_meta": {
+    "description": "Culture perspective - Tests: timeline, text, list, bar, citation, image"
+  },
+  
+  "cultural_significance": "One of the most prized wild mushrooms in European cuisine, with deep cultural roots in Italian, French, and Central European gastronomy",
+  
+  "historical_timeline": [
+    {"date": "Ancient Rome", "event": "Mentioned by Pliny as 'suilli' - pig mushrooms"},
+    {"date": "Medieval", "event": "Reserved for nobility in many regions"},
+    {"date": "1782", "event": "Scientific name established by Bulliard"},
+    {"date": "1900s", "event": "Becomes symbol of Italian autumn cuisine"},
+    {"date": "2000s", "event": "Global gourmet recognition, premium export"}
+  ],
+  
+  "regional_traditions": [
+    {"label": "Italy (Porcini)", "value": 95},
+    {"label": "France (Cèpe)", "value": 85},
+    {"label": "Germany (Steinpilz)", "value": 80},
+    {"label": "Poland (Borowik)", "value": 75},
+    {"label": "Spain (Boletus)", "value": 65}
+  ],
+  
+  "traditional_names": ["Porcini", "Cèpe de Bordeaux", "Steinpilz", "Penny Bun", "Borowik szlachetny", "Hřib smrkový"],
+  
+  "culinary_heritage": "Central to risotto ai funghi porcini, essential in French haute cuisine, and a symbol of Germanic forest culture",
+  
+  "folklore": "In Germanic folklore, circles of these mushrooms were believed to mark fairy dancing grounds. Italian tradition holds that the best porcini grow where lightning has struck.",
+  
+  "festivals": ["Festa del Fungo Porcino (Borgotaro, Italy)", "Sagra del Porcino (various Italian towns)", "Pilzfest (various German towns)"],
+  
+  "literary_reference": {
+    "author": "Giacomo Castelvetro",
+    "year": 1614,
+    "title": "The Fruits, Herbs and Vegetables of Italy",
+    "quote": "The most noble of all mushrooms"
+  },
+  
+  "protected_designation": "Fungo di Borgotaro IGP - Protected Geographical Indication since 1993",
+  
+  "art_depictions": ["Dutch still life paintings (17th century)", "Italian botanical illustrations", "Modern food photography icon"]
+}

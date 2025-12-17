@@ -5,13 +5,6 @@
 
 import { debug } from '../../../../observer/debug.js';
 
-// Blue theme ring colors
-const RING_FARBEN = [
-  ['rgba(60, 140, 220, 0.8)', 'rgba(80, 160, 240, 0.7)', 'rgba(100, 180, 255, 0.6)'],
-  ['rgba(40, 120, 200, 0.8)', 'rgba(60, 140, 220, 0.7)', 'rgba(80, 160, 240, 0.6)'],
-  ['rgba(80, 160, 240, 0.8)', 'rgba(100, 180, 255, 0.7)', 'rgba(120, 200, 255, 0.6)']
-];
-
 export function compareSunburst(items, config = {}) {
   debug.morphs('compareSunburst', { itemCount: items?.length });
   
@@ -29,13 +22,19 @@ export function compareSunburst(items, config = {}) {
   items.forEach((item, itemIndex) => {
     const rawVal = item.value ?? item.wert;
     
+    // Neon pilz colors
+    const baseColor = item.lineFarbe || item.farbe || `hsl(${itemIndex * 90}, 70%, 55%)`;
+    const glowColor = item.glowFarbe || baseColor;
+    const textColor = item.textFarbe || baseColor;
+    
     const wrapper = document.createElement('div');
     wrapper.className = 'compare-item-wrapper';
     
     const label = document.createElement('div');
     label.className = 'compare-item-label';
     label.textContent = item.name || item.id || `Item ${itemIndex + 1}`;
-    if (item.textFarbe) label.style.color = item.textFarbe;
+    label.style.color = textColor;
+    label.style.textShadow = `0 0 6px ${glowColor}`;
     wrapper.appendChild(label);
     
     // Original sunburst structure
@@ -59,17 +58,30 @@ export function compareSunburst(items, config = {}) {
       svg.setAttribute('viewBox', `0 0 ${size} ${size}`);
       svg.setAttribute('class', 'amorph-sunburst-svg');
       
+      // Add glow filter
+      const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+      const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+      filter.setAttribute('id', `sunburst-glow-${itemIndex}`);
+      filter.innerHTML = `<feGaussianBlur stdDeviation="1.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>`;
+      defs.appendChild(filter);
+      svg.appendChild(defs);
+      
       const maxDepth = berechneMaxDepth(root);
       const ringWidth = (maxRadius - innerRadius) / Math.max(maxDepth, 1);
       
-      zeichneNode(svg, root, 0, Math.PI * 2, 0, cx, cy, innerRadius, ringWidth, 0);
+      // Use neon color variations for rings
+      zeichneNode(svg, root, 0, Math.PI * 2, 0, cx, cy, innerRadius, ringWidth, baseColor, glowColor, itemIndex);
       
-      // Center circle
+      // Center circle with neon
       const centerCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
       centerCircle.setAttribute('cx', cx);
       centerCircle.setAttribute('cy', cy);
       centerCircle.setAttribute('r', innerRadius - 3);
       centerCircle.setAttribute('class', 'amorph-sunburst-center');
+      centerCircle.setAttribute('fill', `${baseColor}44`);
+      centerCircle.setAttribute('stroke', baseColor);
+      centerCircle.setAttribute('stroke-width', '1');
+      centerCircle.setAttribute('filter', `url(#sunburst-glow-${itemIndex})`);
       svg.appendChild(centerCircle);
       
       sunburstEl.appendChild(svg);
@@ -123,7 +135,7 @@ function berechneMaxDepth(node, depth = 0) {
   return Math.max(...node.children.map(child => berechneMaxDepth(child, depth + 1)));
 }
 
-function zeichneNode(svg, node, startAngle, endAngle, depth, cx, cy, innerRadius, ringWidth, colorIndex) {
+function zeichneNode(svg, node, startAngle, endAngle, depth, cx, cy, innerRadius, ringWidth, baseColor, glowColor, itemIndex) {
   if (depth > 0 && node.value > 0) {
     const r0 = innerRadius + (depth - 1) * ringWidth;
     const r1 = innerRadius + depth * ringWidth;
@@ -132,10 +144,14 @@ function zeichneNode(svg, node, startAngle, endAngle, depth, cx, cy, innerRadius
     const segment = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     segment.setAttribute('d', path);
     segment.setAttribute('class', 'amorph-sunburst-segment');
-    const farben = RING_FARBEN[colorIndex % RING_FARBEN.length];
-    segment.setAttribute('fill', farben[Math.min(depth - 1, farben.length - 1)]);
+    
+    // Use neon color with varying opacity for depth
+    const opacity = Math.max(0.3, 0.8 - (depth - 1) * 0.15);
+    segment.setAttribute('fill', baseColor);
+    segment.setAttribute('fill-opacity', opacity.toString());
     segment.setAttribute('stroke', 'rgba(0,0,0,0.3)');
     segment.setAttribute('stroke-width', '0.5');
+    segment.setAttribute('filter', `url(#sunburst-glow-${itemIndex})`);
     svg.appendChild(segment);
   }
   
@@ -145,7 +161,7 @@ function zeichneNode(svg, node, startAngle, endAngle, depth, cx, cy, innerRadius
     
     node.children.forEach((child, i) => {
       const childAngle = angleSpan * (child.value / node.value);
-      zeichneNode(svg, child, currentAngle, currentAngle + childAngle, depth + 1, cx, cy, innerRadius, ringWidth, i);
+      zeichneNode(svg, child, currentAngle, currentAngle + childAngle, depth + 1, cx, cy, innerRadius, ringWidth, baseColor, glowColor, itemIndex);
       currentAngle += childAngle;
     });
   }

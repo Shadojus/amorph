@@ -32,10 +32,16 @@
 
 /* Shape - Leuchtende Fäche */
 .amorph-radar-shape {
-  fill: rgba(100, 150, 255, 0.15);
-  stroke: rgba(150, 200, 255, 0.7);
+  /* fill und stroke werden inline gesetzt für individuelle Pilz-Farben */
   stroke-width: 1.5;
   stroke-linejoin: round;
+  /* filter wird inline gesetzt für Glow-Effekt */
+}
+
+/* Fallback nur für Radar ohne inline colors */
+.amorph-radar-shape:not([fill]) {
+  fill: rgba(100, 150, 255, 0.15);
+  stroke: rgba(150, 200, 255, 0.7);
   filter: drop-shadow(0 0 6px rgba(100, 150, 255, 0.4));
 }
 

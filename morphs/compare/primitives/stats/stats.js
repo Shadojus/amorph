@@ -1,6 +1,6 @@
 /**
- * COMPARE STATS - Statistics comparison
- * Uses the exact same HTML structure as the original stats morph
+ * COMPARE STATS - UNIFIED Statistics comparison
+ * All items shown as comparative bars for each stat metric
  */
 
 import { debug } from '../../../../observer/debug.js';
@@ -40,114 +40,152 @@ export function compareStats(items, config = {}) {
     return el;
   }
   
-  // Container for all stats cards
-  const container = document.createElement('div');
-  container.className = 'compare-items-container';
-  
-  items.forEach((item, itemIndex) => {
+  // Parse all items' stats
+  const parsedItems = items.map((item, idx) => {
     const rawVal = item.value ?? item.wert;
+    const stats = {};
     
-    // Wrapper for item
-    const wrapper = document.createElement('div');
-    wrapper.className = 'compare-item-wrapper';
-    
-    // Label with item name - apply inline text color
-    const label = document.createElement('div');
-    label.className = 'compare-item-label';
-    label.textContent = item.name || item.id || `Item ${itemIndex + 1}`;
-    if (item.textFarbe) label.style.color = item.textFarbe;
-    wrapper.appendChild(label);
-    
-    // Use original stats structure
-    const statsEl = document.createElement('div');
-    statsEl.className = 'amorph-stats';
-    
-    if (typeof rawVal !== 'object' || rawVal === null || Array.isArray(rawVal)) {
-      statsEl.innerHTML = '<span class="amorph-stats-leer">Keine Statistiken</span>';
-    } else {
-      const einheit = config.einheit || rawVal.unit || rawVal.einheit || '';
-      
-      // Extract and categorize stats
-      const statsArray = [];
+    if (typeof rawVal === 'object' && rawVal !== null && !Array.isArray(rawVal)) {
       for (const [key, value] of Object.entries(rawVal)) {
         if (typeof value !== 'number') continue;
         const keyLower = String(key || '').toLowerCase();
         if (['unit', 'einheit', 'id'].includes(keyLower)) continue;
         
         const def = STAT_DEFINITIONS[keyLower] || { icon: '•', priority: 10, type: 'other' };
-        
-        statsArray.push({
-          key,
-          label: formatLabel(key),
-          value,
-          icon: def.icon,
-          priority: def.priority,
-          type: def.type,
-          sentiment: def.sentiment
-        });
-      }
-      
-      if (statsArray.length === 0) {
-        statsEl.innerHTML = '<span class="amorph-stats-leer">Keine numerischen Werte</span>';
-      } else {
-        // Sort by priority
-        statsArray.sort((a, b) => a.priority - b.priority);
-        
-        // Primary stats
-        const primaryStats = statsArray.filter(s => s.type === 'primary');
-        const otherStats = statsArray.filter(s => s.type !== 'primary');
-        
-        // Render primary stats
-        if (primaryStats.length > 0) {
-          const primaryGrid = document.createElement('div');
-          primaryGrid.className = 'amorph-stats-primary';
-          
-          for (const stat of primaryStats.slice(0, 2)) {
-            const statItem = document.createElement('div');
-            statItem.className = 'amorph-stats-primary-item';
-            statItem.innerHTML = `
-              <span class="amorph-stats-primary-value">${formatValue(stat.value, einheit)}</span>
-              <span class="amorph-stats-primary-label">${stat.label}</span>
-            `;
-            primaryGrid.appendChild(statItem);
-          }
-          statsEl.appendChild(primaryGrid);
-        }
-        
-        // Render other stats
-        if (otherStats.length > 0) {
-          const grid = document.createElement('div');
-          grid.className = 'amorph-stats-grid';
-          
-          for (const stat of otherStats.slice(0, config.maxStats || 6)) {
-            const statItem = document.createElement('div');
-            statItem.className = `amorph-stats-item amorph-stats-${stat.type}`;
-            
-            if (stat.sentiment === 'positive' || (stat.key.toLowerCase().includes('growth') && stat.value > 0)) {
-              statItem.setAttribute('data-sentiment', 'positive');
-            } else if (stat.sentiment === 'negative' || (stat.key.toLowerCase().includes('decline') && stat.value > 0)) {
-              statItem.setAttribute('data-sentiment', 'negative');
-            }
-            
-            statItem.innerHTML = `
-              <span class="amorph-stats-icon">${stat.icon}</span>
-              <span class="amorph-stats-value">${formatValue(stat.value, stat.type === 'trend' ? '%' : einheit)}</span>
-              <span class="amorph-stats-label">${stat.label}</span>
-            `;
-            
-            grid.appendChild(statItem);
-          }
-          
-          statsEl.appendChild(grid);
-        }
+        stats[key] = { value, ...def, label: formatLabel(key) };
       }
     }
     
-    wrapper.appendChild(statsEl);
-    container.appendChild(wrapper);
+    return { 
+      ...item, 
+      stats, 
+      index: idx,
+      // Farben werden durchgereicht, item hat bereits lineFarbe etc.
+      color: item.lineFarbe || item.farbe || `hsl(${idx * 90}, 70%, 55%)`
+    };
   });
   
-  el.appendChild(container);
+  // Collect all unique stat keys
+  const allStatKeys = new Set();
+  parsedItems.forEach(item => Object.keys(item.stats).forEach(k => allStatKeys.add(k)));
+  
+  if (allStatKeys.size === 0) {
+    el.innerHTML = '<div class="compare-empty">Keine Statistiken</div>';
+    return el;
+  }
+  
+  // Sort stat keys by priority
+  const sortedKeys = [...allStatKeys].sort((a, b) => {
+    const prioA = parsedItems[0]?.stats[a]?.priority ?? 10;
+    const prioB = parsedItems[0]?.stats[b]?.priority ?? 10;
+    return prioA - prioB;
+  });
+  
+  // UNIFIED stats container
+  const statsContainer = document.createElement('div');
+  statsContainer.className = 'amorph-stats amorph-stats-compare';
+  
+  // Primary stat (first key with highest priority) - shown as big numbers with NEON
+  const primaryKey = sortedKeys[0];
+  if (primaryKey) {
+    const primarySection = document.createElement('div');
+    primarySection.className = 'stats-primary-compare';
+    
+    parsedItems.forEach(item => {
+      const stat = item.stats[primaryKey];
+      if (!stat) return;
+      
+      // Use NEON colors
+      const lineColor = item.lineFarbe || item.farbe || item.color;
+      const glowColor = item.glowFarbe || lineColor;
+      const textColor = item.textFarbe || lineColor;
+      
+      const statItem = document.createElement('div');
+      statItem.className = 'stats-primary-item';
+      
+      const nameEl = document.createElement('div');
+      nameEl.className = 'stats-primary-name';
+      nameEl.textContent = item.name || item.id;
+      nameEl.style.color = textColor;
+      
+      const valueEl = document.createElement('div');
+      valueEl.className = 'stats-primary-value';
+      valueEl.textContent = formatValue(stat.value, '');
+      valueEl.style.color = lineColor;
+      valueEl.style.textShadow = `0 0 15px ${glowColor}`;
+      
+      const labelEl = document.createElement('div');
+      labelEl.className = 'stats-primary-label';
+      labelEl.textContent = stat.label || primaryKey;
+      
+      statItem.appendChild(nameEl);
+      statItem.appendChild(valueEl);
+      statItem.appendChild(labelEl);
+      primarySection.appendChild(statItem);
+    });
+    
+    statsContainer.appendChild(primarySection);
+  }
+  
+  // Secondary stats as comparative bars with NEON
+  const secondaryKeys = sortedKeys.slice(1, 7); // Max 6 secondary stats
+  if (secondaryKeys.length > 0) {
+    const secondarySection = document.createElement('div');
+    secondarySection.className = 'stats-secondary-compare';
+    
+    secondaryKeys.forEach(key => {
+      const def = parsedItems[0]?.stats[key];
+      const maxVal = Math.max(...parsedItems.map(i => i.stats[key]?.value ?? 0), 1);
+      
+      const statRow = document.createElement('div');
+      statRow.className = 'stats-row';
+      
+      // Stat label
+      const labelEl = document.createElement('div');
+      labelEl.className = 'stats-row-label';
+      labelEl.innerHTML = `<span class="stats-icon">${def?.icon || '•'}</span> ${def?.label || key}`;
+      statRow.appendChild(labelEl);
+      
+      // Bars for all items with NEON glow
+      const barsEl = document.createElement('div');
+      barsEl.className = 'stats-row-bars';
+      
+      parsedItems.forEach(item => {
+        const stat = item.stats[key];
+        const val = stat?.value ?? 0;
+        const percent = (val / maxVal) * 100;
+        
+        // Use NEON colors
+        const lineColor = item.lineFarbe || item.farbe || item.color;
+        const glowColor = item.glowFarbe || lineColor;
+        
+        const barRow = document.createElement('div');
+        barRow.className = 'stats-bar-row';
+        
+        const bar = document.createElement('div');
+        bar.className = 'stats-bar';
+        bar.style.width = `${percent}%`;
+        bar.style.background = lineColor;
+        bar.style.boxShadow = `0 0 8px ${glowColor}, inset 0 0 4px rgba(255,255,255,0.2)`;
+        
+        const valEl = document.createElement('span');
+        valEl.className = 'stats-bar-value';
+        valEl.textContent = formatValue(val, '');
+        valEl.style.color = lineColor;
+        
+        barRow.appendChild(bar);
+        barRow.appendChild(valEl);
+        barsEl.appendChild(barRow);
+      });
+      
+      statRow.appendChild(barsEl);
+      secondarySection.appendChild(statRow);
+    });
+    
+    statsContainer.appendChild(secondarySection);
+  }
+  
+  el.appendChild(statsContainer);
   return el;
 }
 

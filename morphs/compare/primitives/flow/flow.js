@@ -22,13 +22,19 @@ export function compareFlow(items, config = {}) {
   items.forEach((item, itemIndex) => {
     const rawVal = item.value ?? item.wert;
     
+    // Neon pilz colors
+    const color = item.lineFarbe || item.farbe || `hsl(${itemIndex * 90}, 70%, 55%)`;
+    const glowColor = item.glowFarbe || color;
+    const textColor = item.textFarbe || color;
+    
     const wrapper = document.createElement('div');
     wrapper.className = 'compare-item-wrapper';
     
     const label = document.createElement('div');
     label.className = 'compare-item-label';
     label.textContent = item.name || item.id || `Item ${itemIndex + 1}`;
-    if (item.textFarbe) label.style.color = item.textFarbe;
+    label.style.color = textColor;
+    label.style.textShadow = `0 0 6px ${glowColor}`;
     wrapper.appendChild(label);
     
     // Original flow structure
@@ -45,19 +51,29 @@ export function compareFlow(items, config = {}) {
       svg.setAttribute('viewBox', '0 0 120 60');
       svg.setAttribute('class', 'amorph-flow-svg');
       
-      // Draw connections as curves
+      // Add filter for glow
+      const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+      const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+      filter.setAttribute('id', `flow-glow-${itemIndex}`);
+      filter.innerHTML = `<feGaussianBlur stdDeviation="2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>`;
+      defs.appendChild(filter);
+      svg.appendChild(defs);
+      
+      // Draw connections as curves with neon color
       connections.slice(0, 4).forEach((conn, i) => {
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         const y = 15 + i * 12;
         path.setAttribute('d', `M 10,${y} Q 60,${y - 8 + i * 3} 110,${y}`);
         path.setAttribute('class', 'amorph-flow-curve');
         path.setAttribute('fill', 'none');
-        path.setAttribute('stroke', `rgba(${100 + i * 20}, ${160 + i * 10}, 255, 0.6)`);
+        path.setAttribute('stroke', color);
+        path.setAttribute('stroke-opacity', 0.4 + i * 0.15);
         path.setAttribute('stroke-width', Math.max(1, Math.min(3, (conn.value || 1) / 10)));
+        path.setAttribute('filter', `url(#flow-glow-${itemIndex})`);
         svg.appendChild(path);
       });
       
-      // Draw nodes
+      // Draw nodes with neon color
       nodes.slice(0, 4).forEach((node, i) => {
         const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
         const x = 10 + (i % 2) * 100;
@@ -66,7 +82,8 @@ export function compareFlow(items, config = {}) {
         circle.setAttribute('cy', y);
         circle.setAttribute('r', '4');
         circle.setAttribute('class', 'amorph-flow-node');
-        circle.setAttribute('fill', 'rgba(150, 200, 255, 0.8)');
+        circle.setAttribute('fill', color);
+        circle.setAttribute('filter', `url(#flow-glow-${itemIndex})`);
         svg.appendChild(circle);
       });
       

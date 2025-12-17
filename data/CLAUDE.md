@@ -1,6 +1,6 @@
 # Data
 
-Modulare Testdaten für AMORPH - 4 Kingdoms × 15 Perspektiven.
+Modulare Daten für AMORPH - 4 Kingdoms × 15 Perspektiven.
 
 ## Verzeichnisstruktur
 
@@ -9,17 +9,14 @@ data/
 ├── animalia/
 │   ├── index.json              ← Collection-Index
 │   └── monarchfalter/          ← 1 Index + 15 Perspektiven
-│       ├── index.json
-│       ├── chemistry.json
-│       ├── ecology.json
-│       └── ... (15 Perspektiven)
 ├── bacteria/
 │   ├── index.json
-│   └── ecoli/
+│   ├── ecoli/
+│   └── test-*/                 ← Morph-Test-Daten (44 Ordner)
 ├── fungi/
 │   ├── index.json
-│   └── fly-agaric/
-│       └── porcini/
+│   ├── fly-agaric/
+│   └── porcini/
 └── plantae/
     ├── index.json
     └── ginkgo/
@@ -35,69 +32,89 @@ data/
 
 ---
 
-## Kingdoms & Spezies
+## Daten erstellen
 
-| Kingdom | Spezies | Wissenschaftlich | Slug |
-|---------|---------|------------------|------|
-| Animalia | Monarchfalter | Danaus plexippus | `monarchfalter` |
-| Bacteria | E. coli | Escherichia coli | `ecoli` |
-| Fungi | Fliegenpilz | Amanita muscaria | `fly-agaric` |
-| Fungi | Steinpilz | Boletus edulis | `porcini` |
-| Plantae | Ginkgo | Ginkgo biloba | `ginkgo` |
+### Schritt 1: Blueprint lesen
 
----
+Öffne das Blueprint für die gewünschte Perspektive:
+`config/schema/perspektiven/blueprints/{perspektive}.blueprint.yaml`
 
-## 15 Perspektiven-Dateien
+### Schritt 2: JSON erstellen
 
-| Perspektive | Datei | Haupt-Morphs |
-|-------------|-------|--------------|
-| Identification | `identification.json` | object, list, text, boolean |
-| Ecology | `ecology.json` | range, number, list, object |
-| Geography | `geography.json` | list, object, text |
-| Conservation | `conservation.json` | badge, progress, list, boolean |
-| Chemistry | `chemistry.json` | pie, bar, number, list |
-| Temporal | `temporal.json` | timeline, range, object |
-| Statistics | `statistics.json` | stats, range, number |
-| Interactions | `interactions.json` | radar, list, object |
-| Safety | `safety.json` | progress, badge, list, boolean |
-| Research | `research.json` | progress, list, number |
-| Culture | `culture.json` | text, list, object |
-| Economy | `economy.json` | range, bar, rating, number |
-| Medicine | `medicine.json` | progress, list, text |
-| Culinary | `culinary.json` | boolean, rating, number, list |
-| Cultivation | `cultivation.json` | progress, range, list |
+Kopiere die Struktur und fülle mit echten Daten:
 
----
-
-## Collection Index Format
+```yaml
+# Blueprint sagt:
+# morph: badge
+conservation_status:
+  status: ""
+  variant: ""
+```
 
 ```json
-// fungi/index.json
+// Dein JSON:
 {
-  "collection": "fungi",
-  "description": "Fungi Kingdom - Mycological Data",
-  "type": "json-perspectives",
-  "species": [
-    { "slug": "porcini", "folder": "porcini" },
-    { "slug": "fly-agaric", "folder": "fly-agaric" }
-  ]
+  "conservation_status": {
+    "status": "Vulnerable",
+    "variant": "warning"
+  }
 }
 ```
+
+### Schritt 3: Morph-Typen beachten
+
+| Morph | Leere Struktur | Befülltes Beispiel |
+|-------|----------------|---------------------|
+| `text` | `""` | `"Detailed description..."` |
+| `number` | `0` | `42` |
+| `boolean` | `false` | `true` |
+| `tag` | `""` | `"mycorrhizal"` |
+| `badge` | `{status:"",variant:""}` | `{status:"Active",variant:"success"}` |
+| `list` | `[""]` | `["oak","beech","pine"]` |
+| `range` | `{min:0,max:0,unit:""}` | `{min:5,max:15,unit:"cm"}` |
+| `progress` | `{value:0,max:100}` | `{value:75,max:100}` |
+| `gauge` | Siehe Blueprint | `{value:65,min:0,max:100,zones:[...]}` |
+| `bar` | `[{label:"",value:0}]` | `[{label:"Protein",value:26}]` |
+| `timeline` | `[{date:"",event:""}]` | `[{date:"1753",event:"First described"}]` |
+| `calendar` | 12× `{month:N,active:false}` | Aktiviere relevante Monate |
 
 ---
 
 ## Spezies Index Format
 
 ```json
-// fungi/fly-agaric/index.json
 {
-  "id": "fungi-002",
-  "slug": "fly-agaric",
-  "name": "Fly Agaric",
-  "scientific_name": "Amanita muscaria",
-  "image": "data/fungi/fly-agaric/species_mockup_image.jpg",
-  "description": "The iconic red and white spotted mushroom...",
+  "id": "fungi-001",
+  "slug": "steinpilz",
+  "name": "Steinpilz",
+  "scientific_name": "Boletus edulis",
+  "image": "data/fungi/steinpilz/image.jpg",
+  "description": "Der König unter den Speisepilzen...",
   "perspectives": [
+    "identification",
+    "ecology",
+    "culinary",
+    "safety"
+  ]
+}
+```
+
+---
+
+## Perspektiven-Datei Format
+
+```json
+// steinpilz/identification.json
+{
+  "cap_diameter": { "min": 8, "max": 25, "unit": "cm" },
+  "cap_color": ["brown", "chestnut", "tan"],
+  "cap_shape": "convex to flat",
+  "edibility_status": { "status": "choice_edible", "variant": "success" },
+  "spore_print_color": "olive-brown",
+  "has_ring": false,
+  "has_volva": false
+}
+```
     "identification", "ecology", "geography", "conservation",
     "chemistry", "temporal", "statistics", "interactions",
     "safety", "research", "culture", "economy", 

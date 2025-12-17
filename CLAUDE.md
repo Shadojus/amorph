@@ -18,13 +18,14 @@ DATEN (JSON) → detectType() → MORPH → DOM
 
 | Ordner | Zweck | Hauptdateien |
 |--------|-------|--------------|
-| `core/` | Config, Pipeline, Container | config.js (543), pipeline.js (880), container.js (72) |
-| `config/` | YAML-Konfiguration | manifest, daten, morphs, features, observer, schema/ |
+| `core/` | Config, Pipeline, Container | config.js, pipeline.js, container.js |
+| `config/` | YAML-Konfiguration | manifest, daten, morphs, features, observer |
 | `config/schema/` | Modulares Schema | basis.yaml, semantik.yaml, perspektiven/ |
+| `config/schema/perspektiven/blueprints/` | 15 Morph-Blueprints | *.blueprint.yaml |
 | `features/` | 8 Feature-Module | Context API, isolierte UI-Komponenten |
-| `morphs/` | 30+ Transformationen | primitives/, compare/, composites/ |
-| `observer/` | Debug & Analytics | debug.js, interaction.js, rendering.js, session.js |
-| `util/` | Utilities | dom.js, fetch.js, router.js, semantic.js, session.js |
+| `morphs/` | 44+ Transformationen | primitives/, compare/ |
+| `observer/` | Debug & Analytics | debug.js, interaction.js, rendering.js |
+| `util/` | Utilities | dom.js, fetch.js, router.js, semantic.js |
 | `styles/` | CSS Design-System | Black Glasmorphism, 12 Pilz-Farben |
 | `data/` | Testdaten | 4 Kingdoms × 15 Perspektiven |
 | `themes/` | Style-Overrides | (Platzhalter) |
@@ -42,53 +43,70 @@ DATEN (JSON) → detectType() → MORPH → DOM
 
 ---
 
-## 30+ Primitive Morphs
+## 44+ Morph-Primitives
 
-**Text/Display**: text, string, number, boolean, badge, tag, rating, progress
-**Container**: list, object, hierarchy
-**Charts**: bar, pie, radar, sparkline, heatmap, gauge, slopegraph, severity
-**Range/Stats**: range, stats
-**Temporal**: timeline, lifecycle, steps, calendar
-**Specialized**: image, link, map, network, citation, dosage, currency
-**Kirk**: kirk (dynamische Auswahl), interpreted (Beschreibungen)
+### Text/Display
+`text`, `string`, `number`, `boolean`, `badge`, `tag`, `rating`, `progress`
+
+### Container
+`list`, `object`, `hierarchy`
+
+### Charts
+`bar`, `pie`, `radar`, `sparkline`, `heatmap`, `gauge`, `slopegraph`, `severity`
+`groupedbar`, `stackedbar`, `boxplot`, `dotplot`, `lollipop`, `scatterplot`
+`sunburst`, `treemap`, `bubble`, `pictogram`
+
+### Range/Stats
+`range`, `stats`
+
+### Temporal
+`timeline`, `lifecycle`, `steps`, `calendar`
+
+### Specialized
+`image`, `link`, `map`, `network`, `citation`, `dosage`, `currency`
+`comparison`, `flow`
+
+### Kirk
+`kirk` (dynamische Auswahl)
 
 ---
 
-## Compare-System
+## Morph-Erkennung (Priorität)
 
-`morphs/compare/` - Morphs für Vergleichsansicht mehrerer Items:
-
-| Morph | Zweck |
-|-------|-------|
-| `smartCompare` | Automatische Typ-Erkennung & Vergleich |
-| `diffCompare` | Differenz-Highlight |
-| `compareByType` | Explizite Typ-Angabe |
-
-**Farben**: 12 `pilz-farbe-X` Klassen für Item-Identifikation (CSS-Variablen).
+```
+flow → scatterplot → groupedbar → stackedbar → boxplot → dotplot →
+lollipop → sunburst → treemap → bubble → pictogram → slopegraph →
+heatmap → sparkline → severity → lifecycle → timeline → steps →
+calendar → radar → pie → bar → network → hierarchy → map →
+citation → dosage → currency → gauge → stats → range → comparison →
+rating → progress → badge → image → link → tag → text → number →
+boolean → list → object
+```
 
 ---
 
 ## 15 Perspektiven
 
-| ID | Symbol | Fokus |
-|----|--------|-------|
-| chemistry | 🧪 | Metabolite, Enzyme, Zusammensetzung |
-| conservation | 🛡️ | IUCN-Status, Schutzmaßnahmen |
-| culinary | 🍳 | Essbarkeit, Zubereitung |
-| cultivation | 🌱 | Anbau, Substrate |
-| culture | 📜 | Mythologie, Geschichte |
-| ecology | 🌿 | Habitat, Symbiosen |
-| economy | 💰 | Markt, Preise |
-| geography | 🗺️ | Verbreitung, Klima |
-| identification | 🔍 | Bestimmungsmerkmale |
-| interactions | 🔗 | Wirte, Mikrobiom |
-| medicine | 💊 | Wirkstoffe, Therapie |
-| research | 📚 | Publikationen |
-| safety | ⚠️ | Toxine, Verwechslung |
-| statistics | 📊 | Fundstatistiken |
-| temporal | ⏰ | Saisonalität |
+| ID | Symbol | Fokus | Blueprint |
+|----|--------|-------|-----------|
+| chemistry | 🧪 | Metabolite, Enzyme | ~500 Felder |
+| conservation | 🛡️ | IUCN-Status, Schutz | ~600 Felder |
+| culinary | 🍳 | Essbarkeit, Zubereitung | ~400 Felder |
+| cultivation | 🌱 | Anbau, Substrate | ~800 Felder |
+| culture | 📜 | Mythologie, Geschichte | ~700 Felder |
+| ecology | 🌿 | Habitat, Symbiosen | ~650 Felder |
+| economy | 💰 | Markt, Preise | ~600 Felder |
+| geography | 🗺️ | Verbreitung, Klima | ~900 Felder |
+| identification | 🔍 | Bestimmungsmerkmale | ~2000 Felder |
+| interactions | 🔗 | Wirte, Mikrobiom | ~550 Felder |
+| medicine | 💊 | Wirkstoffe, Therapie | ~700 Felder |
+| research | 📚 | Publikationen | ~600 Felder |
+| safety | ⚠️ | Toxine, Verwechslung | ~1400 Felder |
+| statistics | 📊 | Fundstatistiken | ~500 Felder |
+| temporal | ⏰ | Saisonalität | ~1600 Felder |
 
-**Schema**: `config/schema/perspektiven/*.yaml` - Jede Perspektive definiert `fields[]`, `colors[]`, `keywords[]`.
+**Blueprints**: `config/schema/perspektiven/blueprints/*.blueprint.yaml`
+Jedes Blueprint definiert leere Datenstrukturen mit korrektem Morph-Typ.
 
 ---
 
@@ -97,7 +115,7 @@ DATEN (JSON) → detectType() → MORPH → DOM
 | Feature | Pfad | Beschreibung |
 |---------|------|--------------|
 | Header | `features/header/` | Logo, Suche, Navigation |
-| Grid | `features/grid/` | Layout-Switcher (Grid/Liste/Kompakt) |
+| Grid | `features/grid/` | Layout-Switcher |
 | Ansichten | `features/ansichten/` | View-Management |
 | Einzelansicht | `features/einzelansicht/` | Detail-Modal |
 | Vergleich | `features/vergleich/` | Compare-Modus |
@@ -105,72 +123,18 @@ DATEN (JSON) → detectType() → MORPH → DOM
 | Suche | `features/suche/` | Semantische Suche |
 | InfiniteScroll | `features/infinitescroll/` | Lazy-Loading |
 
-**Pattern**: `context.js` exportiert `createContext()` mit `signal()` / `effect()` für reaktive Features.
-
----
-
-## Typ-Erkennung (detectType)
-
-### Zahlen (detectNumberType)
-```javascript
-0-10 mit Dezimal  → 'rating'
-0-100 Ganzzahl    → 'progress'
-andere            → 'number'
-```
-
-### Strings (detectStringType)
-```javascript
-http(s)://        → 'link'
-.jpg/.png/...     → 'image'
-Status-Keyword    → 'badge'
-≤20 Zeichen       → 'tag'
-andere            → 'string'
-```
-
-### Arrays (detectArrayType)
-```javascript
-[num, num, ...]         → 'sparkline'
-[[num], [num]]          → 'heatmap'
-[{vorher, nachher}]     → 'slopegraph'
-[{phase}]               → 'lifecycle'
-[{date, event}]         → 'timeline'
-[{axis, value}] ≥3      → 'radar'
-[{label, value}] ≤6     → 'pie'
-[{label, value}] >6     → 'bar'
-```
-
-### Objekte (detectObjectType)
-```javascript
-{lat, lng}              → 'map'
-{author, year, title}   → 'citation'
-{dose, unit}            → 'dosage'
-{currency, amount}      → 'currency'
-{value, zones/min/max}  → 'gauge'
-{vorher, nachher}       → 'slopegraph'
-{min, max, avg} ≥3      → 'stats'
-{min, max}              → 'range'
-{rating/score}          → 'rating'
-{status}                → 'badge'
-{A: num, B: num} 2-8    → 'pie'
-```
-
 ---
 
 ## Event-System
 
 ```javascript
-// Core Events
-'amorph:rendered'           // Nach Render
-'amorph:items-loaded'       // Daten geladen
-'amorph:route-change'       // Navigation
-'amorph:ansicht-wechsel'    // View-Wechsel
-
-// Auswahl
-'amorph:auswahl-geaendert'  // Feld-Auswahl geändert
-'amorph:items-ausgewaehlt'  // Items für Vergleich
-
-// Perspektiven
-'amorph:perspektive-geaendert'  // Perspektive gewechselt
+'amorph:rendered'              // Nach Render
+'amorph:items-loaded'          // Daten geladen
+'amorph:route-change'          // Navigation
+'amorph:ansicht-wechsel'       // View-Wechsel
+'amorph:auswahl-geaendert'     // Feld-Auswahl
+'amorph:items-ausgewaehlt'     // Items für Vergleich
+'amorph:perspektive-geaendert' // Perspektive gewechselt
 ```
 
 ---
@@ -181,23 +145,52 @@ andere            → 'string'
 function morph(wert, config, morphField) → HTMLElement | null
 ```
 
-| Parameter | Typ | Beschreibung |
-|-----------|-----|--------------|
-| `wert` | any | Eingabedaten |
-| `config` | object | Morph-Konfiguration |
-| `morphField` | function | Rekursive Transformation |
-
 **Regeln**: 
 - ✅ DOM erstellen
-- ✅ Lokale Events (click, etc.)
+- ✅ Lokale Events
 - ❌ Globale Events
 - ❌ Seiteneffekte
 
 ---
 
-## Observer-System
+## Daten-Workflow
 
-`observer/debug.js` - Zentrales Logging:
+### 1. Schema verstehen
+- `config/schema/perspektiven/*.yaml` - Feld-Definitionen
+- `config/schema/perspektiven/blueprints/*.blueprint.yaml` - Morph-Typen
+
+### 2. Daten erstellen
+Struktur: `data/{kingdom}/{species}/`
+```
+data/fungi/steinpilz/
+├── index.json          # Kern: id, slug, name, image, perspectives[]
+├── identification.json # Perspektive 1
+├── ecology.json        # Perspektive 2
+└── ...                 # Weitere Perspektiven
+```
+
+### 3. Morph-Typen nutzen
+Daten müssen der Blueprint-Struktur entsprechen:
+```javascript
+// morph: badge
+{ status: "endangered", variant: "warning" }
+
+// morph: range
+{ min: 5, max: 15, unit: "cm" }
+
+// morph: gauge
+{ value: 75, min: 0, max: 100, zones: [...] }
+```
+
+---
+
+## Debug-Konsole
+
+```javascript
+window.amorphDebug.summary()   // Stats
+window.amorphFilter('search')  // Filter
+window.amorphVerbose(true)     // Alle logs
+```
 
 ```javascript
 debug.config(msg, data)    // Konfiguration

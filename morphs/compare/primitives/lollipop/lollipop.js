@@ -1,16 +1,9 @@
 /**
- * COMPARE LOLLIPOP - Lollipop chart comparison
- * Uses the exact same HTML structure as the original lollipop morph
+ * COMPARE LOLLIPOP - UNIFIED Lollipop chart comparison
+ * All items shown in ONE chart with item colors
  */
 
 import { debug } from '../../../../observer/debug.js';
-
-// Blue theme colors
-const LOLLIPOP_FARBEN = {
-  positiv: 'rgba(100, 180, 255, 0.8)',
-  negativ: 'rgba(60, 120, 180, 0.8)',
-  neutral: 'rgba(140, 200, 255, 0.7)'
-};
 
 export function compareLollipop(items, config = {}) {
   debug.morphs('compareLollipop', { itemCount: items?.length });
@@ -23,81 +16,89 @@ export function compareLollipop(items, config = {}) {
     return el;
   }
   
-  const container = document.createElement('div');
-  container.className = 'compare-items-container';
-  
-  items.forEach((item, itemIndex) => {
+  // Parse all items
+  const parsedItems = items.map((item, idx) => {
     const rawVal = item.value ?? item.wert;
-    
-    const wrapper = document.createElement('div');
-    wrapper.className = 'compare-item-wrapper';
-    
-    const label = document.createElement('div');
-    label.className = 'compare-item-label';
-    label.textContent = item.name || item.id || `Item ${itemIndex + 1}`;
-    if (item.textFarbe) label.style.color = item.textFarbe;
-    wrapper.appendChild(label);
-    
-    // Original lollipop structure
-    const lollipopEl = document.createElement('div');
-    lollipopEl.className = 'amorph-lollipop';
-    
     const dataItems = normalisiereWert(rawVal);
+    return {
+      ...item,
+      dataItems,
+      index: idx,
+      // Neon pilz colors
+      color: item.lineFarbe || item.farbe || `hsl(${idx * 90}, 70%, 55%)`,
+      glowColor: item.glowFarbe || item.farbe
+    };
+  }).filter(item => item.dataItems.length > 0);
+  
+  if (parsedItems.length === 0) {
+    el.innerHTML = '<div class="compare-empty">Keine Lollipop-Daten</div>';
+    return el;
+  }
+  
+  // Find global max value
+  let globalMax = 0;
+  parsedItems.forEach(item => {
+    item.dataItems.forEach(d => {
+      if (d.value > globalMax) globalMax = d.value;
+    });
+  });
+  globalMax = globalMax || 1;
+  
+  // UNIFIED lollipop container
+  const lollipopContainer = document.createElement('div');
+  lollipopContainer.className = 'amorph-lollipop amorph-lollipop-compare';
+  
+  // One row per item, showing top values
+  parsedItems.forEach(item => {
+    const sorted = [...item.dataItems].sort((a, b) => b.value - a.value);
     
-    if (dataItems.length === 0) {
-      lollipopEl.innerHTML = '<span class="amorph-lollipop-leer">Keine Lollipop-Daten</span>';
-    } else {
-      const sorted = dataItems.sort((a, b) => b.value - a.value);
-      const maxValue = Math.max(...sorted.map(i => i.value), 1);
+    sorted.slice(0, 4).forEach((dataItem, i) => {
+      const percent = (dataItem.value / globalMax) * 100;
       
-      const lollipopContainer = document.createElement('div');
-      lollipopContainer.className = 'amorph-lollipop-container horizontal';
+      const row = document.createElement('div');
+      row.className = 'amorph-lollipop-row-compare';
+      if (i === 0) row.classList.add('is-max');
       
-      sorted.slice(0, 5).forEach((dataItem, i) => {
-        const row = document.createElement('div');
-        row.className = 'amorph-lollipop-row';
-        if (i === 0) row.classList.add('is-max');
-        
-        const itemLabel = document.createElement('span');
-        itemLabel.className = 'amorph-lollipop-label';
-        itemLabel.textContent = dataItem.label;
-        row.appendChild(itemLabel);
-        
-        const track = document.createElement('div');
-        track.className = 'amorph-lollipop-track';
-        
-        const percent = (dataItem.value / maxValue) * 100;
-        
-        const line = document.createElement('div');
-        line.className = 'amorph-lollipop-line';
-        line.style.width = `${percent}%`;
-        line.style.background = LOLLIPOP_FARBEN.positiv;
-        track.appendChild(line);
-        
-        const dot = document.createElement('div');
-        dot.className = 'amorph-lollipop-dot';
-        dot.style.left = `${percent}%`;
-        dot.style.background = LOLLIPOP_FARBEN.positiv;
-        track.appendChild(dot);
-        
-        row.appendChild(track);
-        
-        const valueEl = document.createElement('span');
-        valueEl.className = 'amorph-lollipop-value';
-        valueEl.textContent = dataItem.value.toLocaleString();
-        row.appendChild(valueEl);
-        
-        lollipopContainer.appendChild(row);
-      });
+      // Item name + data label
+      const label = document.createElement('span');
+      label.className = 'amorph-lollipop-label';
+      label.innerHTML = `<span class="lollipop-item-name" style="color:${item.textFarbe || item.color}">${item.name || item.id}</span> <span class="lollipop-data-label">${dataItem.label}</span>`;
+      row.appendChild(label);
       
-      lollipopEl.appendChild(lollipopContainer);
-    }
-    
-    wrapper.appendChild(lollipopEl);
-    container.appendChild(wrapper);
+      // Track
+      const track = document.createElement('div');
+      track.className = 'amorph-lollipop-track';
+      
+      // Line with neon effect
+      const line = document.createElement('div');
+      line.className = 'amorph-lollipop-line';
+      line.style.width = `${percent}%`;
+      line.style.background = item.color;
+      line.style.boxShadow = `0 0 6px ${item.glowColor || item.color}`;
+      track.appendChild(line);
+      
+      // Dot with neon effect
+      const dot = document.createElement('div');
+      dot.className = 'amorph-lollipop-dot';
+      dot.style.left = `${percent}%`;
+      dot.style.background = item.color;
+      dot.style.boxShadow = `0 0 8px ${item.glowColor || item.color}`;
+      track.appendChild(dot);
+      
+      row.appendChild(track);
+      
+      // Value
+      const valueEl = document.createElement('span');
+      valueEl.className = 'amorph-lollipop-value';
+      valueEl.textContent = dataItem.value.toLocaleString();
+      valueEl.style.color = item.color;
+      row.appendChild(valueEl);
+      
+      lollipopContainer.appendChild(row);
+    });
   });
   
-  el.appendChild(container);
+  el.appendChild(lollipopContainer);
   return el;
 }
 

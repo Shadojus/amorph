@@ -1,0 +1,57 @@
+{
+  "_meta": {
+    "description": "Identification perspective - Tests: comparison, radar, bar, range, text, list, image"
+  },
+  
+  "common_names": ["Death Cap", "Grüner Knollenblätterpilz", "Amanite phalloïde", "Oronja verde"],
+  
+  "scientific_name": "Amanita phalloides (Vaill. ex Fr.) Link",
+  
+  "description": "Medium to large mushroom with olive-green to yellowish-green cap, white gills, white stem with faint greenish tinge, prominent ring, and cup-like volva at base",
+  
+  "cap_characteristics": {
+    "color": "Olive-green to yellowish-green, sometimes pale or white",
+    "surface": "Smooth, slightly sticky when wet, often with radial fibers",
+    "shape": "Convex when young, flattening with age, often with slight umbo"
+  },
+  
+  "cap_diameter_cm": {
+    "min": 5,
+    "max": 15
+  },
+  
+  "stem_height_cm": {
+    "min": 8,
+    "max": 15
+  },
+  
+  "spore_size_um": {
+    "min": 8,
+    "max": 11
+  },
+  
+  "identification_confidence": [
+    {"axis": "Cap color", "value": 75},
+    {"axis": "Volva presence", "value": 95},
+    {"axis": "Ring presence", "value": 85},
+    {"axis": "Spore print", "value": 98},
+    {"axis": "Habitat", "value": 70},
+    {"axis": "Odor", "value": 60}
+  ],
+  
+  "critical_features": [
+    {"label": "White volva at base", "value": 98},
+    {"label": "White spore print", "value": 95},
+    {"label": "Free white gills", "value": 90},
+    {"label": "Pendant ring on stem", "value": 85},
+    {"label": "Greenish cap tones", "value": 75}
+  ],
+  
+  "lookalikes": ["Volvariella volvacea", "Agaricus campestris", "Amanita caesarea", "Amanita citrina"],
+  
+  "microscopic_features": "Spores broadly ellipsoid to subglobose, 8-11 × 7-9 µm, amyloid, smooth, white in mass",
+  
+  "chemical_tests": "Cap tissue turns wine-red with concentrated H2SO4. Meixner test positive for amatoxins.",
+  
+  "critical_warning": "DEADLY POISONOUS. Responsible for 90% of mushroom fatalities. All parts toxic. No safe preparation method exists."
+}

@@ -1,6 +1,6 @@
 /**
- * COMPARE PROGRESS - Progress bar comparison
- * Uses the exact same HTML structure as the original progress morph
+ * COMPARE PROGRESS - UNIFIED Progress bar comparison
+ * All items shown as stacked progress bars for direct comparison
  */
 
 import { debug } from '../../../../observer/debug.js';
@@ -16,25 +16,11 @@ export function compareProgress(items, config = {}) {
     return el;
   }
   
-  // Container for all progress bars
-  const container = document.createElement('div');
-  container.className = 'compare-items-container';
+  // Parse all items and find global max
+  let globalMax = 0;
   
-  items.forEach((item, itemIndex) => {
+  const parsedItems = items.map((item, idx) => {
     const rawVal = item.value ?? item.wert;
-    
-    // Wrapper for item
-    const wrapper = document.createElement('div');
-    wrapper.className = 'compare-item-wrapper';
-    
-    // Label with item name - apply inline text color
-    const label = document.createElement('div');
-    label.className = 'compare-item-label';
-    label.textContent = item.name || item.id || `Item ${itemIndex + 1}`;
-    if (item.textFarbe) label.style.color = item.textFarbe;
-    wrapper.appendChild(label);
-    
-    // Extract values
     let value, maxValue;
     
     if (typeof rawVal === 'number') {
@@ -48,48 +34,74 @@ export function compareProgress(items, config = {}) {
       maxValue = 100;
     }
     
-    const percent = maxValue > 0 ? Math.min(100, (value / maxValue) * 100) : 0;
-    const einheit = config.einheit || rawVal?.unit || rawVal?.einheit || '';
+    globalMax = Math.max(globalMax, maxValue);
     
-    // Use original progress structure
-    const progressEl = document.createElement('div');
-    progressEl.className = 'amorph-progress';
+    return {
+      ...item,
+      value,
+      maxValue,
+      index: idx,
+      // Farben werden durchgereicht, item hat bereits lineFarbe etc.
+      color: item.lineFarbe || item.farbe || `hsl(${idx * 90}, 70%, 55%)`
+    };
+  });
+  
+  const einheit = config.einheit || '';
+  
+  // UNIFIED progress container
+  const progressContainer = document.createElement('div');
+  progressContainer.className = 'amorph-progress amorph-progress-compare';
+  
+  // All progress bars stacked with NEON glow
+  parsedItems.forEach(item => {
+    const percent = globalMax > 0 ? Math.min(100, (item.value / globalMax) * 100) : 0;
     
-    // Track
+    const row = document.createElement('div');
+    row.className = 'amorph-progress-row-compare';
+    
+    // Name label with neon text color
+    const label = document.createElement('div');
+    label.className = 'amorph-progress-label';
+    label.textContent = item.name || item.id;
+    const textColor = item.textFarbe || item.lineFarbe || item.farbe;
+    if (textColor) label.style.color = textColor;
+    row.appendChild(label);
+    
+    // Track with fill
     const track = document.createElement('div');
     track.className = 'amorph-progress-track';
-    track.title = `${formatValue(value, einheit)} / ${formatValue(maxValue, einheit)} (${percent.toFixed(0)}%)`;
+    track.title = `${formatValue(item.value, einheit)} / ${formatValue(item.maxValue, einheit)}`;
     
-    // Fill - apply inline style for color
+    // NEON fill with glow
+    const lineColor = item.lineFarbe || item.farbe || item.color;
+    const glowColor = item.glowFarbe || lineColor;
+    
     const fill = document.createElement('div');
     fill.className = 'amorph-progress-fill';
     fill.style.width = `${percent}%`;
-    if (item.farbe) fill.style.background = item.farbe;
-    
-    // Color based on percent
-    if (percent >= 80) {
-      fill.classList.add('amorph-progress-high');
-    } else if (percent >= 50) {
-      fill.classList.add('amorph-progress-medium');
-    } else {
-      fill.classList.add('amorph-progress-low');
-    }
+    fill.style.background = lineColor;
+    fill.style.boxShadow = `0 0 10px ${glowColor}, inset 0 0 5px rgba(255,255,255,0.3)`;
     
     track.appendChild(fill);
+    row.appendChild(track);
     
-    // Value display
+    // Value with neon color
     const valueDisplay = document.createElement('span');
     valueDisplay.className = 'amorph-progress-value-display';
-    valueDisplay.textContent = `${formatValue(value, einheit)}`;
+    valueDisplay.textContent = formatValue(item.value, einheit);
+    valueDisplay.style.color = lineColor;
+    row.appendChild(valueDisplay);
     
-    progressEl.appendChild(track);
-    progressEl.appendChild(valueDisplay);
-    
-    wrapper.appendChild(progressEl);
-    container.appendChild(wrapper);
+    progressContainer.appendChild(row);
   });
   
-  el.appendChild(container);
+  // Scale indicator
+  const scale = document.createElement('div');
+  scale.className = 'amorph-progress-scale';
+  scale.innerHTML = `<span>0</span><span>${formatValue(globalMax, einheit)}</span>`;
+  progressContainer.appendChild(scale);
+  
+  el.appendChild(progressContainer);
   return el;
 }
 

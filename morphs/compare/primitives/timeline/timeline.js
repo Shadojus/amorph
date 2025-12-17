@@ -1,6 +1,6 @@
 /**
- * COMPARE TIMELINE - Timeline comparison
- * Uses the exact same HTML structure as the original timeline morph
+ * COMPARE TIMELINE - UNIFIED Timeline comparison
+ * All timelines shown with item-specific colors
  */
 
 import { debug } from '../../../../observer/debug.js';
@@ -16,60 +16,63 @@ export function compareTimeline(items, config = {}) {
     return el;
   }
   
-  // Container for all timelines
-  const container = document.createElement('div');
-  container.className = 'compare-items-container';
-  
-  // Create a timeline for each item using original structure
-  items.forEach((item, itemIndex) => {
+  // Parse all items
+  const parsedItems = items.map((item, idx) => {
     const val = item.value ?? item.wert;
-    const color = item.farbe || item.color || `hsl(${itemIndex * 60}, 70%, 60%)`;
+    const events = Array.isArray(val) ? normalisiereWert(val) : [];
+    return {
+      ...item,
+      events,
+      index: idx,
+      // Neon pilz colors
+      color: item.lineFarbe || item.farbe || `hsl(${idx * 90}, 70%, 55%)`,
+      glowColor: item.glowFarbe || item.farbe
+    };
+  }).filter(item => item.events.length > 0);
+  
+  if (parsedItems.length === 0) {
+    el.innerHTML = '<div class="compare-empty">Keine Timeline-Daten</div>';
+    return el;
+  }
+  
+  // UNIFIED timeline container
+  const timelineContainer = document.createElement('div');
+  timelineContainer.className = 'amorph-timeline amorph-timeline-compare';
+  
+  // Create timeline for each item with its color
+  parsedItems.forEach(item => {
+    const itemTimeline = document.createElement('div');
+    itemTimeline.className = 'amorph-timeline-item-block';
     
-    // Use original timeline structure
-    const timelineEl = document.createElement('div');
-    timelineEl.className = 'amorph-timeline';
-    
-    // Title with item name - apply inline text color
+    // Title with item name
     const titel = document.createElement('div');
     titel.className = 'amorph-timeline-titel';
-    titel.textContent = item.name || item.id || `Item ${itemIndex + 1}`;
-    if (item.textFarbe) titel.style.color = item.textFarbe;
-    timelineEl.appendChild(titel);
+    titel.textContent = item.name || item.id;
+    titel.style.color = item.textFarbe || item.color;
+    itemTimeline.appendChild(titel);
     
-    if (!Array.isArray(val) || val.length === 0) {
-      timelineEl.innerHTML += '<span class="amorph-timeline-leer">Keine Ereignisse</span>';
-      container.appendChild(timelineEl);
-      return;
-    }
-    
-    // Normalize events
-    const events = normalisiereWert(val).slice(0, config.maxEvents || 10);
-    
-    if (events.length === 0) {
-      timelineEl.innerHTML += '<span class="amorph-timeline-leer">Keine gültigen Ereignisse</span>';
-      container.appendChild(timelineEl);
-      return;
-    }
-    
-    // Line
+    // Line with neon color
     const line = document.createElement('div');
     line.className = 'amorph-timeline-line';
-    line.style.backgroundColor = color;
-    timelineEl.appendChild(line);
+    line.style.backgroundColor = item.color;
+    line.style.boxShadow = `0 0 8px ${item.glowColor || item.color}`;
+    itemTimeline.appendChild(line);
     
-    // Render events
-    for (let i = 0; i < events.length; i++) {
-      const event = events[i];
+    // Events
+    const eventsToShow = item.events.slice(0, config.maxEvents || 6);
+    
+    eventsToShow.forEach((event, i) => {
       const eventItem = document.createElement('div');
       eventItem.className = 'amorph-timeline-item';
       
-      // Dot
+      // Dot with neon color
       const dot = document.createElement('div');
       dot.className = 'amorph-timeline-dot';
-      dot.style.borderColor = color;
+      dot.style.borderColor = item.color;
+      dot.style.boxShadow = `0 0 6px ${item.glowColor || item.color}`;
       if (event.active || event.current || event.aktuell) {
         dot.classList.add('amorph-timeline-active');
-        dot.style.backgroundColor = color;
+        dot.style.backgroundColor = item.color;
       }
       eventItem.appendChild(dot);
       
@@ -77,13 +80,12 @@ export function compareTimeline(items, config = {}) {
       const content = document.createElement('div');
       content.className = 'amorph-timeline-content';
       
-      // Time
       const time = document.createElement('span');
       time.className = 'amorph-timeline-time';
       time.textContent = event.time;
+      time.style.color = item.color;
       content.appendChild(time);
       
-      // Description
       if (event.label) {
         const label = document.createElement('span');
         label.className = 'amorph-timeline-label';
@@ -92,13 +94,13 @@ export function compareTimeline(items, config = {}) {
       }
       
       eventItem.appendChild(content);
-      timelineEl.appendChild(eventItem);
-    }
+      itemTimeline.appendChild(eventItem);
+    });
     
-    container.appendChild(timelineEl);
+    timelineContainer.appendChild(itemTimeline);
   });
   
-  el.appendChild(container);
+  el.appendChild(timelineContainer);
   return el;
 }
 

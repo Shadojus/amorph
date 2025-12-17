@@ -29,13 +29,19 @@ export function compareCalendar(items, config = {}) {
   items.forEach((item, itemIndex) => {
     const rawVal = item.value ?? item.wert;
     
+    // Neon pilz colors
+    const color = item.lineFarbe || item.farbe || `hsl(${itemIndex * 90}, 70%, 55%)`;
+    const glowColor = item.glowFarbe || color;
+    const textColor = item.textFarbe || color;
+    
     const wrapper = document.createElement('div');
     wrapper.className = 'compare-item-wrapper';
     
     const label = document.createElement('div');
     label.className = 'compare-item-label';
     label.textContent = item.name || item.id || `Item ${itemIndex + 1}`;
-    if (item.textFarbe) label.style.color = item.textFarbe;
+    label.style.color = textColor;
+    label.style.textShadow = `0 0 6px ${glowColor}`;
     wrapper.appendChild(label);
     
     // Original calendar structure (strip mode)
@@ -59,11 +65,15 @@ export function compareCalendar(items, config = {}) {
       monthEl.style.width = '8px';
       monthEl.style.height = '16px';
       monthEl.style.borderRadius = '2px';
-      monthEl.style.background = isActive 
-        ? 'rgba(100, 180, 255, 0.7)' 
-        : 'rgba(100, 150, 200, 0.15)';
       
-      if (isActive) monthEl.classList.add('is-active');
+      // Use neon colors for active months
+      if (isActive) {
+        monthEl.style.background = color;
+        monthEl.style.boxShadow = `0 0 6px ${glowColor}`;
+        monthEl.classList.add('is-active');
+      } else {
+        monthEl.style.background = `${color}22`; // 13% opacity
+      }
       
       strip.appendChild(monthEl);
     });

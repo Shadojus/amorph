@@ -1,6 +1,6 @@
 /**
- * COMPARE BAR - Horizontal bars for numeric comparisons
- * Uses the exact same HTML structure as the original bar morph
+ * COMPARE BAR - UNIFIED horizontal bars for numeric comparisons
+ * All items shown as bars in ONE chart for direct comparison
  */
 
 import { debug } from '../../../../observer/debug.js';
@@ -16,10 +16,6 @@ export function compareBar(items, config = {}) {
     return el;
   }
   
-  // Container for all bar charts
-  const container = document.createElement('div');
-  container.className = 'compare-items-container';
-  
   // Parse values for each item
   const parsedItems = items.map((item, i) => {
     const rawVal = item.value ?? item.wert;
@@ -31,42 +27,37 @@ export function compareBar(items, config = {}) {
   const maxValue = config.max || Math.max(...parsedItems.map(p => p.numeric), 1);
   const einheit = config.unit || config.einheit || '';
   
-  // Create a bar chart for each item using original structure
-  parsedItems.forEach((item) => {
-    // Wrapper for item
-    const wrapper = document.createElement('div');
-    wrapper.className = 'compare-item-wrapper';
-    
-    const itemEl = document.createElement('div');
-    itemEl.className = 'amorph-bar';
-    
-    // Header with item name - apply inline text color
+  // SINGLE unified bar chart container
+  const barChart = document.createElement('div');
+  barChart.className = 'amorph-bar amorph-bar-compare';
+  
+  // Optional label/title
+  if (config.label) {
     const header = document.createElement('div');
     header.className = 'amorph-bar-header';
-    
-    const titel = document.createElement('div');
-    titel.className = 'amorph-bar-titel';
-    titel.textContent = item.name || item.id || `Item ${item.index + 1}`;
-    if (item.textFarbe) titel.style.color = item.textFarbe;
-    header.appendChild(titel);
-    
-    itemEl.appendChild(header);
-    
-    // Container for the bar
-    const barContainer = document.createElement('div');
-    barContainer.className = 'amorph-bar-container';
-    
-    // Single bar row
+    header.innerHTML = `<div class="amorph-bar-titel">${config.label}</div>`;
+    barChart.appendChild(header);
+  }
+  
+  // Container for all bars
+  const barContainer = document.createElement('div');
+  barContainer.className = 'amorph-bar-container amorph-bar-container-compare';
+  
+  // Create ONE bar row per item (all in same container) with NEON colors
+  parsedItems.forEach((item) => {
     const row = document.createElement('div');
-    row.className = 'amorph-bar-row';
+    row.className = 'amorph-bar-row amorph-bar-row-compare';
+    row.setAttribute('data-item-id', item.id || item.index);
     
-    // Label (optional - can be the value description)
+    // Item name as label with neon text color
     const label = document.createElement('span');
     label.className = 'amorph-bar-label';
-    label.textContent = item.label || '';
+    label.textContent = item.name || item.id || `Item ${item.index + 1}`;
+    const textColor = item.textFarbe || item.lineFarbe || item.farbe;
+    if (textColor) label.style.color = textColor;
     row.appendChild(label);
     
-    // Track with fill - apply inline styles for colors
+    // Track with fill - use item NEON color
     const track = document.createElement('div');
     track.className = 'amorph-bar-track';
     
@@ -74,34 +65,38 @@ export function compareBar(items, config = {}) {
     fill.className = 'amorph-bar-fill';
     const percent = maxValue > 0 ? (item.numeric / maxValue) * 100 : 0;
     fill.style.width = `${percent}%`;
-    if (item.farbe) fill.style.background = item.farbe;
+    
+    // Use item-specific NEON color with glow
+    const lineColor = item.lineFarbe || item.farbe || `hsl(${item.index * 90}, 70%, 55%)`;
+    const glowColor = item.glowFarbe || lineColor;
+    fill.style.background = lineColor;
+    fill.style.boxShadow = `0 0 10px ${glowColor}, inset 0 0 5px rgba(255,255,255,0.3)`;
     
     track.appendChild(fill);
     row.appendChild(track);
     
-    // Value annotation
+    // Value annotation with neon color
     const value = document.createElement('span');
     value.className = 'amorph-bar-value';
     value.textContent = formatValue(item.numeric, einheit);
+    value.style.color = lineColor;
     row.appendChild(value);
     
     barContainer.appendChild(row);
-    itemEl.appendChild(barContainer);
-    
-    // Scale
-    const scale = document.createElement('div');
-    scale.className = 'amorph-bar-scale';
-    scale.innerHTML = `
-      <span class="amorph-bar-scale-min">0</span>
-      <span class="amorph-bar-scale-max">${formatValue(maxValue, einheit)}</span>
-    `;
-    itemEl.appendChild(scale);
-    
-    wrapper.appendChild(itemEl);
-    container.appendChild(wrapper);
   });
   
-  el.appendChild(container);
+  barChart.appendChild(barContainer);
+  
+  // Scale (once, at bottom)
+  const scale = document.createElement('div');
+  scale.className = 'amorph-bar-scale';
+  scale.innerHTML = `
+    <span class="amorph-bar-scale-min">0</span>
+    <span class="amorph-bar-scale-max">${formatValue(maxValue, einheit)}</span>
+  `;
+  barChart.appendChild(scale);
+  
+  el.appendChild(barChart);
   return el;
 }
 

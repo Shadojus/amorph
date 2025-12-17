@@ -22,13 +22,19 @@ export function compareLifecycle(items, config = {}) {
   items.forEach((item, itemIndex) => {
     const rawVal = item.value ?? item.wert;
     
+    // Neon pilz colors
+    const color = item.lineFarbe || item.farbe || `hsl(${itemIndex * 90}, 70%, 55%)`;
+    const glowColor = item.glowFarbe || color;
+    const textColor = item.textFarbe || color;
+    
     const wrapper = document.createElement('div');
     wrapper.className = 'compare-item-wrapper';
     
     const label = document.createElement('div');
     label.className = 'compare-item-label';
     label.textContent = item.name || item.id || `Item ${itemIndex + 1}`;
-    if (item.textFarbe) label.style.color = item.textFarbe;
+    label.style.color = textColor;
+    label.style.textShadow = `0 0 6px ${glowColor}`;
     wrapper.appendChild(label);
     
     // Original lifecycle structure
@@ -56,9 +62,18 @@ export function compareLifecycle(items, config = {}) {
         phaseEl.style.alignItems = 'center';
         phaseEl.style.gap = '2px';
         phaseEl.style.padding = '2px 6px';
-        phaseEl.style.background = phase.active ? 'rgba(100,180,255,0.3)' : 'rgba(100,150,200,0.15)';
         phaseEl.style.borderRadius = '8px';
         phaseEl.style.fontSize = '9px';
+        
+        // Neon styling
+        if (phase.active) {
+          phaseEl.style.background = `${color}66`; // 40% opacity
+          phaseEl.style.boxShadow = `0 0 8px ${glowColor}`;
+          phaseEl.style.border = `1px solid ${color}`;
+        } else {
+          phaseEl.style.background = `${color}22`; // 13% opacity
+          phaseEl.style.border = `1px solid ${color}44`;
+        }
         
         const icon = document.createElement('span');
         icon.className = 'amorph-lifecycle-icon';
@@ -68,16 +83,18 @@ export function compareLifecycle(items, config = {}) {
         const name = document.createElement('span');
         name.className = 'amorph-lifecycle-name';
         name.textContent = phase.name;
+        name.style.color = phase.active ? textColor : `${textColor}aa`;
         phaseEl.appendChild(name);
         
         linear.appendChild(phaseEl);
         
-        // Arrow between phases
+        // Arrow between phases with neon color
         if (i < phases.length - 1 && i < 4) {
           const arrow = document.createElement('span');
           arrow.className = 'amorph-lifecycle-arrow';
           arrow.textContent = '→';
-          arrow.style.opacity = '0.5';
+          arrow.style.opacity = '0.6';
+          arrow.style.color = color;
           linear.appendChild(arrow);
         }
       });

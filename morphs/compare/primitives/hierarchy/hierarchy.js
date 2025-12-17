@@ -1,13 +1,13 @@
 /**
- * COMPARE HIERARCHY - Hierarchy/tree comparison
- * Uses the exact same HTML structure as the original hierarchy morph
+ * COMPARE HIERARCHY - UNIFIED Hierarchy/tree comparison
+ * All items' hierarchies shown in ONE aligned visualization
  */
 
 import { debug } from '../../../../observer/debug.js';
 
 // Known hierarchy orderings
 const KNOWN_HIERARCHIES = {
-  taxonomie: ['regnum', 'phylum', 'divisio', 'classis', 'ordo', 'familia', 'genus', 'species'],
+  taxonomie: ['kingdom', 'regnum', 'phylum', 'division', 'divisio', 'class', 'classis', 'order', 'ordo', 'family', 'familia', 'genus', 'species'],
   location: ['kontinent', 'land', 'region', 'stadt', 'bezirk'],
   organization: ['organisation', 'abteilung', 'team', 'person'],
   file: ['root', 'folder', 'subfolder', 'file']
@@ -24,54 +24,119 @@ export function compareHierarchy(items, config = {}) {
     return el;
   }
   
-  // Container for all hierarchies
-  const container = document.createElement('div');
-  container.className = 'compare-items-container';
-  
-  items.forEach((item, itemIndex) => {
+  // Parse all items and extract their hierarchy levels
+  const parsedItems = items.map((item, idx) => {
     const rawVal = item.value ?? item.wert;
+    const baseColor = item.lineFarbe || item.farbe || `hsl(${idx * 90}, 70%, 55%)`;
     
-    // Wrapper for item
-    const wrapper = document.createElement('div');
-    wrapper.className = 'compare-item-wrapper';
-    
-    // Label with item name - apply inline text color
-    const label = document.createElement('div');
-    label.className = 'compare-item-label';
-    label.textContent = item.name || item.id || `Item ${itemIndex + 1}`;
-    if (item.textFarbe) label.style.color = item.textFarbe;
-    wrapper.appendChild(label);
-    
-    // Use original hierarchy structure
-    const hierarchyEl = document.createElement('div');
-    hierarchyEl.className = 'amorph-hierarchy';
-    
-    if (!rawVal || typeof rawVal !== 'object') {
-      hierarchyEl.innerHTML = '<span class="amorph-hierarchy-leer">Keine Hierarchie</span>';
-    } else {
+    let levels = [];
+    if (rawVal && typeof rawVal === 'object') {
       const hierarchyType = detectHierarchyType(rawVal);
-      const levels = extractLevels(rawVal, hierarchyType);
-      
-      if (levels.length === 0) {
-        hierarchyEl.innerHTML = '<span class="amorph-hierarchy-leer">Keine Hierarchie-Ebenen</span>';
-      } else {
-        // Use breadcrumb for short, tree for long
-        const mode = config.mode || (levels.length <= 6 ? 'breadcrumb' : 'tree');
-        
-        if (mode === 'tree') {
-          hierarchyEl.appendChild(renderTree(levels, config));
-        } else {
-          hierarchyEl.appendChild(renderBreadcrumb(levels, config));
-        }
-      }
+      levels = extractLevels(rawVal, hierarchyType);
     }
     
-    wrapper.appendChild(hierarchyEl);
-    container.appendChild(wrapper);
+    return {
+      ...item,
+      levels,
+      index: idx,
+      color: baseColor,
+      glowColor: item.glowFarbe || baseColor,
+      textColor: item.textFarbe || baseColor
+    };
   });
   
-  el.appendChild(container);
+  // Find all unique level keys across all items
+  const allLevelKeys = new Set();
+  parsedItems.forEach(item => {
+    item.levels.forEach(level => allLevelKeys.add(level.key));
+  });
+  
+  // Sort level keys by hierarchy order
+  const sortedKeys = sortHierarchyKeys(Array.from(allLevelKeys));
+  
+  // UNIFIED hierarchy container - shows all items side by side
+  const hierarchyEl = document.createElement('div');
+  hierarchyEl.className = 'amorph-hierarchy amorph-hierarchy-compare';
+  
+  // Header row with item names
+  const headerRow = document.createElement('div');
+  headerRow.className = 'hierarchy-compare-header';
+  
+  // Empty cell for level column
+  const levelHeader = document.createElement('div');
+  levelHeader.className = 'hierarchy-level-header';
+  levelHeader.textContent = 'Ebene';
+  headerRow.appendChild(levelHeader);
+  
+  // Item name headers
+  parsedItems.forEach(item => {
+    const nameHeader = document.createElement('div');
+    nameHeader.className = 'hierarchy-item-header';
+    nameHeader.textContent = item.name || item.id;
+    nameHeader.style.color = item.color;
+    nameHeader.style.textShadow = `0 0 6px ${item.glowColor}`;
+    headerRow.appendChild(nameHeader);
+  });
+  hierarchyEl.appendChild(headerRow);
+  
+  // Rows for each hierarchy level
+  sortedKeys.forEach((levelKey, levelIdx) => {
+    const row = document.createElement('div');
+    row.className = 'hierarchy-compare-row';
+    
+    // Level name
+    const levelCell = document.createElement('div');
+    levelCell.className = 'hierarchy-level-cell';
+    levelCell.innerHTML = `
+      <span class="hierarchy-icon">${getHierarchyIcon(levelIdx, sortedKeys.length)}</span>
+      <span class="hierarchy-level-name">${levelKey}</span>
+    `;
+    row.appendChild(levelCell);
+    
+    // Value for each item
+    parsedItems.forEach(item => {
+      const valueCell = document.createElement('div');
+      valueCell.className = 'hierarchy-value-cell';
+      
+      const level = item.levels.find(l => l.key === levelKey);
+      if (level) {
+        valueCell.textContent = level.value;
+        valueCell.style.color = item.color;
+        valueCell.style.textShadow = `0 0 4px ${item.glowColor}`;
+      } else {
+        valueCell.textContent = '–';
+        valueCell.classList.add('hierarchy-empty');
+      }
+      
+      row.appendChild(valueCell);
+    });
+    
+    hierarchyEl.appendChild(row);
+  });
+  
+  // Handle empty case
+  if (sortedKeys.length === 0) {
+    hierarchyEl.innerHTML = '<div class="compare-empty">Keine Hierarchie-Daten</div>';
+  }
+  
+  el.appendChild(hierarchyEl);
   return el;
+}
+
+function sortHierarchyKeys(keys) {
+  // Try to match against known hierarchies
+  for (const [type, order] of Object.entries(KNOWN_HIERARCHIES)) {
+    const matches = order.filter(o => keys.some(k => k.toLowerCase().includes(o)));
+    if (matches.length >= 2) {
+      // Sort by this hierarchy
+      return keys.sort((a, b) => {
+        const aIdx = order.findIndex(o => a.toLowerCase().includes(o));
+        const bIdx = order.findIndex(o => b.toLowerCase().includes(o));
+        return (aIdx === -1 ? 999 : aIdx) - (bIdx === -1 ? 999 : bIdx);
+      });
+    }
+  }
+  return keys;
 }
 
 function detectHierarchyType(wert) {
@@ -98,7 +163,10 @@ function extractLevels(wert, hierarchyType) {
         levels.push({ key: formatKey(key), value, depth: levels.length });
       }
     }
-  } else {
+  }
+  
+  // Always also check for direct keys
+  if (levels.length === 0) {
     for (const [key, value] of Object.entries(wert)) {
       if (typeof value === 'string' || typeof value === 'number') {
         levels.push({ key: formatKey(key), value: String(value), depth: levels.length });
@@ -122,87 +190,6 @@ function findValue(obj, key) {
 
 function formatKey(key) {
   return key.replace(/_/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2').replace(/^./, c => c.toUpperCase());
-}
-
-function renderBreadcrumb(levels, config) {
-  const container = document.createElement('div');
-  container.className = 'amorph-hierarchy-breadcrumb';
-  
-  for (let i = 0; i < levels.length; i++) {
-    const level = levels[i];
-    
-    const item = document.createElement('span');
-    item.className = 'amorph-hierarchy-item';
-    
-    const icon = document.createElement('span');
-    icon.className = 'amorph-hierarchy-icon';
-    icon.textContent = getHierarchyIcon(i, levels.length);
-    item.appendChild(icon);
-    
-    const value = document.createElement('span');
-    value.className = 'amorph-hierarchy-value';
-    value.textContent = level.value;
-    item.appendChild(value);
-    
-    if (config.showLabels !== false) {
-      const label = document.createElement('span');
-      label.className = 'amorph-hierarchy-label';
-      label.textContent = level.key;
-      item.appendChild(label);
-    }
-    
-    container.appendChild(item);
-    
-    if (i < levels.length - 1) {
-      const sep = document.createElement('span');
-      sep.className = 'amorph-hierarchy-separator';
-      sep.textContent = '›';
-      container.appendChild(sep);
-    }
-  }
-  
-  return container;
-}
-
-function renderTree(levels, config) {
-  const container = document.createElement('div');
-  container.className = 'amorph-hierarchy-tree';
-  
-  for (let i = 0; i < levels.length; i++) {
-    const level = levels[i];
-    
-    const item = document.createElement('div');
-    item.className = 'amorph-hierarchy-tree-item';
-    item.style.setProperty('--depth', level.depth);
-    
-    const connector = document.createElement('span');
-    connector.className = 'amorph-hierarchy-connector';
-    connector.innerHTML = i === levels.length - 1 ? '└─' : '├─';
-    item.appendChild(connector);
-    
-    const icon = document.createElement('span');
-    icon.className = 'amorph-hierarchy-icon';
-    icon.textContent = getHierarchyIcon(i, levels.length);
-    item.appendChild(icon);
-    
-    const content = document.createElement('span');
-    content.className = 'amorph-hierarchy-content';
-    
-    const label = document.createElement('span');
-    label.className = 'amorph-hierarchy-tree-label';
-    label.textContent = level.key + ':';
-    content.appendChild(label);
-    
-    const value = document.createElement('span');
-    value.className = 'amorph-hierarchy-tree-value';
-    value.textContent = level.value;
-    content.appendChild(value);
-    
-    item.appendChild(content);
-    container.appendChild(item);
-  }
-  
-  return container;
 }
 
 function getHierarchyIcon(index, total) {

@@ -1,21 +1,9 @@
 /**
- * COMPARE PIE - Side-by-side pie/donut charts
- * Uses the exact same HTML structure as the original pie morph
+ * COMPARE PIE - Pie/donut charts with NEON pilz colors
+ * Each pie uses item-specific neon color scheme
  */
 
 import { debug } from '../../../../observer/debug.js';
-
-// Fallback colors
-const FARBEN_FALLBACK = [
-  'rgba(100, 180, 255, 0.65)',
-  'rgba(80, 160, 240, 0.65)',
-  'rgba(60, 140, 220, 0.65)',
-  'rgba(120, 200, 255, 0.55)',
-  'rgba(40, 120, 200, 0.65)',
-  'rgba(140, 210, 255, 0.50)',
-  'rgba(70, 150, 230, 0.65)',
-  'rgba(90, 170, 250, 0.60)'
-];
 
 export function comparePie(items, config = {}) {
   debug.morphs('comparePie', { itemCount: items?.length });
@@ -30,25 +18,29 @@ export function comparePie(items, config = {}) {
   
   // Container for all pie charts
   const container = document.createElement('div');
-  container.className = 'compare-items-container';
+  container.className = 'amorph-pie-compare-container';
   
-  // Create a pie chart for each item using original structure
+  // Create a pie chart for each item using neon colors
   items.forEach((item, itemIndex) => {
     const val = item.value ?? item.wert;
-    const color = item.farbe || item.color || `hsl(${itemIndex * 60}, 70%, 60%)`;
+    const lineColor = item.lineFarbe || item.farbe || `hsl(${itemIndex * 90}, 70%, 55%)`;
+    const glowColor = item.glowFarbe || lineColor;
+    const textColor = item.textFarbe || lineColor;
     
     // Normalize data
     const segmente = normalisiereWert(val);
     
     // Use original pie structure
     const pieEl = document.createElement('div');
-    pieEl.className = 'amorph-pie';
+    pieEl.className = 'amorph-pie amorph-pie-neon';
     
-    // Title with item name - apply inline text color
+    // Title with item name and neon glow
     const titel = document.createElement('div');
     titel.className = 'amorph-pie-titel';
-    titel.textContent = item.name || item.id || `Item ${itemIndex + 1}`;
-    if (item.textFarbe) titel.style.color = item.textFarbe;
+    titel.innerHTML = `
+      <span class="pie-item-indicator" style="background: ${lineColor}; box-shadow: 0 0 8px ${glowColor}"></span>
+      <span style="color: ${textColor}">${item.name || item.id || `Item ${itemIndex + 1}`}</span>
+    `;
     pieEl.appendChild(titel);
     
     if (segmente.length === 0) {
@@ -66,11 +58,25 @@ export function comparePie(items, config = {}) {
       return;
     }
     
+    // Extract base hue for neon color generation
+    const baseHue = parseInt(lineColor.match(/\d+/)?.[0] || 280);
+    
+    // Generate neon colors based on item's base color
+    const generateNeonColors = (count) => {
+      const colors = [];
+      for (let i = 0; i < count; i++) {
+        const hue = (baseHue + i * 45) % 360;
+        colors.push(`hsla(${hue}, 80%, 55%, 0.75)`);
+      }
+      return colors;
+    };
+    
+    const neonFarben = generateNeonColors(segmente.length);
+    
     // Assign colors and percentages
-    const farben = config.farben || FARBEN_FALLBACK;
     segmente.forEach((seg, i) => {
       seg.percent = (seg.value / total) * 100;
-      seg.color = farben[i % farben.length];
+      seg.color = neonFarben[i % neonFarben.length];
     });
     
     // Generate gradient
@@ -80,31 +86,34 @@ export function comparePie(items, config = {}) {
     const pieContainer = document.createElement('div');
     pieContainer.className = 'amorph-pie-container';
     
-    // Chart
+    // Chart with neon glow
     const chart = document.createElement('div');
-    chart.className = 'amorph-pie-chart';
+    chart.className = 'amorph-pie-chart amorph-pie-chart-neon';
     chart.style.setProperty('--pie-gradient', gradient);
+    chart.style.boxShadow = `0 0 20px ${glowColor}40`;
     
     // Center (donut hole)
     const center = document.createElement('div');
     center.className = 'amorph-pie-center';
     center.innerHTML = `
-      <span class="amorph-pie-total">${formatNumber(total)}</span>
+      <span class="amorph-pie-total" style="color: ${textColor}">${formatNumber(total)}</span>
       <span class="amorph-pie-label">${config.totalLabel || 'Total'}</span>
     `;
     chart.appendChild(center);
     pieContainer.appendChild(chart);
     
-    // Legend
+    // Legend with neon colors - zeige alle Segment-Labels
     const legend = document.createElement('div');
     legend.className = 'amorph-pie-legend';
     
     for (const seg of segmente) {
       const legendItem = document.createElement('div');
       legendItem.className = 'amorph-pie-legend-item';
+      // Kürze Label wenn zu lang
+      const displayLabel = seg.label.length > 20 ? seg.label.slice(0, 18) + '…' : seg.label;
       legendItem.innerHTML = `
-        <span class="amorph-pie-legend-color" style="background: ${seg.color}"></span>
-        <span class="amorph-pie-legend-label">${seg.label}</span>
+        <span class="amorph-pie-legend-color" style="background: ${seg.color}; box-shadow: 0 0 6px ${seg.color}"></span>
+        <span class="amorph-pie-legend-label" title="${seg.label}">${displayLabel}</span>
         <span class="amorph-pie-legend-value">${seg.percent.toFixed(0)}%</span>
       `;
       legend.appendChild(legendItem);

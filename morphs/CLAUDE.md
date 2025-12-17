@@ -6,98 +6,98 @@ Morph-System: Daten → DOM Transformationen. Domänenunabhängig.
 
 ```
 morphs/
-├── index.js          ← Registry + Re-Exports (250 Zeilen)
-├── index.yaml        ← Farb-Paletten + Fallback-Regeln
-├── primitives/       ← 35+ Basis-Morphs
-│   ├── index.js      ← Alle Primitive-Exports (147 Zeilen)
+├── index.js          ← Registry + Re-Exports
+├── index.yaml        ← Farb-Paletten + Erkennungs-Config
+├── primitives/       ← 44+ Basis-Morphs
+│   ├── index.js      ← Alle Primitive-Exports
 │   ├── index.yaml    ← Primitive-Configs
 │   ├── index.css     ← Gemeinsame Styles
 │   └── {morph}/      ← Je ein Ordner pro Morph
 └── compare/          ← Vergleichs-Morphs
     ├── index.js      ← compareByData Export
-    ├── base.js       ← Farben, Sections, detectType (549 Zeilen)
+    ├── base.js       ← Farben, Sections, detectType
     ├── compare.css   ← Compare-Styles
-    ├── composites.js ← Re-Export aus composites/
     ├── composites/   ← smartCompare, diffCompare
     └── primitives/   ← compareBar, compareTag, etc.
 ```
 
 ---
 
-## index.js (250 Zeilen) - Registry
+## 44+ Primitive Morphs
 
-### Exportierte Morphs
+### Text/Display (8)
+| Morph | Eingabe | Ausgabe |
+|-------|---------|---------|
+| `text` | String | `<span>` |
+| `string` | String | `<span>` |
+| `number` | Number | `<span>` formatiert |
+| `boolean` | Boolean | ✓/✗ Icon |
+| `badge` | `{status, variant}` | Status-Badge |
+| `tag` | String ≤20 | Kompaktes Label |
+| `rating` | `{rating, max}` | Sterne/Punkte |
+| `progress` | `{value, max}` | Fortschrittsbalken |
 
-#### Primitives (18)
-```javascript
-text, number, boolean, tag, range, list, object,
-image, link, pie, bar, radar, rating, progress,
-stats, timeline, badge, lifecycle
-```
+### Charts (18)
+| Morph | Eingabe | Ausgabe |
+|-------|---------|---------|
+| `bar` | `[{label, value}]` | Balkendiagramm |
+| `pie` | `[{label, value}]` | Kreisdiagramm |
+| `radar` | `[{axis, value}]` | Spinnendiagramm |
+| `sparkline` | `[numbers]` | Mini-Trend |
+| `heatmap` | `[[numbers]]` | Heatmap-Grid |
+| `gauge` | `{value, zones}` | Tachometer |
+| `slopegraph` | `[{vorher, nachher}]` | Slope-Chart |
+| `severity` | `[{level, typ}]` | Schweregrad-Bars |
+| `groupedbar` | `[{group, values}]` | Gruppierte Balken |
+| `stackedbar` | `[{label, segments}]` | Gestapelte Balken |
+| `boxplot` | `{min,q1,median,q3,max}` | Box-Whisker |
+| `dotplot` | `[{label, value}]` | Punkt-Diagramm |
+| `lollipop` | `[{label, value}]` | Lollipop-Chart |
+| `scatterplot` | `[{x, y}]` | Streudiagramm |
+| `sunburst` | `{children: [...]}` | Sunburst-Hierarchie |
+| `treemap` | `{children: [...]}` | Treemap |
+| `bubble` | `[{x, y, size}]` | Blasendiagramm |
+| `pictogram` | `{value, icon}` | Piktogramm |
 
-#### Extended Charts (4)
-```javascript
-sparkline, slopegraph, heatmap, gauge
-```
+### Temporal (4)
+| Morph | Eingabe | Ausgabe |
+|-------|---------|---------|
+| `timeline` | `[{date, event}]` | Zeitleiste |
+| `lifecycle` | `[{phase, duration}]` | Phasen-Anzeige |
+| `steps` | `[{step, label, status}]` | Schritte |
+| `calendar` | `[{month, active}]` | Monatskalender |
 
-#### Special (10)
-```javascript
-dosage, currency, citation, calendar, steps,
-map, hierarchy, network, comparison, severity
-```
+### Range/Stats (3)
+| Morph | Eingabe | Ausgabe |
+|-------|---------|---------|
+| `range` | `{min, max, unit}` | Bereichsanzeige |
+| `stats` | `{min, max, avg}` | Statistik-Karte |
+| `comparison` | `{items, metrics}` | Vergleichstabelle |
 
-#### Features (3)
-```javascript
-suche, perspektiven, header
-```
+### Container (3)
+| Morph | Eingabe | Ausgabe |
+|-------|---------|---------|
+| `list` | `[strings]` | Liste |
+| `object` | `{key: value}` | Key-Value-Liste |
+| `hierarchy` | `[{level, name}]` | Hierarchie-Baum |
 
-#### Compare-Morphs (15)
-```javascript
-compareMorph, compareBar, compareRating, compareTag,
-compareList, compareImage, compareRadar, comparePie,
-compareText, compareTimeline, compareRange, compareProgress,
-compareBoolean, compareStats, compareObject
-```
-
-#### Composites (2)
-```javascript
-smartCompare, diffCompare
-```
-
-#### Utilities (7)
-```javascript
-erstelleFarben, setAktivePerspektivenFarben, detectType,
-createSection, createHeader, compareByType, compareByData
-```
-
-### compareMorph() - Legacy Wrapper
-
-```javascript
-compareMorph(feldName, typ, items, config) → div.compare-section
-// - Header mit Label + Abwahl-Button
-// - compareByType(typ, items, config) als Content
-```
+### Specialized (8)
+| Morph | Eingabe | Ausgabe |
+|-------|---------|---------|
+| `image` | URL-String | `<img>` |
+| `link` | URL-String | `<a>` |
+| `map` | `{lat, lng}` | Karten-Marker |
+| `network` | `[{name, type}]` | Netzwerk-Graph |
+| `citation` | `{authors, year, title}` | Zitat-Block |
+| `dosage` | `[{amount, unit}]` | Dosierungs-Info |
+| `currency` | `{amount, currency}` | Währungs-Anzeige |
+| `flow` | `[{from, to, value}]` | Sankey-ähnlich |
 
 ---
 
-## index.yaml - Farb-Paletten
+## Erkennungs-Priorität
 
-### Neon-Farben (12 Stück)
-
-```yaml
-colors:
-  palette:
-    - name: "Neon Cyan"
-      rgb: [0, 255, 255]
-      fill: "rgba(0, 255, 255, 0.24)"
-      text: "rgba(0, 255, 255, 0.85)"
-    - name: "Neon Magenta"
-      rgb: [255, 0, 255]
-    - name: "Neon Green"
-      rgb: [0, 255, 128]
-    - name: "Neon Pink"
-      rgb: [255, 0, 128]
-    - name: "Neon Yellow"
+Pipeline prüft in dieser Reihenfolge:
       rgb: [255, 255, 0]
     - name: "Neon Orange"
       rgb: [255, 128, 0]

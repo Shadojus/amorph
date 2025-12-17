@@ -1,0 +1,57 @@
+{
+  "_meta": {
+    "description": "Economy perspective - Tests: currency, bar, slopegraph, pie, sparkline, stats"
+  },
+  
+  "market_price_fresh": {
+    "amount": 45.00,
+    "currency": "EUR",
+    "unit": "per kg"
+  },
+  
+  "market_price_dried": {
+    "amount": 280.00,
+    "currency": "EUR",
+    "unit": "per kg"
+  },
+  
+  "price_trend_10y": [28, 32, 35, 38, 42, 40, 45, 48, 52, 45],
+  
+  "market_size_by_segment": [
+    {"label": "Fresh retail", "value": 42},
+    {"label": "Dried wholesale", "value": 28},
+    {"label": "Restaurant supply", "value": 18},
+    {"label": "Processing", "value": 8},
+    {"label": "Export", "value": 4}
+  ],
+  
+  "revenue_by_region": [
+    {"label": "Western Europe", "value": 185},
+    {"label": "Eastern Europe", "value": 78},
+    {"label": "North America", "value": 45},
+    {"label": "Asia Pacific", "value": 32},
+    {"label": "Rest of World", "value": 12}
+  ],
+  
+  "price_change_seasonal": {
+    "before": 65,
+    "after": 38
+  },
+  
+  "price_statistics": {
+    "min": 25,
+    "max": 120,
+    "avg": 48,
+    "median": 45
+  },
+  
+  "global_trade_value": {
+    "amount": 352000000,
+    "currency": "EUR",
+    "unit": "annually"
+  },
+  
+  "employment_impact": 45000,
+  
+  "economic_multiplier": 2.8
+}

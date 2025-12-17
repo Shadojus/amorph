@@ -48,11 +48,17 @@ export function analyzeItems(items) {
         // CSS-Klasse für Custom Properties (PRIMARY!)
         colorClass: item.farbKlasse || item.colorClass,
         farbKlasse: item.farbKlasse || item.colorClass,
-        // Inline-Farben (legacy/fallback)
+        // Inline-Farben (ALL color variants für Primitives!)
         color: item.farbe || item.color,
         farbe: item.farbe || item.color,
+        // WICHTIG: lineFarbe für Bar, Radar, Gauge, etc.
+        lineFarbe: item.lineFarbe || item.farbe || item.color,
+        // WICHTIG: glowFarbe für Neon-Effekte
+        glowFarbe: item.glowFarbe || item.farbe || item.color,
+        // Text color
         textColor: item.textFarbe || item.textColor,
         textFarbe: item.textFarbe || item.textColor,
+        // Background color
         bgColor: item.bgFarbe || item.bgColor,
         bgFarbe: item.bgFarbe || item.bgColor
       }))

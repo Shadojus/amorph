@@ -1,0 +1,46 @@
+{
+  "_meta": {
+    "description": "Safety perspective - Tests: badge, severity, boolean, gauge, timeline, stats"
+  },
+  
+  "toxicity_status": "safe",
+  
+  "edible": true,
+  
+  "requires_cooking": false,
+  
+  "toxicity_level": {
+    "value": 5,
+    "min": 0,
+    "max": 100,
+    "unit": "toxicity index",
+    "zones": [
+      {"min": 0, "max": 20, "label": "Safe", "color": "green"},
+      {"min": 21, "max": 50, "label": "Caution", "color": "yellow"},
+      {"min": 51, "max": 100, "label": "Dangerous", "color": "red"}
+    ]
+  },
+  
+  "safety_incidents": [
+    {"date": "2018-09", "event": "Confusion with Boletus satanas reported in Bavaria"},
+    {"date": "2020-06", "event": "FDA confirms safe for consumption"},
+    {"date": "2023-03", "event": "Added to EU safe mushroom list"}
+  ],
+  
+  "lookalike_danger": [
+    {"label": "B. satanas", "value": 75, "note": "Similar cap, toxic"},
+    {"label": "T. equestre", "value": 45, "note": "Different gills"},
+    {"label": "B. luridus", "value": 30, "note": "Blue staining"}
+  ],
+  
+  "allergy_risk": {
+    "min": 2,
+    "max": 8,
+    "avg": 4,
+    "count": 1250
+  },
+  
+  "contraindications": ["chitin allergy", "immunocompromised (raw consumption)"],
+  
+  "first_aid_notes": "No specific treatment needed. Gastrointestinal symptoms rare and mild."
+}

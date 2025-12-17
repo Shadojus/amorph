@@ -1,6 +1,6 @@
 /**
- * COMPARE HEATMAP - Heatmap comparison
- * Uses the exact same HTML structure as the original heatmap morph
+ * COMPARE HEATMAP - Heatmap comparison with NEON pilz colors
+ * Each item's heatmap uses its specific neon color scheme
  */
 
 import { debug } from '../../../../observer/debug.js';
@@ -16,27 +16,34 @@ export function compareHeatmap(items, config = {}) {
     return el;
   }
   
-  // Container for all heatmaps
+  // Container for heatmaps
   const container = document.createElement('div');
-  container.className = 'compare-items-container';
+  container.className = 'amorph-heatmap-compare-container';
   
   items.forEach((item, itemIndex) => {
     const rawVal = item.value ?? item.wert;
+    const lineColor = item.lineFarbe || item.farbe || `hsl(${itemIndex * 90}, 70%, 55%)`;
+    const glowColor = item.glowFarbe || lineColor;
+    const textColor = item.textFarbe || lineColor;
     
     // Wrapper for item
     const wrapper = document.createElement('div');
-    wrapper.className = 'compare-item-wrapper';
+    wrapper.className = 'compare-heatmap-item';
     
-    // Label with item name - apply inline text color
+    // Label with item name and neon glow
     const label = document.createElement('div');
-    label.className = 'compare-item-label';
-    label.textContent = item.name || item.id || `Item ${itemIndex + 1}`;
-    if (item.textFarbe) label.style.color = item.textFarbe;
+    label.className = 'compare-heatmap-label';
+    label.innerHTML = `
+      <span class="heatmap-item-indicator" style="background: ${lineColor}; box-shadow: 0 0 8px ${glowColor}"></span>
+      <span style="color: ${textColor}">${item.name || item.id || `Item ${itemIndex + 1}`}</span>
+    `;
     wrapper.appendChild(label);
     
     // Use original heatmap structure
     const heatmapEl = document.createElement('div');
-    heatmapEl.className = 'amorph-heatmap';
+    heatmapEl.className = 'amorph-heatmap amorph-heatmap-neon';
+    heatmapEl.style.setProperty('--heatmap-base-color', lineColor);
+    heatmapEl.style.setProperty('--heatmap-glow-color', glowColor);
     
     // Normalize data to matrix
     const { matrix, rows, cols, min, max } = normalisiereDaten(rawVal);
@@ -62,10 +69,14 @@ export function compareHeatmap(items, config = {}) {
           const colHeader = document.createElement('div');
           colHeader.className = 'amorph-heatmap-col-header';
           colHeader.textContent = col || '';
+          colHeader.style.color = textColor;
           headerRow.appendChild(colHeader);
         }
         grid.appendChild(headerRow);
       }
+      
+      // Extract hue from lineColor for intensity gradient
+      const hue = parseInt(lineColor.match(/\d+/)?.[0] || 280);
       
       // Matrix rows
       const range = max - min || 1;
@@ -77,6 +88,7 @@ export function compareHeatmap(items, config = {}) {
           const rowHeader = document.createElement('div');
           rowHeader.className = 'amorph-heatmap-row-header';
           rowHeader.textContent = rows[i];
+          rowHeader.style.color = textColor;
           row.appendChild(rowHeader);
         }
         
@@ -85,8 +97,18 @@ export function compareHeatmap(items, config = {}) {
           const intensity = (value - min) / range;
           
           const cell = document.createElement('div');
-          cell.className = 'amorph-heatmap-cell';
-          cell.style.setProperty('--intensity', intensity);
+          cell.className = 'amorph-heatmap-cell amorph-heatmap-cell-neon';
+          
+          // Use neon color with varying lightness based on intensity
+          const lightness = 20 + intensity * 50;
+          const saturation = 60 + intensity * 30;
+          cell.style.background = `hsla(${hue}, ${saturation}%, ${lightness}%, ${0.3 + intensity * 0.7})`;
+          
+          // Add glow for high values
+          if (intensity > 0.6) {
+            cell.style.boxShadow = `0 0 ${8 * intensity}px ${glowColor}`;
+          }
+          
           cell.title = String(value);
           row.appendChild(cell);
         }

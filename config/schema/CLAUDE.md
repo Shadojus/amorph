@@ -6,28 +6,86 @@ Modulares Schema-System (Data-Driven Architecture v3.0).
 
 ```
 schema/
-├── index.yaml          ← Schema-Index, Version 3.0, Module
-├── basis.yaml          ← Kern-Felder (id, name, slug, bild), Meta-Config
-├── semantik.yaml       ← 651 Zeilen: Farben, Schwellwerte, 60+ Keywords
-└── perspektiven/       ← 15 Perspektiven (YAML + CSS)
-    ├── index.yaml      ← Aktive Perspektiven-Liste
-    ├── index.css       ← Gemeinsame Perspektiven-Styles
-    ├── chemistry.yaml (990 Zeilen) + chemistry.css
-    ├── conservation.yaml + conservation.css
-    ├── culinary.yaml + culinary.css
-    ├── cultivation.yaml + cultivation.css
-    ├── culture.yaml + culture.css
-    ├── ecology.yaml + ecology.css
-    ├── economy.yaml + economy.css
-    ├── geography.yaml + geography.css
-    ├── identification.yaml + identification.css
-    ├── interactions.yaml + interactions.css
-    ├── medicine.yaml + medicine.css
-    ├── research.yaml + research.css
-    ├── safety.yaml + safety.css
-    ├── statistics.yaml + statistics.css
-    └── temporal.yaml + temporal.css
+├── index.yaml              ← Schema-Index, Version 3.0
+├── basis.yaml              ← Kern-Felder (id, name, slug, bild)
+├── semantik.yaml           ← Suche-Mappings, Keywords
+└── perspektiven/           ← 15 Perspektiven
+    ├── index.yaml          ← Aktive Perspektiven-Liste
+    ├── index.css           ← Gemeinsame Perspektiven-Styles
+    ├── *.yaml              ← 15 Perspektiven-Definitionen
+    ├── *.css               ← Perspektiven-spezifische Styles
+    └── blueprints/         ← 15 Morph-Blueprints (NEU!)
+        └── *.blueprint.yaml
 ```
+
+---
+
+## Blueprints (NEU!)
+
+**Pfad**: `perspektiven/blueprints/*.blueprint.yaml`
+
+Jedes Blueprint definiert **alle Felder einer Perspektive** mit:
+- Korrektem Morph-Typ als Kommentar (`# morph: badge`)
+- Leerer Datenstruktur im exakten Morph-Format
+- `_enums` Sektion mit erlaubten Werten
+
+### Blueprint-Morph-Typen
+
+| Morph | Struktur | Beispiel |
+|-------|----------|----------|
+| `text` | `""` | `name: ""` |
+| `number` | `0` | `count: 0` |
+| `boolean` | `false` | `active: false` |
+| `tag` | `""` | `category: ""` |
+| `badge` | `{status, variant}` | `{status: "", variant: ""}` |
+| `list` | `[""]` | `items: [""]` |
+| `object` | `{key: value}` | `data: {a: 0, b: ""}` |
+| `range` | `{min, max, unit}` | `{min: 0, max: 0, unit: ""}` |
+| `rating` | `{rating, max}` | `{rating: 0, max: 10}` |
+| `progress` | `{value, max, unit}` | `{value: 0, max: 100, unit: "%"}` |
+| `gauge` | `{value, min, max, zones}` | Siehe Blueprint |
+| `stats` | `{total, count, min, max, avg}` | Siehe Blueprint |
+| `bar` | `[{label, value}]` | `[{label: "", value: 0}]` |
+| `pie` | `[{label, value}]` | `[{label: "", value: 0}]` |
+| `radar` | `[{axis, value}]` | `[{axis: "", value: 0}]` |
+| `sparkline` | `[0]` | `trend: [0]` |
+| `timeline` | `[{date, event, description}]` | Siehe Blueprint |
+| `lifecycle` | `[{phase, duration}]` | Siehe Blueprint |
+| `steps` | `[{step, label, status}]` | Siehe Blueprint |
+| `calendar` | `[{month, active}...]` | 12 Monate |
+| `network` | `[{name, type, intensity}]` | Siehe Blueprint |
+| `flow` | `[{from, to, value}]` | Siehe Blueprint |
+| `hierarchy` | `[{level, name}]` | Siehe Blueprint |
+| `map` | `{lat, lng, region}` | Koordinaten |
+| `severity` | `[{level, typ, beschreibung}]` | Siehe Blueprint |
+| `citation` | `{authors, year, title, journal, doi}` | Siehe Blueprint |
+| `currency` | `{amount, currency}` | `{amount: 0, currency: ""}` |
+| `image` | `""` | URL-String |
+| `link` | `""` | URL-String |
+| `dosage` | `[{amount, unit, frequency, route}]` | Siehe Blueprint |
+| `comparison` | `{items, metrics}` | Siehe Blueprint |
+
+### 15 Blueprints
+
+| Perspektive | Datei | ~Zeilen |
+|-------------|-------|---------|
+| chemistry | chemistry.blueprint.yaml | ~500 |
+| conservation | conservation.blueprint.yaml | ~600 |
+| culinary | culinary.blueprint.yaml | ~400 |
+| cultivation | cultivation.blueprint.yaml | ~800 |
+| culture | culture.blueprint.yaml | ~700 |
+| ecology | ecology.blueprint.yaml | ~650 |
+| economy | economy.blueprint.yaml | ~600 |
+| geography | geography.blueprint.yaml | ~900 |
+| identification | identification.blueprint.yaml | ~2000 |
+| interactions | interactions.blueprint.yaml | ~550 |
+| medicine | medicine.blueprint.yaml | ~700 |
+| research | research.blueprint.yaml | ~600 |
+| safety | safety.blueprint.yaml | ~1400 |
+| statistics | statistics.blueprint.yaml | ~500 |
+| temporal | temporal.blueprint.yaml | ~1600 |
+
+**Gesamt**: ~12.000 Zeilen Schema-Definitionen
 
 ---
 

@@ -1,0 +1,51 @@
+{
+  "_meta": {
+    "description": "Cultivation perspective - Tests: lifecycle, steps, range, progress, boolean, bar"
+  },
+  
+  "cultivatable": true,
+  
+  "laboratory_only": true,
+  
+  "cultivation_legal": false,
+  
+  "research_cultivation_progress": 85,
+  
+  "growth_lifecycle": [
+    {"phase": "Spore germination", "duration": "10-21 days", "description": "Requires sterile conditions"},
+    {"phase": "Mycelium growth", "duration": "30-60 days", "description": "Slow colonization of substrate"},
+    {"phase": "Host inoculation", "duration": "6-12 months", "description": "Mycorrhizal establishment"},
+    {"phase": "Primordia formation", "duration": "Variable", "description": "Environmental triggers required"},
+    {"phase": "Fruiting", "duration": "5-10 days", "description": "Rapid development once triggered"}
+  ],
+  
+  "safety_protocol": [
+    {"step": 1, "label": "Authorization", "description": "Obtain research permit and institutional approval"},
+    {"step": 2, "label": "Containment", "description": "BSL-2 laboratory minimum requirement"},
+    {"step": 3, "label": "PPE", "description": "Full protective equipment, double gloves"},
+    {"step": 4, "label": "Documentation", "description": "Log all specimens and procedures"},
+    {"step": 5, "label": "Disposal", "description": "Autoclave all materials, incinerate remains"}
+  ],
+  
+  "temperature_range": {
+    "min": 15,
+    "max": 25
+  },
+  
+  "humidity_range": {
+    "min": 70,
+    "max": 95
+  },
+  
+  "institutional_requirements": [
+    {"label": "Biosafety approval", "value": 100},
+    {"label": "Ethics committee", "value": 95},
+    {"label": "Security clearance", "value": 85},
+    {"label": "Emergency protocols", "value": 100},
+    {"label": "Antidote stockpile", "value": 90}
+  ],
+  
+  "wild_collection_regulated": true,
+  
+  "research_permits_required": 3
+}

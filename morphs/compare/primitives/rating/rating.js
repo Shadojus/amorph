@@ -1,6 +1,6 @@
 /**
- * COMPARE RATING - Star rating comparison
- * Uses the exact same HTML structure as the original rating morph
+ * COMPARE RATING - UNIFIED Star rating comparison
+ * All ratings shown as rows with stars and bars for direct comparison
  */
 
 import { debug } from '../../../../observer/debug.js';
@@ -16,25 +16,9 @@ export function compareRating(items, config = {}) {
     return el;
   }
   
-  // Container for all ratings
-  const container = document.createElement('div');
-  container.className = 'compare-items-container';
-  
-  items.forEach((item, itemIndex) => {
+  // Parse all items
+  const parsedItems = items.map((item, idx) => {
     const rawVal = item.value ?? item.wert;
-    
-    // Wrapper for item
-    const wrapper = document.createElement('div');
-    wrapper.className = 'compare-item-wrapper';
-    
-    // Label with item name - apply inline text color
-    const label = document.createElement('div');
-    label.className = 'compare-item-label';
-    label.textContent = item.name || item.id || `Item ${itemIndex + 1}`;
-    if (item.textFarbe) label.style.color = item.textFarbe;
-    wrapper.appendChild(label);
-    
-    // Extract value and max
     let value, maxValue;
     
     if (typeof rawVal === 'number') {
@@ -48,25 +32,52 @@ export function compareRating(items, config = {}) {
       maxValue = 5;
     }
     
-    // Use original rating structure
-    const ratingEl = document.createElement('span');
-    ratingEl.className = 'amorph-rating';
-    
-    // Normalize to 5-star scale
-    const maxStars = config.maxStars || 5;
-    const normalizedValue = (value / maxValue) * maxStars;
+    return {
+      ...item,
+      value,
+      maxValue,
+      index: idx,
+      // Farben werden durchgereicht, item hat bereits lineFarbe etc.
+      color: item.lineFarbe || item.farbe || `hsl(${idx * 90}, 70%, 55%)`
+    };
+  });
+  
+  const maxStars = config.maxStars || 5;
+  const icon = config.icon || '★';
+  const emptyIcon = config.emptyIcon || '☆';
+  const halfIcon = config.halfIcon || '⯨';
+  
+  // UNIFIED rating container
+  const ratingContainer = document.createElement('div');
+  ratingContainer.className = 'amorph-rating amorph-rating-compare';
+  
+  parsedItems.forEach(item => {
+    const normalizedValue = (item.value / item.maxValue) * maxStars;
     const fullStars = Math.floor(normalizedValue);
     const hasHalf = normalizedValue % 1 >= 0.25 && normalizedValue % 1 < 0.75;
     const hasAlmostFull = normalizedValue % 1 >= 0.75;
+    const percent = (item.value / item.maxValue) * 100;
     
-    // Icons
-    const icon = config.icon || '★';
-    const emptyIcon = config.emptyIcon || '☆';
-    const halfIcon = config.halfIcon || '⯨';
+    // Use NEON colors
+    const lineColor = item.lineFarbe || item.farbe || item.color;
+    const glowColor = item.glowFarbe || lineColor;
+    const textColor = item.textFarbe || lineColor;
     
-    // Stars container
-    const starsContainer = document.createElement('span');
-    starsContainer.className = 'amorph-rating-stars';
+    const row = document.createElement('div');
+    row.className = 'amorph-rating-row-compare';
+    
+    // Name with neon text
+    const nameEl = document.createElement('div');
+    nameEl.className = 'amorph-rating-name';
+    nameEl.textContent = item.name || item.id;
+    nameEl.style.color = textColor;
+    row.appendChild(nameEl);
+    
+    // Stars with NEON glow
+    const starsEl = document.createElement('div');
+    starsEl.className = 'amorph-rating-stars';
+    starsEl.style.color = lineColor;
+    starsEl.style.textShadow = `0 0 8px ${glowColor}`;
     
     for (let i = 0; i < maxStars; i++) {
       const star = document.createElement('span');
@@ -81,26 +92,37 @@ export function compareRating(items, config = {}) {
       } else {
         star.textContent = emptyIcon;
         star.classList.add('amorph-rating-empty');
+        star.style.textShadow = 'none';
       }
       
-      starsContainer.appendChild(star);
+      starsEl.appendChild(star);
     }
     
-    ratingEl.appendChild(starsContainer);
+    row.appendChild(starsEl);
     
-    // Numeric value
-    if (config.showValue !== false) {
-      const valueEl = document.createElement('span');
-      valueEl.className = 'amorph-rating-value';
-      valueEl.textContent = `${value.toFixed(1)}/${maxValue}`;
-      ratingEl.appendChild(valueEl);
-    }
+    // Bar with NEON glow
+    const barEl = document.createElement('div');
+    barEl.className = 'amorph-rating-bar-track';
     
-    wrapper.appendChild(ratingEl);
-    container.appendChild(wrapper);
+    const fill = document.createElement('div');
+    fill.className = 'amorph-rating-bar-fill';
+    fill.style.width = `${percent}%`;
+    fill.style.background = lineColor;
+    fill.style.boxShadow = `0 0 10px ${glowColor}, inset 0 0 5px rgba(255,255,255,0.3)`;
+    barEl.appendChild(fill);
+    row.appendChild(barEl);
+    
+    // Value with neon color
+    const valueEl = document.createElement('div');
+    valueEl.className = 'amorph-rating-value';
+    valueEl.textContent = `${item.value.toFixed(1)}/${item.maxValue}`;
+    valueEl.style.color = lineColor;
+    row.appendChild(valueEl);
+    
+    ratingContainer.appendChild(row);
   });
   
-  el.appendChild(container);
+  el.appendChild(ratingContainer);
   return el;
 }
 

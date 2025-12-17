@@ -1,0 +1,55 @@
+{
+  "_meta": {
+    "description": "Identification perspective - Tests: comparison, radar, bar, range, text, list, image"
+  },
+  
+  "common_names": ["King Bolete", "Penny Bun", "Porcini", "Cep", "Steinpilz"],
+  
+  "scientific_name": "Boletus edulis Bull.",
+  
+  "description": "Large, robust bolete with brown to reddish-brown cap, white to cream colored pores, and thick bulbous stem with fine white reticulation",
+  
+  "cap_characteristics": {
+    "color": "Brown to reddish-brown, sometimes with lighter edges",
+    "surface": "Smooth to slightly sticky when wet",
+    "shape": "Convex when young, flattening with age"
+  },
+  
+  "cap_diameter_cm": {
+    "min": 8,
+    "max": 30
+  },
+  
+  "stem_height_cm": {
+    "min": 8,
+    "max": 25
+  },
+  
+  "spore_size_um": {
+    "min": 14,
+    "max": 18
+  },
+  
+  "identification_confidence": [
+    {"axis": "Cap features", "value": 85},
+    {"axis": "Stem features", "value": 90},
+    {"axis": "Pore surface", "value": 95},
+    {"axis": "Spore print", "value": 98},
+    {"axis": "Habitat", "value": 75},
+    {"axis": "Season", "value": 70}
+  ],
+  
+  "distinguishing_features": [
+    {"label": "White reticulation on stem", "value": 95},
+    {"label": "Unchanging flesh", "value": 90},
+    {"label": "Olive-brown spore print", "value": 88},
+    {"label": "Association with oaks/beech", "value": 75},
+    {"label": "No blue staining", "value": 92}
+  ],
+  
+  "lookalikes": ["Boletus pinophilus", "Boletus aereus", "Boletus reticulatus", "Tylopilus felleus"],
+  
+  "microscopic_features": "Spores fusiform, 14-18 × 5-6 µm, smooth, olive-brown in mass",
+  
+  "chemical_tests": "No color change with KOH or FeSO4, flesh white throughout"
+}

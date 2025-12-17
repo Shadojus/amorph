@@ -1,6 +1,6 @@
 /**
- * COMPARE SPARKLINE - Multiple sparklines side by side
- * Uses the exact same HTML structure as the original sparkline morph
+ * COMPARE SPARKLINE - UNIFIED overlapping sparklines
+ * All sparklines shown in ONE SVG for direct comparison
  */
 
 import { debug } from '../../../../observer/debug.js';
@@ -16,56 +16,154 @@ export function compareSparkline(items, config = {}) {
     return el;
   }
   
-  // Container for all sparklines
-  const container = document.createElement('div');
-  container.className = 'compare-items-container';
-  
-  // Process each item - create original sparkline structure for each
-  items.forEach((item, itemIndex) => {
+  // Parse all items
+  const parsedItems = items.map((item, idx) => {
     const data = normalizeDaten(item.value ?? item.wert);
-    const color = item.farbe || item.color || `hsl(${itemIndex * 60}, 70%, 60%)`;
-    
-    // Wrapper for this item's sparkline
-    const itemEl = document.createElement('div');
-    itemEl.className = 'amorph-sparkline';
-    itemEl.style.setProperty('--sparkline-color', color);
-    
-    // Item name as label - apply inline text color
-    if (item.name || item.id) {
-      const label = document.createElement('span');
-      label.className = 'amorph-sparkline-label';
-      label.textContent = item.name || item.id;
-      if (item.textFarbe) label.style.color = item.textFarbe;
-      itemEl.appendChild(label);
-    }
-    
-    if (data.length < 2) {
-      itemEl.innerHTML += '<span class="amorph-sparkline-leer">Zu wenig Daten</span>';
-      container.appendChild(itemEl);
-      return;
-    }
-    
-    // Container for SVG and summary
-    const svgContainer = document.createElement('div');
-    svgContainer.className = 'amorph-sparkline-container';
-    
-    // Create SVG sparkline
-    const svg = createSparklineSVG(data, color);
-    svgContainer.appendChild(svg);
-    
-    // Create summary
-    const summary = createSummary(data, color);
-    svgContainer.appendChild(summary);
-    
-    itemEl.appendChild(svgContainer);
-    
-    // Tooltip
-    itemEl.title = createTooltipText(data, item.name || item.id);
-    
-    container.appendChild(itemEl);
+    return {
+      ...item,
+      data,
+      index: idx,
+      // Use pilz farbe (neon) - prefer lineFarbe for lines
+      color: item.lineFarbe || item.farbe || `hsl(${idx * 90}, 70%, 55%)`
+    };
+  }).filter(item => item.data.length >= 2);
+  
+  if (parsedItems.length === 0) {
+    el.innerHTML = '<div class="compare-empty">Zu wenig Daten</div>';
+    return el;
+  }
+  
+  // Find global min/max across all data
+  let globalMin = Infinity;
+  let globalMax = -Infinity;
+  let maxLength = 0;
+  
+  parsedItems.forEach(item => {
+    item.data.forEach(d => {
+      if (d.value < globalMin) globalMin = d.value;
+      if (d.value > globalMax) globalMax = d.value;
+    });
+    if (item.data.length > maxLength) maxLength = item.data.length;
   });
   
-  el.appendChild(container);
+  const range = globalMax - globalMin || 1;
+  
+  // UNIFIED sparkline container
+  const sparklineContainer = document.createElement('div');
+  sparklineContainer.className = 'amorph-sparkline amorph-sparkline-compare';
+  
+  // Create ONE SVG with all lines overlapped
+  const width = 280;
+  const height = 80;
+  const padding = 8;
+  
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+  svg.setAttribute('class', 'amorph-sparkline-svg');
+  svg.setAttribute('preserveAspectRatio', 'none');
+  
+  // Grid lines
+  for (let i = 0; i <= 4; i++) {
+    const y = padding + (i / 4) * (height - padding * 2);
+    const gridLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    gridLine.setAttribute('x1', padding);
+    gridLine.setAttribute('y1', y);
+    gridLine.setAttribute('x2', width - padding);
+    gridLine.setAttribute('y2', y);
+    gridLine.setAttribute('stroke', 'rgba(255,255,255,0.05)');
+    gridLine.setAttribute('stroke-width', '1');
+    svg.appendChild(gridLine);
+  }
+  
+  // Draw all lines in ONE SVG
+  parsedItems.forEach((item, idx) => {
+    const points = item.data.map((d, i) => {
+      const x = padding + (i / (item.data.length - 1)) * (width - padding * 2);
+      const y = height - padding - ((d.value - globalMin) / range) * (height - padding * 2);
+      return { x, y, value: d.value };
+    });
+    
+    // Area (subtle fill)
+    const areaPath = `M ${points[0].x} ${height - padding} L ${points.map(p => `${p.x} ${p.y}`).join(' L ')} L ${points[points.length - 1].x} ${height - padding} Z`;
+    const area = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    area.setAttribute('d', areaPath);
+    area.setAttribute('fill', item.color);
+    area.setAttribute('fill-opacity', '0.1');
+    svg.appendChild(area);
+    
+    // Line with NEON glow
+    const linePath = `M ${points.map(p => `${p.x} ${p.y}`).join(' L ')}`;
+    
+    // Glow effect
+    const glow = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    glow.setAttribute('d', linePath);
+    glow.setAttribute('stroke', item.glowFarbe || item.color);
+    glow.setAttribute('stroke-width', '6');
+    glow.setAttribute('fill', 'none');
+    glow.setAttribute('opacity', '0.3');
+    glow.setAttribute('stroke-linecap', 'round');
+    svg.appendChild(glow);
+    
+    // Main line
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    line.setAttribute('d', linePath);
+    line.setAttribute('stroke', item.color);
+    line.setAttribute('stroke-width', '2');
+    line.setAttribute('fill', 'none');
+    line.setAttribute('stroke-linecap', 'round');
+    line.setAttribute('stroke-linejoin', 'round');
+    svg.appendChild(line);
+    
+    // End point marker
+    const lastPoint = points[points.length - 1];
+    const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    dot.setAttribute('cx', lastPoint.x);
+    dot.setAttribute('cy', lastPoint.y);
+    dot.setAttribute('r', '4');
+    dot.setAttribute('fill', item.color);
+    svg.appendChild(dot);
+  });
+  
+  sparklineContainer.appendChild(svg);
+  
+  // Legend below
+  const legend = document.createElement('div');
+  legend.className = 'amorph-sparkline-legend';
+  
+  parsedItems.forEach(item => {
+    const values = item.data.map(d => d.value);
+    const first = values[0];
+    const last = values[values.length - 1];
+    const change = last - first;
+    const changePercent = first !== 0 ? ((change / first) * 100).toFixed(1) : 0;
+    
+    const legendItem = document.createElement('div');
+    legendItem.className = 'sparkline-legend-item';
+    
+    const colorLine = document.createElement('span');
+    colorLine.className = 'sparkline-legend-line';
+    colorLine.style.background = item.color;
+    colorLine.style.boxShadow = `0 0 6px ${item.glowFarbe || item.color}`;
+    
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 'sparkline-legend-name';
+    nameSpan.textContent = item.name || item.id;
+    if (item.textFarbe) nameSpan.style.color = item.textFarbe;
+    
+    const trendSpan = document.createElement('span');
+    trendSpan.className = 'sparkline-legend-trend';
+    trendSpan.style.color = change >= 0 ? 'rgba(100, 220, 140, 0.9)' : 'rgba(240, 100, 100, 0.9)';
+    trendSpan.textContent = `${change >= 0 ? '+' : ''}${changePercent}%`;
+    
+    legendItem.appendChild(colorLine);
+    legendItem.appendChild(nameSpan);
+    legendItem.appendChild(trendSpan);
+    legend.appendChild(legendItem);
+  });
+  
+  sparklineContainer.appendChild(legend);
+  el.appendChild(sparklineContainer);
+  
   return el;
 }
 
@@ -101,133 +199,6 @@ function normalizeDaten(wert) {
   }
   
   return [];
-}
-
-function createSparklineSVG(daten, color) {
-  const width = 120;
-  const height = 32;
-  const padding = 2;
-  
-  const values = daten.map(d => d.value);
-  const min = Math.min(...values);
-  const max = Math.max(...values);
-  const range = max - min || 1;
-  
-  // Calculate points
-  const points = daten.map((d, i) => {
-    const x = padding + (i / (daten.length - 1)) * (width - padding * 2);
-    const y = height - padding - ((d.value - min) / range) * (height - padding * 2);
-    return { x, y, value: d.value };
-  });
-  
-  // SVG
-  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
-  svg.setAttribute('class', 'amorph-sparkline-svg');
-  svg.setAttribute('preserveAspectRatio', 'none');
-  
-  // Area under the line
-  const areaPath = `M ${points[0].x} ${height} L ${points.map(p => `${p.x} ${p.y}`).join(' L ')} L ${points[points.length - 1].x} ${height} Z`;
-  const area = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  area.setAttribute('d', areaPath);
-  area.setAttribute('class', 'amorph-sparkline-area');
-  area.setAttribute('fill', color);
-  area.setAttribute('fill-opacity', '0.2');
-  svg.appendChild(area);
-  
-  // Line
-  const linePath = `M ${points.map(p => `${p.x} ${p.y}`).join(' L ')}`;
-  const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  line.setAttribute('d', linePath);
-  line.setAttribute('class', 'amorph-sparkline-line');
-  line.setAttribute('stroke', color);
-  svg.appendChild(line);
-  
-  // Min/Max points
-  const minPoint = points.reduce((a, b) => a.value < b.value ? a : b);
-  const maxPoint = points.reduce((a, b) => a.value > b.value ? a : b);
-  
-  // Min point
-  const minDot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-  minDot.setAttribute('cx', minPoint.x);
-  minDot.setAttribute('cy', minPoint.y);
-  minDot.setAttribute('r', 3);
-  minDot.setAttribute('class', 'amorph-sparkline-point amorph-sparkline-min');
-  svg.appendChild(minDot);
-  
-  // Max point
-  const maxDot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-  maxDot.setAttribute('cx', maxPoint.x);
-  maxDot.setAttribute('cy', maxPoint.y);
-  maxDot.setAttribute('r', 3);
-  maxDot.setAttribute('class', 'amorph-sparkline-point amorph-sparkline-max');
-  svg.appendChild(maxDot);
-  
-  // Current (last) point
-  const lastPoint = points[points.length - 1];
-  const lastDot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-  lastDot.setAttribute('cx', lastPoint.x);
-  lastDot.setAttribute('cy', lastPoint.y);
-  lastDot.setAttribute('r', 4);
-  lastDot.setAttribute('class', 'amorph-sparkline-point amorph-sparkline-current');
-  lastDot.setAttribute('fill', color);
-  svg.appendChild(lastDot);
-  
-  return svg;
-}
-
-function createSummary(daten, color) {
-  const values = daten.map(d => d.value);
-  const first = values[0];
-  const last = values[values.length - 1];
-  const change = last - first;
-  const changePercent = first !== 0 ? ((change / first) * 100).toFixed(1) : 0;
-  
-  const summary = document.createElement('div');
-  summary.className = 'amorph-sparkline-summary';
-  
-  // Trend icon and value
-  const trend = document.createElement('span');
-  trend.className = 'amorph-sparkline-trend';
-  
-  if (change > 0) {
-    trend.classList.add('amorph-sparkline-up');
-    trend.innerHTML = `<span class="trend-icon">↑</span>${Math.abs(changePercent)}%`;
-  } else if (change < 0) {
-    trend.classList.add('amorph-sparkline-down');
-    trend.innerHTML = `<span class="trend-icon">↓</span>${Math.abs(changePercent)}%`;
-  } else {
-    trend.classList.add('amorph-sparkline-stable');
-    trend.innerHTML = `<span class="trend-icon">→</span>0%`;
-  }
-  
-  summary.appendChild(trend);
-  
-  // Current value
-  const current = document.createElement('span');
-  current.className = 'amorph-sparkline-current-value';
-  current.textContent = formatNumber(last);
-  summary.appendChild(current);
-  
-  return summary;
-}
-
-function createTooltipText(daten, name) {
-  const values = daten.map(d => d.value);
-  const min = Math.min(...values);
-  const max = Math.max(...values);
-  const avg = values.reduce((a, b) => a + b, 0) / values.length;
-  const last = values[values.length - 1];
-  
-  const prefix = name ? `${name}: ` : '';
-  return `${prefix}Aktuell: ${formatNumber(last)} | Min: ${formatNumber(min)} | Max: ${formatNumber(max)} | Ø ${formatNumber(avg)}`;
-}
-
-function formatNumber(value) {
-  if (value >= 1000000) return `${(value / 1000000).toFixed(1)}M`;
-  if (value >= 1000) return `${(value / 1000).toFixed(1)}K`;
-  if (value < 1 && value !== 0) return value.toFixed(2);
-  return value.toFixed(1);
 }
 
 export default compareSparkline;

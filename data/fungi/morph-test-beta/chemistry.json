@@ -1,0 +1,67 @@
+{
+  "_meta": {
+    "description": "Chemistry perspective - Tests: bar, pie (array), stackedbar, treemap, dosage, currency"
+  },
+  
+  "toxin_compositi
+  on": [
+    {"label": "α-amanitin", "value": 40},
+    {"label": "β-amanitin", "value": 25},
+    {"label": "γ-amanitin", "value": 15},
+    {"label": "Phalloidin", "value": 12},
+    {"label": "Phalloin", "value": 8}
+  ],
+  
+  "tissue_distribution": [
+    {"label": "Cap", "value": 35},
+    {"label": "Gills", "value": 45},
+    {"label": "Stem", "value": 15},
+    {"label": "Volva", "value": 5}
+  ],
+  
+  "toxin_by_growth_stage": [
+    {"category": "Button", "values": {"α-amanitin": 45, "Phalloidin": 35, "Other": 20}},
+    {"category": "Emerging", "values": {"α-amanitin": 42, "Phalloidin": 30, "Other": 28}},
+    {"category": "Mature", "values": {"α-amanitin": 38, "Phalloidin": 25, "Other": 37}},
+    {"category": "Decaying", "values": {"α-amanitin": 30, "Phalloidin": 18, "Other": 52}}
+  ],
+  
+  "toxin_hierarchy": [
+    {
+      "name": "Amatoxins",
+      "children": [
+        {"name": "α-amanitin", "value": 40},
+        {"name": "β-amanitin", "value": 25},
+        {"name": "γ-amanitin", "value": 15}
+      ]
+    },
+    {
+      "name": "Phallotoxins",
+      "children": [
+        {"name": "Phalloidin", "value": 12},
+        {"name": "Phalloin", "value": 5},
+        {"name": "Phallacidin", "value": 3}
+      ]
+    }
+  ],
+  
+  "lethal_dose_amanitin": {
+    "dose": 0.1,
+    "unit": "mg/kg body weight",
+    "frequency": "single exposure",
+    "form": "any ingestion"
+  },
+  
+  "antidote_cost": {
+    "amount": 45000,
+    "currency": "EUR",
+    "unit": "per treatment course"
+  },
+  
+  "toxin_stability": {
+    "cooking": 100,
+    "freezing": 100,
+    "drying": 100,
+    "pickling": 95
+  }
+}

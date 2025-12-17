@@ -1,0 +1,53 @@
+{
+  "_meta": {
+    "description": "Research perspective - Tests: timeline, citation, bar, sparkline, stats, number"
+  },
+  
+  "publications_total": 8942,
+  
+  "h_index": 125,
+  
+  "citation_count": 185420,
+  
+  "publication_trend": [320, 380, 420, 485, 540, 620, 710, 790, 880, 980],
+  
+  "research_timeline": [
+    {"date": "1821", "event": "First formal description by Fries"},
+    {"date": "1891", "event": "First chemical analysis of toxins"},
+    {"date": "1941", "event": "Structure of phalloidin determined"},
+    {"date": "1968", "event": "α-amanitin structure fully characterized"},
+    {"date": "1978", "event": "Mechanism of RNA polymerase inhibition discovered"},
+    {"date": "2006", "event": "Silibinin approved as treatment in EU"},
+    {"date": "2023", "event": "Novel antidote candidates in clinical trials"}
+  ],
+  
+  "key_publication": {
+    "author": "Letschert K. et al.",
+    "year": 2006,
+    "title": "Molecular characterization and inhibition of amanitin uptake into human hepatocytes",
+    "journal": "Toxicological Sciences",
+    "doi": "10.1093/toxsci/kfj145",
+    "url": "https://doi.org/10.1093/toxsci/kfj145"
+  },
+  
+  "research_by_field": [
+    {"label": "Toxicology", "value": 2850},
+    {"label": "Biochemistry", "value": 1920},
+    {"label": "Medicine", "value": 1680},
+    {"label": "Ecology", "value": 890},
+    {"label": "Forensics", "value": 650},
+    {"label": "Pharmacology", "value": 580},
+    {"label": "Invasion biology", "value": 372}
+  ],
+  
+  "funding_statistics": {
+    "min": 25000,
+    "max": 5000000,
+    "avg": 425000,
+    "median": 185000
+  },
+  
+  "active_research_projects": 234,
+  
+  "research_institutions": 156
+}

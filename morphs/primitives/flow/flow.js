@@ -272,6 +272,10 @@ function erstellePartikel(from, to, value, index) {
     const dx = to.x - from.x;
     const dy = to.y - from.y;
     const len = Math.sqrt(dx * dx + dy * dy);
+    
+    // Prevent division by zero if from and to are the same
+    if (len < 0.001) continue;
+    
     const perpX = -dy / len * offset;
     const perpY = dx / len * offset;
     

@@ -1,0 +1,67 @@
+{
+  "_meta": {
+    "description": "Medicine perspective - Tests: radar, gauge, slopegraph, citation, severity, boolean"
+  },
+  
+  "medicinal_use": false,
+  
+  "research_use_only": true,
+  
+  "therapeutic_profile": [
+    {"axis": "Cancer research", "value": 75},
+    {"axis": "RNA polymerase studies", "value": 95},
+    {"axis": "Toxicology", "value": 100},
+    {"axis": "Forensics", "value": 85},
+    {"axis": "Antidote development", "value": 70},
+    {"axis": "Cell biology", "value": 80}
+  ],
+  
+  "organ_damage_severity": {
+    "value": 95,
+    "min": 0,
+    "max": 100,
+    "label": "Hepatotoxicity",
+    "zones": [
+      {"min": 0, "max": 25, "label": "Mild", "color": "yellow"},
+      {"min": 26, "max": 50, "label": "Moderate", "color": "orange"},
+      {"min": 51, "max": 75, "label": "Severe", "color": "red"},
+      {"min": 76, "max": 100, "label": "Critical", "color": "darkred"}
+    ]
+  },
+  
+  "liver_function_change": {
+    "before": 100,
+    "after": 15
+  },
+  
+  "kidney_function_change": {
+    "before": 100,
+    "after": 45
+  },
+  
+  "landmark_research": {
+    "author": "Wieland T., Faulstich H.",
+    "year": 1978,
+    "title": "Amatoxins, phallotoxins, phallolysin, and antamanide: the biologically active components of poisonous Amanita mushrooms",
+    "journal": "CRC Critical Reviews in Biochemistry",
+    "doi": "10.3109/10409237809177141",
+    "url": "https://doi.org/10.3109/10409237809177141"
+  },
+  
+  "poisoning_phases": [
+    {"type": "Phase I (0-24h)", "severity": "latent", "recommendation": "Symptoms delayed - deceptive wellness"},
+    {"type": "Phase II (24-72h)", "severity": "critical", "recommendation": "Gastrointestinal crisis begins"},
+    {"type": "Phase III (72-96h)", "severity": "terminal", "recommendation": "Hepatorenal syndrome onset"}
+  ],
+  
+  "treatment_urgency": [
+    {"label": "Immediate (0-6h)", "value": 95, "severity": "critical"},
+    {"label": "Early (6-24h)", "value": 70, "severity": "high"},
+    {"label": "Delayed (24-48h)", "value": 40, "severity": "moderate"},
+    {"label": "Late (>48h)", "value": 15, "severity": "low"}
+  ],
+  
+  "antidotes_available": 3,
+  
+  "transplant_required_percent": 15
+}
