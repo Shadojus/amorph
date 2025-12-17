@@ -110,7 +110,7 @@ function normalisiereZones(zones, min, max) {
     ];
   }
   
-  const range = max - min;
+  const range = max - min || 1; // Prevent division by zero
   return zones.map(z => {
     // Wenn Zone bereits als Prozent definiert ist (0-100)
     if (z.percent) {
@@ -121,10 +121,12 @@ function normalisiereZones(zones, min, max) {
       };
     }
     // Ansonsten absolute Werte zu Prozent konvertieren
+    const startPercent = ((z.start - min) / range) * 100;
+    const endPercent = ((z.end - min) / range) * 100;
     return {
-      start: ((z.start - min) / range) * 100,
-      end: ((z.end - min) / range) * 100,
-      color: z.color || z.farbe || getZoneColor(((z.start - min) / range) * 100)
+      start: isFinite(startPercent) ? startPercent : 0,
+      end: isFinite(endPercent) ? endPercent : 100,
+      color: z.color || z.farbe || getZoneColor(isFinite(startPercent) ? startPercent : 0)
     };
   });
 }
@@ -143,9 +145,10 @@ function formatLabel(key) {
 }
 
 function createSingleGauge(data, config) {
-  const { value, min = 0, max, label, zones } = data;
-  const range = max - min;
-  const percent = Math.min(100, Math.max(0, ((value - min) / range) * 100));
+  const { value, min = 0, max = 100, label, zones } = data;
+  const range = max - min || 1; // Prevent division by zero
+  const rawPercent = ((value - min) / range) * 100;
+  const percent = isFinite(rawPercent) ? Math.min(100, Math.max(0, rawPercent)) : 0;
   
   const container = document.createElement('div');
   container.className = 'amorph-gauge-item';
@@ -256,6 +259,11 @@ function createSingleGauge(data, config) {
 }
 
 function createArc(cx, cy, r, startAngle, endAngle) {
+  // Prevent NaN in path
+  if (!isFinite(cx) || !isFinite(cy) || !isFinite(r) || !isFinite(startAngle) || !isFinite(endAngle)) {
+    return 'M 0 0'; // Fallback empty path
+  }
+  
   const start = {
     x: cx + r * Math.cos(startAngle * Math.PI / 180),
     y: cy - r * Math.sin(startAngle * Math.PI / 180)
@@ -264,6 +272,11 @@ function createArc(cx, cy, r, startAngle, endAngle) {
     x: cx + r * Math.cos(endAngle * Math.PI / 180),
     y: cy - r * Math.sin(endAngle * Math.PI / 180)
   };
+  
+  // Additional safety check
+  if (!isFinite(start.x) || !isFinite(start.y) || !isFinite(end.x) || !isFinite(end.y)) {
+    return 'M 0 0';
+  }
   
   const largeArc = Math.abs(endAngle - startAngle) > 180 ? 1 : 0;
   const sweep = startAngle > endAngle ? 1 : 0;

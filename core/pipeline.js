@@ -234,9 +234,11 @@ export function transform(daten, config, customMorphs = {}) {
             }
           } else {
             // Debug: Why was the field not rendered?
+            // Only warn if the field is not hidden and not empty
             const isEmptyArray = Array.isArray(value) && value.length === 0;
             const isEmptyObj = typeof value === 'object' && value !== null && !Array.isArray(value) && Object.keys(value).length === 0;
-            if (!isEmptyArray && !isEmptyObj && value !== null && value !== undefined && value !== '') {
+            const isHidden = hiddenFields.includes(key);
+            if (!isHidden && !isEmptyArray && !isEmptyObj && value !== null && value !== undefined && value !== '') {
               debug.warn('Field not rendered', { key, valueType: typeof value, isArray: Array.isArray(value), arrayLen: Array.isArray(value) ? value.length : 0 });
             }
           }

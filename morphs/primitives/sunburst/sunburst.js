@@ -271,6 +271,14 @@ function zeichneNode(svg, node, startAngle, endAngle, depth, cx, cy, innerRadius
 }
 
 function erstelleSegment(cx, cy, r1, r2, startAngle, endAngle, color) {
+  // Safety check for NaN
+  if (!isFinite(cx) || !isFinite(cy) || !isFinite(r1) || !isFinite(r2) || 
+      !isFinite(startAngle) || !isFinite(endAngle)) {
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', 'M 0 0');
+    return path;
+  }
+  
   // Winkel zu Koordinaten (0 = oben)
   const x1Inner = cx + Math.cos(startAngle - Math.PI / 2) * r1;
   const y1Inner = cy + Math.sin(startAngle - Math.PI / 2) * r1;
@@ -280,6 +288,13 @@ function erstelleSegment(cx, cy, r1, r2, startAngle, endAngle, color) {
   const y1Outer = cy + Math.sin(startAngle - Math.PI / 2) * r2;
   const x2Outer = cx + Math.cos(endAngle - Math.PI / 2) * r2;
   const y2Outer = cy + Math.sin(endAngle - Math.PI / 2) * r2;
+  
+  // Check computed coords
+  if (!isFinite(x1Inner) || !isFinite(y1Inner) || !isFinite(x1Outer) || !isFinite(y1Outer)) {
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', 'M 0 0');
+    return path;
+  }
   
   const largeArc = (endAngle - startAngle) > Math.PI ? 1 : 0;
   

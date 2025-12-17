@@ -232,7 +232,7 @@ function erstelleOrganischeKurven(from, to, value, color, index) {
     // Perpendicular offset für organische Kurve
     const dx = to.x - from.x;
     const dy = to.y - from.y;
-    const len = Math.sqrt(dx * dx + dy * dy);
+    const len = Math.sqrt(dx * dx + dy * dy) || 1; // Prevent division by zero
     const perpX = -dy / len * offset;
     const perpY = dx / len * offset;
     

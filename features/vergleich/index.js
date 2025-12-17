@@ -148,9 +148,21 @@ export default async function init(ctx) {
         bg: '#444',
         glow: '#666'
       };
+      
+      // Robuste Name-Extraktion
+      const extractedName = getItemName(data.pilzDaten);
+      let itemName = '';
+      if (extractedName && extractedName !== 'undefined' && extractedName.trim() !== '') {
+        itemName = extractedName;
+      } else if (data.pilzDaten?.name && data.pilzDaten.name !== 'undefined') {
+        itemName = data.pilzDaten.name;
+      } else {
+        itemName = `Pilz ${id}`;
+      }
+      
       return {
         id: String(id),
-        name: getItemName(data.pilzDaten) || id,
+        name: itemName,
         data: data.pilzDaten || {},
         // CSS-Klasse für Custom Properties
         farbKlasse: farbObj.farbKlasse,
@@ -291,10 +303,17 @@ export default async function init(ctx) {
         
         // Name extrahieren - mit robustem Fallback
         const extractedName = getItemName(item.pilzDaten);
-        // WICHTIG: Leerer String ist falsy, also explizit prüfen
-        const itemName = extractedName && extractedName.trim() !== '' 
-          ? extractedName 
-          : (item.pilzDaten?.name || item.pilzDaten?.titel || `Pilz ${normalizedId}`);
+        // WICHTIG: Prüfe auf undefined, 'undefined' string, und leere Strings
+        let itemName = '';
+        if (extractedName && extractedName !== 'undefined' && extractedName.trim() !== '') {
+          itemName = extractedName;
+        } else if (item.pilzDaten?.name && item.pilzDaten.name !== 'undefined') {
+          itemName = item.pilzDaten.name;
+        } else if (item.pilzDaten?.titel && item.pilzDaten.titel !== 'undefined') {
+          itemName = item.pilzDaten.titel;
+        } else {
+          itemName = `Pilz ${normalizedId}`;
+        }
         
         debug.compare('Item name extraction', {
           itemId: normalizedId,
@@ -430,6 +449,8 @@ export default async function init(ctx) {
           }
         }
         diagramme.appendChild(morphEl);
+      } else {
+        debug.compare(`morphEl is NULL for ${feldName}`);
       }
     }
     

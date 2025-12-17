@@ -5,8 +5,15 @@
 import { debug } from '../../../../observer/debug.js';
 
 export function compareStats(items, config = {}) {
+  debug.morphs('compareStats', { itemCount: items?.length, items });
+  
   const el = document.createElement('div');
   el.className = 'amorph-compare amorph-compare-stats';
+  
+  if (!items?.length) {
+    el.innerHTML = '<div class="compare-empty">No data</div>';
+    return el;
+  }
   
   // Collect all stats keys
   const allKeys = new Set();
@@ -28,7 +35,8 @@ export function compareStats(items, config = {}) {
   header.innerHTML = '<div class="stats-label">Stat</div>';
   items.forEach(item => {
     const itemName = item.name || item.id || '–';
-    header.innerHTML += `<div class="stats-name" style="color:${item.textColor || item.textFarbe || item.color || item.farbe || '#fff'}">${itemName}</div>`;
+    const textStyle = item.textFarbe ? ` style="color:${item.textFarbe}"` : '';
+    header.innerHTML += `<div class="stats-name"${textStyle}>${itemName}</div>`;
   });
   el.appendChild(header);
   
@@ -55,11 +63,12 @@ export function compareStats(items, config = {}) {
       
       const cell = document.createElement('div');
       cell.className = 'stats-cell' + (isMax ? ' stats-max' : '');
+      const barStyle = item.farbe ? `background:${item.farbe};` : '';
       cell.innerHTML = `
         <div class="stats-bar-bg">
-          <div class="stats-bar" style="width:${percent}%;background-color:${item.color || item.farbe || '#888'}"></div>
+          <div class="stats-bar" style="width:${percent}%;${barStyle}"></div>
         </div>
-        <span class="stats-value" style="color:${item.textColor || item.textFarbe || item.color || item.farbe || '#fff'}">${val ?? '–'}</span>
+        <span class="stats-value">${val ?? '–'}</span>
       `;
       row.appendChild(cell);
     });

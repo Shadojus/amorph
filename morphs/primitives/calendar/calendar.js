@@ -295,6 +295,12 @@ function renderCircleCalendar(data, config) {
 }
 
 function createArcPath(cx, cy, innerR, outerR, startAngle, endAngle) {
+  // Safety check for NaN
+  if (!isFinite(cx) || !isFinite(cy) || !isFinite(innerR) || !isFinite(outerR) || 
+      !isFinite(startAngle) || !isFinite(endAngle)) {
+    return 'M 0 0';
+  }
+  
   const startInner = {
     x: cx + Math.cos(startAngle) * innerR,
     y: cy + Math.sin(startAngle) * innerR
@@ -311,6 +317,12 @@ function createArcPath(cx, cy, innerR, outerR, startAngle, endAngle) {
     x: cx + Math.cos(endAngle) * outerR,
     y: cy + Math.sin(endAngle) * outerR
   };
+  
+  // Check computed coords
+  if (!isFinite(startInner.x) || !isFinite(startInner.y) || 
+      !isFinite(endInner.x) || !isFinite(endInner.y)) {
+    return 'M 0 0';
+  }
   
   return `
     M ${startInner.x} ${startInner.y}

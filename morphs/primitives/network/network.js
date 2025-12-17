@@ -243,6 +243,11 @@ export function network(wert, config = {}) {
 
 // Erstellt organische Bezier-Kurve
 function createOrganicCurve(x1, y1, x2, y2, index, total) {
+  // Safety check for NaN
+  if (!isFinite(x1) || !isFinite(y1) || !isFinite(x2) || !isFinite(y2)) {
+    return 'M 0 0';
+  }
+  
   // Kontrollpunkt seitlich versetzt für organische Kurve
   const midX = (x1 + x2) / 2;
   const midY = (y1 + y2) / 2;
@@ -254,6 +259,11 @@ function createOrganicCurve(x1, y1, x2, y2, index, total) {
   
   const ctrlX = midX + Math.cos(angle) * offset * direction;
   const ctrlY = midY + Math.sin(angle) * offset * direction;
+  
+  // Check computed values
+  if (!isFinite(ctrlX) || !isFinite(ctrlY)) {
+    return `M ${x1} ${y1} L ${x2} ${y2}`;
+  }
   
   return `M ${x1} ${y1} Q ${ctrlX} ${ctrlY} ${x2} ${y2}`;
 }

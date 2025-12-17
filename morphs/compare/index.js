@@ -49,7 +49,37 @@ export {
   compareRange,
   compareProgress,
   compareBoolean,
-  compareObject
+  compareObject,
+  // New primitives
+  compareBadge,
+  compareNumber,
+  compareGauge,
+  compareSparkline,
+  compareCurrency,
+  compareLink,
+  compareCitation,
+  compareDosage,
+  compareSeverity,
+  compareComparison,
+  compareBoxplot,
+  compareBubble,
+  compareCalendar,
+  compareDotplot,
+  compareLollipop,
+  compareFlow,
+  compareSteps,
+  compareLifecycle,
+  compareGroupedbar,
+  compareStackedbar,
+  compareSlopegraph,
+  compareHeatmap,
+  compareHierarchy,
+  compareNetwork,
+  compareMap,
+  comparePictogram,
+  compareScatterplot,
+  compareSunburst,
+  compareTreemap
 } from './primitives/index.js';
 
 // Smart Composites
@@ -101,9 +131,6 @@ import { smartCompare, diffCompare } from './composites.js';
  */
 export function compareMorph(fieldName, type, items, config = {}) {
   debug.morphs('compareMorph', { fieldName, type, items: items?.length });
-  
-  // DEBUG: Items on receipt
-  console.log(`[compareMorph] ${fieldName}:`, JSON.stringify(items?.map(i => ({ id: i.id, name: i.name, nameType: typeof i.name }))));
   
   // Delegate to compareByType - SINGLE SOURCE OF TRUTH
   return compareByType(type, items, config);
