@@ -1,0 +1,51 @@
+{
+  "compilerOptions": {
+    // Enable JavaScript checking without compiling
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    
+    // Module system
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "target": "ES2022",
+    
+    // Strict type checking
+    "strict": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    
+    // Path resolution
+    "baseUrl": ".",
+    "paths": {
+      "@core/*": ["core/*"],
+      "@morphs/*": ["morphs/*"],
+      "@features/*": ["features/*"],
+      "@util/*": ["util/*"],
+      "@observer/*": ["observer/*"]
+    },
+    
+    // JSDoc support
+    "declaration": false,
+    "declarationMap": false,
+    
+    // IDE support
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "core/**/*.js",
+    "morphs/**/*.js",
+    "features/**/*.js",
+    "util/**/*.js",
+    "observer/**/*.js",
+    "types/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "data",
+    "scripts"
+  ]
+}

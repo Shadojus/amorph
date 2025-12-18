@@ -19,6 +19,7 @@ DATEN (JSON) → detectType() → MORPH → DOM
 | Ordner | Zweck | Hauptdateien |
 |--------|-------|--------------|
 | `core/` | Config, Pipeline, Container | config.js, pipeline.js, container.js |
+| `core/detection/` | **NEU** Modulare Typ-Erkennung | index.js, number.js, string.js, array.js, object.js |
 | `config/` | YAML-Konfiguration | manifest, daten, morphs, features, observer |
 | `config/schema/` | Modulares Schema | basis.yaml, semantik.yaml, perspektiven/ |
 | `config/schema/perspektiven/blueprints/` | 15 Morph-Blueprints | *.blueprint.yaml |
@@ -31,6 +32,22 @@ DATEN (JSON) → detectType() → MORPH → DOM
 | `docs/` | Entwicklungs-Dokumentation | Kirk-Prinzipien, Daten-Erstellung |
 | `themes/` | Style-Overrides | (Platzhalter) |
 | `scripts/` | Build-Scripts | validate.js, build-index.js |
+| `tests/` | **NEU** Unit-Tests | detection.test.js, morphs.test.js, integration.test.js |
+| `types/` | **NEU** TypeScript Definitionen | index.d.ts |
+
+---
+
+## Entwicklung
+
+```bash
+npm run dev          # Dev-Server (Port 3000)
+npm test             # Unit-Tests (Vitest)
+npm run test:watch   # Tests im Watch-Mode
+npm run test:coverage # Coverage-Report
+npm run typecheck    # TypeScript-Prüfung
+npm run validate     # Daten-Validierung (Zod)
+npm run build:index  # Universe-Index generieren
+```
 
 ---
 
