@@ -20,7 +20,7 @@ let detectionConfig = null;
  * snake_case → Title Case
  * _internal → Internal (removes leading underscore)
  */
-function formatFieldLabel(key) {
+export function formatFieldLabel(key) {
   // Bekannte Einheiten-Suffixe erkennen
   const unitMap = {
     '_g': ' (g)',
@@ -142,12 +142,6 @@ export function transform(daten, config, customMorphs = {}) {
     let morph = allMorphs[morphName];
     let actualMorphName = morphName;
     
-    // Debug: track medicine fields
-    const medicineFields = ['medicineisch', 'traditionelle_medicine', 'therapeutische_kategorien', 'wirkungsprofil', 'wirkstoffe', 'safety_score', 'nebenwirkungen', 'dosierung'];
-    if (fieldName && medicineFields.includes(fieldName)) {
-      debug.warn('Medicine field found', { fieldName, type, morphName, valueType: typeof value, isArray: Array.isArray(value) });
-    }
-    
     if (!morph) {
       debug.warn(`Morph not found: ${morphName}, using text`);
       morph = allMorphs.text;
@@ -255,7 +249,7 @@ export function transform(daten, config, customMorphs = {}) {
             // Only warn if the field is not hidden and not empty
             const isEmptyArray = Array.isArray(value) && value.length === 0;
             const isEmptyObj = typeof value === 'object' && value !== null && !Array.isArray(value) && Object.keys(value).length === 0;
-            const isHidden = hiddenFields.includes(key);
+            const isHidden = hiddenFields.includes(key) || key.startsWith('_');
             if (!isHidden && !isEmptyArray && !isEmptyObj && value !== null && value !== undefined && value !== '') {
               debug.warn('Field not rendered', { key, valueType: typeof value, isArray: Array.isArray(value), arrayLen: Array.isArray(value) ? value.length : 0 });
             }

@@ -8,6 +8,7 @@
     "dev": "npx serve . -p 3000",
     "start": "npx serve . -p 3000",
     "build": "node scripts/build.js",
+    "build:pages": "node scripts/build-pages.js",
     "build:index": "node scripts/build-index.js",
     "check": "node scripts/check.js",
     "validate": "node scripts/validate.js",

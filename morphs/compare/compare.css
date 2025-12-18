@@ -439,6 +439,8 @@
 
 @media (max-width: 480px) {
   .compare-items-container {
+    /* Force single column on small screens */
+    grid-template-columns: 1fr;
     gap: 12px;
   }
   
@@ -455,6 +457,44 @@
   .compare-legende {
     gap: 10px;
     padding: 8px 10px;
+  }
+}
+
+/* Extra small screens (iPhone SE, Galaxy S8, etc.) */
+@media (max-width: 390px) {
+  .compare-items-container {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .compare-item-wrapper {
+    padding: 6px;
+  }
+  
+  .compare-item-label {
+    font-size: 10px;
+  }
+  
+  .compare-perspektive {
+    padding: 10px;
+    padding-left: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .compare-perspektive-header .perspektive-symbol {
+    font-size: 20px;
+  }
+  
+  .compare-perspektive-header .perspektive-name {
+    font-size: 14px;
+  }
+  
+  .compare-section {
+    padding: 10px;
+  }
+  
+  .compare-section-header {
+    font-size: 11px;
   }
 }
 

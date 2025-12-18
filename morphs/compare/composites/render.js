@@ -8,6 +8,7 @@
  */
 
 import { compareByType } from '../primitives/index.js';
+import { formatFieldLabel } from '../../../core/pipeline.js';
 
 /**
  * Renders a single field with appropriate morph
@@ -18,7 +19,7 @@ import { compareByType } from '../primitives/index.js';
  */
 export function renderFieldMorph(field, config = {}) {
   const fieldConfig = {
-    label: config.labels?.[field.name] || field.name,
+    label: config.labels?.[field.name] || formatFieldLabel(field.name),
     unit: config.units?.[field.name],
     // Legacy support
     einheit: config.units?.[field.name],
@@ -43,7 +44,7 @@ export function renderMetricsComposite(fieldNames, fields, items, config) {
   // All numeric fields as multi-bar chart
   const metricsData = fieldNames.map(name => ({
     name,
-    label: config.labels?.[name] || name,
+    label: config.labels?.[name] || formatFieldLabel(name),
     items: fields[name].values
   }));
   
@@ -88,7 +89,7 @@ export function renderRangesComposite(fieldNames, fields, items, config) {
     
     const label = document.createElement('div');
     label.className = 'range-label';
-    label.textContent = config.labels?.[name] || name;
+    label.textContent = config.labels?.[name] || formatFieldLabel(name);
     fieldEl.appendChild(label);
     
     // Use compareByType for consistent morph selection
@@ -121,7 +122,7 @@ export function renderProfileComposite(fieldNames, fields, items, config) {
     
     radarFields.forEach(name => {
       const morph = compareByType('radar', fields[name].values, { 
-        label: config.labels?.[name] || name 
+        label: config.labels?.[name] || formatFieldLabel(name) 
       });
       radarContainer.appendChild(morph);
     });
@@ -144,7 +145,7 @@ export function renderProfileComposite(fieldNames, fields, items, config) {
       
       const label = document.createElement('div');
       label.className = 'pie-label';
-      label.textContent = config.labels?.[name] || name;
+      label.textContent = config.labels?.[name] || formatFieldLabel(name);
       fieldEl.appendChild(label);
       
       const morph = compareByType('pie', fields[name].values, {});
@@ -169,7 +170,7 @@ export function renderTimelineComposite(fieldNames, fields, items, config) {
     const field = fields[name];
     const fieldType = field.type || field.typ;
     const morph = compareByType(fieldType, field.values, {
-      label: config.labels?.[name] || name
+      label: config.labels?.[name] || formatFieldLabel(name)
     });
     el.appendChild(morph);
   });
@@ -191,7 +192,7 @@ export function renderCategoriesComposite(fieldNames, fields, items, config) {
     
     const fieldType = field.type || field.typ;
     const morph = compareByType(fieldType, field.values, { 
-      label: config.labels?.[name] || name 
+      label: config.labels?.[name] || formatFieldLabel(name) 
     });
     
     fieldEl.appendChild(morph);
@@ -215,7 +216,7 @@ export function renderHierarchicalComposite(fieldNames, fields, items, config) {
     
     const label = document.createElement('div');
     label.className = 'hierarchical-label';
-    label.textContent = config.labels?.[name] || name;
+    label.textContent = config.labels?.[name] || formatFieldLabel(name);
     fieldEl.appendChild(label);
     
     const fieldType = field.type || field.typ;
@@ -242,7 +243,7 @@ export function renderChartsComposite(fieldNames, fields, items, config) {
     
     const label = document.createElement('div');
     label.className = 'chart-label';
-    label.textContent = config.labels?.[name] || name;
+    label.textContent = config.labels?.[name] || formatFieldLabel(name);
     fieldEl.appendChild(label);
     
     const fieldType = field.type || field.typ;
@@ -269,7 +270,7 @@ export function renderMediaComposite(fieldNames, fields, items, config) {
     
     const fieldType = field.type || field.typ;
     const morph = compareByType(fieldType, field.values, { 
-      label: config.labels?.[name] || name 
+      label: config.labels?.[name] || formatFieldLabel(name) 
     });
     
     fieldEl.appendChild(morph);

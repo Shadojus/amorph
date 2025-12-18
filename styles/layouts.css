@@ -290,6 +290,18 @@ amorph-container[data-morph="item"] amorph-container[data-field] {
   color: rgba(255, 255, 255, 0.88);
 }
 
+/* GENERAL FIELD LABELS: All fields show data-label via ::before */
+/* Specific morphs can override with display: none or different styling */
+amorph-container[data-morph="item"] amorph-container[data-field]::before {
+  content: attr(data-label);
+  font-size: var(--font-size-xs, 11px);
+  font-weight: 500;
+  color: rgba(150, 180, 220, 0.55);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-right: 8px;
+}
+
 /* Letztes Feld ohne Border */
 amorph-container[data-morph="item"] amorph-container[data-field]:last-child {
   border-bottom: none;

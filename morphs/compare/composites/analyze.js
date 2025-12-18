@@ -19,6 +19,7 @@ import { TYPE_TO_CATEGORY } from './types.js';
  * - Type is detected from data structure (detectType)
  * - Category is derived from type
  * - No hardcoded field names
+ * - Fields starting with _ are filtered out (internal fields)
  */
 export function analyzeItems(items) {
   if (!items?.length) return { fields: {}, categories: {} };
@@ -29,6 +30,11 @@ export function analyzeItems(items) {
   const categories = {};
   
   Object.entries(firstData).forEach(([fieldName, value]) => {
+    // Skip internal fields (starting with underscore)
+    if (fieldName.startsWith('_')) {
+      return;
+    }
+    
     const type = detectType(value);
     const category = TYPE_TO_CATEGORY[type] || 'textual';
     

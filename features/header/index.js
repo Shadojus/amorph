@@ -44,6 +44,18 @@ export default function init(ctx) {
         document.dispatchEvent(new CustomEvent('amorph:ansicht-wechsel', {
           detail: { ansicht: ansichtId }
         }));
+        
+        // Wenn zu Vergleich gewechselt wird: Perspektiven-State synchronisieren
+        // Das Vergleich-Feature kennt sonst den aktuellen Perspektiven-State nicht
+        if (ansichtId === 'vergleich' && aktivePerspektiven.size > 0) {
+          setTimeout(() => {
+            const eventData = { aktiv: Array.from(aktivePerspektiven) };
+            debug.header('Syncing perspectives to compare view', eventData);
+            document.dispatchEvent(new CustomEvent('perspektiven:geaendert', { 
+              detail: eventData
+            }));
+          }, 100); // Nach dem View-Switch Event
+        }
       }
     }
   };

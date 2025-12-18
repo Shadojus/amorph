@@ -17,6 +17,7 @@ import { getSession, getUrlState, setUrlState } from './util/session.js';
 import { setSchema, setMorphsConfig } from './util/semantic.js';
 import { debug } from './observer/debug.js';
 import { setFarbenConfig, setErkennungConfig as setCompareErkennungConfig } from './morphs/compare/base.js';
+import { getState as getAnsichtState } from './features/ansichten/index.js';
 import './core/container.js'; // Web Component registrieren
 
 /**
@@ -158,6 +159,13 @@ export async function amorph(options = {}) {
     const current = getUrlState();
     setUrlState({ ...current, perspektiven });
     
+    // NICHT re-rendern wenn im Vergleich-View (dort werden Daten anders gehandhabt)
+    const aktiveAnsicht = getAnsichtState().aktiveAnsicht;
+    if (aktiveAnsicht === 'vergleich') {
+      debug.amorph('Skipping grid re-render in compare view');
+      return;
+    }
+    
     // Wenn Perspektiven aktiv sind, brauchen wir deren Daten
     if (perspektiven.length > 0 && currentData.length > 0) {
       debug.amorph('Perspectives active - loading only needed perspectives...', { 
@@ -219,24 +227,16 @@ export async function amorph(options = {}) {
   debug.render('Done!');
   
   // Navigation zu Einzelansicht (von Header-Auswahl-Badges)
+  // Direkte Navigation zur URL statt Inline-Einzelansicht
   document.addEventListener('amorph:navigate-pilz', async (e) => {
     const { slug, id } = e.detail || {};
     if (!slug && !id) return;
     
     debug.amorph('Navigate to item', { slug, id });
     
-    // URL ändern
-    const newUrl = `/${slug || id}`;
-    window.history.pushState({ route: 'einzelansicht', params: { slug: slug || id } }, '', newUrl);
-    
-    // Event für Einzelansicht-Feature dispatchen
-    window.dispatchEvent(new CustomEvent('amorph:route-change', {
-      detail: { 
-        route: 'einzelansicht', 
-        params: { slug: slug || id },
-        query: {}
-      }
-    }));
+    // Direkt zur URL navigieren (echte Navigation, kein SPA-Routing)
+    const targetUrl = `/${slug || id}`;
+    window.location.href = targetUrl;
   });
   
   // Re-Render Handler (für Suche etc.)

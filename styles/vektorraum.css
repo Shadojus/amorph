@@ -694,3 +694,45 @@
     padding: var(--space-sm) var(--space-md);
   }
 }
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .amorph-sammel-content {
+    padding: var(--space-md);
+    gap: var(--space-lg);
+  }
+  
+  .amorph-sammel-diagramme {
+    gap: var(--space-lg);
+  }
+  
+  .amorph-sammel-diagramm {
+    padding: var(--space-md);
+  }
+}
+
+@media (max-width: 390px) {
+  .amorph-sammel-content {
+    padding: var(--space-sm);
+    gap: var(--space-md);
+  }
+  
+  .amorph-sammel-toolbar {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 0.85rem;
+  }
+  
+  .amorph-sammel-diagramme {
+    gap: var(--space-md);
+  }
+  
+  .amorph-sammel-diagramm {
+    padding: var(--space-sm);
+    border-radius: 8px;
+  }
+  
+  .sammel-titel {
+    font-size: 12px;
+    margin-bottom: var(--space-md);
+  }
+}
