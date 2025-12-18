@@ -218,7 +218,7 @@ export interface DataSource {
   getMatchedTerms?: () => Set<string>;
   loadMore?: (offset: number, limit: number) => Promise<{ items: DataItem[]; hasMore: boolean }>;
   getTotalCount?: () => number;
-  ensureFullData?: () => Promise<DataItem[]>;
+  ensureFullData?: (activePerspectives?: string[]) => Promise<DataItem[]>;
 }
 
 // ============================================================================

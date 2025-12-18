@@ -90,17 +90,20 @@ export async function amorph(options = {}) {
   let currentQuery = '';
   
   // Features laden (mit Zugriff auf search-Funktion)
+  // PERFORMANCE: Suche lädt nur Index-Daten (name, tags, description)
+  // Perspektiven werden erst bei Einzelansicht/Compare geladen (on-demand)
   const features = await loadFeatures(container, config, dataSource, {
     onSearch: async (query) => {
       currentQuery = query;
-      debug.search('Search executed', { query });
+      debug.search('Search executed (index only)', { query });
       
       // Alte States entfernen
       container.querySelectorAll('.amorph-empty-state, .amorph-error-state, .amorph-no-results').forEach(el => el.remove());
       
       try {
+        // OPTIMIERT: query() lädt KEINE Perspektiven mehr, nur Index-Daten
         currentData = await dataSource.query({ search: query });
-        debug.search('Results', { count: currentData.length });
+        debug.search('Results (index data)', { count: currentData.length });
         
         // Keine Ergebnisse? Zeige No-Results State
         if (query && query.trim() && currentData.length === 0) {
@@ -149,32 +152,39 @@ export async function amorph(options = {}) {
     setUrlState({ ...current, suche: query });
   });
   
-  // Bei Perspektiven-Wechsel: Vollständige Daten laden und neu rendern
+  // Bei Perspektiven-Wechsel: Nur benötigte Perspektiven laden (optimiert für Skalierung)
   document.addEventListener('perspektiven:geaendert', async (e) => {
     const perspektiven = e.detail?.aktiv || [];
     const current = getUrlState();
     setUrlState({ ...current, perspektiven });
     
-    // Wenn Perspektiven aktiv sind, brauchen wir vollständige Daten
+    // Wenn Perspektiven aktiv sind, brauchen wir deren Daten
     if (perspektiven.length > 0 && currentData.length > 0) {
-      debug.amorph('Perspectives active - ensuring full data...', { count: currentData.length });
+      debug.amorph('Perspectives active - loading only needed perspectives...', { 
+        count: currentData.length,
+        perspectives: perspektiven 
+      });
       
-      // Prüfen ob Daten bereits vollständig sind (haben _baseUrl oder _perspectivesLoaded)
-      const needsFullData = !currentData[0]?._baseUrl && !currentData[0]?._perspectivesLoaded;
+      // Prüfen ob bereits alle aktiven Perspektiven geladen sind
+      const loadedPerspectives = currentData[0]?._loadedPerspectives || new Set();
+      const needsMoreData = perspektiven.some(p => !loadedPerspectives.has(p));
       
-      if (needsFullData && dataSource.ensureFullData) {
+      if (needsMoreData && dataSource.ensureFullData) {
         try {
-          // Vollständige Daten laden
-          currentData = await dataSource.ensureFullData();
+          // NUR die aktiven Perspektiven laden (optimiert!)
+          currentData = await dataSource.ensureFullData(perspektiven);
           
-          // Auswahl-Daten mit vollständigen Perspektiven-Daten aktualisieren
+          // Auswahl-Daten mit Perspektiven-Daten aktualisieren
           const { updateAuswahlDaten } = await import('./features/ansichten/index.js');
           updateAuswahlDaten(currentData);
           
           // Neu rendern
           await render(container, currentData, config);
           
-          debug.amorph('Re-rendered with full data', { count: currentData.length });
+          debug.amorph('Re-rendered with perspective data', { 
+            count: currentData.length,
+            loadedPerspectives: perspektiven 
+          });
           
           // Highlighting neu anwenden falls Query aktiv
           if (currentQuery && currentQuery.trim()) {
@@ -187,7 +197,7 @@ export async function amorph(options = {}) {
             detail: { perspektiven, count: currentData.length }
           }));
         } catch (e) {
-          debug.error('Failed to load full data for perspectives', e);
+          debug.error('Failed to load perspective data', e);
         }
       }
     }

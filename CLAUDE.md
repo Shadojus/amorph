@@ -14,6 +14,58 @@ DATEN (JSON) → detectType() → MORPH → DOM
 
 ---
 
+## Performance-Architektur (WICHTIG!)
+
+**Optimierte Suche ohne Full-Load - skaliert bis 1000+ Einträge:**
+
+```
+1. App-Start         → Nur universe-index.json laden (~10KB für 100 Spezies)
+2. Suche             → Nur Index durchsuchen (KEINE Perspektiven!)
+3. Grid-Ansicht      → Index-Daten anzeigen (name, description, tags)
+4. Perspektive aktiv → NUR aktive Perspektiven laden (nicht alle 15!)
+5. Detail-Klick      → Alle Perspektiven für EINE Spezies laden
+6. Compare-Mode      → Nur aktive Perspektiven für ausgewählte Items
+```
+
+### Request-Optimierung
+
+| Szenario | Vorher (naiv) | Nachher (optimiert) |
+|----------|---------------|---------------------|
+| 100 Items, 2 Perspektiven aktiv | 700 Requests | 200 Requests |
+| 500 Items, 3 Perspektiven aktiv | 3500 Requests | 1500 Requests |
+| Suche ohne Perspektiven | 700 Requests | 0 Requests |
+
+### Selektives Perspektiven-Laden
+
+```javascript
+// Nur aktive Perspektiven laden (NICHT alle 15!)
+await dataSource.ensureFullData(['safety', 'cultivation']);
+
+// Cache nutzt bereits geladene Perspektiven
+await dataSource.ensureFullData(['safety', 'medicine']); 
+// → Lädt nur 'medicine', 'safety' ist gecached
+```
+
+### DataSource-API
+
+```javascript
+// Suche - nur im Index, keine Perspektiven
+const results = await dataSource.query({ search: 'pilz' });
+
+// Selektiv Perspektiven nachladen (Grid + Compare)
+await dataSource.ensureFullData(['safety', 'cultivation']);
+
+// Einzelansicht - alle Perspektiven einer Spezies
+const full = await dataSource.getBySlug('steinpilz');
+
+// Pagination
+const { items, hasMore } = await dataSource.loadMore(offset, limit);
+```
+
+**Index-Felder für Suche:** `name`, `slug`, `scientific_name`, `description`, `tags`, `searchText`, `perspectives`
+
+---
+
 ## Architektur
 
 | Ordner | Zweck | Hauptdateien |
@@ -197,11 +249,47 @@ npm run build:index      # Universe-Index neu generieren
 
 ### Datenquellen (daten.yaml)
 
-| Typ | Beschreibung | Empfehlung |
-|-----|--------------|------------|
-| `json-universe-optimized` | Lädt Index, Perspektiven on-demand | **Produktion** |
-| `json-universe` | Lädt alles bei Suche | Entwicklung |
-| `json-perspektiven` | Einzelne Sammlung | Legacy |
+| Typ | Beschreibung | Skalierung | Empfehlung |
+|-----|--------------|------------|------------|
+| `json-universe-optimized` | Index + selektives Perspektiven-Laden | ✅ 1000+ Items | **Produktion** |
+| `json-universe` | Index + selektives Laden (mit Discovery) | ✅ 1000+ Items | Entwicklung |
+| `json-perspektiven` | Einzelne Sammlung, selektiv | ✅ 500+ Items | Legacy |
+| `json` | Eine JSON-Datei, alles im RAM | ❌ <100 Items | Test |
+
+### Lazy-Loading Flow
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                        App-Start                                     │
+│  universe-index.json (~10KB) ────────────────────────────────────▶  │
+│  ✓ Alle Spezies-Namen, Slugs, Tags                                  │
+│  ✗ Keine Perspektiven-Daten                                         │
+└─────────────────────────────────────────────────────────────────────┘
+                                  │
+                                  ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                     Suche "Steinpilz"                                │
+│  Durchsucht NUR Index-Felder                                        │
+│  → Keine zusätzlichen HTTP-Requests                                 │
+│  → Ergebnis: 3 Treffer (Index-Daten)                               │
+└─────────────────────────────────────────────────────────────────────┘
+                                  │
+                                  ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│              Perspektive "safety" aktiviert                          │
+│  ensureFullData(['safety']) →                                       │
+│  ✓ Lädt safety.json für 3 Treffer (3 Requests)                     │
+│  ✗ NICHT: cultivation.json, medicine.json etc.                      │
+└─────────────────────────────────────────────────────────────────────┘
+                                  │
+                                  ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│           Perspektive "cultivation" hinzugefügt                      │
+│  ensureFullData(['safety', 'cultivation']) →                        │
+│  ✓ safety bereits gecached (0 Requests)                            │
+│  ✓ Lädt nur cultivation.json (3 Requests)                          │
+└─────────────────────────────────────────────────────────────────────┘
+```
 
 ### Validierung mit Zod
 

@@ -197,17 +197,73 @@ elevation_range:  # morph: range
 
 ---
 
-## Lazy Loading
+## Lazy Loading (Skaliert bis 1000+ Einträge)
 
 Das Frontend lädt Daten on-demand:
 
-1. **Start**: Nur `universe-index.json` laden
-2. **Suche**: Alle passenden Spezies laden
-3. **Perspektive aktiviert**: Perspektiven-JSON nachladen
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│  1. App-Start                                                        │
+│     └── universe-index.json (~10KB für 100 Spezies)                 │
+│         ✓ name, slug, description, tags, perspectives[]             │
+│         ✗ Keine Perspektiven-Daten                                  │
+└─────────────────────────────────────────────────────────────────────┘
+                                  │
+                                  ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│  2. Suche "Steinpilz"                                                │
+│     └── Durchsucht NUR Index (0 zusätzliche Requests)               │
+│         → Ergebnis: 3 Treffer                                       │
+└─────────────────────────────────────────────────────────────────────┘
+                                  │
+                                  ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│  3. Perspektive "safety" aktiviert                                   │
+│     └── ensureFullData(['safety'])                                  │
+│         ✓ Lädt safety.json für 3 Treffer (3 Requests)              │
+│         ✗ NICHT: ecology.json, cultivation.json etc.                │
+└─────────────────────────────────────────────────────────────────────┘
+                                  │
+                                  ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│  4. Weitere Perspektive "cultivation" hinzugefügt                    │
+│     └── ensureFullData(['safety', 'cultivation'])                   │
+│         ✓ safety bereits gecached (0 Requests)                     │
+│         ✓ Lädt nur cultivation.json (3 neue Requests)              │
+└─────────────────────────────────────────────────────────────────────┘
+                                  │
+                                  ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│  5. Einzelansicht für "Steinpilz"                                    │
+│     └── getBySlug('steinpilz')                                      │
+│         ✓ Lädt ALLE Perspektiven für EINE Spezies                  │
+│         ✓ Cache wird genutzt für bereits geladene                  │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### Request-Vergleich
+
+| Szenario | Naiver Ansatz | Optimiert |
+|----------|---------------|-----------|
+| 100 Items, Suche ohne Perspektive | 700 Requests | 0 Requests |
+| 100 Items, 2 Perspektiven aktiv | 700 Requests | 200 Requests |
+| 500 Items, 3 Perspektiven aktiv | 3500 Requests | 1500 Requests |
+| Perspektive hinzufügen (gecached) | Alles neu | Nur neue Perspektive |
+
+### API
 
 ```javascript
-// Ablauf bei Perspektiven-Aktivierung
-await dataSource.ensureFullData()  // Lädt alle Perspektiven
+// Suche - nur Index, keine Perspektiven
+const results = await dataSource.query({ search: 'pilz' });
+
+// Selektiv Perspektiven nachladen (für Grid + Compare)
+await dataSource.ensureFullData(['safety', 'cultivation']);
+
+// Einzelansicht - alle Perspektiven einer Spezies
+const full = await dataSource.getBySlug('steinpilz');
+
+// Pagination für Infinite Scroll
+const { items, hasMore } = await dataSource.loadMore(offset, limit);
 ```
 
 ---

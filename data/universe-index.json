@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated": "2025-12-18T11:40:15.589Z",
+  "generated": "2025-12-18T15:00:02.625Z",
   "total": 3,
   "kingdoms": {
     "fungi": {
@@ -43,7 +43,40 @@
         "medicine",
         "safety",
         "temporal"
-      ]
+      ],
+      "tags": [
+        "keine dokumentierte indigene nutzung von p. cyanescens",
+        "verwandte psilocybe-arten: spirituelle zeremonien (mesoamerika)",
+        "heilrituale (mazateken)",
+        "divination und orakel",
+        "neo-schamanische zeremonien",
+        "spirituelle retreats (legal in einigen jurisdiktionen)",
+        "bewusstseins-exploration",
+        "meditation und kontemplative praktiken",
+        "keine traditionelle nahrungsnutzung dokumentiert",
+        "keine historische traditionelle medizin (art erst 1946 beschrieben)",
+        "moderne verwendung: psychedelisch-assistierte therapie",
+        "microdosing fuer kognitive und emotionale benefits",
+        "moderne spirituelle retreats",
+        "therapeutische sitzungen",
+        "keine antike verwendung dokumentiert - art erst 1946 beschrieben. verwandte psilocybe-arten wurden in mesoamerika seit mindestens 3000 jahren verwendet (pilzsteine, codices).",
+        "keine mittelalterliche verwendung bekannt",
+        "keine verwendung vor der wissenschaftlichen beschreibung 1946",
+        "psilocybin therapy",
+        "magic mushrooms",
+        "microdosing",
+        "psychedelic renaissance",
+        "mental health treatment",
+        "wood chip mulch",
+        "bark mulch, decaying wood debris",
+        "cool, wet autumn/winter",
+        "urban development",
+        "change in landscaping practices",
+        "removal of mulch substrates",
+        "urban, periurban, waldraender",
+        "holzhaecksel, rindenmulch, verrottende holzreste"
+      ],
+      "searchText": "psilocybin (o-phosphoryl-4-hydroxy-n,n-dimethyltryptamin) psilocin (4-hydroxy-n,n-dimethyltryptamin) baeocystin (4-phosphoryloxy-n-methyltryptamin) norbaeocystin (4-phosphoryloxy-tryptamin) aeruginascin (n,n,n-trimethyl-4-phosphoryloxytryptamin) hplc-uv (254 nm, 280 nm) hplc-ms/ms (gold-standard) lc-esi-ms tlc (dünnschichtchromatographie) mit ehrlich-reagenz gc-ms nach derivatisierung nmr-spektroskopie immunoassays (elisa) depression (therapieresistent) angststörungen ptsd suchterkrankungen clus"
     },
     {
       "id": "plantae-001",
@@ -63,7 +96,40 @@
         "identification",
         "medicine",
         "safety"
-      ]
+      ],
+      "tags": [
+        "orakeltraenke in der antike",
+        "rauchopfer in keltischen ritualen",
+        "bestandteil von hexensalben",
+        "keine - pflanze ist toedlich giftig",
+        "narkotikum bei operationen (antike)",
+        "schmerzmittel",
+        "augenmittel zur pupillenerweiterung",
+        "asthma-zigaretten (19. jahrhundert)",
+        "parkinson-behandlung (historisch)",
+        "bestandteil von 'hexensalben' und 'flugsalben'",
+        "rauschmittel bei initiationsriten",
+        "orakeltraenke",
+        "liebestraenke",
+        "bereits in der antike als narkotikum und gift bekannt. dioskurides beschrieb die pflanze ausfuehrlich. verwendet fuer narkose bei operationen, aber auch als mordgift.",
+        "zentraler bestandteil der 'hexensalben' und 'flugsalben'. in der volksmedizin als schmerzmittel. beruechtigtes mordgift. verbindung mit hexerei fuehrte zu zahlreichen hinrichtungen.",
+        "wissenschaftliche erforschung der wirkstoffe. kosmetische verwendung durch frauen der oberschicht (pupillenerweiterung galt als attraktiv). beginn der pharmazeutischen nutzung.",
+        "forest_clearing",
+        "forest_edge",
+        "warm_summers",
+        "laubmischwaelder",
+        "waldlichtungen und schlagfluren",
+        "waldraender und gebusch",
+        "kalkreiche hangwaelder",
+        "ruderalstandorte",
+        "alte gaerten und friedhoefe",
+        "burgruinen",
+        "wegboeschungen",
+        "buchenwaelder auf kalk",
+        "eichen-hainbuchenwaelder",
+        "schlucht- und hangmischwaelder"
+      ],
+      "searchText": "hyoscyamin (l-atropin) atropin (dl-hyoscyamin) scopolamin (l-hyoscin) apoatropin belladonnin rutin quercetin kaempferol chlorogensaeure kaffeesaeure scopoletin aesculetin beta-sitosterol stigmasterol campesterol linalool caryophyllen oleanolsaeure hplc-uv (usp/ph. eur. methoden) gc-ms fuer alkaloidprofile immunoassays (elisa) duennschichtchromatographie (dc) karl-fischer-titration (wassergehalt) europaeisches arzneibuch (ph. eur.) - belladonnae folium usp-nf - belladonna leaf dab (deutsches arzn"
     },
     {
       "id": "animalia-001",
@@ -86,7 +152,40 @@
         "safety",
         "statistics",
         "temporal"
-      ]
+      ],
+      "tags": [
+        "offene alpine matten oberhalb der baumgrenze",
+        "tiefgruendiger boden fuer baue",
+        "ausreichend nahrungspflanzen",
+        "suedexponierte haenge",
+        "schneebedeckung im winter",
+        "alpine graslaender zwischen 1500-2500m hoehe",
+        "nahrungsquelle (fleisch)",
+        "murmeltierroel (fett als heilmittel)",
+        "fell fuer kleidung",
+        "zaehne als schmuck",
+        "murmeltierbraten",
+        "murmeltierragout",
+        "geselchtes murmeltierfleisch",
+        "murmeltierroel gegen rheuma",
+        "murmeltierroel gegen gelenkschmerzen",
+        "murmeltierroel als einreibung gegen kaelte",
+        "murmeltierroel gegen hauterkrankungen",
+        "bereits in der steinzeit wurden murmeltiere gejagt. knochenfunde belegen ihre bedeutung als nahrungsquelle fuer fruehere alpenbewohner.",
+        "im mittelalter war das murmeltierroel ein geschaetztes heilmittel. die jagd war ein wichtiger teil der alpinen wirtschaft.",
+        "alpine matten und gebirgsweiden",
+        "felsige haenge",
+        "gebirgstaeler",
+        "schutthalden",
+        "suedexposition fuer waerme",
+        "krautreiche vegetation als nahrung",
+        "felsen oder steine als aussichtspunkte",
+        "schneebedeckung im winter fuer isolation",
+        "herbivor",
+        "diurnal",
+        "april bis mai"
+      ],
+      "searchText": "bern convention appendix iii eu habitats directive annex v nationale jagdgesetze naturschutzgesetze der alpenlaender oesterreich: jagdbare art mit schonzeiten schweiz: geschuetzt, lokale jagd erlaubt deutschland: streng geschuetzt (bnatschg) italien: jagdbar mit regulierung frankreich: jagdbar mit saisons bern convention (1979) eu habitats directive (1992) alpine convention (1991) offene alpine matten oberhalb der baumgrenze tiefgruendiger boden fuer baue ausreichend nahrungspflanzen suedexponie"
     }
   ]
 }

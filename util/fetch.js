@@ -443,79 +443,97 @@ class JsonPerspektivenSource {
   }
   
   /**
-   * Lädt alle Perspektiven für eine Spezies und merged sie ins Hauptobjekt
+   * Lädt Perspektiven für eine Spezies - OPTIMIERT für selektives Laden
+   * @param {Object} spezies - Spezies-Objekt mit _ordner und perspektiven
+   * @param {Array<string>} onlyPerspectives - Optional: Nur diese Perspektiven laden
    */
-  async loadAllPerspektiven(spezies) {
-    // Support both German 'perspektiven' and English 'perspectives'
-    const perspektivenListe = spezies.perspektiven || spezies.perspectives;
+  async loadPerspectives(spezies, onlyPerspectives = null) {
+    const allPerspectives = spezies.perspektiven || spezies.perspectives || [];
+    const perspectivesToLoad = onlyPerspectives || allPerspectives;
     
-    debug.data('loadAllPerspektiven check', { 
-      name: spezies.name,
-      hasOrdner: !!spezies._ordner, 
-      ordner: spezies._ordner,
-      hasPerspektiven: !!perspektivenListe,
-      perspektivenCount: perspektivenListe?.length
-    });
-    
-    if (!spezies._ordner || !perspektivenListe) {
-      debug.warn('Skipping perspectives load', { reason: !spezies._ordner ? 'no _ordner' : 'no perspectives list' });
+    if (!spezies._ordner || perspectivesToLoad.length === 0) {
       return spezies;
     }
     
     const cacheKey = spezies.slug || spezies.id;
-    if (this.loadedPerspektiven.has(cacheKey)) {
-      return this.loadedPerspektiven.get(cacheKey);
+    
+    // Bereits geladene Perspektiven aus Cache holen
+    let merged = this.loadedPerspektiven.get(cacheKey) || { ...spezies };
+    merged._loadedPerspectives = merged._loadedPerspectives || new Set();
+    
+    // Nur Perspektiven laden die noch fehlen
+    const missingPerspectives = perspectivesToLoad.filter(
+      p => allPerspectives.includes(p) && !merged._loadedPerspectives.has(p)
+    );
+    
+    if (missingPerspectives.length === 0) {
+      debug.data('All requested perspectives cached', { slug: spezies.slug });
+      return merged;
     }
     
-    debug.data('Loading perspectives for', { name: spezies.name, count: perspektivenListe.length });
+    debug.data('Loading perspectives', { 
+      name: spezies.name, 
+      loading: missingPerspectives,
+      cached: [...merged._loadedPerspectives]
+    });
     
-    // Alle Perspektiven-Dateien parallel laden
-    const loadPromises = perspektivenListe.map(async (perspektive) => {
+    // Nur fehlende Perspektiven parallel laden
+    const loadPromises = missingPerspectives.map(async (perspektive) => {
       const url = `${spezies._baseUrl}${perspektive}.json`;
       try {
         const response = await fetch(url);
-        if (!response.ok) {
-          debug.warn(`Perspective not found: ${url}`);
-          return null;
-        }
+        if (!response.ok) return null;
         return { perspektive, data: await response.json() };
       } catch (e) {
-        debug.warn(`Error loading ${url}:`, e);
         return null;
       }
     });
     
-    const perspektivenResults = await Promise.all(loadPromises);
+    const results = await Promise.all(loadPromises);
     
-    // Merge all perspective data into main object
-    const merged = { ...spezies };
-    for (const result of perspektivenResults) {
-      if (result && result.data) {
-        // Remove perspective marker, merge rest
+    for (const result of results) {
+      if (result?.data) {
         const { perspektive: marker, ...daten } = result.data;
         Object.assign(merged, daten);
-        merged[`_perspektive_${result.perspektive}`] = true; // Marker that this perspective is loaded
+        merged._loadedPerspectives.add(result.perspektive);
       }
     }
     
-    // Cache
     this.loadedPerspektiven.set(cacheKey, merged);
+    return merged;
+  }
+  
+  // Legacy-Alias für Abwärtskompatibilität
+  async loadAllPerspektiven(spezies) {
+    return this.loadPerspectives(spezies, null);
+  }
+  
+  /**
+   * Lädt Perspektiven für alle aktuell geladenen Items
+   * @param {Array<string>} activePerspectives - Nur diese Perspektiven laden (optional)
+   */
+  async ensureFullData(activePerspectives = null) {
+    if (this.lastFilteredData.length === 0) return [];
     
-    debug.data('Perspectives merged', { 
-      name: spezies.name, 
-      keys: Object.keys(merged).length 
+    debug.data('Loading perspectives for items...', { 
+      count: this.lastFilteredData.length,
+      perspectives: activePerspectives || 'all'
     });
     
-    return merged;
+    const fullItems = await Promise.all(
+      this.lastFilteredData.map(item => this.loadPerspectives(item, activePerspectives))
+    );
+    
+    this.lastFilteredData = fullItems;
+    return fullItems;
   }
   
   async query({ search, limit = 50, offset = 0 } = {}) {
     let items = await this.ensureData();
     this.lastMatchedTerms = new Set();
     
-    // Load all perspectives for all items (for complete search)
-    const fullItems = await Promise.all(items.map(item => this.loadAllPerspektiven(item)));
-    items = fullItems;
+    // OPTIMIERT: Perspektiven werden NICHT bei Query geladen!
+    // Nur bei ensureFullData() oder getBySlug()
     
     if (search && String(search).trim()) {
       const query = String(search).toLowerCase().trim();
@@ -643,7 +661,8 @@ class JsonUniverseOptimizedSource {
   }
   
   /**
-   * Suche - lädt vollständige Daten für echte Suche
+   * Suche - OPTIMIERT: Sucht nur im Index, lädt KEINE Perspektiven!
+   * Perspektiven werden erst bei getBySlug() / Einzelansicht geladen.
    */
   async query({ search, limit = 50, offset = 0 } = {}) {
     const index = await this.ensureIndex();
@@ -656,19 +675,14 @@ class JsonUniverseOptimizedSource {
       return index.species.slice(offset, offset + limit);
     }
     
-    // Bei Suche: Alle Spezies mit vollständigen Daten laden
+    // OPTIMIERT: Nur im Index suchen - KEINE Perspektiven laden!
     const query = String(search).toLowerCase().trim();
-    debug.search('Universe Optimized Query - Loading full data...', { query, totalItems: index.species.length });
+    debug.search('Universe Optimized Query - Index only (fast)', { query, totalItems: index.species.length });
     
-    // Alle Spezies parallel laden
-    const fullItems = await Promise.all(
-      index.species.map(species => this.loadFullSpecies(species))
-    );
-    
-    // Mit vollständiger Suchfunktion durchsuchen
-    const scored = fullItems.map(item => {
-      const result = scoreItemWithMatches(item, query);
-      return { item, score: result.score, matches: result.matches };
+    // Suche nur in Index-Daten (name, description, scientific_name, perspectives)
+    const scored = index.species.map(species => {
+      const result = scoreItemBasic(species, query);
+      return { item: species, score: result.score, matches: result.matches };
     });
     
     const filtered = scored.filter(s => s.score > 0);
@@ -685,7 +699,7 @@ class JsonUniverseOptimizedSource {
     
     this.totalCount = this.lastFilteredData.length;
     
-    debug.search('Search complete', { 
+    debug.search('Search complete (index only)', { 
       hits: this.lastFilteredData.length,
       matchedTerms: [...this.lastMatchedTerms].slice(0, 5)
     });
@@ -715,22 +729,45 @@ class JsonUniverseOptimizedSource {
   }
   
   /**
-   * Lädt alle Perspektiven für eine Spezies
+   * Lädt Perspektiven für eine Spezies
+   * @param {Object} species - Spezies aus dem Index
+   * @param {Array<string>} onlyPerspectives - Optional: Nur diese Perspektiven laden (für Skalierung)
    */
-  async loadFullSpecies(species) {
+  async loadFullSpecies(species, onlyPerspectives = null) {
     const cacheKey = `${species.kingdom}/${species.slug}`;
+    const perspectivesToLoad = onlyPerspectives || species.perspectives || [];
+    const partialCacheKey = onlyPerspectives 
+      ? `${cacheKey}:${onlyPerspectives.sort().join(',')}`
+      : cacheKey;
     
-    if (this.perspectiveCache.has(cacheKey)) {
+    // Vollständiger Cache-Hit?
+    if (!onlyPerspectives && this.perspectiveCache.has(cacheKey)) {
       return this.perspectiveCache.get(cacheKey);
     }
     
-    debug.data('Loading full species', { slug: species.slug, perspectives: species.perspectives });
-    
-    const full = { ...species };
+    // Partieller Cache - prüfen welche Perspektiven bereits geladen
+    let full = this.perspectiveCache.get(cacheKey) || { ...species };
     full._baseUrl = `${this.dataPath}${species.kingdom}/${species.slug}/`;
+    full._loadedPerspectives = full._loadedPerspectives || new Set();
     
-    // Alle Perspektiven parallel laden
-    const loadPromises = (species.perspectives || []).map(async (perspective) => {
+    // Nur Perspektiven laden die noch fehlen
+    const missingPerspectives = perspectivesToLoad.filter(
+      p => !full._loadedPerspectives.has(p)
+    );
+    
+    if (missingPerspectives.length === 0) {
+      debug.data('All requested perspectives cached', { slug: species.slug });
+      return full;
+    }
+    
+    debug.data('Loading species perspectives', { 
+      slug: species.slug, 
+      loading: missingPerspectives,
+      cached: [...full._loadedPerspectives]
+    });
+    
+    // Nur fehlende Perspektiven parallel laden
+    const loadPromises = missingPerspectives.map(async (perspective) => {
       const url = `${full._baseUrl}${perspective}.json`;
       try {
         const response = await fetch(url);
@@ -746,9 +783,11 @@ class JsonUniverseOptimizedSource {
     for (const result of results) {
       if (result?.data) {
         Object.assign(full, result.data);
+        full._loadedPerspectives.add(result.perspective);
       }
     }
     
+    // Im Cache speichern
     this.perspectiveCache.set(cacheKey, full);
     return full;
   }
@@ -772,15 +811,43 @@ class JsonUniverseOptimizedSource {
   }
   
   /**
-   * Lädt vollständige Perspektiven-Daten für alle aktuell geladenen Items
-   * Wird aufgerufen wenn Perspektiven aktiviert werden und Daten fehlen
-   * @returns {Promise<Array>} Array mit vollständig geladenen Items
+   * Lädt Perspektiven-Daten für aktuell geladene Items
+   * OPTIMIERT: Lädt nur die aktiven Perspektiven, nicht alle!
+   * @param {Array<string>} activePerspectives - Nur diese Perspektiven laden (optional)
+   * @returns {Promise<Array>} Array mit geladenen Items
    */
-  async ensureFullData() {
+  async ensureFullData(activePerspectives = null) {
     if (this.lastFilteredData.length === 0) return [];
     
-    // Prüfe ob erstes Item bereits Perspektiven-Daten hat
+    // Prüfe ob erstes Item bereits alle nötigen Perspektiven hat
     const firstItem = this.lastFilteredData[0];
+    
+    if (activePerspectives && activePerspectives.length > 0) {
+      // Selektives Laden: Nur aktive Perspektiven
+      const loadedPerspectives = firstItem._loadedPerspectives || new Set();
+      const allLoaded = activePerspectives.every(p => loadedPerspectives.has(p));
+      
+      if (allLoaded) {
+        debug.data('Active perspectives already loaded', { perspectives: activePerspectives });
+        return this.lastFilteredData;
+      }
+      
+      debug.data('Loading active perspectives for items...', { 
+        count: this.lastFilteredData.length,
+        perspectives: activePerspectives 
+      });
+      
+      // Nur aktive Perspektiven für alle Items laden
+      const fullItems = await Promise.all(
+        this.lastFilteredData.map(item => this.loadFullSpecies(item, activePerspectives))
+      );
+      
+      this.lastFilteredData = fullItems;
+      debug.data('Active perspectives loaded', { count: fullItems.length, perspectives: activePerspectives });
+      return fullItems;
+    }
+    
+    // Fallback: Alle Perspektiven laden (für Einzelansicht etc.)
     const hasPerspectives = firstItem._baseUrl || firstItem._perspectivesLoaded;
     
     if (hasPerspectives) {
@@ -790,14 +857,11 @@ class JsonUniverseOptimizedSource {
     
     debug.data('Loading full data for all items...', { count: this.lastFilteredData.length });
     
-    // Alle Items parallel mit vollständigen Daten laden
     const fullItems = await Promise.all(
       this.lastFilteredData.map(item => this.loadFullSpecies(item))
     );
     
-    // Cache aktualisieren
     this.lastFilteredData = fullItems;
-    
     debug.data('Full data loaded', { count: fullItems.length });
     return fullItems;
   }
@@ -881,23 +945,37 @@ class JsonUniverseSource {
   }
   
   /**
-   * Lädt alle Perspektiven für eine Spezies
+   * Lädt Perspektiven für eine Spezies - OPTIMIERT für selektives Laden
+   * @param {Object} spezies - Spezies-Objekt
+   * @param {Array<string>} onlyPerspectives - Optional: Nur diese Perspektiven laden
    */
-  async loadAllPerspektiven(spezies) {
-    const perspektivenListe = spezies.perspektiven || spezies.perspectives;
+  async loadPerspectives(spezies, onlyPerspectives = null) {
+    const allPerspectives = spezies.perspektiven || spezies.perspectives || [];
+    const perspectivesToLoad = onlyPerspectives || allPerspectives;
     
-    if (!spezies._ordner || !perspektivenListe) {
+    if (!spezies._ordner || perspectivesToLoad.length === 0) {
       return spezies;
     }
     
     const cacheKey = `${spezies._sammlung}/${spezies.slug}`;
-    if (this.loadedPerspektiven.has(cacheKey)) {
-      return this.loadedPerspektiven.get(cacheKey);
+    
+    let merged = this.loadedPerspektiven.get(cacheKey) || { ...spezies };
+    merged._loadedPerspectives = merged._loadedPerspectives || new Set();
+    
+    const missingPerspectives = perspectivesToLoad.filter(
+      p => allPerspectives.includes(p) && !merged._loadedPerspectives.has(p)
+    );
+    
+    if (missingPerspectives.length === 0) {
+      return merged;
     }
     
-    debug.data('Loading perspectives for', { name: spezies.name, count: perspektivenListe.length });
+    debug.data('Loading perspectives', { 
+      name: spezies.name, 
+      loading: missingPerspectives 
+    });
     
-    const loadPromises = perspektivenListe.map(async (perspektive) => {
+    const loadPromises = missingPerspectives.map(async (perspektive) => {
       const url = `${spezies._baseUrl}${perspektive}.json`;
       try {
         const response = await fetch(url);
@@ -910,16 +988,41 @@ class JsonUniverseSource {
     
     const results = await Promise.all(loadPromises);
     
-    const merged = { ...spezies };
     for (const result of results) {
       if (result?.data) {
         const { perspektive: marker, ...daten } = result.data;
         Object.assign(merged, daten);
+        merged._loadedPerspectives.add(result.perspektive);
       }
     }
     
     this.loadedPerspektiven.set(cacheKey, merged);
     return merged;
+  }
+  
+  // Legacy-Alias
+  async loadAllPerspektiven(spezies) {
+    return this.loadPerspectives(spezies, null);
+  }
+  
+  /**
+   * Lädt Perspektiven für alle aktuell geladenen Items
+   * @param {Array<string>} activePerspectives - Nur diese Perspektiven laden (optional)
+   */
+  async ensureFullData(activePerspectives = null) {
+    if (this.lastFilteredData.length === 0) return [];
+    
+    debug.data('Loading perspectives for items...', { 
+      count: this.lastFilteredData.length,
+      perspectives: activePerspectives || 'all'
+    });
+    
+    const fullItems = await Promise.all(
+      this.lastFilteredData.map(item => this.loadPerspectives(item, activePerspectives))
+    );
+    
+    this.lastFilteredData = fullItems;
+    return fullItems;
   }
   
   async query({ search, limit = 50, offset = 0 } = {}) {
@@ -1004,6 +1107,7 @@ class JsonUniverseSource {
 /**
  * OPTIMIERT: Schnelle Basis-Suche nur in index.json Feldern
  * Keine Perspektiven laden = viel schneller!
+ * Durchsucht: name, slug, scientific_name, description, tags, searchText, perspectives
  * @returns {{ score: number, matches: string[] }}
  */
 function scoreItemBasic(item, query) {
@@ -1015,7 +1119,11 @@ function scoreItemBasic(item, query) {
   const slug = (item.slug || '').toLowerCase();
   const scientificName = (item.scientific_name || item.wissenschaftlich || '').toLowerCase();
   const description = (item.description || item.beschreibung || '').toLowerCase();
-  const kingdom = (item._sammlung || '').toLowerCase();
+  const kingdom = (item.kingdom || item._sammlung || '').toLowerCase();
+  
+  // NEU: Tags und searchText aus erweitertem Index
+  const tags = item.tags || [];
+  const searchText = (item.searchText || '').toLowerCase();
   
   // Exakter Name-Match
   if (name === query) {
@@ -1060,7 +1168,35 @@ function scoreItemBasic(item, query) {
   // Kingdom
   if (kingdom.includes(query)) {
     score += 10;
-    matches.add(item._sammlung);
+    matches.add(item.kingdom || item._sammlung);
+  }
+  
+  // NEU: Tags durchsuchen (hohe Relevanz!)
+  for (const tag of tags) {
+    const tagLower = tag.toLowerCase();
+    if (tagLower === query) {
+      score += 80;  // Exakter Tag-Match
+      matches.add(tag);
+    } else if (tagLower.startsWith(query)) {
+      score += 50;  // Tag beginnt mit Query
+      matches.add(tag);
+    } else if (tagLower.includes(query)) {
+      score += 30;  // Tag enthält Query
+      matches.add(tag);
+    }
+  }
+  
+  // NEU: searchText durchsuchen (aus Perspektiven extrahiert)
+  if (searchText.includes(query)) {
+    score += 25;
+    // Finde passende Wörter
+    const words = searchText.split(/\s+/);
+    for (const word of words) {
+      if (word.includes(query)) {
+        matches.add(word);
+        break;  // Nur erstes Match
+      }
+    }
   }
   
   // Perspektiven-Namen durchsuchen (identification, culinary, etc.)
@@ -1083,7 +1219,7 @@ function scoreItemBasic(item, query) {
   const stopwords = new Set(['was', 'ist', 'der', 'die', 'das', 'ein', 'eine', 'und', 'oder', 'für', 'mit', 'von', 'zu', 'bei', 'kann', 'man', 'wie', 'wo', 'wer', 'welche', 'welcher']);
   const queryWords = query.split(/\s+/).filter(w => w.length > 2 && !stopwords.has(w));
   
-  const allText = `${name} ${scientificName} ${description}`.toLowerCase();
+  const allText = `${name} ${scientificName} ${description} ${searchText}`.toLowerCase();
   for (const word of queryWords) {
     if (allText.includes(word)) {
       score += 5;

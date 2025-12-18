@@ -25,6 +25,55 @@ const KINGDOMS = [
   { slug: 'bacteria', name: 'Bacteria', icon: '🦠' },
 ];
 
+/**
+ * Extrahiert durchsuchbare Begriffe aus Perspektiven-Daten
+ * Sammelt Tags, Keywords, Kategorien für schnelle Index-Suche
+ */
+function extractSearchTerms(data, searchTerms, tags) {
+  // Bekannte Tag-Felder
+  const tagFields = ['tags', 'keywords', 'kategorien', 'categories', 'edibility', 
+    'habitat', 'season', 'saison', 'toxicity', 'toxizitaet', 'uses', 'verwendung',
+    'conservation_status', 'diet', 'activity_pattern'];
+  
+  // Bekannte Text-Felder für Volltextsuche
+  const textFields = ['summary', 'zusammenfassung', 'description', 'beschreibung',
+    'common_names', 'synonyms', 'family', 'familie', 'order', 'ordnung', 'class', 'klasse'];
+  
+  for (const [key, value] of Object.entries(data)) {
+    // Skip private/meta Felder
+    if (key.startsWith('_') || key === 'perspektive' || key === 'perspective') continue;
+    
+    // Array von Strings → Tags
+    if (Array.isArray(value) && value.every(v => typeof v === 'string')) {
+      if (tagFields.some(f => key.toLowerCase().includes(f))) {
+        value.forEach(v => tags.add(v.toLowerCase()));
+      }
+      value.forEach(v => searchTerms.add(v.toLowerCase()));
+    }
+    
+    // String-Wert
+    else if (typeof value === 'string' && value.length > 2 && value.length < 200) {
+      if (tagFields.some(f => key.toLowerCase().includes(f))) {
+        tags.add(value.toLowerCase());
+      }
+      if (textFields.some(f => key.toLowerCase().includes(f))) {
+        // Wörter extrahieren
+        value.split(/\s+/).forEach(word => {
+          if (word.length > 3) searchTerms.add(word.toLowerCase());
+        });
+      }
+    }
+    
+    // Objekt mit 'name' oder 'value' Feld
+    else if (value && typeof value === 'object' && !Array.isArray(value)) {
+      if (value.name) searchTerms.add(String(value.name).toLowerCase());
+      if (value.value && typeof value.value === 'string') {
+        searchTerms.add(value.value.toLowerCase());
+      }
+    }
+  }
+}
+
 function buildIndex() {
   console.log('🔨 Building Universe Index...\n');
   
@@ -79,6 +128,20 @@ function buildIndex() {
           .filter(f => f.endsWith('.json') && f !== 'index.json')
           .map(f => f.replace('.json', ''));
         
+        // OPTIMIERT: Extrahiere Suchbegriffe aus Perspektiven für Index
+        const searchTerms = new Set();
+        const tags = new Set();
+        
+        for (const perspFile of perspectiveFiles) {
+          const perspPath = path.join(speciesPath, `${perspFile}.json`);
+          try {
+            const perspData = JSON.parse(fs.readFileSync(perspPath, 'utf-8'));
+            
+            // Tags, Keywords, Kategorien sammeln
+            extractSearchTerms(perspData, searchTerms, tags);
+          } catch { /* Perspektive konnte nicht geladen werden */ }
+        }
+        
         // Spezies zum Index hinzufügen
         index.species.push({
           id: speciesData.id || `${kingdom.slug}-${speciesSlug}`,
@@ -91,12 +154,15 @@ function buildIndex() {
           kingdom_name: kingdom.name,
           kingdom_icon: kingdom.icon,
           perspectives: perspectiveFiles,
+          // NEU: Durchsuchbare Felder aus Perspektiven
+          tags: [...tags].slice(0, 30),  // Max 30 Tags
+          searchText: [...searchTerms].join(' ').slice(0, 500),  // Max 500 Zeichen
         });
         
         index.kingdoms[kingdom.slug].count++;
         index.total++;
         
-        console.log(`  ✅ ${kingdom.slug}/${speciesSlug} (${perspectiveFiles.length} Perspektiven)`);
+        console.log(`  ✅ ${kingdom.slug}/${speciesSlug} (${perspectiveFiles.length} Perspektiven, ${tags.size} Tags)`);
         
       } catch (e) {
         console.log(`  ❌ ${kingdom.slug}/${speciesSlug}: ${e.message}`);

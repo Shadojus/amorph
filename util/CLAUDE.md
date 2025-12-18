@@ -107,9 +107,33 @@ data/animalia/alpine-marmot/index.json → { name, perspektiven: ["ecology", ...
 data/animalia/alpine-marmot/ecology.json → { ... }
 ```
 
-- Lädt Spezies-Index, dann Perspektiven lazy
-- `loadAllPerspektiven(spezies)` merged alle Perspektiven ins Hauptobjekt
-- Cache via `loadedPerspektiven` Map
+- Lädt Spezies-Index, dann Perspektiven **selektiv**
+- `loadPerspectives(spezies, ['safety', 'ecology'])` - lädt nur angeforderte
+- `loadAllPerspektiven(spezies)` - Legacy-Alias, lädt alle
+- `ensureFullData(['safety'])` - lädt Perspektiven für alle Suchergebnisse
+- Cache via `loadedPerspektiven` Map mit `_loadedPerspectives` Set pro Item
+
+### JsonUniverseOptimizedSource (EMPFOHLEN)
+
+```javascript
+// Nur Index laden (~10KB)
+await dataSource.ensureIndex();
+
+// Suche - nur im Index, KEINE Perspektiven!
+const results = await dataSource.query({ search: 'pilz' });
+
+// Selektiv Perspektiven nachladen
+await dataSource.ensureFullData(['safety', 'cultivation']);
+
+// Einzelansicht - alle Perspektiven
+const full = await dataSource.getBySlug('steinpilz');
+```
+
+Optimierungen:
+- **Suche ohne Perspektiven**: Nur Index durchsuchen
+- **Selektives Laden**: Nur aktive Perspektiven, nicht alle 15
+- **Inkrementeller Cache**: Bereits geladene Perspektiven werden wiederverwendet
+- **Skaliert bis 1000+ Items**
 
 ### Scoring-Funktionen (Zeilen 600-720)
 
