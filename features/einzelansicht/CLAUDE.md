@@ -12,7 +12,7 @@ Detail-Seite für einzelne Items.
 ## Route
 
 ```
-/:slug → /steinpilz, /monarch-butterfly, /ginkgo
+/:slug → /alpine-marmot, /deadly-nightshade
 ```
 
 ## Features

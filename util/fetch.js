@@ -18,8 +18,11 @@ export function createDataSource(config) {
     case 'json-perspektiven':
       return new JsonPerspektivenSource(indexUrl, baseUrl);
     case 'json-universe':
-      // NEU: Durchsucht alle Sammlungen im data/ Ordner
+      // Durchsucht alle Sammlungen im data/ Ordner (legacy, langsam)
       return new JsonUniverseSource(dataPath || './data/');
+    case 'json-universe-optimized':
+      // OPTIMIERT: Lädt nur universe-index.json beim Start
+      return new JsonUniverseOptimizedSource(dataPath || './data/');
     default:
       debug.error(`Unknown data source type: ${typ}`);
       throw new Error(`Unknown data source type: ${typ}`);
@@ -587,6 +590,220 @@ class JsonPerspektivenSource {
 }
 
 /**
+ * JsonUniverseOptimizedSource - OPTIMIERT!
+ * 
+ * Lädt nur universe-index.json beim Start (eine Datei, klein).
+ * Perspektiven werden erst bei Bedarf geladen (Lazy Loading).
+ * 
+ * Workflow:
+ * 1. Beim Start: Nur universe-index.json laden (~10KB für 100 Spezies)
+ * 2. Bei Suche: Nur im Index suchen (name, slug, description)
+ * 3. Bei Detail-View: Perspektiven on-demand laden
+ * 
+ * KI-Freundlich: Alle JSON-Dateien bleiben lesbar im Dateisystem!
+ */
+class JsonUniverseOptimizedSource {
+  constructor(dataPath) {
+    this.dataPath = dataPath.endsWith('/') ? dataPath : dataPath + '/';
+    this.index = null;
+    this.lastMatchedTerms = new Set();
+    this.lastFilteredData = [];
+    this.totalCount = 0;
+    this.perspectiveCache = new Map();
+  }
+  
+  /**
+   * Lädt nur den Universe-Index (einmal beim Start)
+   */
+  async ensureIndex() {
+    if (this.index) return this.index;
+    
+    const indexUrl = `${this.dataPath}universe-index.json`;
+    debug.data('Loading universe index...', { url: indexUrl });
+    
+    try {
+      const response = await fetch(indexUrl);
+      if (!response.ok) {
+        throw new Error(`Index not found: ${indexUrl}`);
+      }
+      this.index = await response.json();
+      
+      debug.data('Universe index loaded', { 
+        total: this.index.total,
+        kingdoms: Object.keys(this.index.kingdoms)
+      });
+      
+      return this.index;
+    } catch (e) {
+      debug.error('Failed to load universe index', e);
+      // Fallback: Leerer Index
+      this.index = { total: 0, species: [], kingdoms: {} };
+      return this.index;
+    }
+  }
+  
+  /**
+   * Suche - lädt vollständige Daten für echte Suche
+   */
+  async query({ search, limit = 50, offset = 0 } = {}) {
+    const index = await this.ensureIndex();
+    this.lastMatchedTerms = new Set();
+    
+    // Wenn keine Suche: Nur Index-Daten zurückgeben (schnell)
+    if (!search || !String(search).trim()) {
+      this.lastFilteredData = index.species;
+      this.totalCount = index.species.length;
+      return index.species.slice(offset, offset + limit);
+    }
+    
+    // Bei Suche: Alle Spezies mit vollständigen Daten laden
+    const query = String(search).toLowerCase().trim();
+    debug.search('Universe Optimized Query - Loading full data...', { query, totalItems: index.species.length });
+    
+    // Alle Spezies parallel laden
+    const fullItems = await Promise.all(
+      index.species.map(species => this.loadFullSpecies(species))
+    );
+    
+    // Mit vollständiger Suchfunktion durchsuchen
+    const scored = fullItems.map(item => {
+      const result = scoreItemWithMatches(item, query);
+      return { item, score: result.score, matches: result.matches };
+    });
+    
+    const filtered = scored.filter(s => s.score > 0);
+    
+    for (const s of filtered) {
+      for (const match of s.matches) {
+        this.lastMatchedTerms.add(match);
+      }
+    }
+    
+    this.lastFilteredData = filtered
+      .sort((a, b) => b.score - a.score)
+      .map(s => s.item);
+    
+    this.totalCount = this.lastFilteredData.length;
+    
+    debug.search('Search complete', { 
+      hits: this.lastFilteredData.length,
+      matchedTerms: [...this.lastMatchedTerms].slice(0, 5)
+    });
+    
+    return this.lastFilteredData.slice(offset, offset + limit);
+  }
+  
+  /**
+   * Pagination für Infinite Scroll
+   */
+  async loadMore(offset, limit = 20) {
+    const items = this.lastFilteredData.slice(offset, offset + limit);
+    const hasMore = offset + limit < this.totalCount;
+    return { items, hasMore };
+  }
+  
+  /**
+   * Einzelne Spezies mit allen Perspektiven laden
+   */
+  async getBySlug(slug) {
+    const index = await this.ensureIndex();
+    const species = index.species.find(s => s.slug === slug);
+    
+    if (!species) return null;
+    
+    return this.loadFullSpecies(species);
+  }
+  
+  /**
+   * Lädt alle Perspektiven für eine Spezies
+   */
+  async loadFullSpecies(species) {
+    const cacheKey = `${species.kingdom}/${species.slug}`;
+    
+    if (this.perspectiveCache.has(cacheKey)) {
+      return this.perspectiveCache.get(cacheKey);
+    }
+    
+    debug.data('Loading full species', { slug: species.slug, perspectives: species.perspectives });
+    
+    const full = { ...species };
+    full._baseUrl = `${this.dataPath}${species.kingdom}/${species.slug}/`;
+    
+    // Alle Perspektiven parallel laden
+    const loadPromises = (species.perspectives || []).map(async (perspective) => {
+      const url = `${full._baseUrl}${perspective}.json`;
+      try {
+        const response = await fetch(url);
+        if (!response.ok) return null;
+        return { perspective, data: await response.json() };
+      } catch (e) {
+        return null;
+      }
+    });
+    
+    const results = await Promise.all(loadPromises);
+    
+    for (const result of results) {
+      if (result?.data) {
+        Object.assign(full, result.data);
+      }
+    }
+    
+    this.perspectiveCache.set(cacheKey, full);
+    return full;
+  }
+  
+  async getById(id) {
+    const index = await this.ensureIndex();
+    const species = index.species.find(s => s.id === id);
+    return species ? this.loadFullSpecies(species) : null;
+  }
+  
+  getTotalCount() {
+    return this.totalCount;
+  }
+  
+  getMatchedTerms() {
+    return this.lastMatchedTerms;
+  }
+  
+  getCollections() {
+    return this.index ? Object.keys(this.index.kingdoms) : [];
+  }
+  
+  /**
+   * Lädt vollständige Perspektiven-Daten für alle aktuell geladenen Items
+   * Wird aufgerufen wenn Perspektiven aktiviert werden und Daten fehlen
+   * @returns {Promise<Array>} Array mit vollständig geladenen Items
+   */
+  async ensureFullData() {
+    if (this.lastFilteredData.length === 0) return [];
+    
+    // Prüfe ob erstes Item bereits Perspektiven-Daten hat
+    const firstItem = this.lastFilteredData[0];
+    const hasPerspectives = firstItem._baseUrl || firstItem._perspectivesLoaded;
+    
+    if (hasPerspectives) {
+      debug.data('Items already have full data');
+      return this.lastFilteredData;
+    }
+    
+    debug.data('Loading full data for all items...', { count: this.lastFilteredData.length });
+    
+    // Alle Items parallel mit vollständigen Daten laden
+    const fullItems = await Promise.all(
+      this.lastFilteredData.map(item => this.loadFullSpecies(item))
+    );
+    
+    // Cache aktualisieren
+    this.lastFilteredData = fullItems;
+    
+    debug.data('Full data loaded', { count: fullItems.length });
+    return fullItems;
+  }
+}
+
+/**
  * JsonUniverseSource - Durchsucht ALLE Sammlungen im data/ Ordner
  * Datengetrieben: Entdeckt automatisch alle Sammlungen und Spezies
  */
@@ -709,9 +926,9 @@ class JsonUniverseSource {
     let items = await this.ensureData();
     this.lastMatchedTerms = new Set();
     
-    // Alle Perspektiven laden für vollständige Suche
-    const fullItems = await Promise.all(items.map(item => this.loadAllPerspektiven(item)));
-    items = fullItems;
+    // OPTIMIERT: Perspektiven werden NICHT mehr bei Query geladen!
+    // Nur Basis-Daten (index.json) werden durchsucht
+    // Perspektiven werden erst bei getBySlug() geladen
     
     if (search && String(search).trim()) {
       const query = String(search).toLowerCase().trim();
@@ -721,8 +938,9 @@ class JsonUniverseSource {
         collections: this.collections 
       });
       
+      // Suche nur in Basis-Daten (name, slug, scientific_name, description)
       const scored = items.map(item => {
-        const result = scoreItemWithMatches(item, query);
+        const result = scoreItemBasic(item, query);
         return { item, score: result.score, matches: result.matches };
       });
       
@@ -784,7 +1002,100 @@ class JsonUniverseSource {
 }
 
 /**
+ * OPTIMIERT: Schnelle Basis-Suche nur in index.json Feldern
+ * Keine Perspektiven laden = viel schneller!
+ * @returns {{ score: number, matches: string[] }}
+ */
+function scoreItemBasic(item, query) {
+  let score = 0;
+  const matches = new Set();
+  
+  // Nur Basis-Felder durchsuchen (aus index.json)
+  const name = (item.name || '').toLowerCase();
+  const slug = (item.slug || '').toLowerCase();
+  const scientificName = (item.scientific_name || item.wissenschaftlich || '').toLowerCase();
+  const description = (item.description || item.beschreibung || '').toLowerCase();
+  const kingdom = (item._sammlung || '').toLowerCase();
+  
+  // Exakter Name-Match
+  if (name === query) {
+    score += 100;
+    matches.add(item.name);
+  }
+  // Name beginnt mit Query
+  else if (name.startsWith(query)) {
+    score += 80;
+    matches.add(item.name);
+  }
+  // Name enthält Query
+  else if (name.includes(query)) {
+    score += 60;
+    matches.add(item.name);
+  }
+  
+  // Slug Match
+  if (slug.includes(query)) {
+    score += 30;
+    matches.add(item.slug);
+  }
+  
+  // Wissenschaftlicher Name
+  if (scientificName.includes(query)) {
+    score += 50;
+    matches.add(item.scientific_name || item.wissenschaftlich);
+  }
+  
+  // Beschreibung
+  if (description.includes(query)) {
+    score += 20;
+    // Finde das passende Wort
+    const words = (item.description || item.beschreibung || '').split(/\s+/);
+    for (const word of words) {
+      if (word.toLowerCase().includes(query)) {
+        matches.add(word.replace(/[.,;:!?()]/g, ''));
+      }
+    }
+  }
+  
+  // Kingdom
+  if (kingdom.includes(query)) {
+    score += 10;
+    matches.add(item._sammlung);
+  }
+  
+  // Perspektiven-Namen durchsuchen (identification, culinary, etc.)
+  const perspectives = item.perspectives || [];
+  for (const perspective of perspectives) {
+    const perspLower = perspective.toLowerCase();
+    if (perspLower === query) {
+      score += 70; // Exakter Match
+      matches.add(perspective);
+    } else if (perspLower.startsWith(query)) {
+      score += 50; // Prefix Match
+      matches.add(perspective);
+    } else if (perspLower.includes(query)) {
+      score += 30; // Teil-Match
+      matches.add(perspective);
+    }
+  }
+  
+  // Query-Wörter einzeln
+  const stopwords = new Set(['was', 'ist', 'der', 'die', 'das', 'ein', 'eine', 'und', 'oder', 'für', 'mit', 'von', 'zu', 'bei', 'kann', 'man', 'wie', 'wo', 'wer', 'welche', 'welcher']);
+  const queryWords = query.split(/\s+/).filter(w => w.length > 2 && !stopwords.has(w));
+  
+  const allText = `${name} ${scientificName} ${description}`.toLowerCase();
+  for (const word of queryWords) {
+    if (allText.includes(word)) {
+      score += 5;
+    }
+  }
+  
+  return { score, matches: [...matches] };
+}
+
+/**
  * Bewertet wie gut ein Item zur Suchanfrage passt UND gibt gefundene Matches zurück
+ * VOLLSTÄNDIG: Durchsucht auch Perspektiven-Daten
  * @returns {{ score: number, matches: string[] }}
  */
 function scoreItemWithMatches(item, query) {

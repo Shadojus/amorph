@@ -149,11 +149,48 @@ export async function amorph(options = {}) {
     setUrlState({ ...current, suche: query });
   });
   
-  // Bei Perspektiven-Wechsel URL updaten
-  document.addEventListener('perspektiven:geaendert', (e) => {
+  // Bei Perspektiven-Wechsel: Vollständige Daten laden und neu rendern
+  document.addEventListener('perspektiven:geaendert', async (e) => {
     const perspektiven = e.detail?.aktiv || [];
     const current = getUrlState();
     setUrlState({ ...current, perspektiven });
+    
+    // Wenn Perspektiven aktiv sind, brauchen wir vollständige Daten
+    if (perspektiven.length > 0 && currentData.length > 0) {
+      debug.amorph('Perspectives active - ensuring full data...', { count: currentData.length });
+      
+      // Prüfen ob Daten bereits vollständig sind (haben _baseUrl oder _perspectivesLoaded)
+      const needsFullData = !currentData[0]?._baseUrl && !currentData[0]?._perspectivesLoaded;
+      
+      if (needsFullData && dataSource.ensureFullData) {
+        try {
+          // Vollständige Daten laden
+          currentData = await dataSource.ensureFullData();
+          
+          // Auswahl-Daten mit vollständigen Perspektiven-Daten aktualisieren
+          const { updateAuswahlDaten } = await import('./features/ansichten/index.js');
+          updateAuswahlDaten(currentData);
+          
+          // Neu rendern
+          await render(container, currentData, config);
+          
+          debug.amorph('Re-rendered with full data', { count: currentData.length });
+          
+          // Highlighting neu anwenden falls Query aktiv
+          if (currentQuery && currentQuery.trim()) {
+            const matchedTerms = dataSource.getMatchedTerms ? dataSource.getMatchedTerms() : new Set();
+            highlightMatches(container, currentQuery.trim(), matchedTerms);
+          }
+          
+          // Event für Header: Perspektiven neu anwenden nach Re-Render
+          document.dispatchEvent(new CustomEvent('amorph:rerender-complete', {
+            detail: { perspektiven, count: currentData.length }
+          }));
+        } catch (e) {
+          debug.error('Failed to load full data for perspectives', e);
+        }
+      }
+    }
   });
   
   // Bei Ansicht-Wechsel URL updaten

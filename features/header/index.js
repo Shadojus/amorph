@@ -654,6 +654,16 @@ export default function init(ctx) {
     }
   }
   
+  // Nach Re-Render (durch Lazy-Loading): Perspektiven neu anwenden
+  document.addEventListener('amorph:rerender-complete', (e) => {
+    debug.header('Rerender complete - reapplying perspectives', { 
+      perspektiven: e.detail?.perspektiven,
+      count: e.detail?.count 
+    });
+    // Kurze Verzögerung damit DOM komplett aktualisiert ist
+    setTimeout(() => anwendenPerspektiven(), 50);
+  });
+  
   ctx.dom.appendChild(container);
   
   // Header direkt in body einfügen (für position: fixed über volle Breite)

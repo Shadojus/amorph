@@ -8,12 +8,12 @@ Morph-System: Daten → DOM Transformationen. Domänenunabhängig.
 morphs/
 ├── index.js          ← Registry + Re-Exports
 ├── index.yaml        ← Farb-Paletten + Erkennungs-Config
-├── primitives/       ← 44+ Basis-Morphs
+├── primitives/       ← 43 Basis-Morphs
 │   ├── index.js      ← Alle Primitive-Exports
 │   ├── index.yaml    ← Primitive-Configs
 │   ├── index.css     ← Gemeinsame Styles
 │   └── {morph}/      ← Je ein Ordner pro Morph
-└── compare/          ← Vergleichs-Morphs
+└── compare/          ← 44 Vergleichs-Morphs
     ├── index.js      ← compareByData Export
     ├── base.js       ← Farben, Sections, detectType
     ├── compare.css   ← Compare-Styles
@@ -23,7 +23,7 @@ morphs/
 
 ---
 
-## 44+ Primitive Morphs
+## 43 Primitive Morphs
 
 ### Text/Display (8)
 | Morph | Eingabe | Ausgabe |

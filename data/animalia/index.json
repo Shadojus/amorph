@@ -1,6 +1,25 @@
 {
-  "collection": "animalia",
-  "description": "Animal Kingdom - Animalia",
-  "type": "json-perspectives",
-  "species": []
+  "kingdom": "animalia",
+  "name": "Animalia",
+  "icon": "🦋",
+  "count": 1,
+  "species": [
+    {
+      "slug": "alpine-marmot",
+      "name": "Alpenmurmeltier",
+      "scientific_name": "Marmota marmota",
+      "perspectives": [
+        "conservation",
+        "culture",
+        "ecology",
+        "geography",
+        "identification",
+        "interactions",
+        "research",
+        "safety",
+        "statistics",
+        "temporal"
+      ]
+    }
+  ]
 }

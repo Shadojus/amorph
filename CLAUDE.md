@@ -23,13 +23,14 @@ DATEN (JSON) → detectType() → MORPH → DOM
 | `config/schema/` | Modulares Schema | basis.yaml, semantik.yaml, perspektiven/ |
 | `config/schema/perspektiven/blueprints/` | 15 Morph-Blueprints | *.blueprint.yaml |
 | `features/` | 8 Feature-Module | Context API, isolierte UI-Komponenten |
-| `morphs/` | 44+ Transformationen | primitives/, compare/ |
+| `morphs/` | 87 Transformationen | 43 primitives/, 44 compare/ |
 | `observer/` | Debug & Analytics | debug.js, interaction.js, rendering.js |
 | `util/` | Utilities | dom.js, fetch.js, router.js, semantic.js |
 | `styles/` | CSS Design-System | Black Glasmorphism, 12 Pilz-Farben |
-| `data/` | Testdaten | 4 Kingdoms × 15 Perspektiven |
+| `data/` | Testdaten | alpine-marmot (animalia), deadly-nightshade (plantae) |
+| `docs/` | Entwicklungs-Dokumentation | Kirk-Prinzipien, Daten-Erstellung |
 | `themes/` | Style-Overrides | (Platzhalter) |
-| `scripts/` | Build-Scripts | (Platzhalter) |
+| `scripts/` | Build-Scripts | validate.js, build-index.js |
 
 ---
 
@@ -43,7 +44,7 @@ DATEN (JSON) → detectType() → MORPH → DOM
 
 ---
 
-## 44+ Morph-Primitives
+## 43 Morph-Primitives (+ 44 Compare)
 
 ### Text/Display
 `text`, `string`, `number`, `boolean`, `badge`, `tag`, `rating`, `progress`
@@ -153,33 +154,69 @@ function morph(wert, config, morphField) → HTMLElement | null
 
 ---
 
+## Daten-System
+
+### Architektur
+
+```
+JSON Files (data/) → Zod Validierung → Frontend (Lazy Loading)
+       ↓
+   build:index
+       ↓
+universe-index.json (schnelle Übersicht)
+```
+
+### NPM Scripts
+
+```bash
+npm run dev              # Entwicklungsserver starten
+npm run validate         # Alle Daten mit Zod validieren
+npm run build:index      # Universe-Index neu generieren
+```
+
+### Datenquellen (daten.yaml)
+
+| Typ | Beschreibung | Empfehlung |
+|-----|--------------|------------|
+| `json-universe-optimized` | Lädt Index, Perspektiven on-demand | **Produktion** |
+| `json-universe` | Lädt alles bei Suche | Entwicklung |
+| `json-perspektiven` | Einzelne Sammlung | Legacy |
+
+### Validierung mit Zod
+
+```bash
+# Alle Daten validieren
+npm run validate
+
+# Einzelne Spezies
+npm run validate -- --species steinpilz
+
+# Watch-Modus
+npm run validate:watch
+```
+
+---
+
 ## Daten-Workflow
 
-### 1. Schema verstehen
-- `config/schema/perspektiven/*.yaml` - Feld-Definitionen
-- `config/schema/perspektiven/blueprints/*.blueprint.yaml` - Morph-Typen
-
-### 2. Daten erstellen
-Struktur: `data/{kingdom}/{species}/`
+### 1. JSON-Datei erstellen
 ```
-data/fungi/steinpilz/
-├── index.json          # Kern: id, slug, name, image, perspectives[]
-├── identification.json # Perspektive 1
-├── ecology.json        # Perspektive 2
-└── ...                 # Weitere Perspektiven
+data/{kingdom}/{species}/
+├── index.json           # Name, Slug, Bild
+├── identification.json  # Bestimmung
+├── culinary.json        # Kulinarik
+├── safety.json          # Sicherheit
+└── ...                  # Weitere Perspektiven
 ```
 
-### 3. Morph-Typen nutzen
-Daten müssen der Blueprint-Struktur entsprechen:
-```javascript
-// morph: badge
-{ status: "endangered", variant: "warning" }
+### 2. Validieren
+```bash
+npm run validate
+```
 
-// morph: range
-{ min: 5, max: 15, unit: "cm" }
-
-// morph: gauge
-{ value: 75, min: 0, max: 100, zones: [...] }
+### 3. Index aktualisieren
+```bash
+npm run build:index
 ```
 
 ---
@@ -276,11 +313,9 @@ app.getData()        // Aktuelle Daten abrufen
 
 ## Testdaten
 
-4 Kingdoms mit je 15 Perspektiven-JSONs:
-- `data/animalia/monarchfalter/`
-- `data/bacteria/ecoli/`
-- `data/fungi/fly-agaric/`, `porcini/`
-- `data/plantae/ginkgo/`
+2 vollständige Spezies mit Perspektiven-JSONs:
+- `data/animalia/alpine-marmot/` (11 JSON-Dateien)
+- `data/plantae/deadly-nightshade/` (8 JSON-Dateien)
 
 **Format**: `{id, slug, name, scientific_name, image, perspectives[]}`
 
@@ -318,7 +353,7 @@ Jeder Ordner enthält `CLAUDE.md` mit vollständiger Dokumentation:
 - `config/CLAUDE.md` - YAML-Dateien, Schema
 - `config/schema/CLAUDE.md` - Modulares Schema, 15 Perspektiven
 - `features/CLAUDE.md` - 8 Features, Context API
-- `morphs/CLAUDE.md` - 30+ Morphs, Compare-System
+- `morphs/CLAUDE.md` - 87 Morphs (43 primitives, 44 compare)
 - `morphs/primitives/CLAUDE.md` - Primitive-Morphs Details
 - `morphs/compare/CLAUDE.md` - Compare-System Details
 - `observer/CLAUDE.md` - Debug, Observer

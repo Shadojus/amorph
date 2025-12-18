@@ -1,6 +1,6 @@
 # Primitives
 
-44+ Basis-Morphs für Datenvisualisierung nach Kirk-Prinzipien.
+43 Basis-Morphs für Datenvisualisierung nach Kirk-Prinzipien.
 
 ## Design-Prinzipien (Andy Kirk - Visualizing Data)
 
@@ -51,7 +51,7 @@ primitives/
     └── CLAUDE.md  ← Erkennungsregeln!
 ```
 
-## Übersicht (44 Morphs)
+## Übersicht (43 Morphs)
 
 | Kategorie | Morphs |
 |-----------|--------|

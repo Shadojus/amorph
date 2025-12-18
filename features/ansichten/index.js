@@ -165,6 +165,52 @@ export function clearAuswahl() {
 }
 
 /**
+ * Aktualisiert die Pilz-Daten in der Auswahl
+ * Wird aufgerufen wenn vollständige Perspektiven-Daten geladen wurden
+ * @param {Array} fullItems - Array mit vollständigen Item-Daten
+ */
+export function updateAuswahlDaten(fullItems) {
+  if (!fullItems?.length || state.auswahl.size === 0) return;
+  
+  // Map für schnellen Lookup nach ID/Slug
+  const itemMap = new Map();
+  for (const item of fullItems) {
+    const id = item.id || item.slug;
+    if (id) itemMap.set(String(id), item);
+  }
+  
+  let updated = 0;
+  
+  // Alle Auswahl-Einträge mit vollständigen Daten aktualisieren
+  for (const [key, data] of state.auswahl) {
+    const fullData = itemMap.get(String(data.pilzId));
+    if (fullData) {
+      // Wert aktualisieren falls vorhanden
+      if (data.feldName in fullData) {
+        data.wert = fullData[data.feldName];
+      }
+      // Vollständige Pilz-Daten aktualisieren
+      data.pilzDaten = fullData;
+      updated++;
+    }
+  }
+  
+  if (updated > 0) {
+    debug.views('Selection data updated with full perspectives', { updated, total: state.auswahl.size });
+    
+    // Event für UI-Updates
+    document.dispatchEvent(new CustomEvent('amorph:auswahl-geaendert', {
+      detail: { 
+        auswahl: [...state.auswahl.keys()], 
+        anzahl: state.auswahl.size,
+        pilzIds: getAuswahlPilzIds(),
+        datenAktualisiert: true
+      }
+    }));
+  }
+}
+
+/**
  * Gibt alle eindeutigen Pilz-IDs in der Auswahl zurück
  */
 export function getAuswahlPilzIds() {

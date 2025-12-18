@@ -1,0 +1,92 @@
+{
+  "version": "1.0",
+  "generated": "2025-12-18T11:40:15.589Z",
+  "total": 3,
+  "kingdoms": {
+    "fungi": {
+      "name": "Fungi",
+      "icon": "🍄",
+      "count": 1
+    },
+    "plantae": {
+      "name": "Plantae",
+      "icon": "🌿",
+      "count": 1
+    },
+    "animalia": {
+      "name": "Animalia",
+      "icon": "🦋",
+      "count": 1
+    },
+    "bacteria": {
+      "name": "Bacteria",
+      "icon": "🦠",
+      "count": 0
+    }
+  },
+  "species": [
+    {
+      "id": "fungi-001",
+      "slug": "psilocybe-cyanescens",
+      "name": "Blauender Kahlkopf",
+      "scientific_name": "Psilocybe cyanescens",
+      "image": "",
+      "description": "Psilocybe cyanescens, bekannt als Blauender Kahlkopf oder Wavy Cap, ist ein stark psilocybinhaltiger Pilz aus der Familie Hymenogastraceae. Die Art wurde 1946 von Elsie Wakefield in England erstbeschrieben und hat sich seitdem weltweit in gemaessigten Klimazonen verbreitet, insbesondere in urbanen Gebieten auf Holzhaecksel und Rindenmulch. Charakteristisch sind der wellenfoermige Hutrand bei Reife, die intensive Blauverfaerbung bei Verletzung und das Wachstum in dichten Gruppen im Spaetherbst nach ersten Froesten. Der Pilz enthaelt signifikante Mengen der psychoaktiven Tryptamin-Alkaloide Psilocybin und Psilocin sowie Baeocystin. In den meisten Laendern unterliegt der Besitz und die Verwendung strengen rechtlichen Beschraenkungen.",
+      "kingdom": "fungi",
+      "kingdom_name": "Fungi",
+      "kingdom_icon": "🍄",
+      "perspectives": [
+        "chemistry",
+        "culture",
+        "ecology",
+        "identification",
+        "medicine",
+        "safety",
+        "temporal"
+      ]
+    },
+    {
+      "id": "plantae-001",
+      "slug": "deadly-nightshade",
+      "name": "Tollkirsche",
+      "scientific_name": "Atropa belladonna",
+      "image": "",
+      "description": "Die Tollkirsche (Atropa belladonna) ist eine der giftigsten Pflanzen Europas und gehoert zur Familie der Nachtschattengewaechse (Solanaceae). Alle Pflanzenteile sind hochgiftig, besonders die verlockend aussehenden schwarzen Beeren, die aufgrund ihres suessen Geschmacks vor allem fuer Kinder gefaehrlich sind. Der Name 'belladonna' (schoene Frau) stammt von der historischen Verwendung des Pflanzenextrakts zur Pupillenerweiterung in der Kosmetik. Die Pflanze enthaelt Tropanalkaloide wie Atropin, Scopolamin und Hyoscyamin, die auf das Nervensystem wirken und in der Medizin therapeutisch eingesetzt werden.",
+      "kingdom": "plantae",
+      "kingdom_name": "Plantae",
+      "kingdom_icon": "🌿",
+      "perspectives": [
+        "chemistry",
+        "culture",
+        "ecology",
+        "geography",
+        "identification",
+        "medicine",
+        "safety"
+      ]
+    },
+    {
+      "id": "animalia-001",
+      "slug": "alpine-marmot",
+      "name": "Alpenmurmeltier",
+      "scientific_name": "Marmota marmota",
+      "image": "data/animalia/alpine-marmot/hauptbild.jpg",
+      "description": "Das Alpenmurmeltier (Marmota marmota) ist ein Nagetier aus der Familie der Hoernchen (Sciuridae). Es ist das groesste einheimische Nagetier der Alpen und bewohnt alpine Matten und Gebirgsweiden oberhalb der Baumgrenze in Hoehen von 800 bis 3200 Metern. Die Tiere leben in komplexen Familiengruppen und halten einen ausgedehnten Winterschlaf von Oktober bis April. Mit ihrem charakteristischen Warnpfiff warnen sie Artgenossen vor Fressfeinden wie dem Steinadler.",
+      "kingdom": "animalia",
+      "kingdom_name": "Animalia",
+      "kingdom_icon": "🦋",
+      "perspectives": [
+        "conservation",
+        "culture",
+        "ecology",
+        "geography",
+        "identification",
+        "interactions",
+        "research",
+        "safety",
+        "statistics",
+        "temporal"
+      ]
+    }
+  ]
+}

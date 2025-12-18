@@ -38,9 +38,25 @@ getAuswahlPilzIds()                      → string[]
 getAuswahlNachPilz()                     → Map<pilzId, {...}>
 getAuswahlNachFeld()                     → Map<feldName, [{pilzId, wert}]>
 
+// Daten-Update (für Lazy-Loading)
+updateAuswahlDaten(fullItems)            // Aktualisiert Auswahl mit vollständigen Daten
+
 // Legacy (wählt ALLE Felder eines Items)
 toggleAuswahl(id, daten)
 ```
+
+## updateAuswahlDaten()
+
+Wird nach Lazy-Loading von Perspektiven aufgerufen, um die Auswahl-Map
+mit vollständigen Daten zu aktualisieren:
+
+```javascript
+// fullItems: Array<{id, ...vollständige Perspektiven}>
+updateAuswahlDaten(fullItems)
+```
+
+**Use Case**: Wenn `perspektiven:geaendert` vollständige Daten lädt,
+müssen bereits ausgewählte Felder mit den neuen Werten aktualisiert werden.
 
 ## Events
 

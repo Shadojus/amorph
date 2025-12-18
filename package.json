@@ -8,7 +8,11 @@
     "dev": "npx serve . -p 3000",
     "start": "npx serve . -p 3000",
     "build": "node scripts/build.js",
-    "check": "node scripts/check.js"
+    "build:index": "node scripts/build-index.js",
+    "check": "node scripts/check.js",
+    "validate": "node scripts/validate.js",
+    "validate:list": "node scripts/validate.js --list",
+    "validate:stats": "node scripts/validate.js --stats"
   },
   "keywords": [
     "amorph",
@@ -20,6 +24,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "js-yaml": "^4.1.1"
+    "js-yaml": "^4.1.1",
+    "zod": "^4.2.1"
   }
 }

@@ -1,100 +1,100 @@
 # Data
 
-Modulare Daten für AMORPH - 4 Kingdoms × 15 Perspektiven.
+Modulare JSON-Daten für AMORPH - 4 Kingdoms × 15 Perspektiven.
 
-## Verzeichnisstruktur
+## Struktur
 
 ```
 data/
+├── universe-index.json           ← Haupt-Index (Frontend lädt diese)
 ├── animalia/
-│   ├── index.json              ← Collection-Index
-│   └── monarchfalter/          ← 1 Index + 15 Perspektiven
+│   ├── index.json                ← Kingdom-Index
+│   └── alpine-marmot/            ← 1 Spezies
+│       ├── index.json            ← Core-Daten
+│       ├── conservation.json     ← Perspektive
+│       ├── culture.json
+│       ├── ecology.json
+│       ├── geography.json
+│       ├── identification.json
+│       ├── interactions.json
+│       ├── research.json
+│       ├── safety.json
+│       ├── statistics.json
+│       └── temporal.json
 ├── bacteria/
-│   ├── index.json
-│   ├── ecoli/
-│   └── test-*/                 ← Morph-Test-Daten (44 Ordner)
+│   └── index.json                ← Kingdom-Index (leer)
 ├── fungi/
-│   ├── index.json
-│   ├── fly-agaric/
-│   └── porcini/
+│   └── index.json                ← Kingdom-Index (leer)
 └── plantae/
-    ├── index.json
-    └── ginkgo/
+    ├── index.json                ← Kingdom-Index
+    └── deadly-nightshade/        ← 1 Spezies
+        ├── index.json
+        ├── chemistry.json
+        ├── culture.json
+        ├── ecology.json
+        ├── geography.json
+        ├── identification.json
+        ├── medicine.json
+        └── safety.json
 ```
-
-## Dateien
-
-| Pfad | Typ | Inhalt |
-|------|-----|--------|
-| `*/index.json` | Collection | `{collection, species: [{slug, folder}]}` |
-| `*/*/index.json` | Spezies | `{id, slug, name, scientific_name, image, perspectives[]}` |
-| `*/*/*.json` | Perspektive | Felder für diese Perspektive |
 
 ---
 
-## Daten erstellen
+## Aktuelle Daten
 
-### Schritt 1: Blueprint lesen
+| Kingdom | Spezies | Perspektiven |
+|---------|---------|--------------|
+| Animalia | alpine-marmot (Alpenmurmeltier) | 10 |
+| Plantae | deadly-nightshade (Tollkirsche) | 7 |
+| Fungi | - | 0 |
+| Bacteria | - | 0 |
 
-Öffne das Blueprint für die gewünschte Perspektive:
-`config/schema/perspektiven/blueprints/{perspektive}.blueprint.yaml`
+**Gesamt**: 2 Spezies, 17 Perspektiven-Dateien
 
-### Schritt 2: JSON erstellen
+---
 
-Kopiere die Struktur und fülle mit echten Daten:
-
-```yaml
-# Blueprint sagt:
-# morph: badge
-conservation_status:
-  status: ""
-  variant: ""
-```
+## universe-index.json Format
 
 ```json
-// Dein JSON:
 {
-  "conservation_status": {
-    "status": "Vulnerable",
-    "variant": "warning"
-  }
+  "version": "1.0",
+  "generated": "2025-12-18T...",
+  "total": 2,
+  "kingdoms": {
+    "fungi": { "name": "Fungi", "icon": "🍄", "count": 0 },
+    "plantae": { "name": "Plantae", "icon": "🌿", "count": 1 },
+    "animalia": { "name": "Animalia", "icon": "🦋", "count": 1 },
+    "bacteria": { "name": "Bacteria", "icon": "🦠", "count": 0 }
+  },
+  "species": [
+    {
+      "id": "animalia-001",
+      "slug": "alpine-marmot",
+      "name": "Alpenmurmeltier",
+      "scientific_name": "Marmota marmota",
+      "kingdom": "animalia",
+      "perspectives": ["conservation", "ecology", ...]
+    }
+  ]
 }
 ```
 
-### Schritt 3: Morph-Typen beachten
-
-| Morph | Leere Struktur | Befülltes Beispiel |
-|-------|----------------|---------------------|
-| `text` | `""` | `"Detailed description..."` |
-| `number` | `0` | `42` |
-| `boolean` | `false` | `true` |
-| `tag` | `""` | `"mycorrhizal"` |
-| `badge` | `{status:"",variant:""}` | `{status:"Active",variant:"success"}` |
-| `list` | `[""]` | `["oak","beech","pine"]` |
-| `range` | `{min:0,max:0,unit:""}` | `{min:5,max:15,unit:"cm"}` |
-| `progress` | `{value:0,max:100}` | `{value:75,max:100}` |
-| `gauge` | Siehe Blueprint | `{value:65,min:0,max:100,zones:[...]}` |
-| `bar` | `[{label:"",value:0}]` | `[{label:"Protein",value:26}]` |
-| `timeline` | `[{date:"",event:""}]` | `[{date:"1753",event:"First described"}]` |
-| `calendar` | 12× `{month:N,active:false}` | Aktiviere relevante Monate |
-
 ---
 
-## Spezies Index Format
+## Spezies index.json Format
 
 ```json
 {
-  "id": "fungi-001",
-  "slug": "steinpilz",
-  "name": "Steinpilz",
-  "scientific_name": "Boletus edulis",
-  "image": "data/fungi/steinpilz/image.jpg",
-  "description": "Der König unter den Speisepilzen...",
+  "id": "animalia-001",
+  "slug": "alpine-marmot",
+  "name": "Alpenmurmeltier",
+  "scientific_name": "Marmota marmota",
+  "image": "data/animalia/alpine-marmot/hauptbild.jpg",
+  "description": "Das Alpenmurmeltier ist ein Nagetier...",
   "perspectives": [
-    "identification",
+    "conservation",
     "ecology",
-    "culinary",
-    "safety"
+    "identification"
   ]
 }
 ```
@@ -103,158 +103,131 @@ conservation_status:
 
 ## Perspektiven-Datei Format
 
+Jede Perspektive ist eine JSON-Datei mit Feldern die dem Blueprint entsprechen:
+
 ```json
-// steinpilz/identification.json
+// alpine-marmot/ecology.json
 {
-  "cap_diameter": { "min": 8, "max": 25, "unit": "cm" },
-  "cap_color": ["brown", "chestnut", "tan"],
-  "cap_shape": "convex to flat",
-  "edibility_status": { "status": "choice_edible", "variant": "success" },
-  "spore_print_color": "olive-brown",
-  "has_ring": false,
-  "has_volva": false
-}
-```
-    "identification", "ecology", "geography", "conservation",
-    "chemistry", "temporal", "statistics", "interactions",
-    "safety", "research", "culture", "economy", 
-    "medicine", "culinary", "cultivation"
-  ]
+  "habitat_types": ["alpine meadows", "rocky slopes"],
+  "elevation_range": { "min": 800, "max": 3200, "unit": "m" },
+  "diet_composition": [
+    { "label": "Grasses", "value": 60 },
+    { "label": "Herbs", "value": 30 },
+    { "label": "Insects", "value": 10 }
+  ],
+  "predators": ["golden eagle", "red fox", "wolf"]
 }
 ```
 
 ---
 
-## Perspektiven-Daten Beispiel
+## Workflow
 
-```json
-// fungi/fly-agaric/chemistry.json
-{
-  // Pie-Chart (nur numerische Values)
-  "chemical_composition": {
-    "water_percent": 90,
-    "protein_percent": 3,
-    "carbohydrate_percent": 4
-  },
-  
-  // Bar-Chart (Array mit label/value)
-  "composition_chart": [
-    { "label": "Water", "value": 90 },
-    { "label": "Protein", "value": 3 }
-  ],
-  
-  // Radar-Chart (Array mit axis/value)
-  "toxin_profile": [
-    { "axis": "Ibotenic acid", "value": 85 },
-    { "axis": "Muscimol", "value": 70 }
-  ],
-  
-  // Range (min/max)
-  "ph_value": { "min": 5.0, "max": 6.5 },
-  
-  // Citation (author/year/title)
-  "reference_citation": {
-    "authors": "Michelot, D.",
-    "year": 2003,
-    "title": "Amanita muscaria...",
-    "journal": "Mycological Research"
-  }
-}
+### 1. Neue Spezies erstellen
+
+```bash
+# Ordner erstellen
+mkdir data/fungi/steinpilz
+
+# index.json erstellen
+echo '{"id":"fungi-001","slug":"steinpilz","name":"Steinpilz",...}' > data/fungi/steinpilz/index.json
+
+# Perspektiven-JSONs erstellen (siehe Blueprints)
+```
+
+### 2. Validieren
+
+```bash
+npm run validate
+```
+
+### 3. Index aktualisieren
+
+```bash
+npm run build:index
+```
+
+---
+
+## 15 Perspektiven
+
+| ID | Symbol | Fokus |
+|----|--------|-------|
+| chemistry | 🧪 | Inhaltsstoffe, Metabolite |
+| conservation | 🛡️ | Schutzstatus, Bedrohungen |
+| culinary | 🍳 | Essbarkeit, Zubereitung |
+| cultivation | 🌱 | Anbau, Zucht |
+| culture | 📜 | Mythologie, Geschichte |
+| ecology | 🌿 | Habitat, Symbiosen |
+| economy | 💰 | Markt, Handel |
+| geography | 🗺️ | Verbreitung, Klima |
+| identification | 🔍 | Bestimmungsmerkmale |
+| interactions | 🔗 | Interaktionen |
+| medicine | 💊 | Medizinische Nutzung |
+| research | 📚 | Wissenschaft |
+| safety | ⚠️ | Gefahren, Toxine |
+| statistics | 📊 | Statistiken |
+| temporal | ⏰ | Zeitliche Aspekte |
+
+---
+
+## Blueprints
+
+Blueprints definieren die Struktur jeder Perspektive:
+
+```
+config/schema/perspektiven/blueprints/
+├── chemistry.blueprint.yaml
+├── conservation.blueprint.yaml
+├── culinary.blueprint.yaml
+├── ...
+└── temporal.blueprint.yaml
+```
+
+Jedes Feld hat einen Morph-Typ Kommentar:
+
+```yaml
+habitat_types:  # morph: list
+  - ""
+elevation_range:  # morph: range
+  min: 0
+  max: 0
+  unit: ""
+```
+
+---
+
+## Lazy Loading
+
+Das Frontend lädt Daten on-demand:
+
+1. **Start**: Nur `universe-index.json` laden
+2. **Suche**: Alle passenden Spezies laden
+3. **Perspektive aktiviert**: Perspektiven-JSON nachladen
+
+```javascript
+// Ablauf bei Perspektiven-Aktivierung
+await dataSource.ensureFullData()  // Lädt alle Perspektiven
 ```
 
 ---
 
 ## Typ-Erkennung (Data → Morph)
 
-| Datenstruktur | Erkannter Typ | Morph |
-|---------------|---------------|-------|
-| `{min, max}` | range | range |
-| `{min, max, avg/durchschnitt}` | stats | stats |
-| `{A: 30, B: 50, ...}` (nur Zahlen) | pie | pie |
-| `[num, num, ...]` (≥3 Zahlen) | sparkline | sparkline |
-| `[{axis/achse, value/wert}]` (≥3) | radar | radar |
-| `[{phase/stage}]` | lifecycle | lifecycle |
-| `[{date/datum, event}]` | timeline | timeline |
-| `[{label, value}]` (≤6) | pie | pie |
-| `[{label, value}]` (>6) | bar | bar |
-| `{author, year, title}` | citation | citation |
-| `{lat, lng}` | map | map |
-| `{dose, unit}` | dosage | dosage |
-| `{status}` | badge | badge |
-| `{rating/score}` | rating | rating |
+| Datenstruktur | Morph |
+|---------------|-------|
+| `{min, max}` | range |
+| `{min, max, avg}` | stats |
+| `[{label, value}]` | bar/pie |
+| `[{axis, value}]` | radar |
+| `[{date, event}]` | timeline |
+| `{lat, lng}` | map |
+| `{status, variant}` | badge |
 
 ---
 
-## Schema-Meta-Felder
+## Siehe auch
 
-In `config/schema/basis.yaml` definiert:
-
-```yaml
-meta:
-  nameField: name              # Haupt-Anzeigename
-  idField: id                  # Eindeutige ID
-  bildField: bild              # Bild-URL
-  bildFallbackFields:          # Fallbacks
-    - image
-    - img
-    - picture
-```
-
----
-
-## Konfiguration (daten.yaml)
-
-```yaml
-quelle:
-  typ: json-perspektiven
-  indexUrl: ./data/fungi/index.json
-  baseUrl: ./data/fungi/
-```
-
-**Kingdom wechseln:**
-- `./data/animalia/` → Monarchfalter
-- `./data/bacteria/` → E. coli
-- `./data/fungi/` → Fliegenpilz, Steinpilz
-- `./data/plantae/` → Ginkgo
-
----
-
-## Lade-Verhalten (JsonPerspektivenSource)
-
-### Initiales Laden
-1. `index.json` der Collection laden
-2. Für jede Spezies: `*/index.json` laden (Basis-Daten)
-
-### Lazy-Loading (bei Perspektiven-Aktivierung)
-```javascript
-// Wenn Perspektive "chemistry" aktiviert wird:
-await loadPerspective(spezies, 'chemistry')
-// Lädt: fungi/fly-agaric/chemistry.json
-// Merged Felder in spezies-Objekt
-```
-
-### Cache
-- Geladene Perspektiven werden gecacht
-- `loadedPerspektiven: Map<speziesId, Set<perspId>>`
-- Kein erneutes Laden bei wiederholter Aktivierung
-
----
-
-## Statistik
-
-| Metrik | Wert |
-|--------|------|
-| Kingdoms | 4 |
-| Spezies | 5 |
-| Perspektiven | 15 |
-| Dateien pro Spezies | 16 (1 Index + 15 Perspektiven) |
-| Gesamt JSON-Dateien | ~84 |
-
----
-
-## README.md
-
-Enthält zusätzliche Dokumentation:
-- Detaillierte Morph-Zuordnung pro Perspektive
-- Dateien-Statistik
-- Konfigurationsbeispiele
+- `scripts/CLAUDE.md` - Validierung und Index-Generierung
+- `config/schema/perspektiven/blueprints/` - Perspektiven-Schemas
+- `docs/DATEN_ERSTELLEN.md` - Ausführliche Anleitung

@@ -1,15 +1,22 @@
 {
-  "collection": "fungi",
-  "description": "Fungi Kingdom - Mycological Data",
-  "type": "json-perspectives",
+  "kingdom": "fungi",
+  "name": "Fungi",
+  "icon": "🍄",
+  "count": 1,
   "species": [
-        {
-      "slug": "morph-test-alpha",
-      "folder": "morph-test-alpha"
-    },
-        {
-      "slug": "morph-test-beta",
-      "folder": "morph-test-beta"
+    {
+      "slug": "psilocybe-cyanescens",
+      "name": "Blauender Kahlkopf",
+      "scientific_name": "Psilocybe cyanescens",
+      "perspectives": [
+        "chemistry",
+        "culture",
+        "ecology",
+        "identification",
+        "medicine",
+        "safety",
+        "temporal"
+      ]
     }
   ]
 }

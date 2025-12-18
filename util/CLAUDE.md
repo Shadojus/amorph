@@ -102,9 +102,9 @@ data/fungi/steinpilz.json   → { name: "Steinpilz", ... }
 
 Struktur:
 ```
-data/animalia/index.json              → { spezies: [{ ordner: "monarchfalter" }] }
-data/animalia/monarchfalter/index.json → { name, perspektiven: ["ecology", ...] }
-data/animalia/monarchfalter/ecology.json → { ... }
+data/animalia/index.json              → { spezies: [{ ordner: "alpine-marmot" }] }
+data/animalia/alpine-marmot/index.json → { name, perspektiven: ["ecology", ...] }
+data/animalia/alpine-marmot/ecology.json → { ... }
 ```
 
 - Lädt Spezies-Index, dann Perspektiven lazy
