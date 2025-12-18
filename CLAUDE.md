@@ -19,7 +19,8 @@ DATEN (JSON) → detectType() → MORPH → DOM
 | Ordner | Zweck | Hauptdateien |
 |--------|-------|--------------|
 | `core/` | Config, Pipeline, Container | config.js, pipeline.js, container.js |
-| `core/detection/` | **NEU** Modulare Typ-Erkennung | index.js, number.js, string.js, array.js, object.js |
+| `core/detection/` | Modulare Typ-Erkennung | index.js, number.js, string.js, array.js, object.js |
+| `core/errors.js` | **NEU** Error Boundaries | Custom Errors, Fallbacks, Registry |
 | `config/` | YAML-Konfiguration | manifest, daten, morphs, features, observer |
 | `config/schema/` | Modulares Schema | basis.yaml, semantik.yaml, perspektiven/ |
 | `config/schema/perspektiven/blueprints/` | 15 Morph-Blueprints | *.blueprint.yaml |
@@ -27,13 +28,16 @@ DATEN (JSON) → detectType() → MORPH → DOM
 | `morphs/` | 87 Transformationen | 43 primitives/, 44 compare/ |
 | `observer/` | Debug & Analytics | debug.js, interaction.js, rendering.js |
 | `util/` | Utilities | dom.js, fetch.js, router.js, semantic.js |
+| `util/security.js` | **NEU** XSS-Prevention | HTML Sanitization, Safe DOM |
+| `util/a11y.js` | **NEU** Accessibility | ARIA, Focus, Keyboard Navigation |
+| `util/performance.js` | **NEU** Performance | Debounce, Lazy Loading, Pools |
 | `styles/` | CSS Design-System | Black Glasmorphism, 12 Pilz-Farben |
 | `data/` | Testdaten | alpine-marmot (animalia), deadly-nightshade (plantae) |
 | `docs/` | Entwicklungs-Dokumentation | Kirk-Prinzipien, Daten-Erstellung |
 | `themes/` | Style-Overrides | (Platzhalter) |
 | `scripts/` | Build-Scripts | validate.js, build-index.js |
-| `tests/` | **NEU** Unit-Tests | detection.test.js, morphs.test.js, integration.test.js |
-| `types/` | **NEU** TypeScript Definitionen | index.d.ts |
+| `tests/` | Unit-Tests (263) | detection, morphs, security, a11y, performance |
+| `types/` | TypeScript Definitionen | index.d.ts |
 
 ---
 
@@ -374,6 +378,79 @@ Jeder Ordner enthält `CLAUDE.md` mit vollständiger Dokumentation:
 - `morphs/primitives/CLAUDE.md` - Primitive-Morphs Details
 - `morphs/compare/CLAUDE.md` - Compare-System Details
 - `observer/CLAUDE.md` - Debug, Observer
+
+---
+
+## Neue Module (v5.2.0)
+
+### Error Handling (`core/errors.js`)
+```javascript
+import { 
+  AmorphError, MorphError, DetectionError, DataError,
+  errorBoundary, asyncErrorBoundary, safeMorph,
+  onError, getErrors, clearErrors 
+} from './core/errors.js';
+
+// Error Boundary für sichere Funktionen
+const result = errorBoundary(() => riskyOperation(), {
+  name: 'operation',
+  fallback: defaultValue
+});
+
+// Safe Morph Wrapper
+const safeBadgeMorph = safeMorph(badgeMorph);
+```
+
+### Security (`util/security.js`)
+```javascript
+import { 
+  escapeHtml, sanitizeHtml, sanitizeUrl,
+  createElement, setTextContent, html 
+} from './util/security.js';
+
+// Safe HTML Rendering
+const safe = sanitizeHtml('<script>bad</script><p>good</p>');
+// → '<p>good</p>'
+
+// Safe Element Creation
+const el = createElement('div', { 
+  className: 'card',
+  textContent: userInput  // auto-escaped
+});
+```
+
+### Accessibility (`util/a11y.js`)
+```javascript
+import { 
+  setAria, announce, focusElement,
+  createFocusTrap, setupArrowNavigation, createSkipLinks 
+} from './util/a11y.js';
+
+// Screen Reader Announcements
+announce('10 Ergebnisse gefunden', 'polite');
+
+// Focus Management
+const trap = createFocusTrap(modal);
+trap.activate();
+```
+
+### Performance (`util/performance.js`)
+```javascript
+import { 
+  debounce, throttle, onVisible, whenIdle,
+  virtualList, createPool, clearMorphCache 
+} from './util/performance.js';
+
+// Debounced Search
+const search = debounce(query => fetchResults(query), 300);
+
+// Lazy Loading
+onVisible(element, entry => loadContent(entry.target));
+
+// Virtual Scrolling
+const list = virtualList(container, { itemHeight: 40 });
+list.render(10000);  // 10k items, only visible rendered
+```
 - `util/CLAUDE.md` - Utilities
 - `styles/CLAUDE.md` - CSS Design-System
 - `data/CLAUDE.md` - Testdaten-Struktur
