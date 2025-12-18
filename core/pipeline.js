@@ -18,6 +18,7 @@ let detectionConfig = null;
  * PROTEIN_G → Protein (g)
  * spore_size_um → Spore Size (µm)
  * snake_case → Title Case
+ * _internal → Internal (removes leading underscore)
  */
 function formatFieldLabel(key) {
   // Bekannte Einheiten-Suffixe erkennen
@@ -37,6 +38,12 @@ function formatFieldLabel(key) {
   };
   
   let label = String(key || '');
+  
+  // Remove leading underscore if present
+  if (label.startsWith('_')) {
+    label = label.slice(1);
+  }
+  
   let unit = '';
   
   // Prüfe auf Einheit am Ende
@@ -92,8 +99,19 @@ export function transform(daten, config, customMorphs = {}) {
   const schemaFieldMorphs = getFeldMorphs();
   const hiddenFields = getVersteckteFelder();
   
+  // Interne Felder die NIEMALS angezeigt werden sollen (System-Metadaten)
+  const internalFields = new Set([
+    '_baseUrl', '_loadedPerspectives', '_perspektiven', '_kingdom', 
+    '_collection', '_indexData', '_cacheKey', '_timestamp'
+  ]);
+  
   function morphField(value, fieldName = null) {
-    // Skip hidden fields
+    // Skip internal system fields (always hidden)
+    if (fieldName && (internalFields.has(fieldName) || fieldName.startsWith('_'))) {
+      return null;
+    }
+    
+    // Skip hidden fields from schema
     if (fieldName && hiddenFields.includes(fieldName)) {
       return null;
     }

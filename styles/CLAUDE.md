@@ -377,6 +377,73 @@ Importiert `../morphs/primitives/index.css` und definiert Basis-Styles für:
 
 ---
 
+## Mobile-Optimierungen
+
+### Responsive Breakpoints
+
+| Breakpoint | Breite | Grid-Spalten | Blur-Stärke |
+|------------|--------|--------------|-------------|
+| XL | 1280px+ | 3 | blur(24px) |
+| LG | 1024-1279px | 3 | blur(24px) |
+| MD | 768-1023px | 2 | blur(12px) |
+| SM | 480-767px | 2 | blur(8px) |
+| XS | <480px | 1 | deaktiviert |
+
+### Backdrop-Filter Performance
+
+```css
+/* Fallback für schwache GPUs */
+@supports not (backdrop-filter: blur(1px)) {
+  .amorph-header { background: rgba(8, 12, 20, 0.98); }
+}
+
+/* Mobile (480px): Kein Blur für beste Performance */
+@media (max-width: 480px) {
+  amorph-container[data-morph="item"] {
+    backdrop-filter: none;
+    background: rgba(20, 25, 35, 0.98);  /* Solider Hintergrund */
+  }
+}
+```
+
+### Touch-Geräte (`@media (hover: none) and (pointer: coarse)`)
+
+```css
+/* Größere Touch-Targets (44px Minimum) */
+.amorph-action-btn { min-height: 44px; }
+.amorph-perspektive-btn { min-height: 44px; min-width: 44px; }
+
+/* Kein Hover-Transform - spart GPU */
+amorph-container[data-morph="item"]:hover { transform: none; }
+
+/* Active State statt Hover */
+amorph-container[data-morph="item"]:active { transform: scale(0.98); }
+
+/* Touch-freundliches Scrolling */
+-webkit-overflow-scrolling: touch;
+scroll-snap-type: x mandatory;
+```
+
+### Reduced Motion
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  .amorph-item { animation: none; }
+  amorph-container[data-field].feld-ausgewaehlt::before { animation: none; }
+}
+```
+
+### CSS-Dateien mit Mobile-Styles
+
+| Datei | Mobile-Features |
+|-------|-----------------|
+| `layouts.css` | Grid-Spalten, Touch-Events, Blur-Deaktivierung |
+| `ansichten.css` | Action-Bar, Detail-View, Touch-Targets, Reduced Motion |
+| `features/header/header.css` | Kompakter Header, Blur-Reduzierung |
+| `features/perspektiven/perspektiven.css` | Scroll-Snap, größere Buttons |
+
+---
+
 ## Kosmisches Grid (body::before)
 
 ```css

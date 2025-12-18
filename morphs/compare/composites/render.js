@@ -3,31 +3,18 @@
  * 
  * Shared rendering logic for all composite morphs.
  * DATA-DRIVEN: Selects morph based on detected type.
+ * 
+ * REFACTORED: All morphs now go through compareByType (single source of truth)
  */
 
-import {
-  compareBar,
-  compareRadar,
-  comparePie,
-  compareRating,
-  compareProgress,
-  compareStats,
-  compareRange,
-  compareTimeline,
-  compareList,
-  compareTag,
-  compareText,
-  compareImage,
-  compareBoolean,
-  compareObject
-} from '../primitives/index.js';
+import { compareByType } from '../primitives/index.js';
 
 /**
  * Renders a single field with appropriate morph
  * 
  * DATA-DRIVEN:
  * - Type comes from field.type (detected by detectType)
- * - Switch is complete for all recognized types
+ * - Delegates to compareByType which has ALL compare morphs
  */
 export function renderFieldMorph(field, config = {}) {
   const fieldConfig = {
@@ -41,38 +28,8 @@ export function renderFieldMorph(field, config = {}) {
   // Support both field.type and field.typ
   const fieldType = field.type || field.typ;
   
-  switch (fieldType) {
-    case 'bar':
-    case 'number':
-      return compareBar(field.values, fieldConfig);
-    case 'rating':
-      return compareRating(field.values, fieldConfig);
-    case 'progress':
-      return compareProgress(field.values, fieldConfig);
-    case 'radar':
-      return compareRadar(field.values, fieldConfig);
-    case 'pie':
-      return comparePie(field.values, fieldConfig);
-    case 'range':
-      return compareRange(field.values, fieldConfig);
-    case 'stats':
-      return compareStats(field.values, fieldConfig);
-    case 'timeline':
-      return compareTimeline(field.values, fieldConfig);
-    case 'list':
-      return compareList(field.values, fieldConfig);
-    case 'tag':
-    case 'badge':
-      return compareTag(field.values, fieldConfig);
-    case 'boolean':
-      return compareBoolean(field.values, fieldConfig);
-    case 'image':
-      return compareImage(field.values, fieldConfig);
-    case 'object':
-      return compareObject(field.values, fieldConfig);
-    default:
-      return compareText(field.values, fieldConfig);
-  }
+  // Delegate to compareByType - SINGLE SOURCE OF TRUTH for all compare morphs
+  return compareByType(fieldType, field.values, fieldConfig);
 }
 
 /**
@@ -90,7 +47,7 @@ export function renderMetricsComposite(fieldNames, fields, items, config) {
     items: fields[name].values
   }));
   
-  // Display as stacked bars
+  // Display each metric with appropriate morph
   metricsData.forEach(metric => {
     const fieldSection = document.createElement('div');
     fieldSection.className = 'metric-field';
@@ -100,21 +57,14 @@ export function renderMetricsComposite(fieldNames, fields, items, config) {
     label.textContent = metric.label;
     fieldSection.appendChild(label);
     
-    // Detect type and choose appropriate morph
+    // Use compareByType for consistent morph selection
     const field = fields[metric.name];
     const fieldType = field.type || field.typ;
-    let morph;
-    
-    switch (fieldType) {
-      case 'rating':
-        morph = compareRating(metric.items, { max: 5 });
-        break;
-      case 'progress':
-        morph = compareProgress(metric.items, { unit: '%', einheit: '%' });
-        break;
-      default:
-        morph = compareBar(metric.items, {});
-    }
+    const morph = compareByType(fieldType, metric.items, { 
+      max: fieldType === 'rating' ? 5 : undefined,
+      unit: fieldType === 'progress' ? '%' : undefined,
+      einheit: fieldType === 'progress' ? '%' : undefined
+    });
     
     fieldSection.appendChild(morph);
     el.appendChild(fieldSection);
@@ -141,12 +91,10 @@ export function renderRangesComposite(fieldNames, fields, items, config) {
     label.textContent = config.labels?.[name] || name;
     fieldEl.appendChild(label);
     
-    // Range or stats - DATA-DRIVEN
+    // Use compareByType for consistent morph selection
     const fieldType = field.type || field.typ;
     const unitConfig = { unit: config.units?.[name], einheit: config.units?.[name] };
-    const morph = fieldType === 'stats' 
-      ? compareStats(field.values, unitConfig)
-      : compareRange(field.values, unitConfig);
+    const morph = compareByType(fieldType, field.values, unitConfig);
     
     fieldEl.appendChild(morph);
     el.appendChild(fieldEl);
@@ -172,7 +120,7 @@ export function renderProfileComposite(fieldNames, fields, items, config) {
     radarContainer.className = 'profile-radar';
     
     radarFields.forEach(name => {
-      const morph = compareRadar(fields[name].values, { 
+      const morph = compareByType('radar', fields[name].values, { 
         label: config.labels?.[name] || name 
       });
       radarContainer.appendChild(morph);
@@ -199,7 +147,7 @@ export function renderProfileComposite(fieldNames, fields, items, config) {
       label.textContent = config.labels?.[name] || name;
       fieldEl.appendChild(label);
       
-      const morph = comparePie(fields[name].values, {});
+      const morph = compareByType('pie', fields[name].values, {});
       fieldEl.appendChild(morph);
       pieContainer.appendChild(fieldEl);
     });
@@ -218,7 +166,9 @@ export function renderTimelineComposite(fieldNames, fields, items, config) {
   el.className = 'composite-timeline';
   
   fieldNames.forEach(name => {
-    const morph = compareTimeline(fields[name].values, {
+    const field = fields[name];
+    const fieldType = field.type || field.typ;
+    const morph = compareByType(fieldType, field.values, {
       label: config.labels?.[name] || name
     });
     el.appendChild(morph);
@@ -240,21 +190,87 @@ export function renderCategoriesComposite(fieldNames, fields, items, config) {
     fieldEl.className = 'category-field';
     
     const fieldType = field.type || field.typ;
-    let morph;
-    switch (fieldType) {
-      case 'boolean':
-        morph = compareBoolean(field.values, { label: config.labels?.[name] || name });
-        break;
-      case 'list':
-        morph = compareList(field.values, { label: config.labels?.[name] || name });
-        break;
-      case 'tag':
-      case 'badge':
-        morph = compareTag(field.values, { label: config.labels?.[name] || name });
-        break;
-      default:
-        morph = compareText(field.values, { label: config.labels?.[name] || name });
-    }
+    const morph = compareByType(fieldType, field.values, { 
+      label: config.labels?.[name] || name 
+    });
+    
+    fieldEl.appendChild(morph);
+    el.appendChild(fieldEl);
+  });
+  
+  return el;
+}
+
+/**
+ * HIERARCHICAL COMPOSITE - Networks, hierarchies, stacked bars
+ */
+export function renderHierarchicalComposite(fieldNames, fields, items, config) {
+  const el = document.createElement('div');
+  el.className = 'composite-hierarchical';
+  
+  fieldNames.forEach(name => {
+    const field = fields[name];
+    const fieldEl = document.createElement('div');
+    fieldEl.className = 'hierarchical-field';
+    
+    const label = document.createElement('div');
+    label.className = 'hierarchical-label';
+    label.textContent = config.labels?.[name] || name;
+    fieldEl.appendChild(label);
+    
+    const fieldType = field.type || field.typ;
+    const morph = compareByType(fieldType, field.values, {});
+    
+    fieldEl.appendChild(morph);
+    el.appendChild(fieldEl);
+  });
+  
+  return el;
+}
+
+/**
+ * CHARTS COMPOSITE - Dotplots, lollipops, pictograms
+ */
+export function renderChartsComposite(fieldNames, fields, items, config) {
+  const el = document.createElement('div');
+  el.className = 'composite-charts';
+  
+  fieldNames.forEach(name => {
+    const field = fields[name];
+    const fieldEl = document.createElement('div');
+    fieldEl.className = 'chart-field';
+    
+    const label = document.createElement('div');
+    label.className = 'chart-label';
+    label.textContent = config.labels?.[name] || name;
+    fieldEl.appendChild(label);
+    
+    const fieldType = field.type || field.typ;
+    const morph = compareByType(fieldType, field.values, {});
+    
+    fieldEl.appendChild(morph);
+    el.appendChild(fieldEl);
+  });
+  
+  return el;
+}
+
+/**
+ * MEDIA COMPOSITE - Images, maps, links
+ */
+export function renderMediaComposite(fieldNames, fields, items, config) {
+  const el = document.createElement('div');
+  el.className = 'composite-media';
+  
+  fieldNames.forEach(name => {
+    const field = fields[name];
+    const fieldEl = document.createElement('div');
+    fieldEl.className = 'media-field';
+    
+    const fieldType = field.type || field.typ;
+    const morph = compareByType(fieldType, field.values, { 
+      label: config.labels?.[name] || name 
+    });
     
     fieldEl.appendChild(morph);
     el.appendChild(fieldEl);
@@ -269,5 +285,8 @@ export default {
   renderRangesComposite,
   renderProfileComposite,
   renderTimelineComposite,
-  renderCategoriesComposite
+  renderCategoriesComposite,
+  renderHierarchicalComposite,
+  renderChartsComposite,
+  renderMediaComposite
 };

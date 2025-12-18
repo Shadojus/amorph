@@ -77,6 +77,7 @@ export function object(wert, config = {}, morphen) {
  * PROTEIN_G → Protein (g)
  * spore_size_um → Spore Size (µm)
  * snake_case → Title Case
+ * _internal → Internal (removes leading underscore)
  */
 function formatLabel(key) {
   // Bekannte Einheiten-Suffixe erkennen
@@ -96,6 +97,12 @@ function formatLabel(key) {
   };
   
   let label = String(key || '');
+  
+  // Remove leading underscore if present
+  if (label.startsWith('_')) {
+    label = label.slice(1);
+  }
+  
   let unit = '';
   
   // Prüfe auf Einheit am Ende

@@ -69,8 +69,22 @@ export function compareBadge(items, config = {}) {
     } else if (typeof val === 'boolean') {
       badgeText = val ? 'Ja' : 'Nein';
       variant = val ? 'success' : 'danger';
+    } else if (val === null || val === undefined) {
+      badgeText = '–';
+      variant = 'neutral';
+    } else if (typeof val === 'object') {
+      // Fallback for any object type not caught above
+      const keys = Object.keys(val);
+      if (keys.length === 0) {
+        badgeText = '–';
+      } else if (keys.length <= 2) {
+        badgeText = keys.map(k => val[k]).join(', ');
+      } else {
+        badgeText = `{${keys.length} Felder}`;
+      }
+      variant = 'neutral';
     } else {
-      badgeText = String(val ?? '–');
+      badgeText = String(val);
       variant = 'neutral';
     }
     

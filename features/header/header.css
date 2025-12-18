@@ -133,6 +133,14 @@
 }
 
 /* === RESPONSIVE === */
+
+/* Backdrop-Filter Fallback für schwache GPUs */
+@supports not (backdrop-filter: blur(1px)) {
+  .amorph-feature-header {
+    background: rgba(8, 8, 12, 0.98);
+  }
+}
+
 @media (max-width: 1024px) {
   .amorph-feature-header {
     padding: var(--space-sm) var(--space-md);
@@ -152,18 +160,29 @@
     --header-font: 0.8rem;
   }
   .amorph-feature-header {
-    padding: var(--space-sm);
+    padding: var(--space-xs) var(--space-sm);
+    /* Reduzierter Blur für Performance */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  .amorph-header-branding {
+    padding-bottom: 4px;
+    margin-bottom: 6px;
   }
   .amorph-header-main {
     gap: var(--space-xs);
-    margin-bottom: var(--space-xs);
+    margin-bottom: 6px;
   }
   .amorph-header-bifroest {
     display: none;
   }
   .amorph-header-perspektiven {
     margin: 0 calc(-1 * var(--space-sm));
-    padding: 0 var(--space-sm);
+    padding: 2px var(--space-sm);
+    /* Smooth scroll für Touch */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
   }
 }
 
@@ -171,22 +190,44 @@
   :root {
     --header-element-height: 38px;
     --header-element-radius: 19px;
-    --header-gap: 8px;
-    --header-padding-x: 14px;
-    --header-font: 0.8rem;
+    --header-gap: 6px;
+    --header-padding-x: 12px;
+    --header-font: 0.78rem;
   }
   .amorph-feature-header {
-    padding: var(--space-sm) var(--space-md);
+    padding: 6px 12px;
+    /* Minimal blur für beste Performance */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
   .amorph-header-branding {
-    padding-bottom: 6px;
-    margin-bottom: 8px;
+    padding-bottom: 4px;
+    margin-bottom: 6px;
   }
   .amorph-header-titel {
-    font-size: 0.9rem;
-    letter-spacing: 0.1em;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
   }
   .amorph-header-main {
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+    gap: 6px;
+  }
+  /* Suche nimmt volle Breite */
+  .amorph-header-main > *:first-child {
+    flex: 1;
+  }
+}
+
+/* Touch-Geräte: Größere Touch-Targets */
+@media (hover: none) and (pointer: coarse) {
+  .amorph-feature-header {
+    /* Kein Blur auf Touch für Performance */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(5, 5, 10, 0.92);
+  }
+  .amorph-header-perspektiven {
+    padding: 4px var(--space-sm);
+    gap: 6px;
   }
 }

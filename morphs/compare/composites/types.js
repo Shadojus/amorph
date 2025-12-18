@@ -5,6 +5,8 @@
  * This is the heart of data-driven decision making.
  * 
  * DATA-DRIVEN: Categories based on data structure, not field names!
+ * 
+ * COMPLETE: All 43 morph types are categorized!
  */
 
 // =============================================================================
@@ -13,25 +15,31 @@
 
 export const TYPE_CATEGORIES = {
   // Numeric comparisons - can be compared on a common scale
-  numeric: ['number', 'rating', 'progress', 'bar'],
+  numeric: ['number', 'rating', 'progress', 'bar', 'gauge', 'currency', 'dosage', 'severity'],
   
   // Ranges - have min/max, can be overlaid
-  ranges: ['range', 'stats'],
+  ranges: ['range', 'stats', 'boxplot', 'comparison'],
   
   // Multidimensional - have multiple axes/dimensions
-  multidim: ['radar', 'pie'],
+  multidim: ['radar', 'pie', 'sunburst', 'treemap', 'bubble', 'scatterplot'],
   
   // Sequential - have temporal or ordered sequence
-  sequential: ['timeline'],
+  sequential: ['timeline', 'sparkline', 'slopegraph', 'lifecycle', 'steps', 'flow', 'calendar'],
   
   // Categorical - discrete values
-  categorical: ['tag', 'badge', 'boolean', 'list'],
+  categorical: ['tag', 'badge', 'boolean', 'list', 'heatmap'],
+  
+  // Hierarchical - nested/structured data
+  hierarchical: ['hierarchy', 'network', 'groupedbar', 'stackedbar'],
+  
+  // Charts - bar-like visualizations
+  charts: ['dotplot', 'lollipop', 'pictogram'],
   
   // Text/Complex
-  textual: ['text', 'string', 'object'],
+  textual: ['text', 'string', 'object', 'citation'],
   
   // Media
-  media: ['image', 'link']
+  media: ['image', 'link', 'map']
 };
 
 // Reverse mapping: type → category

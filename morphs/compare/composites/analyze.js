@@ -85,6 +85,8 @@ export function analyzeItems(items) {
  * DATA-DRIVEN:
  * - Groups by TYPE_CATEGORY, not by field names
  * - "rating" + "popularity" = both numeric → together
+ * 
+ * COMPLETE: All categories from types.js are handled!
  */
 export function findRelatedFields(fields) {
   const groups = [];
@@ -118,7 +120,7 @@ export function findRelatedFields(fields) {
     rangeFields.forEach(f => used.add(f));
   }
   
-  // Group 3: Multidimensional data (Radar, Pie)
+  // Group 3: Multidimensional data (Radar, Pie, Sunburst, etc.)
   const multidimFields = Object.entries(fields)
     .filter(([_, f]) => f.category === 'multidim')
     .map(([name]) => name);
@@ -132,7 +134,7 @@ export function findRelatedFields(fields) {
     multidimFields.forEach(f => used.add(f));
   }
   
-  // Group 4: Sequential data
+  // Group 4: Sequential data (Timeline, Sparkline, Lifecycle, etc.)
   const seqFields = Object.entries(fields)
     .filter(([_, f]) => f.category === 'sequential')
     .map(([name]) => name);
@@ -146,7 +148,7 @@ export function findRelatedFields(fields) {
     seqFields.forEach(f => used.add(f));
   }
   
-  // Group 5: Categorical data
+  // Group 5: Categorical data (Tag, Badge, Boolean, List, Heatmap)
   const catFields = Object.entries(fields)
     .filter(([_, f]) => f.category === 'categorical')
     .map(([name]) => name);
@@ -160,7 +162,49 @@ export function findRelatedFields(fields) {
     catFields.forEach(f => used.add(f));
   }
   
-  // Rest: Single fields that weren't grouped
+  // Group 6: Hierarchical data (Hierarchy, Network, GroupedBar, etc.)
+  const hierarchicalFields = Object.entries(fields)
+    .filter(([_, f]) => f.category === 'hierarchical')
+    .map(([name]) => name);
+  
+  if (hierarchicalFields.length >= 1) {
+    groups.push({
+      type: 'hierarchical',
+      label: 'Structures',
+      fields: hierarchicalFields
+    });
+    hierarchicalFields.forEach(f => used.add(f));
+  }
+  
+  // Group 7: Chart data (Dotplot, Lollipop, Pictogram)
+  const chartFields = Object.entries(fields)
+    .filter(([_, f]) => f.category === 'charts')
+    .map(([name]) => name);
+  
+  if (chartFields.length >= 1) {
+    groups.push({
+      type: 'charts',
+      label: 'Charts',
+      fields: chartFields
+    });
+    chartFields.forEach(f => used.add(f));
+  }
+  
+  // Group 8: Media (Image, Link, Map)
+  const mediaFields = Object.entries(fields)
+    .filter(([_, f]) => f.category === 'media')
+    .map(([name]) => name);
+  
+  if (mediaFields.length >= 1) {
+    groups.push({
+      type: 'media',
+      label: 'Media',
+      fields: mediaFields
+    });
+    mediaFields.forEach(f => used.add(f));
+  }
+  
+  // Rest: Single fields that weren't grouped (textual, etc.)
   Object.keys(fields).forEach(name => {
     if (!used.has(name)) {
       groups.push({

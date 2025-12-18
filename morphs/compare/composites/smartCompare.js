@@ -18,7 +18,10 @@ import {
   renderRangesComposite,
   renderProfileComposite,
   renderTimelineComposite,
-  renderCategoriesComposite
+  renderCategoriesComposite,
+  renderHierarchicalComposite,
+  renderChartsComposite,
+  renderMediaComposite
 } from './render.js';
 
 /**
@@ -121,8 +124,20 @@ function renderGroup(group, fields, items, config) {
       content.appendChild(renderCategoriesComposite(group.fields, fields, items, config));
       break;
       
+    case 'hierarchical':
+      content.appendChild(renderHierarchicalComposite(group.fields, fields, items, config));
+      break;
+      
+    case 'charts':
+      content.appendChild(renderChartsComposite(group.fields, fields, items, config));
+      break;
+      
+    case 'media':
+      content.appendChild(renderMediaComposite(group.fields, fields, items, config));
+      break;
+      
     default:
-      // Single fields
+      // Single fields (textual, etc.)
       group.fields.forEach(fieldName => {
         const field = fields[fieldName];
         if (field) {

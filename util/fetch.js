@@ -482,9 +482,15 @@ class JsonPerspektivenSource {
       const url = `${spezies._baseUrl}${perspektive}.json`;
       try {
         const response = await fetch(url);
-        if (!response.ok) return null;
+        if (!response.ok) {
+          // 404 etc. als "geladen aber leer" markieren - verhindert erneute Requests!
+          merged._loadedPerspectives.add(perspektive);
+          return null;
+        }
         return { perspektive, data: await response.json() };
       } catch (e) {
+        // Fehler auch cachen um Retry-Loops zu verhindern
+        merged._loadedPerspectives.add(perspektive);
         return null;
       }
     });
@@ -771,9 +777,15 @@ class JsonUniverseOptimizedSource {
       const url = `${full._baseUrl}${perspective}.json`;
       try {
         const response = await fetch(url);
-        if (!response.ok) return null;
+        if (!response.ok) {
+          // 404 etc. als "geladen aber leer" markieren - verhindert erneute Requests!
+          full._loadedPerspectives.add(perspective);
+          return null;
+        }
         return { perspective, data: await response.json() };
       } catch (e) {
+        // Fehler auch cachen um Retry-Loops zu verhindern
+        full._loadedPerspectives.add(perspective);
         return null;
       }
     });
@@ -979,9 +991,15 @@ class JsonUniverseSource {
       const url = `${spezies._baseUrl}${perspektive}.json`;
       try {
         const response = await fetch(url);
-        if (!response.ok) return null;
+        if (!response.ok) {
+          // 404 etc. als "geladen aber leer" markieren - verhindert erneute Requests!
+          merged._loadedPerspectives.add(perspektive);
+          return null;
+        }
         return { perspektive, data: await response.json() };
       } catch (e) {
+        // Fehler auch cachen um Retry-Loops zu verhindern
+        merged._loadedPerspectives.add(perspektive);
         return null;
       }
     });

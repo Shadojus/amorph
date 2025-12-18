@@ -83,7 +83,12 @@ export function compareObject(items, config = {}) {
 }
 
 function formatLabel(key) {
-  return key
+  // Remove leading underscore if present
+  let label = String(key || '');
+  if (label.startsWith('_')) {
+    label = label.slice(1);
+  }
+  return label
     .replace(/_/g, ' ')
     .replace(/([a-z])([A-Z])/g, '$1 $2')
     .replace(/\b\w/g, c => c.toUpperCase());

@@ -551,9 +551,54 @@ amorph-container[data-morph="item"] amorph-container[data-field]:last-child {
   }
   
   amorph-container[data-morph="item"] {
-    max-height: none;
-    min-height: auto;
-    padding: var(--space-md);
+    /* Mobile: Fixed height with scroll */
+    max-height: 70vh;
+    min-height: 300px;
+    padding: 0;
+    /* Kein Backdrop-Filter auf Mobile für Performance */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(20, 25, 35, 0.98);
+    /* Enable internal scrolling */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Mobile: Sticky header */
+  amorph-container[data-morph="item"] .amorph-item-header {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    flex-shrink: 0;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(15, 18, 28, 0.98);
+  }
+  
+  /* Mobile: Scrollable content area */
+  amorph-container[data-morph="item"] .amorph-item-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    /* Visible scrollbar on mobile */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 150, 255, 0.4) transparent;
+  }
+  
+  amorph-container[data-morph="item"] .amorph-item-content::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  amorph-container[data-morph="item"] .amorph-item-content::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  amorph-container[data-morph="item"] .amorph-item-content::-webkit-scrollbar-thumb {
+    background: rgba(100, 150, 255, 0.4);
+    border-radius: 2px;
   }
   
   /* Mehr Platz für Daten auf Mobil */
@@ -582,4 +627,51 @@ amorph-container[data-morph="item"] amorph-container[data-field]:last-child {
     grid-row: auto;
     max-width: 100%;
   }
+  
+  /* Fallback: Items ohne Header/Content-Struktur direkt scrollbar machen */
+  amorph-container[data-morph="item"]:not(:has(.amorph-item-content)) {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: var(--space-sm);
+  }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TOUCH DEVICE OPTIMIERUNGEN
+   ═══════════════════════════════════════════════════════════════════════════ */
+@media (hover: none) and (pointer: coarse) {
+  /* Kein Hover-Transform auf Touch - spart GPU */
+  amorph-container[data-morph="item"]:hover {
+    transform: none;
+    box-shadow: 
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      0 8px 32px rgba(0, 0, 0, 0.5),
+      0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Active State statt Hover */
+  amorph-container[data-morph="item"]:active {
+    transform: scale(0.98);
+    transition-duration: 0.1s;
+  }
+  
+  /* Touch-freundliches Scrolling */
+  .amorph-item-content {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  amorph-container[data-morph="item"] {
+    transition: none;
+  }
+  
+  amorph-container[data-morph="item"]:hover {
+    transform: none;
+  }
+}
+

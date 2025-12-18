@@ -369,10 +369,78 @@ debug.error(msg, data)     // Fehler
 ```
 
 ### Responsive Breakpoints
-- XL: 1280px+ (4 Spalten)
+- XL: 1280px+ (3 Spalten)
 - LG: 1024-1279px (3 Spalten)
 - MD: 768-1023px (2 Spalten)
-- SM/XS: <768px (1-2 Spalten)
+- SM: 480-767px (2 Spalten, kompakt)
+- XS: <480px (1 Spalte, mobile-first)
+
+---
+
+## Mobile-Optimierungen
+
+### Touch-Geräte (`@media (hover: none) and (pointer: coarse)`)
+
+```css
+/* Größere Touch-Targets (44px Minimum - Apple Guidelines) */
+.amorph-action-btn { min-height: 44px; }
+.amorph-perspektive-btn { min-height: 44px; min-width: 44px; }
+
+/* Kein Hover-Transform auf Touch - spart GPU */
+amorph-container[data-morph="item"]:hover { transform: none; }
+
+/* Active State statt Hover */
+amorph-container[data-morph="item"]:active { transform: scale(0.98); }
+
+/* Touch-freundliches Scrolling */
+-webkit-overflow-scrolling: touch;
+scroll-snap-type: x mandatory;
+```
+
+### Performance-Optimierungen
+
+| Feature | Desktop | Tablet (768px) | Mobile (480px) |
+|---------|---------|----------------|----------------|
+| Backdrop-Filter | blur(24px) | blur(12px) | deaktiviert |
+| Hover-Transform | aktiv | aktiv | deaktiviert |
+| Animationen | komplett | komplett | `prefers-reduced-motion` |
+| Grid-Spalten | 3 | 2 | 1 |
+
+### Backdrop-Filter Fallback
+
+```css
+/* Schwache GPUs ohne Backdrop-Filter */
+@supports not (backdrop-filter: blur(1px)) {
+  .amorph-header { background: rgba(8, 12, 20, 0.98); }
+}
+
+/* Mobile: Solider Hintergrund statt Blur */
+@media (max-width: 480px) {
+  amorph-container[data-morph="item"] {
+    backdrop-filter: none;
+    background: rgba(20, 25, 35, 0.98);
+  }
+}
+```
+
+### Reduced Motion Support
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  .amorph-item { animation: none; }
+  .amorph-perspektive-btn { transition: none; }
+}
+```
+
+### CSS-Dateien mit Mobile-Styles
+
+| Datei | Mobile-Features |
+|-------|-----------------|
+| `styles/layouts.css` | Grid-Spalten, Touch-Events, Blur-Fallback |
+| `styles/ansichten.css` | Action-Bar, Detail-View, Touch-Targets |
+| `features/header/header.css` | Kompakter Header, Blur-Reduzierung |
+| `features/perspektiven/perspektiven.css` | Scroll-Snap, größere Buttons |
+
 
 ---
 

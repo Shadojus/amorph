@@ -330,7 +330,8 @@ export default function init(ctx) {
     debug.perspectives('Badges updated', { count: aktivePerspektiven.size });
   }
 
-  function anwendenPerspektiven() {
+  // skipEvent=true verhindert Endlosschleife nach Rerender
+  function anwendenPerspektiven(skipEvent = false) {
     const appContainer = document.querySelector('[data-amorph-container]');
     if (!appContainer) return;
     
@@ -451,13 +452,15 @@ export default function init(ctx) {
       });
     }
     
-    // Event emittieren - sowohl ctx-intern als auch document-weit
-    const eventData = { aktiv: Array.from(aktivePerspektiven) };
-    debug.header('Sending perspectives event', eventData);
-    ctx.emit('perspektiven:geaendert', eventData);
-    document.dispatchEvent(new CustomEvent('perspektiven:geaendert', { 
-      detail: eventData
-    }));
+    // Event emittieren - NICHT nach Rerender (skipEvent=true)
+    if (!skipEvent) {
+      const eventData = { aktiv: Array.from(aktivePerspektiven) };
+      debug.header('Sending perspectives event', eventData);
+      ctx.emit('perspektiven:geaendert', eventData);
+      document.dispatchEvent(new CustomEvent('perspektiven:geaendert', { 
+        detail: eventData
+      }));
+    }
   }
   
   function setPerspektive(id, aktiv) {
@@ -655,13 +658,15 @@ export default function init(ctx) {
   }
   
   // Nach Re-Render (durch Lazy-Loading): Perspektiven neu anwenden
+  // WICHTIG: skipEvent=true um Endlosschleife zu verhindern!
   document.addEventListener('amorph:rerender-complete', (e) => {
-    debug.header('Rerender complete - reapplying perspectives', { 
+    debug.header('Rerender complete - reapplying perspectives (no event)', { 
       perspektiven: e.detail?.perspektiven,
       count: e.detail?.count 
     });
     // Kurze Verzögerung damit DOM komplett aktualisiert ist
-    setTimeout(() => anwendenPerspektiven(), 50);
+    // skipEvent=true verhindert erneutes Perspektiven-Laden
+    setTimeout(() => anwendenPerspektiven(true), 50);
   });
   
   ctx.dom.appendChild(container);

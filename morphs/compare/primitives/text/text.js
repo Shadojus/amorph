@@ -45,10 +45,25 @@ export function compareText(items, config = {}) {
     textEl.className = 'amorph-text';
     // Don't apply heavy neon to text content (just keep readable)
     
+    // Helper to format any value safely
+    const formatVal = (v) => {
+      if (v === null || v === undefined) return '–';
+      if (typeof v === 'string') return v;
+      if (typeof v === 'number' || typeof v === 'boolean') return String(v);
+      if (typeof v === 'object') {
+        if (v.name) return v.name;
+        if (v.label) return v.label;
+        if (v.title) return v.title;
+        if (v.value !== undefined) return formatVal(v.value);
+        return '{...}';
+      }
+      return String(v);
+    };
+    
     // Format the value using original text morph logic
     if (typeof val === 'object' && val !== null) {
       if (Array.isArray(val)) {
-        textEl.textContent = val.join(', ');
+        textEl.textContent = val.map(formatVal).join(', ');
       } else {
         if (val.name) {
           textEl.textContent = String(val.name);
@@ -57,18 +72,18 @@ export function compareText(items, config = {}) {
         } else if (val.title || val.titel) {
           textEl.textContent = String(val.title || val.titel);
         } else if (val.value !== undefined) {
-          textEl.textContent = String(val.value);
+          textEl.textContent = formatVal(val.value);
         } else {
           const entries = Object.entries(val)
             .slice(0, 3)
-            .map(([k, v]) => `${k}: ${typeof v === 'object' ? '...' : v}`)
+            .map(([k, v]) => `${k}: ${formatVal(v)}`)
             .join(', ');
           textEl.textContent = entries || '(leer)';
           textEl.classList.add('amorph-text-object');
         }
       }
     } else {
-      textEl.textContent = String(val ?? '–');
+      textEl.textContent = formatVal(val);
     }
     
     wrapper.appendChild(textEl);

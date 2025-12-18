@@ -27,7 +27,10 @@ import {
   renderRangesComposite,
   renderProfileComposite,
   renderTimelineComposite,
-  renderCategoriesComposite
+  renderCategoriesComposite,
+  renderHierarchicalComposite,
+  renderChartsComposite,
+  renderMediaComposite
 } from './render.js';
 
 // Composite morphs
@@ -54,6 +57,9 @@ export {
   renderProfileComposite,
   renderTimelineComposite,
   renderCategoriesComposite,
+  renderHierarchicalComposite,
+  renderChartsComposite,
+  renderMediaComposite,
   
   // Composite morphs
   smartCompare,

@@ -10,6 +10,8 @@
   align-items: center;
   padding: var(--space-xs) 0;
   min-width: max-content;
+  /* Touch-optimiertes Scrollen */
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Perspektiven in eigener Zeile */
@@ -40,6 +42,10 @@
   transition: all 0.25s var(--anim-ease-out);
   position: relative;
   order: 100;
+  /* Scroll-Snap für Touch */
+  scroll-snap-align: start;
+  /* Touch-Action für besseres Scrolling */
+  touch-action: pan-x;
 }
 
 /* Perspektiven mit Treffern - leicht hervorgehoben */
@@ -296,5 +302,94 @@ amorph-container[data-field] {
     background-position: 0% 100%;
     opacity: 1;
     filter: brightness(1.1);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MOBILE OPTIMIERUNGEN - Perspektiven
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Tablet (768px) */
+@media (max-width: 768px) {
+  .amorph-perspektiven {
+    gap: 6px;
+  }
+  
+  .amorph-perspektive-btn {
+    height: 34px;
+    padding: 0 12px;
+    font-size: 0.8rem;
+    gap: 6px;
+    /* Reduzierter Blur für Performance */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  
+  .amorph-perspektive-btn .btn-symbol {
+    font-size: 0.95em;
+  }
+}
+
+/* Mobile (480px) */
+@media (max-width: 480px) {
+  .amorph-perspektiven {
+    gap: 6px;
+    padding: 2px 0;
+  }
+  
+  .amorph-perspektive-btn {
+    height: 36px;
+    padding: 0 10px;
+    font-size: 0.75rem;
+    gap: 5px;
+    /* Kein Blur auf Mobile für beste Performance */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.5)) 20%, rgba(15, 18, 25, 0.95));
+  }
+  
+  /* Nur Symbol auf sehr kleinen Screens */
+  .amorph-perspektive-btn .btn-name {
+    display: none;
+  }
+  
+  .amorph-perspektive-btn .btn-symbol {
+    font-size: 1.1em;
+  }
+  
+  /* Aktive Perspektive zeigt Namen */
+  .amorph-perspektive-btn.aktiv .btn-name {
+    display: inline;
+  }
+}
+
+/* Touch-Geräte: Größere Touch-Targets (44px Minimum) */
+@media (hover: none) and (pointer: coarse) {
+  .amorph-perspektive-btn {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0 14px;
+  }
+  
+  /* Kein Hover-Transform auf Touch */
+  .amorph-perspektive-btn:hover {
+    transform: none;
+  }
+  
+  /* Aktiver State statt Hover */
+  .amorph-perspektive-btn:active {
+    transform: scale(0.96);
+    transition-duration: 0.1s;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .amorph-perspektive-btn {
+    transition: none;
+  }
+  
+  @keyframes multi-color-flow {
+    0%, 100% { opacity: 1; }
   }
 }
