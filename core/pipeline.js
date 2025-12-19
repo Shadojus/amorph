@@ -72,7 +72,6 @@ export function setErkennungConfig(config) {
   detectionConfig = config?.erkennung || null;
   debug.detection('Detection config loaded', { 
     hasBadge: !!detectionConfig?.badge,
-    hasRating: !!detectionConfig?.rating,
     hasProgress: !!detectionConfig?.progress,
     objectRules: Object.keys(detectionConfig?.objekt || {}).length,
     arrayRules: Object.keys(detectionConfig?.array || {}).length
@@ -309,31 +308,20 @@ export function detectType(value) {
  * NUMBER TYPE DETECTION (Kirk: Kontextgerechte Zahlen-Darstellung)
  * ═══════════════════════════════════════════════════════════════════════════════
  * 
- * RATING: 0-10 Skala (Kirk: Sterne/Punkte-Bewertungen)
- *   → Kleine Skala für Bewertungen (1-5 Sterne, 0-10 Punkte)
- *   → Ganzzahlen UND Dezimalen erlaubt (4 oder 4.5)
- *   → Beispiel: 7.5, 8, 4.2
- * 
- * PROGRESS: 11-100 Ganzzahlen (Kirk: Fortschrittsbalken)
+ * PROGRESS: 0-100 Ganzzahlen (Kirk: Fortschrittsbalken)
  *   → Prozentuale Werte, Completion-Status
- *   → Bereich 11-100 um Überschneidung mit Rating zu vermeiden
  *   → Beispiel: 75, 100, 33
  * 
  * NUMBER: Alle anderen numerischen Werte
  *   → Werte >100 oder negative Werte
+ *   → Dezimalwerte
  *   → Standardanzeige für beliebige Zahlen
  */
 function detectNumberType(value) {
   const cfg = detectionConfig || {};
   
-  // Rating: 0-10 (Ganzzahlen UND Dezimalen) - Kirk: Sterne-Bewertungen
-  const rating = cfg.rating || { min: 0, max: 10 };
-  if (value >= rating.min && value <= rating.max) {
-    return 'rating';
-  }
-  
-  // Progress: 11-100 Ganzzahlen - Kirk: Fortschrittsbalken
-  const progress = cfg.progress || { min: 11, max: 100, integersOnly: true };
+  // Progress: 0-100 Ganzzahlen - Kirk: Fortschrittsbalken
+  const progress = cfg.progress || { min: 0, max: 100, integersOnly: true };
   if (value >= progress.min && value <= progress.max && (!progress.integersOnly || Number.isInteger(value))) {
     return 'progress';
   }
@@ -848,10 +836,6 @@ function detectArrayType(value) {
  *   → Wertebereiche, Spannen
  *   → Beispiel: {min: 10, max: 25}
  * 
- * RATING: Bewertungen (rating/score/stars)
- *   → Kirk: Rating-Anzeigen mit Sternen/Punkten
- *   → Beispiel: {rating: 4.5, max: 5}
- * 
  * PROGRESS: Fortschritt (value/current + max/total)
  *   → Fortschrittsbalken
  *   → Beispiel: {current: 75, total: 100}
@@ -969,15 +953,6 @@ function detectObjectType(value) {
     return 'range';
   }
   
-  /* ─── RATING: Bewertungen ─── */
-  // Kirk: Sterne/Punkte-Bewertungen
-  const ratingCfg = cfg.rating || {};
-  const ratingKeys = ensureArray(ratingCfg.requiredKeys, ['rating', 'bewertung']);
-  const ratingAltKeys = ensureArray(ratingCfg.alternativeKeys, ['score', 'stars', 'sterne', 'punkte']);
-  if (ratingKeys.some(k => k in value) || ratingAltKeys.some(k => k in value)) {
-    return 'rating';
-  }
-  
   /* ─── PROGRESS: Fortschrittsanzeige ─── */
   // Fortschrittsbalken
   const progressCfg = cfg.progress || {};
@@ -1046,7 +1021,6 @@ function findMorph(type, value, fieldName, morphConfig, schemaFieldMorphs = {}) 
     'pie': 'pie',
     'bar': 'bar',
     'radar': 'radar',
-    'rating': 'rating',
     'progress': 'progress',
     'stats': 'stats',
     'timeline': 'timeline',

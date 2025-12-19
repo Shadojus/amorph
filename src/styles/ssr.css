@@ -154,24 +154,6 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
- * RATING (Sterne)
- * ═══════════════════════════════════════════════════════════════════════════════ */
-
-.ssr-rating {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  color: #f59e0b;
-  font-size: 1.125rem;
-}
-
-.ssr-rating-value {
-  color: var(--text-secondary, #6b7280);
-  font-size: 0.875rem;
-  margin-left: 0.5rem;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════════
  * PROGRESS BAR
  * ═══════════════════════════════════════════════════════════════════════════════ */
 
@@ -542,4 +524,120 @@
   .ssr-progress {
     background: #374151;
   }
+  
+  .ssr-sparkline {
+    color: #60a5fa;
+  }
+  
+  .ssr-gauge text {
+    fill: #e5e7eb;
+  }
+  
+  .ssr-radar text {
+    fill: #9ca3af;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+ * SVG MORPHS (Sparkline, Gauge, Radar, Heatmap, Pie)
+ * ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* Sparkline */
+.ssr-sparkline {
+  display: inline-block;
+  width: 120px;
+  height: 32px;
+  vertical-align: middle;
+  color: #3b82f6;
+}
+
+.ssr-sparkline-fallback {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #6b7280);
+}
+
+/* Gauge */
+.ssr-gauge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.ssr-gauge svg {
+  width: 80px;
+  height: 48px;
+}
+
+.ssr-gauge-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary, #6b7280);
+}
+
+/* Radar */
+.ssr-radar {
+  width: 140px;
+  height: 140px;
+}
+
+.ssr-radar-fallback {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #6b7280);
+}
+
+/* Heatmap */
+.ssr-heatmap {
+  display: inline-grid;
+  gap: 1px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.ssr-heatmap-cell {
+  transition: opacity 0.2s;
+}
+
+.ssr-heatmap-cell:hover {
+  opacity: 0.8;
+}
+
+/* Pie Chart */
+.ssr-pie {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ssr-pie svg {
+  width: 80px;
+  height: 80px;
+}
+
+.ssr-pie-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+}
+
+.ssr-pie-item {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.ssr-pie-color {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+/* Error State */
+.ssr-error {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  background: #fee2e2;
+  color: #991b1b;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
 }

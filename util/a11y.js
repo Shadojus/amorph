@@ -531,7 +531,6 @@ const A11Y_STYLES = `
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   .amorph-badge,
-  .amorph-rating-star,
   .amorph-bar-fill {
     border: 2px solid currentColor;
   }

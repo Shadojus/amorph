@@ -8,6 +8,9 @@
  * - Styles
  */
 
+// SSR Styles direkt importieren (Astro bundled das)
+import '../styles/ssr.css';
+
 export interface Props {
   title: string;
   description?: string;
@@ -59,11 +62,6 @@ const fullCanonicalUrl = canonicalUrl ? `${siteUrl}${canonicalUrl}` : Astro.url.
   
   <!-- Styles - importiert von root level -->
   <link rel="stylesheet" href="/styles/index.css">
-  
-  <!-- SSR Morph Styles -->
-  <style>
-    @import '../styles/ssr.css';
-  </style>
   
   <slot name="head" />
 </head>

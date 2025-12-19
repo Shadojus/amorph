@@ -430,14 +430,8 @@ export function detectType(value) {
 function detectNumberType(value) {
   const cfg = detectionConfig || {};
   
-  // Rating: 0-10 (integers AND decimals) - Kirk: Star ratings
-  const rating = cfg.rating || { min: 0, max: 10 };
-  if (value >= rating.min && value <= rating.max) {
-    return 'rating';
-  }
-  
-  // Progress: 11-100 integers - Kirk: Progress bars
-  const progress = cfg.progress || { min: 11, max: 100, integersOnly: true };
+  // Progress: 0-100 integers - Kirk: Progress bars
+  const progress = cfg.progress || { min: 0, max: 100, integersOnly: true };
   if (value >= progress.min && value <= progress.max && (!progress.integersOnly || Number.isInteger(value))) {
     return 'progress';
   }
@@ -849,14 +843,6 @@ function detectObjectType(value) {
   const rangeKeys = ensureArray(rangeCfg.requiredKeys || rangeCfg.benoetigtKeys, ['min', 'max']);
   if (rangeKeys.every(k => k in value) && statsMatches < 3) {
     return 'range';
-  }
-  
-  /* ─── RATING: Score/stars ─── */
-  const ratingCfg = cfg.rating || {};
-  const ratingKeys = ensureArray(ratingCfg.requiredKeys || ratingCfg.benoetigtKeys, ['rating', 'bewertung']);
-  const ratingAltKeys = ensureArray(ratingCfg.alternativeKeys, ['score', 'stars', 'sterne', 'punkte']);
-  if (ratingKeys.some(k => k in value) || ratingAltKeys.some(k => k in value)) {
-    return 'rating';
   }
   
   /* ─── PROGRESS: Progress bar ─── */

@@ -94,7 +94,6 @@ export const TYPE_TO_MORPH = {
   'pie': 'pie',
   'bar': 'bar',
   'radar': 'radar',
-  'rating': 'rating',
   'progress': 'progress',
   'stats': 'stats',
   'timeline': 'timeline',

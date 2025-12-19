@@ -13,7 +13,6 @@ import { link } from '../morphs/primitives/link/link.js';
 import { pie } from '../morphs/primitives/pie/pie.js';
 import { bar } from '../morphs/primitives/bar/bar.js';
 import { radar } from '../morphs/primitives/radar/radar.js';
-import { rating } from '../morphs/primitives/rating/rating.js';
 import { progress } from '../morphs/primitives/progress/progress.js';
 import { stats } from '../morphs/primitives/stats/stats.js';
 import { timeline } from '../morphs/primitives/timeline/timeline.js';
@@ -33,7 +32,6 @@ import { header } from './header.js';
 import { 
   compareByType,
   compareBar as compareBarMorph, 
-  compareRating, 
   compareTag as compareTagMorph, 
   compareList as compareListMorph, 
   compareImage, 
@@ -136,7 +134,6 @@ export const morphs = {
   pie,      // Kreisdiagramm für Verteilungen
   bar,      // Balkendiagramm für Vergleiche
   radar,    // Radar-Chart für Profile (3+ Achsen)
-  rating,   // Sterne-Bewertung (0-5, 0-10, 0-100)
   progress, // Fortschrittsbalken
   stats,    // statistics-Karte (min/max/avg)
   timeline, // Zeitliche Abfolge
@@ -146,7 +143,6 @@ export const morphs = {
   // Compare-Morphs (Vergleich) - Alle Typen
   compareMorph,
   compareBar,
-  compareRating,
   compareTag,
   compareList,
   compareImage,
@@ -176,9 +172,9 @@ export const morphs = {
 
 // Log registrierte Morphs
 debug.morphs('registry', { 
-  primitives: ['text', 'number', 'boolean', 'tag', 'range', 'list', 'object', 'image', 'link', 'pie', 'bar', 'radar', 'rating', 'progress', 'stats', 'timeline', 'badge', 'lifecycle'],
+  primitives: ['text', 'number', 'boolean', 'tag', 'range', 'list', 'object', 'image', 'link', 'pie', 'bar', 'radar', 'progress', 'stats', 'timeline', 'badge', 'lifecycle'],
   features: ['suche', 'perspektiven', 'header'],
-  compare: ['compareMorph', 'compareBar', 'compareRating', 'compareTag', 'compareList', 'compareImage', 'compareRadar', 'comparePie', 'compareText', 'compareTimeline', 'compareRange', 'compareProgress', 'compareBoolean', 'compareStats', 'compareObject'],
+  compare: ['compareMorph', 'compareBar', 'compareTag', 'compareList', 'compareImage', 'compareRadar', 'comparePie', 'compareText', 'compareTimeline', 'compareRange', 'compareProgress', 'compareBoolean', 'compareStats', 'compareObject'],
   composites: ['smartCompare', 'diffCompare']
 });
 
@@ -188,13 +184,13 @@ debug.morphs('registry', {
 export { 
   // Primitives
   text, number, boolean, tag, range, list, object, image, link, 
-  pie, bar, radar, rating, progress, stats, timeline, badge, lifecycle,
+  pie, bar, radar, progress, stats, timeline, badge, lifecycle,
   
   // Features
   suche, perspektiven, header,
   
   // Compare Morphs - Alle
-  compareMorph, compareBar, compareRating, compareTag, compareList, 
+  compareMorph, compareBar, compareTag, compareList, 
   compareImage, compareRadar, comparePie, compareText, compareTimeline,
   compareRange, compareProgress, compareBoolean, compareStats, compareObject,
   

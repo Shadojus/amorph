@@ -204,17 +204,6 @@
   color: var(--pilz-text) !important;
 }
 
-/* --- RATING MORPH --- */
-[class*="pilz-farbe-"] .amorph-rating-value,
-[class*="pilz-farbe-"] .amorph-rating-label {
-  color: var(--pilz-text) !important;
-}
-
-[class*="pilz-farbe-"] .amorph-rating-star.amorph-rating-full,
-[class*="pilz-farbe-"] .amorph-rating-star.amorph-rating-half {
-  color: var(--pilz-text) !important;
-}
-
 /* --- RANGE MORPH --- */
 [class*="pilz-farbe-"] .amorph-range-label,
 [class*="pilz-farbe-"] .amorph-range-text {
@@ -444,10 +433,6 @@
 [class*="pilz-farbe-"] .progress-name { color: var(--pilz-text) !important; }
 [class*="pilz-farbe-"] .progress-bar { background: var(--pilz-fill) !important; }
 [class*="pilz-farbe-"] .progress-wert { color: var(--pilz-text) !important; }
-
-/* Alte rating-* Klassen */
-[class*="pilz-farbe-"] .rating-name { color: var(--pilz-text) !important; }
-[class*="pilz-farbe-"] .star.filled { color: var(--pilz-text) !important; }
 
 /* Alte boolean-* Klassen */
 [class*="pilz-farbe-"] .boolean-name { color: var(--pilz-text) !important; }

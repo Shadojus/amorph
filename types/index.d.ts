@@ -40,7 +40,7 @@ export type DetectedType =
   // Primitives
   | 'null' | 'boolean' | 'number' | 'string' | 'text'
   // Numbers
-  | 'rating' | 'progress'
+  | 'progress'
   // Strings
   | 'link' | 'image' | 'badge' | 'tag'
   // Arrays
@@ -124,10 +124,6 @@ export interface DetectionConfig {
   badge?: {
     keywords?: string[];
     maxLength?: number;
-  };
-  rating?: {
-    min?: number;
-    max?: number;
   };
   progress?: {
     min?: number;

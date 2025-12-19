@@ -8,7 +8,6 @@ import { debug } from '../../../observer/debug.js';
 // Import all primitives from subdirectories
 export { compareBar } from './bar/bar.js';
 export { compareBarGroup } from './barGroup/barGroup.js';
-export { compareRating } from './rating/rating.js';
 export { compareTag } from './tag/tag.js';
 export { compareList } from './list/list.js';
 export { compareImage } from './image/image.js';
@@ -56,7 +55,6 @@ export { compareTreemap } from './treemap/treemap.js';
 // For compareByType we need the functions directly
 import { compareBar } from './bar/bar.js';
 import { compareBarGroup } from './barGroup/barGroup.js';
-import { compareRating } from './rating/rating.js';
 import { compareTag } from './tag/tag.js';
 import { compareList } from './list/list.js';
 import { compareImage } from './image/image.js';
@@ -122,9 +120,6 @@ export function compareByType(type, items, config = {}) {
       
     case 'number':
       return compareNumber(items, config);
-      
-    case 'rating':
-      return compareRating(items, config);
       
     case 'radar':
       return compareRadar(items, config);
@@ -254,7 +249,6 @@ export default {
   compareByType,
   compareBar,
   compareBarGroup,
-  compareRating,
   compareTag,
   compareList,
   compareImage,

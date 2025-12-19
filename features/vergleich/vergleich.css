@@ -504,57 +504,6 @@
   text-align: right;
 }
 
-/* === UNIFIED RATING COMPARE === */
-.amorph-rating-compare {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm, 8px);
-  width: 100%;
-}
-
-.amorph-rating-row-compare {
-  display: grid;
-  grid-template-columns: 120px auto 1fr 80px;
-  gap: var(--space-sm, 8px);
-  align-items: center;
-}
-
-.amorph-rating-row-compare .amorph-rating-name {
-  font-size: var(--ui-font-sm, 0.65rem);
-  color: rgba(255, 255, 255, 0.85);
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.amorph-rating-row-compare .amorph-rating-stars {
-  font-size: 1rem;
-  letter-spacing: 2px;
-}
-
-.amorph-rating-row-compare .amorph-rating-star.amorph-rating-empty {
-  opacity: 0.3;
-}
-
-.amorph-rating-bar-track {
-  height: 8px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.amorph-rating-bar-fill {
-  height: 100%;
-  border-radius: 4px;
-  transition: width 0.3s ease;
-}
-
-.amorph-rating-row-compare .amorph-rating-value {
-  font-size: var(--ui-font-sm, 0.65rem);
-  font-weight: 600;
-  text-align: right;
-}
-
 /* === UNIFIED SPARKLINE COMPARE === */
 .amorph-sparkline-compare {
   display: flex;

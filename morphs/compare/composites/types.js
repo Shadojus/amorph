@@ -15,7 +15,7 @@
 
 export const TYPE_CATEGORIES = {
   // Numeric comparisons - can be compared on a common scale
-  numeric: ['number', 'rating', 'progress', 'bar', 'gauge', 'currency', 'dosage', 'severity'],
+  numeric: ['number', 'progress', 'bar', 'gauge', 'currency', 'dosage', 'severity'],
   
   // Ranges - have min/max, can be overlaid
   ranges: ['range', 'stats', 'boxplot', 'comparison'],

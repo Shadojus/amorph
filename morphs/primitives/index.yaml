@@ -16,7 +16,6 @@ morphs:
   - list
   - object
   - range
-  - rating
   - progress
   - stats
   
@@ -78,7 +77,6 @@ detectionOrder:
   - slopegraph   # vorher/nachher oder Jahre → Vorher-Nachher (Kirk: Slopegraph!)
   - stats        # min/max/avg/median → Statistik (Kirk: Box Plot Daten)
   - range        # min/max only → Wertebereiche
-  - rating       # rating/score/stars → Bewertungen
   - progress     # value + max/total → Fortschritt
   - badge        # status/variant → Semantische Status
   

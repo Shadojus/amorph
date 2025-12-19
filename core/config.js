@@ -215,7 +215,6 @@ async function loadMorphsModular(basePath, cacheBuster) {
   const morphs = {
     erkennung: {
       badge: { keywords: [], maxLength: 25 },
-      rating: { min: 0, max: 10, decimalsRequired: true },
       progress: { min: 0, max: 100, integersOnly: true },
       objekt: {},
       array: {}
@@ -321,15 +320,6 @@ async function loadMorphsModular(basePath, cacheBuster) {
           morphs.erkennung.badge.maxLaenge = detection.maxLength || 25;
           morphs.badge.variants = morphConfig.variants || {};
           morphs.badge.colors = morphConfig.colors || {};
-        }
-        
-        // Rating detection
-        if (morphId === 'rating' && detection.number) {
-          morphs.erkennung.rating = {
-            min: detection.number.min || 0,
-            max: detection.number.max || 10,
-            dezimalstellen: detection.number.decimalsRequired
-          };
         }
         
         // Progress detection

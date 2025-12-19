@@ -12,8 +12,7 @@
 @import url('./pie/pie.css');
 @import url('./bar/bar.css');
 @import url('./radar/radar.css');
-@import url('./rating/rating.css');
-@import url('./progress/progress.css');
+@import url('./progress/progress.css')
 @import url('./stats/stats.css');
 @import url('./timeline/timeline.css');
 @import url('./badge/badge.css');

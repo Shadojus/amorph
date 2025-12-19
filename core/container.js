@@ -6,7 +6,7 @@
 import { debug } from '../observer/debug.js';
 
 // Morphs die inline dargestellt werden sollen
-const INLINE_MORPHS = ['tag', 'badge', 'boolean', 'number', 'rating'];
+const INLINE_MORPHS = ['tag', 'badge', 'boolean', 'number'];
 
 export class AmorphContainer extends HTMLElement {
   constructor() {

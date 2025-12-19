@@ -37,7 +37,6 @@ export {
   compareByType,
   compareBar,
   compareBarGroup,
-  compareRating,
   compareTag,
   compareList,
   compareImage,
@@ -97,7 +96,6 @@ import { detectType } from './base.js';
 import {
   compareByType,
   compareBar,
-  compareRating,
   compareTag,
   compareList,
   compareImage,

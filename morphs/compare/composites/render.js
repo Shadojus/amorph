@@ -62,7 +62,7 @@ export function renderMetricsComposite(fieldNames, fields, items, config) {
     const field = fields[metric.name];
     const fieldType = field.type || field.typ;
     const morph = compareByType(fieldType, metric.items, { 
-      max: fieldType === 'rating' ? 5 : undefined,
+      max: undefined,
       unit: fieldType === 'progress' ? '%' : undefined,
       einheit: fieldType === 'progress' ? '%' : undefined
     });

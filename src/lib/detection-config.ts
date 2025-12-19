@@ -44,10 +44,6 @@ export const ALL_BADGE_KEYWORDS = [
 
 export const FIELD_PATTERNS = {
   // Felder die IMMER als bestimmter Typ erkannt werden
-  rating: [
-    /rating$/i, /score$/i, /bewertung$/i, /stars?$/i,
-    /quality$/i, /qualität$/i
-  ],
   progress: [
     /percent(age)?$/i, /prozent$/i, /_pct$/i,
     /completion$/i, /progress$/i, /fortschritt$/i
@@ -71,6 +67,23 @@ export const FIELD_PATTERNS = {
   forceNumber: [
     /count$/i, /anzahl$/i, /total$/i, /summe$/i,
     /id$/i, /index$/i, /position$/i, /order$/i
+  ],
+  // SVG-Visualisierungen
+  sparkline: [
+    /sparkline$/i, /trend$/i, /verlauf$/i, /history$/i,
+    /timeseries$/i, /zeitreihe$/i
+  ],
+  gauge: [
+    /gauge$/i, /meter$/i, /dial$/i, /level$/i
+  ],
+  radar: [
+    /radar$/i, /spider$/i, /profile$/i, /profil$/i
+  ],
+  heatmap: [
+    /heatmap$/i, /matrix$/i, /grid$/i, /correlation$/i
+  ],
+  pie: [
+    /pie$/i, /donut$/i, /anteil$/i, /composition$/i, /verteilung$/i
   ]
 } as const;
 
@@ -79,8 +92,7 @@ export const FIELD_PATTERNS = {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export const NUMERIC_THRESHOLDS = {
-  rating: { min: 0, max: 10 },
-  progress: { min: 11, max: 100, integersOnly: true }
+  progress: { min: 0, max: 100, integersOnly: true }
 } as const;
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -97,10 +109,12 @@ export const STRING_LIMITS = {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export type MorphType = 
-  | 'null' | 'boolean' | 'number' | 'rating' | 'progress'
+  | 'null' | 'boolean' | 'number' | 'progress'
   | 'text' | 'link' | 'image' | 'badge' | 'tag' | 'date'
   | 'list' | 'tags' | 'range' | 'object' | 'hierarchy'
-  | 'timeline' | 'steps' | 'map' | 'stats' | 'currency';
+  | 'timeline' | 'steps' | 'map' | 'stats' | 'currency'
+  // SVG-basierte Morphs (SSR)
+  | 'sparkline' | 'gauge' | 'radar' | 'heatmap' | 'pie' | 'donut';
 
 /**
  * Prüft ob ein Feldname zu einem Pattern passt
@@ -123,15 +137,13 @@ export function detectType(value: any, fieldName?: string): MorphType {
   // Number
   if (typeof value === 'number') {
     // Feld-basierte Erkennung hat Priorität
-    if (matchesFieldPattern(fieldName, FIELD_PATTERNS.rating)) return 'rating';
     if (matchesFieldPattern(fieldName, FIELD_PATTERNS.progress)) return 'progress';
     if (matchesFieldPattern(fieldName, FIELD_PATTERNS.date)) return 'number'; // Jahre als Zahl
     if (matchesFieldPattern(fieldName, FIELD_PATTERNS.currency)) return 'currency';
     if (matchesFieldPattern(fieldName, FIELD_PATTERNS.forceNumber)) return 'number';
     
     // Wert-basierte Erkennung
-    const { rating, progress } = NUMERIC_THRESHOLDS;
-    if (value >= rating.min && value <= rating.max) return 'rating';
+    const { progress } = NUMERIC_THRESHOLDS;
     if (value >= progress.min && value <= progress.max && 
         (!progress.integersOnly || Number.isInteger(value))) return 'progress';
     
@@ -177,6 +189,15 @@ export function detectType(value: any, fieldName?: string): MorphType {
     
     const first = value[0];
     
+    // Feld-basierte Erkennung für Visualisierungen
+    if (matchesFieldPattern(fieldName, FIELD_PATTERNS.sparkline)) return 'sparkline';
+    if (matchesFieldPattern(fieldName, FIELD_PATTERNS.heatmap)) return 'heatmap';
+    
+    // Zahlen-Array → Sparkline (wenn genug Werte)
+    if (typeof first === 'number' && value.length >= 3 && value.every(v => typeof v === 'number')) {
+      return 'sparkline';
+    }
+    
     // String-Array → Tags
     if (typeof first === 'string' && first.length <= 40) return 'tags';
     
@@ -191,6 +212,12 @@ export function detectType(value: any, fieldName?: string): MorphType {
   
   // Object
   if (typeof value === 'object') {
+    // Feld-basierte Erkennung für Visualisierungen
+    if (matchesFieldPattern(fieldName, FIELD_PATTERNS.gauge)) return 'gauge';
+    if (matchesFieldPattern(fieldName, FIELD_PATTERNS.radar)) return 'radar';
+    if (matchesFieldPattern(fieldName, FIELD_PATTERNS.pie)) return 'pie';
+    if (matchesFieldPattern(fieldName, FIELD_PATTERNS.heatmap)) return 'heatmap';
+    
     // Range: {min, max}
     if ('min' in value && 'max' in value) return 'range';
     
@@ -200,8 +227,17 @@ export function detectType(value: any, fieldName?: string): MorphType {
     // Stats: {value, unit}
     if ('value' in value && 'unit' in value) return 'stats';
     
+    // Gauge: {value, max}
+    if ('value' in value && 'max' in value && typeof value.value === 'number') return 'gauge';
+    
     // Hierarchy: {children} oder {parent}
     if ('children' in value || 'parent' in value) return 'hierarchy';
+    
+    // Radar: alle Werte sind Zahlen
+    const values = Object.values(value);
+    if (values.length >= 3 && values.every(v => typeof v === 'number')) {
+      return 'radar';
+    }
     
     return 'object';
   }

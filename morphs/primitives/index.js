@@ -25,7 +25,6 @@ export { stats } from './stats/stats.js';
 export { bar } from './bar/bar.js';
 export { radar } from './radar/radar.js';
 export { pie } from './pie/pie.js';
-export { rating } from './rating/rating.js';
 export { progress } from './progress/progress.js';
 export { timeline } from './timeline/timeline.js';
 export { sparkline } from './sparkline/sparkline.js';
@@ -78,7 +77,6 @@ import { stats } from './stats/stats.js';
 import { bar } from './bar/bar.js';
 import { radar } from './radar/radar.js';
 import { pie } from './pie/pie.js';
-import { rating } from './rating/rating.js';
 import { progress } from './progress/progress.js';
 import { timeline } from './timeline/timeline.js';
 import { sparkline } from './sparkline/sparkline.js';
@@ -133,7 +131,6 @@ export const primitives = {
   bar,
   radar,
   pie,
-  rating,
   progress,
   timeline,
   sparkline,

@@ -13,7 +13,6 @@ import { link } from './primitives/link/link.js';
 import { pie } from './primitives/pie/pie.js';
 import { bar } from './primitives/bar/bar.js';
 import { radar } from './primitives/radar/radar.js';
-import { rating } from './primitives/rating/rating.js';
 import { progress } from './primitives/progress/progress.js';
 import { stats } from './primitives/stats/stats.js';
 import { timeline } from './primitives/timeline/timeline.js';
@@ -66,7 +65,6 @@ import { header } from '../config/header.js';
 import { 
   compareByType,
   compareBar as compareBarMorph, 
-  compareRating, 
   compareTag as compareTagMorph, 
   compareList as compareListMorph, 
   compareImage, 
@@ -169,7 +167,6 @@ export const morphs = {
   pie,        // Kreisdiagramm für Verteilungen
   bar,        // Balkendiagramm für Vergleiche
   radar,      // Radar-Chart für Profile (3+ Achsen)
-  rating,     // Sterne-Bewertung (0-5, 0-10, 0-100)
   progress,   // Fortschrittsbalken
   stats,      // statistics-Karte (min/max/avg)
   timeline,   // Zeitliche Abfolge
@@ -212,7 +209,6 @@ export const morphs = {
   // Compare-Morphs (Vergleich) - Alle Typen
   compareMorph,
   compareBar,
-  compareRating,
   compareTag,
   compareList,
   compareImage,
@@ -242,11 +238,11 @@ export const morphs = {
 
 // Log registrierte Morphs
 debug.morphs('registry', { 
-  primitives: ['text', 'number', 'boolean', 'tag', 'range', 'list', 'object', 'image', 'link', 'pie', 'bar', 'radar', 'rating', 'progress', 'stats', 'timeline', 'badge', 'lifecycle'],
+  primitives: ['text', 'number', 'boolean', 'tag', 'range', 'list', 'object', 'image', 'link', 'pie', 'bar', 'radar', 'progress', 'stats', 'timeline', 'badge', 'lifecycle'],
   extended: ['sparkline', 'slopegraph', 'heatmap', 'gauge', 'dosage', 'currency', 'citation', 'calendar', 'steps', 'map', 'hierarchy', 'network', 'comparison', 'severity'],
   kirkMorphs: ['bubble', 'boxplot', 'treemap', 'stackedbar', 'dotplot', 'sunburst', 'flow', 'groupedbar', 'scatterplot', 'lollipop', 'pictogram'],
   features: ['suche', 'perspektiven', 'header'],
-  compare: ['compareMorph', 'compareBar', 'compareRating', 'compareTag', 'compareList', 'compareImage', 'compareRadar', 'comparePie', 'compareText', 'compareTimeline', 'compareRange', 'compareProgress', 'compareBoolean', 'compareStats', 'compareObject'],
+  compare: ['compareMorph', 'compareBar', 'compareTag', 'compareList', 'compareImage', 'compareRadar', 'comparePie', 'compareText', 'compareTimeline', 'compareRange', 'compareProgress', 'compareBoolean', 'compareStats', 'compareObject'],
   composites: ['smartCompare', 'diffCompare']
 });
 
@@ -256,7 +252,7 @@ debug.morphs('registry', {
 export { 
   // Primitives
   text, number, boolean, tag, range, list, object, image, link, 
-  pie, bar, radar, rating, progress, stats, timeline, badge, lifecycle,
+  pie, bar, radar, progress, stats, timeline, badge, lifecycle,
   
   // Extended Charts & Visualizations
   sparkline, slopegraph, heatmap, gauge,
@@ -272,7 +268,7 @@ export {
   suche, perspektiven, header,
   
   // Compare Morphs - Alle
-  compareMorph, compareBar, compareRating, compareTag, compareList, 
+  compareMorph, compareBar, compareTag, compareList, 
   compareImage, compareRadar, comparePie, compareText, compareTimeline,
   compareRange, compareProgress, compareBoolean, compareStats, compareObject,
   

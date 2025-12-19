@@ -11,7 +11,6 @@ import { number } from '../morphs/primitives/number/number.js';
 import { boolean } from '../morphs/primitives/boolean/boolean.js';
 import { list } from '../morphs/primitives/list/list.js';
 import { badge } from '../morphs/primitives/badge/badge.js';
-import { rating } from '../morphs/primitives/rating/rating.js';
 
 describe('text morph', () => {
   it('renders simple strings', () => {
@@ -252,61 +251,3 @@ describe('badge morph', () => {
   });
 });
 
-describe('rating morph', () => {
-  it('renders number as stars', () => {
-    const el = rating(4);
-    expect(el.className).toBe('amorph-rating');
-    expect(el.querySelector('.amorph-rating-stars')).not.toBeNull();
-  });
-  
-  it('shows correct number of full stars', () => {
-    const el = rating(3);
-    const fullStars = el.querySelectorAll('.amorph-rating-full');
-    expect(fullStars.length).toBe(3);
-  });
-  
-  it('handles half stars', () => {
-    const el = rating(3.5);
-    const halfStars = el.querySelectorAll('.amorph-rating-half');
-    expect(halfStars.length).toBe(1);
-  });
-  
-  it('shows value by default', () => {
-    const el = rating(4.5);
-    const valueEl = el.querySelector('.amorph-rating-value');
-    expect(valueEl).not.toBeNull();
-    expect(valueEl.textContent).toContain('4.5');
-  });
-  
-  it('can hide value', () => {
-    const el = rating(4, { showValue: false });
-    expect(el.querySelector('.amorph-rating-value')).toBeNull();
-  });
-  
-  it('detects max scale automatically', () => {
-    // 0-5 scale
-    const el5 = rating(4);
-    expect(el5.querySelector('.amorph-rating-value').textContent).toContain('/5');
-    
-    // 0-10 scale
-    const el10 = rating(8);
-    expect(el10.querySelector('.amorph-rating-value').textContent).toContain('/10');
-  });
-  
-  it('handles object input', () => {
-    const el = rating({ rating: 4, max: 5 });
-    expect(el.querySelector('.amorph-rating-value').textContent).toContain('4.0/5');
-  });
-  
-  it('renders exactly maxStars stars', () => {
-    const el = rating(3, { maxStars: 5 });
-    const allStars = el.querySelectorAll('.amorph-rating-star');
-    expect(allStars.length).toBe(5);
-  });
-  
-  it('uses custom icons', () => {
-    const el = rating(3, { icon: '●', emptyIcon: '○' });
-    expect(el.querySelector('.amorph-rating-full').textContent).toBe('●');
-    expect(el.querySelector('.amorph-rating-empty').textContent).toBe('○');
-  });
-});

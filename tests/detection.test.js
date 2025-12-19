@@ -32,29 +32,23 @@ describe('detectType', () => {
   });
 
   describe('Numbers', () => {
-    it('should detect rating (0-10)', () => {
-      expect(detectType(0)).toBe('rating');
-      expect(detectType(5)).toBe('rating');
-      expect(detectType(7.5)).toBe('rating');
-      expect(detectType(10)).toBe('rating');
-    });
-
-    it('should detect progress (11-100 integers)', () => {
-      expect(detectType(11)).toBe('progress');
+    it('should detect progress (0-100 integers)', () => {
+      expect(detectType(0)).toBe('progress');
+      expect(detectType(5)).toBe('progress');
       expect(detectType(50)).toBe('progress');
       expect(detectType(75)).toBe('progress');
       expect(detectType(100)).toBe('progress');
     });
 
-    it('should detect number for values outside rating/progress range', () => {
+    it('should detect number for values outside progress range', () => {
       expect(detectType(101)).toBe('number');
       expect(detectType(1000)).toBe('number');
       expect(detectType(-5)).toBe('number');
     });
 
-    it('should detect decimal in rating range as rating', () => {
-      expect(detectType(10.5)).toBe('number'); // 10.5 is > max 10
-      expect(detectType(5.5)).toBe('rating');  // 5.5 is within 0-10
+    it('should detect decimal as number', () => {
+      expect(detectType(10.5)).toBe('number');
+      expect(detectType(5.5)).toBe('number');
     });
 
     it('should not detect decimals as progress', () => {
@@ -288,11 +282,6 @@ describe('detectType', () => {
       expect(detectType({ min: 10, max: 25 })).toBe('range');
     });
 
-    it('should detect rating object', () => {
-      expect(detectType({ rating: 4.5 })).toBe('rating');
-      expect(detectType({ score: 8 })).toBe('rating');
-    });
-
     it('should detect progress object', () => {
       expect(detectType({ current: 75, total: 100 })).toBe('progress');
       expect(detectType({ value: 50, max: 100 })).toBe('progress');
@@ -314,18 +303,6 @@ describe('detectType', () => {
   });
 
   describe('Custom Config', () => {
-    it('should respect custom rating range', () => {
-      setDetectionConfig({
-        erkennung: {
-          rating: { min: 0, max: 5 }
-        }
-      });
-      
-      expect(detectType(4)).toBe('rating');
-      expect(detectType(5)).toBe('rating');
-      expect(detectType(6)).toBe('number'); // Outside custom range
-    });
-
     it('should respect custom badge keywords', () => {
       setDetectionConfig({
         erkennung: {
@@ -341,9 +318,9 @@ describe('detectType', () => {
 
 describe('detectNumberType', () => {
   it('should handle edge cases', () => {
-    expect(detectNumberType(0, null)).toBe('rating');
-    expect(detectNumberType(10, null)).toBe('rating');
-    expect(detectNumberType(10.5, null)).toBe('number'); // Outside 0-10
+    expect(detectNumberType(0, null)).toBe('progress');
+    expect(detectNumberType(10, null)).toBe('progress');
+    expect(detectNumberType(10.5, null)).toBe('number'); // decimals are number
     expect(detectNumberType(11, null)).toBe('progress');
     expect(detectNumberType(100, null)).toBe('progress');
   });

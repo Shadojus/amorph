@@ -518,10 +518,8 @@ function inferFeldMetadata(feldname) {
     metadata.einheit = 'pH';
   }
   
-  // Infer max values for rating/progress fields (hints for morphs)
-  if (name.includes('rating') || name.includes('score') || name.includes('bewertung')) {
-    metadata.max = 10;
-  } else if (name.includes('percent') || name.includes('prozent') || name.includes('efficiency')) {
+  // Infer max values for progress fields (hints for morphs)
+  if (name.includes('percent') || name.includes('prozent') || name.includes('efficiency') || name.includes('progress')) {
     metadata.max = 100;
   }
   

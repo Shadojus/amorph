@@ -72,13 +72,6 @@ const morphSchemas = {
     z.object({ value: z.number() }).passthrough(),
   ]),
   
-  // Rating
-  rating: z.union([
-    z.number(),
-    z.object({ rating: z.number() }).passthrough(),
-    z.object({ value: z.number() }).passthrough(),
-  ]),
-  
   // Severity
   severity: z.union([
     z.string(),

@@ -53,11 +53,11 @@ describe('Detection Module Integration', () => {
     const { findMorph } = await import('../core/detection/index.js');
     
     const schemaFieldMorphs = {
-      'rating': 'rating',
+      'progress_field': 'progress',
       'temperature': 'gauge'
     };
     
-    expect(findMorph('number', 5, 'rating', null, schemaFieldMorphs)).toBe('rating');
+    expect(findMorph('number', 50, 'progress_field', null, schemaFieldMorphs)).toBe('progress');
     expect(findMorph('number', 20, 'temperature', null, schemaFieldMorphs)).toBe('gauge');
   });
 
