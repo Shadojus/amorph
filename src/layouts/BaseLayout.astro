@@ -1,0 +1,84 @@
+---
+/**
+ * Base Layout
+ * 
+ * Gemeinsames Layout für alle Seiten
+ * - SEO Meta Tags
+ * - Open Graph
+ * - Styles
+ */
+
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  canonicalUrl?: string;
+  type?: 'website' | 'article';
+}
+
+const { 
+  title, 
+  description = 'Funginomi – Interaktive Datenvisualisierung für Pilze, Pflanzen und mehr.',
+  image,
+  canonicalUrl,
+  type = 'website'
+} = Astro.props;
+
+const siteUrl = 'https://funginomi.com';
+const fullCanonicalUrl = canonicalUrl ? `${siteUrl}${canonicalUrl}` : Astro.url.href;
+---
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍄</text></svg>">
+  
+  <!-- Canonical -->
+  <link rel="canonical" href={fullCanonicalUrl}>
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content={type}>
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:url" content={fullCanonicalUrl}>
+  <meta property="og:site_name" content="Funginomi">
+  {image && <meta property="og:image" content={image}>}
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={title}>
+  <meta name="twitter:description" content={description}>
+  {image && <meta name="twitter:image" content={image}>}
+  
+  <!-- Styles - importiert von root level -->
+  <link rel="stylesheet" href="/styles/index.css">
+  
+  <!-- SSR Morph Styles -->
+  <style>
+    @import '../styles/ssr.css';
+  </style>
+  
+  <slot name="head" />
+</head>
+<body>
+  <slot />
+</body>
+</html>
+
+<style is:global>
+  /* Astro-specific resets */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    min-height: 100vh;
+  }
+</style>

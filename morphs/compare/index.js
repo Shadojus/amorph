@@ -10,7 +10,7 @@
  * DATA-DRIVEN: detectType uses config/morphs.yaml!
  */
 
-import { debug } from '../../../observer/debug.js';
+import { debug } from '../../observer/debug.js';
 
 // Base utilities (new English API + legacy German aliases)
 export { 

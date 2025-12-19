@@ -70,9 +70,12 @@ const { items, hasMore } = await dataSource.loadMore(offset, limit);
 
 | Ordner | Zweck | Hauptdateien |
 |--------|-------|--------------|
+| `src/` | **Astro SSR Layer** | pages/, layouts/, lib/, components/ |
+| `src/lib/` | Cache & Daten-Loader | cache.ts, species.ts |
+| `src/pages/` | SSR Seiten & API | [slug].astro, api/search.ts, sitemap.xml.ts |
 | `core/` | Config, Pipeline, Container | config.js, pipeline.js, container.js |
 | `core/detection/` | Modulare Typ-Erkennung | index.js, number.js, string.js, array.js, object.js |
-| `core/errors.js` | **NEU** Error Boundaries | Custom Errors, Fallbacks, Registry |
+| `core/errors.js` | Error Boundaries | Custom Errors, Fallbacks, Registry |
 | `config/` | YAML-Konfiguration | manifest, daten, morphs, features, observer |
 | `config/schema/` | Modulares Schema | basis.yaml, semantik.yaml, perspektiven/ |
 | `config/schema/perspektiven/blueprints/` | 15 Morph-Blueprints | *.blueprint.yaml |
@@ -80,9 +83,9 @@ const { items, hasMore } = await dataSource.loadMore(offset, limit);
 | `morphs/` | 87 Transformationen | 43 primitives/, 44 compare/ |
 | `observer/` | Debug & Analytics | debug.js, interaction.js, rendering.js |
 | `util/` | Utilities | dom.js, fetch.js, router.js, semantic.js |
-| `util/security.js` | **NEU** XSS-Prevention | HTML Sanitization, Safe DOM |
-| `util/a11y.js` | **NEU** Accessibility | ARIA, Focus, Keyboard Navigation |
-| `util/performance.js` | **NEU** Performance | Debounce, Lazy Loading, Pools |
+| `util/security.js` | XSS-Prevention | HTML Sanitization, Safe DOM |
+| `util/a11y.js` | Accessibility | ARIA, Focus, Keyboard Navigation |
+| `util/performance.js` | Performance | Debounce, Lazy Loading, Pools |
 | `styles/` | CSS Design-System | Black Glasmorphism, 12 Pilz-Farben |
 | `data/` | Testdaten | alpine-marmot (animalia), deadly-nightshade (plantae) |
 | `docs/` | Entwicklungs-Dokumentation | Kirk-Prinzipien, Daten-Erstellung |
@@ -93,7 +96,38 @@ const { items, hasMore } = await dataSource.loadMore(offset, limit);
 
 ---
 
-## Entwicklung
+## Astro SSR (NEU)
+
+### SEO-Architektur
+
+Search Engines und AI Crawlers bekommen echte HTML-Seiten:
+
+```
+/                      → Homepage (SPA client-side)
+/{slug}                → SSR Species-Seite mit SEO Meta-Tags
+/api/search?q=...      → Such-API (JSON)
+/sitemap.xml           → Dynamische Sitemap
+```
+
+### Cache-Strategie
+
+| Route | TTL | Beschreibung |
+|-------|-----|--------------|
+| `/{slug}` | 24h | Species-Seiten (ETag-Support) |
+| `/api/search` | 5min | Such-Ergebnisse |
+| `/sitemap.xml` | 24h | Sitemap |
+
+### Entwicklung
+
+```bash
+npm run dev      # Astro Dev-Server (Port 4321)
+npm run build    # Production Build
+npm run start    # Production Server (node dist/server/entry.mjs)
+```
+
+---
+
+## Entwicklung (Legacy)
 
 ```bash
 npm run dev          # Dev-Server (Port 3000)

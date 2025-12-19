@@ -1,0 +1,66 @@
+{
+  "$ref": "#/definitions/species",
+  "definitions": {
+    "species": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "scientific_name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "taxonomy": {
+          "type": "object",
+          "properties": {
+            "kingdom": {
+              "type": "string"
+            },
+            "phylum": {
+              "type": "string"
+            },
+            "class": {
+              "type": "string"
+            },
+            "order": {
+              "type": "string"
+            },
+            "family": {
+              "type": "string"
+            },
+            "genus": {
+              "type": "string"
+            },
+            "species": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "scientific_name"
+      ],
+      "additionalProperties": true
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

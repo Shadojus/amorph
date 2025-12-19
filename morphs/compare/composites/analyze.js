@@ -5,7 +5,7 @@
  * 100% DATA-DRIVEN - no assumptions about field names!
  */
 
-import { debug } from '../../../../observer/debug.js';
+import { debug } from '../../../observer/debug.js';
 import { detectType } from '../base.js';
 import { TYPE_TO_CATEGORY } from './types.js';
 

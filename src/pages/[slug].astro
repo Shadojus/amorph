@@ -1,0 +1,126 @@
+---
+/**
+ * Dynamic Species Pages (SSR)
+ * 
+ * Server-Side Rendering mit Caching und Morph-basiertem HTML
+ * /psilocybe-cyanescens → On-demand gerendert, 24h gecacht
+ * 
+ * STRATEGIE:
+ * - SSR generiert SEO-freundliches HTML mit ssr-morphs
+ * - Crawler/AI sehen semantisches, strukturiertes HTML
+ * - Alle Styles in /styles/ssr.css ausgelagert
+ */
+
+import SpeciesLayout from '../layouts/SpeciesLayout.astro';
+import { getSpecies, getAllPerspectives } from '../lib/species';
+import { CACHE_TTL, getCacheHeaders, cacheKey, get, set, isValidEtag } from '../lib/cache';
+import { renderSpeciesContent } from '../lib/ssr-morphs';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+
+// SSR - kein getStaticPaths nötig
+export const prerender = false;
+
+const { slug } = Astro.params;
+
+// 404 wenn kein Slug
+if (!slug) {
+  return Astro.redirect('/404');
+}
+
+// Species laden (aus Cache oder Dateisystem)
+const species = await getSpecies(slug);
+
+// 404 wenn nicht gefunden
+if (!species) {
+  return new Response(null, { status: 404, statusText: 'Not Found' });
+}
+
+// Perspektiv-IDs aus Index laden
+let perspectiveIds: string[] = [];
+try {
+  const indexPath = path.join(process.cwd(), 'data', species.kingdom, 'index.json');
+  const indexData = JSON.parse(await fs.readFile(indexPath, 'utf-8'));
+  const speciesEntry = indexData.species?.find((s: any) => s.slug === slug);
+  perspectiveIds = speciesEntry?.perspectives || [];
+} catch {
+  // Fallback: alle JSON-Dateien im Ordner außer data.json
+  try {
+    const speciesDir = path.join(process.cwd(), 'data', species.kingdom, slug);
+    const files = await fs.readdir(speciesDir);
+    perspectiveIds = files
+      .filter(f => f.endsWith('.json') && f !== 'data.json' && f !== 'index.json')
+      .map(f => f.replace('.json', ''));
+  } catch {}
+}
+
+// Alle Perspektiven parallel laden (optimiert!)
+const perspectives = await getAllPerspectives(slug, species.kingdom, perspectiveIds);
+
+// Kingdom-Info laden
+let kingdomIcon = '🍄';
+let kingdomName = species.kingdom;
+try {
+  const indexPath = path.join(process.cwd(), 'data', species.kingdom, 'index.json');
+  const indexData = JSON.parse(await fs.readFile(indexPath, 'utf-8'));
+  kingdomIcon = indexData.icon || kingdomIcon;
+  kingdomName = indexData.name || kingdomName;
+} catch {}
+
+// Species-Objekt für Layout
+const speciesData = {
+  ...species.data,
+  name: species.name,
+  wissenschaftlicher_name: species.wissenschaftlicher_name,
+  slug: species.slug,
+  kingdom: species.kingdom,
+  kingdomIcon,
+  kingdomName
+};
+
+// Cache-Headers setzen
+const key = cacheKey.species(slug);
+const cached = get(key);
+const cacheHeaders = getCacheHeaders(CACHE_TTL.species, cached?.etag);
+
+for (const [header, value] of Object.entries(cacheHeaders)) {
+  Astro.response.headers.set(header, value);
+}
+
+// Conditional Request (304 Not Modified)
+const clientEtag = Astro.request.headers.get('If-None-Match');
+if (clientEtag && isValidEtag(key, clientEtag)) {
+  return new Response(null, { status: 304 });
+}
+
+// Perspective display names
+const perspectiveLabels: Record<string, string> = {
+  chemistry: '🧪 Chemie',
+  ecology: '🌿 Ökologie', 
+  medicine: '💊 Medizin',
+  safety: '⚠️ Sicherheit',
+  culture: '🎭 Kultur',
+  identification: '🔍 Bestimmung',
+  temporal: '📅 Zeitlich',
+  geography: '🌍 Geografie',
+  cultivation: '🌱 Anbau',
+  culinary: '🍳 Kulinarisch',
+  statistics: '📊 Statistik',
+  conservation: '🛡️ Schutz'
+};
+
+// SSR-Content für SEO generieren
+const ssrContent = renderSpeciesContent(speciesData, perspectives, perspectiveLabels);
+---
+
+<SpeciesLayout species={speciesData} perspectives={perspectiveIds}>
+  <!-- SSR-gerendertes HTML für SEO/Crawler -->
+  <div class="ssr-content" set:html={ssrContent} />
+</SpeciesLayout>
+
+<style>
+  /* SSR Container - alle anderen Styles in /styles/ssr.css */
+  .ssr-content {
+    container-type: inline-size;
+  }
+</style>

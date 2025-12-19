@@ -1,16 +1,19 @@
 {
   "name": "amorph",
-  "version": "5.1.0",
-  "description": "Formlos. Zustandslos. Transformierend.",
+  "version": "5.2.0",
+  "description": "Formlos. Zustandslos. Transformierend. – Astro-powered.",
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "npx serve . -p 3000",
-    "start": "npx serve . -p 3000",
-    "build": "node scripts/build.js",
+    "dev": "astro dev",
+    "start": "node dist/server/entry.mjs",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "build:legacy": "node scripts/build.js",
     "build:pages": "node scripts/build-pages.js",
     "build:index": "node scripts/build-index.js",
-    "check": "node scripts/check.js",
+    "check": "astro check && node scripts/check.js",
     "validate": "node scripts/validate.js",
     "validate:list": "node scripts/validate.js --list",
     "validate:stats": "node scripts/validate.js --stats",
@@ -18,7 +21,7 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "astro check && tsc --noEmit"
   },
   "keywords": [
     "amorph",
@@ -30,14 +33,17 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@astrojs/node": "^9.5.1",
     "js-yaml": "^4.1.1",
     "zod": "^4.2.1"
   },
   "devDependencies": {
-    "vitest": "^2.1.8",
+    "@astrojs/sitemap": "^3.6.0",
     "@vitest/coverage-v8": "^2.1.8",
     "@vitest/ui": "^2.1.8",
+    "astro": "^5.16.6",
     "jsdom": "^25.0.1",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
   }
 }

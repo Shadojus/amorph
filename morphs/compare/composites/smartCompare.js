@@ -9,7 +9,7 @@
  * - Chooses best visualization per group
  */
 
-import { debug } from '../../../../observer/debug.js';
+import { debug } from '../../../observer/debug.js';
 import { createLegend, createLegende } from '../base.js';
 import { analyzeItems, findRelatedFields } from './analyze.js';
 import {

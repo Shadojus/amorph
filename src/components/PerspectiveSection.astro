@@ -1,0 +1,84 @@
+---
+/**
+ * Perspective Section Component
+ * 
+ * Rendert eine einzelne Perspektive mit allen Feldern
+ */
+
+export interface Props {
+  id: string;
+  label: string;
+  data: Record<string, any>;
+}
+
+const { id, label, data } = Astro.props;
+
+// Format field label from snake_case to Title Case
+function formatLabel(key: string): string {
+  return key
+    .replace(/_/g, ' ')
+    .replace(/\b\w/g, c => c.toUpperCase());
+}
+
+// Check if value is a range object
+function isRange(val: any): val is { min: number; max: number; unit?: string } {
+  return val && typeof val === 'object' && 'min' in val && 'max' in val;
+}
+
+// Check if value has value+unit
+function isValueUnit(val: any): val is { value: number | string; unit?: string } {
+  return val && typeof val === 'object' && 'value' in val;
+}
+---
+
+<section class="perspective" id={id} data-perspective={id}>
+  <h2>{label}</h2>
+  <dl class="fields">
+    {Object.entries(data).map(([key, value]) => {
+      // Skip internal fields
+      if (key.startsWith('_')) return null;
+      
+      return (
+        <div class="field">
+          <dt>{formatLabel(key)}</dt>
+          <dd>
+            {value === null || value === undefined ? (
+              <span class="empty">—</span>
+            ) : typeof value === 'boolean' ? (
+              value ? '✓ Ja' : '✗ Nein'
+            ) : typeof value === 'number' ? (
+              String(value)
+            ) : Array.isArray(value) ? (
+              value.length === 0 ? (
+                <span class="empty">—</span>
+              ) : (
+                <ul>
+                  {value.map((v, i) => (
+                    <li>{typeof v === 'object' ? JSON.stringify(v) : String(v)}</li>
+                  ))}
+                </ul>
+              )
+            ) : isRange(value) ? (
+              `${value.min}–${value.max}${value.unit ? ' ' + value.unit : ''}`
+            ) : isValueUnit(value) ? (
+              `${value.value}${value.unit ? ' ' + value.unit : ''}`
+            ) : typeof value === 'object' ? (
+              <dl class="nested">
+                {Object.entries(value).map(([k, v]) => (
+                  <div>
+                    <dt>{formatLabel(k)}</dt>
+                    <dd>{typeof v === 'object' ? JSON.stringify(v) : String(v)}</dd>
+                  </div>
+                ))}
+              </dl>
+            ) : String(value).startsWith('http') ? (
+              <a href={String(value)} rel="noopener" target="_blank">{value}</a>
+            ) : (
+              String(value)
+            )}
+          </dd>
+        </div>
+      );
+    })}
+  </dl>
+</section>

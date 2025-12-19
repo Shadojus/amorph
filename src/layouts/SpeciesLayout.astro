@@ -1,0 +1,183 @@
+---
+/**
+ * Species Layout
+ * 
+ * Layout für einzelne Species-Seiten
+ * - JSON-LD Structured Data
+ * - Breadcrumb Navigation
+ * - SEO optimiert für Crawler
+ */
+
+import BaseLayout from './BaseLayout.astro';
+
+export interface Props {
+  species: {
+    id: string;
+    slug: string;
+    name: string;
+    scientific_name: string;
+    description?: string;
+    image?: string;
+    kingdom?: string;
+    kingdomIcon?: string;
+    kingdomName?: string;
+  };
+  perspectives?: string[];
+}
+
+const { species, perspectives = [] } = Astro.props;
+
+const title = `${species.name} (${species.scientific_name}) - Funginomi`;
+const description = species.description?.slice(0, 160) || 
+  `${species.name} - ${species.scientific_name}. Detaillierte Informationen und Daten.`;
+
+// JSON-LD Structured Data
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Thing",
+  "name": species.name,
+  "alternateName": species.scientific_name,
+  "description": species.description,
+  "url": `https://funginomi.com/${species.slug}`,
+  "identifier": species.id,
+  ...(species.image && { "image": species.image }),
+  ...(species.kingdom === 'fungi' && { "additionalType": "https://en.wikipedia.org/wiki/Fungus" }),
+  ...(species.kingdom === 'plantae' && { "additionalType": "https://en.wikipedia.org/wiki/Plant" }),
+  ...(species.kingdom === 'animalia' && { "@type": "Animal" })
+};
+
+// Perspective labels
+const perspectiveLabels: Record<string, string> = {
+  chemistry: '🧪 Chemie',
+  ecology: '🌿 Ökologie', 
+  medicine: '💊 Medizin',
+  safety: '⚠️ Sicherheit',
+  culture: '🎭 Kultur',
+  identification: '🔍 Bestimmung',
+  temporal: '📅 Zeitlich',
+  geography: '🌍 Geografie',
+  cultivation: '🌱 Anbau',
+  culinary: '🍳 Kulinarisch',
+  statistics: '📊 Statistik',
+  conservation: '🛡️ Schutz'
+};
+---
+
+<BaseLayout 
+  title={title} 
+  description={description}
+  image={species.image}
+  canonicalUrl={`/${species.slug}`}
+  type="article"
+>
+  <Fragment slot="head">
+    <meta name="keywords" content={`${species.name}, ${species.scientific_name}, ${species.kingdom || ''}, ${perspectives.join(', ')}`}>
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd, null, 2)} />
+    <link rel="stylesheet" href="/styles/seo-page.css">
+  </Fragment>
+  
+  <header class="seo-header">
+    <nav>
+      <a href="/" class="home-link">🍄 Funginomi</a>
+      <span class="breadcrumb">
+        {species.kingdom && (
+          <a href={`/?kingdom=${species.kingdom}`}>
+            {species.kingdomIcon || '📁'} {species.kingdomName || species.kingdom}
+          </a>
+        )}
+        <span class="sep">›</span>
+        <span class="current">{species.name}</span>
+      </span>
+    </nav>
+  </header>
+
+  <main class="seo-content">
+    <article class="species-page" itemscope itemtype="https://schema.org/Thing">
+      <header class="species-header">
+        {species.image && (
+          <img 
+            src={species.image} 
+            alt={species.name} 
+            class="species-image" 
+            itemprop="image"
+            loading="lazy"
+          />
+        )}
+        <div class="species-titles">
+          <h1 itemprop="name">{species.name}</h1>
+          <p class="scientific-name" itemprop="alternateName">
+            <em>{species.scientific_name}</em>
+          </p>
+          {species.kingdomName && (
+            <p class="kingdom-badge">
+              {species.kingdomIcon} {species.kingdomName}
+            </p>
+          )}
+        </div>
+      </header>
+      
+      {species.description && (
+        <section class="description" itemprop="description">
+          <p>{species.description}</p>
+        </section>
+      )}
+      
+      {perspectives.length > 0 && (
+        <nav class="perspective-nav">
+          <h2>Perspektiven</h2>
+          <ul>
+            {perspectives.map(p => (
+              <li>
+                <a href={`#${p}`}>{perspectiveLabels[p] || p}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+      
+      <div class="perspectives">
+        <slot />
+      </div>
+      
+      <!-- Link zur interaktiven App -->
+      <section class="interactive-cta">
+        <a href={`/?search=${encodeURIComponent(species.name)}`} class="cta-button">
+          🔍 Interaktiv erkunden
+        </a>
+      </section>
+    </article>
+  </main>
+
+  <footer class="seo-footer">
+    <p>
+      <a href="/">🍄 Funginomi</a> – 
+      Datengetriebene Visualisierung
+    </p>
+  </footer>
+</BaseLayout>
+
+<style>
+  .interactive-cta {
+    padding: 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(100, 150, 255, 0.1);
+  }
+  
+  .cta-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, rgba(100, 150, 255, 0.2), rgba(150, 100, 255, 0.2));
+    border: 1px solid rgba(100, 150, 255, 0.4);
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .cta-button:hover {
+    background: linear-gradient(135deg, rgba(100, 150, 255, 0.3), rgba(150, 100, 255, 0.3));
+    border-color: rgba(100, 150, 255, 0.6);
+    transform: translateY(-2px);
+  }
+</style>

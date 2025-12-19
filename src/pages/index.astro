@@ -1,0 +1,226 @@
+---
+/**
+ * Homepage / App Entry Point (SSR + Cached)
+ * 
+ * Server-Side Rendered mit Species-Übersicht für SEO
+ * Client-side Hydration für volle Interaktivität
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getAllSpeciesSlugs, getSpecies } from '../lib/species';
+import { CACHE_TTL, getCacheHeaders, cacheKey, get, set } from '../lib/cache';
+
+// SSR - kein prerender
+export const prerender = false;
+
+// Alle Species laden (mit Cache)
+const CACHE_KEY = 'homepage:species';
+let speciesList = get<any[]>(CACHE_KEY)?.data;
+
+if (!speciesList) {
+  const slugs = await getAllSpeciesSlugs();
+  speciesList = await Promise.all(
+    slugs.map(async ({ slug, kingdom }) => {
+      const species = await getSpecies(slug);
+      return species ? {
+        slug,
+        kingdom,
+        name: species.name,
+        wissenschaftlicher_name: species.wissenschaftlicher_name,
+        description: species.data?.description || species.data?.kurzbeschreibung || ''
+      } : null;
+    })
+  );
+  speciesList = speciesList.filter(Boolean);
+  set(CACHE_KEY, speciesList, CACHE_TTL.index);
+}
+
+// Kingdom-Icons
+const kingdomIcons: Record<string, string> = {
+  fungi: '🍄',
+  plantae: '🌿',
+  animalia: '🦋',
+  bacteria: '🦠'
+};
+
+// Cache-Headers setzen (1 Stunde)
+const headers = getCacheHeaders(CACHE_TTL.index);
+for (const [header, value] of Object.entries(headers)) {
+  Astro.response.headers.set(header, value);
+}
+---
+
+<BaseLayout 
+  title="AMORPH – Interaktive Artenvisualisierung"
+  description="Entdecke Pilze, Pflanzen und Tiere mit interaktiven Datenvisualisierungen. Vergleiche Eigenschaften, erkunde Perspektiven."
+>
+  <!-- SEO: Server-gerenderte Species-Übersicht -->
+  <section class="species-overview" aria-label="Alle Arten">
+    <header class="overview-header">
+      <h1>AMORPH</h1>
+      <p class="tagline">Formlos. Zustandslos. Transformierend.</p>
+      <p class="description">
+        Entdecke <strong>{speciesList.length} Arten</strong> aus {Object.keys(kingdomIcons).length} Reichen 
+        mit interaktiven Datenvisualisierungen.
+      </p>
+    </header>
+
+    <nav class="species-grid" aria-label="Arten-Übersicht">
+      {speciesList.map((species) => (
+        <a href={`/${species.slug}`} class="species-card" data-kingdom={species.kingdom}>
+          <span class="kingdom-icon">{kingdomIcons[species.kingdom] || '🔬'}</span>
+          <h2>{species.name}</h2>
+          {species.wissenschaftlicher_name && (
+            <p class="scientific-name">{species.wissenschaftlicher_name}</p>
+          )}
+          {species.description && (
+            <p class="description">{species.description.slice(0, 120)}...</p>
+          )}
+        </a>
+      ))}
+    </nav>
+  </section>
+
+  <!-- Die AMORPH App wird hier eingebunden -->
+  <main id="app" data-amorph-container></main>
+  
+  <!-- App-Initialisierung mit korrektem Pfad -->
+  <script type="module">
+    // Import von Root-Level index.js
+    const { amorph } = await import('/index.js');
+    
+    // AMORPH starten
+    const app = await amorph({
+      container: '#app',
+      config: '/config/'
+    });
+    
+    // Für Debugging in Console verfügbar
+    window.amorph = app;
+    
+    // SSR-Content ausblenden wenn App geladen
+    const overview = document.querySelector('.species-overview');
+    if (overview) overview.style.display = 'none';
+    
+    console.log('🍄 AMORPH v5 gestartet (Astro SSR)');
+  </script>
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "AMORPH",
+    "description": "Interaktive Artenvisualisierung",
+    "url": "https://funginomi.com",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://funginomi.com/api/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  })} />
+</BaseLayout>
+
+<style>
+  .species-overview {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .overview-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .overview-header h1 {
+    font-size: 3rem;
+    margin: 0;
+    background: linear-gradient(135deg, #fff 0%, #888 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .tagline {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0.5rem 0;
+    font-style: italic;
+  }
+
+  .overview-header .description {
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 600px;
+    margin: 1rem auto 0;
+  }
+
+  .species-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .species-card {
+    display: block;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+  }
+
+  .species-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .kingdom-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .species-card h2 {
+    font-size: 1.25rem;
+    margin: 0 0 0.25rem;
+    color: #fff;
+  }
+
+  .scientific-name {
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0 0 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .species-card .description {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  /* Verstecke SSR-Content wenn App lädt */
+  #app:not(:empty) + .species-overview,
+  .species-overview:has(+ #app:not(:empty)) {
+    display: none;
+  }
+
+  #app:empty::after {
+    content: '';
+  }
+
+  @media (max-width: 600px) {
+    .overview-header h1 {
+      font-size: 2rem;
+    }
+    
+    .species-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+

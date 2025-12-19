@@ -11,31 +11,25 @@ data/
 │   ├── index.json                ← Kingdom-Index
 │   └── alpine-marmot/            ← 1 Spezies
 │       ├── index.json            ← Core-Daten
-│       ├── conservation.json     ← Perspektive
-│       ├── culture.json
-│       ├── ecology.json
-│       ├── geography.json
-│       ├── identification.json
-│       ├── interactions.json
-│       ├── research.json
-│       ├── safety.json
-│       ├── statistics.json
-│       └── temporal.json
+│       └── *.json                ← Perspektiven
 ├── bacteria/
 │   └── index.json                ← Kingdom-Index (leer)
 ├── fungi/
-│   └── index.json                ← Kingdom-Index (leer)
+│   ├── index.json                ← Kingdom-Index
+│   └── psilocybe-cyanescens/     ← 1 Spezies
+│       ├── index.json            ← Core-Daten
+│       ├── chemistry.json
+│       ├── culture.json
+│       ├── ecology.json
+│       ├── identification.json
+│       ├── medicine.json
+│       ├── safety.json
+│       └── temporal.json
 └── plantae/
     ├── index.json                ← Kingdom-Index
     └── deadly-nightshade/        ← 1 Spezies
         ├── index.json
-        ├── chemistry.json
-        ├── culture.json
-        ├── ecology.json
-        ├── geography.json
-        ├── identification.json
-        ├── medicine.json
-        └── safety.json
+        └── *.json                ← Perspektiven
 ```
 
 ---
@@ -45,11 +39,23 @@ data/
 | Kingdom | Spezies | Perspektiven |
 |---------|---------|--------------|
 | Animalia | alpine-marmot (Alpenmurmeltier) | 10 |
+| Fungi | psilocybe-cyanescens (Blauender Kahlkopf) | 7 |
 | Plantae | deadly-nightshade (Tollkirsche) | 7 |
-| Fungi | - | 0 |
 | Bacteria | - | 0 |
 
-**Gesamt**: 2 Spezies, 17 Perspektiven-Dateien
+**Gesamt**: 3 Spezies, 24 Perspektiven-Dateien
+
+---
+
+## SSR-Integration (NEU)
+
+Die Astro SSR-Layer (`src/lib/species.ts`) lädt Daten direkt aus diesen Ordnern:
+
+```typescript
+// Sucht in beiden Dateien:
+data/{kingdom}/{slug}/index.json
+data/{kingdom}/{slug}/data.json
+```
 
 ---
 

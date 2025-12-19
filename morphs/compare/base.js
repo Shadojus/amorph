@@ -10,7 +10,7 @@
  * DATA-DRIVEN: Keywords and rules come from config/morphs.yaml!
  */
 
-import { debug } from '../../../observer/debug.js';
+import { debug } from '../../observer/debug.js';
 
 // Colors config is set externally (from morphs.yaml)
 let colorsConfig = null;

@@ -1,6 +1,6 @@
 # Scripts
 
-Validierungs- und Index-Scripts für das AMORPH Daten-System.
+Validierungs-, Index- und Build-Scripts für das AMORPH System.
 
 ## Dateien
 
@@ -8,6 +8,8 @@ Validierungs- und Index-Scripts für das AMORPH Daten-System.
 |--------|--------|-------|-------------|
 | `validate.js` | 593 | JSON-Daten gegen Blueprints validieren | `npm run validate` |
 | `build-index.js` | 164 | Universe-Index aus Ordnern generieren | `npm run build:index` |
+| `build-pages.js` | ~200 | Legacy SEO-Seiten Generator | `npm run build:pages` |
+| `prebuild-astro.js` | ~50 | Assets für Astro kopieren | (intern) |
 
 ---
 
@@ -127,12 +129,46 @@ Definiert in `package.json`:
 ```json
 {
   "scripts": {
+    "dev": "astro dev",
+    "start": "node dist/server/entry.mjs",
+    "build": "astro build",
+    "preview": "astro preview",
     "validate": "node scripts/validate.js",
     "validate:list": "node scripts/validate.js --list",
     "validate:stats": "node scripts/validate.js --stats",
-    "build:index": "node scripts/build-index.js"
+    "build:index": "node scripts/build-index.js",
+    "build:pages": "node scripts/build-pages.js",
+    "build:legacy": "node scripts/build.js"
   }
 }
+```
+
+---
+
+## Astro Build (NEU)
+
+### Development
+
+```bash
+npm run dev      # Astro Dev-Server (Port 4321)
+```
+
+### Production
+
+```bash
+npm run build    # Erstellt dist/server/ und dist/client/
+npm run start    # Startet Production-Server
+```
+
+### Output-Struktur
+
+```
+dist/
+├── server/
+│   └── entry.mjs    ← Node.js SSR Server
+└── client/
+    ├── _astro/      ← Bundled Assets
+    └── ...          ← Statische Dateien
 ```
 
 ---

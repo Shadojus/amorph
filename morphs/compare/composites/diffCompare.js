@@ -8,7 +8,7 @@
  * - Groups into: same, different, unique
  */
 
-import { debug } from '../../../../observer/debug.js';
+import { debug } from '../../../observer/debug.js';
 import { createLegend, createLegende } from '../base.js';
 import { analyzeItems, calculateDiff } from './analyze.js';
 import { renderFieldMorph } from './render.js';

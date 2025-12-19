@@ -13,8 +13,29 @@ Black Glasmorphism + Universe Theme + Kosmisches Grid.
 | `ansichten.css` | 577 | View-Styles, Feld-Auswahl, Action-Bar |
 | `vektorraum.css` | 697 | Compare-View Perspektiven-Styling |
 | `universe.css` | ~120 | Kosmisches Theme, Glow-System, Deep Glass |
-| `morphs.css` | 770 | Legacy Morph-Styles (importiert primitives/index.css) |
+| `responsive.css` | ~100 | Mobile/Tablet Breakpoints |
+| `seo-page.css` | ~150 | **NEU** Astro SSR Seiten-Styles |
 | `woodfloor/` | - | Hintergrund-Textur (Moss_Woodsf_Laub.png) |
+
+---
+
+## seo-page.css (NEU)
+
+Styles für Astro SSR-gerenderte SEO-Seiten:
+
+```css
+/* Species-Page Layout */
+.species-page { ... }
+.species-header { ... }
+.breadcrumb { ... }
+
+/* Perspektiven-Navigation */
+.perspectives-nav { ... }
+.perspective-section { ... }
+
+/* Print-optimiert */
+@media print { ... }
+```
 
 ---
 

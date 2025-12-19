@@ -1,4 +1,5 @@
 {
+  "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     // Enable JavaScript checking without compiling
     "allowJs": true,
@@ -18,11 +19,15 @@
     // Path resolution
     "baseUrl": ".",
     "paths": {
+      "@/*": ["src/*"],
       "@core/*": ["core/*"],
       "@morphs/*": ["morphs/*"],
       "@features/*": ["features/*"],
       "@util/*": ["util/*"],
-      "@observer/*": ["observer/*"]
+      "@observer/*": ["observer/*"],
+      "@config/*": ["config/*"],
+      "@styles/*": ["styles/*"],
+      "@data/*": ["data/*"]
     },
     
     // JSDoc support
@@ -33,9 +38,11 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "jsx": "preserve"
   },
   "include": [
+    "src/**/*",
     "core/**/*.js",
     "morphs/**/*.js",
     "features/**/*.js",
@@ -45,6 +52,7 @@
   ],
   "exclude": [
     "node_modules",
+    "dist",
     "data",
     "scripts"
   ]
