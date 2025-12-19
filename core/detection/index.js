@@ -48,10 +48,10 @@ export function getDetectionConfig() {
  */
 export function detectType(value) {
   // Null/undefined
-  if (value === null || value === undefined) return 'null';
+  if (value === null || value === undefined) return /** @type {DetectedType} */ ('null');
   
   // Boolean
-  if (typeof value === 'boolean') return 'boolean';
+  if (typeof value === 'boolean') return /** @type {DetectedType} */ ('boolean');
   
   // Number
   if (typeof value === 'number') {
@@ -65,15 +65,15 @@ export function detectType(value) {
   
   // Array
   if (Array.isArray(value)) {
-    return detectArrayType(value, detectionConfig);
+    return /** @type {DetectedType} */ (detectArrayType(value, detectionConfig));
   }
   
   // Object
   if (typeof value === 'object') {
-    return detectObjectType(value, detectionConfig);
+    return /** @type {DetectedType} */ (detectObjectType(value, detectionConfig));
   }
   
-  return 'unknown';
+  return /** @type {DetectedType} */ ('unknown');
 }
 
 /**

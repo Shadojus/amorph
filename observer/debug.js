@@ -56,8 +56,10 @@ const STYLES = {
 class DebugObserver {
   constructor(enabled = true) {
     this.enabled = enabled;
+    /** @type {Array<{time: string, elapsed: number, category: string, message: string, data: any, timestamp: number}>} */
     this.history = [];
     this.maxHistory = 500;
+    /** @type {string[]|null} */
     this.filter = null;
     this.startTime = Date.now();
     // Mute excessive categories by default - keep log short!
@@ -65,6 +67,11 @@ class DebugObserver {
     this.verbose = false; // If true: log all categories (ignore muted)
   }
   
+  /**
+   * @param {string} category
+   * @param {string} message
+   * @param {any} [data]
+   */
   log(category, message, data = null) {
     if (!this.enabled) return;
     if (this.filter && !this.filter.includes(category)) return;
@@ -93,43 +100,69 @@ class DebugObserver {
   }
   
   // === SYSTEM ===
+  /** @param {string} message @param {any} [data] */
   amorph(message, data = null) { return this.log('amorph', message, data); }
+  /** @param {string} message @param {any} [data] */
   config(message, data = null) { return this.log('config', message, data); }
+  /** @param {string} message @param {any} [data] */
   data(message, data = null) { return this.log('data', message, data); }
+  /** @param {string} message @param {any} [data] */
   schema(message, data = null) { return this.log('schema', message, data); }
   
   // === FEATURES ===
+  /** @param {string} message @param {any} [data] */
   features(message, data = null) { return this.log('features', message, data); }
+  /** @param {string} message @param {any} [data] */
   header(message, data = null) { return this.log('header', message, data); }
+  /** @param {string} message @param {any} [data] */
   search(message, data = null) { return this.log('search', message, data); }
+  /** @param {string} message @param {any} [data] */
   perspectives(message, data = null) { return this.log('perspectives', message, data); }
+  /** @param {string} message @param {any} [data] */
   grid(message, data = null) { return this.log('grid', message, data); }
+  /** @param {string} message @param {any} [data] */
   views(message, data = null) { return this.log('views', message, data); }
+  /** @param {string} message @param {any} [data] */
   compare(message, data = null) { return this.log('compare', message, data); }
+  /** @param {string} message @param {any} [data] */
   detail(message, data = null) { return this.log('detail', message, data); }
   
   // === MORPHS & RENDERING ===
+  /** @param {string} message @param {any} [data] */
   morphs(message, data = null) { return this.log('morphs', message, data); }
+  /** @param {string} message @param {any} [data] */
   detection(message, data = null) { return this.log('detection', message, data); }
+  /** @param {string} message @param {any} [data] */
   render(message, data = null) { return this.log('render', message, data); }
+  /** @param {string} message @param {any} [data] */
   mount(message, data = null) { return this.log('mount', message, data); }
+  /** @param {string} message @param {any} [data] */
   unmount(message, data = null) { return this.log('unmount', message, data); }
   
   // === UTILS ===
+  /** @param {string} message @param {any} [data] */
   semantic(message, data = null) { return this.log('semantic', message, data); }
   
   // === USER-INTERACTION ===
+  /** @param {string} message @param {any} [data] */
   observer(message, data = null) { return this.log('observer', message, data); }
+  /** @param {string} message @param {any} [data] */
   click(message, data = null) { return this.log('click', message, data); }
+  /** @param {string} message @param {any} [data] */
   hover(message, data = null) { return this.log('hover', message, data); }
+  /** @param {string} message @param {any} [data] */
   input(message, data = null) { return this.log('input', message, data); }
+  /** @param {string} message @param {any} [data] */
   scroll(message, data = null) { return this.log('scroll', message, data); }
   
   // === SESSION & NAVIGATION ===
+  /** @param {string} message @param {any} [data] */
   session(message, data = null) { return this.log('session', message, data); }
+  /** @param {string} message @param {any} [data] */
   navigation(message, data = null) { return this.log('navigation', message, data); }
   
   // === ERRORS & WARNINGS ===
+  /** @param {string} message @param {any} [data] */
   error(message, data = null) {
     const entry = this.log('error', message, data);
     if (data instanceof Error) {
@@ -138,6 +171,7 @@ class DebugObserver {
     return entry;
   }
   
+  /** @param {string} message @param {any} [data] */
   warn(message, data = null) {
     return this.log('warn', message, data);
   }

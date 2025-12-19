@@ -1,29 +1,26 @@
 /* SUCHE FEATURE STYLES */
-/* Pure Black Glasmorphism */
+/* Minimal Dark */
 
 /* === SUCHE WRAPPER === */
 .amorph-suche-wrapper {
   flex: 1;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   min-width: 0;
-  height: var(--header-element-height, 40px);
-  /* Pure Black Glass */
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 255, 255, 0.1);
-  border-radius: var(--header-element-radius, 20px);
-  padding: 0 8px 0 var(--header-padding-x, 16px);
-  transition: all 0.2s var(--anim-ease-out);
+  height: 32px;
+  /* Subtle dark */
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 0 8px 0 12px;
+  transition: all 0.15s ease;
   overflow: visible;
 }
 
 .amorph-suche-wrapper:focus-within {
-  border-color: rgba(0, 255, 255, 0.25);
-  background: rgba(0, 0, 0, 0.6);
-  box-shadow: 
-    0 0 20px rgba(0, 255, 255, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 /* Suche-Container innerhalb Wrapper */
@@ -46,27 +43,24 @@
 /* Lupe Icon */
 .amorph-suche::before {
   content: '🔍';
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   opacity: 0.4;
-  margin-right: 12px;
+  margin-right: 8px;
   flex-shrink: 0;
-  filter: grayscale(0.5) brightness(1.2);
 }
 
 .amorph-suche-wrapper:focus-within .amorph-suche::before {
   opacity: 0.6;
-  filter: grayscale(0.2) brightness(1.3);
 }
 
 .amorph-suche input {
   flex: 1;
   min-width: 40px;
   padding: 0;
-  font-size: var(--header-font, 0.85rem);
+  font-size: 0.8rem;
   background: transparent;
-  color: rgba(255, 255, 255, 0.92);
+  color: rgba(255, 255, 255, 0.9);
   border: none;
-  letter-spacing: 0.01em;
 }
 
 .amorph-suche input:focus {
@@ -239,17 +233,77 @@ mark.amorph-highlight {
   }
 }
 
-@media (max-width: 480px) {
+@media (min-width: 401px) and (max-width: 480px) {
   .amorph-suche::before {
-    margin-right: 6px;
-    font-size: 0.6rem;
+    margin-right: 8px;
+    font-size: 0.7rem;
   }
   .amorph-aktive-filter {
     max-width: 35%;
     gap: 3px;
   }
   .amorph-filter-badge {
+    padding: 0 6px;
+    font-size: 0.56rem;
+  }
+  
+  .amorph-suche input {
+    font-size: 15px;
+  }
+  
+  .amorph-suche input::placeholder {
+    font-size: 14px;
+  }
+}
+
+/* Ultra-Small: 390px Ziel */
+@media (max-width: 400px) {
+  .amorph-suche-wrapper {
+    padding: 0 6px 0 12px;
+    gap: 6px;
+    min-width: 0;
+  }
+  
+  .amorph-suche::before {
+    margin-right: 6px;
+    font-size: 0.65rem;
+    opacity: 0.5;
+  }
+  
+  .amorph-suche input {
+    font-size: 15px;
+    min-width: 30px;
+  }
+  
+  .amorph-suche input::placeholder {
+    font-size: 13px;
+  }
+  
+  .amorph-aktive-filter {
+    max-width: 30%;
+    gap: 3px;
+  }
+  
+  .amorph-filter-badge {
     padding: 0 5px;
-    font-size: 0.55rem;
+    font-size: 0.52rem;
+    height: 20px;
+  }
+  
+  .amorph-highlight-nav {
+    gap: 2px;
+    padding: 0 2px;
+    margin-left: 4px;
+  }
+  
+  .amorph-highlight-nav-btn {
+    width: 22px;
+    height: 22px;
+    font-size: 9px;
+  }
+  
+  .amorph-highlight-counter {
+    font-size: 0.5rem;
+    min-width: 16px;
   }
 }

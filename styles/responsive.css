@@ -1,16 +1,125 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   RESPONSIVE STYLES - Mobile Optimierung für Amorph v5
-   Universe Theme Mobile-First Anpassungen
+   RESPONSIVE STYLES - Mobile-First für Amorph v5
+   Minimal Design - Optimiert für 390px+ Bildschirme
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* ===== KLEINE BILDSCHIRME (Mobile) ===== */
-@media (max-width: 480px) {
+/* ===== ULTRA-SMALL SCREENS (390px) - iPhone SE, kleine Android ===== */
+@media (max-width: 400px) {
+  
+  /* === ROOT OVERRIDES === */
+  :root {
+    --font-size-2xs: 11px;
+    --font-size-xs: 12px;
+    --font-size-sm: 13px;
+    --font-size-base: 14px;
+    --font-size-md: 15px;
+    --font-size-lg: 16px;
+    --font-size-xl: 18px;
+    --font-size-2xl: 22px;
+    
+    /* Minimal Abstände */
+    --space-lg: 10px;
+    --space-xl: 14px;
+    --space-2xl: 20px;
+    --padding-card: 8px;
+  }
+  
+  /* === GLOBAL CONTAINER - Minimal Margin === */
+  [data-amorph-container] {
+    padding: 6px 4px;
+    padding-top: 90px;
+  }
+  
+  /* === HEADER === */
+  .amorph-feature-header {
+    padding: 6px 8px;
+  }
+  
+  .amorph-header-main {
+    flex-direction: row;
+    gap: 6px;
+  }
+  
+  .amorph-suche-wrapper {
+    width: 100%;
+    min-height: 36px;
+    height: 36px;
+  }
+  
+  /* Perspektiven scrollbar */
+  .amorph-header-perspektiven {
+    padding: 3px 8px;
+    margin: 0 -8px;
+    gap: 4px;
+  }
+  
+  .amorph-perspektive-btn {
+    height: 26px;
+    padding: 0 8px;
+    font-size: 0.68rem;
+  }
+  
+  /* === GRID ITEMS - FULL WIDTH, MINIMAL SPACING === */
+  .amorph-item {
+    width: 100% !important;
+    margin: 0 0 8px 0;
+  }
+  
+  .amorph-item-content {
+    padding: 8px;
+  }
+  
+  .amorph-item-name {
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+  
+  .amorph-item-field {
+    padding: 6px 0;
+    font-size: 13px;
+  }
+  
+  .amorph-field-label {
+    font-size: 11px;
+    margin-bottom: 3px;
+  }
+  
+  /* === COMPARE VIEW - STACKED LAYOUT === */
+  .compare-items-container {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
+  
+  .compare-item-wrapper {
+    padding: 12px;
+  }
+  
+  .compare-item-label {
+    font-size: 13px;
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+  }
+  
+  .compare-section {
+    padding: 12px;
+    margin-bottom: 16px;
+  }
+  
+  .compare-section-header {
+    font-size: 13px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+  }
+}
+
+/* ===== KLEINE BILDSCHIRME (Mobile 400-480px) ===== */
+@media (min-width: 401px) and (max-width: 480px) {
   
   /* === RANGE MORPH === */
   .amorph-range {
     flex-direction: column;
-    gap: 4px;
-    padding: 6px;
+    gap: 6px;
+    padding: 10px;
     min-width: 100%;
   }
   
@@ -18,93 +127,93 @@
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
-    gap: 8px;
+    gap: 12px;
   }
   
   .amorph-range-min,
   .amorph-range-max {
-    font-size: 11px;
+    font-size: 13px;
   }
   
   .amorph-range-track {
     width: 100%;
-    min-width: 120px;
+    min-width: 140px;
   }
   
   /* === STATS MORPH === */
   .amorph-stats-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+    gap: 10px;
   }
   
   .amorph-stats-item {
-    padding: 10px;
+    padding: 12px;
     min-width: 0;
   }
   
   .amorph-stats-value {
-    font-size: 20px;
+    font-size: 22px;
   }
   
   .amorph-stats-label {
-    font-size: 10px;
+    font-size: 12px;
   }
   
   /* === GAUGE MORPH === */
   .amorph-gauge {
-    padding: 10px;
+    padding: 12px;
   }
   
   .amorph-gauge-svg {
-    width: 100px;
-    height: 55px;
+    width: 110px;
+    height: 60px;
   }
   
   .amorph-gauge-current {
-    font-size: 16px;
+    font-size: 18px;
   }
   
   /* === TIMELINE MORPH === */
   .amorph-timeline-item-titel {
-    font-size: 12px;
+    font-size: 14px;
   }
   
   .amorph-timeline-item-text {
-    font-size: 11px;
+    font-size: 13px;
   }
   
   /* === BAR MORPH === */
   .amorph-bar-row {
-    grid-template-columns: 80px 1fr 40px;
-    gap: 8px;
+    grid-template-columns: 90px 1fr 45px;
+    gap: 10px;
   }
   
   .amorph-bar-label {
-    font-size: 11px;
+    font-size: 13px;
   }
   
   /* === LIFECYCLE MORPH === */
   .amorph-lifecycle-nodes {
-    gap: 4px;
+    gap: 6px;
     flex-wrap: wrap;
     justify-content: center;
   }
   
   .amorph-lifecycle-node {
-    padding: 8px 10px;
-    font-size: 11px;
-    min-width: 70px;
+    padding: 10px 12px;
+    font-size: 13px;
+    min-width: 80px;
   }
   
   .amorph-lifecycle-arrow {
-    font-size: 12px;
-    margin: 0 2px;
+    font-size: 14px;
+    margin: 0 4px;
   }
   
   /* === STEPS MORPH === */
   .amorph-steps-container {
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     align-items: stretch;
   }
   
@@ -118,28 +227,28 @@
   
   /* === HIERARCHY MORPH === */
   .amorph-hierarchy {
-    padding: 8px;
-    font-size: 12px;
+    padding: 10px;
+    font-size: 14px;
   }
   
   .amorph-hierarchy-node {
-    padding-left: 12px;
+    padding-left: 14px;
   }
   
   /* === CALENDAR MORPH === */
   .amorph-calendar {
-    gap: 4px;
-    padding: 8px;
+    gap: 6px;
+    padding: 10px;
   }
   
   .amorph-calendar-grid {
-    gap: 3px;
+    gap: 4px;
   }
   
   .amorph-calendar-day {
-    width: 22px;
-    height: 22px;
-    font-size: 10px;
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
   }
   
   /* === DOSAGE MORPH === */
@@ -150,7 +259,7 @@
   /* === COMPARISON MORPH === */
   .amorph-comparison-values {
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
   }
   
   .amorph-comparison-arrow {
@@ -169,7 +278,7 @@
   .amorph-pictogram,
   .amorph-heatmap,
   .amorph-flow {
-    padding: 10px;
+    padding: 12px;
   }
   
   .amorph-treemap-titel,
@@ -178,23 +287,23 @@
   .amorph-stackedbar-titel,
   .amorph-groupedbar-titel,
   .amorph-pictogram-titel {
-    font-size: 12px;
+    font-size: 14px;
   }
   
   /* === TAG MORPH === */
   .amorph-tag {
-    height: 26px;
-    padding: 0 10px;
-    font-size: 11px;
-    margin: 2px;
+    height: 32px;
+    padding: 0 12px;
+    font-size: 13px;
+    margin: 3px;
   }
   
   /* === BADGE MORPH === */
   .amorph-badge {
-    height: 28px;
-    padding: 0 10px;
-    font-size: 11px;
-    gap: 6px;
+    height: 34px;
+    padding: 0 14px;
+    font-size: 13px;
+    gap: 8px;
   }
   
   /* === SPARKLINE MORPH === */

@@ -17,6 +17,8 @@
  * - Durchsucht die bereits geladenen Daten
  * - Highlights wie im Grid-View
  * 
+ * NEU: Lädt Perspektiven-Daten automatisch wenn Pilze ausgewählt werden
+ * 
  * DATENGETRIEBEN: Item-Namen aus schema.meta.nameField
  */
 
@@ -48,6 +50,8 @@ export default async function init(ctx) {
   // Suche State (kommt vom Header-Feature)
   let aktuelleQuery = '';
   let aktuelleMatchedTerms = new Set();
+  // Cache für geladene Perspektiven-Daten
+  let cachedPerspektivenDaten = new Map();
   
   const container = document.createElement('div');
   container.className = 'amorph-sammeldiagramm';
@@ -55,6 +59,7 @@ export default async function init(ctx) {
     <div class="amorph-sammel-toolbar">
       <span class="sammel-anzahl">0 Felder</span>
       <span class="sammel-perspektiven"></span>
+      <span class="sammel-loading" style="display:none;">⏳ Lade Daten...</span>
     </div>
     <div class="amorph-sammel-content">
       <div class="amorph-sammel-diagramme"></div>
@@ -72,6 +77,87 @@ export default async function init(ctx) {
   const leerAnzeige = container.querySelector('.amorph-sammel-leer');
   const anzahlSpan = container.querySelector('.sammel-anzahl');
   const perspektivenSpan = container.querySelector('.sammel-perspektiven');
+  const loadingSpan = container.querySelector('.sammel-loading');
+  
+  /**
+   * NEU: Lädt Perspektiven-Daten für alle ausgewählten Pilze
+   * Nutzt ctx.dataSource.loadPerspectives() wenn verfügbar
+   */
+  async function ladePerspektivenDaten() {
+    const nachPilz = getAuswahlNachPilz();
+    if (nachPilz.size === 0 || aktivePerspektiven.length === 0) return;
+    
+    // Prüfe ob dataSource.loadPerspectives verfügbar ist
+    if (!ctx.dataSource?.loadPerspectives) {
+      debug.compare('dataSource.loadPerspectives not available');
+      return;
+    }
+    
+    loadingSpan.style.display = 'inline';
+    debug.compare('Loading perspectives for compare items', {
+      items: nachPilz.size,
+      perspectives: aktivePerspektiven
+    });
+    
+    try {
+      // Für jeden ausgewählten Pilz: Perspektiven laden
+      const loadPromises = Array.from(nachPilz.values()).map(async (data) => {
+        const pilzDaten = data.pilzDaten;
+        if (!pilzDaten) return null;
+        
+        // Cache-Key basierend auf slug/id
+        const cacheKey = pilzDaten.slug || pilzDaten.id;
+        
+        // Prüfe ob bereits gecacht
+        const cached = cachedPerspektivenDaten.get(cacheKey);
+        if (cached?._loadedPerspectives) {
+          const alleGeladen = aktivePerspektiven.every(p => 
+            cached._loadedPerspectives.has(p)
+          );
+          if (alleGeladen) {
+            debug.compare('Using cached perspective data', { slug: cacheKey });
+            return { cacheKey, daten: cached };
+          }
+        }
+        
+        // Lade fehlende Perspektiven
+        try {
+          const enriched = await ctx.dataSource.loadPerspectives(pilzDaten, aktivePerspektiven);
+          cachedPerspektivenDaten.set(cacheKey, enriched);
+          return { cacheKey, daten: enriched };
+        } catch (err) {
+          debug.compare('Failed to load perspectives', { slug: cacheKey, error: err.message });
+          return null;
+        }
+      });
+      
+      const results = await Promise.all(loadPromises);
+      
+      // Update pilzDaten in Auswahl mit enriched data
+      for (const result of results) {
+        if (!result) continue;
+        
+        // Finde alle Auswahl-Einträge mit diesem Pilz und update pilzDaten
+        const state = getState();
+        for (const [key, entry] of state.auswahl) {
+          const entrySlug = entry.pilzDaten?.slug || entry.pilzDaten?.id;
+          if (entrySlug === result.cacheKey) {
+            // Merge die neuen Daten in die bestehenden pilzDaten
+            Object.assign(entry.pilzDaten, result.daten);
+          }
+        }
+      }
+      
+      debug.compare('Perspectives loaded and merged', {
+        loaded: results.filter(Boolean).length
+      });
+      
+    } catch (err) {
+      debug.compare('Error loading perspectives', { error: err.message });
+    } finally {
+      loadingSpan.style.display = 'none';
+    }
+  }
   
   // Click-Handler für Abwahl-Buttons
   diagramme.addEventListener('click', (e) => {
@@ -97,8 +183,9 @@ export default async function init(ctx) {
   
   /**
    * Hauptrender - Nutzt Theme Compare-Morphs wenn Perspektiven aktiv
+   * NEU: Async um Perspektiven-Daten laden zu können
    */
-  function render() {
+  async function render() {
     const nachFeld = getAuswahlNachFeld();
     const nachPilz = getAuswahlNachPilz();
     const auswahl = getState().auswahl;
@@ -109,6 +196,11 @@ export default async function init(ctx) {
       leerAnzeige.style.display = 'flex';
       anzahlSpan.textContent = '0 Felder';
       return;
+    }
+    
+    // NEU: Lade Perspektiven-Daten bevor gerendert wird
+    if (aktivePerspektiven.length > 0 && nachPilz.size > 0) {
+      await ladePerspektivenDaten();
     }
     
     leerAnzeige.style.display = 'none';
@@ -521,9 +613,9 @@ export default async function init(ctx) {
   });
   
   // Events
-  document.addEventListener('amorph:auswahl-geaendert', () => {
+  document.addEventListener('amorph:auswahl-geaendert', async () => {
     if (ctx.dom.offsetParent !== null) {
-      render();
+      await render();
       // Highlights neu anwenden nach Render
       if (aktuelleQuery) {
         setTimeout(() => applyHighlights(aktuelleQuery, aktuelleMatchedTerms), 50);
@@ -531,11 +623,11 @@ export default async function init(ctx) {
     }
   });
   
-  document.addEventListener('amorph:ansicht-wechsel', (e) => {
+  document.addEventListener('amorph:ansicht-wechsel', async (e) => {
     if (e.detail.ansicht === 'vergleich') {
       ctx.dom.style.display = 'block';
-      setTimeout(() => {
-        render();
+      setTimeout(async () => {
+        await render();
         // Highlights anwenden wenn Query vorhanden
         if (aktuelleQuery) {
           applyHighlights(aktuelleQuery, aktuelleMatchedTerms);
@@ -547,7 +639,7 @@ export default async function init(ctx) {
   });
   
   // Perspektiven-Änderungen beachten
-  document.addEventListener('perspektiven:geaendert', (e) => {
+  document.addEventListener('perspektiven:geaendert', async (e) => {
     aktivePerspektiven = e.detail?.aktiv || [];
     debug.compare('Perspectives event received', {
       active: aktivePerspektiven,
@@ -570,7 +662,7 @@ export default async function init(ctx) {
     
     // Neu rendern wenn sichtbar
     if (ctx.dom.offsetParent !== null) {
-      render();
+      await render();
       // Highlights nach Perspektiven-Wechsel neu anwenden
       if (aktuelleQuery) {
         setTimeout(() => applyHighlights(aktuelleQuery, aktuelleMatchedTerms), 100);

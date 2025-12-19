@@ -6,641 +6,101 @@ Formlos. Zustandslos. Transformierend.
 
 Datengetriebenes Transformations-Framework. Struktur der Daten bestimmt Darstellung.
 
-```
-DATEN (JSON) → detectType() → MORPH → DOM
-```
+DATEN (JSON) -> detectType() -> MORPH -> DOM
 
 **Kirk-Prinzipien**: Visualisierung wird von Datenstruktur abgeleitet, nicht manuell definiert.
 
 ---
 
-## Performance-Architektur (WICHTIG!)
-
-**Optimierte Suche ohne Full-Load - skaliert bis 1000+ Einträge:**
-
-```
-1. App-Start         → Nur universe-index.json laden (~10KB für 100 Spezies)
-2. Suche             → Nur Index durchsuchen (KEINE Perspektiven!)
-3. Grid-Ansicht      → Index-Daten anzeigen (name, description, tags)
-4. Perspektive aktiv → NUR aktive Perspektiven laden (nicht alle 15!)
-5. Detail-Klick      → Alle Perspektiven für EINE Spezies laden
-6. Compare-Mode      → Nur aktive Perspektiven für ausgewählte Items
-```
-
-### Request-Optimierung
-
-| Szenario | Vorher (naiv) | Nachher (optimiert) |
-|----------|---------------|---------------------|
-| 100 Items, 2 Perspektiven aktiv | 700 Requests | 200 Requests |
-| 500 Items, 3 Perspektiven aktiv | 3500 Requests | 1500 Requests |
-| Suche ohne Perspektiven | 700 Requests | 0 Requests |
-
-### Selektives Perspektiven-Laden
-
-```javascript
-// Nur aktive Perspektiven laden (NICHT alle 15!)
-await dataSource.ensureFullData(['safety', 'cultivation']);
-
-// Cache nutzt bereits geladene Perspektiven
-await dataSource.ensureFullData(['safety', 'medicine']); 
-// → Lädt nur 'medicine', 'safety' ist gecached
-```
-
-### DataSource-API
-
-```javascript
-// Suche - nur im Index, keine Perspektiven
-const results = await dataSource.query({ search: 'pilz' });
-
-// Selektiv Perspektiven nachladen (Grid + Compare)
-await dataSource.ensureFullData(['safety', 'cultivation']);
-
-// Einzelansicht - alle Perspektiven einer Spezies
-const full = await dataSource.getBySlug('steinpilz');
-
-// Pagination
-const { items, hasMore } = await dataSource.loadMore(offset, limit);
-```
-
-**Index-Felder für Suche:** `name`, `slug`, `scientific_name`, `description`, `tags`, `searchText`, `perspectives`
-
----
-
 ## Architektur
 
-| Ordner | Zweck | Hauptdateien |
-|--------|-------|--------------|
-| `src/` | **Astro SSR Layer** | pages/, layouts/, lib/, components/ |
-| `src/lib/` | Cache & Daten-Loader | cache.ts, species.ts |
-| `src/pages/` | SSR Seiten & API | [slug].astro, api/search.ts, sitemap.xml.ts |
-| `core/` | Config, Pipeline, Container | config.js, pipeline.js, container.js |
-| `core/detection/` | Modulare Typ-Erkennung | index.js, number.js, string.js, array.js, object.js |
-| `core/errors.js` | Error Boundaries | Custom Errors, Fallbacks, Registry |
-| `config/` | YAML-Konfiguration | manifest, daten, morphs, features, observer |
-| `config/schema/` | Modulares Schema | basis.yaml, semantik.yaml, perspektiven/ |
-| `config/schema/perspektiven/blueprints/` | 15 Morph-Blueprints | *.blueprint.yaml |
-| `features/` | 8 Feature-Module | Context API, isolierte UI-Komponenten |
-| `morphs/` | 87 Transformationen | 43 primitives/, 44 compare/ |
-| `observer/` | Debug & Analytics | debug.js, interaction.js, rendering.js |
-| `util/` | Utilities | dom.js, fetch.js, router.js, semantic.js |
-| `util/security.js` | XSS-Prevention | HTML Sanitization, Safe DOM |
-| `util/a11y.js` | Accessibility | ARIA, Focus, Keyboard Navigation |
-| `util/performance.js` | Performance | Debounce, Lazy Loading, Pools |
-| `styles/` | CSS Design-System | Black Glasmorphism, 12 Pilz-Farben |
-| `data/` | Testdaten | alpine-marmot (animalia), deadly-nightshade (plantae) |
-| `docs/` | Entwicklungs-Dokumentation | Kirk-Prinzipien, Daten-Erstellung |
-| `themes/` | Style-Overrides | (Platzhalter) |
-| `scripts/` | Build-Scripts | validate.js, build-index.js |
-| `tests/` | Unit-Tests (263) | detection, morphs, security, a11y, performance |
-| `types/` | TypeScript Definitionen | index.d.ts |
+| Ordner | Zweck |
+|--------|-------|
+| src/ | Astro SSR Layer - SEO-Seiten, API Routes |
+| core/ | Config, Pipeline, Detection, Container |
+| config/ | YAML-Konfiguration, Schema-System |
+| features/ | 6 Feature-Module (Header, Grid, Vergleich, etc.) |
+| morphs/ | 43 Primitive + Compare-Morphs |
+| observer/ | Debug und Analytics |
+| util/ | DOM, Fetch, Router, Semantic, A11y |
+| styles/ | Minimal Dark Theme |
+| data/ | JSON-Testdaten (4 Kingdoms) |
 
 ---
 
-## Astro SSR (NEU)
+## Performance-Architektur
 
-### SEO-Architektur
+Optimierte Suche ohne Full-Load:
 
-Search Engines und AI Crawlers bekommen echte HTML-Seiten:
-
-```
-/                      → Homepage (SPA client-side)
-/{slug}                → SSR Species-Seite mit SEO Meta-Tags
-/api/search?q=...      → Such-API (JSON)
-/sitemap.xml           → Dynamische Sitemap
-```
-
-### Cache-Strategie
-
-| Route | TTL | Beschreibung |
-|-------|-----|--------------|
-| `/{slug}` | 24h | Species-Seiten (ETag-Support) |
-| `/api/search` | 5min | Such-Ergebnisse |
-| `/sitemap.xml` | 24h | Sitemap |
-
-### Entwicklung
-
-```bash
-npm run dev      # Astro Dev-Server (Port 4321)
-npm run build    # Production Build
-npm run start    # Production Server (node dist/server/entry.mjs)
-```
+1. App-Start -> Nur universe-index.json (~10KB)
+2. Suche -> Nur Index durchsuchen
+3. Grid-Ansicht -> Index-Daten anzeigen
+4. Perspektive aktiv -> NUR aktive Perspektiven laden
+5. Detail-Klick -> Alle Perspektiven fuer EINE Spezies
 
 ---
 
-## Entwicklung (Legacy)
+## Astro SSR
 
-```bash
-npm run dev          # Dev-Server (Port 3000)
-npm test             # Unit-Tests (Vitest)
-npm run test:watch   # Tests im Watch-Mode
-npm run test:coverage # Coverage-Report
-npm run typecheck    # TypeScript-Prüfung
-npm run validate     # Daten-Validierung (Zod)
-npm run build:index  # Universe-Index generieren
-```
+/ -> Homepage (SPA)
+/{slug} -> SSR Species-Seite
+/api/search -> Such-API
+/sitemap.xml -> Dynamische Sitemap
 
----
-
-## Einstiegspunkte
-
-| Datei | Zweck |
-|-------|-------|
-| `index.js` | Entry: `amorph({ container, config })` |
-| `index.html` | Demo-Seite |
-| `styles/index.css` | Alle CSS-Imports |
+Entwicklung:
+npm run dev - Astro Dev-Server (Port 4321)
+npm run build - Production Build
+npm run start - Production Server
 
 ---
 
-## 43 Morph-Primitives (+ 44 Compare)
+## 43 Primitive Morphs
 
-### Text/Display
-`text`, `string`, `number`, `boolean`, `badge`, `tag`, `rating`, `progress`
-
-### Container
-`list`, `object`, `hierarchy`
-
-### Charts
-`bar`, `pie`, `radar`, `sparkline`, `heatmap`, `gauge`, `slopegraph`, `severity`
-`groupedbar`, `stackedbar`, `boxplot`, `dotplot`, `lollipop`, `scatterplot`
-`sunburst`, `treemap`, `bubble`, `pictogram`
-
-### Range/Stats
-`range`, `stats`
-
-### Temporal
-`timeline`, `lifecycle`, `steps`, `calendar`
-
-### Specialized
-`image`, `link`, `map`, `network`, `citation`, `dosage`, `currency`
-`comparison`, `flow`
-
-### Kirk
-`kirk` (dynamische Auswahl)
-
----
-
-## Morph-Erkennung (Priorität)
-
-```
-flow → scatterplot → groupedbar → stackedbar → boxplot → dotplot →
-lollipop → sunburst → treemap → bubble → pictogram → slopegraph →
-heatmap → sparkline → severity → lifecycle → timeline → steps →
-calendar → radar → pie → bar → network → hierarchy → map →
-citation → dosage → currency → gauge → stats → range → comparison →
-rating → progress → badge → image → link → tag → text → number →
-boolean → list → object
-```
+Text: text, number, boolean, badge, tag, rating, progress
+Charts: bar, pie, radar, sparkline, heatmap, gauge, slopegraph, severity
+Container: list, object, hierarchy, range, stats
+Temporal: timeline, lifecycle, steps, calendar
+Specialized: image, link, map, network, citation, dosage, currency
 
 ---
 
 ## 15 Perspektiven
 
-| ID | Symbol | Fokus | Blueprint |
-|----|--------|-------|-----------|
-| chemistry | 🧪 | Metabolite, Enzyme | ~500 Felder |
-| conservation | 🛡️ | IUCN-Status, Schutz | ~600 Felder |
-| culinary | 🍳 | Essbarkeit, Zubereitung | ~400 Felder |
-| cultivation | 🌱 | Anbau, Substrate | ~800 Felder |
-| culture | 📜 | Mythologie, Geschichte | ~700 Felder |
-| ecology | 🌿 | Habitat, Symbiosen | ~650 Felder |
-| economy | 💰 | Markt, Preise | ~600 Felder |
-| geography | 🗺️ | Verbreitung, Klima | ~900 Felder |
-| identification | 🔍 | Bestimmungsmerkmale | ~2000 Felder |
-| interactions | 🔗 | Wirte, Mikrobiom | ~550 Felder |
-| medicine | 💊 | Wirkstoffe, Therapie | ~700 Felder |
-| research | 📚 | Publikationen | ~600 Felder |
-| safety | ⚠️ | Toxine, Verwechslung | ~1400 Felder |
-| statistics | 📊 | Fundstatistiken | ~500 Felder |
-| temporal | ⏰ | Saisonalität | ~1600 Felder |
-
-**Blueprints**: `config/schema/perspektiven/blueprints/*.blueprint.yaml`
-Jedes Blueprint definiert leere Datenstrukturen mit korrektem Morph-Typ.
+chemistry, conservation, culinary, cultivation, culture, ecology, economy,
+geography, identification, interactions, medicine, research, safety, statistics, temporal
 
 ---
 
-## 8 Features
+## 6 Features
 
-| Feature | Pfad | Beschreibung |
-|---------|------|--------------|
-| Header | `features/header/` | Logo, Suche, Navigation |
-| Grid | `features/grid/` | Layout-Switcher |
-| Ansichten | `features/ansichten/` | View-Management |
-| Einzelansicht | `features/einzelansicht/` | Detail-Modal |
-| Vergleich | `features/vergleich/` | Compare-Modus |
-| Perspektiven | `features/perspektiven/` | Perspektiven-Wechsel |
-| Suche | `features/suche/` | Semantische Suche |
-| InfiniteScroll | `features/infinitescroll/` | Lazy-Loading |
+header/ - Suche + Perspektiven
+grid/ - Layout-Switcher
+vergleich/ - Compare-View
+einzelansicht/ - Detail-Modal
+perspektiven/ - Perspektiven-Buttons
+infinitescroll/ - Pagination
 
 ---
 
-## Event-System
+## Design-System: Minimal Dark Theme
 
-```javascript
-'amorph:rendered'              // Nach Render
-'amorph:items-loaded'          // Daten geladen
-'amorph:route-change'          // Navigation
-'amorph:ansicht-wechsel'       // View-Wechsel
-'amorph:auswahl-geaendert'     // Feld-Auswahl
-'amorph:items-ausgewaehlt'     // Items für Vergleich
-'amorph:perspektive-geaendert' // Perspektive gewechselt
-```
-
----
-
-## Morph-Signatur
-
-```javascript
-function morph(wert, config, morphField) → HTMLElement | null
-```
-
-**Regeln**: 
-- ✅ DOM erstellen
-- ✅ Lokale Events
-- ❌ Globale Events
-- ❌ Seiteneffekte
-
----
-
-## Daten-System
-
-### Architektur
-
-```
-JSON Files (data/) → Zod Validierung → Frontend (Lazy Loading)
-       ↓
-   build:index
-       ↓
-universe-index.json (schnelle Übersicht)
-```
-
-### NPM Scripts
-
-```bash
-npm run dev              # Entwicklungsserver starten
-npm run validate         # Alle Daten mit Zod validieren
-npm run build:index      # Universe-Index neu generieren
-```
-
-### Datenquellen (daten.yaml)
-
-| Typ | Beschreibung | Skalierung | Empfehlung |
-|-----|--------------|------------|------------|
-| `json-universe-optimized` | Index + selektives Perspektiven-Laden | ✅ 1000+ Items | **Produktion** |
-| `json-universe` | Index + selektives Laden (mit Discovery) | ✅ 1000+ Items | Entwicklung |
-| `json-perspektiven` | Einzelne Sammlung, selektiv | ✅ 500+ Items | Legacy |
-| `json` | Eine JSON-Datei, alles im RAM | ❌ <100 Items | Test |
-
-### Lazy-Loading Flow
-
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                        App-Start                                     │
-│  universe-index.json (~10KB) ────────────────────────────────────▶  │
-│  ✓ Alle Spezies-Namen, Slugs, Tags                                  │
-│  ✗ Keine Perspektiven-Daten                                         │
-└─────────────────────────────────────────────────────────────────────┘
-                                  │
-                                  ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                     Suche "Steinpilz"                                │
-│  Durchsucht NUR Index-Felder                                        │
-│  → Keine zusätzlichen HTTP-Requests                                 │
-│  → Ergebnis: 3 Treffer (Index-Daten)                               │
-└─────────────────────────────────────────────────────────────────────┘
-                                  │
-                                  ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│              Perspektive "safety" aktiviert                          │
-│  ensureFullData(['safety']) →                                       │
-│  ✓ Lädt safety.json für 3 Treffer (3 Requests)                     │
-│  ✗ NICHT: cultivation.json, medicine.json etc.                      │
-└─────────────────────────────────────────────────────────────────────┘
-                                  │
-                                  ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│           Perspektive "cultivation" hinzugefügt                      │
-│  ensureFullData(['safety', 'cultivation']) →                        │
-│  ✓ safety bereits gecached (0 Requests)                            │
-│  ✓ Lädt nur cultivation.json (3 Requests)                          │
-└─────────────────────────────────────────────────────────────────────┘
-```
-
-### Validierung mit Zod
-
-```bash
-# Alle Daten validieren
-npm run validate
-
-# Einzelne Spezies
-npm run validate -- --species steinpilz
-
-# Watch-Modus
-npm run validate:watch
-```
-
----
-
-## Daten-Workflow
-
-### 1. JSON-Datei erstellen
-```
-data/{kingdom}/{species}/
-├── index.json           # Name, Slug, Bild
-├── identification.json  # Bestimmung
-├── culinary.json        # Kulinarik
-├── safety.json          # Sicherheit
-└── ...                  # Weitere Perspektiven
-```
-
-### 2. Validieren
-```bash
-npm run validate
-```
-
-### 3. Index aktualisieren
-```bash
-npm run build:index
-```
+- Subtile rgba(255,255,255,0.04-0.08) Backgrounds
+- Kompakte Elemente (32px Header, 28px Buttons)
+- 12px Grid-Gap, 8px Padding
+- Responsive: 390px Mobile-First
 
 ---
 
 ## Debug-Konsole
 
-```javascript
-window.amorphDebug.summary()   // Stats
-window.amorphFilter('search')  // Filter
-window.amorphVerbose(true)     // Alle logs
-```
+window.amorphDebug.summary() - Stats
+debug.config(msg, data) - Konfiguration
+debug.render(msg, data) - Rendering
 
-```javascript
-debug.config(msg, data)    // Konfiguration
-debug.render(msg, data)    // Rendering
-debug.detection(msg, data) // Typ-Erkennung
-debug.mount(msg, data)     // Component Mount
-debug.warn(msg, data)      // Warnungen
-debug.error(msg, data)     // Fehler
-```
-
-**Aktivierung**: `config/observer.yaml` → `debug: true`
+Aktivierung: config/observer.yaml -> debug: true
 
 ---
 
-## Design-System: Black Glasmorphism
+## Ordner-Dokumentation
 
-### CSS-Variablen
-```css
---glass-bg: rgba(0, 0, 0, 0.55);
---glass-blur: blur(24px);
---glass-border: rgba(100, 150, 255, 0.06);
---color-text: rgba(255, 255, 255, 0.94);
-```
-
-### 12 Pilz-Farben
-```css
-.pilz-farbe-0 { --pilz-rgb: 0, 255, 255; }   /* Electric Cyan */
-.pilz-farbe-1 { --pilz-rgb: 255, 0, 255; }   /* Electric Magenta */
-/* ... bis pilz-farbe-11 */
-```
-
-### Responsive Breakpoints
-- XL: 1280px+ (3 Spalten)
-- LG: 1024-1279px (3 Spalten)
-- MD: 768-1023px (2 Spalten)
-- SM: 480-767px (2 Spalten, kompakt)
-- XS: <480px (1 Spalte, mobile-first)
-
----
-
-## Mobile-Optimierungen
-
-### Touch-Geräte (`@media (hover: none) and (pointer: coarse)`)
-
-```css
-/* Größere Touch-Targets (44px Minimum - Apple Guidelines) */
-.amorph-action-btn { min-height: 44px; }
-.amorph-perspektive-btn { min-height: 44px; min-width: 44px; }
-
-/* Kein Hover-Transform auf Touch - spart GPU */
-amorph-container[data-morph="item"]:hover { transform: none; }
-
-/* Active State statt Hover */
-amorph-container[data-morph="item"]:active { transform: scale(0.98); }
-
-/* Touch-freundliches Scrolling */
--webkit-overflow-scrolling: touch;
-scroll-snap-type: x mandatory;
-```
-
-### Performance-Optimierungen
-
-| Feature | Desktop | Tablet (768px) | Mobile (480px) |
-|---------|---------|----------------|----------------|
-| Backdrop-Filter | blur(24px) | blur(12px) | deaktiviert |
-| Hover-Transform | aktiv | aktiv | deaktiviert |
-| Animationen | komplett | komplett | `prefers-reduced-motion` |
-| Grid-Spalten | 3 | 2 | 1 |
-
-### Backdrop-Filter Fallback
-
-```css
-/* Schwache GPUs ohne Backdrop-Filter */
-@supports not (backdrop-filter: blur(1px)) {
-  .amorph-header { background: rgba(8, 12, 20, 0.98); }
-}
-
-/* Mobile: Solider Hintergrund statt Blur */
-@media (max-width: 480px) {
-  amorph-container[data-morph="item"] {
-    backdrop-filter: none;
-    background: rgba(20, 25, 35, 0.98);
-  }
-}
-```
-
-### Reduced Motion Support
-
-```css
-@media (prefers-reduced-motion: reduce) {
-  .amorph-item { animation: none; }
-  .amorph-perspektive-btn { transition: none; }
-}
-```
-
-### CSS-Dateien mit Mobile-Styles
-
-| Datei | Mobile-Features |
-|-------|-----------------|
-| `styles/layouts.css` | Grid-Spalten, Touch-Events, Blur-Fallback |
-| `styles/ansichten.css` | Action-Bar, Detail-View, Touch-Targets |
-| `features/header/header.css` | Kompakter Header, Blur-Reduzierung |
-| `features/perspektiven/perspektiven.css` | Scroll-Snap, größere Buttons |
-
-
----
-
-## Initialisierung
-
-```javascript
-import { amorph } from './index.js';
-
-const app = await amorph({
-  container: '#app',           // CSS-Selektor oder Element
-  config: './config/',         // Config-Ordner
-  customMorphs: {}             // Optionale Custom-Morphs
-});
-```
-
-### Rückgabe-API
-
-```javascript
-app.destroy()        // Aufräumen, Observer stoppen
-app.reload()         // Daten neu laden
-app.search(query)    // Suche ausführen → items[]
-app.getData()        // Aktuelle Daten abrufen
-```
-
-### index.js (435 Zeilen) - Ablauf
-
-1. **Config laden** → `loadConfig()` (YAML-Dateien)
-2. **Schema setzen** → `setSchema()` für semantische Suche
-3. **Erkennung setzen** → `setErkennungConfig()` für Pipeline + Compare
-4. **DataSource erstellen** → `createDataSource()` (JSON/REST/PocketBase)
-5. **Observer starten** → `setupObservers()`
-6. **Features laden** → `loadFeatures()` mit Callbacks
-7. **URL-State wiederherstellen** → `getUrlState()`, auto-search
-8. **Event-Handler** → Suche, Perspektiven, Ansicht, Feld-Auswahl
-
-### index.html
-
-```html
-<main id="app" data-amorph-container></main>
-<script type="module">
-  import { amorph } from './index.js';
-  window.amorph = await amorph({ container: '#app', config: './config/' });
-</script>
-```
-
----
-
-## Testdaten
-
-2 vollständige Spezies mit Perspektiven-JSONs:
-- `data/animalia/alpine-marmot/` (11 JSON-Dateien)
-- `data/plantae/deadly-nightshade/` (8 JSON-Dateien)
-
-**Format**: `{id, slug, name, scientific_name, image, perspectives[]}`
-
----
-
-## Modulare Exports (index.js)
-
-```javascript
-// Hauptfunktion
-export { amorph } from './index.js';
-
-// Core
-export { loadConfig } from './core/config.js';
-export { transform, render } from './core/pipeline.js';
-
-// Morphs
-export { morphs } from './morphs/index.js';
-
-// Data
-export { createDataSource } from './util/fetch.js';
-
-// Observer
-export { setupObservers } from './observer/index.js';
-
-// Features
-export { loadFeatures } from './features/index.js';
-```
-
----
-
-## Dateistruktur pro Ordner
-
-Jeder Ordner enthält `CLAUDE.md` mit vollständiger Dokumentation:
-- `core/CLAUDE.md` - config.js, pipeline.js, container.js
-- `config/CLAUDE.md` - YAML-Dateien, Schema
-- `config/schema/CLAUDE.md` - Modulares Schema, 15 Perspektiven
-- `features/CLAUDE.md` - 8 Features, Context API
-- `morphs/CLAUDE.md` - 87 Morphs (43 primitives, 44 compare)
-- `morphs/primitives/CLAUDE.md` - Primitive-Morphs Details
-- `morphs/compare/CLAUDE.md` - Compare-System Details
-- `observer/CLAUDE.md` - Debug, Observer
-
----
-
-## Neue Module (v5.2.0)
-
-### Error Handling (`core/errors.js`)
-```javascript
-import { 
-  AmorphError, MorphError, DetectionError, DataError,
-  errorBoundary, asyncErrorBoundary, safeMorph,
-  onError, getErrors, clearErrors 
-} from './core/errors.js';
-
-// Error Boundary für sichere Funktionen
-const result = errorBoundary(() => riskyOperation(), {
-  name: 'operation',
-  fallback: defaultValue
-});
-
-// Safe Morph Wrapper
-const safeBadgeMorph = safeMorph(badgeMorph);
-```
-
-### Security (`util/security.js`)
-```javascript
-import { 
-  escapeHtml, sanitizeHtml, sanitizeUrl,
-  createElement, setTextContent, html 
-} from './util/security.js';
-
-// Safe HTML Rendering
-const safe = sanitizeHtml('<script>bad</script><p>good</p>');
-// → '<p>good</p>'
-
-// Safe Element Creation
-const el = createElement('div', { 
-  className: 'card',
-  textContent: userInput  // auto-escaped
-});
-```
-
-### Accessibility (`util/a11y.js`)
-```javascript
-import { 
-  setAria, announce, focusElement,
-  createFocusTrap, setupArrowNavigation, createSkipLinks 
-} from './util/a11y.js';
-
-// Screen Reader Announcements
-announce('10 Ergebnisse gefunden', 'polite');
-
-// Focus Management
-const trap = createFocusTrap(modal);
-trap.activate();
-```
-
-### Performance (`util/performance.js`)
-```javascript
-import { 
-  debounce, throttle, onVisible, whenIdle,
-  virtualList, createPool, clearMorphCache 
-} from './util/performance.js';
-
-// Debounced Search
-const search = debounce(query => fetchResults(query), 300);
-
-// Lazy Loading
-onVisible(element, entry => loadContent(entry.target));
-
-// Virtual Scrolling
-const list = virtualList(container, { itemHeight: 40 });
-list.render(10000);  // 10k items, only visible rendered
-```
-- `util/CLAUDE.md` - Utilities
-- `styles/CLAUDE.md` - CSS Design-System
-- `data/CLAUDE.md` - Testdaten-Struktur
+Jeder Ordner enthaelt CLAUDE.md mit Details.

@@ -29,7 +29,9 @@ export function detectNumberType(value, config = null) {
   
   // Progress: 0-100 integers - Kirk: Progress bars
   const progress = cfg.progress || { min: 0, max: 100, integersOnly: true };
-  if (value >= progress.min && value <= progress.max && 
+  const pMin = progress.min ?? 0;
+  const pMax = progress.max ?? 100;
+  if (value >= pMin && value <= pMax && 
       (!progress.integersOnly || Number.isInteger(value))) {
     return 'progress';
   }

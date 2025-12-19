@@ -1,16 +1,15 @@
 /* PERSPEKTIVEN FEATURE STYLES */
-/* Black Glasmorphism - Harmonische Perspektiven-Buttons */
+/* Minimal Pill Buttons */
 
 /* === PERSPEKTIVEN CONTAINER === */
 .amorph-perspektiven {
   display: flex;
   flex-wrap: nowrap;
-  gap: 8px;
+  gap: 6px;
   justify-content: flex-start;
   align-items: center;
-  padding: var(--space-xs) 0;
+  padding: 2px 0;
   min-width: max-content;
-  /* Touch-optimiertes Scrollen */
   -webkit-overflow-scrolling: touch;
 }
 
@@ -19,48 +18,45 @@
   display: contents;
 }
 
-/* === PERSPEKTIVEN BUTTONS === */
+/* === PERSPEKTIVEN BUTTONS - MINIMAL PILLS === */
 .amorph-perspektive-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  height: calc(var(--header-element-height, 40px) - 4px);
-  padding: 0 16px;
-  font-size: 0.85rem;
+  gap: 5px;
+  height: 28px;
+  padding: 0 10px;
+  font-size: 0.72rem;
   font-weight: 500;
   text-transform: capitalize;
   white-space: nowrap;
-  /* Pastellfarbener Hintergrund mit Perspektiven-Farbe */
-  background: color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.5)) 15%, rgba(20, 25, 35, 0.7));
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  color: rgba(255, 255, 255, 0.75);
-  /* Farbiger Rand mit Perspektiven-Farbe */
-  border: 1px solid color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.5)) 35%, transparent);
-  border-radius: calc(var(--header-element-radius, 20px) - 2px);
+  /* Subtle transparent background */
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: none;
+  color: rgba(255, 255, 255, 0.6);
+  /* Thin colored border */
+  border: 1px solid color-mix(in srgb, var(--p-farbe, rgba(150, 150, 150, 0.5)) 25%, transparent);
+  border-radius: 14px;
   cursor: pointer;
-  transition: all 0.25s var(--anim-ease-out);
+  transition: all 0.15s ease;
   position: relative;
   order: 100;
-  /* Scroll-Snap für Touch */
   scroll-snap-align: start;
-  /* Touch-Action für besseres Scrolling */
   touch-action: pan-x;
 }
 
-/* Perspektiven mit Treffern - leicht hervorgehoben */
+/* Perspektiven mit Treffern */
 .amorph-perspektive-btn.hat-treffer {
   order: 0;
-  color: rgba(255, 255, 255, 0.9);
-  background: color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.5)) 25%, rgba(20, 25, 35, 0.75));
-  border-color: color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.5)) 50%, transparent);
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: color-mix(in srgb, var(--p-farbe, rgba(150, 150, 150, 0.5)) 40%, transparent);
 }
 
 /* Emoji-Symbole */
 .amorph-perspektive-btn .btn-symbol {
-  font-size: 1em;
+  font-size: 0.85em;
   line-height: 1;
-  opacity: 0.85;
+  opacity: 0.7;
   transition: opacity 0.15s ease;
 }
 
@@ -70,79 +66,64 @@
 }
 
 .amorph-perspektive-btn:hover {
-  background: color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.5)) 30%, rgba(25, 30, 40, 0.8));
-  border-color: color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.5)) 60%, transparent);
-  color: rgba(255, 255, 255, 1);
-  transform: translateY(-2px);
-  box-shadow: 
-    0 4px 16px rgba(0, 0, 0, 0.4),
-    0 0 12px color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.5)) 25%, transparent);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: color-mix(in srgb, var(--p-farbe, rgba(150, 150, 150, 0.5)) 50%, transparent);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .amorph-perspektive-btn:hover .btn-symbol {
-  opacity: 1;
+  opacity: 0.9;
 }
 
-/* Focus-State für Accessibility */
+/* Focus-State */
 .amorph-perspektive-btn:focus-visible {
-  outline: 2px solid var(--p-farbe, rgba(180, 190, 200, 0.8));
-  outline-offset: 2px;
+  outline: 1px solid var(--p-farbe, rgba(150, 150, 150, 0.6));
+  outline-offset: 1px;
 }
 
-/* AKTIV - Deutlich sichtbar mit kräftiger Pastellfarbe */
+/* AKTIV - Farbiger Akzent */
 .amorph-perspektive-btn.aktiv,
 .amorph-perspektive-btn[aria-pressed="true"] {
-  background: color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.7)) 45%, rgba(30, 35, 45, 0.85));
-  border-color: var(--p-farbe, rgba(180, 190, 200, 0.7));
-  border-width: 2px;
+  background: color-mix(in srgb, var(--p-farbe, rgba(150, 150, 150, 0.5)) 20%, rgba(255, 255, 255, 0.08));
+  border-color: var(--p-farbe, rgba(150, 150, 150, 0.6));
   color: rgba(255, 255, 255, 1);
-  box-shadow: 
-    0 0 16px color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.7)) 40%, transparent),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   order: -1;
 }
 
-/* Treffer-Badge - Kompakt */
+/* Treffer-Badge - Minimal */
 .amorph-perspektive-btn.hat-treffer::after {
   content: attr(data-treffer-anzahl);
   position: absolute;
-  top: -6px;
-  right: -4px;
-  font-size: 0.7rem;
-  font-weight: 700;
+  top: -4px;
+  right: -3px;
+  font-size: 0.6rem;
+  font-weight: 600;
   line-height: 1;
-  padding: 4px 6px;
-  min-width: 18px;
+  padding: 2px 4px;
+  min-width: 14px;
   text-align: center;
-  /* Pastellfarbener Badge mit Perspektiven-Farbe */
-  background: color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.8)) 60%, rgba(20, 25, 35, 0.9));
-  color: rgba(255, 255, 255, 0.95);
-  border: 1px solid color-mix(in srgb, var(--p-farbe, white) 50%, transparent);
-  border-radius: 10px;
+  background: var(--p-farbe, rgba(150, 150, 150, 0.8));
+  color: rgba(0, 0, 0, 0.9);
+  border: none;
+  border-radius: 7px;
   z-index: 10;
 }
 
 .amorph-perspektive-btn.aktiv.hat-treffer::after,
 .amorph-perspektive-btn[aria-pressed="true"].hat-treffer::after {
-  background: color-mix(in srgb, var(--p-farbe) 70%, rgba(20, 25, 35, 0.85));
-  box-shadow: 0 0 8px color-mix(in srgb, var(--p-farbe) 50%, transparent);
-}
-
-@keyframes badge-glow-pop {
-  0% { transform: scale(0); opacity: 0; }
-  70% { transform: scale(1.1); }
-  100% { transform: scale(1); opacity: 1; }
+  background: var(--p-farbe, rgba(150, 150, 150, 0.9));
 }
 
 /* === RESPONSIVE === */
 @media (max-width: 768px) {
   .amorph-perspektive-btn {
-    height: calc(var(--header-element-height, 30px) - 6px);
+    height: 26px;
     padding: 0 8px;
-    gap: 3px;
+    gap: 4px;
+    font-size: 0.7rem;
   }
   .amorph-perspektive-btn .btn-symbol {
-    font-size: 0.68em;
+    font-size: 0.8em;
   }
 }
 
@@ -331,7 +312,7 @@ amorph-container[data-field] {
 }
 
 /* Mobile (480px) */
-@media (max-width: 480px) {
+@media (min-width: 401px) and (max-width: 480px) {
   .amorph-perspektiven {
     gap: 6px;
     padding: 2px 0;
@@ -342,13 +323,13 @@ amorph-container[data-field] {
     padding: 0 10px;
     font-size: 0.75rem;
     gap: 5px;
-    /* Kein Blur auf Mobile für beste Performance */
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    background: color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.5)) 20%, rgba(15, 18, 25, 0.95));
+    /* Leichter Blur auf Mobile */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.5)) 20%, rgba(15, 18, 25, 0.92));
   }
   
-  /* Nur Symbol auf sehr kleinen Screens */
+  /* Nur Symbol auf kleinen Screens */
   .amorph-perspektive-btn .btn-name {
     display: none;
   }
@@ -360,6 +341,51 @@ amorph-container[data-field] {
   /* Aktive Perspektive zeigt Namen */
   .amorph-perspektive-btn.aktiv .btn-name {
     display: inline;
+  }
+}
+
+/* Ultra-Small: 390px Ziel */
+@media (max-width: 400px) {
+  .amorph-perspektiven {
+    gap: 5px;
+    padding: 2px 0;
+  }
+  
+  .amorph-perspektive-btn {
+    height: 34px;
+    padding: 0 8px;
+    font-size: 0.72rem;
+    gap: 4px;
+    /* Kein Blur auf 390px für beste Performance */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: color-mix(in srgb, var(--p-farbe, rgba(180, 190, 200, 0.5)) 22%, rgba(12, 16, 24, 0.95));
+    border-radius: 14px;
+  }
+  
+  /* Nur Symbol */
+  .amorph-perspektive-btn .btn-name {
+    display: none;
+  }
+  
+  .amorph-perspektive-btn .btn-symbol {
+    font-size: 1.05em;
+  }
+  
+  /* Aktive Perspektive zeigt Namen */
+  .amorph-perspektive-btn.aktiv .btn-name {
+    display: inline;
+    font-size: 0.68rem;
+  }
+  
+  /* Treffer-Badge kompakter */
+  .amorph-perspektive-btn.hat-treffer::after {
+    font-size: 0.52rem;
+    padding: 2px 4px;
+    min-width: 14px;
+    top: -4px;
+    right: -2px;
+    border-radius: 8px;
   }
 }
 

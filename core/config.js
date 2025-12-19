@@ -51,7 +51,7 @@ export async function loadConfig(basePath = './config/') {
       debug.config(`${file} loaded`, { keys: Object.keys(config[name]) });
     } catch (e) {
       if (name === 'manifest' || name === 'daten') {
-        debug.error(`Error loading ${file}`, e);
+        debug.error(`Error loading ${file}`, /** @type {Error} */ (e));
         throw e;
       }
     }
@@ -79,11 +79,12 @@ export async function loadConfig(basePath = './config/') {
  */
 async function loadSchemaModular(basePath, cacheBuster) {
   const schemaPath = basePath + 'schema/';
+  /** @type {{meta: object, kern: object, felder: object, reihenfolge: string[], semantik: object, perspektiven: object, erkennung?: object}} */
   const schema = {
     meta: {},
     kern: {},
     felder: {},
-    reihenfolge: [],
+    reihenfolge: /** @type {string[]} */ ([]),
     semantik: {},
     perspektiven: {}
   };
@@ -327,13 +328,14 @@ async function loadMorphsModular(basePath, cacheBuster) {
           morphs.erkennung.progress = {
             min: detection.number.min || 0,
             max: detection.number.max || 100,
+            integersOnly: detection.number.integersOnly ?? true,
             ganzzahl: detection.number.integersOnly
           };
         }
       }
     } catch (e) {
       // Individual morph config not found - not critical
-      debug.warn(`Morphs: ${morphId}.yaml error`, e.message);
+      debug.warn(`Morphs: ${morphId}.yaml error`, e instanceof Error ? e.message : String(e));
     }
   }
   

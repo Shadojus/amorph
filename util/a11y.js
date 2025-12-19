@@ -201,12 +201,12 @@ export function focusElement(el, { preventScroll = false, savePrevious = true } 
 
 /**
  * Prüft ob ein Element fokussierbar ist
- * @param {Element} el 
+ * @param {HTMLElement} el 
  * @returns {boolean}
  */
 export function isFocusable(el) {
   if (!el || !(el instanceof HTMLElement)) return false;
-  if (el.disabled) return false;
+  if (/** @type {any} */ (el).disabled) return false;
   if (el.hidden || el.getAttribute('aria-hidden') === 'true') return false;
   
   const tabindex = el.getAttribute('tabindex');
@@ -241,11 +241,11 @@ export function getFocusableElements(container) {
     'video[controls]'
   ].join(',');
   
-  return Array.from(container.querySelectorAll(selector)).filter(el => {
+  return /** @type {HTMLElement[]} */ (Array.from(container.querySelectorAll(selector)).filter(el => {
     // Nicht versteckte Elemente
-    const style = window.getComputedStyle(el);
+    const style = window.getComputedStyle(/** @type {HTMLElement} */ (el));
     return style.display !== 'none' && style.visibility !== 'hidden';
-  });
+  }));
 }
 
 // ============================================================================
@@ -396,7 +396,7 @@ export function setupArrowNavigation(container, options = {}) {
     }
     
     if (nextIndex !== currentIndex && items[nextIndex]) {
-      focusElement(items[nextIndex], { savePrevious: false });
+      focusElement(/** @type {HTMLElement} */ (items[nextIndex]), { savePrevious: false });
     }
   }
   

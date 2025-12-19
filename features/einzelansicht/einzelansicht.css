@@ -1,18 +1,18 @@
 /* EINZELANSICHT FEATURE STYLES */
-/* Vollständige Pilz-Detailseite */
+/* Minimal Design */
 
 /* === CONTAINER === */
 .amorph-einzelansicht {
   max-width: 900px;
   margin: 0 auto;
-  padding: var(--space-lg);
-  animation: einzelansicht-enter var(--anim-duration-enter) var(--anim-ease-out);
+  padding: 10px;
+  animation: einzelansicht-enter 0.2s ease;
 }
 
 @keyframes einzelansicht-enter {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -24,36 +24,36 @@
 .einzelansicht-header {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
-  margin-bottom: var(--space-xl);
+  gap: 4px;
+  margin-bottom: 12px;
 }
 
 .einzelansicht-titel {
-  font-size: var(--font-size-2xl);
+  font-size: 1.3rem;
   font-weight: 600;
   color: var(--color-text);
   margin: 0;
 }
 
 .einzelansicht-wissenschaftlich {
-  font-size: var(--font-size-md);
+  font-size: 0.85rem;
   font-style: italic;
-  color: var(--color-text-muted);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 /* === ZURÜCK-BUTTON === */
 .amorph-back-btn {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-xs);
-  padding: var(--space-xs) var(--space-sm);
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-md);
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
+  gap: 4px;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75rem;
   cursor: pointer;
-  transition: var(--transition-all);
+  transition: all 0.15s ease;
   width: fit-content;
 }
 
@@ -284,9 +284,10 @@
 }
 
 /* === RESPONSIVE === */
-@media (max-width: 767px) {
+/* Mobile/Tablet: 401-767px */
+@media (min-width: 401px) and (max-width: 767px) {
   .amorph-einzelansicht {
-    padding: var(--space-md);
+    padding: 16px;
   }
   
   .einzelansicht-felder {
@@ -294,11 +295,113 @@
   }
   
   .einzelansicht-bild img {
-    max-height: 250px;
+    max-height: 280px;
   }
   
   .amorph-detail-feld {
     grid-template-columns: 1fr;
     gap: var(--space-xs);
+  }
+}
+
+/* Ultra-Small Mobile: ≤400px (390px Ziel) */
+@media (max-width: 400px) {
+  .amorph-einzelansicht {
+    padding: 12px;
+  }
+  
+  .einzelansicht-titel {
+    font-size: 1.4rem;
+    line-height: 1.35;
+  }
+  
+  .einzelansicht-wissenschaftlich {
+    font-size: 15px;
+  }
+  
+  .einzelansicht-header {
+    margin-bottom: 16px;
+    gap: 6px;
+  }
+  
+  .einzelansicht-felder {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .einzelansicht-feld {
+    padding: 14px;
+    border-radius: 10px;
+  }
+  
+  .einzelansicht-feld-label {
+    font-size: 11px;
+    letter-spacing: 0.4px;
+    margin-bottom: 8px;
+  }
+  
+  .einzelansicht-feld-content {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  
+  .einzelansicht-bild img {
+    max-height: 220px;
+  }
+  
+  .einzelansicht-beschreibung {
+    padding: 14px;
+    margin-bottom: 16px;
+  }
+  
+  .einzelansicht-beschreibung p {
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  
+  /* Detail View auf 390px */
+  .amorph-detail-container {
+    padding: 0 10px;
+  }
+  
+  .amorph-detail-nav {
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .amorph-detail-nav-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+  
+  .amorph-detail-bild,
+  .amorph-detail-bild img {
+    height: 200px;
+    max-height: 200px;
+  }
+  
+  .amorph-detail-header {
+    padding: 14px;
+  }
+  
+  .amorph-detail-titel {
+    font-size: 1.35rem;
+    line-height: 1.35;
+  }
+  
+  .amorph-detail-felder {
+    padding: 14px;
+    gap: 10px;
+  }
+  
+  .amorph-detail-label {
+    font-size: 11px;
+    min-width: 80px;
+  }
+  
+  .amorph-back-btn {
+    padding: 8px 12px;
+    font-size: 14px;
   }
 }
